@@ -1,0 +1,889 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
+		C0497AF61B64AA1800AC1C6C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Constants.swift */; };
+		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
+		C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */; };
+		C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */; };
+		C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */; };
+		C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD41B64AA1800AC1C6C /* EateryData.swift */; };
+		C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */; };
+		C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */; };
+		C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD71B64AA1800AC1C6C /* LocationManager.swift */; };
+		C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD91B64AA1800AC1C6C /* Eatery.swift */; };
+		C0497B011B64AA1800AC1C6C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADA1B64AA1800AC1C6C /* Menu.swift */; };
+		C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */; };
+		C0497B031B64AA1800AC1C6C /* EatNowDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */; };
+		C0497B041B64AA1800AC1C6C /* EatNowDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */; };
+		C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE01B64AA1800AC1C6C /* EatNowDetailViewController.swift */; };
+		C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE11B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift */; };
+		C0497B071B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AE21B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib */; };
+		C0497B081B64AA1800AC1C6C /* SegmentedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE31B64AA1800AC1C6C /* SegmentedHeader.swift */; };
+		C0497B091B64AA1800AC1C6C /* HoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE51B64AA1800AC1C6C /* HoursTableViewCell.swift */; };
+		C0497B0A1B64AA1800AC1C6C /* HoursTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AE61B64AA1800AC1C6C /* HoursTableViewCell.xib */; };
+		C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */; };
+		C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */; };
+		C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AEB1B64AA1800AC1C6C /* EatNowTableViewCell.swift */; };
+		C0497B0F1B64AA1800AC1C6C /* EatNowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AEC1B64AA1800AC1C6C /* EatNowTableViewCell.xib */; };
+		C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AED1B64AA1800AC1C6C /* EatNowTableViewController.swift */; };
+		C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF01B64AA1800AC1C6C /* String+Extension.swift */; };
+		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
+		C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */; };
+		C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF41B64AA1800AC1C6C /* Macros.swift */; };
+		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
+		C0497B771B64AA3800AC1C6C /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1C1B64AA3800AC1C6C /* Keys.plist */; };
+		C0497B7A1B64AA3800AC1C6C /* 104west+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B231B64AA3800AC1C6C /* 104west+logo.jpg */; };
+		C0497B7B1B64AA3800AC1C6C /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B241B64AA3800AC1C6C /* 104west.jpg */; };
+		C0497B7C1B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B251B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg */; };
+		C0497B7D1B64AA3800AC1C6C /* amit_bhatia_libe_cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B261B64AA3800AC1C6C /* amit_bhatia_libe_cafe.jpg */; };
+		C0497B7E1B64AA3800AC1C6C /* atrium_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B271B64AA3800AC1C6C /* atrium_cafe+logo.jpg */; };
+		C0497B7F1B64AA3800AC1C6C /* atrium_cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B281B64AA3800AC1C6C /* atrium_cafe.jpg */; };
+		C0497B801B64AA3800AC1C6C /* bear_necessities+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B291B64AA3800AC1C6C /* bear_necessities+logo.jpg */; };
+		C0497B811B64AA3800AC1C6C /* bear_necessities.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B2A1B64AA3800AC1C6C /* bear_necessities.jpg */; };
+		C0497B821B64AA3800AC1C6C /* bears_den+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B2B1B64AA3800AC1C6C /* bears_den+logo.jpg */; };
+		C0497B831B64AA3800AC1C6C /* bears_den.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B2C1B64AA3800AC1C6C /* bears_den.jpg */; };
+		C0497B841B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B2D1B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg */; };
+		C0497B851B64AA3800AC1C6C /* becker_house_dining_room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B2E1B64AA3800AC1C6C /* becker_house_dining_room.jpg */; };
+		C0497B861B64AA3800AC1C6C /* big_red_barn+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B2F1B64AA3800AC1C6C /* big_red_barn+logo.jpg */; };
+		C0497B871B64AA3800AC1C6C /* big_red_barn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B301B64AA3800AC1C6C /* big_red_barn.jpg */; };
+		C0497B881B64AA3800AC1C6C /* bus_stop_bagels+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B311B64AA3800AC1C6C /* bus_stop_bagels+logo.jpg */; };
+		C0497B891B64AA3800AC1C6C /* cafe_jennie+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B321B64AA3800AC1C6C /* cafe_jennie+logo.jpg */; };
+		C0497B8A1B64AA3800AC1C6C /* cafe_jennie.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B331B64AA3800AC1C6C /* cafe_jennie.jpg */; };
+		C0497B8B1B64AA3800AC1C6C /* carols_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B341B64AA3800AC1C6C /* carols_cafe+logo.jpg */; };
+		C0497B8C1B64AA3800AC1C6C /* carols_cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B351B64AA3800AC1C6C /* carols_cafe.jpg */; };
+		C0497B8D1B64AA3800AC1C6C /* cascadeli+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B361B64AA3800AC1C6C /* cascadeli+logo.jpg */; };
+		C0497B8E1B64AA3800AC1C6C /* cascadeli.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B371B64AA3800AC1C6C /* cascadeli.jpg */; };
+		C0497B8F1B64AA3800AC1C6C /* cook_house_dining_room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B381B64AA3800AC1C6C /* cook_house_dining_room+logo.jpg */; };
+		C0497B901B64AA3800AC1C6C /* cook_house_dining_room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B391B64AA3800AC1C6C /* cook_house_dining_room.jpg */; };
+		C0497B911B64AA3800AC1C6C /* cornell_dairy_bar+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B3A1B64AA3800AC1C6C /* cornell_dairy_bar+logo.jpg */; };
+		C0497B921B64AA3800AC1C6C /* cornell_dairy_bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B3B1B64AA3800AC1C6C /* cornell_dairy_bar.jpg */; };
+		C0497B931B64AA3800AC1C6C /* goldies+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B3C1B64AA3800AC1C6C /* goldies+logo.jpg */; };
+		C0497B941B64AA3800AC1C6C /* goldies.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B3D1B64AA3800AC1C6C /* goldies.jpg */; };
+		C0497B951B64AA3800AC1C6C /* green_dragon+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B3E1B64AA3800AC1C6C /* green_dragon+logo.jpg */; };
+		C0497B961B64AA3800AC1C6C /* green_dragon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B3F1B64AA3800AC1C6C /* green_dragon.jpg */; };
+		C0497B971B64AA3800AC1C6C /* ivy_room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B401B64AA3800AC1C6C /* ivy_room+logo.jpg */; };
+		C0497B981B64AA3800AC1C6C /* ivy_room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B411B64AA3800AC1C6C /* ivy_room.jpg */; };
+		C0497B991B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B421B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg */; };
+		C0497B9A1B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B431B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg */; };
+		C0497B9B1B64AA3800AC1C6C /* keeton_house_dining_room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B441B64AA3800AC1C6C /* keeton_house_dining_room+logo.jpg */; };
+		C0497B9C1B64AA3800AC1C6C /* keeton_house_dining_room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B451B64AA3800AC1C6C /* keeton_house_dining_room.jpg */; };
+		C0497B9D1B64AA3800AC1C6C /* marthas_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B461B64AA3800AC1C6C /* marthas_cafe+logo.jpg */; };
+		C0497B9E1B64AA3800AC1C6C /* marthas_cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B471B64AA3800AC1C6C /* marthas_cafe.jpg */; };
+		C0497B9F1B64AA3800AC1C6C /* mattins_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B481B64AA3800AC1C6C /* mattins_cafe+logo.jpg */; };
+		C0497BA01B64AA3800AC1C6C /* mattins_cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B491B64AA3800AC1C6C /* mattins_cafe.jpg */; };
+		C0497BA11B64AA3800AC1C6C /* north_star+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B4A1B64AA3800AC1C6C /* north_star+logo.jpg */; };
+		C0497BA21B64AA3800AC1C6C /* okenshields+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B4B1B64AA3800AC1C6C /* okenshields+logo.jpg */; };
+		C0497BA31B64AA3800AC1C6C /* risley_dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B4C1B64AA3800AC1C6C /* risley_dining+logo.jpg */; };
+		C0497BA41B64AA3800AC1C6C /* risley_dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B4D1B64AA3800AC1C6C /* risley_dining.jpg */; };
+		C0497BA51B64AA3800AC1C6C /* robert_purcell_marketplace_eatery+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B4E1B64AA3800AC1C6C /* robert_purcell_marketplace_eatery+logo.jpg */; };
+		C0497BA61B64AA3800AC1C6C /* robert_purcell_marketplace_eatery.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B4F1B64AA3800AC1C6C /* robert_purcell_marketplace_eatery.jpg */; };
+		C0497BA71B64AA3800AC1C6C /* rose_house_dining_room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B501B64AA3800AC1C6C /* rose_house_dining_room+logo.jpg */; };
+		C0497BA81B64AA3800AC1C6C /* rose_house_dining_room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B511B64AA3800AC1C6C /* rose_house_dining_room.jpg */; };
+		C0497BA91B64AA3800AC1C6C /* rustys+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B521B64AA3800AC1C6C /* rustys+logo.jpg */; };
+		C0497BAA1B64AA3800AC1C6C /* rustys.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B531B64AA3800AC1C6C /* rustys.jpg */; };
+		C0497BAB1B64AA3800AC1C6C /* synapsis_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B541B64AA3800AC1C6C /* synapsis_cafe+logo.jpg */; };
+		C0497BAC1B64AA3800AC1C6C /* synapsis_cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B551B64AA3800AC1C6C /* synapsis_cafe.jpg */; };
+		C0497BAD1B64AA3800AC1C6C /* trillium+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B561B64AA3800AC1C6C /* trillium+logo.jpg */; };
+		C0497BAE1B64AA3800AC1C6C /* trillium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B571B64AA3800AC1C6C /* trillium.jpg */; };
+		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
+		C0497BB01B64AA3800AC1C6C /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5B1B64AA3800AC1C6C /* Alamofire.swift */; };
+		C0497BB11B64AA3800AC1C6C /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5C1B64AA3800AC1C6C /* Download.swift */; };
+		C0497BB21B64AA3800AC1C6C /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5D1B64AA3800AC1C6C /* Manager.swift */; };
+		C0497BB31B64AA3800AC1C6C /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5E1B64AA3800AC1C6C /* MultipartFormData.swift */; };
+		C0497BB41B64AA3800AC1C6C /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5F1B64AA3800AC1C6C /* ParameterEncoding.swift */; };
+		C0497BB51B64AA3800AC1C6C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B601B64AA3800AC1C6C /* Request.swift */; };
+		C0497BB61B64AA3800AC1C6C /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B611B64AA3800AC1C6C /* ResponseSerialization.swift */; };
+		C0497BB71B64AA3800AC1C6C /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B621B64AA3800AC1C6C /* ServerTrustPolicy.swift */; };
+		C0497BB81B64AA3800AC1C6C /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B631B64AA3800AC1C6C /* Upload.swift */; };
+		C0497BB91B64AA3800AC1C6C /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B641B64AA3800AC1C6C /* Validation.swift */; };
+		C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */; };
+		C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */; };
+		C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */; };
+		C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */; };
+		C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */; };
+		C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
+		C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */; };
+		C0497BC51B64AB4100AC1C6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BC21B64AB4100AC1C6C /* AppDelegate.swift */; };
+		C0497BCE1B64ACA000AC1C6C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */; };
+		C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */; };
+		C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD31B64AD3900AC1C6C /* GetMenu.swift */; };
+		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
+		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0497ACC1B64AA1800AC1C6C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C0497ACD1B64AA1800AC1C6C /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCalendars.swift; sourceTree = "<group>"; };
+		C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadICS.swift; sourceTree = "<group>"; };
+		C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMeManager.swift; sourceTree = "<group>"; };
+		C0497AD41B64AA1800AC1C6C /* EateryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryData.swift; sourceTree = "<group>"; };
+		C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryIDs.swift; sourceTree = "<group>"; };
+		C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralMenus.swift; sourceTree = "<group>"; };
+		C0497AD71B64AA1800AC1C6C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		C0497AD91B64AA1800AC1C6C /* Eatery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eatery.swift; sourceTree = "<group>"; };
+		C0497ADA1B64AA1800AC1C6C /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowDetailHeaderView.swift; sourceTree = "<group>"; };
+		C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EatNowDetailHeaderView.xib; sourceTree = "<group>"; };
+		C0497AE01B64AA1800AC1C6C /* EatNowDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowDetailViewController.swift; sourceTree = "<group>"; };
+		C0497AE11B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionHeaderView.swift; sourceTree = "<group>"; };
+		C0497AE21B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentedControlSectionHeaderView.xib; sourceTree = "<group>"; };
+		C0497AE31B64AA1800AC1C6C /* SegmentedHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedHeader.swift; sourceTree = "<group>"; };
+		C0497AE51B64AA1800AC1C6C /* HoursTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursTableViewCell.swift; sourceTree = "<group>"; };
+		C0497AE61B64AA1800AC1C6C /* HoursTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HoursTableViewCell.xib; sourceTree = "<group>"; };
+		C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
+		C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealTableViewCell.xib; sourceTree = "<group>"; };
+		C0497AEB1B64AA1800AC1C6C /* EatNowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowTableViewCell.swift; sourceTree = "<group>"; };
+		C0497AEC1B64AA1800AC1C6C /* EatNowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EatNowTableViewCell.xib; sourceTree = "<group>"; };
+		C0497AED1B64AA1800AC1C6C /* EatNowTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowTableViewController.swift; sourceTree = "<group>"; };
+		C0497AF01B64AA1800AC1C6C /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorScheme.swift"; sourceTree = "<group>"; };
+		C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHelperFactory.swift; sourceTree = "<group>"; };
+		C0497AF41B64AA1800AC1C6C /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
+		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
+		C0497B1C1B64AA3800AC1C6C /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		C0497B1F1B64AA3800AC1C6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		C0497B231B64AA3800AC1C6C /* 104west+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104west+logo.jpg"; sourceTree = "<group>"; };
+		C0497B241B64AA3800AC1C6C /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
+		C0497B251B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "amit_bhatia_libe_cafe+logo.jpg"; sourceTree = "<group>"; };
+		C0497B261B64AA3800AC1C6C /* amit_bhatia_libe_cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amit_bhatia_libe_cafe.jpg; sourceTree = "<group>"; };
+		C0497B271B64AA3800AC1C6C /* atrium_cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "atrium_cafe+logo.jpg"; sourceTree = "<group>"; };
+		C0497B281B64AA3800AC1C6C /* atrium_cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = atrium_cafe.jpg; sourceTree = "<group>"; };
+		C0497B291B64AA3800AC1C6C /* bear_necessities+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bear_necessities+logo.jpg"; sourceTree = "<group>"; };
+		C0497B2A1B64AA3800AC1C6C /* bear_necessities.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bear_necessities.jpg; sourceTree = "<group>"; };
+		C0497B2B1B64AA3800AC1C6C /* bears_den+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bears_den+logo.jpg"; sourceTree = "<group>"; };
+		C0497B2C1B64AA3800AC1C6C /* bears_den.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bears_den.jpg; sourceTree = "<group>"; };
+		C0497B2D1B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "becker_house_dining_room+logo.jpg"; sourceTree = "<group>"; };
+		C0497B2E1B64AA3800AC1C6C /* becker_house_dining_room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = becker_house_dining_room.jpg; sourceTree = "<group>"; };
+		C0497B2F1B64AA3800AC1C6C /* big_red_barn+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "big_red_barn+logo.jpg"; sourceTree = "<group>"; };
+		C0497B301B64AA3800AC1C6C /* big_red_barn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = big_red_barn.jpg; sourceTree = "<group>"; };
+		C0497B311B64AA3800AC1C6C /* bus_stop_bagels+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bus_stop_bagels+logo.jpg"; sourceTree = "<group>"; };
+		C0497B321B64AA3800AC1C6C /* cafe_jennie+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cafe_jennie+logo.jpg"; sourceTree = "<group>"; };
+		C0497B331B64AA3800AC1C6C /* cafe_jennie.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cafe_jennie.jpg; sourceTree = "<group>"; };
+		C0497B341B64AA3800AC1C6C /* carols_cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "carols_cafe+logo.jpg"; sourceTree = "<group>"; };
+		C0497B351B64AA3800AC1C6C /* carols_cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = carols_cafe.jpg; sourceTree = "<group>"; };
+		C0497B361B64AA3800AC1C6C /* cascadeli+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cascadeli+logo.jpg"; sourceTree = "<group>"; };
+		C0497B371B64AA3800AC1C6C /* cascadeli.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cascadeli.jpg; sourceTree = "<group>"; };
+		C0497B381B64AA3800AC1C6C /* cook_house_dining_room+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cook_house_dining_room+logo.jpg"; sourceTree = "<group>"; };
+		C0497B391B64AA3800AC1C6C /* cook_house_dining_room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cook_house_dining_room.jpg; sourceTree = "<group>"; };
+		C0497B3A1B64AA3800AC1C6C /* cornell_dairy_bar+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cornell_dairy_bar+logo.jpg"; sourceTree = "<group>"; };
+		C0497B3B1B64AA3800AC1C6C /* cornell_dairy_bar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cornell_dairy_bar.jpg; sourceTree = "<group>"; };
+		C0497B3C1B64AA3800AC1C6C /* goldies+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "goldies+logo.jpg"; sourceTree = "<group>"; };
+		C0497B3D1B64AA3800AC1C6C /* goldies.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = goldies.jpg; sourceTree = "<group>"; };
+		C0497B3E1B64AA3800AC1C6C /* green_dragon+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "green_dragon+logo.jpg"; sourceTree = "<group>"; };
+		C0497B3F1B64AA3800AC1C6C /* green_dragon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = green_dragon.jpg; sourceTree = "<group>"; };
+		C0497B401B64AA3800AC1C6C /* ivy_room+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ivy_room+logo.jpg"; sourceTree = "<group>"; };
+		C0497B411B64AA3800AC1C6C /* ivy_room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ivy_room.jpg; sourceTree = "<group>"; };
+		C0497B421B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "jansens_dining_room_bethe_house+logo.jpg"; sourceTree = "<group>"; };
+		C0497B431B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jansens_dining_room_bethe_house.jpg; sourceTree = "<group>"; };
+		C0497B441B64AA3800AC1C6C /* keeton_house_dining_room+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "keeton_house_dining_room+logo.jpg"; sourceTree = "<group>"; };
+		C0497B451B64AA3800AC1C6C /* keeton_house_dining_room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = keeton_house_dining_room.jpg; sourceTree = "<group>"; };
+		C0497B461B64AA3800AC1C6C /* marthas_cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "marthas_cafe+logo.jpg"; sourceTree = "<group>"; };
+		C0497B471B64AA3800AC1C6C /* marthas_cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marthas_cafe.jpg; sourceTree = "<group>"; };
+		C0497B481B64AA3800AC1C6C /* mattins_cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "mattins_cafe+logo.jpg"; sourceTree = "<group>"; };
+		C0497B491B64AA3800AC1C6C /* mattins_cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mattins_cafe.jpg; sourceTree = "<group>"; };
+		C0497B4A1B64AA3800AC1C6C /* north_star+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "north_star+logo.jpg"; sourceTree = "<group>"; };
+		C0497B4B1B64AA3800AC1C6C /* okenshields+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "okenshields+logo.jpg"; sourceTree = "<group>"; };
+		C0497B4C1B64AA3800AC1C6C /* risley_dining+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "risley_dining+logo.jpg"; sourceTree = "<group>"; };
+		C0497B4D1B64AA3800AC1C6C /* risley_dining.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = risley_dining.jpg; sourceTree = "<group>"; };
+		C0497B4E1B64AA3800AC1C6C /* robert_purcell_marketplace_eatery+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "robert_purcell_marketplace_eatery+logo.jpg"; sourceTree = "<group>"; };
+		C0497B4F1B64AA3800AC1C6C /* robert_purcell_marketplace_eatery.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = robert_purcell_marketplace_eatery.jpg; sourceTree = "<group>"; };
+		C0497B501B64AA3800AC1C6C /* rose_house_dining_room+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rose_house_dining_room+logo.jpg"; sourceTree = "<group>"; };
+		C0497B511B64AA3800AC1C6C /* rose_house_dining_room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rose_house_dining_room.jpg; sourceTree = "<group>"; };
+		C0497B521B64AA3800AC1C6C /* rustys+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rustys+logo.jpg"; sourceTree = "<group>"; };
+		C0497B531B64AA3800AC1C6C /* rustys.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rustys.jpg; sourceTree = "<group>"; };
+		C0497B541B64AA3800AC1C6C /* synapsis_cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "synapsis_cafe+logo.jpg"; sourceTree = "<group>"; };
+		C0497B551B64AA3800AC1C6C /* synapsis_cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = synapsis_cafe.jpg; sourceTree = "<group>"; };
+		C0497B561B64AA3800AC1C6C /* trillium+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "trillium+logo.jpg"; sourceTree = "<group>"; };
+		C0497B571B64AA3800AC1C6C /* trillium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = trillium.jpg; sourceTree = "<group>"; };
+		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C0497B5B1B64AA3800AC1C6C /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
+		C0497B5C1B64AA3800AC1C6C /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		C0497B5D1B64AA3800AC1C6C /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		C0497B5E1B64AA3800AC1C6C /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
+		C0497B5F1B64AA3800AC1C6C /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
+		C0497B601B64AA3800AC1C6C /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		C0497B611B64AA3800AC1C6C /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = "<group>"; };
+		C0497B621B64AA3800AC1C6C /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustPolicy.swift; sourceTree = "<group>"; };
+		C0497B631B64AA3800AC1C6C /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		C0497B641B64AA3800AC1C6C /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		C0497B661B64AA3800AC1C6C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C0497B691B64AA3800AC1C6C /* MXLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendar.h; sourceTree = "<group>"; };
+		C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendar.m; sourceTree = "<group>"; };
+		C0497B6B1B64AA3800AC1C6C /* MXLCalendarAttendee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarAttendee.h; sourceTree = "<group>"; };
+		C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarAttendee.m; sourceTree = "<group>"; };
+		C0497B6D1B64AA3800AC1C6C /* MXLCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarEvent.h; sourceTree = "<group>"; };
+		C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarEvent.m; sourceTree = "<group>"; };
+		C0497B6F1B64AA3800AC1C6C /* MXLCalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarManager.h; sourceTree = "<group>"; };
+		C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarManager.m; sourceTree = "<group>"; };
+		C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
+		C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
+		C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		C0497BC21B64AB4100AC1C6C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C0497BC31B64AB4100AC1C6C /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Eatery-Bridging-Header.h"; sourceTree = "<group>"; };
+		C0497BC41B64AB4100AC1C6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
+		C0497BD31B64AD3900AC1C6C /* GetMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMenu.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C007CABC19E1BEAC00E3BD46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0497BCE1B64ACA000AC1C6C /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C007CAB619E1BEAC00E3BD46 = {
+			isa = PBXGroup;
+			children = (
+				C0497ACA1B64AA1800AC1C6C /* Classes */,
+				C0497BC11B64AB4100AC1C6C /* Other-Sources */,
+				C0497B1B1B64AA3800AC1C6C /* Private */,
+				C0497B1D1B64AA3800AC1C6C /* Resources */,
+				C0497B591B64AA3800AC1C6C /* vendor */,
+				C01E03FA19E5C4AD0050E8C7 /* Frameworks */,
+				C007CAC019E1BEAC00E3BD46 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C007CAC019E1BEAC00E3BD46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C007CABF19E1BEAC00E3BD46 /* Eatery.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C01E03FA19E5C4AD0050E8C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			path = Eatery;
+			sourceTree = "<group>";
+		};
+		C0497ACA1B64AA1800AC1C6C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C0497ACB1B64AA1800AC1C6C /* Data */,
+				C0497AF21B64AA1800AC1C6C /* Global */,
+				C0497ADC1B64AA1800AC1C6C /* Eat Now */,
+				C0497AEE1B64AA1800AC1C6C /* Extensions */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C0497ACB1B64AA1800AC1C6C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AD81B64AA1800AC1C6C /* Models */,
+				C0497ACD1B64AA1800AC1C6C /* DataManager.swift */,
+				C0497ACF1B64AA1800AC1C6C /* Endpoints */,
+				C0497AD31B64AA1800AC1C6C /* Hardcoded */,
+				C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */,
+				C0497AD71B64AA1800AC1C6C /* LocationManager.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		C0497ACF1B64AA1800AC1C6C /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */,
+				C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */,
+				C0497BD31B64AD3900AC1C6C /* GetMenu.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		C0497AD31B64AA1800AC1C6C /* Hardcoded */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AD41B64AA1800AC1C6C /* EateryData.swift */,
+				C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */,
+				C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */,
+			);
+			path = Hardcoded;
+			sourceTree = "<group>";
+		};
+		C0497AD81B64AA1800AC1C6C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AD91B64AA1800AC1C6C /* Eatery.swift */,
+				C0497ADA1B64AA1800AC1C6C /* Menu.swift */,
+				C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C0497ADC1B64AA1800AC1C6C /* Eat Now */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AE91B64AA1800AC1C6C /* Root View Controller */,
+				C0497ADD1B64AA1800AC1C6C /* Detail View Controller */,
+			);
+			path = "Eat Now";
+			sourceTree = "<group>";
+		};
+		C0497ADD1B64AA1800AC1C6C /* Detail View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AE01B64AA1800AC1C6C /* EatNowDetailViewController.swift */,
+				C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */,
+				C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */,
+				C0497AE11B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift */,
+				C0497AE21B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib */,
+				C0497AE31B64AA1800AC1C6C /* SegmentedHeader.swift */,
+				C0497AE41B64AA1800AC1C6C /* TableView Cells */,
+			);
+			path = "Detail View Controller";
+			sourceTree = "<group>";
+		};
+		C0497AE41B64AA1800AC1C6C /* TableView Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AE51B64AA1800AC1C6C /* HoursTableViewCell.swift */,
+				C0497AE61B64AA1800AC1C6C /* HoursTableViewCell.xib */,
+				C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */,
+				C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */,
+			);
+			path = "TableView Cells";
+			sourceTree = "<group>";
+		};
+		C0497AE91B64AA1800AC1C6C /* Root View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AED1B64AA1800AC1C6C /* EatNowTableViewController.swift */,
+				C0497AEB1B64AA1800AC1C6C /* EatNowTableViewCell.swift */,
+				C0497AEC1B64AA1800AC1C6C /* EatNowTableViewCell.xib */,
+			);
+			path = "Root View Controller";
+			sourceTree = "<group>";
+		};
+		C0497AEE1B64AA1800AC1C6C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AF01B64AA1800AC1C6C /* String+Extension.swift */,
+				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C0497AF21B64AA1800AC1C6C /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				C0497AF41B64AA1800AC1C6C /* Macros.swift */,
+				C0497ACC1B64AA1800AC1C6C /* Constants.swift */,
+				C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */,
+				C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */,
+				C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		C0497B1B1B64AA3800AC1C6C /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B1C1B64AA3800AC1C6C /* Keys.plist */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		C0497B1D1B64AA3800AC1C6C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C003672F1B64DC32002839C3 /* testMenu.json */,
+				C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */,
+				C0497B221B64AA3800AC1C6C /* Eatery Images */,
+				C0497B581B64AA3800AC1C6C /* Images.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C0497B221B64AA3800AC1C6C /* Eatery Images */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B231B64AA3800AC1C6C /* 104west+logo.jpg */,
+				C0497B241B64AA3800AC1C6C /* 104west.jpg */,
+				C0497B251B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg */,
+				C0497B261B64AA3800AC1C6C /* amit_bhatia_libe_cafe.jpg */,
+				C0497B271B64AA3800AC1C6C /* atrium_cafe+logo.jpg */,
+				C0497B281B64AA3800AC1C6C /* atrium_cafe.jpg */,
+				C0497B291B64AA3800AC1C6C /* bear_necessities+logo.jpg */,
+				C0497B2A1B64AA3800AC1C6C /* bear_necessities.jpg */,
+				C0497B2B1B64AA3800AC1C6C /* bears_den+logo.jpg */,
+				C0497B2C1B64AA3800AC1C6C /* bears_den.jpg */,
+				C0497B2D1B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg */,
+				C0497B2E1B64AA3800AC1C6C /* becker_house_dining_room.jpg */,
+				C0497B2F1B64AA3800AC1C6C /* big_red_barn+logo.jpg */,
+				C0497B301B64AA3800AC1C6C /* big_red_barn.jpg */,
+				C0497B311B64AA3800AC1C6C /* bus_stop_bagels+logo.jpg */,
+				C0497B321B64AA3800AC1C6C /* cafe_jennie+logo.jpg */,
+				C0497B331B64AA3800AC1C6C /* cafe_jennie.jpg */,
+				C0497B341B64AA3800AC1C6C /* carols_cafe+logo.jpg */,
+				C0497B351B64AA3800AC1C6C /* carols_cafe.jpg */,
+				C0497B361B64AA3800AC1C6C /* cascadeli+logo.jpg */,
+				C0497B371B64AA3800AC1C6C /* cascadeli.jpg */,
+				C0497B381B64AA3800AC1C6C /* cook_house_dining_room+logo.jpg */,
+				C0497B391B64AA3800AC1C6C /* cook_house_dining_room.jpg */,
+				C0497B3A1B64AA3800AC1C6C /* cornell_dairy_bar+logo.jpg */,
+				C0497B3B1B64AA3800AC1C6C /* cornell_dairy_bar.jpg */,
+				C0497B3C1B64AA3800AC1C6C /* goldies+logo.jpg */,
+				C0497B3D1B64AA3800AC1C6C /* goldies.jpg */,
+				C0497B3E1B64AA3800AC1C6C /* green_dragon+logo.jpg */,
+				C0497B3F1B64AA3800AC1C6C /* green_dragon.jpg */,
+				C0497B401B64AA3800AC1C6C /* ivy_room+logo.jpg */,
+				C0497B411B64AA3800AC1C6C /* ivy_room.jpg */,
+				C0497B421B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg */,
+				C0497B431B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg */,
+				C0497B441B64AA3800AC1C6C /* keeton_house_dining_room+logo.jpg */,
+				C0497B451B64AA3800AC1C6C /* keeton_house_dining_room.jpg */,
+				C0497B461B64AA3800AC1C6C /* marthas_cafe+logo.jpg */,
+				C0497B471B64AA3800AC1C6C /* marthas_cafe.jpg */,
+				C0497B481B64AA3800AC1C6C /* mattins_cafe+logo.jpg */,
+				C0497B491B64AA3800AC1C6C /* mattins_cafe.jpg */,
+				C0497B4A1B64AA3800AC1C6C /* north_star+logo.jpg */,
+				C0497B4B1B64AA3800AC1C6C /* okenshields+logo.jpg */,
+				C0497B4C1B64AA3800AC1C6C /* risley_dining+logo.jpg */,
+				C0497B4D1B64AA3800AC1C6C /* risley_dining.jpg */,
+				C0497B4E1B64AA3800AC1C6C /* robert_purcell_marketplace_eatery+logo.jpg */,
+				C0497B4F1B64AA3800AC1C6C /* robert_purcell_marketplace_eatery.jpg */,
+				C0497B501B64AA3800AC1C6C /* rose_house_dining_room+logo.jpg */,
+				C0497B511B64AA3800AC1C6C /* rose_house_dining_room.jpg */,
+				C0497B521B64AA3800AC1C6C /* rustys+logo.jpg */,
+				C0497B531B64AA3800AC1C6C /* rustys.jpg */,
+				C0497B541B64AA3800AC1C6C /* synapsis_cafe+logo.jpg */,
+				C0497B551B64AA3800AC1C6C /* synapsis_cafe.jpg */,
+				C0497B561B64AA3800AC1C6C /* trillium+logo.jpg */,
+				C0497B571B64AA3800AC1C6C /* trillium.jpg */,
+			);
+			path = "Eatery Images";
+			sourceTree = "<group>";
+		};
+		C0497B591B64AA3800AC1C6C /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B5A1B64AA3800AC1C6C /* Alamofire */,
+				C0497B651B64AA3800AC1C6C /* MBProgressHud */,
+				C0497B681B64AA3800AC1C6C /* MXLCalendarManager */,
+				C0497B731B64AA3800AC1C6C /* SwiftyJSON */,
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		C0497B5A1B64AA3800AC1C6C /* Alamofire */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B5B1B64AA3800AC1C6C /* Alamofire.swift */,
+				C0497B5C1B64AA3800AC1C6C /* Download.swift */,
+				C0497B5D1B64AA3800AC1C6C /* Manager.swift */,
+				C0497B5E1B64AA3800AC1C6C /* MultipartFormData.swift */,
+				C0497B5F1B64AA3800AC1C6C /* ParameterEncoding.swift */,
+				C0497B601B64AA3800AC1C6C /* Request.swift */,
+				C0497B611B64AA3800AC1C6C /* ResponseSerialization.swift */,
+				C0497B621B64AA3800AC1C6C /* ServerTrustPolicy.swift */,
+				C0497B631B64AA3800AC1C6C /* Upload.swift */,
+				C0497B641B64AA3800AC1C6C /* Validation.swift */,
+			);
+			path = Alamofire;
+			sourceTree = "<group>";
+		};
+		C0497B651B64AA3800AC1C6C /* MBProgressHud */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B661B64AA3800AC1C6C /* MBProgressHUD.h */,
+				C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */,
+			);
+			path = MBProgressHud;
+			sourceTree = "<group>";
+		};
+		C0497B681B64AA3800AC1C6C /* MXLCalendarManager */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B691B64AA3800AC1C6C /* MXLCalendar.h */,
+				C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */,
+				C0497B6B1B64AA3800AC1C6C /* MXLCalendarAttendee.h */,
+				C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */,
+				C0497B6D1B64AA3800AC1C6C /* MXLCalendarEvent.h */,
+				C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */,
+				C0497B6F1B64AA3800AC1C6C /* MXLCalendarManager.h */,
+				C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */,
+				C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */,
+				C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */,
+			);
+			path = MXLCalendarManager;
+			sourceTree = "<group>";
+		};
+		C0497B731B64AA3800AC1C6C /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */,
+			);
+			path = SwiftyJSON;
+			sourceTree = "<group>";
+		};
+		C0497BC11B64AB4100AC1C6C /* Other-Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C0497BC21B64AB4100AC1C6C /* AppDelegate.swift */,
+				C0497BC31B64AB4100AC1C6C /* Eatery-Bridging-Header.h */,
+				C0497BC41B64AB4100AC1C6C /* Info.plist */,
+			);
+			name = "Other-Sources";
+			path = "Classes/Other-Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C007CABE19E1BEAC00E3BD46 /* Eatery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C007CADE19E1BEAC00E3BD46 /* Build configuration list for PBXNativeTarget "Eatery" */;
+			buildPhases = (
+				C007CABB19E1BEAC00E3BD46 /* Sources */,
+				C007CABC19E1BEAC00E3BD46 /* Frameworks */,
+				C007CABD19E1BEAC00E3BD46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Eatery;
+			productName = Eatery;
+			productReference = C007CABF19E1BEAC00E3BD46 /* Eatery.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C007CAB719E1BEAC00E3BD46 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = CUAppDev;
+				TargetAttributes = {
+					C007CABE19E1BEAC00E3BD46 = {
+						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = 4M3BV3H234;
+					};
+				};
+			};
+			buildConfigurationList = C007CABA19E1BEAC00E3BD46 /* Build configuration list for PBXProject "Eatery" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				he,
+			);
+			mainGroup = C007CAB619E1BEAC00E3BD46;
+			productRefGroup = C007CAC019E1BEAC00E3BD46 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C007CABE19E1BEAC00E3BD46 /* Eatery */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C007CABD19E1BEAC00E3BD46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */,
+				C0497B971B64AA3800AC1C6C /* ivy_room+logo.jpg in Resources */,
+				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
+				C0497B771B64AA3800AC1C6C /* Keys.plist in Resources */,
+				C0497B881B64AA3800AC1C6C /* bus_stop_bagels+logo.jpg in Resources */,
+				C0497B9A1B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg in Resources */,
+				C0497B991B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg in Resources */,
+				C0497BAC1B64AA3800AC1C6C /* synapsis_cafe.jpg in Resources */,
+				C0497BA01B64AA3800AC1C6C /* mattins_cafe.jpg in Resources */,
+				C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */,
+				C0497B7C1B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg in Resources */,
+				C0497B961B64AA3800AC1C6C /* green_dragon.jpg in Resources */,
+				C0497B0F1B64AA1800AC1C6C /* EatNowTableViewCell.xib in Resources */,
+				C0497B911B64AA3800AC1C6C /* cornell_dairy_bar+logo.jpg in Resources */,
+				C0497B9B1B64AA3800AC1C6C /* keeton_house_dining_room+logo.jpg in Resources */,
+				C0497B7A1B64AA3800AC1C6C /* 104west+logo.jpg in Resources */,
+				C0497B8C1B64AA3800AC1C6C /* carols_cafe.jpg in Resources */,
+				C0497B071B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib in Resources */,
+				C0497BA31B64AA3800AC1C6C /* risley_dining+logo.jpg in Resources */,
+				C0497B8B1B64AA3800AC1C6C /* carols_cafe+logo.jpg in Resources */,
+				C0497B0A1B64AA1800AC1C6C /* HoursTableViewCell.xib in Resources */,
+				C0497BA91B64AA3800AC1C6C /* rustys+logo.jpg in Resources */,
+				C0497B8E1B64AA3800AC1C6C /* cascadeli.jpg in Resources */,
+				C0497B8F1B64AA3800AC1C6C /* cook_house_dining_room+logo.jpg in Resources */,
+				C0497B8A1B64AA3800AC1C6C /* cafe_jennie.jpg in Resources */,
+				C0497B041B64AA1800AC1C6C /* EatNowDetailHeaderView.xib in Resources */,
+				C0497BA51B64AA3800AC1C6C /* robert_purcell_marketplace_eatery+logo.jpg in Resources */,
+				C0497B8D1B64AA3800AC1C6C /* cascadeli+logo.jpg in Resources */,
+				C0497B801B64AA3800AC1C6C /* bear_necessities+logo.jpg in Resources */,
+				C0497B7D1B64AA3800AC1C6C /* amit_bhatia_libe_cafe.jpg in Resources */,
+				C0497B891B64AA3800AC1C6C /* cafe_jennie+logo.jpg in Resources */,
+				C0497BA61B64AA3800AC1C6C /* robert_purcell_marketplace_eatery.jpg in Resources */,
+				C0497BA21B64AA3800AC1C6C /* okenshields+logo.jpg in Resources */,
+				C0497B871B64AA3800AC1C6C /* big_red_barn.jpg in Resources */,
+				C0497B7B1B64AA3800AC1C6C /* 104west.jpg in Resources */,
+				C0497BAD1B64AA3800AC1C6C /* trillium+logo.jpg in Resources */,
+				C0497B901B64AA3800AC1C6C /* cook_house_dining_room.jpg in Resources */,
+				C0497BA41B64AA3800AC1C6C /* risley_dining.jpg in Resources */,
+				C0497B821B64AA3800AC1C6C /* bears_den+logo.jpg in Resources */,
+				C0497B831B64AA3800AC1C6C /* bears_den.jpg in Resources */,
+				C0497B941B64AA3800AC1C6C /* goldies.jpg in Resources */,
+				C0497B7E1B64AA3800AC1C6C /* atrium_cafe+logo.jpg in Resources */,
+				C0497B7F1B64AA3800AC1C6C /* atrium_cafe.jpg in Resources */,
+				C0497B9E1B64AA3800AC1C6C /* marthas_cafe.jpg in Resources */,
+				C0497B981B64AA3800AC1C6C /* ivy_room.jpg in Resources */,
+				C0497B951B64AA3800AC1C6C /* green_dragon+logo.jpg in Resources */,
+				C0497B9C1B64AA3800AC1C6C /* keeton_house_dining_room.jpg in Resources */,
+				C0497B931B64AA3800AC1C6C /* goldies+logo.jpg in Resources */,
+				C0497B921B64AA3800AC1C6C /* cornell_dairy_bar.jpg in Resources */,
+				C0497B861B64AA3800AC1C6C /* big_red_barn+logo.jpg in Resources */,
+				C0497BAA1B64AA3800AC1C6C /* rustys.jpg in Resources */,
+				C0497BA11B64AA3800AC1C6C /* north_star+logo.jpg in Resources */,
+				C0497BA71B64AA3800AC1C6C /* rose_house_dining_room+logo.jpg in Resources */,
+				C0497BA81B64AA3800AC1C6C /* rose_house_dining_room.jpg in Resources */,
+				C00367301B64DC32002839C3 /* testMenu.json in Resources */,
+				C0497B811B64AA3800AC1C6C /* bear_necessities.jpg in Resources */,
+				C0497B851B64AA3800AC1C6C /* becker_house_dining_room.jpg in Resources */,
+				C0497B9D1B64AA3800AC1C6C /* marthas_cafe+logo.jpg in Resources */,
+				C0497BAE1B64AA3800AC1C6C /* trillium.jpg in Resources */,
+				C0497BAB1B64AA3800AC1C6C /* synapsis_cafe+logo.jpg in Resources */,
+				C0497B9F1B64AA3800AC1C6C /* mattins_cafe+logo.jpg in Resources */,
+				C0497B841B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C007CABB19E1BEAC00E3BD46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */,
+				C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */,
+				C0497BB31B64AA3800AC1C6C /* MultipartFormData.swift in Sources */,
+				C0497BC51B64AB4100AC1C6C /* AppDelegate.swift in Sources */,
+				C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */,
+				C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */,
+				C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */,
+				C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */,
+				C0497BB51B64AA3800AC1C6C /* Request.swift in Sources */,
+				C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */,
+				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
+				C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */,
+				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
+				C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */,
+				C0497BB11B64AA3800AC1C6C /* Download.swift in Sources */,
+				C0497AF61B64AA1800AC1C6C /* Constants.swift in Sources */,
+				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
+				C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */,
+				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
+				C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */,
+				C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */,
+				C0497B011B64AA1800AC1C6C /* Menu.swift in Sources */,
+				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
+				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
+				C0497B031B64AA1800AC1C6C /* EatNowDetailHeaderView.swift in Sources */,
+				C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */,
+				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,
+				C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */,
+				C0497B091B64AA1800AC1C6C /* HoursTableViewCell.swift in Sources */,
+				C0497BB01B64AA3800AC1C6C /* Alamofire.swift in Sources */,
+				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
+				C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */,
+				C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */,
+				C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */,
+				C0497BB71B64AA3800AC1C6C /* ServerTrustPolicy.swift in Sources */,
+				C0497BB81B64AA3800AC1C6C /* Upload.swift in Sources */,
+				C0497BB21B64AA3800AC1C6C /* Manager.swift in Sources */,
+				C0497BB41B64AA3800AC1C6C /* ParameterEncoding.swift in Sources */,
+				C0497B081B64AA1800AC1C6C /* SegmentedHeader.swift in Sources */,
+				C0497BB91B64AA3800AC1C6C /* Validation.swift in Sources */,
+				C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */,
+				C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */,
+				C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */,
+				C0497BB61B64AA3800AC1C6C /* ResponseSerialization.swift in Sources */,
+				C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C0497B1F1B64AA3800AC1C6C /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C007CADC19E1BEAC00E3BD46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C007CADD19E1BEAC00E3BD46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C007CADF19E1BEAC00E3BD46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_SUFFIX = "-debug";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "$(SRCROOT)/Classes/Other-Sources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C007CAE019E1BEAC00E3BD46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_SUFFIX = "";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "$(SRCROOT)/Classes/Other-Sources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C007CABA19E1BEAC00E3BD46 /* Build configuration list for PBXProject "Eatery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C007CADC19E1BEAC00E3BD46 /* Debug */,
+				C007CADD19E1BEAC00E3BD46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C007CADE19E1BEAC00E3BD46 /* Build configuration list for PBXNativeTarget "Eatery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C007CADF19E1BEAC00E3BD46 /* Debug */,
+				C007CAE019E1BEAC00E3BD46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C007CAB719E1BEAC00E3BD46 /* Project object */;
+}
