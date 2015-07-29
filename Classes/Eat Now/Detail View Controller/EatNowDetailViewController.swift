@@ -124,7 +124,8 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             NSFontAttributeName : UIFont(name: "Avenir Next", size: 16)!
         ]
         sectionHeaderView.segmentedControl.setTitleTextAttributes(attributes, forState: .Normal)
-
+        
+        Analytics.screenEatNowDetailViewController(eatery.id)
     }
     
     // Mark: -

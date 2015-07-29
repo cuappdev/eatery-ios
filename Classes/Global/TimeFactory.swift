@@ -74,8 +74,8 @@ func timeOfDate(date: NSDate) -> Int {
     // TODO: Specify timezone?
     let dateFormatter = NSDateFormatter()
     let calendar = NSCalendar.currentCalendar()
-    let comp = calendar.components(( .CalendarUnitHour | .CalendarUnitMinute), fromDate: date)
-    return comp.hour * 3600 + comp.minute * 60
+    let comp = calendar.components(( .CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond), fromDate: date)
+    return comp.hour * 3600 + comp.minute * 60 + comp.second
 }
 
 /// Returns: true if event is currenlty happening
