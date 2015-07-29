@@ -39,7 +39,9 @@ Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at 
 #Development
 
 ## Dependency management
-Currently we use four third party libraries (found in the `vendor` directory).  For now, we will just copy and paste them into our project to update.  This obviously isn't very scalable but for the short-term, it will drastically decrease the number of build errors in development.
+Currently we use four third party libraries (found in the `vendor` directory).  For now, we will just copy and paste them into our project to update.  This obviously isn't very scalable but for the short-term, it will drastically decrease the number of build errors in development.  
+
+[UPDATE] We now use Cocoapods.  Run `pod install` before opening xcode and make sure you use the .xcworkspace from now on.  
 
 ## Architecture
 [coming soon]
