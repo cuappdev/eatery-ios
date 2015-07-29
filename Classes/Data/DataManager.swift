@@ -82,7 +82,6 @@ class DataManager: NSObject {
         
     var eateries: [String: Eatery] = [:]
     
-    
     static let sharedInstance = DataManager()
     
 //    override init() {

@@ -5,3 +5,5 @@
 #import "../vendor/MXLCalendarManager/MXLCalendarManager.h"
 
 #import "../vendor/MBProgressHud/MBProgressHud.h"
+
+#import <Analytics.h>

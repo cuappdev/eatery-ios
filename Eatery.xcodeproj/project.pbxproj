@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
-		C0497AF61B64AA1800AC1C6C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Constants.swift */; };
+		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
 		C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */; };
 		C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */; };
@@ -110,11 +110,13 @@
 		C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */; };
 		C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
 		C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */; };
-		C0497BC51B64AB4100AC1C6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BC21B64AB4100AC1C6C /* AppDelegate.swift */; };
 		C0497BCE1B64ACA000AC1C6C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */; };
 		C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */; };
 		C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD31B64AD3900AC1C6C /* GetMenu.swift */; };
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
+		C0F182F91B674B1300063D77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F182F71B674B1300063D77 /* Info.plist */; };
+		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
+		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C776123BD662C00D1F0931E9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -122,7 +124,7 @@
 		A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0497ACC1B64AA1800AC1C6C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C0497ACC1B64AA1800AC1C6C /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C0497ACD1B64AA1800AC1C6C /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCalendars.swift; sourceTree = "<group>"; };
 		C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadICS.swift; sourceTree = "<group>"; };
@@ -231,12 +233,13 @@
 		C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
 		C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
 		C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		C0497BC21B64AB4100AC1C6C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C0497BC31B64AB4100AC1C6C /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Eatery-Bridging-Header.h"; sourceTree = "<group>"; };
-		C0497BC41B64AB4100AC1C6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		C0497BD31B64AD3900AC1C6C /* GetMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMenu.swift; sourceTree = "<group>"; };
+		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		C0F182F71B674B1300063D77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		C776123BD662C00D1F0931E9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,11 +269,11 @@
 		C007CAB619E1BEAC00E3BD46 = {
 			isa = PBXGroup;
 			children = (
+				C0497B591B64AA3800AC1C6C /* vendor */,
 				C0497ACA1B64AA1800AC1C6C /* Classes */,
 				C0497BC11B64AB4100AC1C6C /* Other-Sources */,
 				C0497B1B1B64AA3800AC1C6C /* Private */,
 				C0497B1D1B64AA3800AC1C6C /* Resources */,
-				C0497B591B64AA3800AC1C6C /* vendor */,
 				C01E03FA19E5C4AD0050E8C7 /* Frameworks */,
 				C007CAC019E1BEAC00E3BD46 /* Products */,
 				9B4931655E89F604CB150CD0 /* Pods */,
@@ -315,6 +318,7 @@
 				C0497AD31B64AA1800AC1C6C /* Hardcoded */,
 				C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */,
 				C0497AD71B64AA1800AC1C6C /* LocationManager.swift */,
+				C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -406,7 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				C0497AF41B64AA1800AC1C6C /* Macros.swift */,
-				C0497ACC1B64AA1800AC1C6C /* Constants.swift */,
+				C0497ACC1B64AA1800AC1C6C /* Keys.swift */,
 				C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */,
 				C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */,
 				C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */,
@@ -558,9 +562,9 @@
 		C0497BC11B64AB4100AC1C6C /* Other-Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C0497BC21B64AB4100AC1C6C /* AppDelegate.swift */,
-				C0497BC31B64AB4100AC1C6C /* Eatery-Bridging-Header.h */,
-				C0497BC41B64AB4100AC1C6C /* Info.plist */,
+				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
+				C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */,
+				C0F182F71B674B1300063D77 /* Info.plist */,
 			);
 			name = "Other-Sources";
 			path = "Classes/Other-Sources";
@@ -648,6 +652,7 @@
 				C0497B071B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib in Resources */,
 				C0497BA31B64AA3800AC1C6C /* risley_dining+logo.jpg in Resources */,
 				C0497B8B1B64AA3800AC1C6C /* carols_cafe+logo.jpg in Resources */,
+				C0F182F91B674B1300063D77 /* Info.plist in Resources */,
 				C0497B0A1B64AA1800AC1C6C /* HoursTableViewCell.xib in Resources */,
 				C0497BA91B64AA3800AC1C6C /* rustys+logo.jpg in Resources */,
 				C0497B8E1B64AA3800AC1C6C /* cascadeli.jpg in Resources */,
@@ -736,7 +741,7 @@
 				C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */,
 				C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */,
 				C0497BB31B64AA3800AC1C6C /* MultipartFormData.swift in Sources */,
-				C0497BC51B64AB4100AC1C6C /* AppDelegate.swift in Sources */,
+				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */,
 				C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */,
 				C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */,
@@ -748,7 +753,7 @@
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */,
 				C0497BB11B64AA3800AC1C6C /* Download.swift in Sources */,
-				C0497AF61B64AA1800AC1C6C /* Constants.swift in Sources */,
+				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
 				C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
@@ -757,6 +762,7 @@
 				C0497B011B64AA1800AC1C6C /* Menu.swift in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
 				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
+				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
 				C0497B031B64AA1800AC1C6C /* EatNowDetailHeaderView.swift in Sources */,
 				C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */,
 				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,
@@ -882,7 +888,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Classes/Other-Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -904,7 +910,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Classes/Other-Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
