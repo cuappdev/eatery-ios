@@ -17,3 +17,5 @@ DerivedData
 Private/
 *.DS_Store
 *.orig
+Podfile.lock
+Pods/

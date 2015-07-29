@@ -14,6 +14,8 @@ let API = DataManager.sharedInstance
 let DATA = DataManager.sharedInstance
 //let eateries = DataManager.sharedInstance.eateries
 
+let Analytics = AnalyticsManager.sharedInstance
+
 let NSCenter = NSNotificationCenter.defaultCenter()
 
 func async(block: dispatch_block_t) {

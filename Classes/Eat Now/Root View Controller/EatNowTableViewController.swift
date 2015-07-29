@@ -8,6 +8,9 @@
 
 import UIKit
 
+private var calendarRequestStartDate: NSDate? = nil
+private var calendarRequestEndDate: NSDate? = nil
+
 class EatNowTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
     
     private var eateries: [Eatery] = []
@@ -77,17 +80,23 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         }
         
         // Asynchronously load calendars for eateries
+        calendarRequestStartDate = NSDate()
         MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         dispatch_async(queue, { () -> Void in
             API.fetchCalendars(eateries)
         })
+        
+        Analytics.screenEatNowTableViewController()
+
     }
     
     func reloadTableView(sender: UIRefreshControl) {
         println("Pull to refresh.")
         tableView.reloadData()
         sender.endRefreshing()
+        
+        Analytics.trackPullToRefresh()
     }
     
     // MARK: -
@@ -173,7 +182,11 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                 DATA.eateries[e.id] = e
             }
             MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
+            calendarRequestEndDate = NSDate()
+            let requestTime = timeOfDate(calendarRequestEndDate!) - timeOfDate(calendarRequestStartDate!)
+            Analytics.trackCalendarsLoadTime("\(requestTime)")
         }
+        
     }
     
     // MARK: -

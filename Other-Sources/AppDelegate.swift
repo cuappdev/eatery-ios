@@ -13,65 +13,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
         
-    
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        println("Did finish launching")
         
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         // Initialize Eateries
         var eateryIDs: [String] = []
         for data in kEateryData.keys {
             eateryIDs.append(data)
         }
+        
+        // Uncomment to test with only a few eateries
 //        eateryIDs = [eateryIDs[0], eateryIDs[1], eateryIDs[2]]
         for id in eateryIDs {
             DATA.eateries[id] = Eatery(id: id)
         }
         
-        // View Controllers
-        
-//        let eatNow = EatNowViewController(nibName: "EatNowTableView", bundle: nil)
-        let eatNow = EatNowViewController()
-        eatNow.title = "Eat Now"
+        // Set up view controllers
+        let eatNow = EatNowTableViewController()
+        eatNow.title = "Eateries"
         let eatNavController = UINavigationController(rootViewController: eatNow)
         eatNavController.navigationBar.barStyle = .Black
-
-//        let beacon = BeaconViewController()
-//        beacon.title = "Beacon"
-//        let beaconNavController = UINavigationController(rootViewController: beacon)
-//        
-//        let friends = FriendsViewController()
-//        friends.title = "Friends"
-//        let friendsNavController = UINavigationController(rootViewController: friends)
-//        
-//        let testing = NetworkingViewController()
-//        testing.title = "Test"
-//        let testingNavController = UINavigationController(rootViewController: testing)
-//        
-//        let viewControllers = [
-//            eatNavController,
-//            beaconNavController,
-//            friendsNavController,
-//            testingNavController
-//        ]
-//        
-//        
-//        let tabBarController = TabBarController()
-//        tabBarController.tabBar.translucent = false
-//        tabBarController.setViewControllers(viewControllers, animated: true)
         
         window?.rootViewController = eatNavController
         window?.makeKeyAndVisible()
         
+        // Segment setup
+        SEGAnalytics.setupWithConfiguration(SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))
+        let uuid = NSUUID().UUIDString
+        SEGAnalytics.sharedAnalytics().identify(uuid)
         
-        // Parse Stuff
-//        Parse.setApplicationId(kParseApplicationID, clientKey: kParseClientKey)
-//        
-//        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
-//        
-//        PFFacebookUtils.initializeFacebook()
+        Analytics.trackAppLaunch()
         
         return true
     }
@@ -88,42 +62,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        Analytics.trackEnterForeground()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        FBAppCall.handleDidBecomeActiveWithSession(PFFacebookUtils.session())
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        println("\nOpenURL")
-        println("APPLICATION: \(application)")
-        println("url: \(url)")
-        println("scheme: \(url.scheme)")
-        println("query: \(url.query)")
-        println("paramstring: \(url.parameterString)")
-        println("path components: \(url.pathComponents)")
-        println("Source: \(sourceApplication)")
-        println("Annotation: \(annotation)")
-        
-        if url.scheme == "fb1631925100367901" {
-            return FBAppCall.handleOpenURL(url, sourceApplication:sourceApplication, withSession:PFFacebookUtils.session())
-        }
-        
-        if url.scheme == "cuappdeveatery" {
-            
-            return GroupMeManager.sharedInstance.handleOpenURL(url)
-        }
-        
-        println()
-        
-        return true
-    }
-
-
 }
 

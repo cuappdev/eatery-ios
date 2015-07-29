@@ -8,20 +8,22 @@
 
 import Foundation
 
-// Mark: Load Plist
+// MARK: Load Plist
 let KEYSPATH = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")
 let KEYS = NSDictionary(contentsOfFile: KEYSPATH!)!
 
-// Mark: Parse
+// MARK: Parse
 let PARSEDICT: Dictionary<String, String> = KEYS["Parse"] as! Dictionary<String, String>
 let kParseApplicationID: String = PARSEDICT["applicationID"]!
 let kParseClientKey: String = PARSEDICT["clientKey"]!
 
-// Mark: GroupMe
+// MARK: GroupMe
 let kGroupMeKey: String = KEYS["GroupMe"] as! String
+
+// MARK: Segment
+let kSegmentWriteKey: String = KEYS["Segment"] as! String
 
 // Mark: Eatery API
 //private let kApiBaseURL: String = "foo.com/"
 
-let DEBUG = true
-let VERBOSE = true
+
