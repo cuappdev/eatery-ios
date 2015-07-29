@@ -265,6 +265,38 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
             let hud = MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
             hud.labelText = "Loading menu"
             eatery.loadTodaysMenu { () -> Void in
+                // Filter menu by events so we show the number of menus we show is equal to the number of events we have
+                // Necessary because the API is unreliable and may sometimes return extra menus 
+                // This only works if the event summary has the meal spelled out
+                var mealSet: Set<MealType> = Set()
+                for event in eatery.todaysEvents {
+                    mealSet.insert(event.mealTypeOfEvent())
+                }
+                // Only filter if there are no "unkown" events
+                if !mealSet.contains(MealType.Unknown) {
+                    let filteredMenu: Menu = eatery.menu
+                    for menuMeal in eatery.menu.availableMealTypes() {
+                        if !mealSet.contains(menuMeal) {
+                            switch menuMeal {
+                            case .Breakfast:
+                                filteredMenu.breakfast = nil
+                            case .Brunch:
+                                filteredMenu.brunch = nil
+                            case .Lunch:
+                                filteredMenu.lunch = nil
+                            case .Dinner:
+                                filteredMenu.dinner = nil
+                            default:
+                                println("Meal filter by todays events hit default case in switch.")
+                            }
+                        }
+                    }
+                    eatery.menu = filteredMenu
+                }
+                // Use test menu
+//                if let menu = initializeTestMenu(eatery) {
+//                    eatery.menu = menu
+//                }
                 MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
                 println("menu loaded")
                 
@@ -273,19 +305,6 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                 DATA.eateries[eatery.id] = eatery // cache locally
                 self.navigationController?.pushViewController(detailViewController, animated: true)
             }
-            
-            // Use test menu
-//            if let menu = initializeTestMenu(eatery) {
-//                eatery.menu = menu
-//
-//                let detailViewController = EatNowDetailViewController()
-//                detailViewController.eatery = eatery
-//                DATA.eateries[eatery.id] = eatery // cache locally
-//                navigationController?.pushViewController(detailViewController, animated: true)
-//            } else {
-//                println("ERROR loading test menu.")
-//            }
-//            MBProgressHUD.hideHUDForView(navigationController?.view, animated: true)
         }
     }
 

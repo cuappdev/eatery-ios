@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
+		C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
 		C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */; };
@@ -124,6 +125,7 @@
 		A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MXLCalendarEvent+Utility.swift"; sourceTree = "<group>"; };
 		C0497ACC1B64AA1800AC1C6C /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C0497ACD1B64AA1800AC1C6C /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCalendars.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 			children = (
 				C0497AF01B64AA1800AC1C6C /* String+Extension.swift */,
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
+				C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 				C0497BB01B64AA3800AC1C6C /* Alamofire.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */,
+				C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */,
 				C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */,
 				C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */,
 				C0497BB71B64AA3800AC1C6C /* ServerTrustPolicy.swift in Sources */,
