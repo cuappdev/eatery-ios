@@ -21,6 +21,12 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let dateConverter = NSDateFormatter()
+        dateConverter.dateFormat = "MM/dd/yy h:mm a"
+        let n = NSDate()
+        println("Right now is: \(dateConverter.stringFromDate(n))")
+        println("Time travelling to: \(dateConverter.stringFromDate(NOW))")
+        
         // -- TableView setup
         let cellNib = UINib(nibName: "EatNowTableViewCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "eatNowCell")
@@ -93,7 +99,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     func reloadTableView(sender: UIRefreshControl) {
-        println("Pull to refresh.")
+        println("Pull to refresh")
         tableView.reloadData()
         sender.endRefreshing()
         

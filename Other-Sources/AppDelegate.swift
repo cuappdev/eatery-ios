@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Uncomment to test with only a few eateries
 //        eateryIDs = [eateryIDs[0], eateryIDs[1], eateryIDs[2]]
+//        eateryIDs = ["becker_house_dining_room"]
+        
         for id in eateryIDs {
             DATA.eateries[id] = Eatery(id: id)
         }
