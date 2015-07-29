@@ -81,7 +81,8 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         // Asynchronously load calendars for eateries
         calendarRequestStartDate = NSDate()
-        MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
+        let hud = MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
+        hud.labelText = "Loading hours"
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         dispatch_async(queue, { () -> Void in
             API.fetchCalendars(eateries)
@@ -252,7 +253,8 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
             navigationController?.pushViewController(detailViewController, animated: true)
         } else {
             println("fetching menu")
-            MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
+            let hud = MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
+            hud.labelText = "Loading menu"
             eatery.loadTodaysMenu { () -> Void in
                 MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
                 println("menu loaded")
