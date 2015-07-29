@@ -115,7 +115,6 @@
 		C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */; };
 		C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD31B64AD3900AC1C6C /* GetMenu.swift */; };
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
-		C0F182F91B674B1300063D77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F182F71B674B1300063D77 /* Info.plist */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C776123BD662C00D1F0931E9 /* libPods.a */; };
@@ -655,7 +654,6 @@
 				C0497B071B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.xib in Resources */,
 				C0497BA31B64AA3800AC1C6C /* risley_dining+logo.jpg in Resources */,
 				C0497B8B1B64AA3800AC1C6C /* carols_cafe+logo.jpg in Resources */,
-				C0F182F91B674B1300063D77 /* Info.plist in Resources */,
 				C0497B0A1B64AA1800AC1C6C /* HoursTableViewCell.xib in Resources */,
 				C0497BA91B64AA3800AC1C6C /* rustys+logo.jpg in Resources */,
 				C0497B8E1B64AA3800AC1C6C /* cascadeli.jpg in Resources */,
