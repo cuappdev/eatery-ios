@@ -9,3 +9,6 @@
 import Foundation
 
 var groupmeApiKey = ""
+
+//let DEBUG = true
+let VERBOSE = true
