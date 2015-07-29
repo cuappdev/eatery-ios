@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */; };
+		C0142A121B68C5C90090B33A /* Pods.app store.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */; };
+		C0142A131B68C5C90090B33A /* Pods.external beta.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */; };
+		C0142A141B68C5C90090B33A /* Pods.internal beta.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
 		C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */; };
@@ -111,7 +114,6 @@
 		C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */; };
 		C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
 		C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */; };
-		C0497BCE1B64ACA000AC1C6C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */; };
 		C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */; };
 		C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD31B64AD3900AC1C6C /* GetMenu.swift */; };
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
@@ -121,10 +123,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MXLCalendarEvent+Utility.swift"; sourceTree = "<group>"; };
+		C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.app store.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.app store.xcconfig"; sourceTree = "<group>"; };
+		C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.external beta.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.external beta.xcconfig"; sourceTree = "<group>"; };
+		C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.internal beta.xcconfig"; sourceTree = "<group>"; };
 		C0497ACC1B64AA1800AC1C6C /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C0497ACD1B64AA1800AC1C6C /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCalendars.swift; sourceTree = "<group>"; };
@@ -234,7 +238,6 @@
 		C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
 		C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
 		C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		C0497BD31B64AD3900AC1C6C /* GetMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMenu.swift; sourceTree = "<group>"; };
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
@@ -250,7 +253,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0497BCE1B64ACA000AC1C6C /* CoreLocation.framework in Frameworks */,
 				C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,7 +264,9 @@
 			isa = PBXGroup;
 			children = (
 				D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */,
-				A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */,
+				C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */,
+				C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */,
+				C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -292,7 +296,6 @@
 		C01E03FA19E5C4AD0050E8C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C0497BCD1B64ACA000AC1C6C /* CoreLocation.framework */,
 				C776123BD662C00D1F0931E9 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -634,6 +637,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0142A141B68C5C90090B33A /* Pods.internal beta.xcconfig in Resources */,
 				C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */,
 				C0497B971B64AA3800AC1C6C /* ivy_room+logo.jpg in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
@@ -683,6 +687,7 @@
 				C0497B9C1B64AA3800AC1C6C /* keeton_house_dining_room.jpg in Resources */,
 				C0497B931B64AA3800AC1C6C /* goldies+logo.jpg in Resources */,
 				C0497B921B64AA3800AC1C6C /* cornell_dairy_bar.jpg in Resources */,
+				C0142A121B68C5C90090B33A /* Pods.app store.xcconfig in Resources */,
 				C0497B861B64AA3800AC1C6C /* big_red_barn+logo.jpg in Resources */,
 				C0497BAA1B64AA3800AC1C6C /* rustys.jpg in Resources */,
 				C0497BA11B64AA3800AC1C6C /* north_star+logo.jpg in Resources */,
@@ -694,6 +699,7 @@
 				C0497B9D1B64AA3800AC1C6C /* marthas_cafe+logo.jpg in Resources */,
 				C0497BAE1B64AA3800AC1C6C /* trillium.jpg in Resources */,
 				C0497BAB1B64AA3800AC1C6C /* synapsis_cafe+logo.jpg in Resources */,
+				C0142A131B68C5C90090B33A /* Pods.external beta.xcconfig in Resources */,
 				C0497B9F1B64AA3800AC1C6C /* mattins_cafe+logo.jpg in Resources */,
 				C0497B841B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg in Resources */,
 			);
@@ -904,7 +910,7 @@
 		};
 		C0142A051B68BBDA0090B33A /* App Store */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */;
+			baseConfigurationReference = C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "";
@@ -960,7 +966,7 @@
 		};
 		C0142A071B68BBE50090B33A /* Internal Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */;
+			baseConfigurationReference = C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "-internal-beta";
@@ -1016,7 +1022,7 @@
 		};
 		C0142A091B68BBF00090B33A /* External Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A68692F247B49B97D1B8DFEF /* Pods.release.xcconfig */;
+			baseConfigurationReference = C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "-external-beta";
