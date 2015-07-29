@@ -56,14 +56,20 @@ class Eatery: NSObject {
     }
     
     func loadTodaysMenu(completion:() -> Void) {
-        DataManager.sharedInstance.getMenu(forEatery: self.id) { (menu: Menu?) -> Void in
-            if let m = menu {
-                self.menu = m
-            } else {
-                println("no menu for \(self.name)")
-                self.menu = Menu(data: kEmptyMenuJSON)
-            }
+        // Only fetch menu if we have events today
+        if todaysEvents.count == 0 {
+            menu = Menu(data: kEmptyMenuJSON)
             completion()
+        } else {
+            DataManager.sharedInstance.getMenu(forEatery: self.id) { (menu: Menu?) -> Void in
+                if let m = menu {
+                    self.menu = m
+                } else {
+                    println("API returned no menu for \(self.name)")
+                    self.menu = Menu(data: kEmptyMenuJSON)
+                }
+                completion()
+            }
         }
     }
     

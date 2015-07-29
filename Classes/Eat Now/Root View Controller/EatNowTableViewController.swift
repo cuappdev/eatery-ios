@@ -128,7 +128,10 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                         for event in eatery.calendar.events as NSArray as! [MXLCalendarEvent] {
                             // If the event occurs today, add it to the calendar
                             if event.checkDate(today) {
-                                eatery.calendar.addEvent(event, onDate: today)
+                                if !event.isClosedEvent() {
+//                                    println("found event \(event.eventSummary)")
+                                    eatery.calendar.addEvent(event, onDate: today)
+                                }
                             }
                         }
                         // Set that the calendar has loaded all the events for today
