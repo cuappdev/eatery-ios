@@ -13,7 +13,7 @@ let breakfastString = "breakfast"
 let brunchString = "brunch"
 let lunchString = "lunch"
 let dinnerString = "dinner"
-let generalString = "general"
+let generalString = kGeneralMealTypeName
 
 typealias MenuDict = [String : [String : String]] // Dictionary representation of a menu
 
@@ -37,7 +37,7 @@ class Menu: NSObject {
         if let bru = data["brunch"].array { brunch = bru.map(toMenuItem) }
         if let lun = data["lunch"].array { lunch = lun.map(toMenuItem) }
         if let din = data["dinner"].array { dinner = din.map(toMenuItem) }
-        if let gen = data["general"].array { general = gen.map(toMenuItem) }
+        if let gen = data[kGeneralMealTypeName].array { general = gen.map(toMenuItem) }
     }
     
     func availableMealTypes() -> Set<MealType> {

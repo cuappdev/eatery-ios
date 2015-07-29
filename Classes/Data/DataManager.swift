@@ -24,6 +24,7 @@ enum MealType: String {
     case Lunch = "lunch"
     case Dinner = "dinner"
     case General = "general"
+    case Unknown = ""
 }
 
 /**

@@ -66,6 +66,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             return false
         }
         
+        println(eatery.id + " menu:")
         println(eatery.menu)
         
         sectionHeaderView = NSBundle.mainBundle().loadNibNamed("SegmentedControlSectionHeaderView", owner: self, options: nil).first as! SegmentedControlSectionHeaderView
@@ -153,7 +154,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             case .Dinner:
                 return displayMenu["dinner"]!.keys.array.count
             case .General:
-                return displayMenu["general"]!.keys.array.count
+                return displayMenu[kGeneralMealTypeName]!.keys.array.count
             default:
                 return 0
             }
@@ -230,7 +231,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             case .Dinner:
                 showingMealTypeString = "dinner"
             case .General:
-                showingMealTypeString = "general"
+                showingMealTypeString = kGeneralMealTypeName
             default:
                 showingMealTypeString = ""
             }

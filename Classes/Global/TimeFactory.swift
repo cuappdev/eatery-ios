@@ -10,12 +10,12 @@ import Foundation
 
 // The global now, change this to test a different date
 var NOW: NSDate {
-//    return NSDate(timeIntervalSinceNow: NSTimeInterval.intervalWithHoursAndMinutesFromNow(11, minutes: 30))
+//    return NSDate(timeIntervalSinceNow: NSTimeInterval.intervalWithHoursAndMinutesFromNow(hours: 576, minutes: 0))
     return NSDate()
 }
 
 extension NSTimeInterval {
-    static func intervalWithHoursAndMinutesFromNow(hours: Double, minutes: Double) -> NSTimeInterval {
+    static func intervalWithHoursAndMinutesFromNow(#hours: Double, minutes: Double) -> NSTimeInterval {
         return 60 * minutes + 60 * 60 * hours
     }
 }
