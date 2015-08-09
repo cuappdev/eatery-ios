@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let ENABLE_ANALYTICS = false
+private let ENABLE_ANALYTICS = true
 
 class AnalyticsManager: NSObject {
     static let sharedInstance = AnalyticsManager()

@@ -56,8 +56,8 @@ class Eatery: NSObject {
     }
     
     func loadTodaysMenu(completion:() -> Void) {
-        // Only fetch menu if we have events today
-        if todaysEvents.count == 0 {
+        // Only fetch menu if we have events today or if it is a cafe
+        if todaysEvents.count == 0 && !contains(kEateryGeneralMenus.keys.array, id) {
             menu = Menu(data: kEmptyMenuJSON)
             completion()
         } else {

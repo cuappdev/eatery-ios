@@ -118,7 +118,7 @@ class Menu: NSObject {
         let bre = breakfast != nil ? "\n\n\t".join(breakfast!.map {$0.description}) + "\n\n" : ""
         let bru = brunch != nil ? "\n\n\t".join(brunch!.map {$0.description}) + "\n\n" : ""
         let lun = lunch != nil ? "\n\n\t".join(lunch!.map {$0.description}) + "\n\n": ""
-        let din = dinner != nil ? "\n\n\t".join(breakfast!.map {$0.description}) + "\n\n" : ""
+        let din = dinner != nil ? "\n\n\t".join(dinner!.map {$0.description}) + "\n\n" : ""
         return "Breakfast:\n\t\(bre) Brunch:\n\t\(bru) Lunch:\n\t\(lun) Dinner:\n\t\(din)"
     }
 }
