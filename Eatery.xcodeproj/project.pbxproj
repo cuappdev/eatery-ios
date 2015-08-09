@@ -42,7 +42,6 @@
 		C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */; };
 		C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF41B64AA1800AC1C6C /* Macros.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
-		C0497B771B64AA3800AC1C6C /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1C1B64AA3800AC1C6C /* Keys.plist */; };
 		C0497B7A1B64AA3800AC1C6C /* 104west+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B231B64AA3800AC1C6C /* 104west+logo.jpg */; };
 		C0497B7B1B64AA3800AC1C6C /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B241B64AA3800AC1C6C /* 104west.jpg */; };
 		C0497B7C1B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B251B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg */; };
@@ -120,6 +119,8 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C776123BD662C00D1F0931E9 /* libPods.a */; };
+		E956ED7A1B6948B5006275A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = E956ED791B6948B5006275A5 /* Keys.plist */; };
+		E99C63EA1B6EDE12000A5886 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E99C63E91B6EDE12000A5886 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,7 +160,6 @@
 		C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHelperFactory.swift; sourceTree = "<group>"; };
 		C0497AF41B64AA1800AC1C6C /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
-		C0497B1C1B64AA3800AC1C6C /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		C0497B1F1B64AA3800AC1C6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C0497B231B64AA3800AC1C6C /* 104west+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104west+logo.jpg"; sourceTree = "<group>"; };
 		C0497B241B64AA3800AC1C6C /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
@@ -241,11 +241,12 @@
 		C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		C0497BD31B64AD3900AC1C6C /* GetMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMenu.swift; sourceTree = "<group>"; };
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		C0F182F71B674B1300063D77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		C776123BD662C00D1F0931E9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E956ED791B6948B5006275A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -426,7 +427,7 @@
 		C0497B1B1B64AA3800AC1C6C /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				C0497B1C1B64AA3800AC1C6C /* Keys.plist */,
+				E956ED791B6948B5006275A5 /* Keys.plist */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -569,7 +570,7 @@
 			children = (
 				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
 				C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */,
-				C0F182F71B674B1300063D77 /* Info.plist */,
+				E99C63E91B6EDE12000A5886 /* Info.plist */,
 			);
 			name = "Other-Sources";
 			path = "Classes/Other-Sources";
@@ -641,11 +642,11 @@
 				C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */,
 				C0497B971B64AA3800AC1C6C /* ivy_room+logo.jpg in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
-				C0497B771B64AA3800AC1C6C /* Keys.plist in Resources */,
 				C0497B881B64AA3800AC1C6C /* bus_stop_bagels+logo.jpg in Resources */,
 				C0497B9A1B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg in Resources */,
 				C0497B991B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg in Resources */,
 				C0497BAC1B64AA3800AC1C6C /* synapsis_cafe.jpg in Resources */,
+				E99C63EA1B6EDE12000A5886 /* Info.plist in Resources */,
 				C0497BA01B64AA3800AC1C6C /* mattins_cafe.jpg in Resources */,
 				C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */,
 				C0497B7C1B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg in Resources */,
@@ -661,6 +662,7 @@
 				C0497B0A1B64AA1800AC1C6C /* HoursTableViewCell.xib in Resources */,
 				C0497BA91B64AA3800AC1C6C /* rustys+logo.jpg in Resources */,
 				C0497B8E1B64AA3800AC1C6C /* cascadeli.jpg in Resources */,
+				E956ED7A1B6948B5006275A5 /* Keys.plist in Resources */,
 				C0497B8F1B64AA3800AC1C6C /* cook_house_dining_room+logo.jpg in Resources */,
 				C0497B8A1B64AA3800AC1C6C /* cafe_jennie.jpg in Resources */,
 				C0497B041B64AA1800AC1C6C /* EatNowDetailHeaderView.xib in Resources */,
@@ -860,8 +862,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Other-Sources/Info.plist";
+				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -870,6 +873,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -913,19 +917,21 @@
 			baseConfigurationReference = C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_SUFFIX = "-app-store";
+				BUNDLE_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Other-Sources/Info.plist";
+				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "App Store";
 		};
@@ -973,15 +979,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Other-Sources/Info.plist";
+				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Internal Beta";
 		};
@@ -1029,15 +1037,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Other-Sources/Info.plist";
+				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "External Beta";
 		};

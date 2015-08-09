@@ -1,0 +1,115 @@
+fastlane_version "1.13"
+default_platform :ios
+
+platform :ios do
+
+  before_all do
+    #update_fastlane
+  end
+
+  #  -----------------------------------------------------------------------------------------------
+  # |                                        Building                                              |   
+  #  -----------------------------------------------------------------------------------------------
+
+  desc "Downloads necessary certificates and provisioning profiles and builds ipa"
+  lane :build do
+    # get valid certificate.  Fastlane will automatically pass this to sigh
+    cert
+
+    # Provisioning
+    # Use sigh to download provisioning profiles and sign our app & extensions with the udid
+    udid = sigh(
+      app_identifier: "com.cuappdev.cuad-eatery", 
+      output_path: "./fastlane",
+      provisioning_name: "Eatery App Store"
+    )
+    ENV["PROJECT_UDID"] = udid
+
+    # Use this to select the correct version of xcode
+    # xcode_select "/Applications/Xcode.app"
+
+    cocoapods
+
+    ipa(
+      scheme: "Eatery",
+      configuration: "App Store",
+      clean: true
+    )
+  end
+
+  #  -----------------------------------------------------------------------------------------------
+  # |                                       Deployment                                             |   
+  #  -----------------------------------------------------------------------------------------------
+
+  desc "Deploy a new version to the *App Store*"
+  lane :appstore do
+    # increment_build_number
+    # increment_version_number
+
+    # ensure_git_status_clean
+
+    build
+
+    deliver(skip_deploy: true, force: true)
+
+  end
+
+  desc "Deploy a new version to *Testflight*"
+  lane :beta do
+    increment_build_number()
+    # increment_version_number
+
+    build
+
+    deliver(skip_deploy: true, force: true, beta: true)
+
+  end
+
+  #  -----------------------------------------------------------------------------------------------
+  # |                                       Experimental                                           |   
+  #  -----------------------------------------------------------------------------------------------
+
+  lane :test do
+    # puts ENV["TEST_ENV"]
+    # say ENV["TEST_ENV"]
+  end
+
+  #  -----------------------------------------------------------------------------------------------
+  # |                                       After/Error                                            |   
+  #  -----------------------------------------------------------------------------------------------
+
+  def clean_artifacts
+    clean_build_artifacts(
+      exclude_pattern: ".*.mobileprovision"
+    )
+  end
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # clean_artifacts
+    
+    # hipchat(
+    #   message: "Successfully deployed new App Update."
+    # )
+
+    notify "Fastlane #{lane}: 👍"
+  end
+
+  error do |lane, exception|
+    # clean_artifacts
+
+    # hipchat(
+    #   message: exception.message,
+    #   success: false
+    # )
+
+    notify "Fastlane #{lane}: 👎"
+    print "
+-----------------
+----- ERROR -----
+-----------------"
+    print "\n"
+    print exception.message
+  end
+
+end
