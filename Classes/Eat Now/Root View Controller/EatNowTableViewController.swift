@@ -294,7 +294,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                     eatery.menu = filteredMenu
                 }
                 // Use test menu
-//                if let menu = initializeTestMenu(eatery) {
+//                if let menu = self.initializeTestMenu(eatery) {
 //                    eatery.menu = menu
 //                }
                 MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
