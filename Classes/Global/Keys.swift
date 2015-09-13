@@ -21,7 +21,7 @@ let kParseClientKey: String = PARSEDICT["clientKey"]!
 let kGroupMeKey: String = KEYS["GroupMe"] as! String
 
 // MARK: Segment
-let kSegmentWriteKey: String = KEYS["Segment"] as! String
+let kSegmentWriteKey: String = "HELLOWORLD"//KEYS["Segment"] as! String
 
 // Mark: Eatery API
 //private let kApiBaseURL: String = "foo.com/"
