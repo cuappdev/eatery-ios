@@ -70,13 +70,6 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        // -- Refresh control
-        let refreshControl = UIRefreshControl()
-        refreshControl.backgroundColor = UIColor(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1.0)
-        refreshControl.addTarget(self, action: "reloadTableView:", forControlEvents: .ValueChanged)
-        tableView.addSubview(refreshControl)
-        
-        
         // -- Eateries
         // Capture array of eateries from the eatery dictionary stored in the DataManager
         var eateries: [Eatery] = DATA.eateries.values.array.map({ e in e })
@@ -97,14 +90,6 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         Analytics.screenEatNowTableViewController()
 
-    }
-    
-    func reloadTableView(sender: UIRefreshControl) {
-        println("Pull to refresh")
-        tableView.reloadData()
-        sender.endRefreshing()
-        
-        Analytics.trackPullToRefresh()
     }
     
     // MARK: -
