@@ -65,7 +65,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         // TODO: make this a proxy and put it in another file
         navigationController?.view.backgroundColor = UIColor.whiteColor()
         navigationController?.navigationBar.translucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.blueColor()
+        navigationController?.navigationBar.barTintColor = UIColor.eateryBlue()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
