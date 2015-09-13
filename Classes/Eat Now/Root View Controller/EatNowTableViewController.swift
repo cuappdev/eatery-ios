@@ -72,6 +72,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         // -- Refresh control
         let refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = UIColor(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1.0)
         refreshControl.addTarget(self, action: "reloadTableView:", forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl)
         
