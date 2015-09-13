@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up view controllers
         let eatNow = EatNowTableViewController()
-        eatNow.title = "Eateries"
+        eatNow.title = "Places To Eat"
         let eatNavController = UINavigationController(rootViewController: eatNow)
         eatNavController.navigationBar.barStyle = .Black
         
