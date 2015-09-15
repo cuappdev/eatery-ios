@@ -119,7 +119,6 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C776123BD662C00D1F0931E9 /* libPods.a */; };
-		E99C63EA1B6EDE12000A5886 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E99C63E91B6EDE12000A5886 /* Info.plist */; };
 		FA14036F1BA8ADED0004C8EF /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA14036E1BA8ADED0004C8EF /* Keys.plist */; };
 /* End PBXBuildFile section */
 
@@ -646,7 +645,6 @@
 				C0497B9A1B64AA3800AC1C6C /* jansens_dining_room_bethe_house.jpg in Resources */,
 				C0497B991B64AA3800AC1C6C /* jansens_dining_room_bethe_house+logo.jpg in Resources */,
 				C0497BAC1B64AA3800AC1C6C /* synapsis_cafe.jpg in Resources */,
-				E99C63EA1B6EDE12000A5886 /* Info.plist in Resources */,
 				C0497BA01B64AA3800AC1C6C /* mattins_cafe.jpg in Resources */,
 				C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */,
 				C0497B7C1B64AA3800AC1C6C /* amit_bhatia_libe_cafe+logo.jpg in Resources */,
