@@ -19,3 +19,4 @@ Private/
 *.orig
 Podfile.lock
 Pods/
+Keys.plist
