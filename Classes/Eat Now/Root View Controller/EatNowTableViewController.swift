@@ -250,7 +250,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
             println("fetching menu")
             let hud = MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
             hud.labelText = "Loading menu"
-            eatery.loadTodaysMenu { () -> Void in
+            eatery.loadTodaysMenu (false) { () -> Void in
                 // Filter menu by events so we show the number of menus we show is equal to the number of events we have
                 // Necessary because the API is unreliable and may sometimes return extra menus 
                 // This only works if the event summary has the meal spelled out
@@ -334,10 +334,8 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         if searchText == "" {
             filteredEateries = eateries
         } else {
-            filteredEateries = eateries.filter({ (eatery: Eatery) -> Bool in
-                var stringMatch = eatery.name.lowercaseString.rangeOfString(searchText.lowercaseString)
-                return (stringMatch != nil)
-            })
+            let pred = NSPredicate(format: "name contains[cd] %@ OR menu.description contains[cd] %@", searchText, searchText)
+            filteredEateries = (eateries as NSArray).filteredArrayUsingPredicate(pred) as! [Eatery]
         }
         tableView.reloadData()
     }

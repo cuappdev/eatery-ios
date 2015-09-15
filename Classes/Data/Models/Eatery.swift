@@ -53,9 +53,17 @@ class Eatery: NSObject {
         self.name = details["name"]!.stringValue
         self.calendarURLString = details["icalendar"]!.stringValue
         self.calendar = MXLCalendar()
+        
+        super.init()
+        loadTodaysMenu(true, completion: {})
     }
     
-    func loadTodaysMenu(completion:() -> Void) {
+    func loadTodaysMenu(force: Bool, completion:() -> Void) {
+        if !force && menu != nil {
+            completion()
+            return
+        }
+        
         // Only fetch menu if we have events today or if it is a cafe
         if todaysEvents.count == 0 && !contains(kEateryGeneralMenus.keys.array, id) {
             menu = Menu(data: kEmptyMenuJSON)
