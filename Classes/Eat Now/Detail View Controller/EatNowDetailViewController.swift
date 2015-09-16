@@ -248,23 +248,20 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: Menu Sharing
     
     func shareMenu() {
-        
         let textToShare = "Hey check out this awesome menu on Eatery :)"
         
         //get share image
         let imageToShare = imageFromMenu()
         
         //share
-        let activityItems:NSArray = [textToShare,imageToShare]
+        let activityItems = [textToShare,imageToShare]
         let activityVC = UIActivityViewController(activityItems: activityItems as [AnyObject], applicationActivities: nil)
         activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact,UIActivityTypePrint, UIActivityTypePostToWeibo]
-        activityVC.popoverPresentationController?.sourceView = self.view
-        self.presentViewController(activityVC, animated: true, completion: nil)
-        
+        activityVC.popoverPresentationController?.sourceView = view
+        presentViewController(activityVC, animated: true, completion: nil)
     }
     
     func imageFromMenu() -> UIImage {
-        
         //save state of tableview
         let savedContentOffset = tableView.contentOffset
         let savedFrame = tableView.frame
@@ -279,11 +276,11 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         eateryLabel.textAlignment = NSTextAlignment.Left
         eateryLabel.font = UIFont(name: "Avenir Next", size: 30)
         eateryLabel.textColor = UIColor.eateryBlue()
-        self.headerView.addSubview(eateryLabel)
+        headerView.addSubview(eateryLabel)
         
         //render layer of header and menu tableview to graphics context and save as UIImage
         UIGraphicsBeginImageContextWithOptions(tableView.contentSize, tableView.opaque, 0.0)
-        let context = UIGraphicsGetCurrentContext()
+        let context = UIGraphicsGetCurrentContext()!
         headerView.layer.renderInContext(context)
         tableView.layer.renderInContext(context)
         let img = UIGraphicsGetImageFromCurrentImageContext()
@@ -298,12 +295,4 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         
         return img
     }
-    
-
 }
-
-
-
-
-
-
