@@ -9,6 +9,7 @@
 import UIKit
 
 private let kHeaderViewFrameHeight: CGFloat = 240
+private let shareSheetEnabled = false
 
 class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SegmentChangedDelegate {
     
@@ -24,9 +25,12 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
         
         // Navigation Bar
-        let shareButton = UIBarButtonItem(title: "Share Menu", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("shareMenu"))
-        self.navigationItem.rightBarButtonItem = shareButton
+        if shareSheetEnabled {
+            let shareButton = UIBarButtonItem(title: "Share Menu", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("shareMenu"))
+            self.navigationItem.rightBarButtonItem = shareButton
 
+        }
+    
         // View appearance
         view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
