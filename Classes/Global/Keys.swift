@@ -8,17 +8,17 @@
 
 import Foundation
 
-// MARK: Load Plist
-let KEYSPATH = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")
-let KEYS = NSDictionary(contentsOfFile: KEYSPATH!)!
-
-// MARK: Parse
-let PARSEDICT: Dictionary<String, String> = KEYS["Parse"] as! Dictionary<String, String>
-let kParseApplicationID: String = PARSEDICT["applicationID"]!
-let kParseClientKey: String = PARSEDICT["clientKey"]!
-
-// MARK: GroupMe
-let kGroupMeKey: String = KEYS["GroupMe"] as! String
+//// MARK: Load Plist
+//let KEYSPATH = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")
+//let KEYS = NSDictionary(contentsOfFile: KEYSPATH!)!
+//
+//// MARK: Parse
+//let PARSEDICT: Dictionary<String, String> = KEYS["Parse"] as! Dictionary<String, String>
+//let kParseApplicationID: String = PARSEDICT["applicationID"]!
+//let kParseClientKey: String = PARSEDICT["clientKey"]!
+//
+//// MARK: GroupMe
+//let kGroupMeKey: String = KEYS["GroupMe"] as! String
 
 // MARK: Segment
 let kSegmentWriteKey: String = "HELLOWORLD"//KEYS["Segment"] as! String
