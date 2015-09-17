@@ -17,7 +17,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0NW-dj-BWB">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dining Hall" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5y-6b-ViJ">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eatery Type" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5y-6b-ViJ">
                             <rect key="frame" x="30" y="567" width="540" height="25"/>
                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -76,6 +76,7 @@
                 <outlet property="backgroundImageView" destination="RxQ-FJ-jL9" id="Wdu-aP-TA3"/>
                 <outlet property="foregroundImageView" destination="B0C-i3-zdA" id="DpB-QR-e0D"/>
                 <outlet property="nameLabel" destination="8vQ-Qj-5kD" id="6WS-ew-sz5"/>
+                <outlet property="typeLabel" destination="q5y-6b-ViJ" id="Bpu-mc-ckP"/>
             </connections>
             <point key="canvasLocation" x="455" y="306"/>
         </view>

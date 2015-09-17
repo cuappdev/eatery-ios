@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum EateryType: String {
+    case BRB = "BRB"
+    case Swipes = "Swipes"
+    case Cash = "Cash"
+}
+
 class Eatery: NSObject {
 //    let location: CLLocation
     let id: String
@@ -19,6 +25,7 @@ class Eatery: NSObject {
         return self.calendar.eventsForDate(NOW) as NSArray as! [MXLCalendarEvent] // should sort this by startTime
     }
     var menu: Menu!
+    var type: EateryType
     lazy var image: UIImage = {
         if let image = UIImage(named: "\(self.id).jpg") {
             return image
@@ -52,6 +59,7 @@ class Eatery: NSObject {
         let details: [String:JSON] = kEateryData[id]!.dictionaryValue
         self.name = details["name"]!.stringValue
         self.calendarURLString = details["icalendar"]!.stringValue
+        self.type = EateryType(rawValue: details["type"]!.stringValue)!
         self.calendar = MXLCalendar()
         
         super.init()
