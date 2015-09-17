@@ -18,7 +18,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.4875983
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "104 West! (Kosher Dining)"
+    "name"          : "104 West! (Kosher Dining)",
+    "type"          : "Swipes"
 ],
 "amit_bhatia_libe_cafe" :
 [
@@ -29,7 +30,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Olin Library, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Amit Bhatia Libe Café"
+    "name"          : "Amit Bhatia Libe Café",
+    "type"          : "BRB"
 ],
 "atrium_cafe" :
 [
@@ -40,7 +42,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Sage Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Atrium Café"
+    "name"          : "Atrium Café",
+    "type"          : "BRB"
 ],
 "bear_necessities" :
 [
@@ -51,7 +54,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"      : "Robert Purcell Community Center, North Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Bear Necessities"
+    "name"          : "Bear Necessities",
+    "type"          : "BRB"
 ],
 "bears_den" :
 [
@@ -62,7 +66,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Ivy Room, Willard Straight Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Bear's Den Café"
+    "name"          : "Bear's Den Café",
+    "type"          : "BRB"
 ],
 "becker_house_dining_room" :
 [
@@ -72,7 +77,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.489574
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Becker House Dining Room"
+    "name"          : "Becker House Dining Room",
+    "type"          : "Swipes"
 ],
 "big_red_barn" :
 [
@@ -83,7 +89,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Big Red Barn, Central Campus",
     "payment"       : "cash",
-    "name"       : "Big Red Barn"
+    "name"       : "Big Red Barn",
+    "type"          : "BRB"
 ],
 "cafe_jennie" :
 [
@@ -93,8 +100,9 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.484376
     ],
     "location"       : "The Cornell Store, Upper Level near the Skylight, Central Campus",
-    "payment"       : "cash",
-    "name"          : "Café Jennie"
+    "payment"       : "BRB,cash",
+    "name"          : "Café Jennie",
+    "type"          : "BRB"
 ],
 "carols_cafe" :
 [
@@ -104,8 +112,9 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.479864
     ],
     "location"      : "Balch Hall, North Campus",
-    "payment"       : "cash",
-    "name"          : "Carol's Café"
+    "payment"       : "BRB,cash",
+    "name"          : "Carol's Café",
+    "type"          : "BRB"
 ],
 "cascadeli" :
 [
@@ -115,7 +124,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.485679
     ],
     "payment"       : "BRB,cash",
-    "name"          : "Cascadeli"
+    "name"          : "Cascadeli",
+    "type"          : "BRB"
 ],
 "cook_house_dining_room" :
 [
@@ -125,7 +135,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.489560
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Cook House Dining Room"
+    "name"          : "Cook House Dining Room",
+    "type"          : "Swipes"
 ],
 "cornell_dairy_bar" :
 [
@@ -136,7 +147,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Stocking Hall, Central Campus",
     "payment"       : "cash",
-    "name"          : "Cornell Dairy Bar"
+    "name"          : "Cornell Dairy Bar",
+    "type"          : "BRB"
 ],
 "goldies" :
 [
@@ -147,7 +159,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Physical Sciences, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Goldies"
+    "name"          : "Goldies",
+    "type"          : "BRB"
 ],
 "green_dragon" :
 [
@@ -158,7 +171,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Sibley, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Green Dragon"
+    "name"          : "Green Dragon",
+    "type"          : "BRB"
 ],
 "ivy_room" :
 [
@@ -169,7 +183,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"       : "Willard Straight Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Ivy Room"
+    "name"          : "Ivy Room",
+    "type"          : "BRB"
 ],
 "jansens_dining_room_bethe_house" :
 [
@@ -179,7 +194,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.48864
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Jansen's Dining Room (Bethe House)"
+    "name"          : "Jansen's Dining Room (Bethe House)",
+    "type"          : "Swipes"
 ],
 "jansens_market" :
 [
@@ -189,7 +205,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.487932
     ],
     "payment"       : "BRB,cash",
-    "name"          : "Jansen's Market"
+    "name"          : "Jansen's Market",
+    "type"          : "BRB"
 ],
 "keeton_house_dining_room" :
 [
@@ -199,7 +216,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.489478
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Keeton House Dining Room"
+    "name"          : "Keeton House Dining Room",
+    "type"          : "Swipes"
 ],
 "marthas_cafe" :
 [
@@ -210,7 +228,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"      : "MVR, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Martha's Cafe"
+    "name"          : "Martha's Cafe",
+    "type"          : "BRB"
 ],
 "mattins_cafe" :
 [
@@ -221,7 +240,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"      : "Duffield Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name": "Mattin's Cafe"
+    "name": "Mattin's Cafe",
+    "type"          : "BRB"
 ],
 "north_star" :
 [
@@ -231,7 +251,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.473503
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "North Star"
+    "name"          : "North Star",
+    "type"          : "Swipes"
 ],
 "okenshields" :
 [
@@ -241,7 +262,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.4856783
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Okenshields"
+    "name"          : "Okenshields",
+    "type"          : "Swipes"
 ],
 "risley_dining" :
 [
@@ -251,7 +273,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.482080
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Risley Dining Hall"
+    "name"          : "Risley Dining Hall",
+    "type"          : "Swipes"
 ],
 "robert_purcell_marketplace_eatery" :
 [
@@ -261,7 +284,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.477628
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Robert Purcell Marketplace Eatery"
+    "name"          : "Robert Purcell Marketplace Eatery",
+    "type"          : "Swipes"
 ],
 "rose_house_dining_room" :
 [
@@ -271,7 +295,8 @@ let kEateryData: [String : JSON] =
         "longitude"     : -76.488796
     ],
     "payment"       : "BRB,cash,swipe",
-    "name"          : "Rose House Dining Room"
+    "name"          : "Rose House Dining Room",
+    "type"          : "Swipes"
 ],
 "rustys" :
 [
@@ -282,7 +307,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"      : "Uris Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Rusty's"
+    "name"          : "Rusty's",
+    "type"          : "BRB"
 ],
 "synapsis_cafe" :
 [
@@ -293,7 +319,8 @@ let kEateryData: [String : JSON] =
     ],
     "location"      : "Weill Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Synapsis Cafe"
+    "name"          : "Synapsis Cafe",
+    "type"          : "BRB"
 ],
 "trillium" :
 [
@@ -304,5 +331,6 @@ let kEateryData: [String : JSON] =
     ],
     "location"      : "Kennedy Hall, Central Campus",
     "payment"       : "BRB,cash",
-    "name"          : "Trillium"
+    "name"          : "Trillium",
+    "type"          : "BRB"
 ]]
