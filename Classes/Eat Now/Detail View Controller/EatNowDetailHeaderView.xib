@@ -16,21 +16,8 @@
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0NW-dj-BWB">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eatery Type" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5y-6b-ViJ">
-                            <rect key="frame" x="30" y="567" width="540" height="25"/>
-                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="q5y-6b-ViJ" secondAttribute="bottom" constant="8" id="Krx-v3-qgE"/>
-                        <constraint firstItem="q5y-6b-ViJ" firstAttribute="leading" secondItem="0NW-dj-BWB" secondAttribute="leading" constant="30" id="X71-mr-4MZ"/>
-                        <constraint firstAttribute="trailing" secondItem="q5y-6b-ViJ" secondAttribute="trailing" constant="30" id="gUY-87-tLc"/>
-                    </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B0C-i3-zdA">
                     <rect key="frame" x="240" y="20" width="120" height="120"/>
@@ -76,7 +63,6 @@
                 <outlet property="backgroundImageView" destination="RxQ-FJ-jL9" id="Wdu-aP-TA3"/>
                 <outlet property="foregroundImageView" destination="B0C-i3-zdA" id="DpB-QR-e0D"/>
                 <outlet property="nameLabel" destination="8vQ-Qj-5kD" id="6WS-ew-sz5"/>
-                <outlet property="typeLabel" destination="q5y-6b-ViJ" id="Bpu-mc-ckP"/>
             </connections>
             <point key="canvasLocation" x="455" y="306"/>
         </view>

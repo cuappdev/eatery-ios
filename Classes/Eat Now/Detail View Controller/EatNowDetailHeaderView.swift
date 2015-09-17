@@ -13,7 +13,6 @@ class EatNowDetailHeaderView: UIView {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var foregroundImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
     
     func setEatery(eatery: Eatery) {
         backgroundImageView.image = eatery.image
@@ -22,6 +21,5 @@ class EatNowDetailHeaderView: UIView {
         foregroundImageView.layer.borderColor = UIColor.whiteColor().CGColor
         foregroundImageView.layer.borderWidth = 3
         nameLabel.text = eatery.name
-        typeLabel.text = eatery.type.rawValue
     }
 }
