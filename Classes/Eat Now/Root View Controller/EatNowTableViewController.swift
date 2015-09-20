@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 private var calendarRequestStartDate: NSDate? = nil
 private var calendarRequestEndDate: NSDate? = nil
@@ -24,8 +25,8 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         let dateConverter = NSDateFormatter()
         dateConverter.dateFormat = "MM/dd/yy h:mm a"
         let n = NSDate()
-        println("Right now is: \(dateConverter.stringFromDate(n))")
-        println("Time travelling to: \(dateConverter.stringFromDate(NOW))")
+        print("Right now is: \(dateConverter.stringFromDate(n))", terminator: "")
+        print("Time travelling to: \(dateConverter.stringFromDate(NOW))", terminator: "")
         
         // -- TableView setup
         let cellNib = UINib(nibName: "EatNowTableViewCell", bundle: nil)
@@ -37,8 +38,8 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         tableView.rowHeight = cellHeight
         
         // Uncomment for dynamic cell height
-//        tableView.estimatedRowHeight = cellHeight
-//        tableView.rowHeight = UITableViewAutomaticDimension
+        //        tableView.estimatedRowHeight = cellHeight
+        //        tableView.rowHeight = UITableViewAutomaticDimension
         
         // -- UISearchController
         searchController = UISearchController(searchResultsController: nil)
@@ -49,17 +50,17 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         searchController.searchBar.sizeToFit()
         searchController.searchBar.delegate = self
         searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-//        searchController.searchBar.barTintColor = UIColor(white: 0.9, alpha: 1)
+        //        searchController.searchBar.barTintColor = UIColor(white: 0.9, alpha: 1)
         searchController.searchBar.tintColor = UIColor.eateryBlue()
-//        searchController.searchBar.backgroundImage = UIImage()
+        //        searchController.searchBar.backgroundImage = UIImage()
         searchController.searchBar.backgroundColor = UIColor.whiteColor()
-
+        
         extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext = true
         
         tableView.tableHeaderView = searchController.searchBar
         tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
-
+        
         
         // -- Nav bar
         // TODO: make this a proxy and put it in another file
@@ -72,7 +73,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         // -- Eateries
         // Capture array of eateries from the eatery dictionary stored in the DataManager
-        var eateries: [Eatery] = DATA.eateries.values.array.map({ e in e })
+        let eateries: [Eatery] = Array(DATA.eateries.values).map({ e in e })
         
         // Add observers for calendar load notificaitons
         for e in eateries {
@@ -89,15 +90,15 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         })
         
         Analytics.screenEatNowTableViewController()
-
+        
     }
     
     // MARK: -
     // MARK: Calendar loading
     
     func calendarLoaded(sender: NSNotification) {
-        println("Notification: \(sender)")
-        println("--\n")
+        print("Notification: \(sender)", terminator: "")
+        print("--\n", terminator: "")
         // Extract eatery id from notification name
         let rangeOfDash = sender.name.rangeOfString("-")!
         let eid = sender.name.substringToIndex(rangeOfDash.startIndex)
@@ -115,7 +116,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                             // If the event occurs today, add it to the calendar
                             if event.checkDate(today) {
                                 if !event.isClosedEvent() {
-//                                    println("found event \(event.eventSummary)")
+                                    //                                    println("found event \(event.eventSummary)")
                                     eatery.calendar.addEvent(event, onDate: today)
                                 }
                             }
@@ -126,7 +127,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                 }
                 
                 loadTodaysEventsForEatery(eateryToInsert)
-
+                
                 self.insertEateryIntoTableView(eateryToInsert)
             })
         }
@@ -242,17 +243,17 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         // Push detail immediately if we've already loaded the eatery's menu
         if DATA.eateries[eatery.id]!.menu != nil {
-            println("menu cached")
+            print("menu cached", terminator: "")
             let detailViewController = EatNowDetailViewController()
             detailViewController.eatery = DATA.eateries[eatery.id]
             navigationController?.pushViewController(detailViewController, animated: true)
         } else {
-            println("fetching menu")
+            print("fetching menu", terminator: "")
             let hud = MBProgressHUD.showHUDAddedTo(navigationController?.view, animated: true)
             hud.labelText = "Loading menu"
             eatery.loadTodaysMenu (false) { () -> Void in
                 // Filter menu by events so we show the number of menus we show is equal to the number of events we have
-                // Necessary because the API is unreliable and may sometimes return extra menus 
+                // Necessary because the API is unreliable and may sometimes return extra menus
                 // This only works if the event summary has the meal spelled out
                 var mealSet: Set<MealType> = Set()
                 for event in eatery.todaysEvents {
@@ -273,18 +274,18 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
                             case .Dinner:
                                 filteredMenu.dinner = nil
                             default:
-                                println("Meal filter by todays events hit default case in switch.")
+                                print("Meal filter by todays events hit default case in switch.", terminator: "")
                             }
                         }
                     }
                     eatery.menu = filteredMenu
                 }
                 // Use test menu
-//                if let menu = self.initializeTestMenu(eatery) {
-//                    eatery.menu = menu
-//                }
+                //                if let menu = self.initializeTestMenu(eatery) {
+                //                    eatery.menu = menu
+                //                }
                 MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
-                println("menu loaded")
+                print("menu loaded", terminator: "")
                 
                 let detailViewController = EatNowDetailViewController()
                 detailViewController.eatery = eatery
@@ -293,7 +294,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
             }
         }
     }
-
+    
     private func initializeTestMenu(eatery: Eatery) -> Menu? {
         var menu: Menu?
         
@@ -302,27 +303,15 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
             menu = Menu(data: generalMenuJSON)
         } else {
             // Otherwise load test menu from file
-            var deserializingError: NSError
-            let fileManager = NSFileManager.defaultManager()
-            if let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-                let pathComponent = "testMenu.json"
-                let fileURL = directoryURL.URLByAppendingPathComponent(pathComponent)
-                let menuPath = NSBundle.mainBundle().pathForResource("testMenu", ofType: "json")!
-                let menuData = NSData(contentsOfFile: menuPath)!
-                var error: NSError?
-                let jsonData: AnyObject? = NSJSONSerialization.JSONObjectWithData(menuData, options: nil, error: &error)
-                if error != nil {
-                    println("Error parsing testMenu: \(error!)")
-                } else {
-                    if let menuJSON = JSON(rawValue: jsonData!) {
-                        let parsedMenu = Menu(data: menuJSON)
-                        
-                        menu = parsedMenu
-                    }
-                }
-                
+            let menuPath = NSBundle.mainBundle().pathForResource("testMenu", ofType: "json")!
+            let menuData = NSData(contentsOfFile: menuPath)!
+            // TODO: Audit try for removal
+            let jsonData: AnyObject? = try! NSJSONSerialization.JSONObjectWithData(menuData, options: NSJSONReadingOptions(rawValue: 0))
+            if let menuJSON = JSON(rawValue: jsonData!) {
+                let parsedMenu = Menu(data: menuJSON)
+                    
+                menu = parsedMenu
             }
-            
         }
         return menu
     }
@@ -341,7 +330,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text)
+        filterContentForSearchText(searchController.searchBar.text!)
     }
     
     // MARK: -
@@ -352,10 +341,10 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
         view.backgroundColor = UIColor.whiteColor()
         return view
-    }()
+        }()
     
     func willPresentSearchController(searchController: UISearchController) {
-        dispatchAfter(0.4, { () -> Void in
+        dispatchAfter(0.4, block: { () -> Void in
             navigationController?.view.addSubview(statusBarView)
         })
     }

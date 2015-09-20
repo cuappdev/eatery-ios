@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 extension DataManager {
     
@@ -16,17 +18,17 @@ extension DataManager {
             completion(menu: Menu(data: generalMenuJSON))
         } else {
             // if no menu endpoint, return nil
-            if !contains(menuIDs, id) {
+            if !menuIDs.contains(id) {
                 completion(menu: nil)
                 return
             }
-            request(.GET, Router.Menu(id))
-            .responseJSON { (_, _, data: AnyObject?, error: NSError?) -> Void in
-                if let e = error {
+            Alamofire.request(Alamofire.Method.GET, Router.Menu(id))
+            .responseJSON { (_, _, result) -> Void in
+                if let _ = result.error {
                     completion(menu: nil)
                 } else {
-                    if let swiftyJSON = JSON(rawValue: data!) {
-                        println("GOT MENU")
+                    if let swiftyJSON = JSON(rawValue: result.data!) {
+                        print("GOT MENU")
                         completion(menu: Menu(data: swiftyJSON))
                     }
                 }

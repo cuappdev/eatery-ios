@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */; };
-		C0142A121B68C5C90090B33A /* Pods.app store.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */; };
-		C0142A131B68C5C90090B33A /* Pods.external beta.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */; };
-		C0142A141B68C5C90090B33A /* Pods.internal beta.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
 		C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */; };
@@ -96,23 +94,12 @@
 		C0497BAD1B64AA3800AC1C6C /* trillium+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B561B64AA3800AC1C6C /* trillium+logo.jpg */; };
 		C0497BAE1B64AA3800AC1C6C /* trillium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0497B571B64AA3800AC1C6C /* trillium.jpg */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
-		C0497BB01B64AA3800AC1C6C /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5B1B64AA3800AC1C6C /* Alamofire.swift */; };
-		C0497BB11B64AA3800AC1C6C /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5C1B64AA3800AC1C6C /* Download.swift */; };
-		C0497BB21B64AA3800AC1C6C /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5D1B64AA3800AC1C6C /* Manager.swift */; };
-		C0497BB31B64AA3800AC1C6C /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5E1B64AA3800AC1C6C /* MultipartFormData.swift */; };
-		C0497BB41B64AA3800AC1C6C /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B5F1B64AA3800AC1C6C /* ParameterEncoding.swift */; };
-		C0497BB51B64AA3800AC1C6C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B601B64AA3800AC1C6C /* Request.swift */; };
-		C0497BB61B64AA3800AC1C6C /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B611B64AA3800AC1C6C /* ResponseSerialization.swift */; };
-		C0497BB71B64AA3800AC1C6C /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B621B64AA3800AC1C6C /* ServerTrustPolicy.swift */; };
-		C0497BB81B64AA3800AC1C6C /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B631B64AA3800AC1C6C /* Upload.swift */; };
-		C0497BB91B64AA3800AC1C6C /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B641B64AA3800AC1C6C /* Validation.swift */; };
 		C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */; };
 		C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */; };
 		C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */; };
 		C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */; };
 		C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */; };
 		C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
-		C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */; };
 		C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */; };
 		C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD31B64AD3900AC1C6C /* GetMenu.swift */; };
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
@@ -122,6 +109,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		009907E8EA5C64DC3A183B9D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MXLCalendarEvent+Utility.swift"; sourceTree = "<group>"; };
@@ -213,16 +201,6 @@
 		C0497B561B64AA3800AC1C6C /* trillium+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "trillium+logo.jpg"; sourceTree = "<group>"; };
 		C0497B571B64AA3800AC1C6C /* trillium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = trillium.jpg; sourceTree = "<group>"; };
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C0497B5B1B64AA3800AC1C6C /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
-		C0497B5C1B64AA3800AC1C6C /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
-		C0497B5D1B64AA3800AC1C6C /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
-		C0497B5E1B64AA3800AC1C6C /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
-		C0497B5F1B64AA3800AC1C6C /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		C0497B601B64AA3800AC1C6C /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		C0497B611B64AA3800AC1C6C /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = "<group>"; };
-		C0497B621B64AA3800AC1C6C /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustPolicy.swift; sourceTree = "<group>"; };
-		C0497B631B64AA3800AC1C6C /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
-		C0497B641B64AA3800AC1C6C /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		C0497B661B64AA3800AC1C6C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C0497B691B64AA3800AC1C6C /* MXLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendar.h; sourceTree = "<group>"; };
@@ -235,13 +213,14 @@
 		C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarManager.m; sourceTree = "<group>"; };
 		C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
 		C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
-		C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		C0497BD31B64AD3900AC1C6C /* GetMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMenu.swift; sourceTree = "<group>"; };
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
-		C776123BD662C00D1F0931E9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D18D9C591BAF2B5200C9D95D /* Analytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Analytics.framework; path = "Pods/../build/Debug-iphoneos/Analytics.framework"; sourceTree = SOURCE_ROOT; };
+		D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = SOURCE_ROOT; };
+		D18D9C5D1BAF2BF400C9D95D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = SOURCE_ROOT; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -251,7 +230,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */,
+				D18D9C5E1BAF2BF400C9D95D /* Alamofire.framework in Frameworks */,
+				D18D9C5C1BAF2BF100C9D95D /* SwiftyJSON.framework in Frameworks */,
+				D18D9C5A1BAF2B5200C9D95D /* Analytics.framework in Frameworks */,
+				745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +275,10 @@
 		C01E03FA19E5C4AD0050E8C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C776123BD662C00D1F0931E9 /* libPods.a */,
+				D18D9C5D1BAF2BF400C9D95D /* Alamofire.framework */,
+				D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */,
+				D18D9C591BAF2B5200C9D95D /* Analytics.framework */,
+				009907E8EA5C64DC3A183B9D /* Pods.framework */,
 			);
 			name = Frameworks;
 			path = Eatery;
@@ -494,29 +479,10 @@
 		C0497B591B64AA3800AC1C6C /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				C0497B5A1B64AA3800AC1C6C /* Alamofire */,
 				C0497B651B64AA3800AC1C6C /* MBProgressHud */,
 				C0497B681B64AA3800AC1C6C /* MXLCalendarManager */,
-				C0497B731B64AA3800AC1C6C /* SwiftyJSON */,
 			);
 			path = vendor;
-			sourceTree = "<group>";
-		};
-		C0497B5A1B64AA3800AC1C6C /* Alamofire */ = {
-			isa = PBXGroup;
-			children = (
-				C0497B5B1B64AA3800AC1C6C /* Alamofire.swift */,
-				C0497B5C1B64AA3800AC1C6C /* Download.swift */,
-				C0497B5D1B64AA3800AC1C6C /* Manager.swift */,
-				C0497B5E1B64AA3800AC1C6C /* MultipartFormData.swift */,
-				C0497B5F1B64AA3800AC1C6C /* ParameterEncoding.swift */,
-				C0497B601B64AA3800AC1C6C /* Request.swift */,
-				C0497B611B64AA3800AC1C6C /* ResponseSerialization.swift */,
-				C0497B621B64AA3800AC1C6C /* ServerTrustPolicy.swift */,
-				C0497B631B64AA3800AC1C6C /* Upload.swift */,
-				C0497B641B64AA3800AC1C6C /* Validation.swift */,
-			);
-			path = Alamofire;
 			sourceTree = "<group>";
 		};
 		C0497B651B64AA3800AC1C6C /* MBProgressHud */ = {
@@ -545,14 +511,6 @@
 			path = MXLCalendarManager;
 			sourceTree = "<group>";
 		};
-		C0497B731B64AA3800AC1C6C /* SwiftyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				C0497B741B64AA3800AC1C6C /* SwiftyJSON.swift */,
-			);
-			path = SwiftyJSON;
-			sourceTree = "<group>";
-		};
 		C0497BC11B64AB4100AC1C6C /* Other-Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +534,7 @@
 				C007CABC19E1BEAC00E3BD46 /* Frameworks */,
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
 				E2CFE9C2E9E8D8099684D94E /* Copy Pods Resources */,
+				2529F4D1F6E174E13D3FA0DA /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -592,8 +551,9 @@
 		C007CAB719E1BEAC00E3BD46 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = CUAppDev;
 				TargetAttributes = {
 					C007CABE19E1BEAC00E3BD46 = {
@@ -626,7 +586,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0142A141B68C5C90090B33A /* Pods.internal beta.xcconfig in Resources */,
 				C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */,
 				C0497B971B64AA3800AC1C6C /* ivy_room+logo.jpg in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
@@ -675,7 +634,6 @@
 				C0497B9C1B64AA3800AC1C6C /* keeton_house_dining_room.jpg in Resources */,
 				C0497B931B64AA3800AC1C6C /* goldies+logo.jpg in Resources */,
 				C0497B921B64AA3800AC1C6C /* cornell_dairy_bar.jpg in Resources */,
-				C0142A121B68C5C90090B33A /* Pods.app store.xcconfig in Resources */,
 				C0497B861B64AA3800AC1C6C /* big_red_barn+logo.jpg in Resources */,
 				C0497BAA1B64AA3800AC1C6C /* rustys.jpg in Resources */,
 				C0497BA11B64AA3800AC1C6C /* north_star+logo.jpg in Resources */,
@@ -687,7 +645,6 @@
 				C0497B9D1B64AA3800AC1C6C /* marthas_cafe+logo.jpg in Resources */,
 				C0497BAE1B64AA3800AC1C6C /* trillium.jpg in Resources */,
 				C0497BAB1B64AA3800AC1C6C /* synapsis_cafe+logo.jpg in Resources */,
-				C0142A131B68C5C90090B33A /* Pods.external beta.xcconfig in Resources */,
 				C0497B9F1B64AA3800AC1C6C /* mattins_cafe+logo.jpg in Resources */,
 				C0497B841B64AA3800AC1C6C /* becker_house_dining_room+logo.jpg in Resources */,
 			);
@@ -696,6 +653,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2529F4D1F6E174E13D3FA0DA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		40EF041714DAFA5DB1F10F0B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -735,19 +707,16 @@
 			files = (
 				C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */,
 				C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */,
-				C0497BB31B64AA3800AC1C6C /* MultipartFormData.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */,
 				C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */,
 				C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */,
 				C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */,
-				C0497BB51B64AA3800AC1C6C /* Request.swift in Sources */,
 				C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */,
 				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
 				C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */,
-				C0497BB11B64AA3800AC1C6C /* Download.swift in Sources */,
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
 				C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */,
@@ -763,22 +732,14 @@
 				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,
 				C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */,
 				C0497B091B64AA1800AC1C6C /* HoursTableViewCell.swift in Sources */,
-				C0497BB01B64AA3800AC1C6C /* Alamofire.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */,
 				C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */,
 				C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */,
-				C0497BC01B64AA3800AC1C6C /* SwiftyJSON.swift in Sources */,
-				C0497BB71B64AA3800AC1C6C /* ServerTrustPolicy.swift in Sources */,
-				C0497BB81B64AA3800AC1C6C /* Upload.swift in Sources */,
-				C0497BB21B64AA3800AC1C6C /* Manager.swift in Sources */,
-				C0497BB41B64AA3800AC1C6C /* ParameterEncoding.swift in Sources */,
 				C0497B081B64AA1800AC1C6C /* SegmentedHeader.swift in Sources */,
-				C0497BB91B64AA3800AC1C6C /* Validation.swift in Sources */,
 				C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */,
 				C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */,
 				C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */,
-				C0497BB61B64AA3800AC1C6C /* ResponseSerialization.swift in Sources */,
 				C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -817,6 +778,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -849,11 +811,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
@@ -908,11 +874,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
@@ -966,11 +936,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
@@ -1024,11 +998,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";

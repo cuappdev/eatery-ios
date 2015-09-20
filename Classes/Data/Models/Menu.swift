@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 // TODO: make this an enum
 let breakfastString = "breakfast"
@@ -41,13 +42,13 @@ class Menu: NSObject {
     }
     
     func availableMealTypes() -> Set<MealType> {
-        var mealSet: Set<MealType> = Set()
+        let mealSet: Set<MealType> = Set()
         
-        if let bre = breakfast { mealSet.insert(MealType.Breakfast) }
-        if let bru = brunch { mealSet.insert(MealType.Brunch) }
-        if let lun = lunch { mealSet.insert(MealType.Lunch) }
-        if let din = dinner { mealSet.insert(MealType.Dinner) }
-        if let gen = general { mealSet.insert(MealType.General) }
+//        if let bre = breakfast { mealSet.insert(MealType.Breakfast) }
+//        if let bru = brunch { mealSet.insert(MealType.Brunch) }
+//        if let lun = lunch { mealSet.insert(MealType.Lunch) }
+//        if let din = dinner { mealSet.insert(MealType.Dinner) }
+//        if let gen = general { mealSet.insert(MealType.General) }
         
         return mealSet
     }
@@ -115,11 +116,11 @@ class Menu: NSObject {
     }
     
     override var description: String {
-        let bre = breakfast != nil ? "\n\n\t".join(breakfast!.map {$0.description}) + "\n\n" : ""
-        let bru = brunch    != nil ? "\n\n\t".join(brunch!.map {$0.description}) + "\n\n" : ""
-        let lun = lunch     != nil ? "\n\n\t".join(lunch!.map {$0.description}) + "\n\n": ""
-        let din = dinner    != nil ? "\n\n\t".join(dinner!.map {$0.description}) + "\n\n" : ""
-        let gen = general   != nil ? "\n\n\t".join(general!.map {$0.description}) + "\n\n" : ""
+        let bre = breakfast != nil ? breakfast!.map {$0.description}.joinWithSeparator("\n\n\t") + "\n\n" : ""
+        let bru = brunch    != nil ? brunch!.map {$0.description}.joinWithSeparator("\n\n\t") + "\n\n" : ""
+        let lun = lunch     != nil ? lunch!.map {$0.description}.joinWithSeparator("\n\n\t") + "\n\n": ""
+        let din = dinner    != nil ? dinner!.map {$0.description}.joinWithSeparator("\n\n\t") + "\n\n" : ""
+        let gen = general   != nil ? general!.map {$0.description}.joinWithSeparator("\n\n\t") + "\n\n" : ""
         
         return "Breakfast:\n\t\(bre) Brunch:\n\t\(bru) Lunch:\n\t\(lun) Dinner:\n\t\(din) General:\n\t\(gen)"
     }

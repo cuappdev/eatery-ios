@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
+
 
 let kEateryData: [String : JSON] =
 [

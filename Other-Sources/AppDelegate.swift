@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Analytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
         
-        println("Did finish launching")
+        print("Did finish launching", terminator: "")
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
