@@ -15,7 +15,7 @@ var NOW: NSDate {
 }
 
 extension NSTimeInterval {
-    static func intervalWithHoursAndMinutesFromNow(#hours: Double, minutes: Double) -> NSTimeInterval {
+    static func intervalWithHoursAndMinutesFromNow(hours hours: Double, minutes: Double) -> NSTimeInterval {
         return 60 * minutes + 60 * 60 * hours
     }
 }
@@ -25,7 +25,7 @@ extension NSTimeInterval {
 //}
 
 func displayTextForEvent(event: MXLCalendarEvent) -> String {
-    return dateConverter(event.eventStartDate, event.eventEndDate)
+    return dateConverter(event.eventStartDate, date2: event.eventEndDate)
 }
 
 /// Returns nil if no more events today
@@ -50,7 +50,6 @@ func nextEventForEatery(eatery: Eatery) -> MXLCalendarEvent? {
     // If no event currently, find the next one to start
     func findNextEvent() -> MXLCalendarEvent? {
         for event in todaysEvents {
-            let s = timeOfDate(event.eventStartDate)
             let e = timeOfDate(event.eventEndDate)
             if currentTime < e && !event.isClosedEvent() {
                 return event
@@ -72,9 +71,8 @@ func nextEventForEatery(eatery: Eatery) -> MXLCalendarEvent? {
 /// Returns: Time representation of given date measured in seconds.
 func timeOfDate(date: NSDate) -> Int {
     // TODO: Specify timezone?
-    let dateFormatter = NSDateFormatter()
     let calendar = NSCalendar.currentCalendar()
-    let comp = calendar.components(( .CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond), fromDate: date)
+    let comp = calendar.components([.Hour, .Minute, .Second], fromDate: date)
     return comp.hour * 3600 + comp.minute * 60 + comp.second
 }
 
@@ -91,12 +89,11 @@ func eventIsCurrentlyHappening(event: MXLCalendarEvent) -> Bool {
 
 // TODO: make this an extension on MXLCalendarEvent
 private func dateConverter(date1: NSDate, date2: NSDate) -> String {
-    let dateFormatter = NSDateFormatter()
     let calendar = NSCalendar.currentCalendar()
     calendar.timeZone = NSTimeZone(name: "America/New_York")!
     
-    let comp1 = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: date1)
-    let comp2 = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: date2)
+    let comp1 = calendar.components([.Hour, .Minute], fromDate: date1)
+    let comp2 = calendar.components([.Hour, .Minute], fromDate: date2)
     
     var first = ""
     var second = ""

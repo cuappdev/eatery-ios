@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 enum EateryType: String {
     case BRB = "BRB"
@@ -45,10 +46,8 @@ class Eatery: NSObject {
     }
     var icsFileUrl: NSURL? {
         let fileManager = NSFileManager.defaultManager()
-        if let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-            return directoryURL.URLByAppendingPathComponent(icsPathComponent)
-        }
-        return nil
+        let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        return directoryURL.URLByAppendingPathComponent(icsPathComponent)
     }
     override var description: String {
         return "\(name) has id \(id) with calendar: \(calendar)"
@@ -73,15 +72,15 @@ class Eatery: NSObject {
         }
         
         // Only fetch menu if we have events today or if it is a cafe
-        if todaysEvents.count == 0 && !contains(kEateryGeneralMenus.keys.array, id) {
-            menu = Menu(data: kEmptyMenuJSON)
+        if todaysEvents.count == 0 && !Array(kEateryGeneralMenus.keys).contains(id) {
+           self.menu = Menu(data: kEmptyMenuJSON)
             completion()
         } else {
             DataManager.sharedInstance.getMenu(forEatery: self.id) { (menu: Menu?) -> Void in
                 if let m = menu {
                     self.menu = m
                 } else {
-                    println("API returned no menu for \(self.name)")
+                    print("API returned no menu for \(self.name)")
                     self.menu = Menu(data: kEmptyMenuJSON)
                 }
                 completion()

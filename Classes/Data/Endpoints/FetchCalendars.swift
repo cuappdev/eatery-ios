@@ -11,15 +11,15 @@ import Foundation
 extension DataManager {
 
     func fetchCalendars(eateries: [Eatery]) {
-        println("/calendars")
+        print("/calendars", terminator: "")
         let returnList: [Eatery] = eateries
         let calendarManager: MXLCalendarManager = MXLCalendarManager()
         for eatery in returnList {
             let scanBlock = { (e: Eatery) -> Void in
                 let localPath = e.icsFileUrl!.path!
                 calendarManager.scanICSFileAtLocalPath(localPath, withCompletionHandler: { (cal: MXLCalendar!, err: NSError!) -> Void in
-                    println("Scanned ics for \(eatery.id)")
-                    println(cal)
+                    print("Scanned ics for \(eatery.id)", terminator: "")
+                    print(cal, terminator: "")
                     e.calendar = cal
                     let notification = NSNotification(name: calNotificationNameForEateryId(e.id), object: nil, userInfo: nil)
                     NSCenter.postNotification(notification)
@@ -31,8 +31,8 @@ extension DataManager {
             // TODO: Overwrite in background if we havent updated the ics in > 1 week
             if !icsFileExistsForEatery(eatery) {
                 API.downloadICSFileForEatery(eatery, completion: { (error) -> Void in
-                    if let e = error {
-                        println(error)
+                    if let _ = error {
+                        print(error, terminator: "")
                         // TODO: alertview or try again if this is a timeout
                     } else {
                         scanBlock(eatery)

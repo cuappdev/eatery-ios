@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 private let kMenuNotAvailable = "Menu not available."
 let kGeneralMealTypeName = "Menu"

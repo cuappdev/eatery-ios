@@ -59,15 +59,15 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         tableView.separatorStyle = .None
         
         sortedEvents = eatery.todaysEvents
-        sortedEvents.sort { (a, b) -> Bool in
+        sortedEvents.sortInPlace { (a, b) -> Bool in
             if timeOfDate(a.eventStartDate) < timeOfDate(b.eventStartDate) {
                 return true
             }
             return false
         }
         
-        println(eatery.id + " menu:")
-        println(eatery.menu)
+        print(eatery.id + " menu:")
+        print(eatery.menu)
         
         sectionHeaderView = NSBundle.mainBundle().loadNibNamed("SegmentedControlSectionHeaderView", owner: self, options: nil).first as! SegmentedControlSectionHeaderView
         
@@ -77,11 +77,11 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         displayMenu = eatery.menu.displayMenu
         
         // Find array of available meals for a given menu (i.e. Brunch, Dinner)
-        let mealsAvailable: [String] = displayMenu.keys.array
+        let mealsAvailable: [String] = Array(displayMenu.keys)
         
         // Sort them in ascending order (Breakfast < Brunch < Lunch < Dinner)
         var sortedSegments = mealsAvailable
-        sortedSegments.sort { (lhs, rhs) -> Bool in
+        sortedSegments.sortInPlace { (lhs, rhs) -> Bool in
             if lhs == breakfastString {
                 return true
             }
@@ -116,8 +116,8 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         for i in 0..<numberOfSegments {
             let mealString = mealSegments[i]
             // Capitalize first letter of meal
-            let firstLetter = mealString.substringToIndex(advance(mealString.startIndex, 1)).uppercaseString
-            let rest = mealString.substringFromIndex(advance(mealString.startIndex, 1))
+            let firstLetter = mealString.substringToIndex(mealString.startIndex.advancedBy(1)).uppercaseString
+            let rest = mealString.substringFromIndex(mealString.startIndex.advancedBy(1))
             sectionHeaderView.segmentedControl.setTitle(firstLetter + rest, forSegmentAtIndex: i)
         }
         
@@ -146,15 +146,15 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             }
             switch showingMealType {
             case .Breakfast:
-                return displayMenu["breakfast"]!.keys.array.count
+                return Array(displayMenu["breakfast"]!.keys).count
             case .Brunch:
-                return displayMenu["brunch"]!.keys.array.count
+                return Array(displayMenu["brunch"]!.keys).count
             case .Lunch:
-                return displayMenu["lunch"]!.keys.array.count
+                return Array(displayMenu["lunch"]!.keys).count
             case .Dinner:
-                return displayMenu["dinner"]!.keys.array.count
+                return Array(displayMenu["dinner"]!.keys).count
             case .General:
-                return displayMenu[kGeneralMealTypeName]!.keys.array.count
+                return Array(displayMenu[kGeneralMealTypeName]!.keys).count
             default:
                 return 0
             }
@@ -236,7 +236,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
                 showingMealTypeString = ""
             }
             
-            var stationArray: [String] = displayMenu[showingMealTypeString]!.keys.array
+            var stationArray: [String] = Array(displayMenu[showingMealTypeString]!.keys)
             
             let title = stationArray[indexPath.row]
             let content = displayMenu[showingMealTypeString]![title]

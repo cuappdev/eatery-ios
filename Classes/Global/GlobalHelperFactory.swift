@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 
 func calNotificationNameForEateryId(id: String) -> String {
@@ -16,23 +17,23 @@ func calNotificationNameForEateryId(id: String) -> String {
 func printNetworkResponse(request: NSURLRequest?, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) {
     if VERBOSE {
         if let e = error {
-            println("ERROR" + separator)
-            println(e)
+            print("ERROR" + separator, terminator: "")
+            print(e, terminator: "")
         }
         if let req = request {
-            println("REQUEST" + separator)
-            println(req)
+            print("REQUEST" + separator, terminator: "")
+            print(req, terminator: "")
         }
         if let resp = response {
-            println("RESPONSE" + separator)
-            println(resp)
+            print("RESPONSE" + separator, terminator: "")
+            print(resp, terminator: "")
         }
         if let d: AnyObject = data {
-            println("DATA" + separator) // raw json
-            println(data)
+            print("DATA" + separator, terminator: "") // raw json
+            print(data, terminator: "")
             if let swiftyJSON = JSON(rawValue: d) { // if JSON data can be converted to swiftyJSON
-                println("SWIFTY JSON" + separator) // SwiftyJSON
-                println(swiftyJSON)
+                print("SWIFTY JSON" + separator) // SwiftyJSON
+                print(swiftyJSON)
             }
         }
     }
@@ -40,11 +41,8 @@ func printNetworkResponse(request: NSURLRequest?, response: NSHTTPURLResponse?, 
 
 func icsFileExistsForEatery(eatery: Eatery) -> Bool {
     let fileManager = NSFileManager.defaultManager()
-    if let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-        let pathComponent = eatery.icsPathComponent
-        let filePath = directoryURL.URLByAppendingPathComponent(pathComponent).path!
-        return NSFileManager.defaultManager().fileExistsAtPath(filePath)
-    }
-    
-    return false
+    let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+    let pathComponent = eatery.icsPathComponent
+    let filePath = directoryURL.URLByAppendingPathComponent(pathComponent).path!
+    return NSFileManager.defaultManager().fileExistsAtPath(filePath)
 }

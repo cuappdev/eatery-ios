@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import Alamofire
+import Alamofire
 
 
 class GroupMeManager: NSObject {
@@ -69,15 +69,16 @@ class GroupMeManager: NSObject {
             "token" : groupmeApiKey
         ]
         request(.GET, Router.Groups, parameters: parameters, encoding: .URL)
-            .responseJSON { (request : NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> Void in
-                printNetworkResponse(request, response, data, error)
+            .responseJSON { (request, response, result) -> Void in
+                // FIX ME
+                //printNetworkResponse(request, response, data, error)
         }
     }
     
     func handleOpenURL(url: NSURL) -> Bool {
         let query = url.query!
         let accessToken = query.componentsSeparatedByString("=")[1]
-        println("ACCESS TOKEN = \(accessToken)")
+        print("ACCESS TOKEN = \(accessToken)", terminator: "")
         
         groupmeApiKey = accessToken
         

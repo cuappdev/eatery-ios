@@ -14,11 +14,11 @@ class SegmentedHeader: UITableViewHeaderFooterView {
     
     init(frame: CGRect, meals: [String]) {
         segmentedView = UISegmentedControl(items: meals)
-        super.init(frame: frame)
+        super.init(reuseIdentifier: nil)
         
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

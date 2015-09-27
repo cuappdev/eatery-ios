@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Analytics
 
 private let ENABLE_ANALYTICS = true
 

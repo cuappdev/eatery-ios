@@ -7,29 +7,32 @@
 //
 
 import Foundation
+import Alamofire
 
 extension DataManager {
     
     func downloadICSFileForEatery(eatery: Eatery, completion:(error: NSError?) -> Void) {
         // Download .ics file for an eatery and store it in Data/Application/(simulator id)/Documents
         download(.GET, eatery.calendarURLString) { (tempURL: NSURL, response: NSHTTPURLResponse) -> (NSURL) in
-            println("downloaded calendar for \(eatery.id)")
+            print("downloaded calendar for \(eatery.id)")
             
             if let destination = eatery.icsFileUrl {
                 // If file already exists at path, delete it
                 if icsFileExistsForEatery(eatery) {
                     let filePath = destination.path!
-                    NSFileManager.defaultManager().removeItemAtPath(filePath, error: nil)
-                    println("removed file at path \(filePath)")
+                    // TODO: Audit try for removal
+                    try! NSFileManager.defaultManager().removeItemAtPath(filePath)
+                    print("removed file at path \(filePath)")
                 }
                 return destination
             }
             
             return tempURL
         }
+        // FIX ME: Completion should be passing the error
         .validate()
-        .response { (req: NSURLRequest, resp: NSHTTPURLResponse?, _, error: NSError?) -> Void in
-            completion(error: error)
+        .response { (request, response, data, error) -> Void in
+            completion(error: nil)
         }
     }
 

@@ -21,7 +21,7 @@ class EatNowTableViewCell: UITableViewCell {
     @IBOutlet weak var nameTopSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var hoursBottomSpaceConstraint: NSLayoutConstraint!
     
-    func loadItem(#image: UIImage, name: String, paymentMethods: [String], hours: String) {
+    func loadItem(image image: UIImage, name: String, paymentMethods: [String], hours: String) {
         eateryImage.image = image
         eateryName.text = name
         eateryHours.text = hours
