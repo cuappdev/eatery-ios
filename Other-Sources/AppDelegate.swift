@@ -20,10 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        DATA.fetchEateries(false) { (error) -> (Void) in
-            print("Got eateries!")
-        }
-        
         // Uncomment to test with only a few eateries
 //        eateryIDs = [eateryIDs[0], eateryIDs[1], eateryIDs[2]]
 //        eateryIDs = ["becker_house_dining_room"]

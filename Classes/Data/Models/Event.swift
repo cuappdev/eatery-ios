@@ -48,8 +48,7 @@ struct Event {
             }
             
             items[category] = menuItems
-        }
-        
+        }        
         menu = items
     }
     

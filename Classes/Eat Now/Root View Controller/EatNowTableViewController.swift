@@ -36,11 +36,6 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         // Constant cell height
         tableView.rowHeight = cellHeight
-        DATA.fetchEateries(false) { (error) -> (Void) in
-            self.eateries = DATA.eateries
-            print(self.eateries)
-            self.tableView.reloadData()
-        }
         
         // Uncomment for dynamic cell height
         //        tableView.estimatedRowHeight = cellHeight
@@ -66,7 +61,6 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         tableView.tableHeaderView = searchController.searchBar
         tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
         
-        
         // -- Nav bar
         // TODO: make this a proxy and put it in another file
         navigationController?.view.backgroundColor = UIColor.whiteColor()
@@ -78,6 +72,11 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         
         Analytics.screenEatNowTableViewController()
         
+        DATA.fetchEateries(false) { (error) -> (Void) in
+            self.eateries = DATA.eateries
+            print("Fetched data\n")
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: -

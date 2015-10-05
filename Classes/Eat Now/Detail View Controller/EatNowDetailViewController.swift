@@ -18,7 +18,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     private var mealSegments: [String]!
     private var sectionHeaderView: SegmentedControlSectionHeaderView!
     private var selectedMenu: String?
-    private var menus: [String: [MenuItem]] = [:]
+    private var events: [String: Event] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +59,9 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         sectionHeaderView.delegate = self
         
         // Find array of available meals for a given menu (i.e. Brunch, Dinner)
-        menus = eatery.activeEventForDate(NSDate())?.menu ?? [:]
-        let mealsAvailable: [String] = Array((menus ?? [:]).keys)
+        let active = eatery.activeEventForDate(NSDate())
+        events = eatery.eventsOnDate(active?.startDate ?? NSDate())
+        let mealsAvailable: [String] = Array((events ?? [:]).keys)
         selectedMenu = mealsAvailable.first
         
         // Sort them in ascending order (Breakfast < Brunch < Lunch < Dinner)
@@ -87,7 +88,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         mealSegments = sortedSegments
-        
+
         // Has 2 segments by default, so we need to adjust for 1, 3 and 4
         let numberOfSegments = mealSegments.count
         if numberOfSegments == 1 {
@@ -125,8 +126,8 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         if section == 0 {
             return 1
         } else {
-            if let events = eatery.events[selectedMenu ?? ""] {
-                return events.count
+            if let event = events[selectedMenu ?? ""] {
+                return event.menu.count
             }
         }
         

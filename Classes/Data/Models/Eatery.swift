@@ -43,7 +43,7 @@ class Eatery: NSObject {
     // Maps 2015-03-01 to [Event]
     // Thought about using just an array, but
     // for many events, this is much faster for lookups
-    private(set) var events: [String: [Event]] = [:]
+    private(set) var events: [String: [String: Event]] = [:]
     
     init(json: JSON) {
         id    = json[APIKey.Identifier.rawValue].intValue
@@ -64,9 +64,10 @@ class Eatery: NSObject {
             let eventsJSON = hour[APIKey.Events.rawValue]
             let key        = hour[APIKey.Date.rawValue].stringValue
             
-            var currentEvents: [Event] = []
+            var currentEvents: [String: Event] = [:]
             for (_, eventJSON) in eventsJSON {
-                currentEvents.append(Event(json: eventJSON))
+                let event = Event(json: eventJSON)
+                currentEvents[event.desc] = event
             }
             
             events[key] = currentEvents
@@ -78,11 +79,10 @@ class Eatery: NSObject {
         let yesterday = NSDate(timeInterval: -1 * 24 * 60 * 60, sinceDate: date)
         
         for now in [date, yesterday] {
-            if let events = eventsOnDate(now) {
-                for event in events {
-                    if event.occurringOnDate(date) {
-                        return true
-                    }
+            let events = eventsOnDate(now)
+            for (_, event) in events {
+                if event.occurringOnDate(date) {
+                    return true
                 }
             }
         }
@@ -96,10 +96,10 @@ class Eatery: NSObject {
     }
     
     // Retrieves event instances for a specific day
-    func eventsOnDate(date: NSDate) -> [Event]? {
+    func eventsOnDate(date: NSDate) -> [String: Event] {
         Eatery.dateFormatter.dateFormat = "YYYY-MM-dd"
         let dateString = Eatery.dateFormatter.stringFromDate(date)
-        return events[dateString]
+        return events[dateString] ?? [:]
     }
 
     // Retrieves the currently active event or the next event for a day/time
@@ -110,16 +110,15 @@ class Eatery: NSObject {
         var next: Event? = nil
                 
         for now in [date, tomorrow] {
-            if let events = eventsOnDate(now) {
-                
-                for event in events {
-                    let diff = event.startDate.timeIntervalSince1970 - date.timeIntervalSince1970
-                    if event.occurringOnDate(date) {
-                        return event
-                    } else if diff < timeDifference {
-                        timeDifference = diff
-                        next = event
-                    }
+            let events = eventsOnDate(now)
+            
+            for (_, event) in events {
+                let diff = event.startDate.timeIntervalSince1970 - date.timeIntervalSince1970
+                if event.occurringOnDate(date) {
+                    return event
+                } else if diff < timeDifference {
+                    timeDifference = diff
+                    next = event
                 }
             }
         }
