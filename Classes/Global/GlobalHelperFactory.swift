@@ -38,11 +38,3 @@ func printNetworkResponse(request: NSURLRequest?, response: NSHTTPURLResponse?, 
         }
     }
 }
-
-func icsFileExistsForEatery(eatery: Eatery) -> Bool {
-    let fileManager = NSFileManager.defaultManager()
-    let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-    let pathComponent = eatery.icsPathComponent
-    let filePath = directoryURL.URLByAppendingPathComponent(pathComponent).path!
-    return NSFileManager.defaultManager().fileExistsAtPath(filePath)
-}

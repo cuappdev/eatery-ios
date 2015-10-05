@@ -9,18 +9,14 @@
 /* Begin PBXBuildFile section */
 		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
-		C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
-		C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */; };
-		C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */; };
 		C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */; };
 		C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD41B64AA1800AC1C6C /* EateryData.swift */; };
 		C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */; };
 		C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */; };
 		C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD71B64AA1800AC1C6C /* LocationManager.swift */; };
 		C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD91B64AA1800AC1C6C /* Eatery.swift */; };
-		C0497B011B64AA1800AC1C6C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADA1B64AA1800AC1C6C /* Menu.swift */; };
 		C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */; };
 		C0497B031B64AA1800AC1C6C /* EatNowDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */; };
 		C0497B041B64AA1800AC1C6C /* EatNowDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */; };
@@ -101,32 +97,27 @@
 		C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */; };
 		C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
 		C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */; };
-		C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497BD31B64AD3900AC1C6C /* GetMenu.swift */; };
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
-		C872ABA55D09D0E233DA894E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C776123BD662C00D1F0931E9 /* libPods.a */; };
+		FACCE0891BC1A61800E54408 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE0881BC1A61800E54408 /* Event.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		009907E8EA5C64DC3A183B9D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MXLCalendarEvent+Utility.swift"; sourceTree = "<group>"; };
 		C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.app store.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.app store.xcconfig"; sourceTree = "<group>"; };
 		C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.external beta.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.external beta.xcconfig"; sourceTree = "<group>"; };
 		C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.internal beta.xcconfig"; sourceTree = "<group>"; };
 		C0497ACC1B64AA1800AC1C6C /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C0497ACD1B64AA1800AC1C6C /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCalendars.swift; sourceTree = "<group>"; };
-		C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadICS.swift; sourceTree = "<group>"; };
 		C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMeManager.swift; sourceTree = "<group>"; };
 		C0497AD41B64AA1800AC1C6C /* EateryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryData.swift; sourceTree = "<group>"; };
 		C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryIDs.swift; sourceTree = "<group>"; };
 		C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralMenus.swift; sourceTree = "<group>"; };
 		C0497AD71B64AA1800AC1C6C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C0497AD91B64AA1800AC1C6C /* Eatery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eatery.swift; sourceTree = "<group>"; };
-		C0497ADA1B64AA1800AC1C6C /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowDetailHeaderView.swift; sourceTree = "<group>"; };
 		C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EatNowDetailHeaderView.xib; sourceTree = "<group>"; };
@@ -214,7 +205,6 @@
 		C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
 		C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
 		C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
-		C0497BD31B64AD3900AC1C6C /* GetMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMenu.swift; sourceTree = "<group>"; };
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
@@ -223,6 +213,7 @@
 		D18D9C5D1BAF2BF400C9D95D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = SOURCE_ROOT; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		FACCE0881BC1A61800E54408 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,9 +300,6 @@
 		C0497ACF1B64AA1800AC1C6C /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
-				C0497AD01B64AA1800AC1C6C /* FetchCalendars.swift */,
-				C0497AD11B64AA1800AC1C6C /* DownloadICS.swift */,
-				C0497BD31B64AD3900AC1C6C /* GetMenu.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -330,8 +318,8 @@
 			isa = PBXGroup;
 			children = (
 				C0497AD91B64AA1800AC1C6C /* Eatery.swift */,
-				C0497ADA1B64AA1800AC1C6C /* Menu.swift */,
 				C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */,
+				FACCE0881BC1A61800E54408 /* Event.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,7 +373,6 @@
 			children = (
 				C0497AF01B64AA1800AC1C6C /* String+Extension.swift */,
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
-				C0142A021B68A5F20090B33A /* MXLCalendarEvent+Utility.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -706,9 +693,7 @@
 				C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */,
-				C0497AFA1B64AA1800AC1C6C /* DownloadICS.swift in Sources */,
 				C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */,
-				C0497BD41B64AD3900AC1C6C /* GetMenu.swift in Sources */,
 				C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */,
 				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
 				C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */,
@@ -718,9 +703,9 @@
 				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
 				C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
+				FACCE0891BC1A61800E54408 /* Event.swift in Sources */,
 				C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */,
 				C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */,
-				C0497B011B64AA1800AC1C6C /* Menu.swift in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
 				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
@@ -731,13 +716,11 @@
 				C0497B091B64AA1800AC1C6C /* HoursTableViewCell.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */,
-				C0142A031B68A5F20090B33A /* MXLCalendarEvent+Utility.swift in Sources */,
 				C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */,
 				C0497B081B64AA1800AC1C6C /* SegmentedHeader.swift in Sources */,
 				C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */,
 				C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */,
 				C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */,
-				C0497AF91B64AA1800AC1C6C /* FetchCalendars.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
