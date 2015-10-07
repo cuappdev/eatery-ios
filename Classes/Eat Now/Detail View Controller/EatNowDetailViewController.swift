@@ -134,13 +134,13 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("HoursCell", forIndexPath: indexPath) as! HoursTableViewCell
             cell.selectionStyle = .None
 
             // If the eatery has zero or just a closed event, display a "closed" cell
-            var eateryIsClosed = !eatery.isOpenNow()
+            let eateryIsClosed = !eatery.isOpenNow()
 
             if eateryIsClosed {
                 cell.leftLabel.text = "Closed"
@@ -153,11 +153,17 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
             cell.selectionStyle = .None
             
-            var stationArray: [String] = [] //Array(displayMenu[showingMealTypeString]!.keys)
+            let currentEvent = events[selectedMenu!]
+            let currentMenu = currentEvent!.menu
+            let stationArray: [String] = Array(currentMenu.keys)
             
-            let title = ""//stationArray[indexPath.row]
-            let content = ""//displayMenu[showingMealTypeString]![title]
+            let title = stationArray[indexPath.row]
+            let allItems = currentMenu[title]
+            let names = allItems!.map({ (item: MenuItem) -> String in
+                return item.name
+            })
             
+            let content = names.joinWithSeparator("\n")
             cell.titleLabel.text = title.uppercaseString
             cell.contentLabel.text = content
             
