@@ -73,9 +73,11 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         Analytics.screenEatNowTableViewController()
         
         DATA.fetchEateries(false) { (error) -> (Void) in
-            self.eateries = DATA.eateries
             print("Fetched data\n")
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
+                self.eateries = DATA.eateries
+                self.tableView.reloadData()
+            })
         }
     }
     
