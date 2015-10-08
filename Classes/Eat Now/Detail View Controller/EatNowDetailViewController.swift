@@ -62,7 +62,6 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         let active = eatery.activeEventForDate(NSDate())
         events = eatery.eventsOnDate(active?.startDate ?? NSDate())
         let mealsAvailable: [String] = Array((events ?? [:]).keys)
-        selectedMenu = mealsAvailable.first
         
         // Sort them in ascending order (Breakfast < Brunch < Lunch < Dinner)
         var sortedSegments = mealsAvailable
@@ -106,7 +105,9 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             sectionHeaderView.segmentedControl.setTitle(mealString, forSegmentAtIndex: i)
         }
     
-        
+        selectedMenu = sectionHeaderView.segmentedControl
+            .titleForSegmentAtIndex(sectionHeaderView.segmentedControl.selectedSegmentIndex)
+
         let attributes: [NSObject : AnyObject] = [
             NSFontAttributeName : UIFont(name: "Avenir Next", size: 16)!
         ]
