@@ -43,6 +43,8 @@ class Eatery: NSObject {
     let area: Area
     let address: String
     let image: UIImage?
+    let photo: UIImage?
+    
     let hardcodedMenu: [String: [MenuItem]]?
     
     let location: CLLocation
@@ -73,7 +75,8 @@ class Eatery: NSObject {
         slug  = json[APIKey.Slug.rawValue].stringValue
         about = json[APIKey.AboutShort.rawValue].stringValue
         phone = json[APIKey.PhoneNumber.rawValue].stringValue
-        image = UIImage(named: slug)
+        image = UIImage(named: slug + "+logo.jpg")
+        photo = UIImage(named: slug + ".jpg")
         
         //TODO: make the below line safe
         area     = Area(rawValue: json[APIKey.CampusArea.rawValue][APIKey.ShortDescription.rawValue].stringValue)!

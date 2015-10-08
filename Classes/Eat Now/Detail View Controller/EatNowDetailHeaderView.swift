@@ -15,7 +15,7 @@ class EatNowDetailHeaderView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     
     func setEatery(eatery: Eatery) {
-        backgroundImageView.image = eatery.image
+        backgroundImageView.image = eatery.photo ?? eatery.image ?? UIImage()
         foregroundImageView.image = eatery.image
         foregroundImageView.layer.cornerRadius = foregroundImageView.frame.width / 2
         foregroundImageView.layer.borderColor = UIColor.whiteColor().CGColor
