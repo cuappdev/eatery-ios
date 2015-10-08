@@ -126,15 +126,18 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         if section == 0 {
             return 1
         } else {
-            if let event = events[selectedMenu ?? ""] {
-                return event.menu.count
+            if let selectedMenu = selectedMenu {
+                if let event = events[selectedMenu] {
+                    return event.menu.count == 0 ? 1 : event.menu.count
+                }
             }
         }
         
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("HoursCell", forIndexPath: indexPath) as! HoursTableViewCell
             cell.selectionStyle = .None
@@ -148,22 +151,37 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
                 return cell
             }
             
+            let keys = Array(events.keys)
+            cell.leftLabel.text = keys.joinWithSeparator("\n")
+            
+            let values = keys.map({ (key: String) -> String in
+                let event = self.events[key]!
+                return event.startDateFormatted + " - " + event.endDateFormatted
+            })
+            cell.rightLabel.text = values.joinWithSeparator("\n")
+            
             return cell
         } else {
+            let currentEvent = events[selectedMenu!]
             let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
             cell.selectionStyle = .None
             
-            let currentEvent = events[selectedMenu!]
             let currentMenu = currentEvent!.menu
             let stationArray: [String] = Array(currentMenu.keys)
             
-            let title = stationArray[indexPath.row]
-            let allItems = currentMenu[title]
-            let names = allItems!.map({ (item: MenuItem) -> String in
-                return item.name
-            })
+            var title = "Sorry"
+            var content = "No menu available for \(selectedMenu!)"
             
-            let content = names.joinWithSeparator("\n")
+            if stationArray.count != 0 {
+                title = stationArray[indexPath.row]
+                let allItems = currentMenu[title]
+                let names = allItems!.map({ (item: MenuItem) -> String in
+                    return item.name
+                })
+                
+                content = names.count == 0 ? "No items to show" : names.joinWithSeparator("\n")
+            }
+        
             cell.titleLabel.text = title.uppercaseString
             cell.contentLabel.text = content
             
