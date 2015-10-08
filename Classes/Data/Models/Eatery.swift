@@ -90,9 +90,18 @@ class Eatery: NSObject {
         return false
     }
     
+    func isOpenForDate(date: NSDate) -> Bool {
+        let events = eventsOnDate(date)
+        return events.count != 0
+    }
+    
     // Tells if eatery is open now
     func isOpenNow() -> Bool {
         return isOpenOnDate(NSDate())
+    }
+    
+    func isOpenToday() -> Bool {
+        return isOpenForDate(NSDate())
     }
     
     // Retrieves event instances for a specific day

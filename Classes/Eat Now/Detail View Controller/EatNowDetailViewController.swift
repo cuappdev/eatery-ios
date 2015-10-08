@@ -143,7 +143,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             cell.selectionStyle = .None
 
             // If the eatery has zero or just a closed event, display a "closed" cell
-            let eateryIsClosed = !eatery.isOpenNow()
+            let eateryIsClosed = !eatery.isOpenToday()
 
             if eateryIsClosed {
                 cell.leftLabel.text = "Closed"
