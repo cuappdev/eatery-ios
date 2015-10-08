@@ -35,9 +35,13 @@ struct Event {
         startDateFormatted = json[APIKey.StartFormat.rawValue].stringValue
         endDateFormatted = json[APIKey.EndFormat.rawValue].stringValue
         
-        var items: [String: [MenuItem]] = [:]
-        
         let menuJSON = json[APIKey.Menu.rawValue]
+        menu = Event.menuFromJSON(menuJSON)
+    }
+    
+    static func menuFromJSON(menuJSON: JSON) -> [String: [MenuItem]] {
+        var items: [String: [MenuItem]] = [:]
+
         for (_, json) in menuJSON {
             let category = json[APIKey.Category.rawValue].stringValue
             var menuItems: [MenuItem] = []
@@ -48,8 +52,9 @@ struct Event {
             }
             
             items[category] = menuItems
-        }        
-        menu = items
+        }
+        
+        return items
     }
     
     func occurringOnDate(date: NSDate) -> Bool {

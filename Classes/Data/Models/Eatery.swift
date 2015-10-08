@@ -26,8 +26,14 @@ enum Area: String {
     case Central = "Central"
 }
 
+func makeFormatter () -> NSDateFormatter {
+    let formatter = NSDateFormatter()
+    formatter.dateFormat = "YYYY-MM-dd"
+    return formatter
+}
+
 class Eatery: NSObject {
-    static let dateFormatter = NSDateFormatter()
+    static let dateFormatter = makeFormatter()
 
     let id: Int
     let name: String
@@ -44,6 +50,21 @@ class Eatery: NSObject {
     // Thought about using just an array, but
     // for many events, this is much faster for lookups
     private(set) var events: [String: [String: Event]] = [:]
+    private var _todaysEventsString: String? = nil
+    var todaysEventsString: String {
+        get {
+            if let _todaysEventsString = _todaysEventsString {
+                return _todaysEventsString
+            }
+            let ar = Array(eventsOnDate(NSDate()).values)
+            let strings = ar.map { (ev: Event) -> String in
+                ev.menu.description
+            }
+            
+            _todaysEventsString = strings.joinWithSeparator("\n")
+            return _todaysEventsString!
+        }
+    }
     
     init(json: JSON) {
         id    = json[APIKey.Identifier.rawValue].intValue
@@ -72,6 +93,9 @@ class Eatery: NSObject {
             
             events[key] = currentEvents
         }
+        
+        // there is an array called diningItems in it
+        
     }
     
     // Where onDate means including time
@@ -106,7 +130,6 @@ class Eatery: NSObject {
     
     // Retrieves event instances for a specific day
     func eventsOnDate(date: NSDate) -> [String: Event] {
-        Eatery.dateFormatter.dateFormat = "YYYY-MM-dd"
         let dateString = Eatery.dateFormatter.stringFromDate(date)
         return events[dateString] ?? [:]
     }
