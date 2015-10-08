@@ -167,7 +167,13 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
             cell.selectionStyle = .None
             
-            let currentMenu = currentEvent!.menu
+            var currentMenu = currentEvent!.menu
+            if currentMenu.count == 0 {
+                if let hardcoded = eatery.hardcodedMenu {
+                    currentMenu = hardcoded
+                }
+            }
+            
             let stationArray: [String] = Array(currentMenu.keys)
             
             var title = "Sorry"

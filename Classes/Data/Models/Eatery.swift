@@ -43,6 +43,7 @@ class Eatery: NSObject {
     let area: Area
     let address: String
     let image: UIImage?
+    let hardcodedMenu: [String: [MenuItem]]?
     
     let location: CLLocation
     
@@ -78,6 +79,14 @@ class Eatery: NSObject {
         area     = Area(rawValue: json[APIKey.CampusArea.rawValue][APIKey.ShortDescription.rawValue].stringValue)!
         address  = json[APIKey.Address.rawValue].stringValue
         location = CLLocation(latitude: json[APIKey.Latitude.rawValue].doubleValue, longitude: json[APIKey.Longitude.rawValue].doubleValue)
+        
+//        if let d = kEateryGeneralMenus[slug] {
+//            hardcodedMenu = Event.menuFromJSON(d)
+//        } else {
+//            hardcodedMenu = nil
+//        }
+//        
+        hardcodedMenu = nil
         
         let hoursJSON = json[APIKey.Hours.rawValue]
         

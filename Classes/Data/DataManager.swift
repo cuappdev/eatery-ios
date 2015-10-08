@@ -60,6 +60,7 @@ enum APIKey : String {
     case PhoneNumber      = "contactPhone"
     case CampusArea       = "campusArea"
     case Address          = "location"
+    case DiningItems      = "diningItems"
     
     // Hours
     case Date             = "date"
