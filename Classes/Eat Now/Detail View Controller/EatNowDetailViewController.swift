@@ -153,6 +153,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
             
             let keys = Array(events.keys)
             cell.leftLabel.text = keys.joinWithSeparator("\n")
+            cell.leftLabel.numberOfLines = keys.count
             
             let values = keys.map({ (key: String) -> String in
                 let event = self.events[key]!
