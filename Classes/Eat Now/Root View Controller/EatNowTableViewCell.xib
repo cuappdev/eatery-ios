@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15A204h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -11,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="430" height="132"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="430" height="131.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="998" verticalCompressionResistancePriority="998" translatesAutoresizingMaskIntoConstraints="NO" id="hTv-uK-R0e">
@@ -31,7 +32,7 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUf-xc-qNr">
-                        <rect key="frame" x="95" y="16" width="297" height="25"/>
+                        <rect key="frame" x="95" y="16" width="295" height="25"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -52,6 +53,18 @@
                             </mask>
                         </variation>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jxf-qv-7os">
+                        <rect key="frame" x="398" y="16" width="24" height="24"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="JBU-MG-Zfp"/>
+                            <constraint firstAttribute="height" constant="24" id="eOy-Z3-I7G"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="starOff"/>
+                        <connections>
+                            <action selector="favoriteButtonPressed:" destination="KGk-i7-Jjw" eventType="touchDown" id="Ohp-EP-9Za"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -60,8 +73,10 @@
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="H9b-ZV-aVi" secondAttribute="bottom" constant="12" id="CUZ-Pf-Vzi"/>
                     <constraint firstItem="GUf-xc-qNr" firstAttribute="leading" secondItem="hTv-uK-R0e" secondAttribute="trailing" constant="13" id="D8A-yS-en6"/>
                     <constraint firstItem="hTv-uK-R0e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="ESq-7S-9Sf"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Jxf-qv-7os" secondAttribute="trailing" id="Gz6-Cu-S3d"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="hTv-uK-R0e" secondAttribute="bottom" constant="8" id="JLR-BD-sTz"/>
                     <constraint firstItem="GUf-xc-qNr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="K6J-6r-C3H"/>
+                    <constraint firstItem="Jxf-qv-7os" firstAttribute="leading" secondItem="GUf-xc-qNr" secondAttribute="trailing" constant="8" id="KjV-eW-7Lw"/>
                     <constraint firstItem="hTv-uK-R0e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="LEG-3k-mhG"/>
                     <constraint firstAttribute="centerY" secondItem="hTv-uK-R0e" secondAttribute="centerY" id="MC7-l4-iud"/>
                     <constraint firstAttribute="trailingMargin" secondItem="GUf-xc-qNr" secondAttribute="trailing" constant="30" id="NaB-yD-gva"/>
@@ -75,6 +90,7 @@
                     <constraint firstItem="H9b-ZV-aVi" firstAttribute="top" secondItem="GUf-xc-qNr" secondAttribute="bottom" constant="5" id="f96-Zu-cq3"/>
                     <constraint firstItem="hTv-uK-R0e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="lNX-6m-RTe"/>
                     <constraint firstItem="H9b-ZV-aVi" firstAttribute="leading" secondItem="hTv-uK-R0e" secondAttribute="trailing" constant="13" id="lsQ-YZ-D7m"/>
+                    <constraint firstItem="Jxf-qv-7os" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="xh9-Vo-FUZ"/>
                     <constraint firstItem="hTv-uK-R0e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="yr6-Im-17W"/>
                 </constraints>
                 <variation key="default">
@@ -88,6 +104,7 @@
                         <exclude reference="egc-FX-yWj"/>
                         <exclude reference="yr6-Im-17W"/>
                         <exclude reference="D8A-yS-en6"/>
+                        <exclude reference="NaB-yD-gva"/>
                         <exclude reference="32D-TG-qhq"/>
                         <exclude reference="f96-Zu-cq3"/>
                         <exclude reference="lsQ-YZ-D7m"/>
@@ -99,10 +116,14 @@
                 <outlet property="eateryHours" destination="H9b-ZV-aVi" id="5be-NX-m53"/>
                 <outlet property="eateryImage" destination="hTv-uK-R0e" id="zXk-7E-ssY"/>
                 <outlet property="eateryName" destination="GUf-xc-qNr" id="Hhw-d0-hz6"/>
+                <outlet property="favoriteButton" destination="Jxf-qv-7os" id="jAq-mh-MPw"/>
                 <outlet property="hoursBottomSpaceConstraint" destination="CUZ-Pf-Vzi" id="ON4-Az-9Zu"/>
                 <outlet property="nameTopSpaceConstraint" destination="K6J-6r-C3H" id="mbl-dc-62D"/>
             </connections>
             <point key="canvasLocation" x="412" y="185"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="starOff" width="100" height="100"/>
+    </resources>
 </document>

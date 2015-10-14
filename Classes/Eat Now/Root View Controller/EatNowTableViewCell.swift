@@ -17,10 +17,17 @@ class EatNowTableViewCell: UITableViewCell {
     @IBOutlet weak var eateryName: UILabel!
     @IBOutlet weak var eateryHours: UILabel!
     
-    
     @IBOutlet weak var nameTopSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var hoursBottomSpaceConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    var favoriteClickAction: ((sender: EatNowTableViewCell) -> ())?
+    
+    @IBAction func favoriteButtonPressed(sender: UIButton?) {
+        favoriteClickAction?(sender: self)
+    }
+
     func loadItem(image image: UIImage, name: String, paymentMethods: [String], hours: String) {
         eateryImage.image = image
         eateryName.text = name

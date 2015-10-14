@@ -124,6 +124,19 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         cell.loadItem(image: e.image ?? UIImage(), name: e.name, paymentMethods: [""], hours: displayText)
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
+        let active = e.favorite
+        cell.favoriteButton.setImage(UIImage(named: active ? "starOn" : "starOff"), forState: .Normal)
+        
+        cell.favoriteClickAction = {
+            [unowned e]
+            (sender) in
+            
+            let active = e.favorite
+            e.favorite = !active
+            
+            sender.favoriteButton.setImage(UIImage(named: !active ? "starOn" : "starOff"), forState: .Normal)
+        }
+
         return cell
     }
     
