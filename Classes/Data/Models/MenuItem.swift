@@ -7,19 +7,19 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class MenuItem: NSObject {
-    var category: String = ""
+struct MenuItem {
     let name: String
-    var healthy: Bool = true
+    let healthy: Bool
     
-    init(category: String, name: String, healthy: Bool) {
-        self.category = category
+    init(name: String, healthy: Bool) {
         self.name = name
         self.healthy = healthy
     }
     
-    override var description: String {
-        return "Category: \(category)\n\tName: \(name)\n\tHealthy: \(healthy)"
+    init(json: JSON) {
+        name = json[APIKey.Item.rawValue].stringValue
+        healthy = json[APIKey.Healthy.rawValue].boolValue
     }
 }

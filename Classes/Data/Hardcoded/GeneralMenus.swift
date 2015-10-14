@@ -15,181 +15,544 @@ private let kMenuCategoryName = "General"
 
 let kEateryGeneralMenus: [String : JSON] =
 [
-"amit_bhatia_libe_cafe" :
-[
-    kGeneralMealTypeName   : [
+    "Amit-Bhatia-Libe-Cafe" :
         [
-            "name"      : "Starbucks Specialty Coffee, Tazo Tea, Hot Cocoa, Frappuccino, Pepsi Beverages, Smoothies, Baked Goods, Sushi, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"atrium_cafe" :
-[
-    kGeneralMealTypeName   : [
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "item": "Starbucks Specialty Coffee",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Tazo Tea",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Hot Cocoa",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Frappuccino",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Pepsi Beverages",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "nSmoothies",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Baked Goods",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Sushi",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Grab-n-Go items",
+                        "healthy": false
+                    ]
+                ]
+            ]
+    ],
+    "Atrium-Cafe" :
         [
-            "name"      : "Starbucks Specialty Coffee, Tazo Tea, Hot Cocoa, Pepsi Beverages, Pizza, Dim Sum, Salads, Soups, Chili, Hot and Cold Specialty Sandwiches, Build Your Own Sandwich, Sushi, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"bear_necessities" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items" : [
+                    [
+                        "item": "Starbucks Specialty Coffee",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Tazo Tea",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Hot Cocoa",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Pepsi Beverages",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Pizza",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Dim Sum",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Salads",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Soups",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Chili",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Hot and Cold Specialty Sandwiches",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Build Your Own Sandwich",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Sushi",
+                        "healthy": false
+                    ],
+                    [
+                        "item": "Grab-n-Go Items",
+                        "healthy": false
+                    ],
+                ]
+            ]
+    ],
+    "Bear-Necessities" :
         [
-            "name"      : "Starbucks Coffee, Tazo Tea, Hot Cocoa, Pepsi Beverages, Breakfast Menu, Deli Sandwiches, Burgers, Hot Dogs, Wings, Pizza, Calzones, Soup, Chili, Fries, Mozzarella Sticks, Onion Petals, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ], [
-            "name"      : "During the summer, the Bear Necessities deli and salad counter is closed, and the grill closes at 2pm Monday through Friday. Pizza and calzones are available throughout open hours, and there are FreshTake sandwiches and salads in the cooler.",
-            "category"  : "Special Note"
-        ]
-    ]
-],
-"bears_den" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Starbucks Coffee"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Tazo Tea"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Hot Cocoa"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi Beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Breakfast Menu"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Deli Sandwiches"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Burgers"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Hot Dogs"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Wings"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pizza"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Calzones"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Soup"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Chili"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Fries"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Mozzarella Sticks"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Onion Petals"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "and Grab-n-Go items."
+                    ]
+                ]
+            ], [
+                "category"  : "Special Note",
+                "items": [
+                    [
+                        "item": "During the summer\nthe Bear Necessities deli and salad counter is closed\nand the grill closes at 2pm Monday through Friday. Pizza and calzones are available throughout open hours\nand there are FreshTake sandwiches and salads in the cooler.",
+                        "healthy": false
+                    ]
+                ]
+            ]
+    ],
+    "Bears-Den" :
         [
-            "name"      : "New York Style Pizza, Ivy Room Grinders, garlic knots, Pepsi beverages, beer and wine.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"big_red_barn" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "New York Style Pizza"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Ivy Room Grinders"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "garlic knots"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "beer and wine."
+                    ]
+                ]
+            ]
+    ],
+    "Big-Red-Barn" :
         [
-            "name"      : "Finger Lakes Coffee, Mighty Leaf Tea, Pepsi Beverages, Salads, Breakfast Menu, Pasta, Pizza, Deli and Specialty Sandwiches, Subs and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"cafe_jennie" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Finger Lakes Coffee"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Mighty Leaf Tea"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi Beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Salads"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Breakfast Menu"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pasta"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pizza"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Deli and Specialty Sandwiches"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Subs and Grab-n-Go items."
+                    ]
+                ]
+            ]
+    ],
+    "Cafe-Jennie" :
         [
-            "name"      : "Join us in the morning for Steel Cut Oatmeal, Chobani Greek Style Yogurt, or Chorizo or a Vegetable Frittata Bagel Sandwich. Pop by at lunchtime for one of our creative new sandwiches and wraps, like Beef Brisket, Roasted Vegetable Focaccia, or Thai Chicken. Or visit any time for brewed coffee or tea or an espresso beverage made with Peet's Coffee.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"carols_cafe" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items" : [
+                    [
+                        "item": "Join us in the morning for Steel Cut Oatmeal, Chobani Greek Style Yogurt, or Chorizo or a Vegetable Frittata Bagel Sandwich. Pop by at lunchtime for one of our creative new sandwiches and wraps\nlike Beef Brisket, Roasted Vegetable Focaccia, or Thai Chicken. Or visit any time for brewed coffee or tea or an espresso beverage made with Peet's Coffee.",
+                        "healthy": 0
+                    ]
+                ]
+            ]
+    ],
+    "Carols-Cafe" :
         [
-            "name"      : "Starbucks Specialty Coffees, Tazo Tea, Hot Cocoa, Frappuccino, Smoothies, Pepsi Beverages, Baked Goods, Sushi, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"cascadeli" :
-[
-    kGeneralMealTypeName   : [
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Starbucks Specialty Coffees"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Tazo Tea"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Hot Cocoa"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Frappuccino"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Smoothies"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi Beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Baked Goods"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Sushi"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "and Grab-n-Go items."
+                    ],
+                ]
+            ]
+    ],
+    "Cornell-Dairy-Bar" :
         [
-            "name"      : kMenuNotAvailable,
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"cornell_dairy_bar" :
-[
-    kGeneralMealTypeName   : [
+            [
+                "category": "Current Cornell Dairy ice cream flavors",
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Mint Chocolate Cookie"
+                    ]   ]
+            ]
+    ],
+    "Goldies-Cafe" :
         [
-            "name"      : "Finger Lakes Coffee Roasters Specialty Coffee, Mighty Leaf Tea, Hot Cocoa, Frozen Lattes and Mochas, Pepsi Beverages, Hot & Cold Sandwiches, Soups, and Grab-n-Go items. Order ice cream cupcakes and ice cream sandwiches for your events 48 hours in advance!",
-            "category"  : kMenuCategoryName
-        ], [
-            "name"      : "Sweet CORNell\nBavarian Raspberry Fudge\nCornelia's Dark Secret\nPeanut Butter Mini\nFrench Vanilla\nEzra's Morning Cup\nTriple Play Chocolate\nMint Chocolate Cookie\nVanilla\nChocolate\nCaramel Cubed\nBlack Raspberry\nBear Tracks\nCookies & Cream\nCaramel Turtle Sundae\nMint Chocolate Chip\nStrawberry\nBoorange Chip\nFrozen Four Ezra\nCookie Dough Dream\nThanks for understanding if we're temporarily out of a particular flavor, or need to make substitutions. Sometimes people eat a lot of ice cream, and we just run out of something!",
-            "category"  : "Current Cornell Dairy ice cream flavors"
-        ]
-    ]
-],
-"goldies" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Starbucks Specialty Coffees"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Tazo Tea"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Hot Cocoa"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Frappuccino"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi Beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Soup"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Breakfast Sandwiches"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Deli and Signature Sandwiches"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Sushi"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Baked Goods"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "and Grab-n-Go items."
+                    ]
+                ]
+            ]
+    ],
+    "Green-Dragon" :
         [
-            "name"      : "Starbucks Specialty Coffees, Tazo Tea, Hot Cocoa, Frappuccino, Pepsi Beverages, Soup, Breakfast Sandwiches, Deli and Signature Sandwiches, Sushi, Baked Goods, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"green_dragon" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Finger Lakes Specialty Coffees"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Mighty Leaf Tea"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Hot Cocoa"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Smoothies"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi Beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Sushi"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "and Grab-n-Go items."
+                    ]
+                ]
+            ]
+    ],
+    "Ivy-Room" :
         [
-            "name"      : "Finger Lakes Specialty Coffees, Mighty Leaf Tea, Hot Cocoa, Smoothies, Pepsi Beverages, Sushi, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"ivy_room" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "category"  : kMenuCategoryName,
+                "items": [
+                    [
+                        "healthy": 0,
+                        "item": "Pepsi Beverages"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Make Your Own Salads"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Breakfast Menu"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Burgers"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Fries"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Wraps"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Noodle Bowls"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Rice"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Quesadillas"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Burritos"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Tacos"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Grinders"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Pizza"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Garlic Knots"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "Sushi"
+                    ],
+                    [
+                        "healthy": 0,
+                        "item": "and Grab-n-Go items."
+                    ]
+                ]
+            ]
+    ],
+    "Marthas-Cafe" :
         [
-            "name"      : "Pepsi Beverages, Make Your Own Salads, Breakfast Menu, Burgers, Fries, Wraps, Noodle Bowls, Rice, Quesadillas, Burritos, Tacos, Grinders, Pizza, Garlic Knots, Sushi, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"jansens_market" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "name"      : "Finger Lakes Specialty Coffees\nMighty Leaf Tea\nHot Cocoa\nPepsi Beverages\nBreakfast Menu\nHot and Cold Deli Sandwiches\nSoup\nChili\nBurritos\nSpinners\nTaco Salads\nQuesadillas\nNacho Platters\nSushi\nand Grab-n-Go items.",
+                "category"  : kMenuCategoryName,
+                "items": []
+            ]
+    ],
+    "Mattins-Cafe" :
         [
-            "name"      : kMenuNotAvailable,
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"marthas_cafe" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "name"      : "Starbucks Specialty Coffees\nTazo Tea\nHot Cocoa\nPepsi Beverages\nBreakfast and Deli Sandwiches\nHot Sandwiches and Wraps\nSoup\nChili\nBurgers\nSubs\nSushi\nBaked Goods\nand Grab-n-Go items.",
+                "category"  : kMenuCategoryName,
+                "items": []
+            ]
+    ],
+    "Rustys" :
         [
-            "name"      : "Finger Lakes Specialty Coffees, Mighty Leaf Tea, Hot Cocoa, Pepsi Beverages, Breakfast Menu, Hot and Cold Deli Sandwiches, Soup, Chili, Burritos, Spinners, Taco Salads, Quesadillas, Nacho Platters, Sushi, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"mattins_cafe" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "name"      : "Starbucks Specialty Coffees\nTazo Tea\nHot Cocoa\nPepsi Beverages\nBaked Goods and Grab-n-Go items.",
+                "category"  : kMenuCategoryName,
+                "items": []
+            ]
+    ],
+    "Synapsis-Cafe" :
         [
-            "name"      : "Starbucks Specialty Coffees, Tazo Tea, Hot Cocoa, Pepsi Beverages, Breakfast and Deli Sandwiches, Hot Sandwiches and Wraps, Soup, Chili, Burgers, Subs, Sushi, Baked Goods, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"rustys" :
-[
-    kGeneralMealTypeName   : [
+            
+            [
+                "name"      : "Finger Lakes Specialty Coffee\nMighty Leaf Tea\nHot Cocoa\nBubble Tea\nSmoothies\nPepsi Beverages\nHot and Cold Sandwiches\nSoup\nChili\nPizza\nPasta\nSalads\nFries\nSpanakopita\nBaked Goods\nand Grab-n-Go items.",
+                "category"  : kMenuCategoryName,
+                "items": []
+            ]
+    ],
+    "Trillium" :
         [
-            "name"      : "Starbucks Specialty Coffees, Tazo Tea, Hot Cocoa, Pepsi Beverages, Baked Goods and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"synapsis_cafe" :
-[
-    kGeneralMealTypeName   : [
-        [
-            "name"      : "Finger Lakes Specialty Coffee, Mighty Leaf Tea, Hot Cocoa, Bubble Tea, Smoothies, Pepsi Beverages, Hot and Cold Sandwiches, Soup, Chili, Pizza, Pasta, Salads, Fries, Spanakopita, Baked Goods, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-],
-"trillium" :
-[
-    kGeneralMealTypeName   : [
-        [
-            "name"      : "Starbucks Coffees, Pepsi Beverages, Breakfast Menu, Salads, Deli Sandwiches, Soup, Chili, Personal Pizzas, Burgers, Chicken Tenders, Quesadillas, Burritos, Tacos, Hot Wraps, Bok Choy, Fried Rice, Lo Mein, Baked Goods, and Grab-n-Go items.",
-            "category"  : kMenuCategoryName
-        ]
-    ]
-]]
+            
+            [
+                "name"      : "Starbucks Coffees\nPepsi Beverages\nBreakfast Menu\nSalads\nDeli Sandwiches\nSoup\nChili\nPersonal Pizzas\nBurgers\nChicken Tenders\nQuesadillas\nBurritos\nTacos\nHot Wraps\nBok Choy\nFried Rice\nLo Mein\nBaked Goods\nand Grab-n-Go items.",
+                "category"  : kMenuCategoryName,
+                "items": []
+            ]
+    ]]
 
-
-let kEmptyMenuJSON: JSON = [
-    kGeneralMealTypeName   : [
-        [
-            "name"      : kMenuNotAvailable,
-            "category"  : kMenuCategoryName
-        ]
-    ]
-]

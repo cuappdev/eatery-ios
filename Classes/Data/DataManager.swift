@@ -8,80 +8,98 @@
 
 import Foundation
 import Alamofire
-
-
+import SwiftyJSON
 
 let separator = ":------------------------------------------"
 
-enum Time: String {
-    case Today = "today"
-    case Tomorrow = "tomorrow"
-}
-
-enum MealType: String {
-    case Breakfast = "breakfast"
-    case Brunch = "brunch"
-    case Lunch = "lunch"
-    case Dinner = "dinner"
-    case General = "general"
-    case Unknown = ""
-}
 
 /**
 Router Endpoints enum
-
-- .Root
-- .Calendars
-- .Calendar
-- .CalendarRange
-- .Menus
-- .Menu
-- .MenuMeal
-- .Locations
-- .Location
 */
 enum Router: URLStringConvertible {
-    static let baseURLString = "https://eatery-web.herokuapp.com"
+    static let baseURLString = "https://now.dining.cornell.edu/api/1.0/dining"
     case Root
-    case Calendars
-    case Calendar(String)
-    case CalendarRange(String, Time, Time)
-    case Menus
-    case Menu(String)
-    case MenuMeal(String, MealType)
-    case Locations
-    case Location(String)
+    case Eateries
     
     var URLString: String {
         let path: String = {
             switch self {
-            case .Root:
-                return "/"
-            case .Calendars:
-                return "/calendars"
-            case .Calendar(let calID):
-                return "/calendar/\(calID)"
-            case .CalendarRange(let calID, let start, let end):
-                return "/calendar/\(calID)/\(start.rawValue)/\(end.rawValue)/"
-            case .Menus:
-                return "/menus"
-            case .Menu(let menuID):
-                return "/menu/\(menuID)"
-            case .MenuMeal(let menuID, let meal):
-                return "/menu/\(menuID)/\(meal.rawValue)"
-            case .Locations:
-                return "/locations"
-            case .Location(let locationID):
-                return "/location/\(locationID)"
+                case .Root:
+                    return "/"
+                case .Eateries:
+                    return "/eateries.json"
             }
-            }()
+        }()
         return Router.baseURLString + path
     }
 }
 
+/**
+Keys for Cornell API
+*/
+
+enum APIKey : String {
+    // Top Level
+    case Status    = "status"
+    case Data      = "data"
+    case Meta      = "meta"
+    case Message   = "message"
+    
+    // Data
+    case Eateries  = "eateries"
+    
+    // Eatery
+    case Identifier       = "id"
+    case Slug             = "slug"
+    case Name             = "name"
+    case AboutShort       = "aboutshort"
+    case Latitude         = "latitude"
+    case Longitude        = "longitude"
+    case Hours            = "operatingHours"
+    case Payment          = "payMethods"
+    case PhoneNumber      = "contactPhone"
+    case CampusArea       = "campusArea"
+    case Address          = "location"
+    case DiningItems      = "diningItems"
+    
+    // Hours
+    case Date             = "date"
+    case Events           = "events"
+    
+    // Events
+    case StartTime        = "startTimestamp"
+    case EndTime          = "endTimestamp"
+    case StartFormat      = "start"
+    case EndFormat        = "end"
+    case Menu             = "menu"
+    case Summary          = "calSummary"
+    
+    // Events/Payment/CampusArea
+    case Description      = "descr"
+    case ShortDescription = "descrshort"
+    
+    // Menu
+    case Items            = "items"
+    case Category         = "category"
+    case Item             = "item"
+    case Healthy          = "healthy"
+    
+    // Meta
+    case Copyright = "copyright"
+    case Timestamp = "responseDttm"
+}
+
+enum Status: String {
+    case Success = "success"
+}
+
+enum DataError: ErrorType {
+    case ServerError
+}
+
 class DataManager: NSObject {
         
-    var eateries: [String: Eatery] = [:]
+    private (set) var eateries: [Eatery] = []
     
     static let sharedInstance = DataManager()
     
@@ -89,5 +107,41 @@ class DataManager: NSObject {
 //        super.init()
 //        // TODO: Load eatery data from disk
 //    }
+    
+    func fetchEateries(force: Bool, completion: ((error: ErrorType?) -> (Void))?) {
+        if eateries.count > 0 && !force {
+            completion?(error: nil)
+            return
+        }
+        
+        Alamofire.request(.GET, Router.Eateries)
+            .responseData { [unowned self] (request, response, data) -> Void in
+                if let jsonData = data.value {
+                    self.eateries = []
+                    
+                    let json = JSON(data: jsonData)
+                    print("\n");
+                    
+                    if (json[APIKey.Status.rawValue].stringValue != Status.Success.rawValue) {
+                        print("Got server error!\n")
+                        completion?(error: DataError.ServerError)
+                        // do something is message
+                        return
+                    }
+                    
+                    let eateryList = json["data"]["eateries"]
+                    for eateryJSON in eateryList {
+                        let eatery = Eatery(json: eateryJSON.1)
+                        self.eateries.append(eatery)
+                    }
+                    
+                    completion?(error: nil)
+                    
+                } else {
+                    print("Failed to get parsed response!\n")
+                    completion?(error: data.error)
+                }
+        }
+    }
 }
 

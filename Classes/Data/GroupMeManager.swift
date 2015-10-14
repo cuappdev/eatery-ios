@@ -23,10 +23,8 @@ class GroupMeManager: NSObject {
         case Root
         case Groups
         case Calendar(String)
-        case CalendarRange(String, Time, Time)
         case Menus
         case Menu(String)
-        case MenuMeal(String, MealType)
         case Locations
         case Location(String)
         
@@ -39,14 +37,10 @@ class GroupMeManager: NSObject {
                     return "/groups"
                 case .Calendar(let calID):
                     return "/calendar/\(calID)"
-                case .CalendarRange(let calID, let start, let end):
-                    return "/calendar/\(calID)/\(start.rawValue)/\(end.rawValue)/"
                 case .Menus:
                     return "/menus"
                 case .Menu(let menuID):
                     return "/menu/\(menuID)"
-                case .MenuMeal(let menuID, let meal):
-                    return "/menu/\(menuID)/\(meal.rawValue)"
                 case .Locations:
                     return "/locations"
                 case .Location(let locationID):

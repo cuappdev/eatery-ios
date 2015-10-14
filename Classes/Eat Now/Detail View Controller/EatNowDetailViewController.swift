@@ -13,16 +13,12 @@ private let kHeaderViewFrameHeight: CGFloat = 240
 class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SegmentChangedDelegate {
     
     var eatery: Eatery!
-    private var sortedEvents: [MXLCalendarEvent] = []
-    private var showingMealType: MealType {
-        return MealType(rawValue: mealSegments[selectedSegmentIndex]) ?? .General
-    }
     private var headerView: EatNowDetailHeaderView!
     private var tableView: UITableView!
-    private var displayMenu: MenuDict!
     private var mealSegments: [String]!
-    private var selectedSegmentIndex = 0
     private var sectionHeaderView: SegmentedControlSectionHeaderView!
+    private var selectedMenu: String?
+    private var events: [String: Event] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,51 +53,41 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         
         // DO NOT set the separatorStyle above the -registerNib calls.  It crashes because Xcode is made by interns.
         tableView.separatorStyle = .None
-        
-        sortedEvents = eatery.todaysEvents
-        sortedEvents.sortInPlace { (a, b) -> Bool in
-            if timeOfDate(a.eventStartDate) < timeOfDate(b.eventStartDate) {
-                return true
-            }
-            return false
-        }
-        
-        print(eatery.id + " menu:")
-        print(eatery.menu)
-        
         sectionHeaderView = NSBundle.mainBundle().loadNibNamed("SegmentedControlSectionHeaderView", owner: self, options: nil).first as! SegmentedControlSectionHeaderView
         
         sectionHeaderView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
         sectionHeaderView.delegate = self
         
-        displayMenu = eatery.menu.displayMenu
-        
         // Find array of available meals for a given menu (i.e. Brunch, Dinner)
-        let mealsAvailable: [String] = Array(displayMenu.keys)
+        let active = eatery.activeEventForDate(NSDate())
+        events = eatery.eventsOnDate(active?.startDate ?? NSDate())
+        let mealsAvailable: [String] = Array((events ?? [:]).keys)
         
         // Sort them in ascending order (Breakfast < Brunch < Lunch < Dinner)
         var sortedSegments = mealsAvailable
+        
+        //!TODO: don't hardcode these strings here
         sortedSegments.sortInPlace { (lhs, rhs) -> Bool in
-            if lhs == breakfastString {
+            if lhs == "Breakfast" {
                 return true
             }
-            if rhs == breakfastString {
+            if rhs == "Breakfast" {
                 return false
             }
-            if lhs == brunchString {
+            if lhs == "Brunch" {
                 return true
             }
-            if rhs == brunchString {
+            if rhs == "Brunch" {
                 return false
             }
-            if lhs == dinnerString {
+            if lhs == "Dinner" {
                 return false
             }
             return true
         }
         
         mealSegments = sortedSegments
-        
+
         // Has 2 segments by default, so we need to adjust for 1, 3 and 4
         let numberOfSegments = mealSegments.count
         if numberOfSegments == 1 {
@@ -116,17 +102,18 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         for i in 0..<numberOfSegments {
             let mealString = mealSegments[i]
             // Capitalize first letter of meal
-            let firstLetter = mealString.substringToIndex(mealString.startIndex.advancedBy(1)).uppercaseString
-            let rest = mealString.substringFromIndex(mealString.startIndex.advancedBy(1))
-            sectionHeaderView.segmentedControl.setTitle(firstLetter + rest, forSegmentAtIndex: i)
+            sectionHeaderView.segmentedControl.setTitle(mealString, forSegmentAtIndex: i)
         }
-        
+    
+        selectedMenu = sectionHeaderView.segmentedControl
+            .titleForSegmentAtIndex(sectionHeaderView.segmentedControl.selectedSegmentIndex)
+
         let attributes: [NSObject : AnyObject] = [
             NSFontAttributeName : UIFont(name: "Avenir Next", size: 16)!
         ]
         sectionHeaderView.segmentedControl.setTitleTextAttributes(attributes, forState: .Normal)
         
-        Analytics.screenEatNowDetailViewController(eatery.id)
+        Analytics.screenEatNowDetailViewController(eatery.slug)
     }
     
     // Mark: -
@@ -139,108 +126,70 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
-        }
-        else {
-            if displayMenu == nil {
-                return 0
-            }
-            switch showingMealType {
-            case .Breakfast:
-                return Array(displayMenu["breakfast"]!.keys).count
-            case .Brunch:
-                return Array(displayMenu["brunch"]!.keys).count
-            case .Lunch:
-                return Array(displayMenu["lunch"]!.keys).count
-            case .Dinner:
-                return Array(displayMenu["dinner"]!.keys).count
-            case .General:
-                return Array(displayMenu[kGeneralMealTypeName]!.keys).count
-            default:
-                return 0
+        } else {
+            if let selectedMenu = selectedMenu {
+                if let event = events[selectedMenu] {
+                    return event.menu.count == 0 ? 1 : event.menu.count
+                }
             }
         }
+        
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("HoursCell", forIndexPath: indexPath) as! HoursTableViewCell
             cell.selectionStyle = .None
 
             // If the eatery has zero or just a closed event, display a "closed" cell
-            var eateryIsClosed = false
-            if sortedEvents.count <= 1 {
-                if sortedEvents.count == 1 {
-                    if sortedEvents[0].isClosedEvent() {
-                        eateryIsClosed = true
-                    }
-                } else {
-                    eateryIsClosed = true
-                }
-            }
+            let eateryIsClosed = !eatery.isOpenToday()
+
             if eateryIsClosed {
                 cell.leftLabel.text = "Closed"
                 cell.rightLabel.text = ""
                 return cell
             }
             
-            // Layout using linebreaks rather than a billion different labels
-            var leftString = ""
-            for event in sortedEvents {
-//                println(event.eventSummary)
-                if event.eventSummary.lowercaseString.contains("breakfast") {
-                    leftString += "Breakfast"
-                } else if event.eventSummary.lowercaseString.contains("brunch")  {
-                    leftString += "Brunch"
-                } else if event.eventSummary.lowercaseString.contains("lunch") {
-                    leftString += "Lunch"
-                } else if event.eventSummary.lowercaseString.contains("dinner") {
-                    leftString += "Dinner"
-                } else {
-                    leftString += "Open"
-                }
-                
-                if event != sortedEvents.last {
-                    leftString += "\n"
-                }
-            }
-            cell.leftLabel.text = leftString
+            let keys = Array(events.keys)
+            cell.leftLabel.text = keys.joinWithSeparator("\n")
+            cell.leftLabel.numberOfLines = keys.count
             
-            var rightString = ""
-            for event in sortedEvents {
-                rightString += dateConverter(event.eventStartDate, date2: event.eventEndDate)
-                if event != sortedEvents.last {
-                    rightString += "\n"
-                }
-            }
-            cell.rightLabel.text = rightString
+            let values = keys.map({ (key: String) -> String in
+                let event = self.events[key]!
+                return event.startDateFormatted + " - " + event.endDateFormatted
+            })
+            cell.rightLabel.text = values.joinWithSeparator("\n")
             
             return cell
         } else {
+            let currentEvent = events[selectedMenu!]
             let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
             cell.selectionStyle = .None
             
-            var showingMealTypeString = ""
-            
-            switch showingMealType {
-            case .Breakfast:
-                showingMealTypeString = "breakfast"
-            case .Brunch:
-                showingMealTypeString = "brunch"
-            case .Lunch:
-                showingMealTypeString = "lunch"
-            case .Dinner:
-                showingMealTypeString = "dinner"
-            case .General:
-                showingMealTypeString = kGeneralMealTypeName
-            default:
-                showingMealTypeString = ""
+            var currentMenu = currentEvent!.menu
+            if currentMenu.count == 0 {
+                if let hardcoded = eatery.hardcodedMenu {
+                    currentMenu = hardcoded
+                }
             }
             
-            var stationArray: [String] = Array(displayMenu[showingMealTypeString]!.keys)
+            let stationArray: [String] = Array(currentMenu.keys)
             
-            let title = stationArray[indexPath.row]
-            let content = displayMenu[showingMealTypeString]![title]
+            var title = "Sorry"
+            var content = "No menu available for \(selectedMenu!)"
             
+            if stationArray.count != 0 {
+                title = stationArray[indexPath.row]
+                let allItems = currentMenu[title]
+                let names = allItems!.map({ (item: MenuItem) -> String in
+                    return item.name
+                })
+                
+                content = names.count == 0 ? "No items to show" : names.joinWithSeparator("\n")
+            }
+        
             cell.titleLabel.text = title.uppercaseString
             cell.contentLabel.text = content
             
@@ -283,7 +232,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: SegmentChangedDelegate
     
     func valueChangedForSegmentedControl(sender: UISegmentedControl) {
-        selectedSegmentIndex = sender.selectedSegmentIndex
+        selectedMenu = sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)
         tableView.reloadData()
     }
 }

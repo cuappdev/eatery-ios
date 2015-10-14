@@ -24,48 +24,8 @@ extension NSTimeInterval {
 //    let event = nextEventForEatery(eatery)
 //}
 
-func displayTextForEvent(event: MXLCalendarEvent) -> String {
-    return dateConverter(event.eventStartDate, date2: event.eventEndDate)
-}
-
-/// Returns nil if no more events today
-func nextEventForEatery(eatery: Eatery) -> MXLCalendarEvent? {
-//    let todaysEvents = eatery.calendar.eventsForDate(now) as NSArray as! [MXLCalendarEvent]
-    // TODO: there is no guarantee that todaysEvents is sorted
-    let todaysEvents = eatery.todaysEvents
-    let currentTime = timeOfDate(NOW)
-    
-    // Find an event curently happening
-    func findCurrentEvent() -> MXLCalendarEvent? {
-        for event in todaysEvents {
-            let s = timeOfDate(event.eventStartDate)
-            let e = timeOfDate(event.eventEndDate)
-            if currentTime > s && currentTime < e && !event.isClosedEvent() {
-                return event
-            }
-        }
-        return nil
-    }
-    
-    // If no event currently, find the next one to start
-    func findNextEvent() -> MXLCalendarEvent? {
-        for event in todaysEvents {
-            let e = timeOfDate(event.eventEndDate)
-            if currentTime < e && !event.isClosedEvent() {
-                return event
-            }
-        }
-        return nil
-    }
-    
-    var nextEvent: MXLCalendarEvent? = nil
-    nextEvent = findCurrentEvent()
-    if nextEvent == nil  {
-        // If no event currently happening, find the next one today
-        nextEvent = findNextEvent()
-    }
-    
-    return nextEvent
+func displayTextForEvent(event: Event) -> String {
+    return dateConverter(event.startDate, date2: event.endDate)
 }
 
 /// Returns: Time representation of given date measured in seconds.
