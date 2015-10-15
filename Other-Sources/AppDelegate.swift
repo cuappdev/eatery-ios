@@ -13,6 +13,13 @@ import Analytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var tools: Tools!
+    
+    //example slack info
+    let slackChannel = "C04C10672"
+    let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
+    let slackUsername = "Keeper of All Your Base"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
         
@@ -38,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SEGAnalytics.sharedAnalytics().identify(uuid)
         
         Analytics.trackAppLaunch()
+        
+        //declaration of tools remains active in background while app runs
+        tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
         
         return true
     }
