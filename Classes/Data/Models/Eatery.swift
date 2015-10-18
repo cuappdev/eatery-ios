@@ -81,6 +81,9 @@ class Eatery: NSObject {
     // Thought about using just an array, but
     // for many events, this is much faster for lookups
     private(set) var events: [String: [String: Event]] = [:]
+    
+    // Gives a string full of all the menus for this eatery today
+    // this is used for searching.
     private var _todaysEventsString: String? = nil
     var todaysEventsString: String {
         get {
@@ -188,7 +191,7 @@ class Eatery: NSObject {
                 let diff = event.startDate.timeIntervalSince1970 - date.timeIntervalSince1970
                 if event.occurringOnDate(date) {
                     return event
-                } else if diff < timeDifference {
+                } else if diff < timeDifference && diff > 0 {
                     timeDifference = diff
                     next = event
                 }
