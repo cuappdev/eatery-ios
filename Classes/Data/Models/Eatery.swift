@@ -114,13 +114,11 @@ class Eatery: NSObject {
         address  = json[APIKey.Address.rawValue].stringValue
         location = CLLocation(latitude: json[APIKey.Latitude.rawValue].doubleValue, longitude: json[APIKey.Longitude.rawValue].doubleValue)
         
-//        if let d = kEateryGeneralMenus[slug] {
-//            hardcodedMenu = Event.menuFromJSON(d)
-//        } else {
-//            hardcodedMenu = nil
-//        }
-//        
-        hardcodedMenu = nil
+        if let d = kEateryGeneralMenus[slug] {
+            hardcodedMenu = Event.menuFromJSON(d)
+        } else {
+            hardcodedMenu = nil
+        }
         
         let hoursJSON = json[APIKey.Hours.rawValue]
         

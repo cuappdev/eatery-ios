@@ -47,6 +47,7 @@
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
+		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; settings = {ASSET_TAGS = (); }; };
 		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; settings = {ASSET_TAGS = (); }; };
 		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; settings = {ASSET_TAGS = (); }; };
 		FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
@@ -160,6 +161,7 @@
 		D18D9C5D1BAF2BF400C9D95D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = SOURCE_ROOT; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hardcodedMenus.json; sourceTree = "<group>"; };
 		FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A2E41BC60DE50001DE97 /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
 		FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "amit-bhatia-libe-cafe.jpg"; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		C0497B1D1B64AA3800AC1C6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */,
 				C003672F1B64DC32002839C3 /* testMenu.json */,
 				C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */,
 				C0497B221B64AA3800AC1C6C /* Eatery Images */,
@@ -629,6 +632,7 @@
 				FAC5A3221BC60DE50001DE97 /* becker-house-dining.jpg in Resources */,
 				FAC5A3361BC60DE50001DE97 /* Ivy-Room+logo.jpg in Resources */,
 				FAC5A3231BC60DE50001DE97 /* Becker-House-Dining+logo.jpg in Resources */,
+				FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */,
 				FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */,
 				FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */,
 			);
