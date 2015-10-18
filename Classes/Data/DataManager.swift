@@ -140,7 +140,7 @@ class DataManager: NSObject {
             completion?(error: nil)
         }
         
-        if let request = req.request {
+        if let request = req.request where !force {
             let cached = NSURLCache.sharedURLCache().cachedResponseForRequest(request)
             if let info = cached?.userInfo {
                 // This is hacky because the server doesn't support caching really
