@@ -16,13 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
         
+        let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        NSURLCache.setSharedURLCache(URLCache)
+        
         print("Did finish launching", terminator: "")
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        // Uncomment to test with only a few eateries
-//        eateryIDs = [eateryIDs[0], eateryIDs[1], eateryIDs[2]]
-//        eateryIDs = ["becker_house_dining_room"]
         
         // Set up view controllers
         let eatNow = EatNowTableViewController()
