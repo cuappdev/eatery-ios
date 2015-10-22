@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; settings = {ASSET_TAGS = (); }; };
-		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; settings = {ASSET_TAGS = (); }; };
-		95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */; settings = {ASSET_TAGS = (); }; };
-		95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9C1BD8699F003612DB /* _FBTweakCategoryViewController.m */; settings = {ASSET_TAGS = (); }; };
-		95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9E1BD8699F003612DB /* _FBTweakCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
-		95434FBC1BD8699F003612DB /* _FBTweakDictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA01BD8699F003612DB /* _FBTweakDictionaryViewController.m */; settings = {ASSET_TAGS = (); }; };
-		95434FBD1BD8699F003612DB /* _FBTweakTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA21BD8699F003612DB /* _FBTweakTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		95434FBE1BD8699F003612DB /* FBTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA51BD8699F003612DB /* FBTweak.m */; settings = {ASSET_TAGS = (); }; };
-		95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA71BD8699F003612DB /* FBTweakCategory.m */; settings = {ASSET_TAGS = (); }; };
-		95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA91BD8699F003612DB /* FBTweakCollection.m */; settings = {ASSET_TAGS = (); }; };
-		95434FC11BD8699F003612DB /* FBTweakInline.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FAC1BD8699F003612DB /* FBTweakInline.m */; settings = {ASSET_TAGS = (); }; };
-		95434FC21BD8699F003612DB /* FBTweakShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FAF1BD8699F003612DB /* FBTweakShakeWindow.m */; settings = {ASSET_TAGS = (); }; };
-		95434FC31BD8699F003612DB /* FBTweakStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB11BD8699F003612DB /* FBTweakStore.m */; settings = {ASSET_TAGS = (); }; };
-		95434FC41BD8699F003612DB /* FBTweakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB31BD8699F003612DB /* FBTweakViewController.m */; settings = {ASSET_TAGS = (); }; };
-		95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB41BD8699F003612DB /* SubmitBugViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; settings = {ASSET_TAGS = (); }; };
-		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; settings = {ASSET_TAGS = (); }; };
+		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; };
+		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; };
+		95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */; };
+		95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9C1BD8699F003612DB /* _FBTweakCategoryViewController.m */; };
+		95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9E1BD8699F003612DB /* _FBTweakCollectionViewController.m */; };
+		95434FBC1BD8699F003612DB /* _FBTweakDictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA01BD8699F003612DB /* _FBTweakDictionaryViewController.m */; };
+		95434FBD1BD8699F003612DB /* _FBTweakTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA21BD8699F003612DB /* _FBTweakTableViewCell.m */; };
+		95434FBE1BD8699F003612DB /* FBTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA51BD8699F003612DB /* FBTweak.m */; };
+		95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA71BD8699F003612DB /* FBTweakCategory.m */; };
+		95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA91BD8699F003612DB /* FBTweakCollection.m */; };
+		95434FC11BD8699F003612DB /* FBTweakInline.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FAC1BD8699F003612DB /* FBTweakInline.m */; };
+		95434FC21BD8699F003612DB /* FBTweakShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FAF1BD8699F003612DB /* FBTweakShakeWindow.m */; };
+		95434FC31BD8699F003612DB /* FBTweakStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB11BD8699F003612DB /* FBTweakStore.m */; };
+		95434FC41BD8699F003612DB /* FBTweakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB31BD8699F003612DB /* FBTweakViewController.m */; };
+		95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB41BD8699F003612DB /* SubmitBugViewController.swift */; };
+		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
+		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
@@ -64,61 +64,61 @@
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
-		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A31B1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E61BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A31C1BC60DE50001DE97 /* atrium-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E71BC60DE50001DE97 /* atrium-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A31D1BC60DE50001DE97 /* Atrium-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E81BC60DE50001DE97 /* Atrium-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A31E1BC60DE50001DE97 /* bear-necessities.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E91BC60DE50001DE97 /* bear-necessities.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A31F1BC60DE50001DE97 /* Bear-Necessities+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EA1BC60DE50001DE97 /* Bear-Necessities+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3201BC60DE50001DE97 /* bears-den.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EB1BC60DE50001DE97 /* bears-den.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3211BC60DE50001DE97 /* Bears-Den+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EC1BC60DE50001DE97 /* Bears-Den+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3221BC60DE50001DE97 /* becker-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2ED1BC60DE50001DE97 /* becker-house-dining.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3231BC60DE50001DE97 /* Becker-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EE1BC60DE50001DE97 /* Becker-House-Dining+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3241BC60DE50001DE97 /* big-red-barn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EF1BC60DE50001DE97 /* big-red-barn.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3251BC60DE50001DE97 /* Big-Red-Barn+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F01BC60DE50001DE97 /* Big-Red-Barn+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3261BC60DE50001DE97 /* Bug-Stop-Bagels+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F11BC60DE50001DE97 /* Bug-Stop-Bagels+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3271BC60DE50001DE97 /* cafe-jennie.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F21BC60DE50001DE97 /* cafe-jennie.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3281BC60DE50001DE97 /* Cafe-Jennie+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F31BC60DE50001DE97 /* Cafe-Jennie+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3291BC60DE50001DE97 /* carols-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F41BC60DE50001DE97 /* carols-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A32A1BC60DE50001DE97 /* Carols-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F51BC60DE50001DE97 /* Carols-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A32B1BC60DE50001DE97 /* cascadeli.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F61BC60DE50001DE97 /* cascadeli.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A32C1BC60DE50001DE97 /* Cascadeli+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F71BC60DE50001DE97 /* Cascadeli+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A32D1BC60DE50001DE97 /* cook-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F81BC60DE50001DE97 /* cook-house-dining.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A32E1BC60DE50001DE97 /* Cook-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F91BC60DE50001DE97 /* Cook-House-Dining+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A32F1BC60DE50001DE97 /* cornell-dairy-bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FA1BC60DE50001DE97 /* cornell-dairy-bar.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3301BC60DE50001DE97 /* Cornell-Dairy-Bar+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FB1BC60DE50001DE97 /* Cornell-Dairy-Bar+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3311BC60DE50001DE97 /* Goldies-Cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FC1BC60DE50001DE97 /* Goldies-Cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3321BC60DE50001DE97 /* Goldies-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FD1BC60DE50001DE97 /* Goldies-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3331BC60DE50001DE97 /* green-dragon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FE1BC60DE50001DE97 /* green-dragon.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3341BC60DE50001DE97 /* Green-Dragon+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FF1BC60DE50001DE97 /* Green-Dragon+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3351BC60DE50001DE97 /* Ivy-Room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3001BC60DE50001DE97 /* Ivy-Room.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3361BC60DE50001DE97 /* Ivy-Room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3011BC60DE50001DE97 /* Ivy-Room+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3021BC60DE50001DE97 /* Janens-Dining+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3381BC60DE50001DE97 /* jansens-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3031BC60DE50001DE97 /* jansens-dining.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3391BC60DE50001DE97 /* keeton-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3041BC60DE50001DE97 /* keeton-house-dining.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A33A1BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3051BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A33B1BC60DE50001DE97 /* marthas-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3061BC60DE50001DE97 /* marthas-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A33C1BC60DE50001DE97 /* Marthas-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3071BC60DE50001DE97 /* Marthas-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A33D1BC60DE50001DE97 /* mattins-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3081BC60DE50001DE97 /* mattins-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A33E1BC60DE50001DE97 /* Mattins-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3091BC60DE50001DE97 /* Mattins-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A33F1BC60DE50001DE97 /* North-Star+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30A1BC60DE50001DE97 /* North-Star+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3401BC60DE50001DE97 /* Okenshields+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30B1BC60DE50001DE97 /* Okenshields+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3411BC60DE50001DE97 /* risley-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30C1BC60DE50001DE97 /* risley-dining.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3421BC60DE50001DE97 /* Risley-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30D1BC60DE50001DE97 /* Risley-Dining+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3431BC60DE50001DE97 /* rose-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30E1BC60DE50001DE97 /* rose-house-dining.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3441BC60DE50001DE97 /* Rose-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30F1BC60DE50001DE97 /* Rose-House-Dining+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3451BC60DE50001DE97 /* rpcc-marketplace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3101BC60DE50001DE97 /* rpcc-marketplace.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3461BC60DE50001DE97 /* RPCC-Marketplace+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3111BC60DE50001DE97 /* RPCC-Marketplace+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3471BC60DE50001DE97 /* rustys.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3121BC60DE50001DE97 /* rustys.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3481BC60DE50001DE97 /* Rustys+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3131BC60DE50001DE97 /* Rustys+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A3491BC60DE50001DE97 /* synapsis-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3141BC60DE50001DE97 /* synapsis-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A34A1BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3151BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A34B1BC60DE50001DE97 /* trillium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3161BC60DE50001DE97 /* trillium.jpg */; settings = {ASSET_TAGS = (); }; };
-		FAC5A34C1BC60DE50001DE97 /* Trillium+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3171BC60DE50001DE97 /* Trillium+logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		FACCE0891BC1A61800E54408 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE0881BC1A61800E54408 /* Event.swift */; settings = {ASSET_TAGS = (); }; };
+		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; };
+		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; };
+		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; };
+		FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */; };
+		FAC5A31B1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E61BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg */; };
+		FAC5A31C1BC60DE50001DE97 /* atrium-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E71BC60DE50001DE97 /* atrium-cafe.jpg */; };
+		FAC5A31D1BC60DE50001DE97 /* Atrium-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E81BC60DE50001DE97 /* Atrium-Cafe+logo.jpg */; };
+		FAC5A31E1BC60DE50001DE97 /* bear-necessities.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E91BC60DE50001DE97 /* bear-necessities.jpg */; };
+		FAC5A31F1BC60DE50001DE97 /* Bear-Necessities+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EA1BC60DE50001DE97 /* Bear-Necessities+logo.jpg */; };
+		FAC5A3201BC60DE50001DE97 /* bears-den.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EB1BC60DE50001DE97 /* bears-den.jpg */; };
+		FAC5A3211BC60DE50001DE97 /* Bears-Den+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EC1BC60DE50001DE97 /* Bears-Den+logo.jpg */; };
+		FAC5A3221BC60DE50001DE97 /* becker-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2ED1BC60DE50001DE97 /* becker-house-dining.jpg */; };
+		FAC5A3231BC60DE50001DE97 /* Becker-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EE1BC60DE50001DE97 /* Becker-House-Dining+logo.jpg */; };
+		FAC5A3241BC60DE50001DE97 /* big-red-barn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2EF1BC60DE50001DE97 /* big-red-barn.jpg */; };
+		FAC5A3251BC60DE50001DE97 /* Big-Red-Barn+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F01BC60DE50001DE97 /* Big-Red-Barn+logo.jpg */; };
+		FAC5A3261BC60DE50001DE97 /* Bug-Stop-Bagels+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F11BC60DE50001DE97 /* Bug-Stop-Bagels+logo.jpg */; };
+		FAC5A3271BC60DE50001DE97 /* cafe-jennie.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F21BC60DE50001DE97 /* cafe-jennie.jpg */; };
+		FAC5A3281BC60DE50001DE97 /* Cafe-Jennie+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F31BC60DE50001DE97 /* Cafe-Jennie+logo.jpg */; };
+		FAC5A3291BC60DE50001DE97 /* carols-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F41BC60DE50001DE97 /* carols-cafe.jpg */; };
+		FAC5A32A1BC60DE50001DE97 /* Carols-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F51BC60DE50001DE97 /* Carols-Cafe+logo.jpg */; };
+		FAC5A32B1BC60DE50001DE97 /* cascadeli.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F61BC60DE50001DE97 /* cascadeli.jpg */; };
+		FAC5A32C1BC60DE50001DE97 /* Cascadeli+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F71BC60DE50001DE97 /* Cascadeli+logo.jpg */; };
+		FAC5A32D1BC60DE50001DE97 /* cook-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F81BC60DE50001DE97 /* cook-house-dining.jpg */; };
+		FAC5A32E1BC60DE50001DE97 /* Cook-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2F91BC60DE50001DE97 /* Cook-House-Dining+logo.jpg */; };
+		FAC5A32F1BC60DE50001DE97 /* cornell-dairy-bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FA1BC60DE50001DE97 /* cornell-dairy-bar.jpg */; };
+		FAC5A3301BC60DE50001DE97 /* Cornell-Dairy-Bar+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FB1BC60DE50001DE97 /* Cornell-Dairy-Bar+logo.jpg */; };
+		FAC5A3311BC60DE50001DE97 /* Goldies-Cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FC1BC60DE50001DE97 /* Goldies-Cafe.jpg */; };
+		FAC5A3321BC60DE50001DE97 /* Goldies-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FD1BC60DE50001DE97 /* Goldies-Cafe+logo.jpg */; };
+		FAC5A3331BC60DE50001DE97 /* green-dragon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FE1BC60DE50001DE97 /* green-dragon.jpg */; };
+		FAC5A3341BC60DE50001DE97 /* Green-Dragon+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2FF1BC60DE50001DE97 /* Green-Dragon+logo.jpg */; };
+		FAC5A3351BC60DE50001DE97 /* Ivy-Room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3001BC60DE50001DE97 /* Ivy-Room.jpg */; };
+		FAC5A3361BC60DE50001DE97 /* Ivy-Room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3011BC60DE50001DE97 /* Ivy-Room+logo.jpg */; };
+		FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3021BC60DE50001DE97 /* Janens-Dining+logo.jpg */; };
+		FAC5A3381BC60DE50001DE97 /* jansens-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3031BC60DE50001DE97 /* jansens-dining.jpg */; };
+		FAC5A3391BC60DE50001DE97 /* keeton-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3041BC60DE50001DE97 /* keeton-house-dining.jpg */; };
+		FAC5A33A1BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3051BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg */; };
+		FAC5A33B1BC60DE50001DE97 /* marthas-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3061BC60DE50001DE97 /* marthas-cafe.jpg */; };
+		FAC5A33C1BC60DE50001DE97 /* Marthas-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3071BC60DE50001DE97 /* Marthas-Cafe+logo.jpg */; };
+		FAC5A33D1BC60DE50001DE97 /* mattins-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3081BC60DE50001DE97 /* mattins-cafe.jpg */; };
+		FAC5A33E1BC60DE50001DE97 /* Mattins-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3091BC60DE50001DE97 /* Mattins-Cafe+logo.jpg */; };
+		FAC5A33F1BC60DE50001DE97 /* North-Star+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30A1BC60DE50001DE97 /* North-Star+logo.jpg */; };
+		FAC5A3401BC60DE50001DE97 /* Okenshields+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30B1BC60DE50001DE97 /* Okenshields+logo.jpg */; };
+		FAC5A3411BC60DE50001DE97 /* risley-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30C1BC60DE50001DE97 /* risley-dining.jpg */; };
+		FAC5A3421BC60DE50001DE97 /* Risley-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30D1BC60DE50001DE97 /* Risley-Dining+logo.jpg */; };
+		FAC5A3431BC60DE50001DE97 /* rose-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30E1BC60DE50001DE97 /* rose-house-dining.jpg */; };
+		FAC5A3441BC60DE50001DE97 /* Rose-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A30F1BC60DE50001DE97 /* Rose-House-Dining+logo.jpg */; };
+		FAC5A3451BC60DE50001DE97 /* rpcc-marketplace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3101BC60DE50001DE97 /* rpcc-marketplace.jpg */; };
+		FAC5A3461BC60DE50001DE97 /* RPCC-Marketplace+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3111BC60DE50001DE97 /* RPCC-Marketplace+logo.jpg */; };
+		FAC5A3471BC60DE50001DE97 /* rustys.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3121BC60DE50001DE97 /* rustys.jpg */; };
+		FAC5A3481BC60DE50001DE97 /* Rustys+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3131BC60DE50001DE97 /* Rustys+logo.jpg */; };
+		FAC5A3491BC60DE50001DE97 /* synapsis-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3141BC60DE50001DE97 /* synapsis-cafe.jpg */; };
+		FAC5A34A1BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3151BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg */; };
+		FAC5A34B1BC60DE50001DE97 /* trillium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3161BC60DE50001DE97 /* trillium.jpg */; };
+		FAC5A34C1BC60DE50001DE97 /* Trillium+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3171BC60DE50001DE97 /* Trillium+logo.jpg */; };
+		FACCE0891BC1A61800E54408 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE0881BC1A61800E54408 /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -911,10 +911,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -974,10 +971,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1036,10 +1030,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1098,10 +1089,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

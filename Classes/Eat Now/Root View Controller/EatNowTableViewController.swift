@@ -184,9 +184,9 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         }()
     
     func willPresentSearchController(searchController: UISearchController) {
-        dispatchAfter(0.4, block: { () -> Void in
-            navigationController?.view.addSubview(statusBarView)
-        })
+        dispatchAfter(0.4) {
+            self.navigationController?.view.addSubview(self.statusBarView)
+        }
     }
     
     func didDismissSearchController(searchController: UISearchController) {
