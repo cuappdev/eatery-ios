@@ -13,16 +13,25 @@ import Analytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var tools: Tools!
+    
+    //example slack info
+    let slackChannel = "C04C10672"
+    let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
+    let slackUsername = "Keeper of All Your Base"
+    
+    //flag to enable tools
+    let toolsEnabled = true
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
+        
+        let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        NSURLCache.setSharedURLCache(URLCache)
         
         print("Did finish launching", terminator: "")
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        // Uncomment to test with only a few eateries
-//        eateryIDs = [eateryIDs[0], eateryIDs[1], eateryIDs[2]]
-//        eateryIDs = ["becker_house_dining_room"]
         
         // Set up view controllers
         let eatNow = EatNowTableViewController()
@@ -40,6 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Analytics.trackAppLaunch()
         
+        //declaration of tools remains active in background while app runs
+        if toolsEnabled {
+            tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
+        }
+
         return true
     }
 

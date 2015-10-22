@@ -8,6 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; settings = {ASSET_TAGS = (); }; };
+		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; settings = {ASSET_TAGS = (); }; };
+		95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */; settings = {ASSET_TAGS = (); }; };
+		95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9C1BD8699F003612DB /* _FBTweakCategoryViewController.m */; settings = {ASSET_TAGS = (); }; };
+		95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9E1BD8699F003612DB /* _FBTweakCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
+		95434FBC1BD8699F003612DB /* _FBTweakDictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA01BD8699F003612DB /* _FBTweakDictionaryViewController.m */; settings = {ASSET_TAGS = (); }; };
+		95434FBD1BD8699F003612DB /* _FBTweakTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA21BD8699F003612DB /* _FBTweakTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		95434FBE1BD8699F003612DB /* FBTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA51BD8699F003612DB /* FBTweak.m */; settings = {ASSET_TAGS = (); }; };
+		95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA71BD8699F003612DB /* FBTweakCategory.m */; settings = {ASSET_TAGS = (); }; };
+		95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FA91BD8699F003612DB /* FBTweakCollection.m */; settings = {ASSET_TAGS = (); }; };
+		95434FC11BD8699F003612DB /* FBTweakInline.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FAC1BD8699F003612DB /* FBTweakInline.m */; settings = {ASSET_TAGS = (); }; };
+		95434FC21BD8699F003612DB /* FBTweakShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FAF1BD8699F003612DB /* FBTweakShakeWindow.m */; settings = {ASSET_TAGS = (); }; };
+		95434FC31BD8699F003612DB /* FBTweakStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB11BD8699F003612DB /* FBTweakStore.m */; settings = {ASSET_TAGS = (); }; };
+		95434FC41BD8699F003612DB /* FBTweakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB31BD8699F003612DB /* FBTweakViewController.m */; settings = {ASSET_TAGS = (); }; };
+		95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB41BD8699F003612DB /* SubmitBugViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; settings = {ASSET_TAGS = (); }; };
+		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; settings = {ASSET_TAGS = (); }; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
@@ -47,6 +64,7 @@
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
+		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; settings = {ASSET_TAGS = (); }; };
 		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; settings = {ASSET_TAGS = (); }; };
 		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; settings = {ASSET_TAGS = (); }; };
 		FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */; settings = {ASSET_TAGS = (); }; };
@@ -105,6 +123,39 @@
 
 /* Begin PBXFileReference section */
 		009907E8EA5C64DC3A183B9D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95434F951BD8699F003612DB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
+		95434F971BD8699F003612DB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
+		95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
+		95434F991BD8699F003612DB /* _FBTweakBindObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakBindObserver.h; sourceTree = "<group>"; };
+		95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakBindObserver.m; sourceTree = "<group>"; };
+		95434F9B1BD8699F003612DB /* _FBTweakCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakCategoryViewController.h; sourceTree = "<group>"; };
+		95434F9C1BD8699F003612DB /* _FBTweakCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakCategoryViewController.m; sourceTree = "<group>"; };
+		95434F9D1BD8699F003612DB /* _FBTweakCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakCollectionViewController.h; sourceTree = "<group>"; };
+		95434F9E1BD8699F003612DB /* _FBTweakCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakCollectionViewController.m; sourceTree = "<group>"; };
+		95434F9F1BD8699F003612DB /* _FBTweakDictionaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakDictionaryViewController.h; sourceTree = "<group>"; };
+		95434FA01BD8699F003612DB /* _FBTweakDictionaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakDictionaryViewController.m; sourceTree = "<group>"; };
+		95434FA11BD8699F003612DB /* _FBTweakTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakTableViewCell.h; sourceTree = "<group>"; };
+		95434FA21BD8699F003612DB /* _FBTweakTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakTableViewCell.m; sourceTree = "<group>"; };
+		95434FA31BD8699F003612DB /* FBTweak-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBTweak-Prefix.pch"; sourceTree = "<group>"; };
+		95434FA41BD8699F003612DB /* FBTweak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweak.h; sourceTree = "<group>"; };
+		95434FA51BD8699F003612DB /* FBTweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweak.m; sourceTree = "<group>"; };
+		95434FA61BD8699F003612DB /* FBTweakCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakCategory.h; sourceTree = "<group>"; };
+		95434FA71BD8699F003612DB /* FBTweakCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakCategory.m; sourceTree = "<group>"; };
+		95434FA81BD8699F003612DB /* FBTweakCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakCollection.h; sourceTree = "<group>"; };
+		95434FA91BD8699F003612DB /* FBTweakCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakCollection.m; sourceTree = "<group>"; };
+		95434FAA1BD8699F003612DB /* FBTweakEnabled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakEnabled.h; sourceTree = "<group>"; };
+		95434FAB1BD8699F003612DB /* FBTweakInline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakInline.h; sourceTree = "<group>"; };
+		95434FAC1BD8699F003612DB /* FBTweakInline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakInline.m; sourceTree = "<group>"; };
+		95434FAD1BD8699F003612DB /* FBTweakInlineInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakInlineInternal.h; sourceTree = "<group>"; };
+		95434FAE1BD8699F003612DB /* FBTweakShakeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakShakeWindow.h; sourceTree = "<group>"; };
+		95434FAF1BD8699F003612DB /* FBTweakShakeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakShakeWindow.m; sourceTree = "<group>"; };
+		95434FB01BD8699F003612DB /* FBTweakStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakStore.h; sourceTree = "<group>"; };
+		95434FB11BD8699F003612DB /* FBTweakStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakStore.m; sourceTree = "<group>"; };
+		95434FB21BD8699F003612DB /* FBTweakViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakViewController.h; sourceTree = "<group>"; };
+		95434FB31BD8699F003612DB /* FBTweakViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakViewController.m; sourceTree = "<group>"; };
+		95434FB41BD8699F003612DB /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
+		95434FB51BD8699F003612DB /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		95434FB61BD8699F003612DB /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.app store.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.app store.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +211,7 @@
 		D18D9C5D1BAF2BF400C9D95D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = SOURCE_ROOT; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hardcodedMenus.json; sourceTree = "<group>"; };
 		FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A2E41BC60DE50001DE97 /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
 		FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "amit-bhatia-libe-cafe.jpg"; sourceTree = "<group>"; };
@@ -228,6 +280,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		95434F941BD8699F003612DB /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				95434F951BD8699F003612DB /* ADScreenCapture.swift */,
+				95434F961BD8699F003612DB /* FBTweaks */,
+				95434FB41BD8699F003612DB /* SubmitBugViewController.swift */,
+				95434FB51BD8699F003612DB /* Tools.swift */,
+				95434FB61BD8699F003612DB /* Tweaks.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		95434F961BD8699F003612DB /* FBTweaks */ = {
+			isa = PBXGroup;
+			children = (
+				95434F971BD8699F003612DB /* _FBTweakArrayViewController.h */,
+				95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */,
+				95434F991BD8699F003612DB /* _FBTweakBindObserver.h */,
+				95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */,
+				95434F9B1BD8699F003612DB /* _FBTweakCategoryViewController.h */,
+				95434F9C1BD8699F003612DB /* _FBTweakCategoryViewController.m */,
+				95434F9D1BD8699F003612DB /* _FBTweakCollectionViewController.h */,
+				95434F9E1BD8699F003612DB /* _FBTweakCollectionViewController.m */,
+				95434F9F1BD8699F003612DB /* _FBTweakDictionaryViewController.h */,
+				95434FA01BD8699F003612DB /* _FBTweakDictionaryViewController.m */,
+				95434FA11BD8699F003612DB /* _FBTweakTableViewCell.h */,
+				95434FA21BD8699F003612DB /* _FBTweakTableViewCell.m */,
+				95434FA31BD8699F003612DB /* FBTweak-Prefix.pch */,
+				95434FA41BD8699F003612DB /* FBTweak.h */,
+				95434FA51BD8699F003612DB /* FBTweak.m */,
+				95434FA61BD8699F003612DB /* FBTweakCategory.h */,
+				95434FA71BD8699F003612DB /* FBTweakCategory.m */,
+				95434FA81BD8699F003612DB /* FBTweakCollection.h */,
+				95434FA91BD8699F003612DB /* FBTweakCollection.m */,
+				95434FAA1BD8699F003612DB /* FBTweakEnabled.h */,
+				95434FAB1BD8699F003612DB /* FBTweakInline.h */,
+				95434FAC1BD8699F003612DB /* FBTweakInline.m */,
+				95434FAD1BD8699F003612DB /* FBTweakInlineInternal.h */,
+				95434FAE1BD8699F003612DB /* FBTweakShakeWindow.h */,
+				95434FAF1BD8699F003612DB /* FBTweakShakeWindow.m */,
+				95434FB01BD8699F003612DB /* FBTweakStore.h */,
+				95434FB11BD8699F003612DB /* FBTweakStore.m */,
+				95434FB21BD8699F003612DB /* FBTweakViewController.h */,
+				95434FB31BD8699F003612DB /* FBTweakViewController.m */,
+			);
+			path = FBTweaks;
+			sourceTree = "<group>";
+		};
 		9B4931655E89F604CB150CD0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				C0497B591B64AA3800AC1C6C /* vendor */,
+				95434F941BD8699F003612DB /* Tools */,
 				C0497ACA1B64AA1800AC1C6C /* Classes */,
 				C0497BC11B64AB4100AC1C6C /* Other-Sources */,
 				C0497B1D1B64AA3800AC1C6C /* Resources */,
@@ -392,6 +493,7 @@
 		C0497B1D1B64AA3800AC1C6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */,
 				C003672F1B64DC32002839C3 /* testMenu.json */,
 				C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */,
 				C0497B221B64AA3800AC1C6C /* Eatery Images */,
@@ -629,6 +731,7 @@
 				FAC5A3221BC60DE50001DE97 /* becker-house-dining.jpg in Resources */,
 				FAC5A3361BC60DE50001DE97 /* Ivy-Room+logo.jpg in Resources */,
 				FAC5A3231BC60DE50001DE97 /* Becker-House-Dining+logo.jpg in Resources */,
+				FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */,
 				FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */,
 				FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */,
 			);
@@ -689,23 +792,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95434FBE1BD8699F003612DB /* FBTweak.m in Sources */,
 				C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */,
 				C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */,
+				95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */,
+				95434FC71BD8699F003612DB /* Tweaks.swift in Sources */,
+				95434FC31BD8699F003612DB /* FBTweakStore.m in Sources */,
+				95434FC11BD8699F003612DB /* FBTweakInline.m in Sources */,
 				C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */,
+				95434FBD1BD8699F003612DB /* _FBTweakTableViewCell.m in Sources */,
 				C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */,
 				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
 				C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */,
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
+				95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */,
 				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
 				C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */,
+				95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
+				95434FC21BD8699F003612DB /* FBTweakShakeWindow.m in Sources */,
 				FACCE0891BC1A61800E54408 /* Event.swift in Sources */,
 				C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */,
+				95434FC41BD8699F003612DB /* FBTweakViewController.m in Sources */,
 				C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */,
+				95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */,
+				95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
 				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
@@ -714,11 +829,16 @@
 				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,
 				C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */,
 				C0497B091B64AA1800AC1C6C /* HoursTableViewCell.swift in Sources */,
+				95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */,
+				95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
+				95434FC61BD8699F003612DB /* Tools.swift in Sources */,
 				C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */,
 				C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */,
 				C0497B081B64AA1800AC1C6C /* SegmentedHeader.swift in Sources */,
+				95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */,
 				C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */,
+				95434FBC1BD8699F003612DB /* _FBTweakDictionaryViewController.m in Sources */,
 				C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */,
 				C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */,
 			);

@@ -21,7 +21,6 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let dateConverter = NSDateFormatter()
         dateConverter.dateFormat = "MM/dd/yy h:mm a"
         let n = NSDate()

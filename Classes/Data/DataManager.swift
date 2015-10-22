@@ -114,28 +114,63 @@ class DataManager: NSObject {
             return
         }
         
-        Alamofire.request(.GET, Router.Eateries)
-            .responseData { [unowned self] (request, response, data) -> Void in
-                if let jsonData = data.value {
-                    self.eateries = []
-                    
-                    let json = JSON(data: jsonData)
-                    print("\n");
-                    
-                    if (json[APIKey.Status.rawValue].stringValue != Status.Success.rawValue) {
-                        print("Got server error!\n")
-                        completion?(error: DataError.ServerError)
-                        // do something is message
+        print("requesting eatery info")
+        let req = Alamofire.request(.GET, Router.Eateries)
+
+        func processData (data: NSData) {
+            self.eateries = []
+            
+            
+            let json = JSON(data: data)
+            print("\n");
+            
+            if (json[APIKey.Status.rawValue].stringValue != Status.Success.rawValue) {
+                print("Got server error!\n")
+                completion?(error: DataError.ServerError)
+                // do something is message
+                return
+            }
+            
+            let eateryList = json["data"]["eateries"]
+            for eateryJSON in eateryList {
+                let eatery = Eatery(json: eateryJSON.1)
+                self.eateries.append(eatery)
+            }
+            
+            completion?(error: nil)
+        }
+        
+        if let request = req.request where !force {
+            let cached = NSURLCache.sharedURLCache().cachedResponseForRequest(request)
+            if let info = cached?.userInfo {
+                // This is hacky because the server doesn't support caching really
+                // and even if it did it is too slow to respond to make it worthwhile
+                // so I'm going to try to screw with the cache policy depending
+                // upon the age of the entry in the cache
+                if let date = info["date"] as? Double {
+                    let maxAge: Double = 24 * 60 * 60
+                    let now = NSDate().timeIntervalSince1970
+                    if now - date <= maxAge {
+                        processData(cached!.data)
                         return
                     }
-                    
-                    let eateryList = json["data"]["eateries"]
-                    for eateryJSON in eateryList {
-                        let eatery = Eatery(json: eateryJSON.1)
-                        self.eateries.append(eatery)
-                    }
-                    
-                    completion?(error: nil)
+                }
+            }
+        }
+        
+        req
+            .responseData { (request, response, data) -> Void in
+                print("received server response")
+                
+                if let data = data.value,
+                    response = response,
+                    request = request {
+                    let cached = NSCachedURLResponse(response: response, data: data, userInfo: ["date": NSDate().timeIntervalSince1970], storagePolicy: .Allowed)
+                    NSURLCache.sharedURLCache().storeCachedResponse(cached, forRequest: request)
+                }
+                
+                if let jsonData = data.value {
+                    processData(jsonData)
                     
                 } else {
                     print("Failed to get parsed response!\n")

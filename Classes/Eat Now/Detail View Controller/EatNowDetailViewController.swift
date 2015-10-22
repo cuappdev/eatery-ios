@@ -9,6 +9,7 @@
 import UIKit
 
 private let kHeaderViewFrameHeight: CGFloat = 240
+private let shareSheetEnabled = false
 
 class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SegmentChangedDelegate {
     
@@ -22,7 +23,14 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Navigation Bar
+        if shareSheetEnabled {
+            let shareButton = UIBarButtonItem(title: "Share Menu", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("shareMenu"))
+            self.navigationItem.rightBarButtonItem = shareButton
 
+        }
+    
         // View appearance
         view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
@@ -235,10 +243,56 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         selectedMenu = sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)
         tableView.reloadData()
     }
+    
+    // MARK: -
+    // MARK: Menu Sharing
+    
+    func shareMenu() {
+        let textToShare = "Hey check out this awesome menu on Eatery :)"
+        
+        //get share image
+        let imageToShare = imageFromMenu()
+        
+        //share
+        let activityItems = [textToShare,imageToShare]
+        let activityVC = UIActivityViewController(activityItems: activityItems as [AnyObject], applicationActivities: nil)
+        activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact,UIActivityTypePrint, UIActivityTypePostToWeibo]
+        activityVC.popoverPresentationController?.sourceView = view
+        presentViewController(activityVC, animated: true, completion: nil)
+    }
+    
+    func imageFromMenu() -> UIImage {
+        //save state of tableview
+        let savedContentOffset = tableView.contentOffset
+        let savedFrame = tableView.frame
+        
+        //set tableview frame to capture full content width/height into screenshot
+        tableView.contentOffset = CGPointZero
+        tableView.frame = CGRectMake(0, 0, tableView.contentSize.width, tableView.contentSize.height)
+        
+        //branding
+        let eateryLabel = UILabel(frame: CGRectMake(10, 0, 100, 50))
+        eateryLabel.text = "Eatery"
+        eateryLabel.textAlignment = NSTextAlignment.Left
+        eateryLabel.font = UIFont(name: "Avenir Next", size: 30)
+        eateryLabel.textColor = UIColor.eateryBlue()
+        headerView.addSubview(eateryLabel)
+        
+        //render layer of header and menu tableview to graphics context and save as UIImage
+        UIGraphicsBeginImageContextWithOptions(tableView.contentSize, tableView.opaque, 0.0)
+        let context = UIGraphicsGetCurrentContext()!
+        headerView.layer.renderInContext(context)
+        tableView.layer.renderInContext(context)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //remove branding
+        eateryLabel.removeFromSuperview()
+        
+        //restore tableview state
+        tableView.contentOffset = savedContentOffset
+        tableView.frame = savedFrame
+        
+        return img
+    }
 }
-
-
-
-
-
-
