@@ -9,63 +9,63 @@ import UIKit
 
 class SubmitBugViewController: UIViewController {
     
-    var toolsController:Tools!
-    var screenshot:UIImage?
-    var textView:UITextView!
-    var channel:String!
-    var token:String!
-    var username:String!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //set background color for view
-        view.backgroundColor = UIColor.whiteColor()
-        
-        //create title label in top center of view controller
-        let titleLabel = UILabel(frame: CGRectMake(0, 20, view.frame.width, 30))
-        titleLabel.text = "Submit Bug Report"
-        titleLabel.textAlignment = NSTextAlignment.Center
-        view.addSubview(titleLabel)
-        
-        //create cancel button to dismiss but submittion form
-        let cancelButton = UIButton(frame: CGRectMake(0, 20, 80, 30))
-        cancelButton.setTitle("Cancel", forState: UIControlState.Normal)
-        cancelButton.setTitleColor(UIColor(red:0.0, green:122.0/255.0, blue:1.0, alpha:1.0), forState: UIControlState.Normal)
-        cancelButton.addTarget(self, action: Selector("cancel"), forControlEvents: UIControlEvents.TouchDown)
-        view.addSubview(cancelButton)
-        
-        //create submit button to send bug report to slack
-        let submitButton = UIButton(frame: CGRectMake(view.frame.width - 80 , 20, 80, 30))
-        submitButton.setTitle("Submit", forState: UIControlState.Normal)
-        submitButton.setTitleColor(UIColor(red:0.0, green:122.0/255.0, blue:1.0, alpha:1.0), forState: UIControlState.Normal)
-        submitButton.addTarget(self, action: Selector("submitBug"), forControlEvents: UIControlEvents.TouchDown)
-        view.addSubview(submitButton)
-    }
+    let toolsController: Tools
+	let channel: String
+	let token: String
+	let username: String
+    var screenshot: UIImage?
+    var textView: UITextView!
     
     //initialize using this method to create a message without a screenshot
-    init(toolsController:Tools, channel:String, token:String, username:String) {
-        super.init(nibName: nil, bundle: nil)
-        self.toolsController = toolsController
+    init(toolsController: Tools, channel: String, token: String, username: String) {
+		self.toolsController = toolsController
         self.channel = channel
         self.token = token
         self.username = username
+		super.init(nibName: nil, bundle: nil)
     }
-    
+	
     //initialize using this method to create a message with a screenshot
-    init(toolsController:Tools, screenshot:UIImage, channel:String, token:String, username:String) {
-        super.init(nibName: nil, bundle: nil)
-        self.toolsController = toolsController
+    init(toolsController: Tools, screenshot: UIImage, channel: String, token: String, username: String) {
+		self.toolsController = toolsController
         self.channel = channel
         self.token = token
         self.username = username
         self.screenshot = screenshot
+		super.init(nibName: nil, bundle: nil)
     }
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		//set background color for view
+		view.backgroundColor = UIColor.whiteColor()
+		
+		//create title label in top center of view controller
+		let titleLabel = UILabel(frame: CGRectMake(0, 20, view.frame.width, 30))
+		titleLabel.text = "Submit Bug Report"
+		titleLabel.textAlignment = .Center
+		view.addSubview(titleLabel)
+		
+		//create cancel button to dismiss but submittion form
+		let cancelButton = UIButton(frame: CGRectMake(0, 20, 80, 30))
+		cancelButton.setTitle("Cancel", forState: .Normal)
+		cancelButton.setTitleColor(UIColor(red: 0.0, green:122.0/255.0, blue: 1.0, alpha: 1.0), forState: .Normal)
+		cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchDown)
+		view.addSubview(cancelButton)
+		
+		//create submit button to send bug report to slack
+		let submitButton = UIButton(frame: CGRectMake(view.frame.width - 80 , 20, 80, 30))
+		submitButton.setTitle("Submit", forState: .Normal)
+		submitButton.setTitleColor(UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0), forState: .Normal)
+		submitButton.addTarget(self, action: "submitBug", forControlEvents: .TouchDown)
+		view.addSubview(submitButton)
+	}
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+	
     override func viewDidAppear(animated: Bool) {
         //create text view for entering message
         textView = UITextView(frame: CGRectMake(0, 50, view.frame.width, 250))
@@ -79,7 +79,7 @@ class SubmitBugViewController: UIViewController {
     func submitBug() {
         // if we have a screenshot, submit it,
         // otherwise only submit text
-        if(screenshot != nil) {
+        if screenshot != nil {
             submitScreenshot()
         }
         else {
@@ -112,7 +112,7 @@ class SubmitBugViewController: UIViewController {
         task.resume()
         
         //after request is sent we can dismiss view controller
-        dismissViewControllerAnimated(true) { () -> Void in
+        dismissViewControllerAnimated(true) {
             self.toolsController.assignFirstResponder()
         }
     }
@@ -122,9 +122,9 @@ class SubmitBugViewController: UIViewController {
         
         //create parameters for url request
         let parameters = [
-            "channels": channel as String,
-            "token": token as String,
-            "initial_comment": textView.text as String
+            "channels": channel,
+            "token": token,
+            "initial_comment": textView.text!
         ]
         
         //represent screenshot as jpeg image data
@@ -139,7 +139,7 @@ class SubmitBugViewController: UIViewController {
         }
     }
     
-    func makeMultipartFormDataRequest (baseURL: NSURL, parameters:[String:String], data:NSData) {
+    func makeMultipartFormDataRequest (baseURL: NSURL, parameters: [String:String], data: NSData) {
         // create url request to send
         let mutableURLRequest = NSMutableURLRequest(URL: baseURL)
         mutableURLRequest.HTTPMethod = "POST"

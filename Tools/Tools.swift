@@ -9,26 +9,26 @@ import UIKit
 
 class Tools: UIView, FBTweakViewControllerDelegate {
     
-    var screenCapture:ADScreenCapture!
-    var popup:UIAlertController!
-    var rootViewController:UIViewController!
-    var fbTweaks:FBTweakViewController!
+    var screenCapture: ADScreenCapture!
+    var popup: UIAlertController!
+    var rootViewController: UIViewController!
+    var fbTweaks: FBTweakViewController!
     var displayingTweaks = false
     var keyboardIsShowing = false
     
-    init(rootViewController:UIViewController, slackChannel:String, slackToken:String, slackUsername:String) {
+    init(rootViewController: UIViewController, slackChannel: String, slackToken: String, slackUsername: String) {
         super.init(frame: rootViewController.view.frame)
         
         self.rootViewController = rootViewController
         userInteractionEnabled = false
         
         //create view that will be responsible for screen capture
-        screenCapture = ADScreenCapture(rootViewController: rootViewController, frame: rootViewController.view.frame)
+        screenCapture = ADScreenCapture(frame: rootViewController.view.frame)
         rootViewController.view.addSubview(screenCapture)
         rootViewController.view.addSubview(self)
         
         //create UIAlertController to display options on shake gesture
-        popup = UIAlertController(title: "Tools", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        popup = UIAlertController(title: "Tools", message: nil, preferredStyle: .ActionSheet)
         
         //create message action option
         let submitMessage = UIAlertAction(title: "Submit Message", style: .Default) { (action) in
@@ -49,9 +49,9 @@ class Tools: UIView, FBTweakViewControllerDelegate {
             if(!self.displayingTweaks) {
                 self.fbTweaks = FBTweakViewController(store: FBTweakStore.sharedInstance())
                 self.fbTweaks.tweaksDelegate = self
-                self.rootViewController.presentViewController(self.fbTweaks, animated: true, completion: { () -> Void in
+                self.rootViewController.presentViewController(self.fbTweaks, animated: true) {
                     self.displayingTweaks = true
-                })
+                }
             }
         }
         popup.addAction(openTweaks)
@@ -62,12 +62,12 @@ class Tools: UIView, FBTweakViewControllerDelegate {
         popup.addAction(cancelAction)
 
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "assignFirstResponder", name:"AssignToolsAsFirstResponder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "assignFirstResponder", name: "AssignToolsAsFirstResponder", object: nil)
         self.becomeFirstResponder()
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShown"), name:UIKeyboardWillShowNotification , object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDismissed"), name:UIKeyboardWillHideNotification , object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown", name:UIKeyboardWillShowNotification , object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDismissed", name:UIKeyboardWillHideNotification , object: nil)
     }
     
     func keyboardShown() {
@@ -79,13 +79,9 @@ class Tools: UIView, FBTweakViewControllerDelegate {
     }
     
     func assignFirstResponder() {
-        if(!keyboardIsShowing) {
+        if !keyboardIsShowing {
             self.becomeFirstResponder()
         }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -99,10 +95,10 @@ class Tools: UIView, FBTweakViewControllerDelegate {
     }
     
     func tweakViewControllerPressedDone(tweakViewController: FBTweakViewController!) {
-        tweakViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+        tweakViewController.dismissViewControllerAnimated(true) {
             self.assignFirstResponder()
             self.displayingTweaks = false
-        })
+        }
     }
     
     override func canBecomeFirstResponder() -> Bool {

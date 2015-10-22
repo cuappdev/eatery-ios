@@ -8,20 +8,6 @@
 import UIKit
 
 class ADScreenCapture: UIView {
-	
-	var viewController:UIViewController!
-	var screenResolution:CGSize!
-	
-	init(rootViewController:UIViewController, frame:CGRect)
-	{
-		super.init(frame:frame)
-		viewController = rootViewController
-		userInteractionEnabled = false
-
-		let screenBounds = UIScreen.mainScreen().bounds
-		let screenScale = UIScreen.mainScreen().scale
-		screenResolution = CGSizeMake(screenBounds.size.width * screenScale, screenBounds.size.height * screenScale)
-	}
     
     func getScreenshot() -> UIImage {
         let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
@@ -35,8 +21,13 @@ class ADScreenCapture: UIView {
         UIGraphicsEndImageContext()
         return screenshot
     }
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        userInteractionEnabled = false
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

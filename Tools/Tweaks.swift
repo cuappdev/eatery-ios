@@ -12,7 +12,7 @@ class Tweaks: NSObject, FBTweakObserver {
     typealias ActionWithValue = ((currentValue:AnyObject) -> ())
     var actionsWithValue = [String:ActionWithValue]()
     
-    class func collectionWithName(collectionName:String, categoryName:String) -> FBTweakCollection {
+    class func collectionWithName(collectionName: String, categoryName: String) -> FBTweakCollection {
         
         let store = FBTweakStore.sharedInstance()
         
