@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DiningStack
 
 class EatNowDetailHeaderView: UIView {
     

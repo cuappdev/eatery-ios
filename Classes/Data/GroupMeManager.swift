@@ -63,7 +63,7 @@ class GroupMeManager: NSObject {
             "token" : groupmeApiKey
         ]
         request(.GET, Router.Groups, parameters: parameters, encoding: .URL)
-            .responseJSON { (request, response, result) -> Void in
+            .responseJSON { (resp) -> Void in
                 // FIX ME
                 //printNetworkResponse(request, response, data, error)
         }
