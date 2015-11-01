@@ -10,6 +10,20 @@ import Foundation
 import DiningStack
 
 extension Eatery {
+    /// Preview Image of the eatery such as a logo
+    var image: UIImage? {
+        get {
+            return UIImage(named: slug + "+logo.jpg")
+        }
+    }
+    
+    /// Photo of the facility
+    var photo: UIImage? {
+        get {
+            return UIImage(named: slug + ".jpg")
+        }
+    }
+    
     //!TODO: Maybe cache this value? I don't think this is too expensive
     var favorite: Bool {
         get {
