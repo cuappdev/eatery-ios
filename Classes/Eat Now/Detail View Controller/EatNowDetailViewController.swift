@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DiningStack
 
 private let kHeaderViewFrameHeight: CGFloat = 240
 private let shareSheetEnabled = false

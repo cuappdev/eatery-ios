@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import DiningStack
 
 private var calendarRequestStartDate: NSDate? = nil
 private var calendarRequestEndDate: NSDate? = nil

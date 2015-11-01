@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import DiningStack
 // The global now, change this to test a different date
 var NOW: NSDate {
 //    return NSDate(timeIntervalSinceNow: NSTimeInterval.intervalWithHoursAndMinutesFromNow(hours: 576, minutes: 0))
