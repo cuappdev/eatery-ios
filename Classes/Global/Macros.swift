@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import DiningStack
 
 let NSDefaults = NSUserDefaults.standardUserDefaults()
 let API = DataManager.sharedInstance

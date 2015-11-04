@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import DiningStack
 
 private var calendarRequestStartDate: NSDate? = nil
 private var calendarRequestEndDate: NSDate? = nil
@@ -163,7 +164,7 @@ class EatNowTableViewController: UITableViewController, UISearchResultsUpdating,
         if searchText == "" {
             filteredEateries = eateries
         } else {
-            let pred = NSPredicate(format: "name contains[cd] %@ OR todaysEventsString contains[cd] %@", searchText, searchText)
+            let pred = NSPredicate(format: "name contains[cd] %@ OR description contains[cd] %@", searchText, searchText)
             filteredEateries = (eateries as NSArray).filteredArrayUsingPredicate(pred) as! [Eatery]
         }
         tableView.reloadData()

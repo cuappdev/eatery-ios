@@ -20,3 +20,11 @@ Private/
 Podfile.lock
 Pods/
 Keys.plist
+
+vendor/DiningStack
+
+## Other
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint

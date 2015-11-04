@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; };
 		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; };
 		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; };
 		95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */; };
@@ -27,14 +27,8 @@
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
-		C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
 		C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */; };
-		C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD41B64AA1800AC1C6C /* EateryData.swift */; };
-		C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */; };
-		C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */; };
 		C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD71B64AA1800AC1C6C /* LocationManager.swift */; };
-		C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD91B64AA1800AC1C6C /* Eatery.swift */; };
-		C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */; };
 		C0497B031B64AA1800AC1C6C /* EatNowDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */; };
 		C0497B041B64AA1800AC1C6C /* EatNowDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */; };
 		C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE01B64AA1800AC1C6C /* EatNowDetailViewController.swift */; };
@@ -50,7 +44,6 @@
 		C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AED1B64AA1800AC1C6C /* EatNowTableViewController.swift */; };
 		C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF01B64AA1800AC1C6C /* String+Extension.swift */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
-		C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */; };
 		C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF41B64AA1800AC1C6C /* Macros.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
@@ -65,6 +58,9 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; };
+		FAA912AB1BE69E96003475A8 /* DiningStack.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAA912AC1BE69E9A003475A8 /* DiningStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; };
+		FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; };
 		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; };
 		FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */; };
@@ -118,8 +114,31 @@
 		FAC5A34A1BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3151BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg */; };
 		FAC5A34B1BC60DE50001DE97 /* trillium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3161BC60DE50001DE97 /* trillium.jpg */; };
 		FAC5A34C1BC60DE50001DE97 /* Trillium+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3171BC60DE50001DE97 /* Trillium+logo.jpg */; };
-		FACCE0891BC1A61800E54408 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE0881BC1A61800E54408 /* Event.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAF5CE731BE19C6E00C49EDE;
+			remoteInfo = DiningStack;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FAA912A91BE69E8C003475A8 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FAA912AB1BE69E96003475A8 /* DiningStack.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		009907E8EA5C64DC3A183B9D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,14 +181,8 @@
 		C0142A101B68C5C90090B33A /* Pods.external beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.external beta.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.external beta.xcconfig"; sourceTree = "<group>"; };
 		C0142A111B68C5C90090B33A /* Pods.internal beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.internal beta.xcconfig"; sourceTree = "<group>"; };
 		C0497ACC1B64AA1800AC1C6C /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		C0497ACD1B64AA1800AC1C6C /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMeManager.swift; sourceTree = "<group>"; };
-		C0497AD41B64AA1800AC1C6C /* EateryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryData.swift; sourceTree = "<group>"; };
-		C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryIDs.swift; sourceTree = "<group>"; };
-		C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralMenus.swift; sourceTree = "<group>"; };
 		C0497AD71B64AA1800AC1C6C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		C0497AD91B64AA1800AC1C6C /* Eatery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eatery.swift; sourceTree = "<group>"; };
-		C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		C0497ADE1B64AA1800AC1C6C /* EatNowDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowDetailHeaderView.swift; sourceTree = "<group>"; };
 		C0497ADF1B64AA1800AC1C6C /* EatNowDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EatNowDetailHeaderView.xib; sourceTree = "<group>"; };
 		C0497AE01B64AA1800AC1C6C /* EatNowDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowDetailViewController.swift; sourceTree = "<group>"; };
@@ -185,7 +198,6 @@
 		C0497AED1B64AA1800AC1C6C /* EatNowTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatNowTableViewController.swift; sourceTree = "<group>"; };
 		C0497AF01B64AA1800AC1C6C /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorScheme.swift"; sourceTree = "<group>"; };
-		C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHelperFactory.swift; sourceTree = "<group>"; };
 		C0497AF41B64AA1800AC1C6C /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
 		C0497B1F1B64AA3800AC1C6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -212,6 +224,8 @@
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
 		FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hardcodedMenus.json; sourceTree = "<group>"; };
+		FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiningStack.xcodeproj; path = DiningStack/DiningStack.xcodeproj; sourceTree = "<group>"; };
+		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
 		FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A2E41BC60DE50001DE97 /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
 		FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "amit-bhatia-libe-cafe.jpg"; sourceTree = "<group>"; };
@@ -265,7 +279,6 @@
 		FAC5A3151BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Synapsis-Cafe+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A3161BC60DE50001DE97 /* trillium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = trillium.jpg; sourceTree = "<group>"; };
 		FAC5A3171BC60DE50001DE97 /* Trillium+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Trillium+logo.jpg"; sourceTree = "<group>"; };
-		FACCE0881BC1A61800E54408 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */,
+				FAA912AC1BE69E9A003475A8 /* DiningStack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,42 +401,12 @@
 		C0497ACB1B64AA1800AC1C6C /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				C0497AD81B64AA1800AC1C6C /* Models */,
-				C0497ACD1B64AA1800AC1C6C /* DataManager.swift */,
-				C0497ACF1B64AA1800AC1C6C /* Endpoints */,
-				C0497AD31B64AA1800AC1C6C /* Hardcoded */,
 				C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */,
 				C0497AD71B64AA1800AC1C6C /* LocationManager.swift */,
 				C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */,
+				FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		C0497ACF1B64AA1800AC1C6C /* Endpoints */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Endpoints;
-			sourceTree = "<group>";
-		};
-		C0497AD31B64AA1800AC1C6C /* Hardcoded */ = {
-			isa = PBXGroup;
-			children = (
-				C0497AD41B64AA1800AC1C6C /* EateryData.swift */,
-				C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */,
-				C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */,
-			);
-			path = Hardcoded;
-			sourceTree = "<group>";
-		};
-		C0497AD81B64AA1800AC1C6C /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C0497AD91B64AA1800AC1C6C /* Eatery.swift */,
-				C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */,
-				FACCE0881BC1A61800E54408 /* Event.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		C0497ADC1B64AA1800AC1C6C /* Eat Now */ = {
@@ -484,7 +468,6 @@
 				C0497AF41B64AA1800AC1C6C /* Macros.swift */,
 				C0497ACC1B64AA1800AC1C6C /* Keys.swift */,
 				C0497BD11B64ACED00AC1C6C /* GlobalVars.swift */,
-				C0497AF31B64AA1800AC1C6C /* GlobalHelperFactory.swift */,
 				C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */,
 			);
 			path = Global;
@@ -565,6 +548,7 @@
 		C0497B591B64AA3800AC1C6C /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */,
 				C0497B651B64AA3800AC1C6C /* MBProgressHud */,
 				C0497B681B64AA3800AC1C6C /* MXLCalendarManager */,
 			);
@@ -608,6 +592,14 @@
 			path = "Classes/Other-Sources";
 			sourceTree = "<group>";
 		};
+		FAA9129F1BE69E5F003475A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAA912A51BE69E5F003475A8 /* DiningStack.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -621,6 +613,7 @@
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
 				E2CFE9C2E9E8D8099684D94E /* Copy Pods Resources */,
 				2529F4D1F6E174E13D3FA0DA /* Embed Pods Frameworks */,
+				FAA912A91BE69E8C003475A8 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -644,7 +637,6 @@
 				TargetAttributes = {
 					C007CABE19E1BEAC00E3BD46 = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = 4M3BV3H234;
 					};
 				};
 			};
@@ -660,12 +652,28 @@
 			mainGroup = C007CAB619E1BEAC00E3BD46;
 			productRefGroup = C007CAC019E1BEAC00E3BD46 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FAA9129F1BE69E5F003475A8 /* Products */;
+					ProjectRef = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C007CABE19E1BEAC00E3BD46 /* Eatery */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FAA912A51BE69E5F003475A8 /* DiningStack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DiningStack.framework;
+			remoteRef = FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C007CABD19E1BEAC00E3BD46 /* Resources */ = {
@@ -793,10 +801,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				95434FBE1BD8699F003612DB /* FBTweak.m in Sources */,
-				C0497AFC1B64AA1800AC1C6C /* EateryData.swift in Sources */,
 				C0497B0E1B64AA1800AC1C6C /* EatNowTableViewCell.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
-				C0497B141B64AA1800AC1C6C /* GlobalHelperFactory.swift in Sources */,
 				95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */,
 				95434FC71BD8699F003612DB /* Tweaks.swift in Sources */,
 				95434FC31BD8699F003612DB /* FBTweakStore.m in Sources */,
@@ -811,14 +817,12 @@
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */,
 				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
-				C0497AFD1B64AA1800AC1C6C /* EateryIDs.swift in Sources */,
+				FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */,
 				95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
 				95434FC21BD8699F003612DB /* FBTweakShakeWindow.m in Sources */,
-				FACCE0891BC1A61800E54408 /* Event.swift in Sources */,
 				C0497BD21B64ACED00AC1C6C /* GlobalVars.swift in Sources */,
 				95434FC41BD8699F003612DB /* FBTweakViewController.m in Sources */,
-				C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */,
 				95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */,
 				95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
@@ -833,13 +837,10 @@
 				95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				95434FC61BD8699F003612DB /* Tools.swift in Sources */,
-				C0497AFE1B64AA1800AC1C6C /* GeneralMenus.swift in Sources */,
-				C0497B001B64AA1800AC1C6C /* Eatery.swift in Sources */,
 				C0497B081B64AA1800AC1C6C /* SegmentedHeader.swift in Sources */,
 				95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */,
 				C0497B101B64AA1800AC1C6C /* EatNowTableViewController.swift in Sources */,
 				95434FBC1BD8699F003612DB /* _FBTweakDictionaryViewController.m in Sources */,
-				C0497AF71B64AA1800AC1C6C /* DataManager.swift in Sources */,
 				C0497B051B64AA1800AC1C6C /* EatNowDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -968,7 +969,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
