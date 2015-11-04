@@ -43,5 +43,9 @@ Currently we use four third party libraries (found in the `vendor` directory).  
 
 [UPDATE] We now use Cocoapods.  Run `pod install` before opening xcode and make sure you use the .xcworkspace from now on.  
 
+When cloning the current version, call `git clone --recursive https://github.com/cuappdev/eatery.git`
+
+If you already have the project installed, call `git submodule update --init --recursive`
+
 ## Architecture
 [coming soon]
