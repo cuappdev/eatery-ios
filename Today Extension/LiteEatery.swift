@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import DiningStack
 
 enum OpenStatus {
     case Open(String)

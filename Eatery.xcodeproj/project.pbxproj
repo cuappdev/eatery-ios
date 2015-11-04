@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DDD3B9A1BE9F4B7005B1D1E /* DiningStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; };
 		423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */; };
 		4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4283B3701BE6A17C003DE22E /* NotificationCenter.framework */; };
 		4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3751BE6A17C003DE22E /* MainInterface.storyboard */; };
 		4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */; };
-		4283B3841BE6A32F003DE22E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
-		4283B3851BE6A3C2003DE22E /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD91B64AA1800AC1C6C /* Eatery.swift */; };
-		4283B3861BE6A3C5003DE22E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */; };
-		4283B3871BE6A3C7003DE22E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE0881BC1A61800E54408 /* Event.swift */; };
 		4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3881BE6A4A4003DE22E /* LiteEatery.swift */; };
 		4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */; };
 		4283B38E1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */; };
@@ -24,10 +21,7 @@
 		4283B3931BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */; };
 		4283B3951BE6A6DC003DE22E /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3941BE6A6DC003DE22E /* CircleView.swift */; };
 		4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
-		4283B3971BE6AA8D003DE22E /* EateryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD41B64AA1800AC1C6C /* EateryData.swift */; };
-		4283B3981BE6AAE8003DE22E /* EateryIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */; };
-		4283B3991BE6AAEC003DE22E /* GeneralMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */; };
-		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; };
 		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; };
 		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; };
 		95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */; };
@@ -137,36 +131,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FAF5CE731BE19C6E00C49EDE;
-			remoteInfo = DiningStack;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		FAA912A91BE69E8C003475A8 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FAA912AB1BE69E96003475A8 /* DiningStack.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXContainerItemProxy section */
 		4283B3791BE6A17C003DE22E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C007CAB719E1BEAC00E3BD46 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4283B36E1BE6A17C003DE22E;
 			remoteInfo = "Today Extension";
+		};
+		FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAF5CE731BE19C6E00C49EDE;
+			remoteInfo = DiningStack;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -180,6 +157,17 @@
 				4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAA912A91BE69E8C003475A8 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FAA912AB1BE69E96003475A8 /* DiningStack.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -342,6 +330,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DDD3B9A1BE9F4B7005B1D1E /* DiningStack.framework in Frameworks */,
 				423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */,
 				4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */,
 			);
@@ -741,7 +730,6 @@
 				TargetAttributes = {
 					4283B36E1BE6A17C003DE22E = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 4M3BV3H234;
 					};
 					C007CABE19E1BEAC00E3BD46 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -919,20 +907,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4283B3981BE6AAE8003DE22E /* EateryIDs.swift in Sources */,
-				4283B3851BE6A3C2003DE22E /* Eatery.swift in Sources */,
 				4283B3921BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift in Sources */,
 				4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */,
 				4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */,
-				4283B3861BE6A3C5003DE22E /* MenuItem.swift in Sources */,
 				4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */,
 				4283B38E1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift in Sources */,
-				4283B3971BE6AA8D003DE22E /* EateryData.swift in Sources */,
 				4283B3951BE6A6DC003DE22E /* CircleView.swift in Sources */,
 				4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */,
-				4283B3841BE6A32F003DE22E /* DataManager.swift in Sources */,
-				4283B3871BE6A3C7003DE22E /* Event.swift in Sources */,
-				4283B3991BE6AAEC003DE22E /* GeneralMenus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1146,7 +1127,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
