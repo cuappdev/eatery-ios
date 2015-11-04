@@ -11,87 +11,119 @@ import NotificationCenter
 import SwiftyJSON
 
 class TodayExtensionTableViewController: UITableViewController, NCWidgetProviding {
-
+    
+    var liteEateries: [LiteEatery] = []
+    let eateriesURL = NSURL(string: "https://now.dining.cornell.edu/api/1.0/dining/eateries.json")
+    var data: NSData?
+    var favs: [AnyObject]?
+    var noFavsView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let defs = NSUserDefaults(suiteName: "group.com.cuappdev.eatery")!
+        favs = defs.arrayForKey("favorites")
+        
+        let todayCell = UINib(nibName: "TodayExtensionTableViewCell", bundle: nil)
+        tableView.registerNib(todayCell, forCellReuseIdentifier: "todaycell")
+        
+        let noFavsCell = UINib(nibName: "NoFavoritesTableViewCell", bundle: nil)
+        tableView.registerNib(noFavsCell, forCellReuseIdentifier: "nofavs")
+        
+        // TableView Setup
+        let tableViewHeight = tableView.numberOfRowsInSection(0) * Int(tableView.rowHeight)
+        self.preferredContentSize = CGSize(width: 320, height: tableViewHeight)
+        
+        // Data Handling
+        tableView.dataSource = self
+        
+        getData()
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if liteEateries.count == 0 {
+            return 1
+        } else {
+            return liteEateries.count
+        }
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
+        // if no favorites, put in alternate cell
+        if liteEateries.count == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("nofavs", forIndexPath: indexPath) as! NoFavoritesTableViewCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("todaycell", forIndexPath: indexPath) as! TodayExtensionTableViewCell
+            let eatery = liteEateries[indexPath.row]
+            cell.nameLabel.text = eatery.nameShort
+            cell.nameLabel.textColor = UIColor.whiteColor()
+            
+            let openStatus = eatery.generateDescriptionOfCurrentState()
+            
+            switch openStatus {
+            case .Open(let message):
+                cell.hoursLabel.text = message
+                cell.circleView.state = .Open
+            case .Closed(let message):
+                cell.hoursLabel.text = message
+                cell.circleView.state = .Closed
+            }
+            
+            cell.hoursLabel.textColor = UIColor.lightTextColor()
+            return cell
+        }
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
+        completionHandler(NCUpdateResult.NewData)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func widgetMarginInsetsForProposedMarginInsets(defaultMarginInsets: UIEdgeInsets) -> UIEdgeInsets {
+        return UIEdgeInsetsZero
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
+    func getData() {
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithURL(eateriesURL!) { (data, response, error) -> Void in
+            if error != nil {
+                print(error)
+            } else {
+                let json = JSON(data: data!)
+                print(json)
+                let eateries = json["data"]["eateries"]
+                for eateryJSON in eateries {
+                    let eatery = LiteEatery(json: eateryJSON.1)
+//                    if (self.favs?.contains({ x -> Bool in
+//                        print(eatery.slug)
+//                        return eatery.slug == x as! String
+//                    }) != nil) {
+//                        self.liteEateries.append(eatery)
+//                    }
+                    
+                    self.liteEateries.append(eatery)
+                    
+                }
+                
+                // Update view in main queue to reflect data
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                    let tableViewHeight = self.tableView.numberOfRowsInSection(0) * Int(self.tableView.rowHeight)
+                    if self.liteEateries.count == 0 {
+                        self.preferredContentSize = CGSize(width: 320, height: 100)
+                    } else {
+                        self.preferredContentSize = CGSize(width: 320, height: tableViewHeight)
+                    }
+                })
+            }
+        }
+        task.resume()
+        
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

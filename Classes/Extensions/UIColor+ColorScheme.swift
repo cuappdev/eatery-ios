@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 CUAppDev. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIColor {
     

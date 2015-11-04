@@ -7,10 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */; };
 		4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4283B3701BE6A17C003DE22E /* NotificationCenter.framework */; };
 		4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3751BE6A17C003DE22E /* MainInterface.storyboard */; };
 		4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */; };
+		4283B3841BE6A32F003DE22E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACD1B64AA1800AC1C6C /* DataManager.swift */; };
+		4283B3851BE6A3C2003DE22E /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD91B64AA1800AC1C6C /* Eatery.swift */; };
+		4283B3861BE6A3C5003DE22E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ADB1B64AA1800AC1C6C /* MenuItem.swift */; };
+		4283B3871BE6A3C7003DE22E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE0881BC1A61800E54408 /* Event.swift */; };
+		4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3881BE6A4A4003DE22E /* LiteEatery.swift */; };
+		4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */; };
+		4283B38E1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */; };
+		4283B38F1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */; };
+		4283B3921BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */; };
+		4283B3931BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */; };
+		4283B3951BE6A6DC003DE22E /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3941BE6A6DC003DE22E /* CircleView.swift */; };
+		4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
+		4283B3971BE6AA8D003DE22E /* EateryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD41B64AA1800AC1C6C /* EateryData.swift */; };
+		4283B3981BE6AAE8003DE22E /* EateryIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD51B64AA1800AC1C6C /* EateryIDs.swift */; };
+		4283B3991BE6AAEC003DE22E /* GeneralMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD61B64AA1800AC1C6C /* GeneralMenus.swift */; };
 		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; };
 		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; };
@@ -175,6 +191,13 @@
 		4283B3761BE6A17C003DE22E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		4283B3781BE6A17C003DE22E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayExtensionTableViewController.swift; sourceTree = "<group>"; };
+		4283B3881BE6A4A4003DE22E /* LiteEatery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteEatery.swift; sourceTree = "<group>"; };
+		4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteEvent.swift; sourceTree = "<group>"; };
+		4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFavoritesTableViewCell.swift; sourceTree = "<group>"; };
+		4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoFavoritesTableViewCell.xib; sourceTree = "<group>"; };
+		4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayExtensionTableViewCell.swift; sourceTree = "<group>"; };
+		4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayExtensionTableViewCell.xib; sourceTree = "<group>"; };
+		4283B3941BE6A6DC003DE22E /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		95434F951BD8699F003612DB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
 		95434F971BD8699F003612DB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
 		95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
@@ -319,6 +342,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */,
 				4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +363,13 @@
 			isa = PBXGroup;
 			children = (
 				4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */,
+				4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */,
+				4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */,
+				4283B3941BE6A6DC003DE22E /* CircleView.swift */,
+				4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */,
+				4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */,
+				4283B3881BE6A4A4003DE22E /* LiteEatery.swift */,
+				4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */,
 				4283B3751BE6A17C003DE22E /* MainInterface.storyboard */,
 				4283B3781BE6A17C003DE22E /* Info.plist */,
 			);
@@ -758,6 +789,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4283B38F1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib in Resources */,
+				4283B3931BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib in Resources */,
 				4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -886,7 +919,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4283B3981BE6AAE8003DE22E /* EateryIDs.swift in Sources */,
+				4283B3851BE6A3C2003DE22E /* Eatery.swift in Sources */,
+				4283B3921BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift in Sources */,
+				4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */,
+				4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */,
+				4283B3861BE6A3C5003DE22E /* MenuItem.swift in Sources */,
+				4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */,
+				4283B38E1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift in Sources */,
+				4283B3971BE6AA8D003DE22E /* EateryData.swift in Sources */,
+				4283B3951BE6A6DC003DE22E /* CircleView.swift in Sources */,
 				4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */,
+				4283B3841BE6A32F003DE22E /* DataManager.swift in Sources */,
+				4283B3871BE6A3C7003DE22E /* Event.swift in Sources */,
+				4283B3991BE6AAEC003DE22E /* GeneralMenus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,6 +1021,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Today Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -1008,6 +1058,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1051,6 +1105,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1094,6 +1152,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1375,6 +1437,7 @@
 				4283B37F1BE6A17C003DE22E /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		C007CABA19E1BEAC00E3BD46 /* Build configuration list for PBXProject "Eatery" */ = {
 			isa = XCConfigurationList;
