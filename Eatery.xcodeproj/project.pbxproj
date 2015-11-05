@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DDD3B9A1BE9F4B7005B1D1E /* DiningStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; };
+		423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */; };
+		4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4283B3701BE6A17C003DE22E /* NotificationCenter.framework */; };
+		4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3751BE6A17C003DE22E /* MainInterface.storyboard */; };
+		4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */; };
+		4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3881BE6A4A4003DE22E /* LiteEatery.swift */; };
+		4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */; };
+		4283B38E1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */; };
+		4283B38F1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */; };
+		4283B3921BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */; };
+		4283B3931BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */; };
+		4283B3951BE6A6DC003DE22E /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3941BE6A6DC003DE22E /* CircleView.swift */; };
+		4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; };
 		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; };
 		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; };
@@ -117,6 +131,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4283B3791BE6A17C003DE22E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C007CAB719E1BEAC00E3BD46 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4283B36E1BE6A17C003DE22E;
+			remoteInfo = "Today Extension";
+		};
 		FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
@@ -127,6 +148,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4283B3811BE6A17C003DE22E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAA912A91BE69E8C003475A8 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -142,6 +174,20 @@
 
 /* Begin PBXFileReference section */
 		009907E8EA5C64DC3A183B9D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4283B36F1BE6A17C003DE22E /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4283B3701BE6A17C003DE22E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		4283B3761BE6A17C003DE22E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		4283B3781BE6A17C003DE22E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayExtensionTableViewController.swift; sourceTree = "<group>"; };
+		4283B3881BE6A4A4003DE22E /* LiteEatery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteEatery.swift; sourceTree = "<group>"; };
+		4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteEvent.swift; sourceTree = "<group>"; };
+		4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFavoritesTableViewCell.swift; sourceTree = "<group>"; };
+		4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoFavoritesTableViewCell.xib; sourceTree = "<group>"; };
+		4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayExtensionTableViewCell.swift; sourceTree = "<group>"; };
+		4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayExtensionTableViewCell.xib; sourceTree = "<group>"; };
+		4283B3941BE6A6DC003DE22E /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		42B1F4ED1BEAD587004C382A /* Today Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Today Extension.entitlements"; sourceTree = "<group>"; };
+		42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Eatery.entitlements; sourceTree = "<group>"; };
 		95434F951BD8699F003612DB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
 		95434F971BD8699F003612DB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
 		95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
@@ -282,6 +328,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4283B36C1BE6A17C003DE22E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DDD3B9A1BE9F4B7005B1D1E /* DiningStack.framework in Frameworks */,
+				423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */,
+				4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C007CABC19E1BEAC00E3BD46 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -294,6 +350,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4283B3721BE6A17C003DE22E /* Today Extension */ = {
+			isa = PBXGroup;
+			children = (
+				42B1F4ED1BEAD587004C382A /* Today Extension.entitlements */,
+				4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */,
+				4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */,
+				4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */,
+				4283B3941BE6A6DC003DE22E /* CircleView.swift */,
+				4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */,
+				4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */,
+				4283B3881BE6A4A4003DE22E /* LiteEatery.swift */,
+				4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */,
+				4283B3751BE6A17C003DE22E /* MainInterface.storyboard */,
+				4283B3781BE6A17C003DE22E /* Info.plist */,
+			);
+			path = "Today Extension";
+			sourceTree = "<group>";
+		};
 		95434F941BD8699F003612DB /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,11 +430,13 @@
 		C007CAB619E1BEAC00E3BD46 = {
 			isa = PBXGroup;
 			children = (
+				42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */,
 				C0497B591B64AA3800AC1C6C /* vendor */,
 				95434F941BD8699F003612DB /* Tools */,
 				C0497ACA1B64AA1800AC1C6C /* Classes */,
 				C0497BC11B64AB4100AC1C6C /* Other-Sources */,
 				C0497B1D1B64AA3800AC1C6C /* Resources */,
+				4283B3721BE6A17C003DE22E /* Today Extension */,
 				C01E03FA19E5C4AD0050E8C7 /* Frameworks */,
 				C007CAC019E1BEAC00E3BD46 /* Products */,
 				9B4931655E89F604CB150CD0 /* Pods */,
@@ -371,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				C007CABF19E1BEAC00E3BD46 /* Eatery.app */,
+				4283B36F1BE6A17C003DE22E /* Today Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -382,6 +459,7 @@
 				D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */,
 				D18D9C591BAF2B5200C9D95D /* Analytics.framework */,
 				009907E8EA5C64DC3A183B9D /* Pods.framework */,
+				4283B3701BE6A17C003DE22E /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			path = Eatery;
@@ -603,6 +681,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4283B36E1BE6A17C003DE22E /* Today Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4283B3801BE6A17C003DE22E /* Build configuration list for PBXNativeTarget "Today Extension" */;
+			buildPhases = (
+				4283B36B1BE6A17C003DE22E /* Sources */,
+				4283B36C1BE6A17C003DE22E /* Frameworks */,
+				4283B36D1BE6A17C003DE22E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Today Extension";
+			productName = "Today Extension";
+			productReference = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C007CABE19E1BEAC00E3BD46 /* Eatery */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C007CADE19E1BEAC00E3BD46 /* Build configuration list for PBXNativeTarget "Eatery" */;
@@ -614,10 +709,12 @@
 				E2CFE9C2E9E8D8099684D94E /* Copy Pods Resources */,
 				2529F4D1F6E174E13D3FA0DA /* Embed Pods Frameworks */,
 				FAA912A91BE69E8C003475A8 /* Copy Frameworks */,
+				4283B3811BE6A17C003DE22E /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4283B37A1BE6A17C003DE22E /* PBXTargetDependency */,
 			);
 			name = Eatery;
 			productName = Eatery;
@@ -631,12 +728,27 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = CUAppDev;
 				TargetAttributes = {
+					4283B36E1BE6A17C003DE22E = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 2X3Y4V49XK;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					C007CABE19E1BEAC00E3BD46 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = 2X3Y4V49XK;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -661,6 +773,7 @@
 			projectRoot = "";
 			targets = (
 				C007CABE19E1BEAC00E3BD46 /* Eatery */,
+				4283B36E1BE6A17C003DE22E /* Today Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -676,6 +789,16 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4283B36D1BE6A17C003DE22E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4283B38F1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib in Resources */,
+				4283B3931BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib in Resources */,
+				4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C007CABD19E1BEAC00E3BD46 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -796,6 +919,20 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4283B36B1BE6A17C003DE22E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4283B3921BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift in Sources */,
+				4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */,
+				4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */,
+				4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */,
+				4283B38E1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift in Sources */,
+				4283B3951BE6A6DC003DE22E /* CircleView.swift in Sources */,
+				4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C007CABB19E1BEAC00E3BD46 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -847,7 +984,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4283B37A1BE6A17C003DE22E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4283B36E1BE6A17C003DE22E /* Today Extension */;
+			targetProxy = 4283B3791BE6A17C003DE22E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		4283B3751BE6A17C003DE22E /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4283B3761BE6A17C003DE22E /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -859,6 +1012,175 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4283B37C1BE6A17C003DE22E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Today Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.Today-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4283B37D1BE6A17C003DE22E /* External Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Today Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.Today-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "External Beta";
+		};
+		4283B37E1BE6A17C003DE22E /* Internal Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Today Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.Today-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Internal Beta";
+		};
+		4283B37F1BE6A17C003DE22E /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Today Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.Today-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
 		C007CADC19E1BEAC00E3BD46 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -909,9 +1231,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "-debug";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -969,9 +1293,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -979,7 +1305,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1028,9 +1354,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "-internal-beta";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1038,7 +1366,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1087,9 +1415,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "-external-beta";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1097,7 +1427,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1107,6 +1437,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4283B3801BE6A17C003DE22E /* Build configuration list for PBXNativeTarget "Today Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4283B37C1BE6A17C003DE22E /* Debug */,
+				4283B37D1BE6A17C003DE22E /* External Beta */,
+				4283B37E1BE6A17C003DE22E /* Internal Beta */,
+				4283B37F1BE6A17C003DE22E /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		C007CABA19E1BEAC00E3BD46 /* Build configuration list for PBXProject "Eatery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
