@@ -21,7 +21,7 @@ class CircleView: UIView {
             case .Open:
                 backgroundColor = UIColor.openGreen()
             case .Closed:
-                backgroundColor = UIColor.closedRed()
+                backgroundColor = UIColor.grayColor()
             }
         }
     }

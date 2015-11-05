@@ -36,19 +36,18 @@ class LiteEatery: NSObject {
     let slug: String
     
     private(set) var events: [String: [String: LiteEvent]] = [:]
-    private var _todaysEventsString: String? = nil
     
     init(json: JSON) {
-        id    = json[APIKey.Identifier.rawValue].intValue
-        nameShort  = json[APIKey.NameShort.rawValue].stringValue
-        slug  = json[APIKey.Slug.rawValue].stringValue
+        id = json[APIKey.Identifier.rawValue].intValue
+        nameShort = json[APIKey.NameShort.rawValue].stringValue
+        slug = json[APIKey.Slug.rawValue].stringValue
         
         let hoursJSON = json[APIKey.Hours.rawValue]
         
         var currentEvents: [String: LiteEvent] = [:]
         for (_, hour) in hoursJSON {
             let eventsJSON = hour[APIKey.Events.rawValue]
-            let key        = hour[APIKey.Date.rawValue].stringValue
+            let key = hour[APIKey.Date.rawValue].stringValue
             
             for (_, eventJSON) in eventsJSON {
                 let event = LiteEvent(json: eventJSON)

@@ -32,12 +32,12 @@ class TodayExtensionTableViewCell: UITableViewCell {
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        circleView = CircleView(frame: CGRect(x: 24, y: 16, width: 16, height: 16))
+        circleView = CircleView(frame: CGRect(x: 24, y: 16, width: 12, height: 12))
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        circleView = CircleView(frame: CGRect(x: 24, y: 16, width: 16, height: 16))
+        circleView = CircleView(frame: CGRect(x: 24, y: 16, width: 12, height: 12))
         super.init(coder: aDecoder)
     }
 }

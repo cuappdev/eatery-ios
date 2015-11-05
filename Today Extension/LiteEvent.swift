@@ -21,7 +21,7 @@ struct LiteEvent {
     init(json: JSON) {
         desc = json["descr"].stringValue
         startDate = NSDate(timeIntervalSince1970: json["startTimestamp"].doubleValue)
-        endDate   = NSDate(timeIntervalSince1970: json["endTimestamp"].doubleValue)
+        endDate = NSDate(timeIntervalSince1970: json["endTimestamp"].doubleValue)
         startDateFormatted = json["start"].stringValue
         endDateFormatted = json["end"].stringValue
     }
