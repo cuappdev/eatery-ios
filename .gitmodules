@@ -1,3 +1,4 @@
 [submodule "vendor/DiningStack"]
 	path = vendor/DiningStack
 	url = https://github.com/cuappdev/DiningStack.git
+	ignore = dirty
