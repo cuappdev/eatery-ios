@@ -41,6 +41,17 @@ platform :ios do
   # |                                       Deployment                                             |   
   #  -----------------------------------------------------------------------------------------------
 
+  desc "Deploy a new version to *Testflight*"
+  lane :beta do
+    increment_build_number()
+    # increment_version_number
+
+    build
+
+    deliver(skip_deploy: true, force: true, beta: true)
+
+  end
+
   desc "Deploy a new version to the *App Store*"
   lane :appstore do
     # increment_build_number
@@ -51,17 +62,6 @@ platform :ios do
     build
 
     deliver(skip_deploy: true, force: true)
-
-  end
-
-  desc "Deploy a new version to *Testflight*"
-  lane :beta do
-    increment_build_number()
-    # increment_version_number
-
-    build
-
-    deliver(skip_deploy: true, force: true, beta: true)
 
   end
 
@@ -92,7 +92,9 @@ platform :ios do
     #   message: "Successfully deployed new App Update."
     # )
 
-    notify "Fastlane #{lane}: 👍"
+    notification(
+      message: "Fastlane #{lane}: 👍"
+      )
   end
 
   error do |lane, exception|
@@ -102,8 +104,11 @@ platform :ios do
     #   message: exception.message,
     #   success: false
     # )
+    
+    notification(
+      message: "Fastlane #{lane}: 👎"
+      )
 
-    notify "Fastlane #{lane}: 👎"
     print "
 -----------------
 ----- ERROR -----
