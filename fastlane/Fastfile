@@ -1,4 +1,4 @@
-fastlane_version "1.13"
+fastlane_version "1.39"
 default_platform :ios
 
 platform :ios do
@@ -30,7 +30,7 @@ platform :ios do
 
     cocoapods
 
-    ipa(
+    gym(
       scheme: "Eatery",
       configuration: "App Store",
       clean: true
