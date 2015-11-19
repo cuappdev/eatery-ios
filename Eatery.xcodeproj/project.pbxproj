@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DDD3B9A1BE9F4B7005B1D1E /* DiningStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; };
-		423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */; };
+		1DCA95B61BFDE0A900A319D3 /* DiningStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCA95B41BFDE0A900A319D3 /* DiningStack.framework */; };
+		1DCA95B71BFDE0A900A319D3 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCA95B51BFDE0A900A319D3 /* SwiftyJSON.framework */; };
 		4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4283B3701BE6A17C003DE22E /* NotificationCenter.framework */; };
 		4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3751BE6A17C003DE22E /* MainInterface.storyboard */; };
 		4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -72,8 +72,6 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; };
-		FAA912AB1BE69E96003475A8 /* DiningStack.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAA912AC1BE69E9A003475A8 /* DiningStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA912A51BE69E5F003475A8 /* DiningStack.framework */; };
 		FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; };
 		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; };
@@ -138,13 +136,6 @@
 			remoteGlobalIDString = 4283B36E1BE6A17C003DE22E;
 			remoteInfo = "Today Extension";
 		};
-		FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FAF5CE731BE19C6E00C49EDE;
-			remoteInfo = DiningStack;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -159,21 +150,14 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FAA912A91BE69E8C003475A8 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FAA912AB1BE69E96003475A8 /* DiningStack.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		009907E8EA5C64DC3A183B9D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DCA95B01BFDDFCC00A319D3 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = SOURCE_ROOT; };
+		1DCA95B21BFDDFE600A319D3 /* DiningStack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiningStack.framework; path = "Pods/../build/Debug-iphoneos/DiningStack.framework"; sourceTree = SOURCE_ROOT; };
+		1DCA95B41BFDE0A900A319D3 /* DiningStack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiningStack.framework; path = "Pods/../build/Debug-iphoneos/DiningStack.framework"; sourceTree = SOURCE_ROOT; };
+		1DCA95B51BFDE0A900A319D3 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = SOURCE_ROOT; };
 		4283B36F1BE6A17C003DE22E /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4283B3701BE6A17C003DE22E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		4283B3761BE6A17C003DE22E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -270,7 +254,6 @@
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Other-Sources/Info.plist"; sourceTree = SOURCE_ROOT; };
 		FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hardcodedMenus.json; sourceTree = "<group>"; };
-		FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiningStack.xcodeproj; path = DiningStack/DiningStack.xcodeproj; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
 		FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A2E41BC60DE50001DE97 /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
@@ -332,8 +315,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DDD3B9A1BE9F4B7005B1D1E /* DiningStack.framework in Frameworks */,
-				423AB0341BE99120009C9841 /* SwiftyJSON.framework in Frameworks */,
+				1DCA95B61BFDE0A900A319D3 /* DiningStack.framework in Frameworks */,
+				1DCA95B71BFDE0A900A319D3 /* SwiftyJSON.framework in Frameworks */,
 				4283B3711BE6A17C003DE22E /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,7 +326,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */,
-				FAA912AC1BE69E9A003475A8 /* DiningStack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +437,10 @@
 		C01E03FA19E5C4AD0050E8C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DCA95B41BFDE0A900A319D3 /* DiningStack.framework */,
+				1DCA95B51BFDE0A900A319D3 /* SwiftyJSON.framework */,
+				1DCA95B21BFDDFE600A319D3 /* DiningStack.framework */,
+				1DCA95B01BFDDFCC00A319D3 /* Pods.framework */,
 				D18D9C5D1BAF2BF400C9D95D /* Alamofire.framework */,
 				D18D9C5B1BAF2BF100C9D95D /* SwiftyJSON.framework */,
 				D18D9C591BAF2B5200C9D95D /* Analytics.framework */,
@@ -626,7 +612,6 @@
 		C0497B591B64AA3800AC1C6C /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */,
 				C0497B651B64AA3800AC1C6C /* MBProgressHud */,
 				C0497B681B64AA3800AC1C6C /* MXLCalendarManager */,
 			);
@@ -670,14 +655,6 @@
 			path = "Classes/Other-Sources";
 			sourceTree = "<group>";
 		};
-		FAA9129F1BE69E5F003475A8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FAA912A51BE69E5F003475A8 /* DiningStack.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -708,7 +685,6 @@
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
 				E2CFE9C2E9E8D8099684D94E /* Copy Pods Resources */,
 				2529F4D1F6E174E13D3FA0DA /* Embed Pods Frameworks */,
-				FAA912A91BE69E8C003475A8 /* Copy Frameworks */,
 				4283B3811BE6A17C003DE22E /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -764,12 +740,6 @@
 			mainGroup = C007CAB619E1BEAC00E3BD46;
 			productRefGroup = C007CAC019E1BEAC00E3BD46 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = FAA9129F1BE69E5F003475A8 /* Products */;
-					ProjectRef = FAA9129E1BE69E5F003475A8 /* DiningStack.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C007CABE19E1BEAC00E3BD46 /* Eatery */,
@@ -777,16 +747,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		FAA912A51BE69E5F003475A8 /* DiningStack.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DiningStack.framework;
-			remoteRef = FAA912A41BE69E5F003475A8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4283B36D1BE6A17C003DE22E /* Resources */ = {
@@ -1019,10 +979,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Today Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -1058,10 +1014,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1107,10 +1059,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1156,10 +1104,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
