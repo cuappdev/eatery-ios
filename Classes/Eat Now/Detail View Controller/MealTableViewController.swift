@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DiningStack
 
 protocol MealScrollDelegate {
     func mealScrollViewDidBeginPushing(scrollView: UIScrollView)
