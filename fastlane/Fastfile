@@ -20,10 +20,17 @@ platform :ios do
     # Use sigh to download provisioning profiles and sign our app & extensions with the udid
     udid = sigh(
       app_identifier: "com.cuappdev.cuad-eatery", 
-      output_path: "./fastlane",
+      output_path: "./fastlane/profiles",
       provisioning_name: "Eatery App Store"
     )
     ENV["PROJECT_UDID"] = udid
+
+    udid = sigh(
+      app_identifier: "com.cuappdev.cuad-eatery.Today-Extension", 
+      output_path: "./fastlane/profiles",
+      provisioning_name: "Eatery Today Extension"
+    )
+    ENV["TODAY_EXT_UDID"] = udid
 
     # Use this to select the correct version of xcode
     # xcode_select "/Applications/Xcode.app"
@@ -48,7 +55,7 @@ platform :ios do
 
     build
 
-    deliver(skip_deploy: true, force: true, beta: true)
+    testflight(skip_submission: true)
 
   end
 
@@ -61,7 +68,11 @@ platform :ios do
 
     build
 
-    deliver(skip_deploy: true, force: true)
+    deliver(
+      submit_for_review: false,
+      automatic_release: false,
+      force: true
+     )
 
   end
 
