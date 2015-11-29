@@ -39,6 +39,7 @@
 		95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB41BD8699F003612DB /* SubmitBugViewController.swift */; };
 		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
+		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */; };
@@ -205,6 +206,7 @@
 		95434FB41BD8699F003612DB /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
 		95434FB51BD8699F003612DB /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		95434FB61BD8699F003612DB /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
+		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImages.swift; sourceTree = "<group>"; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.app store.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.app store.xcconfig"; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 		C0497ADC1B64AA1800AC1C6C /* Eat Now */ = {
 			isa = PBXGroup;
 			children = (
+				95495D2D1C0AA0790015B85E /* MenuImages.swift */,
 				C0497AE91B64AA1800AC1C6C /* Root View Controller */,
 				C0497ADD1B64AA1800AC1C6C /* Detail View Controller */,
 			);
@@ -922,6 +925,7 @@
 				95434FC41BD8699F003612DB /* FBTweakViewController.m in Sources */,
 				95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */,
 				95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */,
+				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
 				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
