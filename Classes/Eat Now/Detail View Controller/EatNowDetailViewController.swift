@@ -249,8 +249,6 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: Menu Sharing
     
     func shareMenu() {
-        let textToShare = "Hey check out this awesome menu on Eatery :)"
-        
         //get share image
         var imageToShare = UIImage()
         let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
@@ -261,7 +259,7 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         //share
-        let activityItems = [textToShare,imageToShare]
+        let activityItems = [imageToShare]
         let activityVC = UIActivityViewController(activityItems: activityItems as [AnyObject], applicationActivities: nil)
         activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact,UIActivityTypePrint, UIActivityTypePostToWeibo]
         activityVC.popoverPresentationController?.sourceView = view
