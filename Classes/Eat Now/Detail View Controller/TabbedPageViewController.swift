@@ -12,6 +12,10 @@ protocol TabbedPageViewControllerDelegate {
     func selectedTabDidChange(newIndex: Int)
 }
 
+protocol TabbedPageViewControllerScrollDelegate {
+    func scrollViewDidChange()
+}
+
 private let kTabBarHeight: CGFloat = 44
 
 class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, TabBarDelegate {
@@ -20,6 +24,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     private var meals: [String] = []
     
     var tabDelegate: TabbedPageViewControllerDelegate?
+    var scrollDelegate: TabbedPageViewControllerScrollDelegate?
     
     var pageViewController: UIPageViewController!
     
@@ -36,17 +41,20 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
             return mealVC.meal
         })
         
-        let tabBar = UnderlineTabBarView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
-        tabBar.setUp(meals)
-        tabBar.delegate = self
-        view.addSubview(tabBar)
-        
-        tabDelegate = tabBar
+        var tabBar: UnderlineTabBarView?
+        if meals.count > 1 {
+            tabBar = UnderlineTabBarView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
+            tabBar!.setUp(meals)
+            tabBar!.delegate = self
+            view.addSubview(tabBar!)
+            
+            tabDelegate = tabBar!
+        }
         
         // Page view controller
         pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
         pageViewController.view.backgroundColor = UIColor.lightGray()
-        let pageVCYOffset: CGFloat = tabBar.frame.origin.y + tabBar.frame.height
+        let pageVCYOffset: CGFloat = tabBar != nil ? tabBar!.frame.origin.y + tabBar!.frame.height : 0
         let pageVCHeight = view.frame.height - pageVCYOffset - 44 - 20
         pageViewController.view.frame = CGRect(x: 0, y: pageVCYOffset, width: view.frame.width, height: pageVCHeight)
         
@@ -81,6 +89,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
         let index = viewControllers.indexOf(currentViewController)!
         tabDelegate?.selectedTabDidChange(index)
+        scrollDelegate?.scrollViewDidChange()
         
         updateActiveScrollView(index)
     }
@@ -98,6 +107,8 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         }
         pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: true, completion: nil)
         
+        scrollDelegate?.scrollViewDidChange()
+
         updateActiveScrollView(newIndex)
     }
     

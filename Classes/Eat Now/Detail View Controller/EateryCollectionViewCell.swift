@@ -23,7 +23,23 @@ class EateryCollectionViewCell: UICollectionViewCell {
     
     func setEatery(eatery: Eatery) {
         // photos are enormous so commenting temporarily until we thumbnail them
-//        backgroundImageView.image = eatery.photo
-        titleLabel.text = eatery.name
+        backgroundImageView.image = eatery.photo
+        titleLabel.text = eatery.nickname()
+        
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+        case .Open(let message):
+            statusLabel.textColor = UIColor.openGreen()
+            statusLabel.text = "Open"
+            timeLabel.text = message
+        case .Closed(let message):
+            statusLabel.textColor = UIColor.closedRed()
+            statusLabel.text = "Closed"
+            if message == "Closed" {
+                timeLabel.text = ""
+            } else {
+                timeLabel.text = message
+            }
+        }
     }
 }

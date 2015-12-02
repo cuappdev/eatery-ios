@@ -44,15 +44,6 @@ class MealTableViewController: UITableViewController {
         
         tableView.separatorStyle = .None
         
-//        tableView.showsVerticalScrollIndicator = false
-        
-//        tableView.contentSize.height += view.frame.height * 2
-        
-//        tableView.clipsToBounds = false
-//        tableView.layer.masksToBounds = false
-        
-//        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: kMenuHeaderViewFrameHeight / 2))
-        
         tableView.scrollEnabled = false
     }
 
@@ -61,23 +52,17 @@ class MealTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return event.menu.count == 0 ? 1 : event.menu.count
     }
-    
-//    override func viewDidAppear(animated: Bool) {
-//        scrollDelegate.resetOuterScrollView()
-//    }
-//    
-//    override func viewDidDisappear(animated: Bool) {
-//        // dont forward scroll events when resetting content offset
-//        resetting = true
-//        tableView.setContentOffset(CGPointZero, animated: false)
-//        resetting = false
-//    }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
         
-        let menu = event.menu
+        var menu = event.menu
+        
+        if let hardcoded = eatery.hardcodedMenu {
+            menu = hardcoded
+        }
+        
         let stationArray: [String] = Array(menu.keys)
         
         var title = "--"
@@ -93,6 +78,9 @@ class MealTableViewController: UITableViewController {
             content = names.count == 0 ? "No items to show" : names.joinWithSeparator("\n")
         }
         
+        if title == "General" {
+            title = "Menu"
+        }
         cell.titleLabel.text = title.uppercaseString
         cell.contentLabel.text = content
         
@@ -100,45 +88,4 @@ class MealTableViewController: UITableViewController {
 
         return cell
     }
-    
-    
-    // MARK: -
-    // MARK: UIScrollViewDelegate
-    
-    let kThreshhold: CGFloat = kMenuHeaderViewFrameHeight
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        if true { return }
-        
-        if !active { return }
-        
-        let offset = scrollView.contentOffset.y
-        previousScrollOffset = offset
-        
-        if offset < kThreshhold && !tracking {
-            tracking = true
-            scrollDelegate.mealScrollViewDidBeginPushing(scrollView)
-        }
-        
-        if tracking {
-            scrollDelegate.mealScrollViewDidPushOffset(scrollView, offset: CGPoint(x: 0, y: offset))
-        }
-        
-    }
-    
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            scrollingEnded()
-        }
-    }
-    
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        scrollingEnded()
-    }
-    
-    func scrollingEnded() {
-        tracking = false
-        scrollDelegate.mealScrollViewDidEndPushing(tableView)
-    }
-
 }

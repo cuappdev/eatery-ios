@@ -60,7 +60,7 @@ class GroupMeManager: NSObject {
     
     func getGroups() {
         let parameters = [
-            "token" : groupmeApiKey
+            "token" : ""
         ]
         request(.GET, Router.Groups, parameters: parameters, encoding: .URL)
             .responseJSON { (resp) -> Void in
@@ -74,7 +74,7 @@ class GroupMeManager: NSObject {
         let accessToken = query.componentsSeparatedByString("=")[1]
         print("ACCESS TOKEN = \(accessToken)", terminator: "")
         
-        groupmeApiKey = accessToken
+//        groupmeApiKey = accessToken
         
         GroupMeManager.sharedInstance.getGroups()
         
