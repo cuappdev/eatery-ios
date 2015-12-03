@@ -94,10 +94,11 @@ platform :ios do
       exclude_pattern: ".*.mobileprovision"
     )
   end
+
   after_all do |lane|
     # This block is called, only if the executed lane was successful
 
-    # clean_artifacts
+    clean_build_artifacts
     
     # hipchat(
     #   message: "Successfully deployed new App Update."
