@@ -21,7 +21,7 @@ class MealTableViewController: UITableViewController {
     
     var eatery: Eatery!
     var meal: String!
-    var event: Event!
+    var event: Event?
     
     private var tracking = false
     private var previousScrollOffset: CGFloat = 0
@@ -50,27 +50,31 @@ class MealTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return event.menu.count == 0 ? 1 : event.menu.count
+        if let e = event {
+            return e.menu.count == 0 ? 1 : e.menu.count
+        } else {
+            return 1
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
         
-        var menu = event.menu
+        var menu = event?.menu
         
         if let hardcoded = eatery.hardcodedMenu {
             menu = hardcoded
         }
         
-        let stationArray: [String] = Array(menu.keys)
+        let stationArray: [String] = Array(menu!.keys)
         
         var title = "--"
         var content = "No menu available"
         
         if stationArray.count != 0 {
             title = stationArray[indexPath.row]
-            let allItems = menu[title]
+            let allItems = menu![title]
             let names = allItems!.map({ (item: MenuItem) -> String in
                 return item.name
             })

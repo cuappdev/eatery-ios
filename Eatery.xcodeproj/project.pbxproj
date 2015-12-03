@@ -40,7 +40,6 @@
 		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
-		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */; };
@@ -1003,7 +1002,6 @@
 				95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */,
 				95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
-				C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
 				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
@@ -1073,7 +1071,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX).Today-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1117,7 +1115,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX).Today-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -1163,7 +1161,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX).Today-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -1269,7 +1267,7 @@
 				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
@@ -1278,7 +1276,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1331,7 +1329,7 @@
 				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
@@ -1340,7 +1338,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1392,7 +1390,7 @@
 				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
@@ -1401,7 +1399,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1453,7 +1451,7 @@
 				CODE_SIGN_ENTITLEMENTS = Eatery.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
@@ -1462,7 +1460,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery$(BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "$(PROJECT_UDID)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Other-Sources/Eatery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

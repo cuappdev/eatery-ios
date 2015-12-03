@@ -49,8 +49,12 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
 
         // TabbedPageViewController
         let todaysEventsDict = eatery.eventsOnDate(NSDate())
-        let meals = todaysEventsDict.map { (meal: String, _) -> String in
+        var meals = todaysEventsDict.map { (meal: String, _) -> String in
             return meal
+        }
+        
+        if meals.count == 0 {
+            meals.append("General")
         }
         
         var mealViewControllers: [MealTableViewController] = []
@@ -58,7 +62,7 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
             let mealVC = MealTableViewController()
             mealVC.eatery = eatery
             mealVC.meal = meal
-            mealVC.event = todaysEventsDict[meal]!
+            mealVC.event = todaysEventsDict[meal]
             mealVC.tableView.layoutIfNeeded()
             mealViewControllers.append(mealVC)
         }
