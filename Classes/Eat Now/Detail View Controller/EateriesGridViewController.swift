@@ -35,10 +35,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     let tableLayoutDelegate = EateriesCollectionViewTableLayout()
     
     var currentLayout: CollectionLayout = .Grid
-    
-    private var searchController: UISearchController!
-
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,7 +68,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 NSDefaults.synchronize()
             }
             
-            
             var layoutDelegate: EateriesCollectionViewLayout
             switch currentLayout {
             case .Grid:
@@ -102,6 +98,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.addSubview(refreshControl)
         
         loadData(false, completion: nil)
+        
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
