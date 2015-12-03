@@ -251,12 +251,12 @@ class EatNowDetailViewController: UIViewController, UITableViewDataSource, UITab
     func shareMenu() {
         //get share image
         var imageToShare = UIImage()
-        let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
-        if hardcodeMenuIterable.count > 0 {
-            imageToShare = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: hardcodeMenuIterable)
-        } else {
-            imageToShare = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: events[selectedMenu!]!.getMenuIterable())
-        }
+//        let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
+//        if hardcodeMenuIterable.count > 0 {
+//            imageToShare = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: hardcodeMenuIterable)
+//        } else {
+//            imageToShare = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: events[selectedMenu!]!.getMenuIterable())
+//        }
         
         //share
         let activityItems = [imageToShare]
