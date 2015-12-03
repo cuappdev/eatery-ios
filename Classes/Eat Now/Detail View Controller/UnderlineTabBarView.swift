@@ -27,7 +27,6 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         backgroundColor = UIColor.whiteColor()
     }
     
-    
     func setUp(sections: [String]) {
         
         for section in sections {
