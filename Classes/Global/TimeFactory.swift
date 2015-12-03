@@ -66,7 +66,7 @@ private func dateConverter(date1: NSDate, date2: NSDate) -> String {
     
     // TODO: incorporate eventSummary if applicable
     
-    return "Open \(first) to \(second)"
+    return "\(first) to \(second)"
 }
 
 private func hourConverter(hour: Int) -> String {

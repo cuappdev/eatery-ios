@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="QOJ-fU-Qfd" customClass="EateriesCollectionViewHeaderView" customModule="Eatery" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="152"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5k-wW-POb">
+                    <rect key="frame" x="0.0" y="66.5" width="305" height="18"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <color key="textColor" red="0.51010101009999997" green="0.51010101009999997" blue="0.51010101009999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="a5k-wW-POb" firstAttribute="centerY" secondItem="QOJ-fU-Qfd" secondAttribute="centerY" id="JQQ-8J-yWb"/>
+                <constraint firstItem="a5k-wW-POb" firstAttribute="leading" secondItem="QOJ-fU-Qfd" secondAttribute="leading" id="piR-lL-5ZI"/>
+                <constraint firstAttribute="trailing" secondItem="a5k-wW-POb" secondAttribute="trailing" constant="15" id="zt0-rx-Oy0"/>
+            </constraints>
+            <connections>
+                <outlet property="titleLabel" destination="a5k-wW-POb" id="TEF-Fu-ear"/>
+            </connections>
+            <point key="canvasLocation" x="367" y="463"/>
+        </collectionReusableView>
+    </objects>
+</document>

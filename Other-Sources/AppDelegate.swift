@@ -34,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         // Set up view controllers
-        let eatNow = EatNowTableViewController()
+//        let eatNow = EatNowTableViewController()
+        let eatNow = EateriesGridViewController()
         eatNow.title = "Places To Eat"
         let eatNavController = UINavigationController(rootViewController: eatNow)
         eatNavController.navigationBar.barStyle = .Black

@@ -107,7 +107,7 @@ class TodayExtensionTableViewController: UITableViewController, NCWidgetProvidin
 //                        self.liteEateries.append(eatery)
 //                    }
                     
-                    self.liteEateries.append(eatery)
+//                    self.liteEateries.append(eatery)
                     
                 }
                 

@@ -12,7 +12,6 @@ import DiningStack
 let NSDefaults = NSUserDefaults.standardUserDefaults()
 let API = DataManager.sharedInstance
 let DATA = DataManager.sharedInstance
-//let eateries = DataManager.sharedInstance.eateries
 
 let Analytics = AnalyticsManager.sharedInstance
 
