@@ -40,7 +40,6 @@
 		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
-		745255E5F75E8B1EAC4E54EE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009907E8EA5C64DC3A183B9D /* Pods.framework */; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AD21B64AA1800AC1C6C /* GroupMeManager.swift */; };
@@ -63,7 +62,6 @@
 		C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF41B64AA1800AC1C6C /* Macros.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
-		C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */; };
 		C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */; };
 		C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */; };
 		C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */; };
@@ -251,8 +249,6 @@
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
 		C0497B1F1B64AA3800AC1C6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C0497B661B64AA3800AC1C6C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C0497B691B64AA3800AC1C6C /* MXLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendar.h; sourceTree = "<group>"; };
 		C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendar.m; sourceTree = "<group>"; };
 		C0497B6B1B64AA3800AC1C6C /* MXLCalendarAttendee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarAttendee.h; sourceTree = "<group>"; };
@@ -651,19 +647,9 @@
 		C0497B591B64AA3800AC1C6C /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				C0497B651B64AA3800AC1C6C /* MBProgressHud */,
 				C0497B681B64AA3800AC1C6C /* MXLCalendarManager */,
 			);
 			path = vendor;
-			sourceTree = "<group>";
-		};
-		C0497B651B64AA3800AC1C6C /* MBProgressHud */ = {
-			isa = PBXGroup;
-			children = (
-				C0497B661B64AA3800AC1C6C /* MBProgressHUD.h */,
-				C0497B671B64AA3800AC1C6C /* MBProgressHUD.m */,
-			);
-			path = MBProgressHud;
 			sourceTree = "<group>";
 		};
 		C0497B681B64AA3800AC1C6C /* MXLCalendarManager */ = {
@@ -1003,7 +989,6 @@
 				95434FBA1BD8699F003612DB /* _FBTweakCategoryViewController.m in Sources */,
 				95434FBB1BD8699F003612DB /* _FBTweakCollectionViewController.m in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
-				C0497B021B64AA1800AC1C6C /* MenuItem.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
 				C0497B061B64AA1800AC1C6C /* SegmentedControlSectionHeaderView.swift in Sources */,
 				C0497B121B64AA1800AC1C6C /* String+Extension.swift in Sources */,
@@ -1013,7 +998,6 @@
 				C0497B031B64AA1800AC1C6C /* EatNowDetailHeaderView.swift in Sources */,
 				C0497AFB1B64AA1800AC1C6C /* GroupMeManager.swift in Sources */,
 				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,
-				C0497BBA1B64AA3800AC1C6C /* MBProgressHUD.m in Sources */,
 				E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */,
 				C0497B091B64AA1800AC1C6C /* HoursTableViewCell.swift in Sources */,
 				95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */,
