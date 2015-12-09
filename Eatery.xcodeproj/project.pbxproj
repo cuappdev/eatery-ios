@@ -90,7 +90,7 @@
 		FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */; };
 		FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */; };
-		FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104west.jpg */; };
+		FAC5A3191BC60DE50001DE97 /* 104-West.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104-West.jpg */; };
 		FAC5A31A1BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */; };
 		FAC5A31B1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E61BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg */; };
 		FAC5A31C1BC60DE50001DE97 /* atrium-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E71BC60DE50001DE97 /* atrium-cafe.jpg */; };
@@ -121,7 +121,7 @@
 		FAC5A3351BC60DE50001DE97 /* Ivy-Room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3001BC60DE50001DE97 /* Ivy-Room.jpg */; };
 		FAC5A3361BC60DE50001DE97 /* Ivy-Room+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3011BC60DE50001DE97 /* Ivy-Room+logo.jpg */; };
 		FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3021BC60DE50001DE97 /* Janens-Dining+logo.jpg */; };
-		FAC5A3381BC60DE50001DE97 /* jansens-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3031BC60DE50001DE97 /* jansens-dining.jpg */; };
+		FAC5A3381BC60DE50001DE97 /* Jansens-Dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3031BC60DE50001DE97 /* Jansens-Dining.jpg */; };
 		FAC5A3391BC60DE50001DE97 /* keeton-house-dining.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3041BC60DE50001DE97 /* keeton-house-dining.jpg */; };
 		FAC5A33A1BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3051BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg */; };
 		FAC5A33B1BC60DE50001DE97 /* marthas-cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A3061BC60DE50001DE97 /* marthas-cafe.jpg */; };
@@ -287,7 +287,7 @@
 		FA1E4B821BD41A5A00DBD076 /* hardcodedMenus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hardcodedMenus.json; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
 		FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West+logo.jpg"; sourceTree = "<group>"; };
-		FAC5A2E41BC60DE50001DE97 /* 104west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 104west.jpg; sourceTree = "<group>"; };
+		FAC5A2E41BC60DE50001DE97 /* 104-West.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West.jpg"; sourceTree = "<group>"; };
 		FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "amit-bhatia-libe-cafe.jpg"; sourceTree = "<group>"; };
 		FAC5A2E61BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Amit-Bhatia-Libe-Cafe+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A2E71BC60DE50001DE97 /* atrium-cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "atrium-cafe.jpg"; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 		FAC5A3001BC60DE50001DE97 /* Ivy-Room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Ivy-Room.jpg"; sourceTree = "<group>"; };
 		FAC5A3011BC60DE50001DE97 /* Ivy-Room+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Ivy-Room+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A3021BC60DE50001DE97 /* Janens-Dining+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Janens-Dining+logo.jpg"; sourceTree = "<group>"; };
-		FAC5A3031BC60DE50001DE97 /* jansens-dining.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "jansens-dining.jpg"; sourceTree = "<group>"; };
+		FAC5A3031BC60DE50001DE97 /* Jansens-Dining.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Jansens-Dining.jpg"; sourceTree = "<group>"; };
 		FAC5A3041BC60DE50001DE97 /* keeton-house-dining.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "keeton-house-dining.jpg"; sourceTree = "<group>"; };
 		FAC5A3051BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Keeton-House-Dining+logo.jpg"; sourceTree = "<group>"; };
 		FAC5A3061BC60DE50001DE97 /* marthas-cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "marthas-cafe.jpg"; sourceTree = "<group>"; };
@@ -588,7 +588,7 @@
 			isa = PBXGroup;
 			children = (
 				FAC5A2E31BC60DE50001DE97 /* 104-West+logo.jpg */,
-				FAC5A2E41BC60DE50001DE97 /* 104west.jpg */,
+				FAC5A2E41BC60DE50001DE97 /* 104-West.jpg */,
 				FAC5A2E51BC60DE50001DE97 /* amit-bhatia-libe-cafe.jpg */,
 				FAC5A2E61BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg */,
 				FAC5A2E71BC60DE50001DE97 /* atrium-cafe.jpg */,
@@ -619,7 +619,7 @@
 				FAC5A3001BC60DE50001DE97 /* Ivy-Room.jpg */,
 				FAC5A3011BC60DE50001DE97 /* Ivy-Room+logo.jpg */,
 				FAC5A3021BC60DE50001DE97 /* Janens-Dining+logo.jpg */,
-				FAC5A3031BC60DE50001DE97 /* jansens-dining.jpg */,
+				FAC5A3031BC60DE50001DE97 /* Jansens-Dining.jpg */,
 				FAC5A3041BC60DE50001DE97 /* keeton-house-dining.jpg */,
 				FAC5A3051BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg */,
 				FAC5A3061BC60DE50001DE97 /* marthas-cafe.jpg */,
@@ -835,7 +835,7 @@
 				C0497B0A1B64AA1800AC1C6C /* HoursTableViewCell.xib in Resources */,
 				FAC5A33A1BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg in Resources */,
 				FAC5A33C1BC60DE50001DE97 /* Marthas-Cafe+logo.jpg in Resources */,
-				FAC5A3191BC60DE50001DE97 /* 104west.jpg in Resources */,
+				FAC5A3191BC60DE50001DE97 /* 104-West.jpg in Resources */,
 				FAC5A31B1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe+logo.jpg in Resources */,
 				FAC5A33E1BC60DE50001DE97 /* Mattins-Cafe+logo.jpg in Resources */,
 				FAC5A3401BC60DE50001DE97 /* Okenshields+logo.jpg in Resources */,
@@ -874,7 +874,7 @@
 				C00367301B64DC32002839C3 /* testMenu.json in Resources */,
 				FAC5A3271BC60DE50001DE97 /* cafe-jennie.jpg in Resources */,
 				FAC5A32D1BC60DE50001DE97 /* cook-house-dining.jpg in Resources */,
-				FAC5A3381BC60DE50001DE97 /* jansens-dining.jpg in Resources */,
+				FAC5A3381BC60DE50001DE97 /* Jansens-Dining.jpg in Resources */,
 				FAC5A32F1BC60DE50001DE97 /* cornell-dairy-bar.jpg in Resources */,
 				FAC5A33D1BC60DE50001DE97 /* mattins-cafe.jpg in Resources */,
 				FAC5A3251BC60DE50001DE97 /* Big-Red-Barn+logo.jpg in Resources */,
