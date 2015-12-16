@@ -2,8 +2,10 @@
 
 Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University.  It provides an easy and accessible way to browse the hours and menus of the dining locations on campus.
 
-<img src=Github-Assets/home_screen.png width=350 />
-<img src=Github-Assets/detail_screen.png width=350 />
+<img src=Github-Assets/list.png width=350 />
+<img src=Github-Assets/collection.png width=350 />
+<img src=Github-Assets/detail.png width=350 />
+<img src=Github-Assets/detailcafe.png width=350 />
 
 ## Supported Eateries
 * 104west
@@ -38,14 +40,13 @@ Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at 
 
 #Development
 
-## Dependency management
-Currently we use four third party libraries (found in the `vendor` directory).  For now, we will just copy and paste them into our project to update.  This obviously isn't very scalable but for the short-term, it will drastically decrease the number of build errors in development.  
+##Installation
+We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
 
-[UPDATE] We now use Cocoapods.  Run `pod install` before opening xcode and make sure you use the .xcworkspace from now on.  
+After cloning the project, run the following:
 
-When cloning the current version, call `git clone --recursive https://github.com/cuappdev/eatery.git`
+```bash
+pod install
+```
 
-If you already have the project installed, call `git submodule update --init --recursive`
-
-## Architecture
-[coming soon]
+Open the Xcode workspace and enjoy Eatery!
