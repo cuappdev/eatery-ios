@@ -79,22 +79,22 @@ extension Eatery {
     // Bool value is either stable or about to change
     func generateDescriptionOfCurrentState() -> EateryStatus {
         if isOpenToday() {
-            let activeEvent = activeEventForDate(NSDate())
+            guard let activeEvent = activeEventForDate(NSDate()) else { return .Closed("Closed") }
             print(activeEvent)
-            if activeEvent!.occurringOnDate(NSDate()) {
-                let minutesTillClose = (Int)(activeEvent!.endDate.timeIntervalSinceNow/Double(60))
+            if activeEvent.occurringOnDate(NSDate()) {
+                let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
                     return .Open("Closing in \(minutesTillClose)m")
                 } else {
-                    let timeString = ShortDateFormatter.stringFromDate(activeEvent!.endDate)
+                    let timeString = ShortDateFormatter.stringFromDate(activeEvent.endDate)
                     return .Open("Closes at \(timeString)")
                 }
             } else {
-                let minutesTillOpen = (Int)(activeEvent!.startDate.timeIntervalSinceNow/Double(60))
+                let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                 if minutesTillOpen < 60 {
                     return .Closed("Opens in \(minutesTillOpen)m")
                 } else {
-                    let timeString = ShortDateFormatter.stringFromDate(activeEvent!.startDate)
+                    let timeString = ShortDateFormatter.stringFromDate(activeEvent.startDate)
                     return .Closed("Opens at \(timeString)")
                 }
             }
