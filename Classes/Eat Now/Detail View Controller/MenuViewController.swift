@@ -49,10 +49,18 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
 
         // TabbedPageViewController
         let todaysEventsDict = eatery.eventsOnDate(NSDate())
-        var meals = todaysEventsDict.map { (meal: String, _) -> String in
+        let sortedEventsDict = todaysEventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
+            if a.1.startDate.compare(b.1.startDate) == NSComparisonResult.OrderedAscending {
+                return true
+            }
+            return false
+        }
+        
+        var meals = sortedEventsDict.map { (meal: String, _) -> String in
             return meal
         }
         
+        // Add a "General" tag so we dont get a crash for eateries that have no events
         if meals.count == 0 {
             meals.append("General")
         }
