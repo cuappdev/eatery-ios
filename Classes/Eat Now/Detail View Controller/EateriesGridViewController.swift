@@ -35,10 +35,12 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     let tableLayoutDelegate = EateriesCollectionViewTableLayout()
     
     var currentLayout: CollectionLayout = .Grid
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
+
         // -- Nav bar
         // TODO: make this a proxy and put it in another file
         navigationController?.view.backgroundColor = UIColor.whiteColor()
@@ -48,7 +50,13 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        // Collection View
+        setupCollectionView()
+        
+        loadData(false, completion: nil)
+        
+    }
+    
+    func setupCollectionView() {
         var collectionViewFrame = view.frame
         collectionViewFrame.size = CGSize(width: collectionViewFrame.width - 2 * kCollectionViewGutterWidth, height: collectionViewFrame.height - kNavAndStatusBarHeight)
         collectionViewFrame.offsetInPlace(dx: kCollectionViewGutterWidth, dy: 0)
@@ -87,18 +95,19 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         view.addSubview(collectionView)
-        
-        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "pullToRefresh:", forControlEvents: .ValueChanged)
         collectionView.addSubview(refreshControl)
-        
-        loadData(false, completion: nil)
-        
+    }
+    
+    func pullToRefresh(sender: UIRefreshControl) {
+        loadData(true) { () -> Void in
+            sender.endRefreshing()
+        }
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -111,13 +120,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                })
-        }
-    }
-    
-    func pullToRefresh(sender: UIRefreshControl) {
-        loadData(true) { () -> Void in
-            sender.endRefreshing()
+            })
         }
     }
     
@@ -134,8 +137,71 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         eateryData["West"] = westCampusEateries
         eateryData["Central"] = centralCampusEateries
         
+        sortEateries()
+        
         gridLayoutDelegate.eateryData = eateryData
         tableLayoutDelegate.eateryData = eateryData
+    }
+    
+    func sortEateries() {
+        
+        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+            if !a.isOpenToday() { return false }
+            if !b.isOpenToday() { return true  }
+            
+            // Both Eateries are open today, find which comes first
+            // To do this, we simply compare the time intervals between
+            // now and the active event's start date
+            
+            let now = NSDate()
+            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+            
+            if aTimeInterval <= bTimeInterval {
+                return true
+            }
+            
+            return false
+        }
+        
+        let sortByOpenAndLexographicallyClosure = { (a: Eatery, b: Eatery) -> Bool in
+            
+            // If only one of the eateries is closed today, we can return the other one early
+            if a.isOpenToday() && !b.isOpenToday() {
+                return true
+            }
+            if !a.isOpenToday() && b.isOpenToday() {
+                return false
+            }
+            
+            // Sort open eateries before closed ones
+            // If they are both currently open or currently closed, sort alphabetically
+            
+            let aState = a.generateDescriptionOfCurrentState()
+            let bState = b.generateDescriptionOfCurrentState()
+            
+            switch aState {
+            case .Open(_):
+                switch bState {
+                case .Open(_):  return a.nickname() <= b.nickname()
+                default:        return true
+                }
+                
+            case .Closed(_):
+                switch bState {
+                case .Closed(_):return a.nickname() <= b.nickname()
+                default:        return false
+                }
+                
+            default: return true
+            }
+        }
+        
+        
+        
+        eateryData["North"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
+        eateryData["West"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
+        eateryData["Central"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         
     }
     
