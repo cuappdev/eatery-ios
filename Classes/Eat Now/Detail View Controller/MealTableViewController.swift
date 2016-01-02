@@ -67,28 +67,31 @@ class MealTableViewController: UITableViewController {
             menu = hardcoded
         }
         
-        let stationArray: [String] = Array(menu!.keys)
-        
-        var title = "--"
-        var content = "No menu available"
-        
-        if stationArray.count != 0 {
-            title = stationArray[indexPath.row]
-            let allItems = menu![title]
-            let names = allItems!.map({ (item: MenuItem) -> String in
-                return item.name
-            })
+        if let menu = menu {
+            let stationArray: [String] = Array(menu.keys)
             
-            content = names.count == 0 ? "No items to show" : names.joinWithSeparator("\n")
+            var title = "--"
+            var content = "No menu available"
+            
+            if stationArray.count != 0 {
+                title = stationArray[indexPath.row]
+                let allItems = menu[title]
+                let names = allItems!.map { $0.name }
+                
+                content = names.isEmpty ? "No items to show" : names.joinWithSeparator("\n")
+            }
+            
+            if title == "General" {
+                title = "Menu"
+            }
+            cell.titleLabel.text = title.uppercaseString
+            cell.contentLabel.text = content
+            
+            cell.selectionStyle = .None
+        } else {
+            cell.titleLabel.text = "No menu available"
+            cell.contentLabel.text = ""
         }
-        
-        if title == "General" {
-            title = "Menu"
-        }
-        cell.titleLabel.text = title.uppercaseString
-        cell.contentLabel.text = content
-        
-        cell.selectionStyle = .None
 
         return cell
     }
