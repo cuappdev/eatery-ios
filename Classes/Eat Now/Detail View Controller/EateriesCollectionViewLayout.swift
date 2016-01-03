@@ -13,6 +13,8 @@ class EateriesCollectionViewLayout: UICollectionViewFlowLayout, UICollectionView
 
     var eateryData: [String: [Eatery]] = [:]
     var controller: EateriesGridViewController!
+    var pushedViewController = false
+    let navBarDisplayThreshold = CGFloat(50)
         
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 20)
@@ -21,33 +23,35 @@ class EateriesCollectionViewLayout: UICollectionViewFlowLayout, UICollectionView
     // MARK: -
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("did select")
-        
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        if eateryData["Favorites"]?.count == 0 {
-            section += 1
-        }
-        switch section {
-        case 0:
-            eatery = eateryData["Favorites"]![indexPath.row]
-        case 1:
-            eatery = eateryData["Central"]![indexPath.row]
-        case 2:
-            eatery = eateryData["West"]![indexPath.row]
-        case 3:
-            eatery = eateryData["North"]![indexPath.row]
-        default:
-            print("Invalid section in grid view.")
-        }
-        
-        let detailViewController = MenuViewController()
-        detailViewController.eatery = eatery
-        detailViewController.delegate = controller
-        controller.navigationController?.pushViewController(detailViewController, animated: true)
-    }
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        print("did select")
+//        
+//        var eatery: Eatery!
+//        
+//        var section = indexPath.section
+//        if eateryData["Favorites"]?.count == 0 {
+//            section += 1
+//        }
+//        switch section {
+//        case 0:
+//            eatery = eateryData["Favorites"]![indexPath.row]
+//        case 1:
+//            eatery = eateryData["Central"]![indexPath.row]
+//        case 2:
+//            eatery = eateryData["West"]![indexPath.row]
+//        case 3:
+//            eatery = eateryData["North"]![indexPath.row]
+//        default:
+//            print("Invalid section in grid view.")
+//        }
+//        
+//        let detailViewController = MenuViewController()
+//        detailViewController.eatery = eatery
+//        detailViewController.delegate = controller
+//        controller.navigationController?.pushViewController(detailViewController, animated: true)
+//        pushedViewController = true
+//    }
+    
     
 //    var indexPathsToAnimate: [NSIndexPath] = []
 //    override func prepareForCollectionViewUpdates(updateItems: [UICollectionViewUpdateItem]) {

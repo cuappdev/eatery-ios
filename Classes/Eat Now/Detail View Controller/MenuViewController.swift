@@ -34,6 +34,8 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
         // Appearance
         view.backgroundColor = UIColor.lightGray()
         
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        
         // Scroll View
         outerScrollView = UIScrollView(frame: view.frame)
         let scrollViewContentSizeHeight = view.frame.height + kMenuHeaderViewFrameHeight

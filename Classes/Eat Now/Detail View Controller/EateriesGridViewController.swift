@@ -25,16 +25,18 @@ enum CollectionLayout: String {
 
 let kCollectionViewGutterWidth: CGFloat = 8
 
-class EateriesGridViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, MenuFavoriteDelegate {
+class EateriesGridViewController: UIViewController, UICollectionViewDataSource, UISearchResultsUpdating, MenuFavoriteDelegate {
     
     var collectionView: UICollectionView!
     private var eateries: [Eatery] = []
     private var eateryData: [String: [Eatery]] = [:]
     
-    let gridLayoutDelegate = EateriesCollectionViewGridLayout()
-    let tableLayoutDelegate = EateriesCollectionViewTableLayout()
-    
     var currentLayout: CollectionLayout = .Grid
+    var collectionViewFrame: CGRect!
+    
+    var searchController: UISearchController!
+    var searchQuery: String = ""
+    var isTopView = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,29 +46,33 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         // -- Nav bar
         // TODO: make this a proxy and put it in another file
         navigationController?.view.backgroundColor = UIColor.whiteColor()
-        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.barTintColor = UIColor.eateryBlue()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         setupCollectionView()
+        extendedLayoutIncludesOpaqueBars = true
+        edgesForExtendedLayout = UIRectEdge.Top
+        automaticallyAdjustsScrollViewInsets = false
         
         loadData(false, completion: nil)
-        
     }
     
-    func setupCollectionView() {
-        var collectionViewFrame = view.frame
-        collectionViewFrame.size = CGSize(width: collectionViewFrame.width - 2 * kCollectionViewGutterWidth, height: collectionViewFrame.height - kNavAndStatusBarHeight)
-        collectionViewFrame.offsetInPlace(dx: kCollectionViewGutterWidth, dy: 0)
+    override func viewDidAppear(animated: Bool) {
+        isTopView = true
+    }
+    
+    func setupCollectionView() {      
+        collectionViewFrame = UIScreen.mainScreen().bounds
         
-        gridLayoutDelegate.controller = self
-        tableLayoutDelegate.controller = self
+        collectionViewFrame.size = CGSize(width: collectionViewFrame.width - 2 * kCollectionViewGutterWidth, height: collectionViewFrame.height)
+        collectionViewFrame.offsetInPlace(dx: kCollectionViewGutterWidth, dy: 0)
         
         collectionView = UICollectionView(frame: collectionViewFrame, collectionViewLayout: EateriesCollectionViewLayout())
         collectionView.dataSource = self
-        collectionView.delegate = tableLayoutDelegate
+        collectionView.delegate = self
         
         if shouldShowLayoutButton {
             if let layoutString = NSDefaults.stringForKey(kDefaultsCollectionViewLayoutKey) {
@@ -76,25 +82,31 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 NSDefaults.synchronize()
             }
             
-            var layoutDelegate: EateriesCollectionViewLayout
-            switch currentLayout {
-            case .Grid:
-                layoutDelegate = gridLayoutDelegate
-            case .Table:
-                layoutDelegate = tableLayoutDelegate
-            }
-            collectionView.delegate = layoutDelegate
+            collectionView.delegate = self
             
             let layoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
             layoutButton.addTarget(self, action: "layoutButtonPressed:", forControlEvents: .TouchUpInside)
             layoutButton.setImage(currentLayout.iconImage, forState: .Normal)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: layoutButton)
+            
+            searchController = UISearchController(searchResultsController: nil)
+            searchController.dimsBackgroundDuringPresentation = false
+            searchController.searchResultsUpdater = self
+            searchController.hidesNavigationBarDuringPresentation = false
+            searchController.searchBar.sizeToFit()
+            let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+            textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
+            searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+            searchController.searchBar.placeholder = ""
+            searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
+            
+            navigationItem.titleView = searchController.searchBar
         }
         
         collectionView.registerNib(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         
-        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 20 + kNavAndStatusBarHeight, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         view.addSubview(collectionView)
@@ -125,10 +137,29 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func processEateries() {
-        let favoriteEateries = eateries.filter { return $0.favorite }
-        let northCampusEateries = eateries.filter { return $0.area == .North }
-        let westCampusEateries = eateries.filter { return $0.area == .West }
-        let centralCampusEateries = eateries.filter { return $0.area == .Central }
+        var desiredEateries: [Eatery] = []
+        if searchQuery != "" {
+            desiredEateries = eateries.filter {
+                var hardcodedFoodItemFound = false
+                if let hardcoded = $0.hardcodedMenu {
+                    for (_, value) in hardcoded {
+                        for item in value {
+                            if item.name.lowercaseString.rangeOfString(searchQuery.lowercaseString) != nil {
+                                hardcodedFoodItemFound = true
+                            }
+                        }
+                    }
+                }
+                return (($0.name.lowercaseString.rangeOfString(searchQuery.lowercaseString) != nil)
+                    || ($0.nickname().lowercaseString.rangeOfString(searchQuery.lowercaseString) != nil)
+                    || hardcodedFoodItemFound) }
+        } else {
+            desiredEateries = eateries
+        }
+        let favoriteEateries = desiredEateries.filter { return $0.favorite }
+        let northCampusEateries = desiredEateries.filter { return $0.area == .North }
+        let westCampusEateries = desiredEateries.filter { return $0.area == .West }
+        let centralCampusEateries = desiredEateries.filter { return $0.area == .Central }
 
         // TODO: sort by hours?
 
@@ -138,13 +169,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         eateryData["Central"] = centralCampusEateries
         
         sortEateries()
-        
-        gridLayoutDelegate.eateryData = eateryData
-        tableLayoutDelegate.eateryData = eateryData
     }
     
     func sortEateries() {
-        
         let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
             if !a.isOpenToday() { return false }
             if !b.isOpenToday() { return true  }
@@ -196,8 +223,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             default: return true
             }
         }
-        
-        
         
         eateryData["North"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         eateryData["West"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
@@ -305,21 +330,113 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func layoutButtonPressed(sender: UIButton) {
         // toggle
-        currentLayout = currentLayout == .Grid ? .Table : .Grid
-        NSDefaults.setObject(currentLayout.rawValue, forKey: kDefaultsCollectionViewLayoutKey)
-        NSDefaults.synchronize()
-        
-        let newLayoutDelegate = currentLayout == .Grid ? gridLayoutDelegate : tableLayoutDelegate
-        
-        sender.setImage(currentLayout.iconImage, forState: .Normal)
-        
-        collectionView.performBatchUpdates({ () -> Void in
-            self.collectionView.collectionViewLayout.invalidateLayout()
-            self.collectionView.delegate = newLayoutDelegate
-            }, completion: nil)
+//        currentLayout = currentLayout == .Grid ? .Table : .Grid
+//        NSDefaults.setObject(currentLayout.rawValue, forKey: kDefaultsCollectionViewLayoutKey)
+//        NSDefaults.synchronize()
+//        
+//        let newLayoutDelegate = currentLayout == .Grid ? gridLayoutDelegate : tableLayoutDelegate
+//        
+//        sender.setImage(currentLayout.iconImage, forState: .Normal)
+//        
+//        collectionView.performBatchUpdates({ () -> Void in
+//            self.collectionView.collectionViewLayout.invalidateLayout()
+//            self.collectionView.delegate = newLayoutDelegate
+//            }, completion: nil)
     }
     
     var shouldShowLayoutButton: Bool {
         return view.frame.width > 320
     }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let search = searchController.searchBar.text {
+            searchQuery = search
+            processEateries()
+            collectionView.reloadData()
+        }
+    }
+    
+    //for dislpaying nav bar if user scrolled to top
+    func displayNavigationBar() {
+        if navigationController!.navigationBarHidden {
+            navigationController?.hidesBarsOnSwipe = false
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+    }
+    
+    //necessary to prevent displaying nav bar twice (once from displayNavigationBar() and other from hidesBarsOnSwipe
+    func hideNavigationBar() {
+        if !(navigationController!.navigationBarHidden) && !(navigationController!.hidesBarsOnSwipe) {
+            navigationController?.setNavigationBarHidden(true, animated: true)
+            navigationController?.hidesBarsOnSwipe = true
+        }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
 }
+
+extension EateriesGridViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if isTopView {
+            if (scrollView.contentOffset.y == -84) {
+                displayNavigationBar()
+            } else {
+                hideNavigationBar()
+            }
+        }
+    }
+}
+
+extension EateriesGridViewController : UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("did select")
+        
+        var eatery: Eatery!
+        
+        var section = indexPath.section
+        if eateryData["Favorites"]?.count == 0 {
+            section += 1
+        }
+        switch section {
+        case 0:
+            eatery = eateryData["Favorites"]![indexPath.row]
+        case 1:
+            eatery = eateryData["Central"]![indexPath.row]
+        case 2:
+            eatery = eateryData["West"]![indexPath.row]
+        case 3:
+            eatery = eateryData["North"]![indexPath.row]
+        default:
+            print("Invalid section in grid view.")
+        }
+        
+        let detailViewController = MenuViewController()
+        detailViewController.eatery = eatery
+        detailViewController.delegate = self
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+        self.isTopView = false
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let gridWidth = collectionView.frame.width / 2
+        let cellWidth = gridWidth - kCollectionViewGutterWidth / 2
+        return CGSize(width: cellWidth, height: cellWidth * 0.8)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return kCollectionViewGutterWidth
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return kCollectionViewGutterWidth / 2
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
+    }
+}
+
