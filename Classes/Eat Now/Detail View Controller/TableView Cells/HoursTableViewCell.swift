@@ -11,7 +11,6 @@ import UIKit
 class HoursTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var rightLabel: UILabel!
     
@@ -19,7 +18,6 @@ class HoursTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         titleLabel.text = "HOURS"
-//        iconImageView.backgroundColor = UIColor(white: 0.97, alpha: 1)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

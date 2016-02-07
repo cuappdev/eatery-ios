@@ -80,7 +80,6 @@
 		E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0AD1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift */; };
 		E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */; };
 		E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */; };
-		E9CFC0B61C0F654E00ED884A /* EateriesCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B51C0F654E00ED884A /* EateriesCollectionViewLayout.swift */; };
 		E9CFC0B81C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */; };
 		E9EC978F1BFD1B4B00D06823 /* EateriesGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */; };
 		E9EC97921BFD1BD600D06823 /* EateryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC97901BFD1BD600D06823 /* EateryCollectionViewCell.swift */; };
@@ -277,7 +276,6 @@
 		E9CFC0AD1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateriesCollectionViewHeaderView.xib; sourceTree = "<group>"; };
 		E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
-		E9CFC0B51C0F654E00ED884A /* EateriesCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewLayout.swift; sourceTree = "<group>"; };
 		E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewTableLayout.swift; sourceTree = "<group>"; };
 		E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesGridViewController.swift; sourceTree = "<group>"; };
 		E9EC97901BFD1BD600D06823 /* EateryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -692,7 +690,6 @@
 			isa = PBXGroup;
 			children = (
 				E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */,
-				E9CFC0B51C0F654E00ED884A /* EateriesCollectionViewLayout.swift */,
 				E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */,
 				E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */,
 				E9EC97901BFD1BD600D06823 /* EateryCollectionViewCell.swift */,
@@ -968,7 +965,6 @@
 				E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */,
 				E9EC97921BFD1BD600D06823 /* EateryCollectionViewCell.swift in Sources */,
 				C0497AFF1B64AA1800AC1C6C /* LocationManager.swift in Sources */,
-				E9CFC0B61C0F654E00ED884A /* EateriesCollectionViewLayout.swift in Sources */,
 				95434FBD1BD8699F003612DB /* _FBTweakTableViewCell.m in Sources */,
 				E9CFC0A51C0E43C500ED884A /* Globals.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,

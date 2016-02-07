@@ -31,9 +31,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     private var eateries: [Eatery] = []
     private var eateryData: [String: [Eatery]] = [:]
     
-    var currentLayout: CollectionLayout = .Grid
-    var collectionViewFrame: CGRect!
-    
     var searchController: UISearchController!
     var searchQuery: String = ""
     var isTopView = true
@@ -64,45 +61,25 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         isTopView = true
     }
     
-    func setupCollectionView() {      
-        collectionViewFrame = UIScreen.mainScreen().bounds
+    func setupCollectionView() {
         
-        collectionViewFrame.size = CGSize(width: collectionViewFrame.width - 2 * kCollectionViewGutterWidth, height: collectionViewFrame.height)
-        collectionViewFrame.offsetInPlace(dx: kCollectionViewGutterWidth, dy: 0)
-        
-        collectionView = UICollectionView(frame: collectionViewFrame, collectionViewLayout: EateriesCollectionViewLayout())
+        collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: EateriesCollectionViewGridLayout())
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        if shouldShowLayoutButton {
-            if let layoutString = NSDefaults.stringForKey(kDefaultsCollectionViewLayoutKey) {
-                currentLayout = CollectionLayout(rawValue: layoutString)!
-            } else {
-                NSDefaults.setObject("grid", forKey: kDefaultsCollectionViewLayoutKey)
-                NSDefaults.synchronize()
-            }
-            
-            collectionView.delegate = self
-            
-            let layoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
-            layoutButton.addTarget(self, action: "layoutButtonPressed:", forControlEvents: .TouchUpInside)
-            layoutButton.setImage(currentLayout.iconImage, forState: .Normal)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: layoutButton)
-            
-            searchController = UISearchController(searchResultsController: nil)
-            searchController.dimsBackgroundDuringPresentation = false
-            searchController.searchResultsUpdater = self
-            searchController.hidesNavigationBarDuringPresentation = false
-            searchController.searchBar.sizeToFit()
-            let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
-            textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
-            searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-            searchController.searchBar.placeholder = ""
-            searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
-            
-            navigationItem.titleView = searchController.searchBar
-        }
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
+        searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        searchController.searchBar.placeholder = ""
+        searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
         
+        navigationItem.titleView = searchController.searchBar
+    
         collectionView.registerNib(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         
@@ -219,8 +196,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 case .Closed(_):return a.nickname() <= b.nickname()
                 default:        return false
                 }
-                
-            default: return true
             }
         }
         
@@ -325,25 +300,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.reloadData()
     }
     
-    // MARK: -
-    // MARK: Nav button
-    
-    func layoutButtonPressed(sender: UIButton) {
-        // toggle
-//        currentLayout = currentLayout == .Grid ? .Table : .Grid
-//        NSDefaults.setObject(currentLayout.rawValue, forKey: kDefaultsCollectionViewLayoutKey)
-//        NSDefaults.synchronize()
-//        
-//        let newLayoutDelegate = currentLayout == .Grid ? gridLayoutDelegate : tableLayoutDelegate
-//        
-//        sender.setImage(currentLayout.iconImage, forState: .Normal)
-//        
-//        collectionView.performBatchUpdates({ () -> Void in
-//            self.collectionView.collectionViewLayout.invalidateLayout()
-//            self.collectionView.delegate = newLayoutDelegate
-//            }, completion: nil)
-    }
-    
     var shouldShowLayoutButton: Bool {
         return view.frame.width > 320
     }
@@ -392,6 +348,10 @@ extension EateriesGridViewController : UIScrollViewDelegate {
 
 extension EateriesGridViewController : UICollectionViewDelegate {
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 20)
+    }
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("did select")
         
@@ -419,24 +379,6 @@ extension EateriesGridViewController : UICollectionViewDelegate {
         detailViewController.delegate = self
         self.navigationController?.pushViewController(detailViewController, animated: true)
         self.isTopView = false
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let gridWidth = collectionView.frame.width / 2
-        let cellWidth = gridWidth - kCollectionViewGutterWidth / 2
-        return CGSize(width: cellWidth, height: cellWidth * 0.8)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return kCollectionViewGutterWidth
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return kCollectionViewGutterWidth / 2
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
     }
 }
 
