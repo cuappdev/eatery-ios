@@ -25,7 +25,7 @@ enum CollectionLayout: String {
 
 let kCollectionViewGutterWidth: CGFloat = 8
 
-class EateriesGridViewController: UIViewController, UICollectionViewDataSource, UISearchResultsUpdating, MenuFavoriteDelegate {
+class EateriesGridViewController: UIViewController, UICollectionViewDataSource, UISearchResultsUpdating, MenuFavoriteDelegate, UIViewControllerPreviewingDelegate {
     
     var collectionView: UICollectionView!
     private var eateries: [Eatery] = []
@@ -55,6 +55,13 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         automaticallyAdjustsScrollViewInsets = false
         
         loadData(false, completion: nil)
+        
+        // Check for 3D Touch availability
+        if #available(iOS 9.0, *) {
+            if traitCollection.forceTouchCapability == .Available {
+                registerForPreviewingWithDelegate(self, sourceView: view)
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -289,6 +296,52 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         }
         
         return reusableHeaderView
+    }
+    
+    // MARK: -
+    // MARK: UIViewControllerPreviewingDelegate
+    
+    @available(iOS 9.0, *)
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let collectionViewPoint = view.convertPoint(location, toView: collectionView)
+        
+        guard let indexPath = collectionView.indexPathForItemAtPoint(collectionViewPoint),
+            cell = collectionView.cellForItemAtIndexPath(indexPath) else {
+                print("Unable to get cell at location: \(location)")
+                return nil
+        }
+        
+        var eatery: Eatery!
+        
+        var section = indexPath.section
+        if eateryData["Favorites"]?.count == 0 {
+            section += 1
+        }
+        switch section {
+        case 0:
+            eatery = eateryData["Favorites"]![indexPath.row]
+        case 1:
+            eatery = eateryData["Central"]![indexPath.row]
+        case 2:
+            eatery = eateryData["West"]![indexPath.row]
+        case 3:
+            eatery = eateryData["North"]![indexPath.row]
+        default:
+            print("Invalid section in grid view.")
+        }
+        
+        let peekViewController = MenuViewController()
+        peekViewController.eatery = eatery
+        peekViewController.delegate = self
+        
+        peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+        previewingContext.sourceRect = collectionView.convertRect(cell.frame, toView: view)
+        
+        return peekViewController
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        showViewController(viewControllerToCommit, sender: self)
     }
     
     // MARK: -
