@@ -8,28 +8,17 @@
 
 import UIKit
 
-class EateriesCollectionViewGridLayout: EateriesCollectionViewLayout {
+class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
     
-    // MARK: -
-    // MARK: UICollectionViewDelegateFlowLayout
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let gridWidth = collectionView.frame.width / 2
-        let cellWidth = gridWidth - kCollectionViewGutterWidth / 2
-        return CGSize(width: cellWidth, height: cellWidth * 0.8)
+    override func prepareLayout() {
+        super.prepareLayout()
+        
+        guard let collectionView = collectionView else {return}
+        let width = collectionView.bounds.width
+        let cellWidth = floor(width / 2 - kCollectionViewGutterWidth * 1.5)
+        itemSize = CGSize(width: cellWidth, height: cellWidth * 0.8)
+        minimumLineSpacing = kCollectionViewGutterWidth
+        minimumInteritemSpacing = kCollectionViewGutterWidth / 2
+        sectionInset = UIEdgeInsets(top: 10, left: kCollectionViewGutterWidth, bottom: 20, right: kCollectionViewGutterWidth)
     }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return kCollectionViewGutterWidth
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return kCollectionViewGutterWidth / 2
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
-    }
-    
-    
 }

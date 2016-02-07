@@ -8,26 +8,16 @@
 
 import UIKit
 
-class EateriesCollectionViewTableLayout: EateriesCollectionViewLayout {
-
-    // MARK: -
-    // MARK: UICollectionViewDelegateFlowLayout
+class EateriesCollectionViewTableLayout: UICollectionViewFlowLayout {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let cellWidth = collectionView.frame.width
-        return CGSize(width: cellWidth, height: cellWidth * 0.4)
+    override func prepareLayout() {
+        super.prepareLayout()
+        
+        guard let collectionView = collectionView else {return}
+        let width = collectionView.bounds.width
+        itemSize = CGSize(width: width, height: width * 0.4)
+        minimumLineSpacing = 0
+        minimumInteritemSpacing = 0
+        sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
     }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return kCollectionViewGutterWidth
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
-    }
-
 }

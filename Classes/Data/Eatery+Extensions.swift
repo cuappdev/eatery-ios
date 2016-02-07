@@ -80,7 +80,6 @@ extension Eatery {
     func generateDescriptionOfCurrentState() -> EateryStatus {
         if isOpenToday() {
             guard let activeEvent = activeEventForDate(NSDate()) else { return .Closed("Closed") }
-            print(activeEvent)
             if activeEvent.occurringOnDate(NSDate()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {

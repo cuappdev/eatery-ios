@@ -36,12 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up view controllers
 //        let eatNow = EatNowTableViewController()
         let eatNow = EateriesGridViewController()
-        eatNow.title = "Places To Eat"
+        //eatNow.title = "Places To Eat"
         let eatNavController = UINavigationController(rootViewController: eatNow)
         eatNavController.navigationBar.barStyle = .Black
         
         window?.rootViewController = eatNavController
         window?.makeKeyAndVisible()
+        
+        let statusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
+        statusBarView.backgroundColor = UIColor.eateryBlue()
+        window?.rootViewController!.view.addSubview(statusBarView)
         
         // Segment setup
         SEGAnalytics.setupWithConfiguration(SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))
