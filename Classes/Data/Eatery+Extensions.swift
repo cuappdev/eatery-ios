@@ -15,12 +15,11 @@ enum EateryStatus {
     case Closed(String)
 }
 
-private func makeShortDateFormatter () -> NSDateFormatter {
+private let ShortDateFormatter: NSDateFormatter = {
     let formatter = NSDateFormatter()
     formatter.dateFormat = "h:mma"
     return formatter
-}
-private let ShortDateFormatter = makeShortDateFormatter()
+}()
 
 private let kEateryNicknames = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("nicknames", withExtension: "json")!) ?? NSData()).dictionaryValue
 private let kEateryLocations = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("locations", withExtension: "json")!) ?? NSData()).dictionaryValue
@@ -43,21 +42,21 @@ extension Eatery {
     //!TODO: Maybe cache this value? I don't think this is too expensive
     var favorite: Bool {
         get {
-            let ar = NSUserDefaults.standardUserDefaults().arrayForKey("favorites") ?? [] // use `stringArrayForKey`
-            return ar.contains({ [unowned self] (x) -> Bool in
-                return x as? String == self.slug
-                })
+            let ar = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+            return ar.contains {
+                $0 == slug
+            }
         }
         
         set {
-            var ar = NSUserDefaults.standardUserDefaults().arrayForKey("favorites") ?? []
+            var ar = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
             let contains = self.favorite
             if (newValue && !contains) {
                 ar.append(self.slug)
             } else if (!newValue && contains) {
-                let idx = ar.indexOf({ [unowned self] (obj) -> Bool in
-                    return obj as? String == self.slug
-                    })
+                let idx = ar.indexOf {
+                    $0 == slug
+                }
                 
                 if let idx = idx {
                     ar.removeAtIndex(idx)

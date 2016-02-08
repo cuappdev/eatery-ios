@@ -156,24 +156,24 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func sortEateries() {
-        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
-            if !a.isOpenToday() { return false }
-            if !b.isOpenToday() { return true  }
-            
-            // Both Eateries are open today, find which comes first
-            // To do this, we simply compare the time intervals between
-            // now and the active event's start date
-            
-            let now = NSDate()
-            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-            
-            if aTimeInterval <= bTimeInterval {
-                return true
-            }
-            
-            return false
-        }
+//        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+//            if !a.isOpenToday() { return false }
+//            if !b.isOpenToday() { return true  }
+//            
+//            // Both Eateries are open today, find which comes first
+//            // To do this, we simply compare the time intervals between
+//            // now and the active event's start date
+//            
+//            let now = NSDate()
+//            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+//            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+//            
+//            if aTimeInterval <= bTimeInterval {
+//                return true
+//            }
+//            
+//            return false
+//        }
         
         let sortByOpenAndLexographicallyClosure = { (a: Eatery, b: Eatery) -> Bool in
             
@@ -406,8 +406,6 @@ extension EateriesGridViewController : UICollectionViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("did select")
-        
         var eatery: Eatery!
         
         var section = indexPath.section

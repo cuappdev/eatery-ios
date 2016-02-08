@@ -8,11 +8,6 @@
 
 import Foundation
 import DiningStack
-// The global now, change this to test a different date
-var NOW: NSDate {
-//    return NSDate(timeIntervalSinceNow: NSTimeInterval.intervalWithHoursAndMinutesFromNow(hours: 576, minutes: 0))
-    return NSDate()
-}
 
 extension NSTimeInterval {
     static func intervalWithHoursAndMinutesFromNow(hours hours: Double, minutes: Double) -> NSTimeInterval {
@@ -38,7 +33,7 @@ func timeOfDate(date: NSDate) -> Int {
 
 /// Returns: true if event is currenlty happening
 func eventIsCurrentlyHappening(event: MXLCalendarEvent) -> Bool {
-    let currentTime = timeOfDate(NOW)
+    let currentTime = timeOfDate(NSDate())
     let s = timeOfDate(event.eventStartDate)
     let e = timeOfDate(event.eventEndDate)
     if currentTime > s && currentTime < e && !event.isClosedEvent() {
