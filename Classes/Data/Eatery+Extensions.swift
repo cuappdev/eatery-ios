@@ -15,12 +15,11 @@ enum EateryStatus {
     case Closed(String)
 }
 
-private func makeShortDateFormatter () -> NSDateFormatter {
+private let ShortDateFormatter: NSDateFormatter = {
     let formatter = NSDateFormatter()
     formatter.dateFormat = "h:mma"
     return formatter
-}
-private let ShortDateFormatter = makeShortDateFormatter()
+}()
 
 private let kEateryNicknames = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("nicknames", withExtension: "json")!) ?? NSData()).dictionaryValue
 private let kEateryLocations = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("locations", withExtension: "json")!) ?? NSData()).dictionaryValue
@@ -28,36 +27,32 @@ private let kEateryLocations = JSON(data: NSData(contentsOfURL: NSBundle.mainBun
 extension Eatery {
     /// Preview Image of the eatery such as a logo
     var image: UIImage? {
-        get {
-            return UIImage(named: slug + "+logo.jpg")
-        }
+        return UIImage(named: slug + "+logo.jpg")
     }
     
     /// Photo of the facility
     var photo: UIImage? {
-        get {
-            return UIImage(named: slug + ".jpg")
-        }
+        return UIImage(named: slug + ".jpg")
     }
     
     //!TODO: Maybe cache this value? I don't think this is too expensive
     var favorite: Bool {
         get {
-            let ar = NSUserDefaults.standardUserDefaults().arrayForKey("favorites") ?? [] // use `stringArrayForKey`
-            return ar.contains({ [unowned self] (x) -> Bool in
-                return x as? String == self.slug
-                })
+            let ar = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+            return ar.contains {
+                $0 == slug
+            }
         }
         
         set {
-            var ar = NSUserDefaults.standardUserDefaults().arrayForKey("favorites") ?? []
+            var ar = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
             let contains = self.favorite
             if (newValue && !contains) {
                 ar.append(self.slug)
             } else if (!newValue && contains) {
-                let idx = ar.indexOf({ [unowned self] (obj) -> Bool in
-                    return obj as? String == self.slug
-                    })
+                let idx = ar.indexOf {
+                    $0 == slug
+                }
                 
                 if let idx = idx {
                     ar.removeAtIndex(idx)
@@ -108,21 +103,34 @@ extension Eatery {
         
         let events = eventsOnDate(date)
         if events.count > 0 {
-            let eventsArray = events.map({ (_, event) -> Event in
-                return event
-            })
+            let eventsArray = events.map { $0.1 }
+            let sortedEventsArray = eventsArray.sort {
+                $0.startDate.compare($1.startDate) == .OrderedAscending
+            }
             
-            let sortedEventsArray = eventsArray.sort({ (first, second) -> Bool in
-                if first.startDate.compare(second.startDate) == .OrderedAscending {
-                    return true
+            var mergedTimes = [(NSDate, NSDate)]()
+            var currentTime: (NSDate, NSDate)?
+            for time in sortedEventsArray {
+                if currentTime == nil {
+                    currentTime = (time.startDate, time.endDate)
+                    continue
                 }
-                return false
-            })
+                if currentTime!.1.compare(time.startDate) == .OrderedSame {
+                    currentTime = (currentTime!.0, time.endDate)
+                } else {
+                    mergedTimes.append(currentTime!)
+                    currentTime = (time.startDate, time.endDate)
+                }
+            }
+            
+            if let time = currentTime {
+                mergedTimes.append(time)
+            }
             
             resultString = ""
-            for event in sortedEventsArray {
+            for (start, end) in mergedTimes {
                 if resultString != "" { resultString += ", " }
-                resultString += displayTextForEvent(event)
+                resultString += dateConverter(start, date2: end)
             }
         }
         

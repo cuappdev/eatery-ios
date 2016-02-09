@@ -28,11 +28,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .Open(let message):
-            statusLabel.textColor = UIColor.openGreen()
+            statusLabel.textColor = .openGreen()
             statusLabel.text = "Open"
             timeLabel.text = message
         case .Closed(let message):
-            statusLabel.textColor = UIColor.closedRed()
+            statusLabel.textColor = .closedRed()
             statusLabel.text = "Closed"
             if message == "Closed" {
                 timeLabel.text = ""

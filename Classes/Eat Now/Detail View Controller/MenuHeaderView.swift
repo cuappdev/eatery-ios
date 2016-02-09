@@ -43,9 +43,9 @@ class MenuHeaderView: UIView {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .Open(_):
-            statusView.backgroundColor = UIColor.openGreen()
+            statusView.backgroundColor = .openGreen()
         case .Closed(_):
-            statusView.backgroundColor = UIColor.redColor()
+            statusView.backgroundColor = .redColor()
         }
         
         // Title Label
@@ -63,9 +63,9 @@ class MenuHeaderView: UIView {
         
         // Action Buttons
         if eatery.favorite {
-            buttonOneOutlet.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            buttonOneOutlet.setTitleColor(.whiteColor(), forState: .Normal)
         } else {
-            buttonOneOutlet.setTitleColor(UIColor.lightTextColor(), forState: .Normal)
+            buttonOneOutlet.setTitleColor(.lightTextColor(), forState: .Normal)
         }
     }
     
@@ -73,10 +73,10 @@ class MenuHeaderView: UIView {
         print("Favorite button pressed")
         if eatery.favorite {
             eatery.favorite = false
-            buttonOneOutlet.setTitleColor(UIColor.lightTextColor(), forState: .Normal)
+            buttonOneOutlet.setTitleColor(.lightTextColor(), forState: .Normal)
         } else {
             eatery.favorite = true
-            buttonOneOutlet.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            buttonOneOutlet.setTitleColor(.whiteColor(), forState: .Normal)
         }
         
         delegate?.favoriteButtonPressed()

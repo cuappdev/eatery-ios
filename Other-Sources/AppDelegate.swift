@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         let statusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
-        statusBarView.backgroundColor = UIColor.eateryBlue()
+        statusBarView.backgroundColor = .eateryBlue()
         window?.rootViewController!.view.addSubview(statusBarView)
         
         // Segment setup

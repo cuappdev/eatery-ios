@@ -8,11 +8,6 @@
 
 import Foundation
 import DiningStack
-// The global now, change this to test a different date
-var NOW: NSDate {
-//    return NSDate(timeIntervalSinceNow: NSTimeInterval.intervalWithHoursAndMinutesFromNow(hours: 576, minutes: 0))
-    return NSDate()
-}
 
 extension NSTimeInterval {
     static func intervalWithHoursAndMinutesFromNow(hours hours: Double, minutes: Double) -> NSTimeInterval {
@@ -38,7 +33,7 @@ func timeOfDate(date: NSDate) -> Int {
 
 /// Returns: true if event is currenlty happening
 func eventIsCurrentlyHappening(event: MXLCalendarEvent) -> Bool {
-    let currentTime = timeOfDate(NOW)
+    let currentTime = timeOfDate(NSDate())
     let s = timeOfDate(event.eventStartDate)
     let e = timeOfDate(event.eventEndDate)
     if currentTime > s && currentTime < e && !event.isClosedEvent() {
@@ -48,7 +43,7 @@ func eventIsCurrentlyHappening(event: MXLCalendarEvent) -> Bool {
 }
 
 // TODO: make this an extension on MXLCalendarEvent
-private func dateConverter(date1: NSDate, date2: NSDate) -> String {
+func dateConverter(date1: NSDate, date2: NSDate) -> String {
     let calendar = NSCalendar.currentCalendar()
     calendar.timeZone = NSTimeZone(name: "America/New_York")!
     
@@ -101,7 +96,7 @@ extension MXLCalendarEvent {
     /// Eateries have events for being closed.
     /// We can find them by querying the eventSummary parameter
     func isClosedEvent() -> Bool {
-        return eventSummary.lowercaseString.contains("closed")
+        return eventSummary.lowercaseString.containsString("closed")
     }
 }
 

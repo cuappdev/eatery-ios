@@ -42,10 +42,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
 
         // -- Nav bar
         // TODO: make this a proxy and put it in another file
-        navigationController?.view.backgroundColor = UIColor.whiteColor()
-        navigationController?.navigationBar.translucent = true
-        navigationController?.navigationBar.barTintColor = UIColor.eateryBlue()
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.view.backgroundColor = .whiteColor()
+        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.barTintColor = .eateryBlue()
+        navigationController?.navigationBar.tintColor = .whiteColor()
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
@@ -80,10 +80,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.sizeToFit()
         let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
-        textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
-        searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        textFieldInsideSearchBar!.textColor = .whiteColor()
+        searchController.searchBar.searchBarStyle = .Minimal
         searchController.searchBar.placeholder = ""
-        searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
+        searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: .Search, state: UIControlState.Normal)
         
         navigationItem.titleView = searchController.searchBar
     
@@ -156,24 +156,24 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func sortEateries() {
-        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
-            if !a.isOpenToday() { return false }
-            if !b.isOpenToday() { return true  }
-            
-            // Both Eateries are open today, find which comes first
-            // To do this, we simply compare the time intervals between
-            // now and the active event's start date
-            
-            let now = NSDate()
-            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-            
-            if aTimeInterval <= bTimeInterval {
-                return true
-            }
-            
-            return false
-        }
+//        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+//            if !a.isOpenToday() { return false }
+//            if !b.isOpenToday() { return true  }
+//            
+//            // Both Eateries are open today, find which comes first
+//            // To do this, we simply compare the time intervals between
+//            // now and the active event's start date
+//            
+//            let now = NSDate()
+//            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+//            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+//            
+//            if aTimeInterval <= bTimeInterval {
+//                return true
+//            }
+//            
+//            return false
+//        }
         
         let sortByOpenAndLexographicallyClosure = { (a: Eatery, b: Eatery) -> Bool in
             
@@ -406,8 +406,6 @@ extension EateriesGridViewController : UICollectionViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("did select")
-        
         var eatery: Eatery!
         
         var section = indexPath.section

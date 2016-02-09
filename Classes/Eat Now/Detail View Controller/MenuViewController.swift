@@ -32,7 +32,7 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
         super.viewDidLoad()
 
         // Appearance
-        view.backgroundColor = UIColor.lightGray()
+        view.backgroundColor = .lightGray()
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
@@ -52,14 +52,11 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
         // TabbedPageViewController
         let todaysEventsDict = eatery.eventsOnDate(NSDate())
         let sortedEventsDict = todaysEventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
-            if a.1.startDate.compare(b.1.startDate) == NSComparisonResult.OrderedAscending {
-                return true
-            }
-            return false
+            a.1.startDate.compare(b.1.startDate) == .OrderedAscending
         }
         
         var meals = sortedEventsDict.map { (meal: String, _) -> String in
-            return meal
+            meal
         }
         
         // Add a "General" tag so we dont get a crash for eateries that have no events
