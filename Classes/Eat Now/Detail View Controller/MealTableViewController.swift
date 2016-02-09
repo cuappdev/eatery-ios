@@ -33,10 +33,10 @@ class MealTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Appearance
-        view.backgroundColor = UIColor.greenColor()
+        view.backgroundColor = .greenColor()
         
         // TableView Config
-        tableView.backgroundColor = UIColor.clearColor()
+        tableView.backgroundColor = .clearColor()
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
         

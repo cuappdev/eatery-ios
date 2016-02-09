@@ -42,10 +42,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
 
         // -- Nav bar
         // TODO: make this a proxy and put it in another file
-        navigationController?.view.backgroundColor = UIColor.whiteColor()
-        navigationController?.navigationBar.translucent = true
-        navigationController?.navigationBar.barTintColor = UIColor.eateryBlue()
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.view.backgroundColor = .whiteColor()
+        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.barTintColor = .eateryBlue()
+        navigationController?.navigationBar.tintColor = .whiteColor()
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
@@ -80,10 +80,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.sizeToFit()
         let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
-        textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
-        searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        textFieldInsideSearchBar!.textColor = .whiteColor()
+        searchController.searchBar.searchBarStyle = .Minimal
         searchController.searchBar.placeholder = ""
-        searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: UISearchBarIcon.Search, state: UIControlState.Normal)
+        searchController.searchBar.setImage(UIImage(named: "searchIcon"), forSearchBarIcon: .Search, state: UIControlState.Normal)
         
         navigationItem.titleView = searchController.searchBar
     

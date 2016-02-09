@@ -9,8 +9,6 @@
 import Foundation
 import DiningStack
 
-let NSDefaults = NSUserDefaults.standardUserDefaults()
-
 let DATA = DataManager.sharedInstance
 
 let Analytics = AnalyticsManager.sharedInstance

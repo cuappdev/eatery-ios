@@ -126,22 +126,21 @@ class LiteEatery: NSObject {
     // Bool value is either stable or about to change
     func generateDescriptionOfCurrentState() -> OpenStatus {
         if isOpenToday() {
-            let activeEvent = activeEventForDate(NSDate())
-            print(activeEvent)
-            if activeEvent!.occurringOnDate(NSDate()) {
-                let minutesTillClose = (Int)(activeEvent!.endDate.timeIntervalSinceNow/Double(60))
+            guard let activeEvent = activeEventForDate(NSDate()) else { return .Closed("Closed") }
+            if activeEvent.occurringOnDate(NSDate()) {
+                let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
                     return .Open("Closing in \(minutesTillClose) m")
                 } else {
-                    let timeString = LiteEatery.shortDateFormatter.stringFromDate(activeEvent!.endDate)
+                    let timeString = LiteEatery.shortDateFormatter.stringFromDate(activeEvent.endDate)
                     return .Open("Closes at \(timeString)")
                 }
             } else {
-                let minutesTillOpen = (Int)(activeEvent!.startDate.timeIntervalSinceNow/Double(60))
+                let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                 if minutesTillOpen < 60 {
                     return .Closed("Opens in \(minutesTillOpen) m")
                 } else {
-                    let timeString = LiteEatery.shortDateFormatter.stringFromDate(activeEvent!.startDate)
+                    let timeString = LiteEatery.shortDateFormatter.stringFromDate(activeEvent.startDate)
                     return .Closed("Opens at \(timeString)")
                 }
             }

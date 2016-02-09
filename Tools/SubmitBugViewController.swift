@@ -39,7 +39,7 @@ class SubmitBugViewController: UIViewController {
 		super.viewDidLoad()
 		
 		//set background color for view
-		view.backgroundColor = UIColor.whiteColor()
+		view.backgroundColor = .whiteColor()
 		
 		//create title label in top center of view controller
 		let titleLabel = UILabel(frame: CGRectMake(0, 20, view.frame.width, 30))

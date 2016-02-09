@@ -43,7 +43,7 @@ func eventIsCurrentlyHappening(event: MXLCalendarEvent) -> Bool {
 }
 
 // TODO: make this an extension on MXLCalendarEvent
-private func dateConverter(date1: NSDate, date2: NSDate) -> String {
+func dateConverter(date1: NSDate, date2: NSDate) -> String {
     let calendar = NSCalendar.currentCalendar()
     calendar.timeZone = NSTimeZone(name: "America/New_York")!
     
@@ -96,7 +96,7 @@ extension MXLCalendarEvent {
     /// Eateries have events for being closed.
     /// We can find them by querying the eventSummary parameter
     func isClosedEvent() -> Bool {
-        return eventSummary.lowercaseString.contains("closed")
+        return eventSummary.lowercaseString.containsString("closed")
     }
 }
 

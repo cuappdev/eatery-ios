@@ -63,7 +63,7 @@ class TodayExtensionTableViewController: UITableViewController, NCWidgetProvidin
             let cell = tableView.dequeueReusableCellWithIdentifier("todaycell", forIndexPath: indexPath) as! TodayExtensionTableViewCell
             let eatery = liteEateries[indexPath.row]
             cell.nameLabel.text = eatery.nameShort
-            cell.nameLabel.textColor = UIColor.whiteColor()
+            cell.nameLabel.textColor = .whiteColor()
             
             let openStatus = eatery.generateDescriptionOfCurrentState()
             
@@ -76,7 +76,7 @@ class TodayExtensionTableViewController: UITableViewController, NCWidgetProvidin
                 cell.circleView.state = .Closed
             }
             
-            cell.hoursLabel.textColor = UIColor.lightTextColor()
+            cell.hoursLabel.textColor = .lightTextColor()
             return cell
         }
     }
