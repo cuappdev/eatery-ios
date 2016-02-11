@@ -36,6 +36,12 @@
 		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
+		B0F2F2D71C6C1D000024D04A /* North-Star.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2D61C6C1D000024D04A /* North-Star.jpg */; };
+		B0F2F2D91C6C1D3A0024D04A /* Okenshields.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2D81C6C1D3A0024D04A /* Okenshields.jpg */; };
+		B0F2F2DB1C6C1D5C0024D04A /* Sweet-Sensations.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2DA1C6C1D5C0024D04A /* Sweet-Sensations.jpg */; };
+		B0F2F2DF1C6C1E530024D04A /* Bug-Stop-Bagels.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2DE1C6C1E530024D04A /* Bug-Stop-Bagels.jpg */; };
+		B0F2F2E11C6C1EAA0024D04A /* Jansens-Market.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2E01C6C1EAA0024D04A /* Jansens-Market.jpg */; };
+		B0F2F2E71C6C22380024D04A /* Hot-Dog-Cart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2E61C6C22380024D04A /* Hot-Dog-Cart.jpg */; };
 		C00367301B64DC32002839C3 /* testMenu.json in Resources */ = {isa = PBXBuildFile; fileRef = C003672F1B64DC32002839C3 /* testMenu.json */; };
 		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */; };
@@ -196,6 +202,12 @@
 		95434FB51BD8699F003612DB /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		95434FB61BD8699F003612DB /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuImages.swift; path = "Eat Now/MenuImages.swift"; sourceTree = "<group>"; };
+		B0F2F2D61C6C1D000024D04A /* North-Star.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "North-Star.jpg"; sourceTree = "<group>"; };
+		B0F2F2D81C6C1D3A0024D04A /* Okenshields.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Okenshields.jpg; sourceTree = "<group>"; };
+		B0F2F2DA1C6C1D5C0024D04A /* Sweet-Sensations.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Sweet-Sensations.jpg"; sourceTree = "<group>"; };
+		B0F2F2DE1C6C1E530024D04A /* Bug-Stop-Bagels.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Bug-Stop-Bagels.jpg"; sourceTree = "<group>"; };
+		B0F2F2E01C6C1EAA0024D04A /* Jansens-Market.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Jansens-Market.jpg"; sourceTree = "<group>"; };
+		B0F2F2E61C6C22380024D04A /* Hot-Dog-Cart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Hot-Dog-Cart.jpg"; sourceTree = "<group>"; };
 		C003672F1B64DC32002839C3 /* testMenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testMenu.json; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0142A0F1B68C5C90090B33A /* Pods.app store.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods.app store.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.app store.xcconfig"; sourceTree = "<group>"; };
@@ -525,6 +537,7 @@
 				FAC5A2EF1BC60DE50001DE97 /* Big-Red-Barn.jpg */,
 				FAC5A2F01BC60DE50001DE97 /* Big-Red-Barn+logo.jpg */,
 				FAC5A2F11BC60DE50001DE97 /* Bug-Stop-Bagels+logo.jpg */,
+				B0F2F2DE1C6C1E530024D04A /* Bug-Stop-Bagels.jpg */,
 				FAC5A2F21BC60DE50001DE97 /* Cafe-Jennie.jpg */,
 				FAC5A2F31BC60DE50001DE97 /* Cafe-Jennie+logo.jpg */,
 				FAC5A2F41BC60DE50001DE97 /* Carols-Cafe.jpg */,
@@ -539,17 +552,21 @@
 				FAC5A2FD1BC60DE50001DE97 /* Goldies-Cafe+logo.jpg */,
 				FAC5A2FE1BC60DE50001DE97 /* Green-Dragon.jpg */,
 				FAC5A2FF1BC60DE50001DE97 /* Green-Dragon+logo.jpg */,
+				B0F2F2E61C6C22380024D04A /* Hot-Dog-Cart.jpg */,
 				FAC5A3001BC60DE50001DE97 /* Ivy-Room.jpg */,
 				FAC5A3011BC60DE50001DE97 /* Ivy-Room+logo.jpg */,
 				FAC5A3021BC60DE50001DE97 /* Janens-Dining+logo.jpg */,
 				FAC5A3031BC60DE50001DE97 /* Jansens-Dining.jpg */,
+				B0F2F2E01C6C1EAA0024D04A /* Jansens-Market.jpg */,
 				FAC5A3041BC60DE50001DE97 /* Keeton-House-Dining.jpg */,
 				FAC5A3051BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg */,
 				FAC5A3061BC60DE50001DE97 /* Marthas-Cafe.jpg */,
 				FAC5A3071BC60DE50001DE97 /* Marthas-Cafe+logo.jpg */,
 				FAC5A3081BC60DE50001DE97 /* Mattins-Cafe.jpg */,
 				FAC5A3091BC60DE50001DE97 /* Mattins-Cafe+logo.jpg */,
+				B0F2F2D61C6C1D000024D04A /* North-Star.jpg */,
 				FAC5A30A1BC60DE50001DE97 /* North-Star+logo.jpg */,
+				B0F2F2D81C6C1D3A0024D04A /* Okenshields.jpg */,
 				FAC5A30B1BC60DE50001DE97 /* Okenshields+logo.jpg */,
 				FAC5A30C1BC60DE50001DE97 /* Risley-Dining.jpg */,
 				FAC5A30D1BC60DE50001DE97 /* Risley-Dining+logo.jpg */,
@@ -561,6 +578,7 @@
 				FAC5A3131BC60DE50001DE97 /* Rustys+logo.jpg */,
 				FAC5A3141BC60DE50001DE97 /* Synapsis-Cafe.jpg */,
 				FAC5A3151BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg */,
+				B0F2F2DA1C6C1D5C0024D04A /* Sweet-Sensations.jpg */,
 				FAC5A3161BC60DE50001DE97 /* Trillium.jpg */,
 				FAC5A3171BC60DE50001DE97 /* Trillium+logo.jpg */,
 			);
@@ -731,6 +749,7 @@
 				FAC5A31C1BC60DE50001DE97 /* Atrium-Cafe.jpg in Resources */,
 				FAC5A3321BC60DE50001DE97 /* Goldies-Cafe+logo.jpg in Resources */,
 				FAC5A32A1BC60DE50001DE97 /* Carols-Cafe+logo.jpg in Resources */,
+				B0F2F2DF1C6C1E530024D04A /* Bug-Stop-Bagels.jpg in Resources */,
 				FAC5A33A1BC60DE50001DE97 /* Keeton-House-Dining+logo.jpg in Resources */,
 				FAC5A33C1BC60DE50001DE97 /* Marthas-Cafe+logo.jpg in Resources */,
 				FAC5A3191BC60DE50001DE97 /* 104-West.jpg in Resources */,
@@ -767,16 +786,21 @@
 				FAC5A34A1BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg in Resources */,
 				FAC5A32E1BC60DE50001DE97 /* Cook-House-Dining+logo.jpg in Resources */,
 				FAC5A31E1BC60DE50001DE97 /* Bear-Necessities.jpg in Resources */,
+				B0F2F2D71C6C1D000024D04A /* North-Star.jpg in Resources */,
 				FAC5A3471BC60DE50001DE97 /* Rustys.jpg in Resources */,
+				B0F2F2E11C6C1EAA0024D04A /* Jansens-Market.jpg in Resources */,
 				C00367301B64DC32002839C3 /* testMenu.json in Resources */,
 				FAC5A3271BC60DE50001DE97 /* Cafe-Jennie.jpg in Resources */,
 				FAC5A32D1BC60DE50001DE97 /* Cook-House-Dining.jpg in Resources */,
 				FAC5A3381BC60DE50001DE97 /* Jansens-Dining.jpg in Resources */,
 				FAC5A32F1BC60DE50001DE97 /* Cornell-Dairy-Bar.jpg in Resources */,
+				B0F2F2D91C6C1D3A0024D04A /* Okenshields.jpg in Resources */,
 				FAC5A33D1BC60DE50001DE97 /* Mattins-Cafe.jpg in Resources */,
 				FAC5A3251BC60DE50001DE97 /* Big-Red-Barn+logo.jpg in Resources */,
+				B0F2F2E71C6C22380024D04A /* Hot-Dog-Cart.jpg in Resources */,
 				FAC5A3221BC60DE50001DE97 /* Becker-House-Dining.jpg in Resources */,
 				FAC5A3361BC60DE50001DE97 /* Ivy-Room+logo.jpg in Resources */,
+				B0F2F2DB1C6C1D5C0024D04A /* Sweet-Sensations.jpg in Resources */,
 				FAC5A3231BC60DE50001DE97 /* Becker-House-Dining+logo.jpg in Resources */,
 				FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */,
 				FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */,
