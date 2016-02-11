@@ -92,6 +92,9 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
         view.addGestureRecognizer(scrollGestureRecognizer)
         
         animator = UIDynamicAnimator()
+        
+        //scroll to currently opened event if possible
+        scrollToCurrentTimeOpening()
     }
     
     
@@ -239,4 +242,28 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
         delegate?.favoriteButtonPressed()
     }
 
+    // MARK: -
+    // MARK: Scroll To Proper Time
+    
+    func scrollToCurrentTimeOpening() {
+        //only need to scroll if currently active event for day
+        // and more than one event
+        if let event = eatery.activeEventForDate(NSDate()) {
+            if let viewControllers = pageViewController.viewControllers {
+                if viewControllers.count < 2 {
+                    return
+                }
+                for vc in viewControllers {
+                    if let mealVC = vc as? MealTableViewController {
+                        if let mealEvent = mealVC.event {
+                            if mealEvent.desc == event.desc {
+                                pageViewController.scrollToViewController(mealVC)
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -67,6 +67,15 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         pageViewController.didMoveToParentViewController(self)
     }
     
+    func scrollToViewController(vc: UIViewController) {
+        pageViewController.setViewControllers([vc], direction: .Forward, animated: false, completion: nil)
+        let index = viewControllers.indexOf(vc)!
+        tabDelegate?.selectedTabDidChange(index)
+        scrollDelegate?.scrollViewDidChange()
+        
+        updateActiveScrollView(index)
+    }
+    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         
         let index = viewControllers.indexOf(viewController)!
