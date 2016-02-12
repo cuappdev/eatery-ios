@@ -358,6 +358,14 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchQuery = searchText
+        self.processEateries()
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+        searchBar.becomeFirstResponder()
+    }
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
