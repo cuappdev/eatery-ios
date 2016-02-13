@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -22,7 +22,7 @@
                     <rect key="frame" x="0.0" y="536" width="600" height="64"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXi-JT-D1m">
-                            <rect key="frame" x="10" y="17" width="10" height="10"/>
+                            <rect key="frame" x="10" y="15" width="10" height="10"/>
                             <color key="backgroundColor" red="0.3234326247" green="0.79042376889999999" blue="0.18324595269999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="P9v-on-IxF"/>
@@ -30,25 +30,40 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="sBa-LA-nI0">
-                            <rect key="frame" x="29" y="42" width="551" height="13.5"/>
+                            <rect key="frame" x="29" y="38" width="551" height="13.5"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WbD-aq-Tra">
-                            <rect key="frame" x="28" y="8" width="552" height="29"/>
+                            <rect key="frame" x="28" y="8" width="95" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="95" id="7hr-MF-e8v"/>
+                                <constraint firstAttribute="height" constant="25" id="MAf-gb-Vf8"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9J-Yb-YND" userLabel="Payment View">
+                            <rect key="frame" x="495" y="8" width="95" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="DFd-1q-Yvi"/>
+                                <constraint firstAttribute="width" constant="95" id="wcj-71-QCw"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="WbD-aq-Tra" firstAttribute="top" secondItem="edz-Rb-vgp" secondAttribute="top" constant="8" id="3cB-q6-AKV"/>
                         <constraint firstAttribute="trailing" secondItem="WbD-aq-Tra" secondAttribute="trailing" constant="20" id="Dcr-B6-OV6"/>
+                        <constraint firstAttribute="trailing" secondItem="O9J-Yb-YND" secondAttribute="trailing" constant="10" id="EoD-JM-TLk"/>
                         <constraint firstAttribute="trailing" secondItem="sBa-LA-nI0" secondAttribute="trailing" constant="20" id="GTG-57-bZK"/>
+                        <constraint firstItem="O9J-Yb-YND" firstAttribute="centerY" secondItem="WbD-aq-Tra" secondAttribute="centerY" id="K3W-V4-wfW"/>
                         <constraint firstItem="sBa-LA-nI0" firstAttribute="top" secondItem="WbD-aq-Tra" secondAttribute="bottom" constant="5" id="KnH-gc-hIs"/>
                         <constraint firstItem="WbD-aq-Tra" firstAttribute="leading" secondItem="qXi-JT-D1m" secondAttribute="trailing" constant="8" id="OWd-lB-U3y"/>
+                        <constraint firstItem="O9J-Yb-YND" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WbD-aq-Tra" secondAttribute="trailing" constant="10" id="TqU-Ta-h6P"/>
                         <constraint firstAttribute="width" constant="64" id="fHf-A0-yhO"/>
                         <constraint firstItem="qXi-JT-D1m" firstAttribute="leading" secondItem="edz-Rb-vgp" secondAttribute="leading" constant="10" id="ntp-8f-WWk"/>
                         <constraint firstAttribute="height" constant="64" id="q1g-gg-Qah"/>
@@ -58,11 +73,12 @@
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="fHf-A0-yhO"/>
+                            <exclude reference="Dcr-B6-OV6"/>
                         </mask>
                     </variation>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQd-oc-cnd">
-                    <rect key="frame" x="538" y="15" width="42" height="28"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQd-oc-cnd">
+                    <rect key="frame" x="532" y="15" width="48" height="30"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                     <state key="normal" title="Button">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -71,8 +87,8 @@
                         <action selector="buttonOnePressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="drr-gn-U5V"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5t9-X3-VtJ">
-                    <rect key="frame" x="476" y="15" width="42" height="28"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5t9-X3-VtJ">
+                    <rect key="frame" x="464" y="15" width="48" height="30"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                     <state key="normal" title="Button">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,8 +97,8 @@
                         <action selector="buttonTwoPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="ajp-Pr-dVi"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7Q-dB-p8b">
-                    <rect key="frame" x="414" y="15" width="42" height="28"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7Q-dB-p8b">
+                    <rect key="frame" x="396" y="15" width="48" height="30"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                     <state key="normal" title="Button">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -127,6 +143,7 @@
                 <outlet property="buttonThreeOutlet" destination="f7Q-dB-p8b" id="Moh-Bs-JLx"/>
                 <outlet property="buttonTwoOutlet" destination="5t9-X3-VtJ" id="7sn-EH-UKs"/>
                 <outlet property="hoursLabel" destination="sBa-LA-nI0" id="QM6-IL-1sG"/>
+                <outlet property="paymentView" destination="O9J-Yb-YND" id="UtG-SC-pWY"/>
                 <outlet property="statusView" destination="qXi-JT-D1m" id="Usm-Ii-MbL"/>
                 <outlet property="titleLabel" destination="WbD-aq-Tra" id="g6h-F4-WG5"/>
             </connections>

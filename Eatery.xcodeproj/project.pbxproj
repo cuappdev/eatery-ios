@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3751BE6A17C003DE22E /* MainInterface.storyboard */; };
-		4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */; };
 		4283B3891BE6A4A4003DE22E /* LiteEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3881BE6A4A4003DE22E /* LiteEatery.swift */; };
 		4283B38B1BE6A4AF003DE22E /* LiteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */; };
@@ -61,6 +60,7 @@
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
+		D14DD1F41C6FF5210043CDF3 /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* MenuViewController.swift */; };
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
 		E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */; };
@@ -134,7 +134,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4283B3791BE6A17C003DE22E /* PBXContainerItemProxy */ = {
+		D14DD1F51C6FF5210043CDF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C007CAB719E1BEAC00E3BD46 /* Project object */;
 			proxyType = 1;
@@ -144,13 +144,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4283B3811BE6A17C003DE22E /* Embed App Extensions */ = {
+		D14DD1F71C6FF5220043CDF3 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				4283B37B1BE6A17C003DE22E /* Today Extension.appex in Embed App Extensions */,
+				D14DD1F41C6FF5210043CDF3 /* Today Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -677,12 +677,12 @@
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
 				E2CFE9C2E9E8D8099684D94E /* Copy Pods Resources */,
 				2529F4D1F6E174E13D3FA0DA /* Embed Pods Frameworks */,
-				4283B3811BE6A17C003DE22E /* Embed App Extensions */,
+				D14DD1F71C6FF5220043CDF3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4283B37A1BE6A17C003DE22E /* PBXTargetDependency */,
+				D14DD1F61C6FF5210043CDF3 /* PBXTargetDependency */,
 			);
 			name = Eatery;
 			productName = Eatery;
@@ -945,10 +945,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4283B37A1BE6A17C003DE22E /* PBXTargetDependency */ = {
+		D14DD1F61C6FF5210043CDF3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4283B36E1BE6A17C003DE22E /* Today Extension */;
-			targetProxy = 4283B3791BE6A17C003DE22E /* PBXContainerItemProxy */;
+			targetProxy = D14DD1F51C6FF5210043CDF3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1183,7 +1183,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1245,7 +1245,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1306,7 +1306,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1367,7 +1367,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 17;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Other-Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

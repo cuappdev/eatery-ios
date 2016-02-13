@@ -21,7 +21,7 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
-    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var paymentView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBOutlet weak var buttonOneOutlet: UIButton!
@@ -47,6 +47,38 @@ class MenuHeaderView: UIView {
         case .Closed(_):
             statusView.backgroundColor = .redColor()
         }
+        
+        // Payment View
+        var paymentTypeViews: [UIImageView] = []
+        
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
+            paymentTypeViews.append(cashIcon)
+        }
+        
+        if (eatery.paymentMethods.contains(.BRB)) {
+            let brbIcon = UIImageView(image: UIImage(named: "brbIcon"))
+            paymentTypeViews.append(brbIcon)
+        }
+        
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
+            paymentTypeViews.append(swipeIcon)
+        }
+        
+        let payTypeView = UIView()
+        let payViewSize: CGFloat = 25.0
+        let payViewPadding: CGFloat = 10.0
+        var payViewFrame = CGRectMake(0, 0, payViewSize, payViewSize)
+        
+        for payView in paymentTypeViews {
+            payView.frame = CGRectMake(payViewFrame.origin.x, 0, payViewSize, payViewSize)
+            payTypeView.addSubview(payView)
+            payViewFrame.origin.x += payViewSize + payViewPadding
+        }
+        
+        payTypeView.frame = CGRectMake(paymentView.frame.size.width - (payViewFrame.origin.x - 10), 0, payViewFrame.origin.x - 10, payViewFrame.height)
+        paymentView.addSubview(payTypeView)
         
         // Title Label
         titleLabel.text = eatery.name
