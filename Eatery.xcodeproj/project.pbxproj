@@ -20,6 +20,7 @@
 		4283B3961BE6A70F003DE22E /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		6083A8AD1C6E718A002A08BF /* EateriesCollectionSearchbarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6083A8AB1C6E718A002A08BF /* EateriesCollectionSearchbarHeaderView.swift */; };
 		6083A8AE1C6E718A002A08BF /* EateriesCollectionSearchbarHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6083A8AC1C6E718A002A08BF /* EateriesCollectionSearchbarHeaderView.xib */; };
+		4684923E1B32495A62E8F5DE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64AAE901E7D407EC4C6D8C67 /* Pods.framework */; };
 		95434FB71BD8699F003612DB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434F951BD8699F003612DB /* ADScreenCapture.swift */; };
 		95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */; };
 		95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95434F9A1BD8699F003612DB /* _FBTweakBindObserver.m */; };
@@ -172,6 +173,7 @@
 		42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Eatery.entitlements; sourceTree = "<group>"; };
 		6083A8AB1C6E718A002A08BF /* EateriesCollectionSearchbarHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EateriesCollectionSearchbarHeaderView.swift; path = ../EateriesCollectionSearchbarHeaderView.swift; sourceTree = "<group>"; };
 		6083A8AC1C6E718A002A08BF /* EateriesCollectionSearchbarHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EateriesCollectionSearchbarHeaderView.xib; path = ../EateriesCollectionSearchbarHeaderView.xib; sourceTree = "<group>"; };
+		64AAE901E7D407EC4C6D8C67 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95434F951BD8699F003612DB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
 		95434F971BD8699F003612DB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
 		95434F981BD8699F003612DB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4684923E1B32495A62E8F5DE /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +351,14 @@
 				E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */,
 			);
 			name = Layouts;
+			sourceTree = "<group>";
+		};
+		340372A2A23D5433FB653F66 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				64AAE901E7D407EC4C6D8C67 /* Pods.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4283B3721BE6A17C003DE22E /* Today Extension */ = {
@@ -439,6 +450,7 @@
 				4283B3721BE6A17C003DE22E /* Today Extension */,
 				C007CAC019E1BEAC00E3BD46 /* Products */,
 				9B4931655E89F604CB150CD0 /* Pods */,
+				340372A2A23D5433FB653F66 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
