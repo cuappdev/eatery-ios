@@ -3,7 +3,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+<<<<<<< f8cbde63d3bfd8a9f60c889350a37b5cd54f8281
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+=======
+>>>>>>> Add healthy tags to menu items
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>

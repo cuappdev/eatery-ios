@@ -71,26 +71,27 @@ class MealTableViewController: UITableViewController {
             let stationArray: [String] = Array(menu.keys)
             
             var title = "--"
-            var content = "No menu available"
+            var content: NSMutableAttributedString = NSMutableAttributedString(string: "No menu available")
             
             if stationArray.count != 0 {
                 title = stationArray[indexPath.row]
                 let allItems = menu[title]
-                let names = allItems!.map { $0.name }
+                let names: [NSMutableAttributedString] = allItems!.map { $0.healthy ? NSMutableAttributedString(string: "\($0.name.trim()) ").appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: $0.name)
+                }
                 
-                content = names.isEmpty ? "No items to show" : names.joinWithSeparator("\n")
+                content = names.isEmpty ? NSMutableAttributedString(string: "No items to show") : NSMutableAttributedString(string: "\n").join(names)
             }
             
             if title == "General" {
                 title = "Menu"
             }
-            cell.titleLabel.text = title.uppercaseString
-            cell.contentLabel.text = content
             
+            cell.titleLabel.text = title.uppercaseString
+            cell.contentLabel.attributedText = content
             cell.selectionStyle = .None
         } else {
             cell.titleLabel.text = "No menu available"
-            cell.contentLabel.text = ""
+            cell.contentLabel.attributedText = NSAttributedString(string: "")
         }
 
         return cell
