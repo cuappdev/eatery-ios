@@ -38,7 +38,7 @@ class MenuHeaderView: UIView {
     
     func setUp(eatery: Eatery) {
         self.eatery = eatery
-        
+
         // Status View
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
@@ -81,7 +81,7 @@ class MenuHeaderView: UIView {
         paymentView.addSubview(payTypeView)
         
         // Title Label
-        titleLabel.text = eatery.name
+        titleLabel.text = eatery.nameShort
         
         // Hours
         var hoursText = eatery.activeEventsForDate(NSDate())
