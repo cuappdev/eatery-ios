@@ -58,7 +58,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = true
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Organize
             , target: self, action: "addNavigationBarButtonTapped")
         
         loadData(false, completion: nil)
