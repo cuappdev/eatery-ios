@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="5cC-YI-wBi" customClass="EateriesCollectionSearchbarHeaderView" customModule="Eatery" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="152"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="dI3-VO-y0r" userLabel="searchBar">
+                    <rect key="frame" x="0.0" y="54" width="320" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="dI3-VO-y0r" secondAttribute="trailing" id="Gnh-hS-FjQ"/>
+                <constraint firstItem="dI3-VO-y0r" firstAttribute="leading" secondItem="5cC-YI-wBi" secondAttribute="leading" id="oC6-DQ-RNr"/>
+                <constraint firstItem="dI3-VO-y0r" firstAttribute="centerY" secondItem="5cC-YI-wBi" secondAttribute="centerY" id="ulz-aI-kxd"/>
+            </constraints>
+            <connections>
+                <outlet property="searchBar" destination="dI3-VO-y0r" id="Iqv-Km-1wf"/>
+            </connections>
+            <point key="canvasLocation" x="338" y="315"/>
+        </collectionReusableView>
+    </objects>
+</document>
