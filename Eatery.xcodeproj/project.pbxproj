@@ -61,6 +61,7 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		D14DD1F41C6FF5210043CDF3 /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4283B36F1BE6A17C003DE22E /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D1EE777A1C702469001823D8 /* MiscellaneousExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */; };
 		E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* MenuViewController.swift */; };
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
 		E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */; };
@@ -240,6 +241,7 @@
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscellaneousExtensions.swift; sourceTree = "<group>"; };
 		D2C0C4BBF1579ADC42E403F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E93CD4161BE67AC400089CE5 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "Eat Now/Detail View Controller/MenuViewController.swift"; sourceTree = "<group>"; };
 		E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabbedPageViewController.swift; path = "Eat Now/Detail View Controller/TabbedPageViewController.swift"; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
+				D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -933,6 +936,7 @@
 				E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */,
 				95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */,
 				95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */,
+				D1EE777A1C702469001823D8 /* MiscellaneousExtensions.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				95434FC61BD8699F003612DB /* Tools.swift in Sources */,
 				E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */,

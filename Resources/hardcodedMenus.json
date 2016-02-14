@@ -24,7 +24,7 @@
                 },
                 {
                     "healthy": false,
-                    "item": "nSmoothies"
+                    "item": "Smoothies"
                 },
                 {
                     "healthy": false,
@@ -864,7 +864,7 @@
             "items": [
                 {
                     "healthy": 0,
-                    "item": "Join us in the morning for Steel Cut Oatmeal, Chobani Greek Style Yogurt, or Chorizo or a Vegetable Frittata Bagel Sandwich. Pop by at lunchtime for one of our creative new sandwiches and wraps\nlike Beef Brisket, Roasted Vegetable Focaccia, or Thai Chicken. Or visit any time for brewed coffee or tea or an espresso beverage made with Peet's Coffee."
+                    "item": "Join us in the morning for Steel Cut Oatmeal, Chobani Greek Style Yogurt, or Chorizo or a Vegetable Frittata Bagel Sandwich. Pop by at lunchtime for one of our creative new sandwiches and wraps like Beef Brisket, Roasted Vegetable Focaccia, or Thai Chicken. Or visit any time for brewed coffee or tea or an espresso beverage made with Peet's Coffee."
                 }
             ],
             "category": "General"
