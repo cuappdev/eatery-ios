@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10089" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10072.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -24,37 +25,49 @@
                         <rect key="frame" x="0.0" y="250" width="300" height="50"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="15K-gp-bKu">
-                                <rect key="frame" x="8" y="5" width="282" height="18"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <rect key="frame" x="8" y="7" width="38.5" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-9C-mAO">
-                                <rect key="frame" x="264" y="28" width="26" height="12"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
+                                <rect key="frame" x="268" y="30" width="23.5" height="12"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                                 <color key="textColor" red="0.51010101010101017" green="0.51010101010101017" blue="0.51010101010101017" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znd-in-pGh">
-                                <rect key="frame" x="8" y="28" width="26" height="12"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
+                                <rect key="frame" x="8" y="30" width="23.5" height="12"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                                 <color key="textColor" red="0.51010101010101017" green="0.51010101010101017" blue="0.51010101010101017" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swipeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dqq-z9-vBB">
+                                <rect key="frame" x="274" y="7" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="dqq-z9-vBB" secondAttribute="height" id="C5K-JV-Hw1"/>
+                                    <constraint firstAttribute="height" constant="18" id="SvN-vY-MBN"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="dqq-z9-vBB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="15K-gp-bKu" secondAttribute="trailing" constant="10" id="0ao-cH-CR8"/>
                             <constraint firstAttribute="trailing" secondItem="15K-gp-bKu" secondAttribute="trailing" constant="10" id="S5w-er-p2W"/>
-                            <constraint firstAttribute="trailing" secondItem="2Bk-9C-mAO" secondAttribute="trailing" constant="10" id="TZH-pr-nlo"/>
+                            <constraint firstAttribute="trailing" secondItem="2Bk-9C-mAO" secondAttribute="trailing" constant="8" id="TZH-pr-nlo"/>
                             <constraint firstItem="znd-in-pGh" firstAttribute="top" secondItem="15K-gp-bKu" secondAttribute="bottom" constant="5" id="dDB-5l-zOb"/>
                             <constraint firstItem="znd-in-pGh" firstAttribute="leading" secondItem="15K-gp-bKu" secondAttribute="leading" id="f97-rf-vtI"/>
-                            <constraint firstItem="15K-gp-bKu" firstAttribute="top" secondItem="HoN-He-Rpa" secondAttribute="top" constant="5" id="fs4-1W-r5I"/>
+                            <constraint firstItem="15K-gp-bKu" firstAttribute="top" secondItem="HoN-He-Rpa" secondAttribute="top" constant="7" id="fs4-1W-r5I"/>
+                            <constraint firstAttribute="trailing" secondItem="dqq-z9-vBB" secondAttribute="trailing" constant="8" id="hGf-h2-g4g"/>
+                            <constraint firstItem="dqq-z9-vBB" firstAttribute="centerY" secondItem="15K-gp-bKu" secondAttribute="centerY" id="ijB-24-3YZ"/>
                             <constraint firstItem="2Bk-9C-mAO" firstAttribute="baseline" secondItem="znd-in-pGh" secondAttribute="baseline" id="iwG-ik-oUv"/>
                             <constraint firstItem="15K-gp-bKu" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="8" id="j4q-1Y-oNQ"/>
                             <constraint firstAttribute="height" constant="50" id="kNg-1p-ZzT"/>
+                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="znd-in-pGh" secondAttribute="trailing" constant="10" id="n53-xp-R3O"/>
                             <constraint firstItem="znd-in-pGh" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="8" id="vAn-Qi-UYo"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="S5w-er-p2W"/>
                                 <exclude reference="f97-rf-vtI"/>
                             </mask>
                         </variation>
@@ -78,6 +91,7 @@
             <size key="customSize" width="300" height="300"/>
             <connections>
                 <outlet property="backgroundImageView" destination="eyk-u5-ZqO" id="QIc-Wr-cpG"/>
+                <outlet property="paymentIcon" destination="dqq-z9-vBB" id="Fky-0K-BJv"/>
                 <outlet property="statusLabel" destination="znd-in-pGh" id="JeV-cB-WHc"/>
                 <outlet property="timeLabel" destination="2Bk-9C-mAO" id="Hvs-fM-Ydo"/>
                 <outlet property="titleLabel" destination="15K-gp-bKu" id="biz-FT-A0u"/>
@@ -85,4 +99,7 @@
             <point key="canvasLocation" x="304" y="400"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="swipeIcon" width="47" height="47"/>
+    </resources>
 </document>
