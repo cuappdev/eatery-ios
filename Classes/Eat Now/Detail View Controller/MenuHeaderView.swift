@@ -27,7 +27,7 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var buttonOneOutlet: UIButton!
     
     override func awakeFromNib() {
-        buttonOneOutlet.setTitle("Favorite", forState: .Normal)
+        buttonOneOutlet.setImage(UIImage(named: "whiteStar"), forState: .Normal)
         
         statusView.layer.cornerRadius = statusView.frame.width / 2
     }
@@ -91,9 +91,9 @@ class MenuHeaderView: UIView {
         
         // Action Buttons
         if eatery.favorite {
-            buttonOneOutlet.setTitleColor(.whiteColor(), forState: .Normal)
+            buttonOneOutlet.setImage(UIImage(named: "goldStar"), forState: .Normal)
         } else {
-            buttonOneOutlet.setTitleColor(.lightTextColor(), forState: .Normal)
+            buttonOneOutlet.setImage(UIImage(named: "whiteStar"), forState: .Normal)
         }
     }
     
@@ -101,10 +101,10 @@ class MenuHeaderView: UIView {
         print("Favorite button pressed")
         if eatery.favorite {
             eatery.favorite = false
-            buttonOneOutlet.setTitleColor(.lightTextColor(), forState: .Normal)
+            buttonOneOutlet.setImage(UIImage(named: "whiteStar"), forState: .Normal)
         } else {
             eatery.favorite = true
-            buttonOneOutlet.setTitleColor(.whiteColor(), forState: .Normal)
+            buttonOneOutlet.setImage(UIImage(named: "goldStar"), forState: .Normal)
         }
         
         delegate?.favoriteButtonPressed()
