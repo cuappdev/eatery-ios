@@ -25,13 +25,9 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBOutlet weak var buttonOneOutlet: UIButton!
-    @IBOutlet weak var buttonTwoOutlet: UIButton!
-    @IBOutlet weak var buttonThreeOutlet: UIButton!
     
     override func awakeFromNib() {
         buttonOneOutlet.setTitle("Favorite", forState: .Normal)
-        buttonTwoOutlet.setTitle("", forState: .Normal)
-        buttonThreeOutlet.setTitle("", forState: .Normal)
         
         statusView.layer.cornerRadius = statusView.frame.width / 2
     }
@@ -112,11 +108,6 @@ class MenuHeaderView: UIView {
         }
         
         delegate?.favoriteButtonPressed()
-    }
-    
-    @IBAction func buttonTwoPressed(sender: AnyObject) {
-    }
-    @IBAction func buttonThreePressed(sender: AnyObject) {
     }
 
 }

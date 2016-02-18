@@ -95,33 +95,11 @@
                         <action selector="buttonOnePressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="drr-gn-U5V"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5t9-X3-VtJ">
-                    <rect key="frame" x="464" y="15" width="48" height="30"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                    <state key="normal" title="Button">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="buttonTwoPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="ajp-Pr-dVi"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7Q-dB-p8b">
-                    <rect key="frame" x="396" y="15" width="48" height="30"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                    <state key="normal" title="Button">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="buttonThreePressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="7IP-av-9dg"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="RQd-oc-cnd" firstAttribute="centerY" secondItem="f7Q-dB-p8b" secondAttribute="centerY" id="22u-I5-Uf9"/>
                 <constraint firstAttribute="trailing" secondItem="RQd-oc-cnd" secondAttribute="trailing" constant="20" id="3I8-3x-d9f"/>
                 <constraint firstAttribute="trailing" secondItem="edz-Rb-vgp" secondAttribute="trailing" id="3qC-pA-WiD"/>
-                <constraint firstItem="RQd-oc-cnd" firstAttribute="leading" secondItem="5t9-X3-VtJ" secondAttribute="trailing" constant="20" id="7pp-uK-4dr"/>
                 <constraint firstItem="edz-Rb-vgp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JeW-fb-2M9"/>
                 <constraint firstItem="TlU-2P-5x9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KIU-Jh-asd"/>
                 <constraint firstItem="TlU-2P-5x9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OID-HT-9lS"/>
@@ -129,27 +107,14 @@
                 <constraint firstAttribute="trailing" secondItem="TlU-2P-5x9" secondAttribute="trailing" id="UJ5-ww-ehT"/>
                 <constraint firstItem="edz-Rb-vgp" firstAttribute="top" secondItem="TlU-2P-5x9" secondAttribute="bottom" id="Uuu-Dm-wCd"/>
                 <constraint firstAttribute="trailing" secondItem="xJe-ai-0Pk" secondAttribute="trailing" id="XjQ-mN-7MC"/>
-                <constraint firstItem="RQd-oc-cnd" firstAttribute="leading" secondItem="5t9-X3-VtJ" secondAttribute="trailing" constant="20" id="dMC-we-bxE"/>
                 <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dy2-HV-4ni"/>
                 <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eBA-wY-58E"/>
-                <constraint firstItem="5t9-X3-VtJ" firstAttribute="leading" secondItem="f7Q-dB-p8b" secondAttribute="trailing" constant="20" id="gVG-GZ-v4V"/>
                 <constraint firstAttribute="bottom" secondItem="edz-Rb-vgp" secondAttribute="bottom" id="k4a-2a-ejH"/>
-                <constraint firstAttribute="trailing" secondItem="f7Q-dB-p8b" secondAttribute="trailing" constant="277" id="lhl-Rr-Hd7"/>
-                <constraint firstAttribute="trailing" secondItem="5t9-X3-VtJ" secondAttribute="trailing" constant="277" id="rcJ-Ok-cER"/>
-                <constraint firstItem="RQd-oc-cnd" firstAttribute="centerY" secondItem="5t9-X3-VtJ" secondAttribute="centerY" id="sdW-LD-6e0"/>
                 <constraint firstItem="edz-Rb-vgp" firstAttribute="top" secondItem="xJe-ai-0Pk" secondAttribute="bottom" id="y7u-du-jx3"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="lhl-Rr-Hd7"/>
-                    <exclude reference="rcJ-Ok-cER"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="backgroundImageView" destination="xJe-ai-0Pk" id="cfF-Oj-Njg"/>
                 <outlet property="buttonOneOutlet" destination="RQd-oc-cnd" id="NSn-a9-CmL"/>
-                <outlet property="buttonThreeOutlet" destination="f7Q-dB-p8b" id="Moh-Bs-JLx"/>
-                <outlet property="buttonTwoOutlet" destination="5t9-X3-VtJ" id="7sn-EH-UKs"/>
                 <outlet property="hoursLabel" destination="sBa-LA-nI0" id="QM6-IL-1sG"/>
                 <outlet property="paymentView" destination="O9J-Yb-YND" id="UtG-SC-pWY"/>
                 <outlet property="statusView" destination="qXi-JT-D1m" id="Usm-Ii-MbL"/>
