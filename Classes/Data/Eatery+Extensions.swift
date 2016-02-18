@@ -138,11 +138,22 @@ extension Eatery {
         return resultString
     }
     
-    func nickname() -> String {
+    func fetchNickname(index: Int) -> String {
         guard let nicknameJSON = kEateryNicknames[slug] else {
             return name
         }
-        return nicknameJSON["nickname"].stringValue
+        return nicknameJSON["nickname"][index].stringValue
+    }
+    
+    func nickname() -> String {
+        return fetchNickname(0)
+    }
+    
+    func allNicknames() -> [String] {
+        guard let nicknameJSON = kEateryNicknames[slug] else {
+            return [name]
+        }
+        return nicknameJSON["nickname"].arrayValue.map { $0.string! }
     }
         
 }

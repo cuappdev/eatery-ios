@@ -1,92 +1,92 @@
 {
     "104-West": {
-        "nickname": "104West!"
+        "nickname": ["104West!"]
     },
     "Amit-Bhatia-Libe-Cafe": {
-        "nickname": "Libe Café"
+        "nickname": ["Libe Café"]
     },
     "Atrium-Cafe": {
-        "nickname": "Atrium Café"
+        "nickname": ["Atrium Café"]
     },
     "Bear-Necessities": {
-        "nickname": "Nasties"
+        "nickname": ["Nasties"]
     },
     "Bears-Den": {
-        "nickname": "Bear's Den"
+        "nickname": ["Bear's Den"]
     },
     "Becker-House-Dining": {
-        "nickname": "Becker House"
+        "nickname": ["Becker House"]
     },
     "Big-Red-Barn": {
-        "nickname": "Big Red Barn"
+        "nickname": ["Big Red Barn"]
     },
     "Bug-Stop-Bagels": {
-        "nickname": "Bus Stop Bagels"
+        "nickname": ["Bus Stop Bagels"]
     },
     "Cafe-Jennie": {
-        "nickname": "Café Jennie"
+        "nickname": ["Café Jennie"]
     },
     "Carols-Cafe": {
-        "nickname": "Carol's Café"
+        "nickname": ["Carol's Café"]
     },
     "Cook-House-Dining": {
-        "nickname": "Cook House"
+        "nickname": ["Cook House"]
     },
     "Cornell-Dairy-Bar": {
-        "nickname": "Cornell Dairy Bar"
+        "nickname": ["Cornell Dairy Bar"]
     },
     "Goldies-Cafe": {
-        "nickname": "Goldie's Café"
+        "nickname": ["Goldie's Café"]
     },
     "Green-Dragon": {
-        "nickname": "Green Dragon"
+        "nickname": ["Green Dragon"]
     },
     "Hot-Dog-Cart": {
-        "nickname": "Hot Dog Cart"
+        "nickname": ["Hot Dog Cart"]
     },
     "Ivy-Room": {
-        "nickname": "Ivy Room"
+        "nickname": ["Ivy Room"]
     },
     "Jansens-Dining": {
-        "nickname": "Bethe House"
+        "nickname": ["Bethe House"]
     },
     "Jansens-Market": {
-        "nickname": "Jansen's Market"
+        "nickname": ["Jansen's Market"]
     },
     "Keeton-House-Dining": {
-        "nickname": "Keeton House"
+        "nickname": ["Keeton House"]
     },
     "Marthas-Cafe": {
-        "nickname": "Martha's Café"
+        "nickname": ["Martha's Café"]
     },
     "Mattins-Cafe": {
-        "nickname": "Mattins Café"
+        "nickname": ["Mattins Café"]
     },
     "North-Star": {
-        "nickname": "North Star"
+        "nickname": ["North Star", "Appel"]
     },
     "Okenshields": {
-        "nickname": "Okenshields"
+        "nickname": ["Okenshields"]
     },
     "Risley-Dining": {
-        "nickname": "Risley"
+        "nickname": ["Risley"]
     },
     "RPCC-Marketplace": {
-        "nickname": "RPCC"
+        "nickname": ["RPCC", "Robert Purcell Community Center"]
     },
     "Rose-House-Dining": {
-        "nickname": "Rose House"
+        "nickname": ["Rose House"]
     },
     "Rustys": {
-        "nickname": "Rusty's"
+        "nickname": ["Rusty's"]
     },
     "Sweet-Sensations": {
-        "nickname": "Sweet Sensations"
+        "nickname": ["Sweet Sensations"]
     },
     "Synapsis-Cafe": {
-        "nickname": "Synapsis Café"
+        "nickname": ["Synapsis Café"]
     },
     "Trillium": {
-        "nickname": "Trillium"
+        "nickname": ["Trillium"]
     }
 }

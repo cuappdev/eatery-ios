@@ -127,7 +127,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 if let hardcoded = $0.hardcodedMenu {
                     for (_, value) in hardcoded {
                         for item in value {
-                            if item.name.lowercaseString.rangeOfString(searchQuery.lowercaseString) != nil {
+                            if item.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil {
                                 hardcodedFoodItemFound = true
                             }
                         }
@@ -135,9 +135,13 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 } else {
                     
                 }
-                return (($0.name.lowercaseString.rangeOfString(searchQuery.lowercaseString) != nil)
-                    || ($0.nickname().lowercaseString.rangeOfString(searchQuery.lowercaseString) != nil)
-                    || hardcodedFoodItemFound) }
+                return ((
+                    $0.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil)
+                    || hardcodedFoodItemFound
+                    || $0.allNicknames().contains({ (nickname) -> Bool in
+                            nickname.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil
+                        })
+                    )}
         } else {
             desiredEateries = eateries
         }
