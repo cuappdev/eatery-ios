@@ -150,8 +150,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             let favoriteEateries = desiredEateries.filter { return $0.favorite }
             let openEateries = desiredEateries.filter { return $0.isOpenNow() }
             let closedEateries = desiredEateries.filter { return !$0.isOpenNow()}
-            print(openEateries)
-            print(closedEateries)
             eateryData["Favorites"] = favoriteEateries
             eateryData["Open"] = openEateries
             eateryData["Closed"] = closedEateries
@@ -164,29 +162,48 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func sortEateriesByOpen() {
         
-                let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+    /*sorts Eateries by time in catergories of Open and Closed. If eatery a and b are Open and eatery a closes before eatery b then eatery a will be sorted first. If eatery a and b are Closed and eatery a opens before eatery b than eatery a will be sorted before eatery b
+    */
         
-                    // Both Eateries are open today, find which comes first
-                    // To do this, we simply compare the time intervals between
-                    // now and the active event's start date
-        
-                    let now = NSDate()
-                    if let aTimeInterval = a.activeEventForDate(now) {
-                        if let bTimeInterval = b.activeEventForDate(now) {
-                            if aTimeInterval.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow {
+        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+            
+            if a.isOpenToday() {
+                if let activeEvent = a.activeEventForDate(NSDate()) {
+                    if activeEvent.occurringOnDate(NSDate()) {
+                        if let bTimeInterval = b.activeEventForDate(NSDate()) {
+                            //both eateries are open
+                            if activeEvent.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow {
                                 return true
+                            } else {
+                                //a closes before b
+                                return false
+                            }
+                        } else {
+                            //a is open and b is closed (should never happen but just in case)
+                            return true
+                        }
+                    } else {
+                        //a is closed
+                        let atimeTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
+                        if let bActiveEvent = b.activeEventForDate(NSDate()){
+                            let bTimeTillOpen = (Int)(bActiveEvent.startDate.timeIntervalSinceNow/Double(60))
+                            if atimeTillOpen < bTimeTillOpen {
+                                return true
+                            } else {
+                                return false
                             }
                         } else {
                             return true
                         }
                     }
-                    return false
                 }
+            }
+           return false
+  
+        }
         
         eateryData["Open"]!.sortInPlace(sortByHoursClosure)
         eateryData["Closed"]!.sortInPlace(sortByHoursClosure)
-        
-        
     }
     
     func sortEateries() {
