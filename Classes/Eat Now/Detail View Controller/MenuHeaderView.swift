@@ -9,14 +9,15 @@
 import UIKit
 import DiningStack
 
-protocol EateryFavoriteDelegate {
+protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
+    func shareButtonPressed()
 }
 
 class MenuHeaderView: UIView {
     
     var eatery: Eatery!
-    var delegate: EateryFavoriteDelegate?
+    var delegate: MenuButtonsDelegate?
 
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,11 +25,12 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var paymentView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
-    @IBOutlet weak var buttonOneOutlet: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     
     override func awakeFromNib() {
-        buttonOneOutlet.setImage(UIImage(named: "whiteStar"), forState: .Normal)
-        
+        favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
+        shareButton.setImage(UIImage(named: "shareIcon"), forState: .Normal)
         statusView.layer.cornerRadius = statusView.frame.width / 2
     }
     
@@ -91,23 +93,26 @@ class MenuHeaderView: UIView {
         
         // Action Buttons
         if eatery.favorite {
-            buttonOneOutlet.setImage(UIImage(named: "goldStar"), forState: .Normal)
+            favoriteButton.setImage(UIImage(named: "goldStar"), forState: .Normal)
         } else {
-            buttonOneOutlet.setImage(UIImage(named: "whiteStar"), forState: .Normal)
+            favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
         }
     }
     
-    @IBAction func buttonOnePressed(sender: AnyObject) {
-        print("Favorite button pressed")
+    @IBAction func favoriteButtonPressed(sender: AnyObject) {
         if eatery.favorite {
             eatery.favorite = false
-            buttonOneOutlet.setImage(UIImage(named: "whiteStar"), forState: .Normal)
+            favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
         } else {
             eatery.favorite = true
-            buttonOneOutlet.setImage(UIImage(named: "goldStar"), forState: .Normal)
+            favoriteButton.setImage(UIImage(named: "goldStar"), forState: .Normal)
         }
         
         delegate?.favoriteButtonPressed()
+    }
+    
+    @IBAction func shareButtonPressed(sender: UIButton) {
+        delegate?.shareButtonPressed()
     }
 
 }
