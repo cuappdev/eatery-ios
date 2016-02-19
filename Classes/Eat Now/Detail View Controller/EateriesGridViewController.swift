@@ -377,7 +377,7 @@ extension EateriesGridViewController : UICollectionViewDelegate {
         if (section == 0) {
             return CGSize(width: collectionView.frame.width, height: 44)
         } else {
-            return CGSize(width: collectionView.frame.width, height: 10)
+            return CGSize(width: collectionView.frame.width, height: 14)
         }
     }
     
