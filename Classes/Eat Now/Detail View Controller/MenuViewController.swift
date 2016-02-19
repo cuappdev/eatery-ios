@@ -97,7 +97,6 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
         scrollToCurrentTimeOpening()
     }
     
-    
     func handleScroll(gesture: UIPanGestureRecognizer) {
 //        print("location: \(gesture.locationInView(view))")
 //        print("translation: \(gesture.translationInView(view))")
@@ -240,6 +239,33 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
+    }
+    
+    // MARK: -
+    // MARK: Menu Sharing
+    
+    func shareMenu() {
+        var image: UIImage = UIImage()
+        let mealVC = (pageViewController.pageViewController.viewControllers![0] as! MealTableViewController)
+        let eatery = mealVC.eatery
+        
+        if let _ = eatery.hardcodedMenu {
+            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(NSDate()), selectedMenu: mealVC.meal, menuIterable: eatery.getHardcodeMenuIterable())
+        } else {
+            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(NSDate()), selectedMenu: mealVC.meal, menuIterable: mealVC.event!.getMenuIterable())
+        }
+        
+        let objectsToShare = [image]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        
+        if #available(iOS 9.0, *) {
+            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail,UIActivityTypeOpenInIBooks, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+        } else {
+            // Fallback on earlier versions
+            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+        }
+        
+        presentViewController(activityVC, animated: true, completion: nil)
     }
 
     // MARK: -

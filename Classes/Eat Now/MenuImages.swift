@@ -117,7 +117,14 @@ class MenuImages: NSObject {
         //create menu header
         //open indicator
         let openIndicatorView = UIView(frame: CGRectMake(15,20,15,15))
-        openIndicatorView.backgroundColor = UIColor(red: 174/255.0, green: 220/255.0, blue: 69/255.0, alpha: 1.0)
+        // Status View
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+            case .Open(_):
+                openIndicatorView.backgroundColor = .openGreen()
+            case .Closed(_):
+                openIndicatorView.backgroundColor = .redColor()
+        }
         openIndicatorView.layer.cornerRadius = openIndicatorView.frame.width / 2.0
         openIndicatorView.clipsToBounds = true
         menuHeader.addSubview(openIndicatorView)
@@ -134,9 +141,10 @@ class MenuImages: NSObject {
         eateryNameLabel.center = CGPointMake(eateryNameLabel.center.x, openIndicatorView.center.y)
         
         //create eatery time label
+        let openTime = "Open \(events[selectedMenu]!.startDateFormatted) to \(events[selectedMenu]!.endDateFormatted)"
         let eateryTimeLabel = UILabel(frame: CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height, 200, 15))
         eateryTimeLabel.textColor = fontColor
-        eateryTimeLabel.text = events[selectedMenu]!.summary
+        eateryTimeLabel.text = openTime
         eateryTimeLabel.font = headerTimeFont
         eateryTimeLabel.sizeToFit()
         eateryTimeLabel.frame = CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height - 12, eateryTimeLabel.frame.width, eateryTimeLabel.frame.height)
@@ -147,6 +155,9 @@ class MenuImages: NSObject {
         let eventNameLabel = UILabel(frame: CGRectMake(0, 0, 200, 15))
         eventNameLabel.textColor = UIButton().tintColor
         eventNameLabel.text = selectedMenu.uppercaseString
+        if let _ = eatery.hardcodedMenu {
+            eventNameLabel.text = "MENU"
+        }
         eventNameLabel.font = headerEventFont
         eventNameLabel.sizeToFit()
         eventNameLabel.center = CGPointMake(menuHeader.center.x, menuHeader.frame.height - eventNameLabel.frame.height)
