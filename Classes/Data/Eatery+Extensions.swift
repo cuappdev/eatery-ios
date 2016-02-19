@@ -9,6 +9,7 @@
 import Foundation
 import DiningStack
 import SwiftyJSON
+import UIKit
 
 enum EateryStatus {
     case Open(String)
