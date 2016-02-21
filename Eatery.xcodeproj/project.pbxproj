@@ -82,6 +82,17 @@
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
+		D10246291C7A31C4000D5CD8 /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */; };
+		D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */; };
+		D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */; };
+		D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102462E1C7A320C000D5CD8 /* TitleSectionTableViewCell.swift */; };
+		D10246311C7A320C000D5CD8 /* TitleSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102462F1C7A320C000D5CD8 /* TitleSectionTableViewCell.xib */; };
+		D10246341C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246321C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift */; };
+		D10246351C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D10246331C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib */; };
+		D102463A1C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246361C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift */; };
+		D102463B1C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D10246371C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib */; };
+		D102463C1C7A3239000D5CD8 /* EateryMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246381C7A3239000D5CD8 /* EateryMenuTableViewCell.swift */; };
+		D102463D1C7A3239000D5CD8 /* EateryMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D10246391C7A3239000D5CD8 /* EateryMenuTableViewCell.xib */; };
 		D1EE777A1C702469001823D8 /* MiscellaneousExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */; };
 		E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* MenuViewController.swift */; };
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
@@ -306,6 +317,17 @@
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
+		D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDateView.swift; sourceTree = "<group>"; };
+		D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterDateView.xib; sourceTree = "<group>"; };
+		D102462E1C7A320C000D5CD8 /* TitleSectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleSectionTableViewCell.swift; sourceTree = "<group>"; };
+		D102462F1C7A320C000D5CD8 /* TitleSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleSectionTableViewCell.xib; sourceTree = "<group>"; };
+		D10246321C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterEateriesTableViewCell.swift; sourceTree = "<group>"; };
+		D10246331C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterEateriesTableViewCell.xib; sourceTree = "<group>"; };
+		D10246361C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		D10246371C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		D10246381C7A3239000D5CD8 /* EateryMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryMenuTableViewCell.swift; sourceTree = "<group>"; };
+		D10246391C7A3239000D5CD8 /* EateryMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryMenuTableViewCell.xib; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscellaneousExtensions.swift; sourceTree = "<group>"; };
 		DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		E0C3D466EB4300A3FE69189D /* Pods-Today Extension.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.app store.xcconfig"; sourceTree = "<group>"; };
@@ -429,6 +451,7 @@
 				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
+				D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -622,6 +645,7 @@
 				E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */,
 				C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */,
 				C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */,
+				D102463E1C7A3250000D5CD8 /* Look Ahead Cells */,
 			);
 			name = Cells;
 			path = "Eat Now/Detail View Controller/TableView Cells";
@@ -761,6 +785,23 @@
 			path = "Classes/Other-Sources";
 			sourceTree = "<group>";
 		};
+		D102463E1C7A3250000D5CD8 /* Look Ahead Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */,
+				D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */,
+				D102462E1C7A320C000D5CD8 /* TitleSectionTableViewCell.swift */,
+				D102462F1C7A320C000D5CD8 /* TitleSectionTableViewCell.xib */,
+				D10246321C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift */,
+				D10246331C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib */,
+				D10246361C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift */,
+				D10246371C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib */,
+				D10246381C7A3239000D5CD8 /* EateryMenuTableViewCell.swift */,
+				D10246391C7A3239000D5CD8 /* EateryMenuTableViewCell.xib */,
+			);
+			name = "Look Ahead Cells";
+			sourceTree = "<group>";
+		};
 		E9CFC0A61C0E44D900ED884A /* Extra Eatery Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -890,6 +931,7 @@
 				TargetAttributes = {
 					4283B36E1BE6A17C003DE22E = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = S9S784A2B4;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -898,12 +940,15 @@
 					};
 					659B21691C70796600F3B138 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = S9S784A2B4;
 					};
 					659B21751C70796600F3B138 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = S9S784A2B4;
 					};
 					C007CABE19E1BEAC00E3BD46 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = S9S784A2B4;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -972,6 +1017,7 @@
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				FAC5A3461BC60DE50001DE97 /* RPCC-Marketplace+logo.jpg in Resources */,
 				FAC5A3211BC60DE50001DE97 /* Bears-Den+logo.jpg in Resources */,
+				D102463B1C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib in Resources */,
 				C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */,
 				FAC5A31D1BC60DE50001DE97 /* Atrium-Cafe+logo.jpg in Resources */,
 				FAC5A32B1BC60DE50001DE97 /* Cascadeli.jpg in Resources */,
@@ -1003,6 +1049,7 @@
 				FAC5A3491BC60DE50001DE97 /* Synapsis-Cafe.jpg in Resources */,
 				FAC5A3481BC60DE50001DE97 /* Rustys+logo.jpg in Resources */,
 				FAC5A3241BC60DE50001DE97 /* Big-Red-Barn.jpg in Resources */,
+				D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */,
 				FAC5A3311BC60DE50001DE97 /* Goldies-Cafe.jpg in Resources */,
 				E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */,
 				FAC5A3301BC60DE50001DE97 /* Cornell-Dairy-Bar+logo.jpg in Resources */,
@@ -1013,10 +1060,12 @@
 				FAC5A33F1BC60DE50001DE97 /* North-Star+logo.jpg in Resources */,
 				FAC5A34B1BC60DE50001DE97 /* Trillium.jpg in Resources */,
 				FAC5A3181BC60DE50001DE97 /* 104-West+logo.jpg in Resources */,
+				D102463D1C7A3239000D5CD8 /* EateryMenuTableViewCell.xib in Resources */,
 				FAC5A3451BC60DE50001DE97 /* RPCC-Marketplace.jpg in Resources */,
 				FAC5A34A1BC60DE50001DE97 /* Synapsis-Cafe+logo.jpg in Resources */,
 				FAC5A32E1BC60DE50001DE97 /* Cook-House-Dining+logo.jpg in Resources */,
 				FAC5A31E1BC60DE50001DE97 /* Bear-Necessities.jpg in Resources */,
+				D10246351C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib in Resources */,
 				B0F2F2D71C6C1D000024D04A /* North-Star.jpg in Resources */,
 				FAC5A3471BC60DE50001DE97 /* Rustys.jpg in Resources */,
 				B0F2F2E11C6C1EAA0024D04A /* Jansens-Market.jpg in Resources */,
@@ -1034,6 +1083,7 @@
 				B0F2F2DB1C6C1D5C0024D04A /* Sweet-Sensations.jpg in Resources */,
 				FAC5A3231BC60DE50001DE97 /* Becker-House-Dining+logo.jpg in Resources */,
 				FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */,
+				D10246311C7A320C000D5CD8 /* TitleSectionTableViewCell.xib in Resources */,
 				FAC5A3371BC60DE50001DE97 /* Janens-Dining+logo.jpg in Resources */,
 				FAC5A31A1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe.jpg in Resources */,
 			);
@@ -1252,6 +1302,8 @@
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */,
 				95434FC71BD8699F003612DB /* Tweaks.swift in Sources */,
+				D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */,
+				D10246341C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift in Sources */,
 				95434FC31BD8699F003612DB /* FBTweakStore.m in Sources */,
 				95434FC11BD8699F003612DB /* FBTweakInline.m in Sources */,
 				E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */,
@@ -1261,15 +1313,19 @@
 				E9CFC0A51C0E43C500ED884A /* Globals.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,
 				C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */,
+				D102463A1C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift in Sources */,
 				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
 				C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */,
+				D10246291C7A31C4000D5CD8 /* LookAheadViewController.swift in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
+				D102463C1C7A3239000D5CD8 /* EateryMenuTableViewCell.swift in Sources */,
 				C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */,
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */,
 				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
 				FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */,
 				95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */,
+				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
 				E9CFC0B81C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift in Sources */,
 				95434FC21BD8699F003612DB /* FBTweakShakeWindow.m in Sources */,

@@ -2,17 +2,27 @@
   "images" : [
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "shareicon_0.5x.png",
+=======
+>>>>>>> a9975c7... Add look ahead files
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "shareicon.png",
+=======
+      "filename" : "share_360.png",
+>>>>>>> a9975c7... Add look ahead files
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "shareicon_1.5x.png",
+=======
+>>>>>>> a9975c7... Add look ahead files
       "scale" : "3x"
     }
   ],

@@ -18,15 +18,21 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var pageViewController: TabbedPageViewController!
     var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
-    var delegate: MenuButtonsDelegate?
+    var delegate: MenuFavoriteDelegate?
+    var displayedDate: NSDate!
+    var selectedMeal: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Appearance
         view.backgroundColor = .lightGray()
-        
         navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "E, MMM d"
+        dateFormatter.dateFormat = (displayedDate == NSDate()) ? "E, MMM d" : "MMM d"
+        title = (displayedDate == NSDate()) ? dateFormatter.stringFromDate(displayedDate) : "Today, \(dateFormatter.stringFromDate(displayedDate))"
         
         // Scroll View
         outerScrollView = UIScrollView(frame: view.frame)
@@ -36,14 +42,14 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         // Header Views
         menuHeaderView = NSBundle.mainBundle().loadNibNamed("MenuHeaderView", owner: self, options: nil).first! as! MenuHeaderView
-        menuHeaderView.setUp(eatery)
+        menuHeaderView.setUp(eatery, date: displayedDate)
         menuHeaderView.frame = CGRect(origin: CGPointZero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
         outerScrollView.addSubview(menuHeaderView)
 
         // TabbedPageViewController
-        let todaysEventsDict = eatery.eventsOnDate(NSDate())
-        let sortedEventsDict = todaysEventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
+        let eventsDict = eatery.eventsOnDate(displayedDate)
+        let sortedEventsDict = eventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
             a.1.startDate.compare(b.1.startDate) == .OrderedAscending
         }
         
@@ -61,7 +67,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
             let mealVC = MealTableViewController()
             mealVC.eatery = eatery
             mealVC.meal = meal
-            mealVC.event = todaysEventsDict[meal]
+            mealVC.event = eventsDict[meal]
             mealVC.tableView.layoutIfNeeded()
             mealViewControllers.append(mealVC)
         }
@@ -86,7 +92,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         animator = UIDynamicAnimator()
         
         //scroll to currently opened event if possible
-        scrollToCurrentTimeOpening()
+        scrollToCurrentTimeOpening(displayedDate, meal: selectedMeal)
     }
     
     func handleScroll(gesture: UIPanGestureRecognizer) {
@@ -250,9 +256,9 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         let eatery = mealVC.eatery
         
         if let _ = eatery.hardcodedMenu {
-            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(NSDate()), selectedMenu: mealVC.meal, menuIterable: eatery.getHardcodeMenuIterable())
+            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: eatery.getHardcodeMenuIterable())
         } else {
-            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(NSDate()), selectedMenu: mealVC.meal, menuIterable: mealVC.event!.getMenuIterable())
+            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: mealVC.event!.getMenuIterable())
         }
         
         let objectsToShare = [image]
@@ -271,10 +277,10 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     // MARK: -
     // MARK: Scroll To Proper Time
     
-    func scrollToCurrentTimeOpening() {
+    func scrollToCurrentTimeOpening(date: NSDate, meal: String?) {
         //only need to scroll if currently active event for day
         // and more than one event
-        if let event = eatery.activeEventForDate(NSDate()) {
+        if let event = eatery.activeEventForDate(date) {
             if let viewControllers = pageViewController.viewControllers {
                 if viewControllers.count < 2 {
                     return
@@ -282,9 +288,16 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                 for vc in viewControllers {
                     if let mealVC = vc as? MealTableViewController {
                         if let mealEvent = mealVC.event {
-                            if mealEvent.desc == event.desc {
-                                pageViewController.scrollToViewController(mealVC)
-                                return
+                            if let selectedMeal = meal {
+                                if mealEvent.desc == selectedMeal {
+                                    pageViewController.scrollToViewController(mealVC)
+                                    return
+                                }
+                            } else {
+                                if mealEvent.desc == event.desc {
+                                    pageViewController.scrollToViewController(mealVC)
+                                    return
+                                }
                             }
                         }
                     }

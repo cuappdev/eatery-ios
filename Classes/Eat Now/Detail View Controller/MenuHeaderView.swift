@@ -17,7 +17,8 @@ protocol MenuButtonsDelegate {
 class MenuHeaderView: UIView {
     
     var eatery: Eatery!
-    var delegate: MenuButtonsDelegate?
+    var delegate: EateryFavoriteDelegate?
+    var displayedDate: NSDate!
 
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -34,8 +35,9 @@ class MenuHeaderView: UIView {
         statusView.layer.cornerRadius = statusView.frame.width / 2
     }
     
-    func setUp(eatery: Eatery) {
+    func setUp(eatery: Eatery, date: NSDate) {
         self.eatery = eatery
+        self.displayedDate = date
 
         // Status View
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
@@ -82,7 +84,7 @@ class MenuHeaderView: UIView {
         titleLabel.text = eatery.nameShort
         
         // Hours
-        var hoursText = eatery.activeEventsForDate(NSDate())
+        var hoursText = eatery.activeEventsForDate(displayedDate)
         if hoursText != "Closed" {
             hoursText = "Open \(hoursText)"
         }
