@@ -138,7 +138,11 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
             }
             // Less than zero
             if offset.y < 0 {
-                outerScrollView.contentOffset.y = rubberBandDistance(offset.y, dimension: outerScrollView.contentSize.height)
+                let distance = rubberBandDistance(offset.y, dimension: outerScrollView.contentSize.height)
+                outerScrollView.contentOffset.y = distance
+                //stetch the header
+                menuHeaderView.frame = CGRectMake(0, distance, view.frame.width, kMenuHeaderViewFrameHeight - distance)
+                
                 
                 guard springBehavior == nil && decelerationBehavior != nil else { return }
                 let target = CGPointZero
