@@ -28,6 +28,9 @@ enum Sorting: String {
     case Open = "open"
 }
 
+let campusNames = ["Central", "West", "North"]
+let openNames = ["Open", "Closed"]
+
 let kCollectionViewGutterWidth: CGFloat = 8
 
 class EateriesGridViewController: UIViewController, UICollectionViewDataSource, MenuButtonsDelegate, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
@@ -269,169 +272,64 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        if eateryData["Favorites"]?.count > 0 {
-            if sorted == .Campus {
-                return 4
-            } else if sorted == .Open {
-                return 3
-            }
-        } else {
-            if sorted == .Campus {
-                return 3
-            } else if sorted == .Open {
-                return 2
-            }
-        }
+        var section = 1
+        section += eateryData["Favorites"]?.count > 0 ? 1 : 0
+        section += sorted == .Campus ? 3 : 2
         
-        return 4
+        return section
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var eSection = section
-        if sorted == .Campus {
-            if eateryData["Favorites"]?.count == 0 {
-                eSection += 1
+        var section = section
+        if section == 0 { return 0 }
+        
+        let names = sorted == .Campus ? campusNames : openNames
+        if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+            if section == 1 {
+                return favorites.count
             }
-            switch eSection {
-            case 0:
-                return eateryData["Favorites"] != nil ?     eateryData["Favorites"]!.count : 0
-            case 1:
-                return eateryData["Central"] != nil ?       eateryData["Central"]!.count : 0
-            case 2:
-                return eateryData["West"] != nil ?          eateryData["West"]!.count : 0
-            case 3:
-                return eateryData["North"] != nil ?         eateryData["North"]!.count : 0
-            default:
-                return 0
-            }
-        } else if sorted == .Open {
-            if eateryData["Favorites"]?.count == 0 {
-                eSection += 1
-            }
-            switch eSection {
-            case 0:
-                return eateryData["Favorites"] != nil ?     eateryData["Favorites"]!.count : 0
-            case 1:
-                return eateryData["Open"] != nil ?       eateryData["Open"]!.count : 0
-            case 2:
-                return eateryData["Closed"] != nil ?          eateryData["Closed"]!.count : 0
-            default:
-                return 0
-            }
+            section -= 1
         }
-        return 0
+        section -= 1
+        
+        return eateryData[names[section]]?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! EateryCollectionViewCell
         
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        
-        if sorted == .Campus {
-            if eateryData["Favorites"]?.count == 0 {
-                section += 1
-            }
-            switch section {
-            case 0:
-                eatery = eateryData["Favorites"]![indexPath.row]
-            case 1:
-                eatery = eateryData["Central"]![indexPath.row]
-            case 2:
-                eatery = eateryData["West"]![indexPath.row]
-            case 3:
-                eatery = eateryData["North"]![indexPath.row]
-            default:
-                print("Invalid section in grid view.")
-            }
-        } else if sorted == .Open {
-            if eateryData["Favorites"]?.count == 0 {
-                section += 1
-            }
-            switch section {
-            case 0:
-                eatery = eateryData["Favorites"]![indexPath.row]
-            case 1:
-                eatery = eateryData["Open"]![indexPath.row]
-            case 2:
-                eatery = eateryData["Closed"]![indexPath.row]
-            default:
-                print("Invalid section in grid view.")
-            }
-        }
-
-        cell.setEatery(eatery)
+        cell.setEatery(eateryForIndexPath(indexPath))
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
-        var reusableHeaderView: UICollectionReusableView!
-        
         if kind == UICollectionElementKindSectionHeader {
             var section = indexPath.section
             
-            if sorted == .Campus {
-                if eateryData["Favorites"] == nil || eateryData["Favorites"]?.count == 0 {
-                    section += 1
-                }
-                switch section {
-                case 0:
-                    sectionHeaderView.titleLabel.text = "Favorites"
-                case 1:
-                    sectionHeaderView.titleLabel.text = "Central"
-                case 2:
-                    sectionHeaderView.titleLabel.text = "West"
-                case 3:
-                    sectionHeaderView.titleLabel.text = "North"
-                default:
-                    print("Invalid section.")
-                }
-            } else if sorted == .Open {
-                if eateryData["Favorites"] == nil || eateryData["Favorites"]?.count == 0 {
-                    section += 1
-                }
-                switch section {
-                case 0:
-                    sectionHeaderView.titleLabel.text = "Favorites"
-                case 1:
-                    sectionHeaderView.titleLabel.text = "Open"
-                case 2:
-                    sectionHeaderView.titleLabel.text = "Closed"
-                default:
-                    print("Invalid section.")
-                }
-            }
-            
-            if section == 0 {
+            if section == 0 { // Search bar is section 0
                 let sectionHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "SearchbarHeaderView", forIndexPath: indexPath) as! EateriesCollectionSearchbarHeaderView
                 sectionHeaderView.searchBar.delegate = self
                 sectionHeaderView.searchBar.enablesReturnKeyAutomatically = false
-                reusableHeaderView = sectionHeaderView
+                return sectionHeaderView
             } else {
+                let names = sorted == .Campus ? campusNames : openNames
                 let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! EateriesCollectionViewHeaderView
-                if eateryData["Favorites"] == nil || eateryData["Favorites"]?.count == 0 {
-                    section += 1
+                
+                if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+                    if section == 1 {
+                        sectionTitleHeaderView.titleLabel.text = "Favorites"
+                        return sectionTitleHeaderView
+                    }
+                    section -= 1
                 }
-                switch section {
-                case 1:
-                    sectionTitleHeaderView.titleLabel.text = "Favorites"
-                case 2:
-                    sectionTitleHeaderView.titleLabel.text = "Central"
-                case 3:
-                    sectionTitleHeaderView.titleLabel.text = "West"
-                case 4:
-                    sectionTitleHeaderView.titleLabel.text = "North"
-                default:
-                    print("Invalid section.")
-                }
-                reusableHeaderView = sectionTitleHeaderView
+                section -= 1
+                sectionTitleHeaderView.titleLabel.text = names[section]
+                return sectionTitleHeaderView
             }
         }
-        
-        return reusableHeaderView
+        return UICollectionReusableView()
     }
     
     // MARK: -
@@ -447,44 +345,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 return nil
         }
         
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        
-        if sorted == .Campus {
-            if eateryData["Favorites"]?.count == 0 {
-                section += 1
-            }
-            switch section {
-            case 0:
-                eatery = eateryData["Favorites"]![indexPath.row]
-            case 1:
-                eatery = eateryData["Central"]![indexPath.row]
-            case 2:
-                eatery = eateryData["West"]![indexPath.row]
-            case 3:
-                eatery = eateryData["North"]![indexPath.row]
-            default:
-                print("Invalid section in grid view.")
-            }
-        } else if sorted == .Open {
-            if eateryData["Favorites"]?.count == 0 {
-                section += 1
-            }
-            switch section {
-            case 0:
-                eatery = eateryData["Favorites"]![indexPath.row]
-            case 1:
-                eatery = eateryData["Open"]![indexPath.row]
-            case 2:
-                eatery = eateryData["Closed"]![indexPath.row]
-            default:
-                print("Invalid section in grid view.")
-            }
-        }
-        
         let peekViewController = MenuViewController()
-        peekViewController.eatery = eatery
+        peekViewController.eatery = eateryForIndexPath(indexPath)
         peekViewController.delegate = self
         
         peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
@@ -546,57 +408,37 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
+    
+    func eateryForIndexPath(indexPath: NSIndexPath) -> Eatery {
+        var eatery: Eatery!
+        
+        var section = indexPath.section
+        let names = sorted == .Campus ? campusNames : openNames
+        if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+            if section == 1 {
+                eatery = favorites[indexPath.row]
+            }
+            section -= 1
+        }
+        section -= 1
+        
+        if eatery == nil, let e = eateryData[names[section]] where e.count > 0 {
+            eatery = e[indexPath.row]
+        }
+        
+        return eatery
+    }
 }
 
 extension EateriesGridViewController : UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if (section == 0) {
-            return CGSize(width: collectionView.frame.width, height: 44)
-        } else {
-            return CGSize(width: collectionView.frame.width, height: 14)
-        }
+        return CGSize(width: collectionView.frame.width, height: section == 0 ? 44 : 14)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        
-        if sorted == .Campus {
-            if eateryData["Favorites"]?.count == 0 {
-                section += 1
-            }
-            switch section {
-            case 0:
-                eatery = eateryData["Favorites"]![indexPath.row]
-            case 1:
-                eatery = eateryData["Central"]![indexPath.row]
-            case 2:
-                eatery = eateryData["West"]![indexPath.row]
-            case 3:
-                eatery = eateryData["North"]![indexPath.row]
-            default:
-                print("Invalid section in grid view.")
-            }
-        } else if sorted == .Open {
-            if eateryData["Favorites"]?.count == 0 {
-                section += 1
-            }
-            switch section {
-            case 0:
-                eatery = eateryData["Favorites"]![indexPath.row]
-            case 1:
-                eatery = eateryData["Open"]![indexPath.row]
-            case 2:
-                eatery = eateryData["Closed"]![indexPath.row]
-            default:
-                print("Invalid section in grid view.")
-            }
-        }
-        
         let detailViewController = MenuViewController()
-        detailViewController.eatery = eatery
+        detailViewController.eatery = eateryForIndexPath(indexPath)
         detailViewController.delegate = self
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
