@@ -23,6 +23,14 @@ enum CollectionLayout: String {
     }
 }
 
+enum Sorting: String {
+    case Campus = "campus"
+    case Open = "open"
+}
+
+let campusNames = ["Central", "West", "North"]
+let openNames = ["Open", "Closed"]
+
 let kCollectionViewGutterWidth: CGFloat = 8
 
 class EateriesGridViewController: UIViewController, UICollectionViewDataSource, MenuButtonsDelegate, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
@@ -33,6 +41,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     var searchController: UISearchController!
     var searchQuery: String = ""
+    var sorted: Sorting = .Campus
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +60,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         setupCollectionView()
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = true
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Organize
+            , target: self, action: "addNavigationBarButtonTapped")
         
         loadData(false, completion: nil)
         
@@ -89,6 +101,19 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
+    func addNavigationBarButtonTapped() {
+        
+        //navigationController?.pushViewController(searchTableViewController, animated: false)
+        if sorted == .Open {
+            sorted = .Campus
+        } else if sorted == .Campus {
+            sorted = .Open
+        }
+        
+        loadData(true) { () -> Void in
+            return }
+    }
+    
     func processEateries() {
         var desiredEateries: [Eatery] = []
         if searchQuery != "" {
@@ -111,40 +136,99 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         } else {
             desiredEateries = eateries
         }
-        let favoriteEateries = desiredEateries.filter { return $0.favorite }
-        let northCampusEateries = desiredEateries.filter { return $0.area == .North }
-        let westCampusEateries = desiredEateries.filter { return $0.area == .West }
-        let centralCampusEateries = desiredEateries.filter { return $0.area == .Central }
         
+
         // TODO: sort by hours?
+        if sorted == .Campus {
+            let favoriteEateries = desiredEateries.filter { return $0.favorite }
+            let northCampusEateries = desiredEateries.filter { return $0.area == .North }
+            let westCampusEateries = desiredEateries.filter { return $0.area == .West }
+            let centralCampusEateries = desiredEateries.filter { return $0.area == .Central }
+            eateryData["Favorites"] = favoriteEateries
+            eateryData["North"] = northCampusEateries
+            eateryData["West"] = westCampusEateries
+            eateryData["Central"] = centralCampusEateries
+            sortEateries()
+        } else if sorted == .Open {
+            let favoriteEateries = desiredEateries.filter { return $0.favorite }
+            let openEateries = desiredEateries.filter { return $0.isOpenNow() }
+            let closedEateries = desiredEateries.filter { return !$0.isOpenNow()}
+            eateryData["Favorites"] = favoriteEateries
+            eateryData["Open"] = openEateries
+            eateryData["Closed"] = closedEateries
+            sortEateriesByOpen()
+            
+        }
         
-        eateryData["Favorites"] = favoriteEateries
-        eateryData["North"] = northCampusEateries
-        eateryData["West"] = westCampusEateries
-        eateryData["Central"] = centralCampusEateries
         
-        sortEateries()
+    }
+    
+    func sortEateriesByOpen() {
+        
+    /*sorts Eateries by time in catergories of Open and Closed. If eatery a and b are Open and eatery a closes before eatery b then eatery a will be sorted first. If eatery a and b are Closed and eatery a opens before eatery b than eatery a will be sorted before eatery b
+    */
+        
+        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+            
+            if a.isOpenToday() {
+                if let activeEvent = a.activeEventForDate(NSDate()) {
+                    if activeEvent.occurringOnDate(NSDate()) {
+                        if let bTimeInterval = b.activeEventForDate(NSDate()) {
+                            //both eateries are open
+                            if activeEvent.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow {
+                                return true
+                            } else {
+                                //a closes before b
+                                return false
+                            }
+                        } else {
+                            //a is open and b is closed (should never happen but just in case)
+                            return true
+                        }
+                    } else {
+                        //a is closed
+                        let atimeTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
+                        if let bActiveEvent = b.activeEventForDate(NSDate()){
+                            let bTimeTillOpen = (Int)(bActiveEvent.startDate.timeIntervalSinceNow/Double(60))
+                            if atimeTillOpen < bTimeTillOpen {
+                                return true
+                            } else {
+                                return false
+                            }
+                        } else {
+                            return true
+                        }
+                    }
+                }
+            }
+           return false
+  
+        }
+        
+        eateryData["Open"]!.sortInPlace(sortByHoursClosure)
+        eateryData["Closed"]!.sortInPlace(sortByHoursClosure)
     }
     
     func sortEateries() {
-        //        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
-        //            if !a.isOpenToday() { return false }
-        //            if !b.isOpenToday() { return true  }
-        //
-        //            // Both Eateries are open today, find which comes first
-        //            // To do this, we simply compare the time intervals between
-        //            // now and the active event's start date
-        //
-        //            let now = NSDate()
-        //            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-        //            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-        //
-        //            if aTimeInterval <= bTimeInterval {
-        //                return true
-        //            }
-        //
-        //            return false
-        //        }
+        
+//        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+//            if !a.isOpenToday() { return false }
+//            if !b.isOpenToday() { return true  }
+//            
+//            // Both Eateries are open today, find which comes first
+//            // To do this, we simply compare the time intervals between
+//            // now and the active event's start date
+//            
+//            let now = NSDate()
+//            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+//            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
+//            
+//            if aTimeInterval <= bTimeInterval {
+//                return true
+//            }
+//            
+//            return false
+//        }
         
         let sortByOpenAndLexographicallyClosure = { (a: Eatery, b: Eatery) -> Bool in
             
@@ -180,6 +264,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         eateryData["North"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         eateryData["West"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         eateryData["Central"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
+ 
         
     }
     
@@ -187,94 +272,64 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        guard eateryData["Favorites"]?.count > 0 else {
-            return 4
-        }
-        return 5
+        var section = 1
+        section += eateryData["Favorites"]?.count > 0 ? 1 : 0
+        section += sorted == .Campus ? 3 : 2
+        
+        return section
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var eSection = section
-        if eateryData["Favorites"]?.count == 0 {
-            eSection += 1
+        var section = section
+        if section == 0 { return 0 }
+        
+        let names = sorted == .Campus ? campusNames : openNames
+        if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+            if section == 1 {
+                return favorites.count
+            }
+            section -= 1
         }
-        switch eSection {
-        case 0:
-            return 0
-        case 1:
-            return eateryData["Favorites"] != nil ?     eateryData["Favorites"]!.count : 0
-        case 2:
-            return eateryData["Central"] != nil ?       eateryData["Central"]!.count : 0
-        case 3:
-            return eateryData["West"] != nil ?          eateryData["West"]!.count : 0
-        case 4:
-            return eateryData["North"] != nil ?         eateryData["North"]!.count : 0
-        default:
-            return 0
-        }
+        section -= 1
+        
+        return eateryData[names[section]]?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! EateryCollectionViewCell
         
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        if eateryData["Favorites"]?.count == 0 {
-            section += 1
-        }
-        switch section {
-        case 1:
-            eatery = eateryData["Favorites"]![indexPath.row]
-        case 2:
-            eatery = eateryData["Central"]![indexPath.row]
-        case 3:
-            eatery = eateryData["West"]![indexPath.row]
-        case 4:
-            eatery = eateryData["North"]![indexPath.row]
-        default:
-            print("Invalid section in grid view.")
-        }
-        
-        cell.setEatery(eatery)
+        cell.setEatery(eateryForIndexPath(indexPath))
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
-        var reusableHeaderView: UICollectionReusableView!
-        
         if kind == UICollectionElementKindSectionHeader {
             var section = indexPath.section
             
-            if section == 0 {
+            if section == 0 { // Search bar is section 0
                 let sectionHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "SearchbarHeaderView", forIndexPath: indexPath) as! EateriesCollectionSearchbarHeaderView
                 sectionHeaderView.searchBar.delegate = self
                 sectionHeaderView.searchBar.enablesReturnKeyAutomatically = false
-                reusableHeaderView = sectionHeaderView
+                return sectionHeaderView
             } else {
+                let names = sorted == .Campus ? campusNames : openNames
                 let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! EateriesCollectionViewHeaderView
-                if eateryData["Favorites"] == nil || eateryData["Favorites"]?.count == 0 {
-                    section += 1
+                
+                if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+                    if section == 1 {
+                        sectionTitleHeaderView.titleLabel.text = "Favorites"
+                        return sectionTitleHeaderView
+                    }
+                    section -= 1
                 }
-                switch section {
-                case 1:
-                    sectionTitleHeaderView.titleLabel.text = "Favorites"
-                case 2:
-                    sectionTitleHeaderView.titleLabel.text = "Central"
-                case 3:
-                    sectionTitleHeaderView.titleLabel.text = "West"
-                case 4:
-                    sectionTitleHeaderView.titleLabel.text = "North"
-                default:
-                    print("Invalid section.")
-                }
-                reusableHeaderView = sectionTitleHeaderView
+                section -= 1
+                sectionTitleHeaderView.titleLabel.text = names[section]
+                return sectionTitleHeaderView
             }
         }
-        
-        return reusableHeaderView
+        return UICollectionReusableView()
     }
     
     // MARK: -
@@ -290,27 +345,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 return nil
         }
         
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        if eateryData["Favorites"]?.count == 0 {
-            section += 1
-        }
-        switch section {
-        case 1:
-            eatery = eateryData["Favorites"]![indexPath.row]
-        case 2:
-            eatery = eateryData["Central"]![indexPath.row]
-        case 3:
-            eatery = eateryData["West"]![indexPath.row]
-        case 4:
-            eatery = eateryData["North"]![indexPath.row]
-        default:
-            print("Invalid section in grid view.")
-        }
-        
         let peekViewController = MenuViewController()
-        peekViewController.eatery = eatery
+        peekViewController.eatery = eateryForIndexPath(indexPath)
         peekViewController.delegate = self
         
         peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
@@ -372,40 +408,37 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
+    
+    func eateryForIndexPath(indexPath: NSIndexPath) -> Eatery {
+        var eatery: Eatery!
+        
+        var section = indexPath.section
+        let names = sorted == .Campus ? campusNames : openNames
+        if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+            if section == 1 {
+                eatery = favorites[indexPath.row]
+            }
+            section -= 1
+        }
+        section -= 1
+        
+        if eatery == nil, let e = eateryData[names[section]] where e.count > 0 {
+            eatery = e[indexPath.row]
+        }
+        
+        return eatery
+    }
 }
 
 extension EateriesGridViewController : UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if (section == 0) {
-            return CGSize(width: collectionView.frame.width, height: 44)
-        } else {
-            return CGSize(width: collectionView.frame.width, height: 14)
-        }
+        return CGSize(width: collectionView.frame.width, height: section == 0 ? 44 : 14)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        if eateryData["Favorites"]?.count == 0 {
-            section += 1
-        }
-        switch section {
-        case 1:
-            eatery = eateryData["Favorites"]![indexPath.row]
-        case 2:
-            eatery = eateryData["Central"]![indexPath.row]
-        case 3:
-            eatery = eateryData["West"]![indexPath.row]
-        case 4:
-            eatery = eateryData["North"]![indexPath.row]
-        default:
-            print("Invalid section in grid view.")
-        }
-        
         let detailViewController = MenuViewController()
-        detailViewController.eatery = eatery
+        detailViewController.eatery = eateryForIndexPath(indexPath)
         detailViewController.delegate = self
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
