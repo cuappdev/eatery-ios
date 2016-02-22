@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -85,6 +86,23 @@
                         </mask>
                     </variation>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e9R-Hh-GD3">
+                    <rect key="frame" x="498.5" y="15" width="36.5" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="e9R-Hh-GD3" secondAttribute="height" multiplier="17:14" id="8gK-8Z-LFo"/>
+                        <constraint firstAttribute="width" constant="30" id="CxZ-IS-vIQ"/>
+                        <constraint firstAttribute="height" constant="30" id="wfN-Qw-rIt"/>
+                    </constraints>
+                    <state key="normal" image="shareIcon"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="CxZ-IS-vIQ"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="shareButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="zqy-P5-8AZ"/>
+                    </connections>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQd-oc-cnd">
                     <rect key="frame" x="550" y="15" width="30" height="30"/>
                     <constraints>
@@ -95,7 +113,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="buttonOnePressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="drr-gn-U5V"/>
+                        <action selector="favoriteButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="dlL-Vi-KV7"/>
                     </connections>
                 </button>
             </subviews>
@@ -109,23 +127,28 @@
                 <constraint firstItem="RQd-oc-cnd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="QxS-22-pNR"/>
                 <constraint firstAttribute="trailing" secondItem="TlU-2P-5x9" secondAttribute="trailing" id="UJ5-ww-ehT"/>
                 <constraint firstItem="edz-Rb-vgp" firstAttribute="top" secondItem="TlU-2P-5x9" secondAttribute="bottom" id="Uuu-Dm-wCd"/>
+                <constraint firstItem="e9R-Hh-GD3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="VDI-0s-Eh0"/>
                 <constraint firstAttribute="trailing" secondItem="xJe-ai-0Pk" secondAttribute="trailing" id="XjQ-mN-7MC"/>
                 <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dy2-HV-4ni"/>
                 <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eBA-wY-58E"/>
                 <constraint firstAttribute="bottom" secondItem="edz-Rb-vgp" secondAttribute="bottom" id="k4a-2a-ejH"/>
+                <constraint firstItem="RQd-oc-cnd" firstAttribute="leading" secondItem="e9R-Hh-GD3" secondAttribute="trailing" constant="15" id="wZR-zB-qQQ"/>
                 <constraint firstItem="edz-Rb-vgp" firstAttribute="top" secondItem="xJe-ai-0Pk" secondAttribute="bottom" id="y7u-du-jx3"/>
             </constraints>
             <connections>
                 <outlet property="backgroundImageView" destination="xJe-ai-0Pk" id="cfF-Oj-Njg"/>
-                <outlet property="buttonOneOutlet" destination="RQd-oc-cnd" id="NSn-a9-CmL"/>
+                <outlet property="favoriteButton" destination="RQd-oc-cnd" id="5oy-lj-I1I"/>
                 <outlet property="hoursLabel" destination="sBa-LA-nI0" id="QM6-IL-1sG"/>
                 <outlet property="paymentView" destination="O9J-Yb-YND" id="UtG-SC-pWY"/>
+                <outlet property="shareButton" destination="e9R-Hh-GD3" id="cKm-3D-ZkG"/>
                 <outlet property="statusView" destination="qXi-JT-D1m" id="Usm-Ii-MbL"/>
                 <outlet property="titleLabel" destination="WbD-aq-Tra" id="g6h-F4-WG5"/>
             </connections>
+            <point key="canvasLocation" x="523" y="360"/>
         </view>
     </objects>
     <resources>
+        <image name="shareIcon" width="34" height="28"/>
         <image name="whiteStar" width="28" height="27"/>
     </resources>
 </document>

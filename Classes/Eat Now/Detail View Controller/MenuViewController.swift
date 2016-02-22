@@ -9,24 +9,16 @@
 import UIKit
 import DiningStack
 
-protocol MenuFavoriteDelegate {
-    func favoriteButtonPressed()
-}
-
 let kMenuHeaderViewFrameHeight: CGFloat = 240
 
-class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageViewControllerScrollDelegate {
+class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
     
     var eatery: Eatery!
     var outerScrollView: UIScrollView!
-    
     var pageViewController: TabbedPageViewController!
-    
     var previousContentOffset: CGFloat = 0
-    
     var menuHeaderView: MenuHeaderView!
-    
-    var delegate: MenuFavoriteDelegate?
+    var delegate: MenuButtonsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -239,10 +231,14 @@ class MenuViewController: UIViewController, EateryFavoriteDelegate, TabbedPageVi
     }
     
     // MARK: -
-    // MARK: EateryFavoriteDelegate
+    // MARK: MenuButtonsDelegate
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
+    }
+    
+    func shareButtonPressed() {
+        shareMenu()
     }
     
     // MARK: -

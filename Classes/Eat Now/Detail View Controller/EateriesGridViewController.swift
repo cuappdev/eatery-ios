@@ -25,7 +25,7 @@ enum CollectionLayout: String {
 
 let kCollectionViewGutterWidth: CGFloat = 8
 
-class EateriesGridViewController: UIViewController, UICollectionViewDataSource, MenuFavoriteDelegate, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
+class EateriesGridViewController: UIViewController, UICollectionViewDataSource, MenuButtonsDelegate, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
     
     var collectionView: UICollectionView!
     private var eateries: [Eatery] = []
@@ -324,12 +324,15 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     // MARK: -
-    // MARK: MenuFavoriteDelegate
+    // MARK: MenuButtonsDelegate
     
     func favoriteButtonPressed() {
         // if this is too expensive, set a flag and run it on `viewDidAppear`
         processEateries()
         collectionView.reloadData()
+    }
+    
+    func shareButtonPressed() {
     }
     
     var shouldShowLayoutButton: Bool {
