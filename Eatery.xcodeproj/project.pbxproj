@@ -509,12 +509,12 @@
 			isa = PBXGroup;
 			children = (
 				652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */,
-				652AE53B1C707EBC00B7245A /* Eatery-Watch-App-Extension-Bridging-Header.h */,
 				652AE53C1C707EBC00B7245A /* EateryRowController.swift */,
 				652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */,
 				652AE53E1C707EBC00B7245A /* MenuRowController.swift */,
 				659B217F1C70796600F3B138 /* ExtensionDelegate.swift */,
 				659B21811C70796600F3B138 /* NotificationController.swift */,
+				652AE53B1C707EBC00B7245A /* Eatery-Watch-App-Extension-Bridging-Header.h */,
 				659B21831C70796600F3B138 /* Assets.xcassets */,
 				659B21851C70796600F3B138 /* Info.plist */,
 				659B217B1C70796600F3B138 /* Supporting Files */,
