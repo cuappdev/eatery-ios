@@ -18,7 +18,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var pageViewController: TabbedPageViewController!
     var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
-    var delegate: MenuFavoriteDelegate?
+    var delegate: MenuButtonsDelegate?
     var displayedDate: NSDate!
     var selectedMeal: String?
     

@@ -350,7 +350,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         }
         
         let peekViewController = MenuViewController()
-        peekViewController.eatery = eatery
+        peekViewController.eatery = eateryForIndexPath(indexPath)
         peekViewController.displayedDate = NSDate()
         peekViewController.selectedMeal = nil
         peekViewController.delegate = self

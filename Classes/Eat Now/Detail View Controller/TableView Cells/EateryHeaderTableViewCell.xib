@@ -16,10 +16,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KI1-qa-4JK" userLabel="Cell Divider">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                         <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -27,11 +23,6 @@
                             <constraint firstAttribute="height" constant="1" id="1Th-d9-UTd"/>
                         </constraints>
                     </view>
-<<<<<<< HEAD
-=======
->>>>>>> a9975c7... Add look ahead files
-=======
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eatery Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBb-mc-wiI">
                         <rect key="frame" x="10" y="10" width="107" height="21.5"/>
                         <constraints>
@@ -74,28 +65,13 @@
                     <constraint firstItem="oBb-mc-wiI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="7FA-48-a7N"/>
                     <constraint firstItem="oBb-mc-wiI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="86e-cd-Y7M"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="B9T-ip-Qiz" secondAttribute="bottom" constant="2" id="CRC-4r-H9r"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <constraint firstAttribute="trailing" secondItem="KI1-qa-4JK" secondAttribute="trailing" id="JTl-Nh-OYc"/>
                     <constraint firstItem="KI1-qa-4JK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Kno-SU-WHc"/>
-=======
->>>>>>> a9975c7... Add look ahead files
-=======
-                    <constraint firstAttribute="trailing" secondItem="KI1-qa-4JK" secondAttribute="trailing" id="JTl-Nh-OYc"/>
-                    <constraint firstItem="KI1-qa-4JK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Kno-SU-WHc"/>
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <constraint firstAttribute="bottom" secondItem="oBb-mc-wiI" secondAttribute="bottom" id="NrA-E0-2Po"/>
                     <constraint firstItem="l1c-VV-wU0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5A0-7h-LTz" secondAttribute="trailing" constant="10" id="OF6-NB-Xr6"/>
                     <constraint firstAttribute="trailing" secondItem="l1c-VV-wU0" secondAttribute="trailing" constant="8" id="OMX-iY-8lq"/>
                     <constraint firstItem="5A0-7h-LTz" firstAttribute="centerY" secondItem="oBb-mc-wiI" secondAttribute="centerY" id="Scw-Qw-rZC"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <constraint firstItem="KI1-qa-4JK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VOK-lP-VNg"/>
-=======
->>>>>>> a9975c7... Add look ahead files
-=======
-                    <constraint firstItem="KI1-qa-4JK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VOK-lP-VNg"/>
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <constraint firstItem="5A0-7h-LTz" firstAttribute="leading" secondItem="oBb-mc-wiI" secondAttribute="trailing" constant="5" id="h1Y-4T-dOC"/>
                     <constraint firstItem="l1c-VV-wU0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="i4U-hC-ebN"/>
                     <constraint firstItem="B9T-ip-Qiz" firstAttribute="top" secondItem="oBb-mc-wiI" secondAttribute="bottom" id="qDw-z8-vEZ"/>

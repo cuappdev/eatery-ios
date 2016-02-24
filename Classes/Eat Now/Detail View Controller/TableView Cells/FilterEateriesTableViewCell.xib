@@ -17,18 +17,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wA0-RA-Smo" userLabel="Title View">
                         <rect key="frame" x="0.0" y="0.0" width="350" height="40"/>
                         <subviews>
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIEW MENUS AND HOURS FOR AN UPCOMING TIME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Q3-Ev-Hab">
                                 <rect key="frame" x="10" y="20.5" width="330" height="14.5"/>
-=======
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT AN UPCOMING TIME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Q3-Ev-Hab">
-                                <rect key="frame" x="10" y="18.5" width="330" height="14.5"/>
->>>>>>> a9975c7... Add look ahead files
-=======
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIEW MENUS AND HOURS FOR AN UPCOMING TIME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Q3-Ev-Hab">
-                                <rect key="frame" x="10" y="20.5" width="330" height="14.5"/>
->>>>>>> a4aff36... Update look ahead menus according to new design
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -38,15 +28,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="DeK-X0-bm0"/>
                             <constraint firstItem="9Q3-Ev-Hab" firstAttribute="leading" secondItem="wA0-RA-Smo" secondAttribute="leading" constant="10" id="MZb-oM-Y4v"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <constraint firstAttribute="bottom" secondItem="9Q3-Ev-Hab" secondAttribute="bottom" constant="5" id="nzB-Bg-H07"/>
-=======
-                            <constraint firstAttribute="bottom" secondItem="9Q3-Ev-Hab" secondAttribute="bottom" constant="7" id="nzB-Bg-H07"/>
->>>>>>> a9975c7... Add look ahead files
-=======
-                            <constraint firstAttribute="bottom" secondItem="9Q3-Ev-Hab" secondAttribute="bottom" constant="5" id="nzB-Bg-H07"/>
->>>>>>> a4aff36... Update look ahead menus according to new design
                             <constraint firstAttribute="trailing" secondItem="9Q3-Ev-Hab" secondAttribute="trailing" constant="10" id="rhy-0R-sls"/>
                         </constraints>
                     </view>
@@ -218,10 +200,6 @@
                             </mask>
                         </variation>
                     </view>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qzJ-N7-BuN" userLabel="Cell Divider">
                         <rect key="frame" x="0.0" y="40" width="350" height="1"/>
                         <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -229,26 +207,12 @@
                             <constraint firstAttribute="height" constant="1" id="ln9-zs-byQ"/>
                         </constraints>
                     </view>
-<<<<<<< HEAD
                 </subviews>
                 <constraints>
                     <constraint firstItem="qzJ-N7-BuN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="64g-hH-5sg"/>
                     <constraint firstItem="7NF-Nk-ils" firstAttribute="top" secondItem="tVf-wF-B7k" secondAttribute="bottom" constant="8" id="9RJ-Ae-eJz"/>
                     <constraint firstItem="tVf-wF-B7k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Bp4-eN-n5g"/>
                     <constraint firstAttribute="trailing" secondItem="qzJ-N7-BuN" secondAttribute="trailing" id="C1c-S3-mZD"/>
-=======
-=======
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
-                </subviews>
-                <constraints>
-                    <constraint firstItem="qzJ-N7-BuN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="64g-hH-5sg"/>
-                    <constraint firstItem="7NF-Nk-ils" firstAttribute="top" secondItem="tVf-wF-B7k" secondAttribute="bottom" constant="8" id="9RJ-Ae-eJz"/>
-                    <constraint firstItem="tVf-wF-B7k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Bp4-eN-n5g"/>
-<<<<<<< HEAD
->>>>>>> a9975c7... Add look ahead files
-=======
-                    <constraint firstAttribute="trailing" secondItem="qzJ-N7-BuN" secondAttribute="trailing" id="C1c-S3-mZD"/>
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <constraint firstItem="tVf-wF-B7k" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Co6-4y-XUv"/>
                     <constraint firstItem="7NF-Nk-ils" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="GGS-NV-4ox"/>
                     <constraint firstItem="7NF-Nk-ils" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Jxs-T8-t2B"/>
@@ -257,14 +221,7 @@
                     <constraint firstItem="7NF-Nk-ils" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="QRc-QP-8S1"/>
                     <constraint firstItem="dJ4-Vz-GDt" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="aJ5-Nb-iPl"/>
                     <constraint firstItem="wA0-RA-Smo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="e9I-38-rLc"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <constraint firstItem="qzJ-N7-BuN" firstAttribute="top" secondItem="wA0-RA-Smo" secondAttribute="bottom" id="fCy-fr-B14"/>
-=======
->>>>>>> a9975c7... Add look ahead files
-=======
-                    <constraint firstItem="qzJ-N7-BuN" firstAttribute="top" secondItem="wA0-RA-Smo" secondAttribute="bottom" id="fCy-fr-B14"/>
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
                     <constraint firstItem="7NF-Nk-ils" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tVf-wF-B7k" secondAttribute="bottom" constant="5" id="l9U-K5-spb"/>
                     <constraint firstItem="7NF-Nk-ils" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="niN-ah-nrE"/>
                     <constraint firstItem="tVf-wF-B7k" firstAttribute="top" secondItem="wA0-RA-Smo" secondAttribute="bottom" constant="8" id="qH8-GD-Ioz"/>
@@ -293,15 +250,7 @@
                 <outlet property="sixthDateView" destination="Q2f-mL-zD8" id="y19-NL-SiY"/>
                 <outlet property="thirdDateView" destination="9p4-Hf-9Tg" id="Hvf-J2-ho0"/>
             </connections>
-<<<<<<< HEAD
-<<<<<<< HEAD
             <point key="canvasLocation" x="250" y="236"/>
-=======
-            <point key="canvasLocation" x="115" y="289"/>
->>>>>>> a9975c7... Add look ahead files
-=======
-            <point key="canvasLocation" x="250" y="236"/>
->>>>>>> 969b58f... Add carrot for expanded eatery cells on lookAheadVC
         </tableViewCell>
     </objects>
 </document>

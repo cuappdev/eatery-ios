@@ -17,7 +17,7 @@ protocol MenuButtonsDelegate {
 class MenuHeaderView: UIView {
     
     var eatery: Eatery!
-    var delegate: EateryFavoriteDelegate?
+    var delegate: MenuButtonsDelegate?
     var displayedDate: NSDate!
 
     @IBOutlet weak var statusView: UIView!
