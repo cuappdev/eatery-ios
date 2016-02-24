@@ -13,7 +13,7 @@ class MenuImages: NSObject {
 
     // Returns an image that contains the condensed menu of categories + items for LookAheadVC
     class func createCondensedMenuImage(width: CGFloat, menuIterable: [(String,[String])]) -> UIImage {
-        let bodyColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
+        let bodyColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
         let categoryHeaderHeight: CGFloat = 20
         let dividerSize: CGFloat = 20
         let condensedCategoryFont = UIFont(name: "HelveticaNeue-Medium", size: 11)
@@ -289,7 +289,7 @@ class MenuImages: NSObject {
     
     // Shares an image of the full menu with info about the eatery
     class func shareMenu(eatery: Eatery, vc: UIViewController, events: [String: Event], selectedMenu: String?) {
-        //get share image
+        // Get share image
         var imageToShare = UIImage()
         let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
         if hardcodeMenuIterable.count > 0 {
@@ -298,11 +298,18 @@ class MenuImages: NSObject {
             imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: events[selectedMenu!]!.getMenuIterable())
         }
         
-        //share
+        // Share
         let activityItems = [imageToShare]
         let activityVC = UIActivityViewController(activityItems: activityItems as [AnyObject], applicationActivities: nil)
-        activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact,UIActivityTypePrint, UIActivityTypePostToWeibo]
         activityVC.popoverPresentationController?.sourceView = vc.view
+        
+        if #available(iOS 9.0, *) {
+            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail,UIActivityTypeOpenInIBooks, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+        } else {
+            // Fallback on earlier versions
+            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+        }
+        
         vc.presentViewController(activityVC, animated: true, completion: nil)
     }
     

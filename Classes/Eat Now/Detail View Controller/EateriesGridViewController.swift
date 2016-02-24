@@ -70,6 +70,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         
         // Set up bar look ahead VC
         let barButton = UIBarButtonItem(title: "Menu Guide", style: .Plain, target: self, action: "goToLookAheadVC")
+        barButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.rightBarButtonItem = barButton
     }
     

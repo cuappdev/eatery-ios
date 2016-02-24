@@ -51,26 +51,20 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         // View appearance
         title = "Eatery Guide"
         edgesForExtendedLayout = .None
-        view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        
-        // Navigation Controller
-        navigationController?.view.backgroundColor = UIColor.whiteColor()
-        navigationController?.navigationBar.translucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.eateryBlue()
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         
         // Table View
         let tableViewFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         tableView = UITableView(frame: tableViewFrame, style: .Grouped)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .None
+        tableView.sectionFooterHeight = 0.0
+        tableView.showsVerticalScrollIndicator = false
+        tableView.autoresizingMask = .FlexibleHeight
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.autoresizingMask = .FlexibleHeight
-        tableView.showsVerticalScrollIndicator = false
-        tableView.separatorStyle = .None
+        tableView.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         view.addSubview(tableView)
         
         // Table View Nibs

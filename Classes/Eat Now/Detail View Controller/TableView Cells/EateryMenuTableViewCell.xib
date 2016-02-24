@@ -31,7 +31,7 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Mqp-sx-CRC">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareAltIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Mqp-sx-CRC">
                         <rect key="frame" x="234" y="15" width="10.5" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="S1H-F3-Ur4"/>
@@ -108,6 +108,6 @@
     </objects>
     <resources>
         <image name="carrot" width="21" height="9"/>
-        <image name="shareIcon" width="38" height="50"/>
+        <image name="shareAltIcon" width="38" height="50"/>
     </resources>
 </document>
