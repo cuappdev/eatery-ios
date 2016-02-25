@@ -6,13 +6,13 @@
         "nickname": ["Libe Café"]
     },
     "Atrium-Cafe": {
-        "nickname": ["Atrium Café"]
+        "nickname": ["Atrium Café", "Sage"]
     },
     "Bear-Necessities": {
         "nickname": ["Nasties"]
     },
     "Bears-Den": {
-        "nickname": ["Bear's Den"]
+        "nickname": ["Bear's Den", "Bears Den"]
     },
     "Becker-House-Dining": {
         "nickname": ["Becker House"]
@@ -27,7 +27,7 @@
         "nickname": ["Café Jennie"]
     },
     "Carols-Cafe": {
-        "nickname": ["Carol's Café"]
+        "nickname": ["Carol's Café", "Carols Cafe"]
     },
     "Cook-House-Dining": {
         "nickname": ["Cook House"]
@@ -36,7 +36,7 @@
         "nickname": ["Cornell Dairy Bar"]
     },
     "Goldies-Cafe": {
-        "nickname": ["Goldie's Café"]
+        "nickname": ["Goldie's Café", "Goldies Cafe"]
     },
     "Green-Dragon": {
         "nickname": ["Green Dragon"]
@@ -51,13 +51,13 @@
         "nickname": ["Bethe House"]
     },
     "Jansens-Market": {
-        "nickname": ["Jansen's Market"]
+        "nickname": ["Jansen's Market", "Jansens Market"]
     },
     "Keeton-House-Dining": {
         "nickname": ["Keeton House"]
     },
     "Marthas-Cafe": {
-        "nickname": ["Martha's Café"]
+        "nickname": ["Martha's Café", "Marthas Cafe"]
     },
     "Mattins-Cafe": {
         "nickname": ["Mattins Café"]
@@ -78,7 +78,7 @@
         "nickname": ["Rose House"]
     },
     "Rustys": {
-        "nickname": ["Rusty's"]
+        "nickname": ["Rusty's", "Rustys"]
     },
     "Sweet-Sensations": {
         "nickname": ["Sweet Sensations"]
