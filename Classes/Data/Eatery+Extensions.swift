@@ -142,7 +142,14 @@ extension Eatery {
         guard let nicknameJSON = kEateryNicknames[slug] else {
             return name
         }
-        return nicknameJSON["nickname"].stringValue
+        return nicknameJSON["nickname"].arrayValue.first?.stringValue ?? ""
+    }
+    
+    func allNicknames() -> [String] {
+        guard let nicknameJSON = kEateryNicknames[slug] else {
+            return [name]
+        }
+        return nicknameJSON["nickname"].arrayValue.map { $0.string! }
     }
         
 }
