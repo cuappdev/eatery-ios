@@ -56,7 +56,6 @@
                                     <action selector="refreshMenuItem" destination="AgC-eL-Hgc" id="ABO-in-mra"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Sort" icon="more" id="PZK-hQ-iwW"/>
                         </items>
                     </menu>
                     <connections>

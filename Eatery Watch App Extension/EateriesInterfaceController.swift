@@ -22,11 +22,13 @@ class EateriesInterfaceController: WKInterfaceController {
     @IBAction func refreshMenuItem() {
         getEateries()
     }
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         getEateries()
     }
     
+    /** Fetch list of Eateries from DataManager */
     func getEateries() {
         DATA.fetchEateries(false) { (error) -> Void in
             print("Watch fetched data\n")
@@ -38,6 +40,7 @@ class EateriesInterfaceController: WKInterfaceController {
         }
     }
     
+    /** Updates table and stores eateries. Use this to update Eatery times in table. */
     func configureTable() {
         table.setNumberOfRows(eateries.count, withRowType: "EateryRow")
         for index in eateries.indices {
