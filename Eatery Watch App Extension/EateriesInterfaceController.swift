@@ -17,23 +17,30 @@ class EateriesInterfaceController: WKInterfaceController {
     @IBOutlet var table: WKInterfaceTable!
     
     var eateries = [Eatery]()
+    var dateLastFetched = NSDate()
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
-        
+    @IBAction func refreshMenuItem() {
         getEateries()
     }
     
+    override func awakeWithContext(context: AnyObject?) {
+        super.awakeWithContext(context)
+        getEateries()
+    }
+    
+    /** Fetch list of Eateries from DataManager */
     func getEateries() {
         DATA.fetchEateries(false) { (error) -> Void in
             print("Watch fetched data\n")
             dispatch_async(dispatch_get_main_queue()) {
+                self.dateLastFetched = NSDate()
                 self.eateries = DATA.eateries
                 self.configureTable()
             }
         }
     }
     
+    /** Updates table and stores eateries. Use this to update Eatery times in table. */
     func configureTable() {
         table.setNumberOfRows(eateries.count, withRowType: "EateryRow")
         for index in eateries.indices {
@@ -48,12 +55,17 @@ class EateriesInterfaceController: WKInterfaceController {
     }
 
     override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        // If it is past midnight of the following day of last fetch, fetch.
+        let startOfNextDay = NSCalendar.currentCalendar().startOfDayForDate(dateLastFetched.dateByAddingTimeInterval(86400))
+        if NSDate().timeIntervalSinceDate(startOfNextDay) > 0 {
+            getEateries()
+        } else {
+            configureTable()
+        }
     }
 
     override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
     

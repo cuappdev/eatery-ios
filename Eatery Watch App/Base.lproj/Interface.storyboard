@@ -49,6 +49,15 @@
                             </items>
                         </table>
                     </items>
+                    <menu key="menu" id="gin-Gx-FhB">
+                        <items>
+                            <menuItem title="Refresh" icon="repeat" id="A2d-ES-Q1s">
+                                <connections>
+                                    <action selector="refreshMenuItem" destination="AgC-eL-Hgc" id="ABO-in-mra"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                     <connections>
                         <outlet property="table" destination="6r3-Hb-92T" id="9R9-ek-ueD"/>
                     </connections>
