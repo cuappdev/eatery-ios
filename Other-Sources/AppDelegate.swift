@@ -33,10 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
+        // Set up navigation bar appearance
+        UINavigationBar.appearance().barTintColor = UIColor.eateryBlue()
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        
         // Set up view controllers
-//        let eatNow = EatNowTableViewController()
         let eatNow = EateriesGridViewController()
-        //eatNow.title = "Places To Eat"
+        eatNow.title = "Eateries"
         let eatNavController = UINavigationController(rootViewController: eatNow)
         eatNavController.navigationBar.barStyle = .Black
         

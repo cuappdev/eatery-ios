@@ -1,5 +1,5 @@
 //
-//  MiscellaneousExtensions.swift
+//  String+Manipulation.swift
 //  Eatery
 //
 //  Created by Annie Cheng on 2/13/16.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     func trim() -> String {

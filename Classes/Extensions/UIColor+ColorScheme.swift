@@ -10,6 +10,14 @@ import UIKit
 
 extension UIColor {
     
+    public static func colorFromCode(code: Int) -> UIColor {
+        let red = CGFloat((code & 0xFF0000) >> 16) / 255
+        let green = CGFloat((code & 0xFF00) >> 8) / 255
+        let blue = CGFloat(code & 0xFF) / 255
+        
+        return UIColor(red: red, green: green, blue: blue, alpha: 1)
+    }
+    
     class func eateryBlue() -> UIColor {
 //        return UIColor(red:(77/255.0), green:(133/255.0), blue:(199/255.0), alpha:1.0)
         return UIColor(red:0.4, green:0.69, blue:0.93, alpha:1)

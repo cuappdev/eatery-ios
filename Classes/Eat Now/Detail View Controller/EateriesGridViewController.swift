@@ -48,15 +48,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        // -- Nav bar
-        // TODO: make this a proxy and put it in another file
+        // Set up navigation bar
         navigationController?.view.backgroundColor = .whiteColor()
         navigationController?.navigationBar.translucent = false
-        navigationController?.navigationBar.barTintColor = .eateryBlue()
-        navigationController?.navigationBar.tintColor = .whiteColor()
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
+
         setupCollectionView()
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = true
@@ -72,6 +67,16 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 registerForPreviewingWithDelegate(self, sourceView: view)
             }
         }
+        
+        // Set up bar look ahead VC
+        let barButton = UIBarButtonItem(title: "Menu Guide", style: .Plain, target: self, action: "goToLookAheadVC")
+        barButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        navigationItem.rightBarButtonItem = barButton
+    }
+    
+    func goToLookAheadVC() {
+        let lookAheadVC = LookAheadViewController()
+        navigationController?.pushViewController(lookAheadVC, animated: true)
     }
     
     func setupCollectionView() {
@@ -351,6 +356,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         
         let peekViewController = MenuViewController()
         peekViewController.eatery = eateryForIndexPath(indexPath)
+        peekViewController.displayedDate = NSDate()
+        peekViewController.selectedMeal = nil
         peekViewController.delegate = self
         
         peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
@@ -443,6 +450,8 @@ extension EateriesGridViewController : UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let detailViewController = MenuViewController()
         detailViewController.eatery = eateryForIndexPath(indexPath)
+        detailViewController.displayedDate = NSDate()
+        detailViewController.selectedMeal = nil
         detailViewController.delegate = self
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
