@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DiningStack
 
 @objc protocol EateryMenuCellDelegate {
     optional func didTapShareMenuButton(cell: EateryMenuTableViewCell?)
@@ -20,7 +19,6 @@ class EateryMenuTableViewCell: UITableViewCell {
     @IBOutlet weak var shareIcon: UIImageView!
     
     var delegate: EateryMenuCellDelegate?
-    var eatery: Eatery?
     
     override func awakeFromNib() {
         super.awakeFromNib()

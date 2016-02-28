@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DiningStack
 
 @objc protocol EateryHeaderCellDelegate {
     optional func didTapInfoButton(cell: EateryHeaderTableViewCell?)
@@ -23,7 +22,6 @@ class EateryHeaderTableViewCell: UITableViewCell {
 
     private var tapGestureRecognizer: UITapGestureRecognizer?
     var delegate: EateryHeaderCellDelegate?
-    var eatery: Eatery?
     var isExpanded: Bool = false
     
     override func awakeFromNib() {

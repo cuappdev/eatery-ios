@@ -267,7 +267,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         if expandedCells[indexPath.row] == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("EateryHeaderCell") as! EateryHeaderTableViewCell
             cell.delegate = self
-            cell.eatery = eatery
             cell.isExpanded = false
             cell.eateryNameLabel.text = eatery.nameShort
             cell.eateryHoursLabel.text = "Closed"
@@ -290,7 +289,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCellWithIdentifier("EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-            cell.eatery = eatery
             cell.shareMenuButton.hidden = !hasMenuIterable(eatery)
             cell.shareIcon.hidden = !hasMenuIterable(eatery)
             cell.menuImageView.image = getEateryMenu(eatery)
@@ -332,13 +330,13 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         tableView.beginUpdates()
         
-        switch(cell!.eatery!.area) {
+        switch(sections[indexPath!.section]) {
         case .West:
             if cell!.isExpanded {
                 filteredWestEateries.removeAtIndex(indexPath!.row + 1)
                 westExpandedCells.removeAtIndex(indexPath!.row + 1)
             } else {
-                filteredWestEateries.insert((cell?.eatery)!, atIndex: indexPath!.row + 1)
+                filteredWestEateries.insert(filteredWestEateries[indexPath!.row], atIndex: indexPath!.row + 1)
                 westExpandedCells.insert(1, atIndex: indexPath!.row + 1)
             }
         case .North:
@@ -346,7 +344,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 filteredNorthEateries.removeAtIndex(indexPath!.row + 1)
                 northExpandedCells.removeAtIndex(indexPath!.row + 1)
             } else {
-                filteredNorthEateries.insert((cell?.eatery)!, atIndex: indexPath!.row + 1)
+                filteredNorthEateries.insert(filteredNorthEateries[indexPath!.row], atIndex: indexPath!.row + 1)
                 northExpandedCells.insert(1, atIndex: indexPath!.row + 1)
             }
         case .Central:
@@ -354,7 +352,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 filteredCentralEateries.removeAtIndex(indexPath!.row + 1)
                 centralExpandedCells.removeAtIndex(indexPath!.row + 1)
             } else {
-                filteredCentralEateries.insert((cell?.eatery)!, atIndex: indexPath!.row + 1)
+                filteredCentralEateries.insert(filteredCentralEateries[indexPath!.row], atIndex: indexPath!.row + 1)
                 centralExpandedCells.insert(1, atIndex: indexPath!.row + 1)
             }
         default: break
@@ -379,8 +377,18 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Filter Menu Cell Delegate Methods
     
     func didTapShareMenuButton(cell: EateryMenuTableViewCell?) {
-        let selectedMeal = getSelectedMeal(cell!.eatery!)
-        MenuImages.shareMenu(cell!.eatery!, vc: self, events: events, selectedMenu: selectedMeal)
+        let indexPath = tableView.indexPathForCell(cell!)
+        var eatery: Eatery!
+        
+        switch(sections[indexPath!.section]) {
+        case .West: eatery = filteredWestEateries[indexPath!.row]
+        case .North: eatery = filteredNorthEateries[indexPath!.row]
+        case .Central: eatery = filteredCentralEateries[indexPath!.row]
+        default: break
+        }
+        
+        let selectedMeal = getSelectedMeal(eatery)
+        MenuImages.shareMenu(eatery, vc: self, events: events, selectedMenu: selectedMeal)
     }
     
     // MARK: - Filter Eateries Cell Delegate Methods
