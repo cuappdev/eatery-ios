@@ -10,6 +10,12 @@ import UIKit
 import SwiftyJSON
 import DiningStack
 
+private let DayDateFormatter: NSDateFormatter = {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "EEE"
+    return dateFormatter
+}()
+
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     private var tableView: UITableView!
@@ -182,12 +188,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func getDayStrings(dates: NSMutableArray) -> NSMutableArray {
         let dayStrings: NSMutableArray = ["Today"]
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EEE"
         dates.removeObjectAtIndex(0)
         
         for date in dates {
-            dayStrings.addObject(dateFormatter.stringFromDate(date as! NSDate))
+            dayStrings.addObject(DayDateFormatter.stringFromDate(date as! NSDate))
         }
         
         return dayStrings
