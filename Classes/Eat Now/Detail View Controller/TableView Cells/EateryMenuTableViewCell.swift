@@ -26,7 +26,7 @@ class EateryMenuTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         selectionStyle = .None
-        contentView.backgroundColor = UIColor.lightGray()
+        contentView.backgroundColor = .lightGray()
     }
     
     @IBAction func didTapShareMenuButton(sender: UIButton) {

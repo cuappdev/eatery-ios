@@ -93,7 +93,7 @@
 		D102463B1C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D10246371C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib */; };
 		D102463C1C7A3239000D5CD8 /* EateryMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246381C7A3239000D5CD8 /* EateryMenuTableViewCell.swift */; };
 		D102463D1C7A3239000D5CD8 /* EateryMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D10246391C7A3239000D5CD8 /* EateryMenuTableViewCell.xib */; };
-		D1EE777A1C702469001823D8 /* MiscellaneousExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */; };
+		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
 		E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* MenuViewController.swift */; };
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
 		E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */; };
@@ -328,7 +328,7 @@
 		D10246371C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		D10246381C7A3239000D5CD8 /* EateryMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryMenuTableViewCell.swift; sourceTree = "<group>"; };
 		D10246391C7A3239000D5CD8 /* EateryMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryMenuTableViewCell.xib; sourceTree = "<group>"; };
-		D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscellaneousExtensions.swift; sourceTree = "<group>"; };
+		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		E0C3D466EB4300A3FE69189D /* Pods-Today Extension.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.app store.xcconfig"; sourceTree = "<group>"; };
 		E0FBC7365BFDDFC4EA5118D6 /* Pods-Today Extension.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.external beta.xcconfig"; sourceTree = "<group>"; };
@@ -655,7 +655,7 @@
 			isa = PBXGroup;
 			children = (
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
-				D1EE77791C702469001823D8 /* MiscellaneousExtensions.swift */,
+				D1EE77791C702469001823D8 /* String+Manipulation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1341,7 +1341,7 @@
 				E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */,
 				95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */,
 				95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */,
-				D1EE777A1C702469001823D8 /* MiscellaneousExtensions.swift in Sources */,
+				D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				95434FC61BD8699F003612DB /* Tools.swift in Sources */,
 				E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */,
