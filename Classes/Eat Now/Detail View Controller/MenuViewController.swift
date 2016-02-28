@@ -11,6 +11,12 @@ import DiningStack
 
 let kMenuHeaderViewFrameHeight: CGFloat = 240
 
+private let TitleDateFormatter: NSDateFormatter = {
+    let formatter = NSDateFormatter()
+    formatter.dateFormat = "E, MMM d"
+    return formatter
+}()
+
 class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
     
     var eatery: Eatery!
@@ -28,11 +34,17 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         // Appearance
         view.backgroundColor = .lightGray()
         navigationController?.setNavigationBarHidden(false, animated: true)
+        let dateString = TitleDateFormatter.stringFromDate(displayedDate)
+        let todayDateString = TitleDateFormatter.stringFromDate(NSDate())
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "E, MMM d"
-        dateFormatter.dateFormat = (displayedDate == NSDate()) ? "E, MMM d" : "MMM d"
-        title = (displayedDate == NSDate()) ? dateFormatter.stringFromDate(displayedDate) : "Today, \(dateFormatter.stringFromDate(displayedDate))"
+        // Set navigation bar title
+        if dateString == todayDateString {
+            let commaIndex = dateString.characters.indexOf(",")
+            let dateSubstring = dateString.substringWithRange(Range<String.Index>(start: commaIndex!, end: dateString.endIndex))
+            title = "Today\(dateSubstring)"
+        } else {
+            title = dateString
+        }
         
         // Scroll View
         outerScrollView = UIScrollView(frame: view.frame)
