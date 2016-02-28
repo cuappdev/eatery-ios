@@ -108,16 +108,18 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 for eatery in eateries {
                     if eatery.eateryType == .Dining {
                         switch(eatery.area) {
-                        case .West:
-                            self.westEateries.append(eatery)
-                        case .North:
-                            self.northEateries.append(eatery)
-                        case .Central:
-                            self.centralEateries.append(eatery)
+                        case .West: self.westEateries.append(eatery)
+                        case .North: self.northEateries.append(eatery)
+                        case .Central: self.centralEateries.append(eatery)
                         default: break
                         }
                     }
                 }
+                
+                // Sort eateries by name
+                self.westEateries.sortInPlace({ $0.name < $1.name })
+                self.northEateries.sortInPlace({ $0.name < $1.name })
+                self.centralEateries.sortInPlace({ $0.name < $1.name })
                 self.filterEateries(self.filterDateViews, buttons: self.filterMealButtons)
                 self.tableView.reloadData()
             })
