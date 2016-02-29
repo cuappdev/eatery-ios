@@ -54,7 +54,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
 
         setupCollectionView()
         extendedLayoutIncludesOpaqueBars = true
-        automaticallyAdjustsScrollViewInsets = true
+        automaticallyAdjustsScrollViewInsets = false
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Organize
             , target: self, action: "addNavigationBarButtonTapped")
@@ -95,9 +95,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.registerNib(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionSearchbarHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SearchbarHeaderView")
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        view.addSubview(collectionView)
+        collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -110,12 +110,16 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                     self.eateries = DATA.eateries
                     self.processEateries()
                     self.collectionView.reloadData()
+                    self.collectionView.contentOffset = CGPointMake(0, 0)
+                    self.view.addSubview(self.collectionView)
                 })
             }
         } else {
             self.eateries = DATA.eateries
             self.processEateries()
             self.collectionView.reloadData()
+            self.collectionView.contentOffset = CGPointMake(0, 0)
+            self.view.addSubview(self.collectionView)
         }
     }
     
@@ -405,6 +409,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchQuery = ""
+        searchBar.text = ""
         processEateries()
         collectionView.reloadData()
         searchBar.resignFirstResponder()
