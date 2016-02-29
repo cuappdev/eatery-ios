@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10109" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10083"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -25,50 +25,58 @@
                         <rect key="frame" x="0.0" y="250" width="300" height="50"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="15K-gp-bKu">
-                                <rect key="frame" x="8" y="7" width="38.5" height="18"/>
+                                <rect key="frame" x="27" y="8" width="38.5" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-9C-mAO">
-                                <rect key="frame" x="268" y="30" width="23.5" height="12"/>
+                                <rect key="frame" x="27" y="28" width="23.5" height="12"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                <color key="textColor" red="0.51010101010101017" green="0.51010101010101017" blue="0.51010101010101017" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znd-in-pGh">
-                                <rect key="frame" x="8" y="30" width="23.5" height="12"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                <color key="textColor" red="0.51010101010101017" green="0.51010101010101017" blue="0.51010101010101017" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.49411764705882355" green="0.49411764705882355" blue="0.49411764705882355" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swipeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dqq-z9-vBB">
-                                <rect key="frame" x="274" y="7" width="18" height="18"/>
+                                <rect key="frame" x="266" y="14" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="dqq-z9-vBB" secondAttribute="height" id="C5K-JV-Hw1"/>
-                                    <constraint firstAttribute="height" constant="18" id="SvN-vY-MBN"/>
+                                    <constraint firstAttribute="height" constant="22" id="SvN-vY-MBN"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cbl-GW-iWh">
+                                <rect key="frame" x="7" y="12" width="12" height="12"/>
+                                <color key="backgroundColor" red="0.68235294117647061" green="0.83137254901960778" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Cbl-GW-iWh" secondAttribute="height" id="sBC-fK-Iwm"/>
+                                    <constraint firstAttribute="height" constant="12" id="zFN-tm-FZm"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="dqq-z9-vBB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="15K-gp-bKu" secondAttribute="trailing" constant="10" id="0ao-cH-CR8"/>
+                            <constraint firstItem="15K-gp-bKu" firstAttribute="leading" secondItem="Cbl-GW-iWh" secondAttribute="trailing" constant="8" id="4po-xa-aDk"/>
+                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="8" id="FCC-lC-AiK"/>
+                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" secondItem="15K-gp-bKu" secondAttribute="leading" id="Fr3-vm-SJA"/>
                             <constraint firstAttribute="trailing" secondItem="15K-gp-bKu" secondAttribute="trailing" constant="10" id="S5w-er-p2W"/>
                             <constraint firstAttribute="trailing" secondItem="2Bk-9C-mAO" secondAttribute="trailing" constant="8" id="TZH-pr-nlo"/>
-                            <constraint firstItem="znd-in-pGh" firstAttribute="top" secondItem="15K-gp-bKu" secondAttribute="bottom" constant="5" id="dDB-5l-zOb"/>
-                            <constraint firstItem="znd-in-pGh" firstAttribute="leading" secondItem="15K-gp-bKu" secondAttribute="leading" id="f97-rf-vtI"/>
-                            <constraint firstItem="15K-gp-bKu" firstAttribute="top" secondItem="HoN-He-Rpa" secondAttribute="top" constant="7" id="fs4-1W-r5I"/>
-                            <constraint firstAttribute="trailing" secondItem="dqq-z9-vBB" secondAttribute="trailing" constant="8" id="hGf-h2-g4g"/>
+                            <constraint firstItem="15K-gp-bKu" firstAttribute="top" secondItem="HoN-He-Rpa" secondAttribute="top" constant="8" id="fs4-1W-r5I"/>
+                            <constraint firstItem="dqq-z9-vBB" firstAttribute="centerY" secondItem="HoN-He-Rpa" secondAttribute="centerY" id="gMi-Wy-hJJ"/>
+                            <constraint firstAttribute="trailing" secondItem="dqq-z9-vBB" secondAttribute="trailing" constant="12" id="hGf-h2-g4g"/>
+                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="top" secondItem="15K-gp-bKu" secondAttribute="bottom" constant="2" id="iNJ-uQ-SQ8"/>
                             <constraint firstItem="dqq-z9-vBB" firstAttribute="centerY" secondItem="15K-gp-bKu" secondAttribute="centerY" id="ijB-24-3YZ"/>
-                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="baseline" secondItem="znd-in-pGh" secondAttribute="baseline" id="iwG-ik-oUv"/>
                             <constraint firstItem="15K-gp-bKu" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="8" id="j4q-1Y-oNQ"/>
                             <constraint firstAttribute="height" constant="50" id="kNg-1p-ZzT"/>
-                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="znd-in-pGh" secondAttribute="trailing" constant="10" id="n53-xp-R3O"/>
-                            <constraint firstItem="znd-in-pGh" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="8" id="vAn-Qi-UYo"/>
+                            <constraint firstItem="15K-gp-bKu" firstAttribute="centerY" secondItem="Cbl-GW-iWh" secondAttribute="centerY" constant="-1" id="q7K-HT-Kwm"/>
+                            <constraint firstItem="Cbl-GW-iWh" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="7" id="qWd-hi-B1e"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="S5w-er-p2W"/>
-                                <exclude reference="f97-rf-vtI"/>
+                                <exclude reference="j4q-1Y-oNQ"/>
+                                <exclude reference="FCC-lC-AiK"/>
+                                <exclude reference="TZH-pr-nlo"/>
+                                <exclude reference="ijB-24-3YZ"/>
                             </mask>
                         </variation>
                     </view>
@@ -92,7 +100,7 @@
             <connections>
                 <outlet property="backgroundImageView" destination="eyk-u5-ZqO" id="QIc-Wr-cpG"/>
                 <outlet property="paymentIcon" destination="dqq-z9-vBB" id="Fky-0K-BJv"/>
-                <outlet property="statusLabel" destination="znd-in-pGh" id="JeV-cB-WHc"/>
+                <outlet property="statusView" destination="Cbl-GW-iWh" id="ftu-Jw-09F"/>
                 <outlet property="timeLabel" destination="2Bk-9C-mAO" id="Hvs-fM-Ydo"/>
                 <outlet property="titleLabel" destination="15K-gp-bKu" id="biz-FT-A0u"/>
             </connections>

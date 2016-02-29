@@ -12,8 +12,8 @@ import DiningStack
 class EateryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var paymentIcon: UIImageView!
     
@@ -25,6 +25,10 @@ class EateryCollectionViewCell: UICollectionViewCell {
         // photos are enormous so commenting temporarily until we thumbnail them
         backgroundImageView.image = eatery.photo
         titleLabel.text = eatery.nickname()
+        statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
+        statusView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = 1
+        contentView.layer.masksToBounds = true
         
         if (eatery.paymentMethods.contains(.Swipes)) {
             paymentIcon.image = UIImage(named: "swipeIcon")
@@ -39,17 +43,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .Open(let message):
-            statusLabel.textColor = .openGreen()
-            statusLabel.text = "Open"
+            statusView.backgroundColor = .openGreen()
             timeLabel.text = message
         case .Closed(let message):
-            statusLabel.textColor = .closedRed()
-            statusLabel.text = "Closed"
-            if message == "Closed" {
-                timeLabel.text = ""
-            } else {
-                timeLabel.text = message
-            }
+            statusView.backgroundColor = .closedGray()
+            timeLabel.text = message
         }
     }
 }
