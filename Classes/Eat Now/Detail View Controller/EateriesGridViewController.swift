@@ -68,6 +68,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             }
         }
         
+        // Add observer for user reentering app
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         // Set up bar look ahead VC
         let barButton = UIBarButtonItem(title: "Menu Guide", style: .Plain, target: self, action: "goToLookAheadVC")
         barButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
@@ -77,6 +81,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     func goToLookAheadVC() {
         let lookAheadVC = LookAheadViewController()
         navigationController?.pushViewController(lookAheadVC, animated: true)
+    }
+    
+    func applicationWillEnterForeground() {
+        loadData(false, completion: nil)
     }
     
     func setupCollectionView() {
@@ -93,16 +101,21 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        DATA.fetchEateries(force) { (error) -> (Void) in
-            print("Fetched data\n")
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                if let completionBlock = completion {
-                    completionBlock()
-                }
-                self.eateries = DATA.eateries
-                self.processEateries()
-                self.collectionView.reloadData()
-            })
+        if !DATA.readEateriesFromDisk() || DATA.dateLastFetched?.dateByAddingTimeInterval(60*60*24*7).timeIntervalSinceNow < 0 {
+            DATA.fetchEateries(force) { (error) -> (Void) in
+                dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                    if let completionBlock = completion {
+                        completionBlock()
+                    }
+                    self.eateries = DATA.eateries
+                    self.processEateries()
+                    self.collectionView.reloadData()
+                })
+            }
+        } else {
+            self.eateries = DATA.eateries
+            self.processEateries()
+            self.collectionView.reloadData()
         }
     }
     
