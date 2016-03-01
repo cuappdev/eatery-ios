@@ -36,6 +36,12 @@ extension Eatery {
         return UIImage(named: slug + ".jpg")
     }
     
+    /// Option to sort by campus or by open time
+    enum Sorting: String {
+        case Campus = "campus"
+        case Open = "open"
+    }
+    
     //!TODO: Maybe cache this value? I don't think this is too expensive
     var favorite: Bool {
         get {

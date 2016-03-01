@@ -23,14 +23,6 @@ enum CollectionLayout: String {
     }
 }
 
-enum Sorting: String {
-    case Campus = "campus"
-    case Open = "open"
-}
-
-let campusNames = ["Central", "West", "North"]
-let openNames = ["Open", "Closed"]
-
 let kCollectionViewGutterWidth: CGFloat = 8
 
 class EateriesGridViewController: UIViewController, UICollectionViewDataSource, MenuButtonsDelegate, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
@@ -41,7 +33,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     var searchController: UISearchController!
     var searchQuery: String = ""
-    var sorted: Sorting = .Campus
+    var sorted: Eatery.Sorting = .Campus
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -309,7 +301,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         var section = section
         if section == 0 { return 0 }
         
-        let names = sorted == .Campus ? campusNames : openNames
+        let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
         if let favorites = eateryData["Favorites"] where favorites.count > 0 {
             if section == 1 {
                 return favorites.count
@@ -340,7 +332,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 sectionHeaderView.searchBar.enablesReturnKeyAutomatically = false
                 return sectionHeaderView
             } else {
-                let names = sorted == .Campus ? campusNames : openNames
+                let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
                 let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! EateriesCollectionViewHeaderView
                 
                 if let favorites = eateryData["Favorites"] where favorites.count > 0 {
@@ -442,7 +434,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         var eatery: Eatery!
         
         var section = indexPath.section
-        let names = sorted == .Campus ? campusNames : openNames
+        let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
         if let favorites = eateryData["Favorites"] where favorites.count > 0 {
             if section == 1 {
                 eatery = favorites[indexPath.row]
