@@ -94,25 +94,17 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        if !DATA.readEateriesFromDisk() || DATA.dateLastFetched?.dateByAddingTimeInterval(60*60*24*7).timeIntervalSinceNow < 0 {
-            DATA.fetchEateries(force) { (error) -> (Void) in
-                dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                    if let completionBlock = completion {
-                        completionBlock()
-                    }
-                    self.eateries = DATA.eateries
-                    self.processEateries()
-                    self.collectionView.reloadData()
-                    self.collectionView.contentOffset = CGPointMake(0, 0)
-                    self.view.addSubview(self.collectionView)
-                })
-            }
-        } else {
-            self.eateries = DATA.eateries
-            self.processEateries()
-            self.collectionView.reloadData()
-            self.collectionView.contentOffset = CGPointMake(0, 0)
-            self.view.addSubview(self.collectionView)
+        DATA.fetchEateries(force) { (error) -> (Void) in
+            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                if let completionBlock = completion {
+                    completionBlock()
+                }
+                self.eateries = DATA.eateries
+                self.processEateries()
+                self.collectionView.reloadData()
+                self.collectionView.contentOffset = CGPointMake(0, 0)
+                self.view.addSubview(self.collectionView)
+            })
         }
     }
     
@@ -125,8 +117,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             sorted = .Open
         }
         
-        loadData(true) { () -> Void in
-            return }
+        loadData(true, completion: nil)
     }
     
     func processEateries() {
