@@ -42,7 +42,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let currentDates: NSMutableArray = []
         var currentDate = NSDate()
         
-        for var i = 0; i < 7; i++ {
+        for _ in 0..<7 {
             currentDates.addObject(currentDate)
             let nextDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: 1, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))
             currentDate = nextDate!
