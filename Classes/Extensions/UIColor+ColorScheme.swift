@@ -40,8 +40,15 @@ extension UIColor {
         return UIColor(red:0.55, green:0.7, blue:0.88, alpha:1)
     }
     
+    class func offBlackColor() -> UIColor {
+        return colorFromCode(0x333333)
+    }
+    
     class func openGreen() -> UIColor {
-//        return colorFromCode(0xAED455)
+        return colorFromCode(0x7ECC7E)
+    }
+    
+    class func openTextGreen() -> UIColor {
         return UIColor(red:0.34, green:0.74, blue:0.38, alpha:1)
     }
     

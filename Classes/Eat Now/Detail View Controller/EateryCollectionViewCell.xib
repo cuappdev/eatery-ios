@@ -27,7 +27,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="15K-gp-bKu">
                                 <rect key="frame" x="27" y="8" width="38.5" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-9C-mAO">
@@ -54,7 +54,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dqq-z9-vBB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="15K-gp-bKu" secondAttribute="trailing" constant="10" id="0ao-cH-CR8"/>
+                            <constraint firstItem="dqq-z9-vBB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="15K-gp-bKu" secondAttribute="trailing" constant="8" id="0ao-cH-CR8"/>
                             <constraint firstItem="15K-gp-bKu" firstAttribute="leading" secondItem="Cbl-GW-iWh" secondAttribute="trailing" constant="8" id="4po-xa-aDk"/>
                             <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="8" id="FCC-lC-AiK"/>
                             <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" secondItem="15K-gp-bKu" secondAttribute="leading" id="Fr3-vm-SJA"/>

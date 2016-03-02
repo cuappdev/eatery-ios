@@ -22,8 +22,8 @@ class EateryRowController: NSObject {
         switch eateryStatus {
         case .Open(let message):
             statusLabel.setText("Open")
-            statusLabel.setTextColor(UIColor.openGreen())
-            statusSeparator.setColor(UIColor.openGreen())
+            statusLabel.setTextColor(UIColor.openTextGreen())
+            statusSeparator.setColor(UIColor.openTextGreen())
             timeLabel.setText(message)
         case .Closed(let message):
             statusLabel.setText("Closed")

@@ -45,7 +45,7 @@ class MenuHeaderView: UIView {
         case .Open(_):
             statusView.backgroundColor = .openGreen()
         case .Closed(_):
-            statusView.backgroundColor = .redColor()
+            statusView.backgroundColor = .closedGray()
         }
         
         // Payment View

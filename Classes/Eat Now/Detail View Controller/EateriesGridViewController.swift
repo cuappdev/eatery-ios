@@ -84,13 +84,13 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        self.definesPresentationContext = true
+        definesPresentationContext = true
         collectionView.registerNib(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionSearchbarHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SearchbarHeaderView")
         collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
         collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
-
+        collectionView.showsVerticalScrollIndicator = false
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -109,8 +109,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func addNavigationBarButtonTapped() {
-        
-        //navigationController?.pushViewController(searchTableViewController, animated: false)
         if sorted == .Open {
             sorted = .Campus
         } else if sorted == .Campus {

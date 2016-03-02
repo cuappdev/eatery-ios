@@ -32,7 +32,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         for section in sections {
             let tabButton = UIButton()
             tabButton.setTitle(section.uppercaseString, forState: .Normal)
-            tabButton.setTitleColor(.blackColor(), forState: .Normal)
+            tabButton.setTitleColor(.offBlackColor(), forState: .Normal)
             tabButton.setTitleColor(.eateryBlue(), forState: .Selected)
             tabButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
             tabButton.addTarget(self, action: "tabButtonPressed:", forControlEvents: .TouchUpInside)

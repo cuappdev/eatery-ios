@@ -18,7 +18,7 @@ class MenuImages: NSObject {
         let dividerSize: CGFloat = 20
         let condensedCategoryFont = UIFont(name: "HelveticaNeue-Medium", size: 11)
         let condensedBodyFont = UIFont(name: "HelveticaNeue", size: 14)
-        let condensedBodyFontColor = UIColor.blackColor()
+        let condensedBodyFontColor = UIColor.offBlackColor()
         var categoryViews: [UIView] = []
         
         if menuIterable.isEmpty {
