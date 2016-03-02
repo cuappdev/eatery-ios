@@ -48,8 +48,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Organize
-            , target: self, action: "addNavigationBarButtonTapped")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "sortIcon"), style: .Plain, target: self, action: "addNavigationBarButtonTapped")
         
         loadData(false, completion: nil)
         
@@ -444,7 +443,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
 extension EateriesGridViewController : UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: section == 0 ? 44 : 14)
+        return CGSize(width: collectionView.frame.width, height: section == 0 ? 44 : 16)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

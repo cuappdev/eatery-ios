@@ -368,7 +368,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 ], withRowAnimation: .Automatic)
         }
         
-        cell!.toggleMenuButton.setTitle(cell!.isExpanded ? "Show Menu" : "Hide Menu", forState: .Normal)
+        UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            cell!.toggleMenuButton.setTitle(cell!.isExpanded ? "Show Menu" : "Hide Menu", forState: .Normal)
+        }, completion: nil)
+    
         tableView.endUpdates()
         
         cell!.isExpanded = cell!.isExpanded ? false : true
@@ -387,8 +390,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         default: break
         }
         
+        let selectedDate = dates[selectedDateIndex]
+        
         let selectedMeal = getSelectedMeal(eatery)
-        MenuImages.shareMenu(eatery, vc: self, events: events, selectedMenu: selectedMeal)
+        MenuImages.shareMenu(eatery, vc: self, events: events, date: selectedDate as! NSDate, selectedMenu: selectedMeal)
     }
     
     // MARK: - Filter Eateries Cell Delegate Methods

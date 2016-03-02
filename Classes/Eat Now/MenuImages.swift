@@ -288,12 +288,12 @@ class MenuImages: NSObject {
     }
     
     // Shares an image of the full menu with info about the eatery
-    class func shareMenu(eatery: Eatery, vc: UIViewController, events: [String: Event], selectedMenu: String?) {
+    class func shareMenu(eatery: Eatery, vc: UIViewController, events: [String: Event], date: NSDate, selectedMenu: String?) {
         // Get share image
         var imageToShare = UIImage()
-        let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
-        if hardcodeMenuIterable.count > 0 {
-            imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: hardcodeMenuIterable)
+
+        if let _ = eatery.hardcodedMenu {
+            imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: eatery.eventsOnDate(date), selectedMenu: selectedMenu!, menuIterable: eatery.getHardcodeMenuIterable())
         } else {
             imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: events[selectedMenu!]!.getMenuIterable())
         }

@@ -14,10 +14,10 @@ class EateriesCollectionViewTableLayout: UICollectionViewFlowLayout {
         super.prepareLayout()
         
         guard let collectionView = collectionView else {return}
-        let width = collectionView.bounds.width
+        let width = collectionView.bounds.width - kCollectionViewGutterWidth * 1.8
         itemSize = CGSize(width: width, height: width * 0.4)
-        minimumLineSpacing = 0
-        minimumInteritemSpacing = 0
+        minimumLineSpacing = kCollectionViewGutterWidth / 1.2
+        minimumInteritemSpacing = kCollectionViewGutterWidth / 1.8
         sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
     }
 }
