@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D07D27A1C86F9D400FABB7B /* UIScreen+Device.swift */; };
 		4113D87ABA9342892F714F34 /* Pods_Today_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA4E2B16C2C3A450EF353BE /* Pods_Today_Extension.framework */; };
 		4283B3771BE6A17C003DE22E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4283B3751BE6A17C003DE22E /* MainInterface.storyboard */; };
 		4283B3831BE6A1F9003DE22E /* TodayExtensionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */; };
@@ -212,6 +213,7 @@
 		019B364D52B66BC8F8B6C25F /* Pods-Eatery Watch App.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.app store.xcconfig"; sourceTree = "<group>"; };
 		063BB995A36FB9F04B5D1D5F /* Pods-Eatery Watch App.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.external beta.xcconfig"; sourceTree = "<group>"; };
 		0F6E64ED32027E3E529637D0 /* Pods_Eatery_Watch_App_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D07D27A1C86F9D400FABB7B /* UIScreen+Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScreen+Device.swift"; sourceTree = "<group>"; };
 		295D96F3E987C9154F7D77DE /* Pods-Eatery Watch App.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.internal beta.xcconfig"; sourceTree = "<group>"; };
 		2EFE6B659BF68ECA9CE402B4 /* Pods-Eatery.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.app store.xcconfig"; sourceTree = "<group>"; };
 		4283B36F1BE6A17C003DE22E /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -654,8 +656,9 @@
 		C0497AEE1B64AA1800AC1C6C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
 				D1EE77791C702469001823D8 /* String+Manipulation.swift */,
+				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
+				1D07D27A1C86F9D400FABB7B /* UIScreen+Device.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1331,6 +1334,7 @@
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
+				1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
 				E9EC978F1BFD1B4B00D06823 /* EateriesGridViewController.swift in Sources */,
 				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,

@@ -80,7 +80,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func setupCollectionView() {
-        collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: EateriesCollectionViewGridLayout())
+        let layout = UIScreen.isNarrowScreen() ? EateriesCollectionViewTableLayout() : EateriesCollectionViewGridLayout()
+        collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         self.definesPresentationContext = true
