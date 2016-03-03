@@ -282,7 +282,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
             }
             
-            cell.toggleMenuButton.setTitle(cell.isExpanded ? "Hide Menu" : "Show Menu", forState: .Normal)
+            UIView.performWithoutAnimation {
+                cell.toggleMenuButton.setTitle(cell.isExpanded ? "Hide Menu" : "Show Menu", forState: .Normal)
+            }
             
             return cell
         } else {
@@ -361,11 +363,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         if cell!.isExpanded {
             tableView.deleteRowsAtIndexPaths([
                 NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
-                ], withRowAnimation: .Automatic)
+                ], withRowAnimation: .Fade)
         } else {
             tableView.insertRowsAtIndexPaths([
                 NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
-                ], withRowAnimation: .Automatic)
+                ], withRowAnimation: .Fade)
         }
         
         UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
