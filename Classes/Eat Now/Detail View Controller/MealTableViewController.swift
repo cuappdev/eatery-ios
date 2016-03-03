@@ -70,6 +70,7 @@ class MealTableViewController: UITableViewController {
         
         
         if let menu = menu {
+            //tuple returned
             let sortedMenu = eatery.sortHardCodedMenu(menu)
             print(sortedMenu)
             var stationArray: [String] = Array()
