@@ -28,6 +28,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>CFBundleVersion</key>
 	<string>17</string>
 	<key>FacebookAppID</key>
