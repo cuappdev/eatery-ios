@@ -32,7 +32,7 @@ class MenuHeaderView: UIView {
     override func awakeFromNib() {
         favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
         shareButton.setImage(UIImage(named: "shareIcon"), forState: .Normal)
-        statusView.layer.cornerRadius = statusView.frame.width / 2
+        statusView.layer.cornerRadius = statusView.frame.width / 2.0
     }
     
     func setUp(eatery: Eatery, date: NSDate) {
@@ -45,7 +45,7 @@ class MenuHeaderView: UIView {
         case .Open(_):
             statusView.backgroundColor = .openGreen()
         case .Closed(_):
-            statusView.backgroundColor = .redColor()
+            statusView.backgroundColor = .closedGray()
         }
         
         // Payment View

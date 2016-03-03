@@ -19,8 +19,7 @@ extension UIColor {
     }
     
     class func eateryBlue() -> UIColor {
-//        return UIColor(red:(77/255.0), green:(133/255.0), blue:(199/255.0), alpha:1.0)
-        return UIColor(red:0.4, green:0.69, blue:0.93, alpha:1)
+        return colorFromCode(0x6AB1EC)
     }
     
     class func facebookBlue() -> UIColor {
@@ -41,7 +40,15 @@ extension UIColor {
         return UIColor(red:0.55, green:0.7, blue:0.88, alpha:1)
     }
     
+    class func offBlackColor() -> UIColor {
+        return colorFromCode(0x333333)
+    }
+    
     class func openGreen() -> UIColor {
+        return colorFromCode(0x7ECC7E)
+    }
+    
+    class func openTextGreen() -> UIColor {
         return UIColor(red:0.34, green:0.74, blue:0.38, alpha:1)
     }
     
@@ -49,8 +56,16 @@ extension UIColor {
         return UIColor(red:0.86, green:0.85, blue:0, alpha:1)
     }
     
+    class func closedGray() -> UIColor {
+        return colorFromCode(0xD2D2D1)
+    }
+    
     class func closedRed() -> UIColor {
         return UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
+    }
+    
+    class func titleDarkGray() -> UIColor {
+        return colorFromCode(0x7e7e7e)
     }
     
     class func lightGray() -> UIColor {
