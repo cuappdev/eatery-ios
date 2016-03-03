@@ -40,7 +40,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     private var events: [String: Event] = [:]
     private var dates: NSMutableArray {
         let currentDates: NSMutableArray = []
-        var currentDate = NSDate()
+        var currentDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
         
         for _ in 0..<7 {
             currentDates.addObject(currentDate)
@@ -155,8 +155,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func getSelectedMeal(eatery: Eatery) -> String {
         let selectedDate = dates[selectedDateIndex] as! NSDate
-        let activeEvent = eatery.activeEventForDate(selectedDate)
-        events = eatery.eventsOnDate(activeEvent?.startDate ?? selectedDate)
+        events = eatery.eventsOnDate(selectedDate)
+
         let meals: [String] = Array((events ?? [:]).keys)
         var selectedMeal = filterMealButtons[selectedMealIndex].titleLabel!.text!
         
