@@ -321,6 +321,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         menuVC.eatery = eatery
         menuVC.displayedDate = dates[selectedDateIndex] as! NSDate
         menuVC.selectedMeal = getSelectedMeal(eatery)
+        if let navigationController = self.navigationController {
+            let delegateIndex = navigationController.viewControllers.count - 2
+            menuVC.delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
+        }
         
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
