@@ -103,7 +103,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                self.collectionView.contentOffset = CGPointMake(0, 0)
+                self.collectionView.contentOffset = CGPointMake(0, -10)
                 self.view.addSubview(self.collectionView)
             })
         }
