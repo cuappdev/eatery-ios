@@ -117,9 +117,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 }
                 
                 // Sort eateries by name
-                self.westEateries.sortInPlace({ $0.name < $1.name })
-                self.northEateries.sortInPlace({ $0.name < $1.name })
-                self.centralEateries.sortInPlace({ $0.name < $1.name })
+                self.westEateries.sortInPlace({ $0.nickname().lowercaseString < $1.nickname().lowercaseString })
+                self.northEateries.sortInPlace({ $0.nickname().lowercaseString < $1.nickname().lowercaseString })
+                self.centralEateries.sortInPlace({ $0.nickname().lowercaseString < $1.nickname().lowercaseString })
                 self.filterEateries(self.filterDateViews, buttons: self.filterMealButtons)
                 self.tableView.reloadData()
             })
@@ -268,7 +268,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCellWithIdentifier("EateryHeaderCell") as! EateryHeaderTableViewCell
             cell.delegate = self
             cell.isExpanded = false
-            cell.eateryNameLabel.text = eatery.nameShort
+            cell.eateryNameLabel.text = (eatery.nameShort == "Jansen's Dining") ? "Bethe House Dining" : eatery.nameShort
             cell.eateryHoursLabel.text = "Closed"
             
             if let event = events[getSelectedMeal(eatery)] {
