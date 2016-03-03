@@ -48,7 +48,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "sortIcon"), style: .Plain, target: self, action: "addNavigationBarButtonTapped")
+        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: "addNavigationBarButtonTapped")
+        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        navigationItem.leftBarButtonItem = leftBarButton
         
         loadData(false, completion: nil)
         
@@ -64,9 +66,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         nc.addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         // Set up bar look ahead VC
-        let barButton = UIBarButtonItem(title: "Menu Guide", style: .Plain, target: self, action: "goToLookAheadVC")
-        barButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
-        navigationItem.rightBarButtonItem = barButton
+        let rightBarButton = UIBarButtonItem(title: "Guide", style: .Plain, target: self, action: "goToLookAheadVC")
+        rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     func goToLookAheadVC() {
