@@ -901,6 +901,7 @@
 					};
 					659B21751C70796600F3B138 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 35AR9TQZZZ;
 					};
 					C007CABE19E1BEAC00E3BD46 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -1666,12 +1667,14 @@
 			baseConfigurationReference = DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
@@ -1699,6 +1702,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1716,6 +1720,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
@@ -1744,6 +1749,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1761,6 +1767,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
@@ -1789,6 +1796,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1806,6 +1814,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cuappdev.cuad-eatery-debug.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";

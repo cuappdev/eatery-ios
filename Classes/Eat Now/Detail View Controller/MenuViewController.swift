@@ -58,6 +58,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         var mealViewControllers: [MealTableViewController] = []
         for meal in meals {
+            print(meal)
             let mealVC = MealTableViewController()
             mealVC.eatery = eatery
             mealVC.meal = meal

@@ -67,9 +67,16 @@ class MealTableViewController: UITableViewController {
             menu = hardcoded
         }
         
+        
+        
         if let menu = menu {
-            let stationArray: [String] = Array(menu.keys)
-            
+            let sortedMenu = eatery.sortHardCodedMenu(menu)
+            print(sortedMenu)
+            var stationArray: [String] = Array()
+            for element in sortedMenu{
+                print(element)
+                stationArray.append(element.0);
+            }
             var title = "--"
             var content: NSMutableAttributedString = NSMutableAttributedString(string: "No menu available")
             
@@ -96,4 +103,5 @@ class MealTableViewController: UITableViewController {
 
         return cell
     }
+   
 }
