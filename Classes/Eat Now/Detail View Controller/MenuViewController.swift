@@ -68,6 +68,12 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         var meals = sortedEventsDict.map { (meal: String, _) -> String in
             meal
         }
+
+        if meals.contains("Lite Lunch") {
+            if let index = meals.indexOf("Lite Lunch") {
+                meals.removeAtIndex(index)
+            }
+        }
         
         // Add a "General" tag so we dont get a crash for eateries that have no events
         if meals.count == 0 {
