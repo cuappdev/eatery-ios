@@ -130,16 +130,26 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                             }
                         }
                     }
-                } else {
-                    
                 }
-                return ((
-                    $0.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil)
+                var currentMenuFoodItemFound = false
+                if let activeEvent = $0.activeEventForDate(NSDate()) {
+                    for (_, value) in activeEvent.menu {
+                        for item in value {
+                            if item.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil {
+                                currentMenuFoodItemFound = true
+                            }
+                        }
+                    }
+                }
+                return (
+                    ($0.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil)
                     || hardcodedFoodItemFound
+                    || currentMenuFoodItemFound
                     || $0.allNicknames().contains({ (nickname) -> Bool in
                             nickname.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil
                         })
-                    )}
+                )
+            }
         } else {
             desiredEateries = eateries
         }
