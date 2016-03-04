@@ -12,7 +12,6 @@ import DiningStack
 class EateryRowController: NSObject {
     @IBOutlet var statusSeparator: WKInterfaceSeparator!
     @IBOutlet var titleLabel: WKInterfaceLabel!
-    @IBOutlet var statusLabel: WKInterfaceLabel!
     @IBOutlet var timeLabel: WKInterfaceLabel!
     
     func setEatery(eatery: Eatery) {
@@ -21,16 +20,13 @@ class EateryRowController: NSObject {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .Open(let message):
-            statusLabel.setText("Open")
-            statusLabel.setTextColor(UIColor.openTextGreen())
             statusSeparator.setColor(UIColor.openTextGreen())
             timeLabel.setText(message)
         case .Closed(let message):
-            statusLabel.setText("Closed")
-            statusLabel.setTextColor(UIColor.closedRed())
-            statusSeparator.setColor(UIColor.closedRed())
+            statusSeparator.setColor(UIColor.closedGray())
             if message == "Closed" {
-                timeLabel.setText("")
+                timeLabel.setText("Closed")
+                timeLabel.setTextColor(UIColor.closedGray())
             } else {
                 timeLabel.setText(message)
             }

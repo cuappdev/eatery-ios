@@ -27,10 +27,7 @@
                                                     </group>
                                                     <group width="1" alignment="left" id="0qr-G3-O3u">
                                                         <items>
-                                                            <label width="43" height="25" alignment="left" verticalAlignment="center" text="Closed" id="FFP-cJ-7n2">
-                                                                <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                                                            </label>
-                                                            <label alignment="right" verticalAlignment="center" text="7:00AM" textAlignment="right" minimumScaleFactor="0.5" id="HOt-04-DhA">
+                                                            <label height="20" alignment="right" verticalAlignment="center" text="7:00AM" textAlignment="right" minimumScaleFactor="0.5" id="HOt-04-DhA">
                                                                 <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                                                             </label>
                                                         </items>
@@ -40,7 +37,6 @@
                                         </items>
                                     </group>
                                     <connections>
-                                        <outlet property="statusLabel" destination="FFP-cJ-7n2" id="Cbn-tk-o4I"/>
                                         <outlet property="statusSeparator" destination="Rs7-0R-dRd" id="xGo-do-k1C"/>
                                         <outlet property="timeLabel" destination="HOt-04-DhA" id="iys-IC-oTa"/>
                                         <outlet property="titleLabel" destination="xOI-dM-od6" id="nlX-zK-zad"/>

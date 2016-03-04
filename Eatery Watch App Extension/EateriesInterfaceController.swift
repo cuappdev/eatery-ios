@@ -31,7 +31,6 @@ class EateriesInterfaceController: WKInterfaceController {
     /** Fetch list of Eateries from DataManager */
     func getEateries() {
         DATA.fetchEateries(false) { (error) -> Void in
-            print("Watch fetched data\n")
             dispatch_async(dispatch_get_main_queue()) {
                 self.dateLastFetched = NSDate()
                 self.eateries = DATA.eateries
