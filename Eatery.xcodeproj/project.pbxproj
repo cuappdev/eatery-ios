@@ -27,7 +27,6 @@
 		652AE53F1C707EBC00B7245A /* EateriesInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */; };
 		652AE5401C707EBC00B7245A /* EateryRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53C1C707EBC00B7245A /* EateryRowController.swift */; };
 		652AE5411C707EBC00B7245A /* MenuInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */; };
-		652AE5421C707EBC00B7245A /* MenuRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53E1C707EBC00B7245A /* MenuRowController.swift */; };
 		652BEED71C70E5F00079C407 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		652BEED81C70E5F70079C407 /* nicknames.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* nicknames.json */; };
 		652BEED91C70E6020079C407 /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
@@ -239,7 +238,6 @@
 		652AE53B1C707EBC00B7245A /* Eatery-Watch-App-Extension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Eatery-Watch-App-Extension-Bridging-Header.h"; sourceTree = "<group>"; };
 		652AE53C1C707EBC00B7245A /* EateryRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryRowController.swift; sourceTree = "<group>"; };
 		652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInterfaceController.swift; sourceTree = "<group>"; };
-		652AE53E1C707EBC00B7245A /* MenuRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuRowController.swift; sourceTree = "<group>"; };
 		659B216A1C70796600F3B138 /* Eatery Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eatery Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659B216D1C70796600F3B138 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		659B216F1C70796600F3B138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -513,7 +511,6 @@
 				652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */,
 				652AE53C1C707EBC00B7245A /* EateryRowController.swift */,
 				652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */,
-				652AE53E1C707EBC00B7245A /* MenuRowController.swift */,
 				659B217F1C70796600F3B138 /* ExtensionDelegate.swift */,
 				659B21811C70796600F3B138 /* NotificationController.swift */,
 				652AE53B1C707EBC00B7245A /* Eatery-Watch-App-Extension-Bridging-Header.h */,
@@ -1293,7 +1290,6 @@
 				652AE5401C707EBC00B7245A /* EateryRowController.swift in Sources */,
 				652BEEDC1C70E63F0079C407 /* MXLCalendarEvent.m in Sources */,
 				652BEEDA1C70E6240079C407 /* TimeFactory.swift in Sources */,
-				652AE5421C707EBC00B7245A /* MenuRowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

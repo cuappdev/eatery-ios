@@ -34,7 +34,6 @@ class MenuInterfaceController: WKInterfaceController {
             // Basic Menu Display for current event only - Must implement WKInterfaceTable with
             // multiple rowType classes to sort by Stations
             if let meal = eatery.activeEventForDate(NSDate()) {
-                print(meal.desc)
                 menuLabel.setText("MENU")
                 
                 var menu = meal.menu
@@ -50,7 +49,7 @@ class MenuInterfaceController: WKInterfaceController {
                 
                 var menuItemsString = ""
                 for menuItem in menuItems {
-                    menuItemsString += menuItem.name + "\n"
+                    menuItemsString += "• " + menuItem.name + "\n"
                 }
                 
                 menuItemsLabel.setText(menuItemsString)
@@ -58,8 +57,6 @@ class MenuInterfaceController: WKInterfaceController {
                 menuItemsLabel.setText("No Current Menu")
             }
             
-        } else {
-            print("Unable to get eatery context")
         }
     }
 
