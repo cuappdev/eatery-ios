@@ -23,10 +23,10 @@ class EateryRowController: NSObject {
             statusSeparator.setColor(UIColor.openTextGreen())
             timeLabel.setText(message)
         case .Closed(let message):
-            statusSeparator.setColor(UIColor.closedGray())
+            statusSeparator.setColor(UIColor.titleDarkGray())
             if message == "Closed" {
                 timeLabel.setText("Closed")
-                timeLabel.setTextColor(UIColor.closedGray())
+                timeLabel.setTextColor(UIColor.titleDarkGray())
             } else {
                 timeLabel.setText(message)
             }
