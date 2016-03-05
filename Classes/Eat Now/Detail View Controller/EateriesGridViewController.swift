@@ -122,34 +122,37 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     func processEateries() {
         var desiredEateries: [Eatery] = []
         if searchQuery != "" {
-            desiredEateries = eateries.filter {
-                var hardcodedFoodItemFound = false
-                if let hardcoded = $0.hardcodedMenu {
-                    for (_, value) in hardcoded {
-                        for item in value {
-                            if item.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil {
-                                hardcodedFoodItemFound = true
+            desiredEateries = eateries.filter { eatery in
+                let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
+                let hardcodedFoodItemFound: () -> Bool = {
+                    if let hardcoded = eatery.hardcodedMenu {
+                        for (_, value) in hardcoded {
+                            for item in value {
+                                if item.name.rangeOfString(self.searchQuery, options: options) != nil {
+                                    return true
+                                }
                             }
                         }
                     }
+                    return false
                 }
-                var currentMenuFoodItemFound = false
-                if let activeEvent = $0.activeEventForDate(NSDate()) {
-                    for (_, value) in activeEvent.menu {
-                        for item in value {
-                            if item.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil {
-                                currentMenuFoodItemFound = true
+                let currentMenuFoodItemFound: () -> Bool = {
+                    if let activeEvent = eatery.activeEventForDate(NSDate()) {
+                        for (_, value) in activeEvent.menu {
+                            for item in value {
+                                if item.name.rangeOfString(self.searchQuery, options: options) != nil {
+                                    return true
+                                }
                             }
                         }
                     }
+                    return false
                 }
                 return (
-                    ($0.name.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil)
-                    || hardcodedFoodItemFound
-                    || currentMenuFoodItemFound
-                    || $0.allNicknames().contains({ (nickname) -> Bool in
-                            nickname.rangeOfString(searchQuery, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]) != nil
-                        })
+                    eatery.name.rangeOfString(searchQuery, options: options) != nil
+                    || eatery.allNicknames().contains { $0.rangeOfString(searchQuery, options: options) != nil }
+                    || hardcodedFoodItemFound()
+                    || currentMenuFoodItemFound()
                 )
             }
         } else {
