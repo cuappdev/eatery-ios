@@ -300,7 +300,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         // and more than one event
         
         if let event = eatery.activeEventForDate(date) {
-            var isLiteLunch = (event.desc == "Lite Lunch")
+            let isLiteLunch = (event.desc == "Lite Lunch")
             
             if let viewControllers = pageViewController.viewControllers {
                 if viewControllers.count < 2 {

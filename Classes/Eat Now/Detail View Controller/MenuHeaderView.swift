@@ -81,7 +81,7 @@ class MenuHeaderView: UIView {
         paymentView.addSubview(payTypeView)
         
         // Title Label
-        titleLabel.text = eatery.nameShort
+        titleLabel.text = eatery.nickname()
         
         // Hours
         var hoursText = eatery.activeEventsForDate(displayedDate)
