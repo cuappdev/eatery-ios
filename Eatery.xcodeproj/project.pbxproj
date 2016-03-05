@@ -1403,7 +1403,7 @@
 				INFOPLIST_FILE = "Today Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cuappdev.eatery.Today-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.todayextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SKIP_INSTALL = YES;
@@ -1448,7 +1448,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cuappdev.eatery.Today-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.todayextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SDKROOT = iphoneos;
@@ -1495,7 +1495,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cuappdev.eatery.Today-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.todayextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SDKROOT = iphoneos;
@@ -1542,7 +1542,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cuappdev.eatery.Today-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.todayextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(TODAY_EXT_UDID)";
 				SDKROOT = iphoneos;
