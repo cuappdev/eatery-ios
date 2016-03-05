@@ -68,7 +68,8 @@ class MealTableViewController: UITableViewController {
         }
         
         if let menu = menu {
-            let stationArray: [String] = Array(menu.keys)
+            let sortedMenu = eatery.sortMenu(menu)
+            let stationArray = sortedMenu.map { $0.0 }
             
             var title = "--"
             var content: NSMutableAttributedString = NSMutableAttributedString(string: "No menu available")
