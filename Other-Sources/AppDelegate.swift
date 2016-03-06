@@ -8,6 +8,8 @@
 
 import UIKit
 import Analytics
+import SwiftyJSON
+import DiningStack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //flag to enable tools
     let toolsEnabled = true
+  
+    //view controllers
+    var eatNow: EateriesGridViewController!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
         
@@ -40,8 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         
         // Set up view controllers
-        let eatNow = EateriesGridViewController()
+        eatNow = EateriesGridViewController()
         eatNow.title = "Eateries"
+      
         let eatNavController = UINavigationController(rootViewController: eatNow)
         eatNavController.navigationBar.barStyle = .Black
         
@@ -67,29 +73,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
         Analytics.trackEnterForeground()
     }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+  
+    func applicationWillResignActive(application: UIApplication) {
+      if #available(iOS 9.1, *) {
+          //Retrieve favorites and their nicknames
+          let slugStrings = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+          let nicknames = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("nicknames", withExtension: "json")!) ?? NSData()).dictionaryValue
+        
+          let favoriteNames = slugStrings.reverse().map { slug -> (String, String) in
+              if let nicknameJSON = nicknames[slug] {
+                  return (slug, nicknameJSON["nickname"].arrayValue.first?.stringValue ?? "")
+              } else {
+                  return (slug, slug)
+              }
+          }
+        
+          // Clear shortcuts then recreate them
+          var shortcuts: [UIApplicationShortcutItem] = []
+          for (slug, name) in favoriteNames {
+              let shortcutItem = UIApplicationShortcutItem(type: slug, localizedTitle: name, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Favorite), userInfo: nil)
+              UIApplication.sharedApplication().shortcutItems?.append(shortcutItem)
+              shortcuts.append(shortcutItem)
+          }
+          UIApplication.sharedApplication().shortcutItems = shortcuts
+      }
     }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
+  
+    // MARK: - Force Touch Shortcut
     
+    @available(iOS 9.0, *)
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        let handleShortcutItem = self.handleShortcutItem(shortcutItem)
+        completionHandler(handleShortcutItem)
+    }
+  
+    @available(iOS 9.0, *)
+    func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        eatNow.preselectedSlug = shortcutItem.type
+        return true
+    }
+  
 }
 

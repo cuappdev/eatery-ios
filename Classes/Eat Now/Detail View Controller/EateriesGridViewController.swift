@@ -34,7 +34,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     var searchController: UISearchController!
     var searchQuery: String = ""
     var sorted: Eatery.Sorting = .Campus
-    
+  
+    var preselectedSlug: String?
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,8 +107,42 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.collectionView.reloadData()
                 self.collectionView.contentOffset = CGPointMake(0, -10)
                 self.view.addSubview(self.collectionView)
+                self.pushPreselectedEatery()
             })
         }
+    }
+  
+    func pushPreselectedEatery() {
+      guard let slug = preselectedSlug else { return }
+      
+      var preselectedEatery: Eatery?
+      
+      // Find eatery
+      for (_, eateries) in eateryData {
+          for eatery in eateries {
+              if eatery.slug == slug {
+                  preselectedEatery = eatery
+                  break
+              }
+          }
+      }
+      
+      guard let eatery = preselectedEatery else { return }
+      let detailViewController = MenuViewController()
+      detailViewController.eatery = eatery
+      detailViewController.displayedDate = NSDate()
+      detailViewController.selectedMeal = nil
+      detailViewController.delegate = self
+      
+      // Unwind back to this VC if it is not showing
+      if !(self.navigationController?.visibleViewController is EateriesGridViewController) {
+          self.navigationController?.popToRootViewControllerAnimated(false)
+      }
+      
+      self.navigationController?.pushViewController(detailViewController, animated: false)
+      
+      
+      preselectedSlug = nil
     }
     
     func addNavigationBarButtonTapped() {
@@ -289,7 +325,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
  
         
     }
-    
+  
     // MARK: -
     // MARK: UICollectionViewDataSource
     
@@ -453,6 +489,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         
         return eatery
     }
+
 }
 
 extension EateriesGridViewController : UICollectionViewDelegate {
