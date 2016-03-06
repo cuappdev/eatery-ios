@@ -32,10 +32,11 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     private var eateryData: [String: [Eatery]] = [:]
     
     var searchController: UISearchController!
-    var searchQuery: String = ""
+    var searchQuery = ""
     var sorted: Eatery.Sorting = .Campus
     var preselectedSlug: String?
-  
+    var searchBarAndSort = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,7 +105,12 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                self.collectionView.contentOffset = CGPointMake(0, -10)
+                if self.searchBarAndSort {
+                    self.collectionView.contentOffset = CGPointMake(0, -70)
+                    self.searchBarAndSort = false
+                } else {
+                    self.collectionView.contentOffset = CGPointMake(0, -10)
+                }
                 self.view.addSubview(self.collectionView)
                 self.pushPreselectedEatery()
             })
@@ -140,8 +146,11 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
       preselectedSlug = nil
     }
     
-    func sortButtonTapped() {
+    func addNavigationBarButtonTapped() {
         sorted = sorted == .Campus ? .Open : .Campus
+		if searchQuery != "" {
+			self.searchBarAndSort = true
+        }
         loadData(false, completion: nil)
     }
     
@@ -436,7 +445,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.reloadData()
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        
+        self.collectionView.contentOffset = CGPointMake(0, -10)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
