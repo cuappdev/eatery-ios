@@ -34,7 +34,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     var searchController: UISearchController!
     var searchQuery: String = ""
     var sorted: Eatery.Sorting = .Campus
-  
     var preselectedSlug: String?
   
     override func viewDidLoad() {
@@ -114,9 +113,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
   
     func pushPreselectedEatery() {
       guard let slug = preselectedSlug else { return }
-      
       var preselectedEatery: Eatery?
-      
       // Find eatery
       for (_, eateries) in eateryData {
           for eatery in eateries {
@@ -125,8 +122,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                   break
               }
           }
+          break
       }
-      
       guard let eatery = preselectedEatery else { return }
       let detailViewController = MenuViewController()
       detailViewController.eatery = eatery
@@ -140,8 +137,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
       }
       
       self.navigationController?.pushViewController(detailViewController, animated: false)
-      
-      
       preselectedSlug = nil
     }
     
