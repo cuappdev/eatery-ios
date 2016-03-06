@@ -106,8 +106,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @available(iOS 9.0, *)
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
-        let handleShortcutItem = self.handleShortcutItem(shortcutItem)
-        completionHandler(handleShortcutItem)
+        let handledShortcutItem = handleShortcutItem(shortcutItem)
+        completionHandler(handledShortcutItem)
     }
   
     @available(iOS 9.0, *)

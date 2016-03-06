@@ -132,11 +132,11 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
       detailViewController.delegate = self
       
       // Unwind back to this VC if it is not showing
-      if !(self.navigationController?.visibleViewController is EateriesGridViewController) {
-          self.navigationController?.popToRootViewControllerAnimated(false)
+      if !(navigationController?.visibleViewController is EateriesGridViewController) {
+          navigationController?.popToRootViewControllerAnimated(false)
       }
       
-      self.navigationController?.pushViewController(detailViewController, animated: false)
+      navigationController?.pushViewController(detailViewController, animated: false)
       preselectedSlug = nil
     }
     
