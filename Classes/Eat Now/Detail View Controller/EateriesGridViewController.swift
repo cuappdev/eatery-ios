@@ -53,6 +53,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.leftBarButtonItem = leftBarButton
         
+        view.addSubview(self.collectionView)
         loadData(false, completion: nil)
         
         // Check for 3D Touch availability
@@ -110,7 +111,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 } else {
                     self.collectionView.contentOffset = CGPointMake(0, -10)
                 }
-                self.view.addSubview(self.collectionView)
             })
         }
     }
