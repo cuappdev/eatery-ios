@@ -1,4 +1,4 @@
-<img src=Github-Assets/eatery_icon.png width=400 />  
+<img src=http://i.imgur.com/4JBBPcN.png width=400 />  
 
 Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University.  It provides an easy and accessible way to browse the hours and menus of the dining locations on campus.
 
