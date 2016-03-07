@@ -2,10 +2,10 @@
 
 Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University.  It provides an easy and accessible way to browse the hours and menus of the dining locations on campus.
 
-<img src=Github-Assets/list.png width=350 />
-<img src=Github-Assets/collection.png width=350 />
-<img src=Github-Assets/detail.png width=350 />
-<img src=Github-Assets/detailcafe.png width=350 />
+<img src=http://i.imgur.com/dQf9kLP.jpg width=350 />
+<img src=http://i.imgur.com/GLJi9WI.png width=350 />
+<img src=http://i.imgur.com/JqdnlUW.png width=350 />
+<img src=http://i.imgur.com/k9OtANb.png width=350 />
 
 ## Supported Eateries
 * 104west
