@@ -14,7 +14,6 @@ import UIKit
 }
 
 class FilterEateriesTableViewCell: UITableViewCell {
-
     @IBOutlet weak var filterTitleLabel: UILabel!
     @IBOutlet weak var firstDateView: FilterDateView!
     @IBOutlet weak var secondDateView: FilterDateView!
@@ -33,7 +32,6 @@ class FilterEateriesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .None
-        
         filterTitleLabel.text = UIScreen.isNarrowScreen() ? "VIEW MENUS & HOURS FOR AN UPCOMING TIME" : "VIEW MENUS AND HOURS FOR AN UPCOMING TIME"
     }
     
@@ -60,7 +58,5 @@ class FilterEateriesTableViewCell: UITableViewCell {
                 break
             }
         }
-        
     }
-
 }
