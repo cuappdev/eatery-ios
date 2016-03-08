@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.cuappdev.eatery</string>
+		<string>group.org.cuappdev.eatery.TodayExtensionSharingDefaults</string>
 	</array>
 </dict>
 </plist>
