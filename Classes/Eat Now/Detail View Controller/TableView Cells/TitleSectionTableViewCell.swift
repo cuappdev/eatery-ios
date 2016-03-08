@@ -16,5 +16,4 @@ class TitleSectionTableViewCell: UITableViewCell {
         super.awakeFromNib()
         selectionStyle = .None
     }
-    
 }

@@ -13,7 +13,6 @@ import UIKit
 }
 
 class FilterDateView: UIView {
-    
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dateButton: UIButton!
@@ -50,5 +49,4 @@ class FilterDateView: UIView {
     @IBAction func didFilterDate(sender: UIButton?) {
         delegate?.didFilterDate!(sender)
     }
-
 }

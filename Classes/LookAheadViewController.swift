@@ -277,6 +277,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             
             cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? UIColor.closedRed() : UIColor.openGreen()
             cell.toggleMenuButton.hidden = (cell.eateryHoursLabel.text == "Closed")
+            cell.infoButton.hidden = (cell.eateryHoursLabel.text == "Closed")
             
             if indexPath.row != (expandedCells.count - 1) {
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
@@ -297,7 +298,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             
             return cell
         }
-        
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -415,7 +415,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func filterEateries(dateViews: [FilterDateView!], buttons: [UIButton!]) {
-        
         // Update selected date
         for dateView in dateViews {
             dateView.dayLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
@@ -467,5 +466,4 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         tableView.reloadData()
     }
-    
 }
