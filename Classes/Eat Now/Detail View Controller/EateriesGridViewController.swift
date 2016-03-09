@@ -49,7 +49,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         
-        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: "addNavigationBarButtonTapped")
+        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: "sortButtonTapped")
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.leftBarButtonItem = leftBarButton
         
@@ -140,14 +140,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
       preselectedSlug = nil
     }
     
-    func addNavigationBarButtonTapped() {
-        if sorted == .Open {
-            sorted = .Campus
-        } else if sorted == .Campus {
-            sorted = .Open
-        }
-        
-        loadData(true, completion: nil)
+    func sortButtonTapped() {
+        sorted = sorted == .Campus ? .Open : .Campus
+        loadData(false, completion: nil)
     }
     
     func processEateries() {
