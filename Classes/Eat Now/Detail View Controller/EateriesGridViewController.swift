@@ -32,10 +32,10 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     private var eateryData: [String: [Eatery]] = [:]
     
     var searchController: UISearchController!
-    var searchQuery: String = ""
+    var searchQuery = ""
     var sorted: Eatery.Sorting = .Campus
     var preselectedSlug: String?
-  
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +53,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.leftBarButtonItem = leftBarButton
         
+        view.addSubview(self.collectionView)
         loadData(false, completion: nil)
         
         // Check for 3D Touch availability
@@ -104,9 +105,12 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                self.collectionView.contentOffset = CGPointMake(0, -10)
-                self.view.addSubview(self.collectionView)
-                self.pushPreselectedEatery()
+                if self.searchQuery != "" {
+                    self.collectionView.contentOffset = CGPointMake(0, -70)
+                } else {
+                    self.collectionView.contentOffset = CGPointMake(0, -10)
+                }
+				self.pushPreselectedEatery()
             })
         }
     }
@@ -436,7 +440,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.reloadData()
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        
+        self.collectionView.contentOffset = CGPointMake(0, -10)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
