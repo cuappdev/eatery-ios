@@ -35,7 +35,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     var searchQuery = ""
     var sorted: Eatery.Sorting = .Campus
     var preselectedSlug: String?
-    var searchBarAndSort = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,9 +105,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                if self.searchBarAndSort {
+                if self.searchQuery != "" {
                     self.collectionView.contentOffset = CGPointMake(0, -70)
-                    self.searchBarAndSort = false
                 } else {
                     self.collectionView.contentOffset = CGPointMake(0, -10)
                 }
@@ -146,11 +144,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
       preselectedSlug = nil
     }
     
-    func addNavigationBarButtonTapped() {
+    func sortButtonTapped() {
         sorted = sorted == .Campus ? .Open : .Campus
-		if searchQuery != "" {
-			self.searchBarAndSort = true
-        }
         loadData(false, completion: nil)
     }
     
