@@ -30,33 +30,20 @@ class MenuInterfaceController: WKInterfaceController {
                 hoursText = "Open \(hoursText)"
             }
             openTimesLabel.setText(hoursText)
+            menuItemsLabel.setText("No Current Menu")
             
-            // Basic Menu Display for current event only - Must implement WKInterfaceTable with
-            // multiple rowType classes to sort by Stations
             if let meal = eatery.activeEventForDate(NSDate()) {
                 menuLabel.setText("MENU")
                 
                 var menu = meal.menu
-                
                 if let hardcoded = eatery.hardcodedMenu {
                     menu = hardcoded
                 }
                 
-                var menuItems = [MenuItem]()
-                for station in menu.values {
-                    menuItems.appendContentsOf(station)
-                }
-                
-                var menuItemsString = ""
-                for menuItem in menuItems {
-                    menuItemsString += "• " + menuItem.name + "\n"
-                }
-                
+                let menuItems = menu.values.flatten()
+                let menuItemsString = menuItems.reduce("") { $0 + "• \($1.name)\n" }
                 menuItemsLabel.setText(menuItemsString)
-            } else {
-                menuItemsLabel.setText("No Current Menu")
             }
-            
         }
     }
 
