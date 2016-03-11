@@ -10,6 +10,11 @@ import WatchKit
 import Foundation
 import DiningStack
 
+enum SortingOption {
+    case OpenAndAlphabetical
+    case Alphabetical
+}
+
 let DATA = DataManager.sharedInstance
 
 class EateriesInterfaceController: WKInterfaceController {
@@ -18,9 +23,17 @@ class EateriesInterfaceController: WKInterfaceController {
     
     var eateries = [Eatery]()
     var dateLastFetched = NSDate()
+    var sortOption = ""
+    var curSortingOption: SortingOption = .Alphabetical
     
     @IBAction func refreshMenuItem() {
         getEateries()
+    }
+    
+    @IBAction func sortMenuItem() {
+        curSortingOption = curSortingOption == .Alphabetical ? .OpenAndAlphabetical : .Alphabetical
+        self.sortEateries()
+        self.configureTable()
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -34,11 +47,54 @@ class EateriesInterfaceController: WKInterfaceController {
             dispatch_async(dispatch_get_main_queue()) {
                 self.dateLastFetched = NSDate()
                 self.eateries = DATA.eateries
+                self.sortEateries()
                 self.configureTable()
             }
         }
     }
     
+    // Sort Eateries Function
+    func sortEateries() {
+        
+        // Sort eateris by open/close, then alphabetically
+        let sortAlphabeticallyAndByOpenClosure = { (a: Eatery, b: Eatery) -> Bool in
+            // If only one of the eateries is closed today, we can return the other one early
+            if a.isOpenToday() && !b.isOpenToday() {
+                return true
+            }
+            if !a.isOpenToday() && b.isOpenToday() {
+                return false
+            }
+            
+            // Sort open eateries before closed ones
+            // If they are both currently open or currently closed, sort alphabetically
+            
+            let aState = a.generateDescriptionOfCurrentState()
+            let bState = b.generateDescriptionOfCurrentState()
+            
+            switch aState {
+            case .Open(_):
+                switch bState {
+                case .Open(_):  return a.nickname() <= b.nickname()
+                default:        return true
+                }
+                
+            case .Closed(_):
+                switch bState {
+                case .Closed(_):return a.nickname() <= b.nickname()
+                default:        return false
+                }
+            }
+        }
+        
+        // Sort eateries just alphabetically
+        let sortAlphabeticallyClosure = { (a: Eatery, b: Eatery) -> Bool in
+            return a.nickname() < b.nickname()
+        }
+        
+        curSortingOption == .Alphabetical ? eateries.sortInPlace(sortAlphabeticallyClosure) : eateries.sortInPlace(sortAlphabeticallyAndByOpenClosure)
+    }
+
     /** Updates table and stores eateries. Use this to update Eatery times in table. */
     func configureTable() {
         table.setNumberOfRows(eateries.count, withRowType: "EateryRow")
