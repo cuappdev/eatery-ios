@@ -23,7 +23,7 @@ class EateriesInterfaceController: WKInterfaceController {
     
     var eateries = [Eatery]()
     var dateLastFetched = NSDate()
-    var curSortingOption: SortingOption = .OpenAndAlphabetical
+    var curSortingOption = SortingOption.OpenAndAlphabetical
     
     @IBAction func refreshMenuItem() {
         getEateries()
@@ -42,7 +42,7 @@ class EateriesInterfaceController: WKInterfaceController {
     
     /** Fetch list of Eateries from DataManager */
     func getEateries() {
-        DATA.fetchEateries(false) { (error) -> Void in
+        DATA.fetchEateries(false) { _ in
             dispatch_async(dispatch_get_main_queue()) {
                 self.dateLastFetched = NSDate()
                 self.eateries = DATA.eateries
