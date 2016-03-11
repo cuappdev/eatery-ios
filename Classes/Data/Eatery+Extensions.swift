@@ -85,7 +85,7 @@ extension Eatery {
             if activeEvent.occurringOnDate(NSDate()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
-                    return .Open("Closing in \(minutesTillClose)m")
+                    return .Open("Closing in \(minutesTillClose+1)m")
                 } else {
                     let timeString = ShortDateFormatter.stringFromDate(activeEvent.endDate)
                     return .Open("Closes at \(timeString)")
@@ -93,7 +93,7 @@ extension Eatery {
             } else {
                 let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                 if minutesTillOpen < 60 {
-                    return .Closed("Opens in \(minutesTillOpen)m")
+                    return .Closed("Opens in \(minutesTillOpen+1)m")
                 } else {
                     let timeString = ShortDateFormatter.stringFromDate(activeEvent.startDate)
                     return .Closed("Opens at \(timeString)")
