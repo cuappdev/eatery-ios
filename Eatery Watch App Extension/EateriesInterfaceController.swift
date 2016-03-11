@@ -23,7 +23,7 @@ class EateriesInterfaceController: WKInterfaceController {
     
     var eateries = [Eatery]()
     var dateLastFetched = NSDate()
-    var curSortingOption: SortingOption = .Alphabetical
+    var curSortingOption: SortingOption = .OpenAndAlphabetical
     
     @IBAction func refreshMenuItem() {
         getEateries()
@@ -57,16 +57,13 @@ class EateriesInterfaceController: WKInterfaceController {
         
         // Sort eateris by open/close, then alphabetically
         let sortAlphabeticallyAndByOpenClosure = { (a: Eatery, b: Eatery) -> Bool in
-            // If only one of the eateries is closed today, we can return the other one early
+    
             if a.isOpenToday() && !b.isOpenToday() {
                 return true
             }
             if !a.isOpenToday() && b.isOpenToday() {
                 return false
             }
-            
-            // Sort open eateries before closed ones
-            // If they are both currently open or currently closed, sort alphabetically
             
             let aState = a.generateDescriptionOfCurrentState()
             let bState = b.generateDescriptionOfCurrentState()
