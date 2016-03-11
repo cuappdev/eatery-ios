@@ -23,7 +23,6 @@ class EateriesInterfaceController: WKInterfaceController {
     
     var eateries = [Eatery]()
     var dateLastFetched = NSDate()
-    var sortOption = ""
     var curSortingOption: SortingOption = .Alphabetical
     
     @IBAction func refreshMenuItem() {
