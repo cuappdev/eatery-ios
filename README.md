@@ -1,11 +1,17 @@
-<img src=http://i.imgur.com/4JBBPcN.png width=400 />  
+[comment]: <>http://imgur.com/a/5fE3D
+<img src=http://i.imgur.com/PTC7zyB.png width=400 />  
 
 Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University.  It provides an easy and accessible way to browse the hours and menus of the dining locations on campus.
 
-<img src=http://i.imgur.com/dQf9kLP.jpg width=350 />
-<img src=http://i.imgur.com/GLJi9WI.png width=350 />
+<img src=http://i.imgur.com/ScSG0J5.png width=350 />
+<img src=http://i.imgur.com/S6Ut7JV.png width=350 />
 <img src=http://i.imgur.com/JqdnlUW.png width=350 />
-<img src=http://i.imgur.com/k9OtANb.png width=350 />
+<img src=http://i.imgur.com/FGi6oqB.png width=350 />
+
+## This app supports Apple Watch
+<img src=http://i.imgur.com/pkeeRt8.png width=150 />
+<img src=http://i.imgur.com/o2yIwec.png width=150 />
+<img src=http://i.imgur.com/dsJ1ZfL.png width=150 />
 
 ## Supported Eateries
 * 104west
