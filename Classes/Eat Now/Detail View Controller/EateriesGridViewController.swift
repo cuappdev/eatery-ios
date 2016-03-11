@@ -35,6 +35,11 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     var searchQuery = ""
     var sorted: Eatery.Sorting = .Campus
     var preselectedSlug: String?
+    lazy var sortingQueue: NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "Sorting queue"
+        return queue
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -453,11 +458,25 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchQuery = searchText
-        self.processEateries()
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
-        searchBar.becomeFirstResponder()
+        sortingQueue.cancelAllOperations()
+        
+        let newOperation = NSBlockOperation()
+        newOperation.addExecutionBlock { [unowned newOperation] in
+            if (newOperation.cancelled == true) { return }
+            self.searchQuery = searchText
+            self.processEateries()
+            if (newOperation.cancelled == true) { return }
+            let newMainOperation = NSBlockOperation()
+            newMainOperation.addExecutionBlock {
+                let sectionCount = self.collectionView.numberOfSections()-1
+                UIView.performWithoutAnimation {
+                    self.collectionView.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(1, sectionCount)))
+                }
+            }
+            NSOperationQueue.mainQueue().addOperation(newMainOperation)
+            
+        }
+        sortingQueue.addOperation(newOperation)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
