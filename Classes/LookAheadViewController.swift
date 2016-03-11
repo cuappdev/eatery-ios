@@ -117,9 +117,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 }
                 
                 // Sort eateries by name
-                self.westEateries.sortInPlace({ $0.nickname().lowercaseString < $1.nickname().lowercaseString })
-                self.northEateries.sortInPlace({ $0.nickname().lowercaseString < $1.nickname().lowercaseString })
-                self.centralEateries.sortInPlace({ $0.nickname().lowercaseString < $1.nickname().lowercaseString })
+                self.westEateries.sortInPlace { $0.nickname.lowercaseString < $1.nickname.lowercaseString }
+                self.northEateries.sortInPlace { $0.nickname.lowercaseString < $1.nickname.lowercaseString }
+                self.centralEateries.sortInPlace { $0.nickname.lowercaseString < $1.nickname.lowercaseString }
                 self.filterEateries(self.filterDateViews, buttons: self.filterMealButtons)
                 self.tableView.reloadData()
             })
@@ -319,15 +319,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         default: break
         }
         
-        let menuVC = MenuViewController()
-        menuVC.eatery = eatery
-        menuVC.displayedDate = dates[selectedDateIndex] as! NSDate
-        menuVC.selectedMeal = getSelectedMeal(eatery)
+        let date = dates[selectedDateIndex] as! NSDate
+        var delegate: MenuButtonsDelegate? = nil
         if let navigationController = self.navigationController {
             let delegateIndex = navigationController.viewControllers.count - 2
-            menuVC.delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
+            delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
         }
         
+        let menuVC = MenuViewController(eatery: eatery, delegate: delegate, date: date, meal: getSelectedMeal(eatery))
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
     

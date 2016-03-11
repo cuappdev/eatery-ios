@@ -9,9 +9,9 @@
 import UIKit
 import DiningStack
 
-protocol MenuButtonsDelegate {
+@objc protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
-    func shareButtonPressed()
+    optional func shareButtonPressed()
 }
 
 class MenuHeaderView: UIView {
@@ -81,7 +81,7 @@ class MenuHeaderView: UIView {
         paymentView.addSubview(payTypeView)
         
         // Title Label
-        titleLabel.text = eatery.nickname()
+        titleLabel.text = eatery.nickname
         
         // Hours
         var hoursText = eatery.activeEventsForDate(displayedDate)
@@ -92,29 +92,23 @@ class MenuHeaderView: UIView {
         
         // Background
         backgroundImageView.image = eatery.photo
-        
-        // Action Buttons
-        if eatery.favorite {
-            favoriteButton.setImage(UIImage(named: "goldStar"), forState: .Normal)
-        } else {
-            favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
-        }
+        renderFavoriteImage()
+    }
+    
+    func renderFavoriteImage() {
+        let name = eatery.favorite ? "goldStar" : "whiteStar"
+        favoriteButton.setImage(UIImage(named: name), forState: .Normal)
     }
     
     @IBAction func favoriteButtonPressed(sender: AnyObject) {
-        if eatery.favorite {
-            eatery.favorite = false
-            favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
-        } else {
-            eatery.favorite = true
-            favoriteButton.setImage(UIImage(named: "goldStar"), forState: .Normal)
-        }
+        eatery.favorite = !eatery.favorite
+        renderFavoriteImage()
         
         delegate?.favoriteButtonPressed()
     }
     
     @IBAction func shareButtonPressed(sender: UIButton) {
-        delegate?.shareButtonPressed()
+        delegate?.shareButtonPressed?()
     }
 
 }

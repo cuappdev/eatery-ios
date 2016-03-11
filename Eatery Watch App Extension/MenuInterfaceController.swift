@@ -23,7 +23,7 @@ class MenuInterfaceController: WKInterfaceController {
         setTitle("Close")
         
         if let eatery = context as? Eatery {
-            titleLabel.setText(eatery.nickname())
+            titleLabel.setText(eatery.nickname)
             
             var hoursText = eatery.activeEventsForDate(NSDate())
             if hoursText != "Closed" {

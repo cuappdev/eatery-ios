@@ -15,7 +15,7 @@ class EateryRowController: NSObject {
     @IBOutlet var timeLabel: WKInterfaceLabel!
     
     func setEatery(eatery: Eatery) {
-        titleLabel.setText(eatery.nickname())
+        titleLabel.setText(eatery.nickname)
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {

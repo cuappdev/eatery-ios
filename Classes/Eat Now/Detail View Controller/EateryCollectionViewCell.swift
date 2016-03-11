@@ -24,7 +24,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     func setEatery(eatery: Eatery) {
         // photos are enormous so commenting temporarily until we thumbnail them
         backgroundImageView.image = eatery.photo
-        titleLabel.text = eatery.nickname()
+        titleLabel.text = eatery.nickname
         statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
         statusView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 1

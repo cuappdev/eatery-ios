@@ -19,14 +19,26 @@ private let TitleDateFormatter: NSDateFormatter = {
 
 class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
     
-    var eatery: Eatery!
+    var eatery: Eatery
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
     var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
     var delegate: MenuButtonsDelegate?
-    var displayedDate: NSDate!
+    var displayedDate: NSDate
     var selectedMeal: String?
+    
+    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: NSDate = NSDate(), meal: String? = nil) {
+        self.eatery = eatery
+        self.delegate = delegate
+        self.displayedDate = date
+        self.selectedMeal = meal
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

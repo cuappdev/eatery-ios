@@ -33,7 +33,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     var searchController: UISearchController!
     var searchQuery = ""
-    var sorted: Eatery.Sorting = .Campus
+    var sorted = Eatery.Sorting.Campus
     var preselectedSlug: String?
     lazy var sortingQueue: NSOperationQueue = {
         var queue = NSOperationQueue()
@@ -121,32 +121,28 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
   
     func pushPreselectedEatery() {
-      guard let slug = preselectedSlug else { return }
-      var preselectedEatery: Eatery?
-      // Find eatery
-      for (_, eateries) in eateryData {
-          for eatery in eateries {
-              if eatery.slug == slug {
-                  preselectedEatery = eatery
-                  break
-              }
-          }
-          break
-      }
-      guard let eatery = preselectedEatery else { return }
-      let detailViewController = MenuViewController()
-      detailViewController.eatery = eatery
-      detailViewController.displayedDate = NSDate()
-      detailViewController.selectedMeal = nil
-      detailViewController.delegate = self
-      
-      // Unwind back to this VC if it is not showing
-      if !(navigationController?.visibleViewController is EateriesGridViewController) {
-          navigationController?.popToRootViewControllerAnimated(false)
-      }
-      
-      navigationController?.pushViewController(detailViewController, animated: false)
-      preselectedSlug = nil
+        guard let slug = preselectedSlug else { return }
+        var preselectedEatery: Eatery?
+        // Find eatery
+        for (_, eateries) in eateryData {
+            for eatery in eateries {
+                if eatery.slug == slug {
+                    preselectedEatery = eatery
+                    break
+                }
+            }
+            break
+        }
+        guard let eatery = preselectedEatery else { return }
+        let menuVC = MenuViewController(eatery: eatery, delegate: self)
+        
+        // Unwind back to this VC if it is not showing
+        if !(navigationController?.visibleViewController is EateriesGridViewController) {
+            navigationController?.popToRootViewControllerAnimated(false)
+        }
+        
+        navigationController?.pushViewController(menuVC, animated: false)
+        preselectedSlug = nil
     }
     
     func sortButtonTapped() {
@@ -161,11 +157,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
                 let hardcodedFoodItemFound: () -> Bool = {
                     if let hardcoded = eatery.hardcodedMenu {
-                        for (_, value) in hardcoded {
-                            for item in value {
-                                if item.name.rangeOfString(self.searchQuery, options: options) != nil {
-                                    return true
-                                }
+                        for item in hardcoded.values.flatten() {
+                            if item.name.rangeOfString(self.searchQuery, options: options) != nil {
+                                return true
                             }
                         }
                     }
@@ -173,11 +167,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 }
                 let currentMenuFoodItemFound: () -> Bool = {
                     if let activeEvent = eatery.activeEventForDate(NSDate()) {
-                        for (_, value) in activeEvent.menu {
-                            for item in value {
-                                if item.name.rangeOfString(self.searchQuery, options: options) != nil {
-                                    return true
-                                }
+                        for item in activeEvent.menu.values.flatten() {
+                            if item.name.rangeOfString(self.searchQuery, options: options) != nil {
+                                return true
                             }
                         }
                     }
@@ -197,27 +189,17 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
 
         // TODO: sort by hours?
         if sorted == .Campus {
-            let favoriteEateries = desiredEateries.filter { return $0.favorite }
-            let northCampusEateries = desiredEateries.filter { return $0.area == .North }
-            let westCampusEateries = desiredEateries.filter { return $0.area == .West }
-            let centralCampusEateries = desiredEateries.filter { return $0.area == .Central }
-            eateryData["Favorites"] = favoriteEateries
-            eateryData["North"] = northCampusEateries
-            eateryData["West"] = westCampusEateries
-            eateryData["Central"] = centralCampusEateries
+            eateryData["Favorites"] = desiredEateries.filter { return $0.favorite }
+            eateryData["North"] = desiredEateries.filter { return $0.area == .North }
+            eateryData["West"] = desiredEateries.filter { return $0.area == .West }
+            eateryData["Central"] = desiredEateries.filter { return $0.area == .Central }
             sortEateries()
         } else if sorted == .Open {
-            let favoriteEateries = desiredEateries.filter { return $0.favorite }
-            let openEateries = desiredEateries.filter { return $0.isOpenNow() }
-            let closedEateries = desiredEateries.filter { return !$0.isOpenNow()}
-            eateryData["Favorites"] = favoriteEateries
-            eateryData["Open"] = openEateries
-            eateryData["Closed"] = closedEateries
+            eateryData["Favorites"] = desiredEateries.filter { return $0.favorite }
+            eateryData["Open"] = desiredEateries.filter { return $0.isOpenNow() }
+            eateryData["Closed"] = desiredEateries.filter { return !$0.isOpenNow()}
             sortEateriesByOpen()
-            
         }
-        
-        
     }
     
     func sortEateriesByOpen() {
@@ -267,26 +249,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func sortEateries() {
-        
-//        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
-//            if !a.isOpenToday() { return false }
-//            if !b.isOpenToday() { return true  }
-//            
-//            // Both Eateries are open today, find which comes first
-//            // To do this, we simply compare the time intervals between
-//            // now and the active event's start date
-//            
-//            let now = NSDate()
-//            let aTimeInterval = a.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-//            let bTimeInterval = b.activeEventForDate(now)!.startDate.timeIntervalSinceNow
-//            
-//            if aTimeInterval <= bTimeInterval {
-//                return true
-//            }
-//            
-//            return false
-//        }
-        
         let sortByOpenAndLexographicallyClosure = { (a: Eatery, b: Eatery) -> Bool in
             
             // If only one of the eateries is closed today, we can return the other one early
@@ -306,13 +268,13 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             switch aState {
             case .Open(_):
                 switch bState {
-                case .Open(_):  return a.nickname() <= b.nickname()
+                case .Open(_):  return a.nickname <= b.nickname
                 default:        return true
                 }
                 
             case .Closed(_):
                 switch bState {
-                case .Closed(_):return a.nickname() <= b.nickname()
+                case .Closed(_):return a.nickname <= b.nickname
                 default:        return false
                 }
             }
@@ -321,8 +283,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         eateryData["North"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         eateryData["West"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         eateryData["Central"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
- 
-        
     }
   
     // MARK: -
@@ -402,16 +362,11 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 return nil
         }
         
-        let peekViewController = MenuViewController()
-        peekViewController.eatery = eateryForIndexPath(indexPath)
-        peekViewController.displayedDate = NSDate()
-        peekViewController.selectedMeal = nil
-        peekViewController.delegate = self
-        
-        peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+        let menuVC = MenuViewController(eatery: eateryForIndexPath(indexPath), delegate: self)
+        menuVC.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convertRect(cell.frame, toView: view)
         
-        return peekViewController
+        return menuVC
     }
     
     func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
@@ -425,13 +380,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         // if this is too expensive, set a flag and run it on `viewDidAppear`
         processEateries()
         collectionView.reloadData()
-    }
-    
-    func shareButtonPressed() {
-    }
-    
-    var shouldShowLayoutButton: Bool {
-        return view.frame.width > 320
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -466,8 +414,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             self.searchQuery = searchText
             self.processEateries()
             if (newOperation.cancelled == true) { return }
-            let newMainOperation = NSBlockOperation()
-            newMainOperation.addExecutionBlock {
+            let newMainOperation = NSBlockOperation() {
                 let sectionCount = self.collectionView.numberOfSections()-1
                 UIView.performWithoutAnimation {
                     self.collectionView.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(1, sectionCount)))
@@ -479,16 +426,12 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         sortingQueue.addOperation(newOperation)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
     func eateryForIndexPath(indexPath: NSIndexPath) -> Eatery {
         var eatery: Eatery!
         
         var section = indexPath.section
         let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
-        if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+        if let favorites = eateryData["Favorites"] where !favorites.isEmpty {
             if section == 1 {
                 eatery = favorites[indexPath.row]
             }
@@ -496,13 +439,12 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         }
         section -= 1
         
-        if eatery == nil, let e = eateryData[names[section]] where e.count > 0 {
+        if eatery == nil, let e = eateryData[names[section]] where !e.isEmpty {
             eatery = e[indexPath.row]
         }
         
         return eatery
     }
-
 }
 
 extension EateriesGridViewController : UICollectionViewDelegate {
@@ -512,11 +454,7 @@ extension EateriesGridViewController : UICollectionViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let detailViewController = MenuViewController()
-        detailViewController.eatery = eateryForIndexPath(indexPath)
-        detailViewController.displayedDate = NSDate()
-        detailViewController.selectedMeal = nil
-        detailViewController.delegate = self
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        let menuVC = MenuViewController(eatery: eateryForIndexPath(indexPath), delegate: self)
+        self.navigationController?.pushViewController(menuVC, animated: true)
     }
 }

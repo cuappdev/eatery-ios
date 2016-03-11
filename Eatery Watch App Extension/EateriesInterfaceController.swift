@@ -71,13 +71,13 @@ class EateriesInterfaceController: WKInterfaceController {
             switch aState {
             case .Open(_):
                 switch bState {
-                case .Open(_):  return a.nickname() <= b.nickname()
+                case .Open(_):  return a.nickname <= b.nickname
                 default:        return true
                 }
                 
             case .Closed(_):
                 switch bState {
-                case .Closed(_):return a.nickname() <= b.nickname()
+                case .Closed(_):return a.nickname <= b.nickname
                 default:        return false
                 }
             }
@@ -85,7 +85,7 @@ class EateriesInterfaceController: WKInterfaceController {
         
         // Sort eateries just alphabetically
         let sortAlphabeticallyClosure = { (a: Eatery, b: Eatery) -> Bool in
-            return a.nickname() < b.nickname()
+            return a.nickname < b.nickname
         }
         
         curSortingOption == .Alphabetical ? eateries.sortInPlace(sortAlphabeticallyClosure) : eateries.sortInPlace(sortAlphabeticallyAndByOpenClosure)

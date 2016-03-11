@@ -144,7 +144,7 @@ extension Eatery {
         return resultString
     }
     
-    func nickname() -> String {
+    var nickname: String {
         guard let nicknameJSON = kEateryNicknames[slug] else {
             return name
         }
