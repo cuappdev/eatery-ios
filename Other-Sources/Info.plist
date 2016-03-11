@@ -48,5 +48,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>org.cuappdev.eatery.view</string>
+	</array>
 </dict>
 </plist>
