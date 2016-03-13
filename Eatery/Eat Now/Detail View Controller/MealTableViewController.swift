@@ -62,8 +62,10 @@ class MealTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
         
         var menu = event?.menu
-        
-        if let hardcoded = eatery.hardcodedMenu {
+      
+        if let diningItems = eatery.diningItems {
+            menu = diningItems
+        } else if let hardcoded = eatery.hardcodedMenu {
             menu = hardcoded
         }
         

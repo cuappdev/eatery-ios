@@ -171,10 +171,13 @@ class MenuImages: NSObject {
         eateryNameLabel.center = CGPointMake(eateryNameLabel.center.x, openIndicatorView.center.y)
         
         //create eatery time label
-        let openTime = "Open \(events[selectedMenu]!.startDateFormatted) to \(events[selectedMenu]!.endDateFormatted)"
+        var text = "Closed"
+        if let event = events[selectedMenu] {
+            text = "Open \(event.startDateFormatted) to \(event.endDateFormatted)"
+        }
         let eateryTimeLabel = UILabel(frame: CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height, 200, 15))
         eateryTimeLabel.textColor = fontColor
-        eateryTimeLabel.text = openTime
+        eateryTimeLabel.text = text
         eateryTimeLabel.font = headerTimeFont
         eateryTimeLabel.sizeToFit()
         eateryTimeLabel.frame = CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height - 12, eateryTimeLabel.frame.width, eateryTimeLabel.frame.height)
@@ -185,7 +188,7 @@ class MenuImages: NSObject {
         let eventNameLabel = UILabel(frame: CGRectMake(0, 0, 200, 15))
         eventNameLabel.textColor = UIButton().tintColor
         eventNameLabel.text = selectedMenu.uppercaseString
-        if let _ = eatery.hardcodedMenu {
+        if eatery.diningItems != nil || eatery.hardcodedMenu != nil{
             eventNameLabel.text = "MENU"
         }
         eventNameLabel.font = headerEventFont
@@ -253,6 +256,7 @@ class MenuImages: NSObject {
         let completeMenuView = UIView(frame: CGRectMake(0, 0, width, 0))
         completeMenuView.backgroundColor = bodyColor
         //add all components to completeMenuView
+        menuHeader.translatesAutoresizingMaskIntoConstraints = false
         completeMenuView.addSubview(menuHeader)
         var y = menuHeader.frame.height + dividerSize
         for categoryView in categoryViews {
@@ -261,6 +265,7 @@ class MenuImages: NSObject {
             frame.origin.y = y
             categoryView.frame = frame
             
+            categoryView.translatesAutoresizingMaskIntoConstraints = false
             completeMenuView.addSubview(categoryView)
             y += categoryView.frame.height
         }
@@ -270,6 +275,7 @@ class MenuImages: NSObject {
         brandingImageView.image = UIImage(named: "eateryLogo")
         brandingImageView.contentMode = .ScaleAspectFit
         
+        brandingImageView.translatesAutoresizingMaskIntoConstraints = false
         completeMenuView.addSubview(brandingImageView)
         y += brandingViewHeight + dividerSize
         
@@ -291,8 +297,11 @@ class MenuImages: NSObject {
     class func shareMenu(eatery: Eatery, vc: UIViewController, events: [String: Event], date: NSDate, selectedMenu: String?) {
         // Get share image
         var imageToShare = UIImage()
-
-        if let _ = eatery.hardcodedMenu {
+      
+        if let _ = eatery.diningItems {
+            imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: eatery.eventsOnDate(date), selectedMenu: selectedMenu!, menuIterable: eatery.getDiningItemMenuIterable())
+        }
+        else if let _ = eatery.hardcodedMenu {
             imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: eatery.eventsOnDate(date), selectedMenu: selectedMenu!, menuIterable: eatery.getHardcodeMenuIterable())
         } else {
             imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: events[selectedMenu!]!.getMenuIterable())
