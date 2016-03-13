@@ -1,7 +1,7 @@
 [comment]: <>http://imgur.com/a/5fE3D
 <img src=http://i.imgur.com/PTC7zyB.png width=400 />  
 
-Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University.  It provides an easy and accessible way to browse the hours and menus of the dining locations on campus. You can view our [release notes](https://docs.google.com/document/d/1wSYynvYDXpVSVbyEahlX4qFZHe-TlxOmiDCznqAtwPU/edit?usp=sharing) to learn more about the progress of the Eatery.
+Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University.  It provides an easy and accessible way to browse the hours and menus of the dining locations on campus. You can view our [release notes](https://docs.google.com/document/d/1wSYynvYDXpVSVbyEahlX4qFZHe-TlxOmiDCznqAtwPU/edit?usp=sharing) to learn more about the progress of the Eatery. Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/id1089672962).
 
 <img src=http://i.imgur.com/ScSG0J5.png width=350 />
 <img src=http://i.imgur.com/S6Ut7JV.png width=350 />
