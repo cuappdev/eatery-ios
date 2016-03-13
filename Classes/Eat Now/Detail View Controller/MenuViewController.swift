@@ -48,6 +48,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         navigationController?.setNavigationBarHidden(false, animated: true)
         let dateString = TitleDateFormatter.stringFromDate(displayedDate)
         let todayDateString = TitleDateFormatter.stringFromDate(NSDate())
+        let headerAndMenuSeparation = CGFloat(-1)
         
         // Set navigation bar title
         if dateString == todayDateString {
@@ -107,7 +108,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         pageViewController.viewControllers = mealViewControllers
         
         pageViewController.view.frame = view.frame
-        pageViewController.view.frame.offsetInPlace(dx: 0, dy: kMenuHeaderViewFrameHeight)
+        pageViewController.view.frame.offsetInPlace(dx: 0, dy: kMenuHeaderViewFrameHeight + headerAndMenuSeparation)
         pageViewController.scrollDelegate = self
         
         addChildViewController(pageViewController)
