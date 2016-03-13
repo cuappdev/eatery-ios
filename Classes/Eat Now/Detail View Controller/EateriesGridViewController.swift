@@ -35,6 +35,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     var searchQuery = ""
     var sorted = Eatery.Sorting.Campus
     var preselectedSlug: String?
+    let defaults = NSUserDefaults.standardUserDefaults()
     lazy var sortingQueue: NSOperationQueue = {
         var queue = NSOperationQueue()
         queue.name = "Sorting queue"
@@ -43,6 +44,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let sortOption = Eatery.Sorting(rawValue: (defaults.objectForKey("sortOption") ?? "campus") as! String!)
+        sorted = sortOption!
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
@@ -147,6 +150,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func sortButtonTapped() {
         sorted = sorted == .Campus ? .Open : .Campus
+        defaults.setObject(sorted.rawValue, forKey: "sortOption")
         loadData(false, completion: nil)
     }
     
