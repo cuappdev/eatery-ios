@@ -47,6 +47,8 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         let sortOption = Eatery.Sorting(rawValue: (defaults.objectForKey("sortOption") ?? "campus") as! String!)
         sorted = sortOption!
         
+        startUserActivity()
+        
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         // Set up navigation bar
@@ -289,7 +291,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         eateryData["Central"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
     }
   
-    // MARK: -
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -353,7 +354,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         return UICollectionReusableView()
     }
     
-    // MARK: -
     // MARK: UIViewControllerPreviewingDelegate
     
     @available(iOS 9.0, *)
@@ -377,7 +377,15 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         showViewController(viewControllerToCommit, sender: self)
     }
     
-    // MARK: -
+    // MARK: Handoff Functions
+    func startUserActivity() {
+        let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
+        activity.title = "View Eateries"
+        activity.webpageURL = NSURL(string:"https://now.dining.cornell.edu/eateries/")
+        userActivity = activity
+        userActivity?.becomeCurrent()
+    }
+    
     // MARK: MenuButtonsDelegate
     
     func favoriteButtonPressed() {
