@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5k-wW-POb">
-                    <rect key="frame" x="8" y="67" width="304" height="18"/>
+                    <rect key="frame" x="8" y="126" width="304" height="18"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -20,13 +20,19 @@
             </subviews>
             <constraints>
                 <constraint firstItem="a5k-wW-POb" firstAttribute="centerY" secondItem="QOJ-fU-Qfd" secondAttribute="centerY" id="JQQ-8J-yWb"/>
+                <constraint firstAttribute="bottom" secondItem="a5k-wW-POb" secondAttribute="bottom" constant="8" id="hOi-OM-c1J"/>
                 <constraint firstItem="a5k-wW-POb" firstAttribute="leading" secondItem="QOJ-fU-Qfd" secondAttribute="leading" constant="8" id="piR-lL-5ZI"/>
                 <constraint firstAttribute="trailing" secondItem="a5k-wW-POb" secondAttribute="trailing" constant="8" id="zt0-rx-Oy0"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="JQQ-8J-yWb"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="titleLabel" destination="a5k-wW-POb" id="TEF-Fu-ear"/>
             </connections>
-            <point key="canvasLocation" x="367" y="463"/>
+            <point key="canvasLocation" x="239" y="461"/>
         </collectionReusableView>
     </objects>
 </document>

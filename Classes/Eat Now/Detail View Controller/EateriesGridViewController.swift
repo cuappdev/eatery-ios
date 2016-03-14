@@ -9,34 +9,21 @@
 import UIKit
 import DiningStack
 
-enum CollectionLayout: String {
-    case Grid = "grid"
-    case Table = "table"
-    
-    var iconImage: UIImage {
-        switch self {
-        case .Grid:
-            return UIImage(named: "tableIcon")!
-        case .Table:
-            return UIImage(named: "gridIcon")!
-        }
-    }
-}
-
 let kCollectionViewGutterWidth: CGFloat = 8
 
-class EateriesGridViewController: UIViewController, UICollectionViewDataSource, MenuButtonsDelegate, UIViewControllerPreviewingDelegate, UISearchBarDelegate {
-    
-    var collectionView: UICollectionView!
+class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
+
+    private var collectionView: UICollectionView!
+    private let topPadding: CGFloat = 10
     private var eateries: [Eatery] = []
     private var eateryData: [String: [Eatery]] = [:]
     
-    var searchController: UISearchController!
-    var searchQuery = ""
-    var sorted = Eatery.Sorting.Campus
+    private var searchBar: UISearchBar!
+    private var shouldBeginEditing = false
+    private var sorted = Eatery.Sorting.Campus
     var preselectedSlug: String?
-    let defaults = NSUserDefaults.standardUserDefaults()
-    lazy var sortingQueue: NSOperationQueue = {
+    private let defaults = NSUserDefaults.standardUserDefaults()
+    private lazy var sortingQueue: NSOperationQueue = {
         var queue = NSOperationQueue()
         queue.name = "Sorting queue"
         return queue
@@ -49,7 +36,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        // Set up navigation bar
         navigationController?.view.backgroundColor = .whiteColor()
         navigationController?.navigationBar.translucent = false
 
@@ -79,11 +65,16 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         let rightBarButton = UIBarButtonItem(title: "Guide", style: .Plain, target: self, action: "goToLookAheadVC")
         rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.rightBarButtonItem = rightBarButton
+        
+        searchBar = UISearchBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+        searchBar.delegate = self
+        searchBar.placeholder = "Search"
+        collectionView.addObserver(self, forKeyPath: "contentOffset", options: [.New], context: nil)
+        view.addSubview(searchBar)
     }
     
     func goToLookAheadVC() {
-        let lookAheadVC = LookAheadViewController()
-        navigationController?.pushViewController(lookAheadVC, animated: true)
+        navigationController?.pushViewController(LookAheadViewController(), animated: true)
     }
     
     func applicationWillEnterForeground() {
@@ -98,9 +89,9 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         definesPresentationContext = true
         collectionView.registerNib(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
-        collectionView.registerNib(UINib(nibName: "EateriesCollectionSearchbarHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SearchbarHeaderView")
         collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        collectionView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: navigationController!.navigationBar.frame.maxY, left: 0, bottom: 0, right: 0)
+        collectionView.contentOffset = CGPointMake(0, 0)
         collectionView.showsVerticalScrollIndicator = false
     }
     
@@ -113,12 +104,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                if self.searchQuery != "" {
-                    self.collectionView.contentOffset = CGPointMake(0, -70)
-                } else {
-                    self.collectionView.contentOffset = CGPointMake(0, -10)
-                }
-				self.pushPreselectedEatery()
+                self.pushPreselectedEatery()
             })
         }
     }
@@ -156,13 +142,14 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func processEateries() {
         var desiredEateries: [Eatery] = []
+        let searchQuery = searchBar.text ?? ""
         if searchQuery != "" {
             desiredEateries = eateries.filter { eatery in
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
                 let hardcodedFoodItemFound: () -> Bool = {
                     if let hardcoded = eatery.hardcodedMenu {
                         for item in hardcoded.values.flatten() {
-                            if item.name.rangeOfString(self.searchQuery, options: options) != nil {
+                            if item.name.rangeOfString(searchQuery, options: options) != nil {
                                 return true
                             }
                         }
@@ -172,7 +159,7 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
                 let currentMenuFoodItemFound: () -> Bool = {
                     if let activeEvent = eatery.activeEventForDate(NSDate()) {
                         for item in activeEvent.menu.values.flatten() {
-                            if item.name.rangeOfString(self.searchQuery, options: options) != nil {
+                            if item.name.rangeOfString(searchQuery, options: options) != nil {
                                 return true
                             }
                         }
@@ -190,18 +177,15 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
             desiredEateries = eateries
         }
         
-
-        // TODO: sort by hours?
+        eateryData["Favorites"] = desiredEateries.filter { $0.favorite }
         if sorted == .Campus {
-            eateryData["Favorites"] = desiredEateries.filter { return $0.favorite }
-            eateryData["North"] = desiredEateries.filter { return $0.area == .North }
-            eateryData["West"] = desiredEateries.filter { return $0.area == .West }
-            eateryData["Central"] = desiredEateries.filter { return $0.area == .Central }
+            eateryData["North"] = desiredEateries.filter { $0.area == .North }
+            eateryData["West"] = desiredEateries.filter { $0.area == .West }
+            eateryData["Central"] = desiredEateries.filter { $0.area == .Central }
             sortEateries()
         } else if sorted == .Open {
-            eateryData["Favorites"] = desiredEateries.filter { return $0.favorite }
-            eateryData["Open"] = desiredEateries.filter { return $0.isOpenNow() }
-            eateryData["Closed"] = desiredEateries.filter { return !$0.isOpenNow()}
+            eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }
+            eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow()}
             sortEateriesByOpen()
         }
     }
@@ -288,12 +272,51 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         eateryData["West"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
         eateryData["Central"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
     }
-  
-    // MARK: -
-    // MARK: UICollectionViewDataSource
     
+    // MARK: -
+    // MARK: MenuButtonsDelegate
+    
+    func favoriteButtonPressed() {
+        processEateries()
+        collectionView.reloadData()
+    }
+    
+    func eateryForIndexPath(indexPath: NSIndexPath) -> Eatery {
+        var eatery: Eatery!
+        
+        var section = indexPath.section
+        let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
+        if let favorites = eateryData["Favorites"] where !favorites.isEmpty {
+            if section == 0 {
+                eatery = favorites[indexPath.row]
+            }
+            section -= 1
+        }
+        
+        if eatery == nil, let e = eateryData[names[section]] where !e.isEmpty {
+            eatery = e[indexPath.row]
+        }
+        
+        return eatery
+    }
+    
+    // MARK: - Key Value Observering
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        let keyPath = keyPath ?? ""
+        if keyPath == "contentOffset" && object === collectionView {
+            searchBar.frame = CGRectMake(0, -collectionView.contentOffset.y, searchBar.frame.width, searchBar.frame.height)
+        }
+    }
+    
+    deinit {
+        collectionView.removeObserver(self, forKeyPath: "contentOffset")
+    }
+}
+
+extension EateriesGridViewController: UICollectionViewDataSource {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        var section = 1
+        var section = 0
         section += eateryData["Favorites"]?.count > 0 ? 1 : 0
         section += sorted == .Campus ? 3 : 2
         
@@ -302,16 +325,14 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var section = section
-        if section == 0 { return 0 }
         
         let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
         if let favorites = eateryData["Favorites"] where favorites.count > 0 {
-            if section == 1 {
+            if section == 0 {
                 return favorites.count
             }
             section -= 1
         }
-        section -= 1
         
         return eateryData[names[section]]?.count ?? 0
     }
@@ -320,7 +341,6 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! EateryCollectionViewCell
         
         cell.setEatery(eateryForIndexPath(indexPath))
-        
         return cell
     }
     
@@ -328,35 +348,98 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
         
         if kind == UICollectionElementKindSectionHeader {
             var section = indexPath.section
+            let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
+            let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! EateriesCollectionViewHeaderView
             
-            if section == 0 { // Search bar is section 0
-                let sectionHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "SearchbarHeaderView", forIndexPath: indexPath) as! EateriesCollectionSearchbarHeaderView
-                sectionHeaderView.searchBar.delegate = self
-                sectionHeaderView.searchBar.enablesReturnKeyAutomatically = false
-                return sectionHeaderView
-            } else {
-                let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
-                let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! EateriesCollectionViewHeaderView
-                
-                if let favorites = eateryData["Favorites"] where favorites.count > 0 {
-                    if section == 1 {
-                        sectionTitleHeaderView.titleLabel.text = "Favorites"
-                        return sectionTitleHeaderView
-                    }
-                    section -= 1
+            if let favorites = eateryData["Favorites"] where favorites.count > 0 {
+                if section == 0 {
+                    sectionTitleHeaderView.titleLabel.text = "Favorites"
+                    return sectionTitleHeaderView
                 }
                 section -= 1
-                sectionTitleHeaderView.titleLabel.text = names[section]
-                return sectionTitleHeaderView
             }
+            sectionTitleHeaderView.titleLabel.text = names[section]
+            return sectionTitleHeaderView
         }
         return UICollectionReusableView()
     }
+}
+
+extension EateriesGridViewController: UICollectionViewDelegate {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let menuVC = MenuViewController(eatery: eateryForIndexPath(indexPath), delegate: self)
+        self.navigationController?.pushViewController(menuVC, animated: true)
+    }
+}
+
+extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return CGSizeMake(0, 100)
+        }
+        return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
+    }
+}
+
+extension EateriesGridViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        if (searchBar.text ?? "") != "" {
+            searchBar.setShowsCancelButton(true, animated: true)
+        }
+    }
     
-    // MARK: -
-    // MARK: UIViewControllerPreviewingDelegate
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.text = ""
+        processEateries()
+        collectionView.reloadData()
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
     
-    @available(iOS 9.0, *)
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        processEateries()
+        collectionView.reloadData()
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        let boolToReturn = shouldBeginEditing
+        shouldBeginEditing = true
+        return boolToReturn
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        sortingQueue.cancelAllOperations()
+        
+        if !searchBar.isFirstResponder() {
+            shouldBeginEditing = false
+        }
+        
+        let newOperation = NSBlockOperation()
+        newOperation.addExecutionBlock { [unowned newOperation] in
+            if (newOperation.cancelled == true) { return }
+            self.processEateries()
+            if (newOperation.cancelled == true) { return }
+            let newMainOperation = NSBlockOperation() {
+                self.collectionView.reloadData()
+            }
+            NSOperationQueue.mainQueue().addOperation(newMainOperation)
+            
+        }
+        sortingQueue.addOperation(newOperation)
+    }
+}
+
+extension EateriesGridViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+    }
+}
+
+@available(iOS 9.0, *)
+extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let collectionViewPoint = view.convertPoint(location, toView: collectionView)
         
@@ -375,90 +458,5 @@ class EateriesGridViewController: UIViewController, UICollectionViewDataSource, 
     
     func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
         showViewController(viewControllerToCommit, sender: self)
-    }
-    
-    // MARK: -
-    // MARK: MenuButtonsDelegate
-    
-    func favoriteButtonPressed() {
-        // if this is too expensive, set a flag and run it on `viewDidAppear`
-        processEateries()
-        collectionView.reloadData()
-    }
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchQuery = ""
-        searchBar.text = ""
-        processEateries()
-        collectionView.reloadData()
-        searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(false, animated: true)
-        self.collectionView.contentOffset = CGPointMake(0, -10)
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if let search = searchBar.text {
-            searchQuery = search
-            processEateries()
-            collectionView.reloadData()
-            searchBar.setShowsCancelButton(false, animated: true)
-        }
-    }
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        sortingQueue.cancelAllOperations()
-        
-        let newOperation = NSBlockOperation()
-        newOperation.addExecutionBlock { [unowned newOperation] in
-            if (newOperation.cancelled == true) { return }
-            self.searchQuery = searchText
-            self.processEateries()
-            if (newOperation.cancelled == true) { return }
-            let newMainOperation = NSBlockOperation() {
-                let sectionCount = self.collectionView.numberOfSections()-1
-                UIView.performWithoutAnimation {
-                    self.collectionView.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(1, sectionCount)))
-                }
-            }
-            NSOperationQueue.mainQueue().addOperation(newMainOperation)
-            
-        }
-        sortingQueue.addOperation(newOperation)
-    }
-    
-    func eateryForIndexPath(indexPath: NSIndexPath) -> Eatery {
-        var eatery: Eatery!
-        
-        var section = indexPath.section
-        let names = sorted == .Campus ? Eatery.campusNames : Eatery.openNames
-        if let favorites = eateryData["Favorites"] where !favorites.isEmpty {
-            if section == 1 {
-                eatery = favorites[indexPath.row]
-            }
-            section -= 1
-        }
-        section -= 1
-        
-        if eatery == nil, let e = eateryData[names[section]] where !e.isEmpty {
-            eatery = e[indexPath.row]
-        }
-        
-        return eatery
-    }
-}
-
-extension EateriesGridViewController : UICollectionViewDelegate {
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: section == 0 ? 44 : 16)
-    }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let menuVC = MenuViewController(eatery: eateryForIndexPath(indexPath), delegate: self)
-        self.navigationController?.pushViewController(menuVC, animated: true)
     }
 }

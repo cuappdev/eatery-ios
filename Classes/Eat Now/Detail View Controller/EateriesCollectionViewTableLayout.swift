@@ -18,6 +18,15 @@ class EateriesCollectionViewTableLayout: UICollectionViewFlowLayout {
         itemSize = CGSize(width: width, height: width * 0.4)
         minimumLineSpacing = kCollectionViewGutterWidth / 1.2
         minimumInteritemSpacing = kCollectionViewGutterWidth / 1.8
-        sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
+        sectionInset = UIEdgeInsets(top: 2, left: 0, bottom: 20, right: 0)
+        headerReferenceSize = CGSizeMake(width, 40)
+    }
+    
+    override func collectionViewContentSize() -> CGSize {
+        var size = super.collectionViewContentSize()
+        if (size.height < collectionView!.frame.height + 44) {
+            size.height = collectionView!.frame.height + 44
+        }
+        return size
     }
 }

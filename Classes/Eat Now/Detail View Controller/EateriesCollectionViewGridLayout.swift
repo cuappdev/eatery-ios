@@ -13,12 +13,6 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
     override func prepareLayout() {
         super.prepareLayout()
         
-        enum UIUserInterfaceIdiom : Int {
-            case Unspecified
-            case Phone // iPhone and iPod touch style UI
-            case Pad // iPad style UI
-        }
-        
         guard let collectionView = collectionView else {return}
         let width = collectionView.bounds.width
         var cellWidth = floor(width / 2 - kCollectionViewGutterWidth * 1.5)
@@ -28,6 +22,15 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         itemSize = CGSize(width: cellWidth, height: cellWidth * 0.8)
         minimumLineSpacing = kCollectionViewGutterWidth
         minimumInteritemSpacing = kCollectionViewGutterWidth / 2
-        sectionInset = UIEdgeInsets(top: 10, left: kCollectionViewGutterWidth, bottom: 20, right: kCollectionViewGutterWidth)
+        sectionInset = UIEdgeInsets(top: 2, left: kCollectionViewGutterWidth, bottom: 20, right: kCollectionViewGutterWidth)
+        headerReferenceSize = CGSizeMake(cellWidth, 40)
+    }
+    
+    override func collectionViewContentSize() -> CGSize {
+        var size = super.collectionViewContentSize()
+        if (size.height < collectionView!.frame.height + 44) {
+            size.height = collectionView!.frame.height + 44
+        }
+        return size
     }
 }
