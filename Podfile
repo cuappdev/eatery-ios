@@ -6,6 +6,7 @@ end
 
 target 'Eatery' do
   platform :ios, '8.0'
+  pod 'DGElasticPullToRefresh', :git => 'https:github.com/dantheli/DGElasticPullToRefresh'
   pod 'Analytics/Segmentio'
   shared_pods
 end
