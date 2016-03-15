@@ -79,9 +79,9 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor.whiteColor()
         collectionView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            // Add your logic here
-            // Do not forget to call dg_stopLoading() at the end
-            self?.collectionView.dg_stopLoading()
+                self?.loadData(true) {
+                    self?.collectionView.dg_stopLoading()
+                }
             }, loadingView: loadingView)
         collectionView.dg_setPullToRefreshFillColor(UIColor.eateryBlue())
         collectionView.dg_setPullToRefreshBackgroundColor(collectionView.backgroundColor!)
