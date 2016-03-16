@@ -53,7 +53,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         // Set navigation bar title
         if dateString == todayDateString {
             let commaIndex = dateString.characters.indexOf(",")
-            let dateSubstring = dateString.substringWithRange(Range<String.Index>(start: commaIndex!, end: dateString.endIndex))
+            let dateSubstring = dateString.substringWithRange(commaIndex!..<dateString.endIndex)
             title = "Today\(dateSubstring)"
         } else {
             title = dateString
