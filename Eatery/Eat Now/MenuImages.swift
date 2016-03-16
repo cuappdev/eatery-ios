@@ -14,12 +14,13 @@ class MenuImages: NSObject {
     // Returns an image that contains the condensed menu of categories + items for LookAheadVC
     class func createCondensedMenuImage(width: CGFloat, menuIterable: [(String,[String])]) -> UIImage {
         let bodyColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
-        let categoryHeaderHeight: CGFloat = 20
+        let categoryHeaderHeight: CGFloat = 30
         let dividerSize: CGFloat = 20
         let condensedCategoryFont = UIFont(name: "HelveticaNeue-Medium", size: 11)
         let condensedBodyFont = UIFont(name: "HelveticaNeue", size: 14)
         let condensedBodyFontColor = UIColor.offBlackColor()
         var categoryViews: [UIView] = []
+
         
         if menuIterable.isEmpty {
             // Create header
@@ -45,7 +46,17 @@ class MenuImages: NSObject {
             categoryViews.append(categoryContainerView)
         }
         
-        for category in menuIterable {
+        let mapMenu = menuIterable.map { element -> (String, [MenuItem]) in
+            var items = [MenuItem]();
+            for item in element.1 {
+                items.append(MenuItem(name: item, healthy: false));
+            }
+            return (element.0, items)
+        }
+        
+        let sortedMenu = Sort().sortMenu(mapMenu)
+        
+        for category in sortedMenu {
             let categoryName = category.0
             let itemList = category.1
             
@@ -71,7 +82,7 @@ class MenuImages: NSObject {
             let menuText = NSMutableAttributedString(string: "")
             
             for item in itemList {
-                menuText.appendAttributedString(NSAttributedString(string: "  \(item)\n"))
+                menuText.appendAttributedString(NSAttributedString(string: "  \(item.name)\n"))
             }
             
             itemTextView.attributedText = menuText
@@ -319,5 +330,5 @@ class MenuImages: NSObject {
         
         vc.presentViewController(activityVC, animated: true, completion: nil)
     }
-    
+
 }
