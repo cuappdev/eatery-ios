@@ -15,10 +15,6 @@ extension NSTimeInterval {
     }
 }
 
-//func nextEventDisplayTextForEatery(eatery: Eatery) -> String {
-//    let event = nextEventForEatery(eatery)
-//}
-
 func displayTextForEvent(event: Event) -> String {
     return dateConverter(event.startDate, date2: event.endDate)
 }
@@ -29,17 +25,6 @@ func timeOfDate(date: NSDate) -> Int {
     let calendar = NSCalendar.currentCalendar()
     let comp = calendar.components([.Hour, .Minute, .Second], fromDate: date)
     return comp.hour * 3600 + comp.minute * 60 + comp.second
-}
-
-/// Returns: true if event is currenlty happening
-func eventIsCurrentlyHappening(event: MXLCalendarEvent) -> Bool {
-    let currentTime = timeOfDate(NSDate())
-    let s = timeOfDate(event.eventStartDate)
-    let e = timeOfDate(event.eventEndDate)
-    if currentTime > s && currentTime < e && !event.isClosedEvent() {
-        return true
-    }
-    return false
 }
 
 // TODO: make this an extension on MXLCalendarEvent
@@ -92,14 +77,6 @@ private func amOrPm(hour: Int) -> String {
     }
 }
 
-extension MXLCalendarEvent {
-    /// Eateries have events for being closed.
-    /// We can find them by querying the eventSummary parameter
-    func isClosedEvent() -> Bool {
-        return eventSummary.lowercaseString.containsString("closed")
-    }
-}
-
 extension String {
     mutating func convertTimeIfNeeded() {
         if self == "12am" {
@@ -109,20 +86,4 @@ extension String {
         }
     }
 }
-
-func >(lhs: MXLCalendarEvent, rhs: MXLCalendarEvent) -> Bool {
-    return timeOfDate(lhs.eventStartDate) > timeOfDate(rhs.eventStartDate)
-}
-
-func <(lhs: MXLCalendarEvent, rhs: MXLCalendarEvent) -> Bool {
-    return timeOfDate(lhs.eventStartDate) < timeOfDate(rhs.eventStartDate)
-}
-
-func ==(lhs: MXLCalendarEvent, rhs: MXLCalendarEvent) -> Bool {
-    return timeOfDate(lhs.eventStartDate) == timeOfDate(rhs.eventStartDate)
-}
-
-
-
-
 

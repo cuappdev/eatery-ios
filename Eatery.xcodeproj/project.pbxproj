@@ -29,10 +29,6 @@
 		652BEED81C70E5F70079C407 /* nicknames.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* nicknames.json */; };
 		652BEED91C70E6020079C407 /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		652BEEDA1C70E6240079C407 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
-		652BEEDC1C70E63F0079C407 /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */; };
-		652BEEDD1C70E6430079C407 /* MXLCalendarAttendee.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */; };
-		652BEEDE1C70E6460079C407 /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */; };
-		652BEEDF1C70E64B0079C407 /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
 		659B216E1C70796600F3B138 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659B216C1C70796600F3B138 /* Interface.storyboard */; };
 		659B21701C70796600F3B138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B216F1C70796600F3B138 /* Assets.xcassets */; };
 		659B21771C70796600F3B138 /* Eatery Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 659B21761C70796600F3B138 /* Eatery Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -72,11 +68,6 @@
 		C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF41B64AA1800AC1C6C /* Macros.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
-		C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */; };
-		C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */; };
-		C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */; };
-		C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */; };
-		C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */; };
 		C066488A1B64B0E800E02A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497B1E1B64AA3800AC1C6C /* LaunchScreen.xib */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
@@ -231,7 +222,6 @@
 		561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.external beta.xcconfig"; sourceTree = "<group>"; };
 		64AAE901E7D407EC4C6D8C67 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesInterfaceController.swift; sourceTree = "<group>"; };
-		652AE53B1C707EBC00B7245A /* Eatery-Watch-App-Extension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Eatery-Watch-App-Extension-Bridging-Header.h"; sourceTree = "<group>"; };
 		652AE53C1C707EBC00B7245A /* EateryRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryRowController.swift; sourceTree = "<group>"; };
 		652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInterfaceController.swift; sourceTree = "<group>"; };
 		659B216A1C70796600F3B138 /* Eatery Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eatery Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,16 +290,6 @@
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
 		C0497B1F1B64AA3800AC1C6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C0497B691B64AA3800AC1C6C /* MXLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendar.h; sourceTree = "<group>"; };
-		C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendar.m; sourceTree = "<group>"; };
-		C0497B6B1B64AA3800AC1C6C /* MXLCalendarAttendee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarAttendee.h; sourceTree = "<group>"; };
-		C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarAttendee.m; sourceTree = "<group>"; };
-		C0497B6D1B64AA3800AC1C6C /* MXLCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarEvent.h; sourceTree = "<group>"; };
-		C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarEvent.m; sourceTree = "<group>"; };
-		C0497B6F1B64AA3800AC1C6C /* MXLCalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarManager.h; sourceTree = "<group>"; };
-		C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarManager.m; sourceTree = "<group>"; };
-		C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
-		C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
 		C0F182F61B674B1300063D77 /* Eatery-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Eatery-Bridging-Header.h"; path = "Other-Sources/Eatery-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Other-Sources/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
@@ -509,7 +489,6 @@
 				652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */,
 				659B217F1C70796600F3B138 /* ExtensionDelegate.swift */,
 				659B21811C70796600F3B138 /* NotificationController.swift */,
-				652AE53B1C707EBC00B7245A /* Eatery-Watch-App-Extension-Bridging-Header.h */,
 				659B21831C70796600F3B138 /* Assets.xcassets */,
 				659B21851C70796600F3B138 /* Info.plist */,
 				659B217B1C70796600F3B138 /* Supporting Files */,
@@ -577,7 +556,6 @@
 			isa = PBXGroup;
 			children = (
 				42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */,
-				C0497B591B64AA3800AC1C6C /* vendor */,
 				95434F941BD8699F003612DB /* Tools */,
 				C0497ACA1B64AA1800AC1C6C /* Classes */,
 				C0497BC11B64AB4100AC1C6C /* Other-Sources */,
@@ -741,31 +719,6 @@
 				FAC5A3171BC60DE50001DE97 /* Trillium+logo.jpg */,
 			);
 			path = "Eatery Images";
-			sourceTree = "<group>";
-		};
-		C0497B591B64AA3800AC1C6C /* vendor */ = {
-			isa = PBXGroup;
-			children = (
-				C0497B681B64AA3800AC1C6C /* MXLCalendarManager */,
-			);
-			path = vendor;
-			sourceTree = "<group>";
-		};
-		C0497B681B64AA3800AC1C6C /* MXLCalendarManager */ = {
-			isa = PBXGroup;
-			children = (
-				C0497B691B64AA3800AC1C6C /* MXLCalendar.h */,
-				C0497B6A1B64AA3800AC1C6C /* MXLCalendar.m */,
-				C0497B6B1B64AA3800AC1C6C /* MXLCalendarAttendee.h */,
-				C0497B6C1B64AA3800AC1C6C /* MXLCalendarAttendee.m */,
-				C0497B6D1B64AA3800AC1C6C /* MXLCalendarEvent.h */,
-				C0497B6E1B64AA3800AC1C6C /* MXLCalendarEvent.m */,
-				C0497B6F1B64AA3800AC1C6C /* MXLCalendarManager.h */,
-				C0497B701B64AA3800AC1C6C /* MXLCalendarManager.m */,
-				C0497B711B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.h */,
-				C0497B721B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m */,
-			);
-			path = MXLCalendarManager;
 			sourceTree = "<group>";
 		};
 		C0497BC11B64AB4100AC1C6C /* Other-Sources */ = {
@@ -1271,13 +1224,9 @@
 				659B21821C70796600F3B138 /* NotificationController.swift in Sources */,
 				652AE53F1C707EBC00B7245A /* EateriesInterfaceController.swift in Sources */,
 				652BEED71C70E5F00079C407 /* Eatery+Extensions.swift in Sources */,
-				652BEEDD1C70E6430079C407 /* MXLCalendarAttendee.m in Sources */,
 				659B21801C70796600F3B138 /* ExtensionDelegate.swift in Sources */,
-				652BEEDF1C70E64B0079C407 /* NSTimeZone+ProperAbbreviation.m in Sources */,
 				652AE5411C707EBC00B7245A /* MenuInterfaceController.swift in Sources */,
-				652BEEDE1C70E6460079C407 /* MXLCalendar.m in Sources */,
 				652AE5401C707EBC00B7245A /* EateryRowController.swift in Sources */,
-				652BEEDC1C70E63F0079C407 /* MXLCalendarEvent.m in Sources */,
 				652BEEDA1C70E6240079C407 /* TimeFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1300,17 +1249,13 @@
 				95434FBD1BD8699F003612DB /* _FBTweakTableViewCell.m in Sources */,
 				E9CFC0A51C0E43C500ED884A /* Globals.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,
-				C0497BBE1B64AA3800AC1C6C /* MXLCalendarManager.m in Sources */,
 				D102463A1C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift in Sources */,
 				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
-				C0497BBF1B64AA3800AC1C6C /* NSTimeZone+ProperAbbreviation.m in Sources */,
 				D10246291C7A31C4000D5CD8 /* LookAheadViewController.swift in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				D102463C1C7A3239000D5CD8 /* EateryMenuTableViewCell.swift in Sources */,
-				C0497BBB1B64AA3800AC1C6C /* MXLCalendar.m in Sources */,
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				95434FB81BD8699F003612DB /* _FBTweakArrayViewController.m in Sources */,
-				C0497BBC1B64AA3800AC1C6C /* MXLCalendarAttendee.m in Sources */,
 				FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */,
 				95434FBF1BD8699F003612DB /* FBTweakCategory.m in Sources */,
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
@@ -1326,7 +1271,6 @@
 				1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
 				E9EC978F1BFD1B4B00D06823 /* EateriesGridViewController.swift in Sources */,
-				C0497BBD1B64AA3800AC1C6C /* MXLCalendarEvent.m in Sources */,
 				E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */,
 				95434FB91BD8699F003612DB /* _FBTweakBindObserver.m in Sources */,
 				95434FC01BD8699F003612DB /* FBTweakCollection.m in Sources */,
@@ -1718,7 +1662,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1762,7 +1705,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
@@ -1807,7 +1749,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
@@ -1852,7 +1793,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Eatery Watch App Extension/Eatery-Watch-App-Extension-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
