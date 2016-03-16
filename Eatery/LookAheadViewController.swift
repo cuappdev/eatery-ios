@@ -129,11 +129,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     // Eatery Menu Methods
     
     func hasMenuIterable(eatery: Eatery) -> Bool {
-        let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
+        let alternateMenuIterable = eatery.getAlternateMenuIterable()
         let selectedMeal = getSelectedMeal(eatery)
         
         if !selectedMeal.isEmpty {
-            let menuIterable = hardcodeMenuIterable.count > 0 ? hardcodeMenuIterable : events[selectedMeal]!.getMenuIterable()
+            let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
             return !menuIterable.isEmpty
         }
         
@@ -142,11 +142,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func getEateryMenu(eatery: Eatery) -> UIImage {
         var eateryMenuImage = UIImage()
-        let hardcodeMenuIterable = eatery.getHardcodeMenuIterable()
+        let alternateMenuIterable = eatery.getAlternateMenuIterable()
         let selectedMeal = getSelectedMeal(eatery)
         
         if !selectedMeal.isEmpty {
-            let menuIterable = hardcodeMenuIterable.count > 0 ? hardcodeMenuIterable : events[selectedMeal]!.getMenuIterable()
+            let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
             eateryMenuImage = MenuImages.createCondensedMenuImage(view.frame.width, menuIterable: menuIterable)
         }
         

@@ -158,7 +158,7 @@ class MenuImages: NSObject {
         openIndicatorView.layer.cornerRadius = openIndicatorView.frame.width / 2.0
         openIndicatorView.clipsToBounds = true
         menuHeader.addSubview(openIndicatorView)
-        
+      
         //create eatery name label
         let eateryNameLabel = UILabel(frame: CGRectMake(openIndicatorView.frame.origin.x + openIndicatorView.frame.width + 5, 0, 275, 50))
         eateryNameLabel.textColor = fontColor
@@ -171,34 +171,38 @@ class MenuImages: NSObject {
         eateryNameLabel.center = CGPointMake(eateryNameLabel.center.x, openIndicatorView.center.y)
         
         //create eatery time label
-        let openTime = "Open \(events[selectedMenu]!.startDateFormatted) to \(events[selectedMenu]!.endDateFormatted)"
+        var text = "Closed"
+        if let event = events[selectedMenu] {
+            text = "Open \(event.startDateFormatted) to \(event.endDateFormatted)"
+        }
         let eateryTimeLabel = UILabel(frame: CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height, 200, 15))
         eateryTimeLabel.textColor = fontColor
-        eateryTimeLabel.text = openTime
+        eateryTimeLabel.text = text
         eateryTimeLabel.font = headerTimeFont
         eateryTimeLabel.sizeToFit()
         eateryTimeLabel.frame = CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height - 12, eateryTimeLabel.frame.width, eateryTimeLabel.frame.height)
         menuHeader.addSubview(eateryTimeLabel)
-        
+      
         
         //create event name label
         let eventNameLabel = UILabel(frame: CGRectMake(0, 0, 200, 15))
         eventNameLabel.textColor = UIButton().tintColor
         eventNameLabel.text = selectedMenu.uppercaseString
-        if let _ = eatery.hardcodedMenu {
+        if eatery.diningItems != nil || eatery.hardcodedMenu != nil{
             eventNameLabel.text = "MENU"
         }
         eventNameLabel.font = headerEventFont
         eventNameLabel.sizeToFit()
         eventNameLabel.center = CGPointMake(menuHeader.center.x, menuHeader.frame.height - eventNameLabel.frame.height)
         menuHeader.addSubview(eventNameLabel)
-        
+      
         //create event name underscore bar view
-        let bar = UIView(frame: CGRectMake(0,menuHeader.frame.height - 2, menuHeader.frame.width / CGFloat(events.count), 2))
+        let sections = CGFloat(events.count < 1 ? 1 : events.count)
+        let bar = UIView(frame: CGRectMake(0,menuHeader.frame.height - 2, menuHeader.frame.width / sections, 2))
         bar.backgroundColor = UIButton().tintColor
         bar.center = CGPointMake(menuHeader.center.x, bar.center.y)
         menuHeader.addSubview(bar)
-        
+      
         //create payment options image
         //TODO
         //let paymentOptionView = UIImageView(frame: CGRectMake(0, 0, 50, 50))
@@ -260,7 +264,7 @@ class MenuImages: NSObject {
             var frame = categoryView.frame
             frame.origin.y = y
             categoryView.frame = frame
-            
+          
             completeMenuView.addSubview(categoryView)
             y += categoryView.frame.height
         }
@@ -269,7 +273,7 @@ class MenuImages: NSObject {
         let brandingImageView = UIImageView(frame: CGRectMake(0, y + 5, width, brandingViewHeight))
         brandingImageView.image = UIImage(named: "eateryLogo")
         brandingImageView.contentMode = .ScaleAspectFit
-        
+      
         completeMenuView.addSubview(brandingImageView)
         y += brandingViewHeight + dividerSize
         
@@ -291,8 +295,11 @@ class MenuImages: NSObject {
     class func shareMenu(eatery: Eatery, vc: UIViewController, events: [String: Event], date: NSDate, selectedMenu: String?) {
         // Get share image
         var imageToShare = UIImage()
-
-        if let _ = eatery.hardcodedMenu {
+      
+        if let _ = eatery.diningItems {
+            imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: eatery.eventsOnDate(date), selectedMenu: selectedMenu!, menuIterable: eatery.getDiningItemMenuIterable())
+        }
+        else if let _ = eatery.hardcodedMenu {
             imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: eatery.eventsOnDate(date), selectedMenu: selectedMenu!, menuIterable: eatery.getHardcodeMenuIterable())
         } else {
             imageToShare = MenuImages.createMenuShareImage(vc.view.frame.width, eatery: eatery, events: events, selectedMenu: selectedMenu!, menuIterable: events[selectedMenu!]!.getMenuIterable())

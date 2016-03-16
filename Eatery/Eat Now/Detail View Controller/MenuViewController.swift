@@ -285,8 +285,11 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         var image: UIImage = UIImage()
         let mealVC = (pageViewController.pageViewController.viewControllers![0] as! MealTableViewController)
         let eatery = mealVC.eatery
-        
-        if let _ = eatery.hardcodedMenu {
+      
+        if let _ = eatery.diningItems {
+            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: eatery.getDiningItemMenuIterable())
+        }
+        else if let _ = eatery.hardcodedMenu {
             image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: eatery.getHardcodeMenuIterable())
         } else {
             image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: mealVC.event!.getMenuIterable())
