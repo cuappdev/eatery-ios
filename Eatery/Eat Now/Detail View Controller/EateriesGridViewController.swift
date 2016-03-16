@@ -8,6 +8,7 @@
 
 import UIKit
 import DiningStack
+import DGElasticPullToRefresh
 
 let kCollectionViewGutterWidth: CGFloat = 8
 
@@ -38,6 +39,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         
         navigationController?.view.backgroundColor = .whiteColor()
         navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.clipsToBounds = true
 
         setupCollectionView()
         extendedLayoutIncludesOpaqueBars = true
@@ -69,8 +71,20 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         searchBar = UISearchBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
         searchBar.delegate = self
         searchBar.placeholder = "Search"
+        searchBar.searchBarStyle = .Minimal
         collectionView.addObserver(self, forKeyPath: "contentOffset", options: [.New], context: nil)
         view.addSubview(searchBar)
+        
+        // Pull To Refresh
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = UIColor.whiteColor()
+        collectionView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+                self?.loadData(true) {
+                    self?.collectionView.dg_stopLoading()
+                }
+            }, loadingView: loadingView)
+        collectionView.dg_setPullToRefreshFillColor(UIColor.eateryBlue())
+        collectionView.dg_setPullToRefreshBackgroundColor(collectionView.backgroundColor!)
     }
     
     func goToLookAheadVC() {
