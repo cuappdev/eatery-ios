@@ -158,7 +158,7 @@ class MenuImages: NSObject {
         openIndicatorView.layer.cornerRadius = openIndicatorView.frame.width / 2.0
         openIndicatorView.clipsToBounds = true
         menuHeader.addSubview(openIndicatorView)
-        
+      
         //create eatery name label
         let eateryNameLabel = UILabel(frame: CGRectMake(openIndicatorView.frame.origin.x + openIndicatorView.frame.width + 5, 0, 275, 50))
         eateryNameLabel.textColor = fontColor
@@ -182,7 +182,7 @@ class MenuImages: NSObject {
         eateryTimeLabel.sizeToFit()
         eateryTimeLabel.frame = CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height - 12, eateryTimeLabel.frame.width, eateryTimeLabel.frame.height)
         menuHeader.addSubview(eateryTimeLabel)
-        
+      
         
         //create event name label
         let eventNameLabel = UILabel(frame: CGRectMake(0, 0, 200, 15))
@@ -195,13 +195,14 @@ class MenuImages: NSObject {
         eventNameLabel.sizeToFit()
         eventNameLabel.center = CGPointMake(menuHeader.center.x, menuHeader.frame.height - eventNameLabel.frame.height)
         menuHeader.addSubview(eventNameLabel)
-        
+      
         //create event name underscore bar view
-        let bar = UIView(frame: CGRectMake(0,menuHeader.frame.height - 2, menuHeader.frame.width / CGFloat(events.count), 2))
+        let sections = CGFloat(events.count < 1 ? 1 : events.count)
+        let bar = UIView(frame: CGRectMake(0,menuHeader.frame.height - 2, menuHeader.frame.width / sections, 2))
         bar.backgroundColor = UIButton().tintColor
         bar.center = CGPointMake(menuHeader.center.x, bar.center.y)
         menuHeader.addSubview(bar)
-        
+      
         //create payment options image
         //TODO
         //let paymentOptionView = UIImageView(frame: CGRectMake(0, 0, 50, 50))
@@ -256,7 +257,6 @@ class MenuImages: NSObject {
         let completeMenuView = UIView(frame: CGRectMake(0, 0, width, 0))
         completeMenuView.backgroundColor = bodyColor
         //add all components to completeMenuView
-        menuHeader.translatesAutoresizingMaskIntoConstraints = false
         completeMenuView.addSubview(menuHeader)
         var y = menuHeader.frame.height + dividerSize
         for categoryView in categoryViews {
@@ -264,8 +264,7 @@ class MenuImages: NSObject {
             var frame = categoryView.frame
             frame.origin.y = y
             categoryView.frame = frame
-            
-            categoryView.translatesAutoresizingMaskIntoConstraints = false
+          
             completeMenuView.addSubview(categoryView)
             y += categoryView.frame.height
         }
@@ -274,8 +273,7 @@ class MenuImages: NSObject {
         let brandingImageView = UIImageView(frame: CGRectMake(0, y + 5, width, brandingViewHeight))
         brandingImageView.image = UIImage(named: "eateryLogo")
         brandingImageView.contentMode = .ScaleAspectFit
-        
-        brandingImageView.translatesAutoresizingMaskIntoConstraints = false
+      
         completeMenuView.addSubview(brandingImageView)
         y += brandingViewHeight + dividerSize
         
