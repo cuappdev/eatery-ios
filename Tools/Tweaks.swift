@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Tweaks
 
 class Tweaks: NSObject, FBTweakObserver {
     

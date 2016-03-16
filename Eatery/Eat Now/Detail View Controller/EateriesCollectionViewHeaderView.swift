@@ -6,7 +6,7 @@
 //  Copyright © 2015 CUAppDev. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class EateriesCollectionViewHeaderView: UICollectionReusableView {
     @IBOutlet weak var titleLabel: UILabel!

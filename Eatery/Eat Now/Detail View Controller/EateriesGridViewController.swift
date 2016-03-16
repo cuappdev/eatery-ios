@@ -96,16 +96,14 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        DATA.fetchEateries(force) { (error) -> (Void) in
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                if let completionBlock = completion {
-                    completionBlock()
-                }
+        DATA.fetchEateries(force) { _ in
+            dispatch_async(dispatch_get_main_queue()) {
+                completion?()
                 self.eateries = DATA.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
                 self.pushPreselectedEatery()
-            })
+            }
         }
     }
   

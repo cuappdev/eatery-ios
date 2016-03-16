@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Tweaks
 
 class Tools: UIView, FBTweakViewControllerDelegate {
     

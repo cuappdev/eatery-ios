@@ -7,6 +7,7 @@ end
 target 'Eatery' do
   platform :ios, '8.0'
   pod 'Analytics/Segmentio'
+  pod 'Tweaks'
   shared_pods
 end
 
