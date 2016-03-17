@@ -105,7 +105,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         collectionView.registerNib(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
         collectionView.contentInset = UIEdgeInsets(top: navigationController!.navigationBar.frame.maxY, left: 0, bottom: 0, right: 0)
-        collectionView.contentOffset = CGPointMake(0, 0)
+        collectionView.contentOffset = CGPointMake(0, -20)
         collectionView.showsVerticalScrollIndicator = false
     }
     
@@ -387,7 +387,7 @@ extension EateriesGridViewController: UICollectionViewDelegate {
 extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            return CGSizeMake(0, 100)
+            return CGSizeMake(0, 80)
         }
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
     }
@@ -418,6 +418,7 @@ extension EateriesGridViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         let boolToReturn = shouldBeginEditing
         shouldBeginEditing = true
+        searchBar.setShowsCancelButton(true, animated: true)
         return boolToReturn
     }
     
@@ -447,6 +448,27 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        scrollSearchBar(scrollView)
+    }
+
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        scrollSearchBar(scrollView)
+    }
+    
+    func scrollSearchBar(scrollView: UIScrollView) {
+        if let barBottomY = navigationController?.navigationBar.frame.maxY {
+            let searchBarMiddleY = searchBar.frame.midY
+            if searchBar.frame.contains(CGPoint(x: 0, y: barBottomY)) {
+                if barBottomY < searchBarMiddleY {
+                    scrollView.setContentOffset(CGPoint(x: 0, y: -64.0), animated: true)
+                } else {
+                    scrollView.setContentOffset(CGPoint(x: 0, y: -64.0 + searchBar.frame.height), animated: true)
+                }
+            }
+        }
     }
 }
 
