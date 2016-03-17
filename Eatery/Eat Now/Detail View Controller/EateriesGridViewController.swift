@@ -20,7 +20,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
     private var eateryData: [String: [Eatery]] = [:]
     
     private var searchBar: UISearchBar!
-    private var shouldBeginEditing = false
     private var sorted = Eatery.Sorting.Campus
     var preselectedSlug: String?
     private let defaults = NSUserDefaults.standardUserDefaults()
@@ -416,18 +415,12 @@ extension EateriesGridViewController: UISearchBarDelegate {
     }
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
-        let boolToReturn = shouldBeginEditing
-        shouldBeginEditing = true
         searchBar.setShowsCancelButton(true, animated: true)
-        return boolToReturn
+        return true
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         sortingQueue.cancelAllOperations()
-        
-        if !searchBar.isFirstResponder() {
-            shouldBeginEditing = false
-        }
         
         let newOperation = NSBlockOperation()
         newOperation.addExecutionBlock { [unowned newOperation] in
