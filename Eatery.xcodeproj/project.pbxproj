@@ -22,6 +22,9 @@
 		4FCD9913DFE369F3EDB74FAE /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50509AB523800758F692AA91 /* Pods_Eatery_Watch_App.framework */; };
 		5251035B4AC57673BCB6D4B4 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E8A627AA2A6DA1D7BB83A8E /* Pods_Eatery.framework */; };
 		5D231AF4D58DED90FD024320 /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6E64ED32027E3E529637D0 /* Pods_Eatery_Watch_App_Extension.framework */; };
+		60CF7D871C9A243500830C57 /* MoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF7D861C9A243500830C57 /* MoreInfoViewController.swift */; };
+		60CF7D8A1C9A250300830C57 /* MoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CF7D881C9A250300830C57 /* MoreInfoTableViewCell.swift */; };
+		60CF7D8B1C9A250300830C57 /* MoreInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60CF7D891C9A250300830C57 /* MoreInfoTableViewCell.xib */; };
 		652AE53F1C707EBC00B7245A /* EateriesInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */; };
 		652AE5401C707EBC00B7245A /* EateryRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53C1C707EBC00B7245A /* EateryRowController.swift */; };
 		652AE5411C707EBC00B7245A /* MenuInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */; };
@@ -177,6 +180,9 @@
 		4BA4E2B16C2C3A450EF353BE /* Pods_Today_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Today_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50509AB523800758F692AA91 /* Pods_Eatery_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.external beta.xcconfig"; sourceTree = "<group>"; };
+		60CF7D861C9A243500830C57 /* MoreInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreInfoViewController.swift; path = "Eat Now/Detail View Controller/MoreInfoViewController.swift"; sourceTree = "<group>"; };
+		60CF7D881C9A250300830C57 /* MoreInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreInfoTableViewCell.swift; sourceTree = "<group>"; };
+		60CF7D891C9A250300830C57 /* MoreInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreInfoTableViewCell.xib; sourceTree = "<group>"; };
 		64AAE901E7D407EC4C6D8C67 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesInterfaceController.swift; sourceTree = "<group>"; };
 		652AE53C1C707EBC00B7245A /* EateryRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryRowController.swift; sourceTree = "<group>"; };
@@ -321,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */,
+				60CF7D861C9A243500830C57 /* MoreInfoViewController.swift */,
 				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
@@ -477,6 +484,8 @@
 				E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */,
 				C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */,
 				C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */,
+				60CF7D881C9A250300830C57 /* MoreInfoTableViewCell.swift */,
+				60CF7D891C9A250300830C57 /* MoreInfoTableViewCell.xib */,
 				D102463E1C7A3250000D5CD8 /* Look Ahead Cells */,
 			);
 			name = Cells;
@@ -709,6 +718,7 @@
 					};
 					659B21751C70796600F3B138 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = TMQPV226LH;
 					};
 					C007CABE19E1BEAC00E3BD46 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -818,6 +828,7 @@
 				B0F2F2DB1C6C1D5C0024D04A /* Sweet-Sensations.jpg in Resources */,
 				FA1E4B831BD41A5A00DBD076 /* hardcodedMenus.json in Resources */,
 				D10246311C7A320C000D5CD8 /* TitleSectionTableViewCell.xib in Resources */,
+				60CF7D8B1C9A250300830C57 /* MoreInfoTableViewCell.xib in Resources */,
 				FAC5A31A1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1043,10 +1054,12 @@
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
+				60CF7D8A1C9A250300830C57 /* MoreInfoTableViewCell.swift in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
 				E9CFC0B81C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
+				60CF7D871C9A243500830C57 /* MoreInfoViewController.swift in Sources */,
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
@@ -1431,12 +1444,14 @@
 			baseConfigurationReference = DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1463,6 +1478,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1480,6 +1496,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1507,6 +1524,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1524,6 +1542,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1551,6 +1570,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1568,6 +1588,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

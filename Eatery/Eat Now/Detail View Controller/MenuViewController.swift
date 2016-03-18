@@ -58,6 +58,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         } else {
             title = dateString
         }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Info", style: .Plain, target: self, action: "moreInfoButtonPressed:")
         
         // Scroll View
         outerScrollView = UIScrollView(frame: view.frame)
@@ -346,5 +347,12 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                 }
             }
         }
+    }
+    
+    func moreInfoButtonPressed(sender: UIBarButtonItem) {
+        let moreInfoVC = MoreInfoViewController()
+        moreInfoVC.eatery = eatery
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(moreInfoVC, animated: true)
     }
 }
