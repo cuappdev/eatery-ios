@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -13,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KI1-qa-4JK" userLabel="Cell Divider">
@@ -24,7 +23,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eatery Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBb-mc-wiI">
-                        <rect key="frame" x="10" y="10" width="107" height="21.5"/>
+                        <rect key="frame" x="10" y="10" width="107" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21.5" id="7Eh-Kx-2Nn"/>
                         </constraints>
@@ -47,17 +46,9 @@
                             <constraint firstAttribute="width" constant="69" id="Zl3-LJ-jH0"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                        <state key="normal" title="Toggle Menu">
+                        <state key="normal" title="More Info">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                         </state>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5A0-7h-LTz">
-                        <rect key="frame" x="122" y="13" width="17" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="17" id="LWL-rT-WrS"/>
-                            <constraint firstAttribute="width" secondItem="5A0-7h-LTz" secondAttribute="height" multiplier="1:1" id="bjK-g4-7It"/>
-                        </constraints>
-                        <state key="normal" image="infoIcon"/>
                     </button>
                 </subviews>
                 <constraints>
@@ -68,13 +59,10 @@
                     <constraint firstAttribute="trailing" secondItem="KI1-qa-4JK" secondAttribute="trailing" id="JTl-Nh-OYc"/>
                     <constraint firstItem="KI1-qa-4JK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Kno-SU-WHc"/>
                     <constraint firstAttribute="bottom" secondItem="oBb-mc-wiI" secondAttribute="bottom" id="NrA-E0-2Po"/>
-                    <constraint firstItem="l1c-VV-wU0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5A0-7h-LTz" secondAttribute="trailing" constant="10" id="OF6-NB-Xr6"/>
                     <constraint firstAttribute="trailing" secondItem="l1c-VV-wU0" secondAttribute="trailing" constant="8" id="OMX-iY-8lq"/>
-                    <constraint firstItem="5A0-7h-LTz" firstAttribute="centerY" secondItem="oBb-mc-wiI" secondAttribute="centerY" id="Scw-Qw-rZC"/>
                     <constraint firstItem="KI1-qa-4JK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VOK-lP-VNg"/>
-                    <constraint firstItem="5A0-7h-LTz" firstAttribute="leading" secondItem="oBb-mc-wiI" secondAttribute="trailing" constant="5" id="h1Y-4T-dOC"/>
-                    <constraint firstItem="l1c-VV-wU0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="i4U-hC-ebN"/>
-                    <constraint firstItem="B9T-ip-Qiz" firstAttribute="top" secondItem="oBb-mc-wiI" secondAttribute="bottom" id="qDw-z8-vEZ"/>
+                    <constraint firstItem="l1c-VV-wU0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="1" id="i4U-hC-ebN"/>
+                    <constraint firstItem="B9T-ip-Qiz" firstAttribute="top" secondItem="oBb-mc-wiI" secondAttribute="bottom" constant="-1" id="qDw-z8-vEZ"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -85,13 +73,9 @@
             <connections>
                 <outlet property="eateryHoursLabel" destination="B9T-ip-Qiz" id="txb-TQ-k9s"/>
                 <outlet property="eateryNameLabel" destination="oBb-mc-wiI" id="O5q-2s-Bzz"/>
-                <outlet property="infoButton" destination="5A0-7h-LTz" id="k8b-U7-Fhs"/>
                 <outlet property="toggleMenuButton" destination="l1c-VV-wU0" id="7tD-m2-Nmo"/>
             </connections>
             <point key="canvasLocation" x="422" y="276.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="infoIcon" width="50" height="50"/>
-    </resources>
 </document>
