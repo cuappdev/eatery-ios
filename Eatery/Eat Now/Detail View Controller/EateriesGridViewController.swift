@@ -393,6 +393,7 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension EateriesGridViewController: UISearchBarDelegate {
+    
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         if (searchBar.text ?? "") != "" {
             searchBar.setShowsCancelButton(true, animated: true)
@@ -416,6 +417,11 @@ extension EateriesGridViewController: UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         searchBar.setShowsCancelButton(true, animated: true)
+        for subview in searchBar.subviews.first!.subviews {
+            if subview.isKindOfClass(UIButton) {
+                (subview as! UIButton).setTitleColor(UIColor.eateryBlue(), forState: .Normal)
+            }
+        }
         return true
     }
     
