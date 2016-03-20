@@ -21,6 +21,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
     
     private var searchBar: UISearchBar!
     private var sorted = Eatery.Sorting.Campus
+    private var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     private let defaults = NSUserDefaults.standardUserDefaults()
     private lazy var sortingQueue: NSOperationQueue = {
@@ -152,38 +153,45 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
     }
     
     func processEateries() {
+        searchedMenuItemNames.removeAll()
         var desiredEateries: [Eatery] = []
         let searchQuery = searchBar.text ?? ""
         if searchQuery != "" {
             desiredEateries = eateries.filter { eatery in
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
-                let hardcodedFoodItemFound: () -> Bool = {
-                    if let hardcoded = eatery.hardcodedMenu {
-                        for item in hardcoded.values.flatten() {
-                            if item.name.rangeOfString(searchQuery, options: options) != nil {
-                                return true
+                var hardcodedFoodItemFound = false
+                if let hardcoded = eatery.hardcodedMenu {
+                    for item in hardcoded.values.flatten() {
+                        if item.name.rangeOfString(searchQuery, options: options) != nil {
+                            if var names = self.searchedMenuItemNames[eatery] {
+                                names.append(item.name)
+                            } else {
+                                self.searchedMenuItemNames[eatery] = [item.name]
                             }
+                            hardcodedFoodItemFound = true
                         }
                     }
-                    return false
                 }
-                let currentMenuFoodItemFound: () -> Bool = {
-                    if let activeEvent = eatery.activeEventForDate(NSDate()) {
-                        for item in activeEvent.menu.values.flatten() {
-                            if item.name.rangeOfString(searchQuery, options: options) != nil {
-                                return true
+                var currentMenuFoodItemFound = false
+                if let activeEvent = eatery.activeEventForDate(NSDate()) {
+                    for item in activeEvent.menu.values.flatten() {
+                        if item.name.rangeOfString(searchQuery, options: options) != nil {
+                            if var names = self.searchedMenuItemNames[eatery] {
+                                names.append(item.name)
+                            } else {
+                                self.searchedMenuItemNames[eatery] = [item.name]
                             }
+                            currentMenuFoodItemFound = true
                         }
                     }
-                    return false
                 }
 
                 return (
                     eatery.name.rangeOfString(searchQuery, options: options) != nil
                     || eatery.allNicknames().contains { $0.rangeOfString(searchQuery, options: options) != nil }
                     || eatery.area.rawValue.rangeOfString(searchQuery, options: options) != nil
-                    || hardcodedFoodItemFound()
-                    || currentMenuFoodItemFound()
+                    || hardcodedFoodItemFound
+                    || currentMenuFoodItemFound
                 )
             }
         } else {
@@ -352,8 +360,24 @@ extension EateriesGridViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! EateryCollectionViewCell
+        let eatery = eateryForIndexPath(indexPath)
+        cell.setEatery(eatery)
         
-        cell.setEatery(eateryForIndexPath(indexPath))
+        cell.searchTextView.userInteractionEnabled = false
+        cell.searchTextView.textColor = UIColor.whiteColor()
+        if searchBar.text != "" {
+            cell.searchTextView.hidden = false
+            if let names = searchedMenuItemNames[eatery] {
+                let attrStrings: [NSMutableAttributedString] = names.map {
+                    NSMutableAttributedString(string: $0, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+                }
+                cell.searchTextView.attributedText = NSMutableAttributedString(string: "\n").join(attrStrings)
+            }
+        } else {
+            cell.searchTextView.hidden = true
+            cell.searchTextView.attributedText = NSMutableAttributedString()
+        }
+        
         return cell
     }
     
