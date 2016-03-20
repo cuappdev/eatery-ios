@@ -178,9 +178,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                     }
                     return false
                 }
+
                 return (
                     eatery.name.rangeOfString(searchQuery, options: options) != nil
                     || eatery.allNicknames().contains { $0.rangeOfString(searchQuery, options: options) != nil }
+                    || eatery.area.rawValue.rangeOfString(searchQuery, options: options) != nil
                     || hardcodedFoodItemFound()
                     || currentMenuFoodItemFound()
                 )
