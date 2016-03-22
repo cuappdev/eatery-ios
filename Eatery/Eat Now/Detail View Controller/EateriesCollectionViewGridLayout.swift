@@ -22,7 +22,7 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         itemSize = CGSize(width: cellWidth, height: cellWidth * 0.8)
         minimumLineSpacing = kCollectionViewGutterWidth
         minimumInteritemSpacing = kCollectionViewGutterWidth / 2
-        sectionInset = UIEdgeInsets(top: 2, left: kCollectionViewGutterWidth, bottom: 20, right: kCollectionViewGutterWidth)
+        sectionInset = UIEdgeInsets(top: 2, left: kCollectionViewGutterWidth, bottom: 16, right: kCollectionViewGutterWidth)
         headerReferenceSize = CGSizeMake(cellWidth, 40)
     }
     
