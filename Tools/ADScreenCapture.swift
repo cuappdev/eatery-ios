@@ -14,7 +14,7 @@ class ADScreenCapture: UIView {
         let scale = UIScreen.mainScreen().scale
         UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale)
         
-        guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: " + __FUNCTION__); return UIImage() }
+        guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: \(#function)"); return UIImage() }
         
         layer.renderInContext(context)
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()

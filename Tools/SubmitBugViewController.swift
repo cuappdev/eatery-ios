@@ -51,14 +51,14 @@ class SubmitBugViewController: UIViewController {
 		let cancelButton = UIButton(frame: CGRectMake(0, 20, 80, 30))
 		cancelButton.setTitle("Cancel", forState: .Normal)
 		cancelButton.setTitleColor(UIColor(red: 0.0, green:122.0/255.0, blue: 1.0, alpha: 1.0), forState: .Normal)
-		cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchDown)
+		cancelButton.addTarget(self, action: #selector(SubmitBugViewController.cancel), forControlEvents: .TouchDown)
 		view.addSubview(cancelButton)
 		
 		//create submit button to send bug report to slack
 		let submitButton = UIButton(frame: CGRectMake(view.frame.width - 80 , 20, 80, 30))
 		submitButton.setTitle("Submit", forState: .Normal)
 		submitButton.setTitleColor(UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0), forState: .Normal)
-		submitButton.addTarget(self, action: "submitBug", forControlEvents: .TouchDown)
+		submitButton.addTarget(self, action: #selector(SubmitBugViewController.submitBug), forControlEvents: .TouchDown)
 		view.addSubview(submitButton)
 	}
 

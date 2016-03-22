@@ -31,7 +31,7 @@ class EateryHeaderTableViewCell: UITableViewCell {
     }
     
     override func didMoveToWindow() {
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "eateryHeaderCellPressed:")
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EateryHeaderTableViewCell.eateryHeaderCellPressed(_:)))
         tapGestureRecognizer?.delegate = self
         tapGestureRecognizer?.cancelsTouchesInView = false
         addGestureRecognizer(tapGestureRecognizer!)

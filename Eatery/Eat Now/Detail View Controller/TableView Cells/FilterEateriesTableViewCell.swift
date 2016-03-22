@@ -40,7 +40,7 @@ class FilterEateriesTableViewCell: UITableViewCell {
     }
     
     override func didMoveToWindow() {
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "filterEateriesCellPressed:")
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(FilterEateriesTableViewCell.filterEateriesCellPressed(_:)))
         tapGestureRecognizer?.delegate = self
         tapGestureRecognizer?.cancelsTouchesInView = false
         addGestureRecognizer(tapGestureRecognizer!)

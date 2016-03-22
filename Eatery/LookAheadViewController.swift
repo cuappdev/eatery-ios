@@ -418,50 +418,26 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         for dateView in dateViews {
             dateView.dayLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
             dateView.dateLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 28.0)
-            let button = dateView.dateButton
             
-            if button.tag == selectedDateIndex {
-                dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
-                dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
-            } else {
-                dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
-                dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
-            }
-            
+            let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 0.7 : 0.3
+            dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
+            dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
         }
         
         // Update selected meal
         for button in buttons {
             button.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
-            if button.tag == selectedMealIndex {
-                button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7), forState: .Normal)
-            } else {
-                button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), forState: .Normal)
-            }
+            let alpha: CGFloat = button.tag == selectedMealIndex ? 0.7 : 0.3
+            button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), forState: .Normal)
         }
         
         // Filter eateries
-        filteredWestEateries.removeAll()
-        filteredNorthEateries.removeAll()
-        filteredCentralEateries.removeAll()
-        westExpandedCells.removeAll()
-        northExpandedCells.removeAll()
-        centralExpandedCells.removeAll()
-        
-        for eatery in westEateries {
-            filteredWestEateries.append(eatery)
-            westExpandedCells.append(0)
-        }
-        
-        for eatery in northEateries {
-            filteredNorthEateries.append(eatery)
-            northExpandedCells.append(0)
-        }
-        
-        for eatery in centralEateries {
-            filteredCentralEateries.append(eatery)
-            centralExpandedCells.append(0)
-        }
+        filteredWestEateries = westEateries
+        filteredNorthEateries = northEateries
+        filteredCentralEateries = centralEateries
+        westExpandedCells = Array(count: westEateries.count, repeatedValue: 0)
+        northExpandedCells = Array(count: northEateries.count, repeatedValue: 0)
+        centralExpandedCells = Array(count: centralEateries.count, repeatedValue: 0)
         
         tableView.reloadData()
     }

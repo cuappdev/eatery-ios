@@ -45,7 +45,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         
-        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: "sortButtonTapped")
+        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: #selector(EateriesGridViewController.sortButtonTapped))
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.leftBarButtonItem = leftBarButton
         
@@ -61,10 +61,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         
         // Add observer for user reentering app
         let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        nc.addObserver(self, selector: #selector(EateriesGridViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         // Set up bar look ahead VC
-        let rightBarButton = UIBarButtonItem(title: "Guide", style: .Plain, target: self, action: "goToLookAheadVC")
+        let rightBarButton = UIBarButtonItem(title: "Guide", style: .Plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
         rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.rightBarButtonItem = rightBarButton
         

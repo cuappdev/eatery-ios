@@ -117,7 +117,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         outerScrollView.scrollEnabled = false
         
-        let scrollGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handleScroll:")
+        let scrollGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MenuViewController.handleScroll(_:)))
         view.addGestureRecognizer(scrollGestureRecognizer)
         
         animator = UIDynamicAnimator()
