@@ -19,15 +19,15 @@ private let DayDateFormatter: NSDateFormatter = {
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     private var tableView: UITableView!
-    private var sectionHeaderHeight: CGFloat = 40.0
-    private var eateryHeaderHeight: CGFloat = 55.0
-    private var filterSectionHeight: CGFloat = 130.0
+    private let sectionHeaderHeight: CGFloat = 40.0
+    private let eateryHeaderHeight: CGFloat = 55.0
+    private let filterSectionHeight: CGFloat = 130.0
     private var filterEateriesCell: FilterEateriesTableViewCell!
     private var filterMealButtons: [UIButton]!
     private var filterDateViews: [FilterDateView]!
     private var selectedMealIndex: Int = 0
     private var selectedDateIndex: Int = 0
-    private var sections: [Area] = [.West, .North, .Central]
+    private let sections: [Area] = [.West, .North, .Central]
     private var westEateries: [Eatery] = []
     private var northEateries: [Eatery] = []
     private var centralEateries: [Eatery] = []
@@ -38,18 +38,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     private var northExpandedCells: [Int] = []
     private var centralExpandedCells: [Int] = []
     private var events: [String: Event] = [:]
-    private var dates: NSMutableArray {
-        let currentDates: NSMutableArray = []
-        var currentDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
-        
-        for _ in 0..<7 {
-            currentDates.addObject(currentDate)
-            let nextDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: 1, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))
-            currentDate = nextDate!
+    private let dates: [NSDate] = {
+        (0..<7).flatMap {
+            NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: $0, toDate: NSDate(), options: [])
         }
-        
-        return currentDates
-    }
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,8 +88,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         for (index,dateView) in filterDateViews.enumerate() {
             dateView.delegate = self
             dateView.dateButton.tag = index
-            dateView.dayLabel.text = dayStrings[index] as? String
-            dateView.dateLabel.text = dateStrings[index] as? String
+            dateView.dayLabel.text = dayStrings[index]
+            dateView.dateLabel.text = dateStrings[index]
         }
         
         filterEateries(filterDateViews, buttons: filterMealButtons)
@@ -154,7 +147,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func getSelectedMeal(eatery: Eatery) -> String {
-        let selectedDate = dates[selectedDateIndex] as! NSDate
+        let selectedDate = dates[selectedDateIndex]
         events = eatery.eventsOnDate(selectedDate)
 
         let meals: [String] = Array((events ?? [:]).keys)
@@ -188,27 +181,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     // Date Methods
     
-    func getDayStrings(dates: NSMutableArray) -> NSMutableArray {
-        let dayStrings: NSMutableArray = ["Today"]
-        dates.removeObjectAtIndex(0)
-        
-        for date in dates {
-            dayStrings.addObject(DayDateFormatter.stringFromDate(date as! NSDate))
-        }
-        
+    func getDayStrings(dates: [NSDate]) -> [String] {
+        var dayStrings = ["Today"]
+        dayStrings.appendContentsOf(dates[1..<dates.count].map { DayDateFormatter.stringFromDate($0) })
         return dayStrings
     }
     
-    func getDateStrings(dates: NSMutableArray) -> NSMutableArray {
-        let dateStrings: NSMutableArray = []
-        let calendar = NSCalendar.currentCalendar()
-        
-        for date in dates {
-            let dayComponents = calendar.component(.Day, fromDate: date as! NSDate)
-            dateStrings.addObject(String(dayComponents))
-        }
-        
-        return dateStrings
+    func getDateStrings(dates: [NSDate]) -> [String] {
+        return dates.map { "\(NSCalendar.currentCalendar().component(.Day, fromDate: $0))" }
     }
     
     // MARK: - Table View Methods
@@ -319,7 +299,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         default: break
         }
         
-        let date = dates[selectedDateIndex] as! NSDate
+        let date = dates[selectedDateIndex] 
         var delegate: MenuButtonsDelegate? = nil
         if let navigationController = self.navigationController {
             let delegateIndex = navigationController.viewControllers.count - 2
@@ -398,7 +378,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let selectedDate = dates[selectedDateIndex]
         
         let selectedMeal = getSelectedMeal(eatery)
-        MenuImages.shareMenu(eatery, vc: self, events: events, date: selectedDate as! NSDate, selectedMenu: selectedMeal)
+        MenuImages.shareMenu(eatery, vc: self, events: events, date: selectedDate, selectedMenu: selectedMeal)
     }
     
     // MARK: - Filter Eateries Cell Delegate Methods

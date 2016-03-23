@@ -123,7 +123,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         animator = UIDynamicAnimator()
         
         //scroll to currently opened event if possible
-        scrollToCurrentTimeOpening(displayedDate, meal: selectedMeal)
+        scrollToCurrentTimeOpening(displayedDate)
     }
     
     func handleScroll(gesture: UIPanGestureRecognizer) {
@@ -311,40 +311,22 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     // MARK: -
     // MARK: Scroll To Proper Time
     
-    func scrollToCurrentTimeOpening(date: NSDate, meal: String?) {
-        //only need to scroll if currently active event for day
-        // and more than one event
+    func scrollToCurrentTimeOpening(date: NSDate) {
+        guard let currentEvent = eatery.activeEventForDate(date) else { return }
+        guard let mealViewControllers = pageViewController.viewControllers as? [MealTableViewController]
+            where mealViewControllers.count > 1 else { return }
         
-        if let event = eatery.activeEventForDate(date) {
-            let isLiteLunch = (event.desc == "Lite Lunch")
-            
-            if let viewControllers = pageViewController.viewControllers {
-                if viewControllers.count < 2 {
-                    return
-                }
-                for vc in viewControllers {
-                    if let mealVC = vc as? MealTableViewController {
-                        if isLiteLunch && mealVC.meal == "Lunch" {
-                            pageViewController.scrollToViewController(mealVC)
-                            return
-                        }
-
-                        if let mealEvent = mealVC.event {
-                            if let selectedMeal = meal {
-                                if mealEvent.desc == selectedMeal {
-                                    pageViewController.scrollToViewController(mealVC)
-                                    return
-                                }
-                            } else {
-                                if mealEvent.desc == event.desc {
-                                    pageViewController.scrollToViewController(mealVC)
-                                    return
-                                }
-                            }
-                        }
-                    }
-                }
+        let desiredMealVC: MealTableViewController -> Bool = {
+            if currentEvent.desc == "Lite Lunch" {
+                return $0.meal == "Lunch"
+            } else {
+                let mealName = self.selectedMeal ?? currentEvent.desc
+                return $0.event?.desc == mealName
             }
+        }
+        
+        if let currentVC = mealViewControllers.filter(desiredMealVC).first {
+            pageViewController.scrollToViewController(currentVC)
         }
     }
 }
