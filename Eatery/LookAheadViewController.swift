@@ -15,6 +15,8 @@ private let DayDateFormatter: NSDateFormatter = {
     dateFormatter.dateFormat = "EEE"
     return dateFormatter
 }()
+private let LunchStartHour = 11
+private let DinnerStartHour = 16
 
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
@@ -426,9 +428,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     func currentMealIndex() -> Int {
         let calendar = NSCalendar.currentCalendar()
         let currentHour = calendar.component(.Hour, fromDate: NSDate())
-        if currentHour <= 10 {
+        if currentHour < LunchStartHour {
             return 0 // Breakfast
-        } else if currentHour <= 16 {
+        } else if currentHour < DinnerStartHour {
             return 1 // Lunch
         } else {
             return 2 // Dinner
