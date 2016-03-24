@@ -1,7 +1,7 @@
 use_frameworks!
 
 def shared_pods
-  pod 'DiningStack', :git => 'https://github.com/cuappdev/DiningStack.git', :branch => 'lucas/cocoapods'
+  pod 'DiningStack', :git => 'https://github.com/cuappdev/DiningStack.git', :branch => 'master'
 end
 
 target 'Eatery' do
