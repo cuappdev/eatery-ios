@@ -370,6 +370,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
         tableView.endUpdates()
         
+        tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Top, animated: true)
+        
         cell!.isExpanded = cell!.isExpanded ? false : true
     }
     
