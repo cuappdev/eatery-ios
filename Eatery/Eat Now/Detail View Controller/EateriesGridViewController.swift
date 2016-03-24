@@ -168,10 +168,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                 if let hardcoded = eatery.hardcodedMenu {
                     for item in hardcoded.values.flatten() {
                         if item.name.rangeOfString(searchQuery, options: options) != nil {
-                            if var names = self.searchedMenuItemNames[eatery] {
-                                names.append(item.name)
-                            } else {
+                            if self.searchedMenuItemNames[eatery] == nil {
                                 self.searchedMenuItemNames[eatery] = [item.name]
+                            } else {
+                                self.searchedMenuItemNames[eatery]?.append(item.name)
                             }
                             hardcodedFoodItemFound = true
                         }
@@ -180,11 +180,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                 var currentMenuFoodItemFound = false
                 if let activeEvent = eatery.activeEventForDate(NSDate()) {
                     for item in activeEvent.menu.values.flatten() {
-                        if item.name.rangeOfString(searchQuery, options: options) != nil {
-                            if var names = self.searchedMenuItemNames[eatery] {
-                                names.append(item.name)
-                            } else {
+                        if item.name.rangeOfString(searchQuery, options: options) != nil && eatery.slug == "North-Star"{
+                            if self.searchedMenuItemNames[eatery] == nil {
                                 self.searchedMenuItemNames[eatery] = [item.name]
+                            } else {
+                                self.searchedMenuItemNames[eatery]?.append(item.name)
                             }
                             currentMenuFoodItemFound = true
                         }
@@ -301,17 +301,21 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         
         cell.searchTextView.userInteractionEnabled = false
         cell.searchTextView.textColor = UIColor.whiteColor()
+        
+        var searchText = NSMutableAttributedString()
         if searchBar.text != "" {
-            cell.searchTextView.hidden = false
             if let names = searchedMenuItemNames[eatery] {
                 let attrStrings: [NSMutableAttributedString] = names.map {
                     NSMutableAttributedString(string: $0, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
                 }
-                cell.searchTextView.attributedText = NSMutableAttributedString(string: "\n").join(attrStrings)
+                cell.searchTextView.hidden = false
+                searchText = NSMutableAttributedString(string: "\n").join(attrStrings)
             }
+        }
+        if searchText != NSMutableAttributedString() {
+            cell.searchTextView.attributedText = searchText
         } else {
             cell.searchTextView.hidden = true
-            cell.searchTextView.attributedText = NSMutableAttributedString()
         }
         
         return cell
