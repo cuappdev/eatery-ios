@@ -8,6 +8,7 @@
 
 import UIKit
 import DiningStack
+import MapKit
 
 let kMenuHeaderViewFrameHeight: CGFloat = 240
 
@@ -70,6 +71,13 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         menuHeaderView.setUp(eatery, date: displayedDate)
         menuHeaderView.frame = CGRect(origin: CGPointZero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
+        
+        menuHeaderView.mapButtonPressed = { [unowned self] in
+            let mapVC = MapViewController()
+            mapVC.eatery = self.eatery
+            self.presentViewController(mapVC, animated: true, completion: nil)
+        }
+        
         outerScrollView.addSubview(menuHeaderView)
 
         // TabbedPageViewController

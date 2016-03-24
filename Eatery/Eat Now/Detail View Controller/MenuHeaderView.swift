@@ -19,6 +19,8 @@ class MenuHeaderView: UIView {
     var eatery: Eatery!
     var delegate: MenuButtonsDelegate?
     var displayedDate: NSDate!
+    
+    var mapButtonPressed: Void -> Void = {}
 
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -28,6 +30,7 @@ class MenuHeaderView: UIView {
     
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var mapButton: UIButton!
     
     override func awakeFromNib() {
         favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
@@ -111,5 +114,9 @@ class MenuHeaderView: UIView {
     @IBAction func shareButtonPressed(sender: UIButton) {
         delegate?.shareButtonPressed?()
     }
-
+    
+    @IBAction func mapButtonPressed(sender: UIButton) {
+        mapButtonPressed()
+    }
+    
 }
