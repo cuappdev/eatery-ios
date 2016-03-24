@@ -180,7 +180,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                 var currentMenuFoodItemFound = false
                 if let activeEvent = eatery.activeEventForDate(NSDate()) {
                     for item in activeEvent.menu.values.flatten() {
-                        if item.name.rangeOfString(searchQuery, options: options) != nil && eatery.slug == "North-Star"{
+                        if item.name.rangeOfString(searchQuery, options: options) != nil {
                             if self.searchedMenuItemNames[eatery] == nil {
                                 self.searchedMenuItemNames[eatery] = [item.name]
                             } else {
