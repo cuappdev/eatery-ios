@@ -92,6 +92,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             dateView.dateLabel.text = dateStrings[index]
         }
         
+        selectedMealIndex = currentMealIndex()
         filterEateries(filterDateViews, buttons: filterMealButtons)
         
         // Fetch Eateries Data
@@ -421,4 +422,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         tableView.reloadData()
     }
+    
+    func currentMealIndex() -> Int {
+        let currentHour = NSCalendar.currentCalendar().component(.Hour, fromDate: NSDate())
+        switch currentHour {
+        case 0...9: return 0
+        case 10...15: return 1
+        default: return 2
+        }
+    }
+    
 }
