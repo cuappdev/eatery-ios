@@ -10,7 +10,7 @@ import UIKit
 import DiningStack
 
 class EateryCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -23,7 +23,13 @@ class EateryCollectionViewCell: UICollectionViewCell {
     
     func setEatery(eatery: Eatery) {
         // photos are enormous so commenting temporarily until we thumbnail them
-        backgroundImageView.image = eatery.photo
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            let image = eatery.photo
+            dispatch_async(dispatch_get_main_queue()) {
+                self.backgroundImageView.image = image
+            }
+        }
         titleLabel.text = eatery.nickname
         statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
         statusView.layer.masksToBounds = true
@@ -49,5 +55,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             statusView.backgroundColor = .closedGray()
             timeLabel.text = message
         }
+    }
+    
+    override func preferredLayoutAttributesFittingAttributes(layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        return layoutAttributes
     }
 }
