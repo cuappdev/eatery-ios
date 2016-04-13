@@ -257,15 +257,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             }
             
             cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? UIColor.closedRed() : UIColor.openGreen()
-            cell.toggleMenuButton.hidden = (cell.eateryHoursLabel.text == "Closed")
-            cell.infoButton.hidden = (cell.eateryHoursLabel.text == "Closed")
+            cell.moreInfoButton.hidden = (cell.eateryHoursLabel.text == "Closed")
             
             if indexPath.row != (expandedCells.count - 1) {
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
-            }
-            
-            UIView.performWithoutAnimation {
-                cell.toggleMenuButton.setTitle(cell.isExpanded ? "Hide Menu" : "Show Menu", forState: .Normal)
             }
             
             return cell
@@ -353,12 +348,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
                 ], withRowAnimation: .Fade)
         }
-        
-        UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            cell!.toggleMenuButton.setTitle(cell!.isExpanded ? "Show Menu" : "Hide Menu", forState: .Normal)
-        }, completion: nil)
     
         tableView.endUpdates()
+        
+        tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Top, animated: true)
         
         cell!.isExpanded = cell!.isExpanded ? false : true
     }
