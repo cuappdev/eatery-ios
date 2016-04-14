@@ -9,8 +9,8 @@
 import UIKit
 
 @objc protocol EateryHeaderCellDelegate {
-    optional func didTapInfoButton(cell: EateryHeaderTableViewCell?)
-    optional func didTapToggleMenuButton(cell: EateryHeaderTableViewCell?)
+    optional func didTapInfoButton(cell: EateryHeaderTableViewCell)
+    optional func didTapToggleMenuButton(cell: EateryHeaderTableViewCell)
 }
 
 class EateryHeaderTableViewCell: UITableViewCell {

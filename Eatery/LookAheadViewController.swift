@@ -289,8 +289,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: - Eatery Header Cell Delegate Methods
     
-    func didTapInfoButton(cell: EateryHeaderTableViewCell?) {
-        let indexPath = tableView.indexPathForCell(cell!)
+    func didTapInfoButton(cell: EateryHeaderTableViewCell) {
+        let indexPath = tableView.indexPathForCell(cell)
         var eatery: Eatery!
         
         switch(sections[indexPath!.section]) {
@@ -311,54 +311,47 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
     
-    func didTapToggleMenuButton(cell: EateryHeaderTableViewCell?) {
-        let indexPath = tableView.indexPathForCell(cell!)
+    func didTapToggleMenuButton(cell: EateryHeaderTableViewCell) {
+        guard let indexPath = tableView.indexPathForCell(cell) else { return }
+        let row = indexPath.row
         
-        tableView.beginUpdates()
+        let menuRow = row + 1
+        if (cell.eateryHoursLabel.text != "Closed") {
+            
+            func closeOrExpand(inout eateries: [Eatery], inout _ cells: [Int]) {
+                if cell.isExpanded {
+                    eateries.removeAtIndex(menuRow)
+                    cells.removeAtIndex(menuRow)
+                } else {
+                    eateries.insert(eateries[row], atIndex: menuRow)
+                    cells.insert(1, atIndex: menuRow)
+                }
+            }
         
-        switch(sections[indexPath!.section]) {
-        case .West:
-            if cell!.isExpanded {
-                filteredWestEateries.removeAtIndex(indexPath!.row + 1)
-                westExpandedCells.removeAtIndex(indexPath!.row + 1)
-            } else {
-                filteredWestEateries.insert(filteredWestEateries[indexPath!.row], atIndex: indexPath!.row + 1)
-                westExpandedCells.insert(1, atIndex: indexPath!.row + 1)
+            tableView.beginUpdates()
+            
+            switch(sections[indexPath.section]) {
+            case .West:
+                closeOrExpand(&filteredWestEateries, &westExpandedCells)
+            case .North:
+                closeOrExpand(&filteredNorthEateries, &northExpandedCells)
+            case .Central:
+                closeOrExpand(&filteredCentralEateries, &centralExpandedCells)
+            default: break
             }
-        case .North:
-            if cell!.isExpanded {
-                filteredNorthEateries.removeAtIndex(indexPath!.row + 1)
-                northExpandedCells.removeAtIndex(indexPath!.row + 1)
+            
+            let menuIndex = NSIndexPath(forRow: menuRow, inSection: indexPath.section)
+            if cell.isExpanded {
+                tableView.deleteRowsAtIndexPaths([menuIndex], withRowAnimation: .Fade)
             } else {
-                filteredNorthEateries.insert(filteredNorthEateries[indexPath!.row], atIndex: indexPath!.row + 1)
-                northExpandedCells.insert(1, atIndex: indexPath!.row + 1)
+                tableView.insertRowsAtIndexPaths([menuIndex], withRowAnimation: .Fade)
             }
-        case .Central:
-            if cell!.isExpanded {
-                filteredCentralEateries.removeAtIndex(indexPath!.row + 1)
-                centralExpandedCells.removeAtIndex(indexPath!.row + 1)
-            } else {
-                filteredCentralEateries.insert(filteredCentralEateries[indexPath!.row], atIndex: indexPath!.row + 1)
-                centralExpandedCells.insert(1, atIndex: indexPath!.row + 1)
-            }
-        default: break
+        
+            tableView.endUpdates()
+            
+            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            cell.isExpanded = !cell.isExpanded
         }
-        
-        if cell!.isExpanded {
-            tableView.deleteRowsAtIndexPaths([
-                NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
-                ], withRowAnimation: .Fade)
-        } else {
-            tableView.insertRowsAtIndexPaths([
-                NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
-                ], withRowAnimation: .Fade)
-        }
-    
-        tableView.endUpdates()
-        
-        tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Top, animated: true)
-        
-        cell!.isExpanded = cell!.isExpanded ? false : true
     }
     
     // MARK: - Filter Menu Cell Delegate Methods
@@ -382,17 +375,17 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: - Filter Eateries Cell Delegate Methods
     
-    func didFilterDate(sender: UIButton?) {
-        selectedDateIndex = sender!.tag
+    func didFilterDate(sender: UIButton) {
+        selectedDateIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
     }
     
-    func didFilterMeal(sender: UIButton?) {
-        selectedMealIndex = sender!.tag
+    func didFilterMeal(sender: UIButton) {
+        selectedMealIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
     }
     
-    func filterEateries(dateViews: [FilterDateView!], buttons: [UIButton!]) {
+    func filterEateries(dateViews: [FilterDateView], buttons: [UIButton]) {
         // Update selected date
         for dateView in dateViews {
             dateView.dayLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
