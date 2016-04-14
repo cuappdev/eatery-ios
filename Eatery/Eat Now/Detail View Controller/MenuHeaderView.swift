@@ -82,6 +82,7 @@ class MenuHeaderView: UIView {
         
         // Title Label
         titleLabel.text = eatery.nickname
+        if eatery.slug == "RPCC-Marketplace" { titleLabel.text = "Robert Purcell Marketplace Eatery" }
         
         // Hours
         var hoursText = eatery.activeEventsForDate(displayedDate)
