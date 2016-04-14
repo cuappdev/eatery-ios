@@ -26,8 +26,17 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             let image = eatery.photo
+            let size = CGSizeApplyAffineTransform(image!.size, CGAffineTransformMakeScale(0.5, 0.5))
+            let hasAlpha = false
+            let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+            
+            UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+            image!.drawInRect(CGRect(origin: CGPointZero, size: size))
+            
+            let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
             dispatch_async(dispatch_get_main_queue()) {
-                self.backgroundImageView.image = image
+                self.backgroundImageView.image = scaledImage
             }
         }
         titleLabel.text = eatery.nickname
