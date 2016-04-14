@@ -164,6 +164,22 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         if searchQuery != "" {
             desiredEateries = eateries.filter { eatery in
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
+                
+                var diningItemMenuFound = false
+                let diningItemMenu = eatery.getDiningItemMenuIterable()
+                if !diningItemMenu.isEmpty {
+                    for item in diningItemMenu.flatMap({ $0.1 }) {
+                        if item.rangeOfString(searchQuery, options: options) != nil {
+                            if self.searchedMenuItemNames[eatery] == nil {
+                                self.searchedMenuItemNames[eatery] = [item]
+                            } else {
+                                self.searchedMenuItemNames[eatery]?.append(item)
+                            }
+                            diningItemMenuFound = true
+                        }
+                    }
+                }
+                
                 var hardcodedFoodItemFound = false
                 if let hardcoded = eatery.hardcodedMenu {
                     for item in hardcoded.values.flatten() {
@@ -177,6 +193,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                         }
                     }
                 }
+                
                 var currentMenuFoodItemFound = false
                 if let activeEvent = eatery.activeEventForDate(NSDate()) {
                     for item in activeEvent.menu.values.flatten() {
@@ -195,6 +212,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                     eatery.name.rangeOfString(searchQuery, options: options) != nil
                     || eatery.allNicknames().contains { $0.rangeOfString(searchQuery, options: options) != nil }
                     || eatery.area.rawValue.rangeOfString(searchQuery, options: options) != nil
+                    || diningItemMenuFound
                     || hardcodedFoodItemFound
                     || currentMenuFoodItemFound
                 )
