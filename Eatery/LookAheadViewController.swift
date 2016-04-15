@@ -168,8 +168,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 selectedMeal = "Lunch"
             } else if meals.contains("Brunch") {
                 selectedMeal = "Brunch"
-            } else if meals.contains("Lite Lunch") {
-                selectedMeal = "Lite Lunch"
             } else {
                 selectedMeal = ""
             }
@@ -253,7 +251,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             cell.eateryHoursLabel.text = "Closed"
             
             if let event = events[getSelectedMeal(eatery)] {
-                cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
+                if getSelectedMeal(eatery) == "Lunch" {
+                    if let liteLunchEvent = events["Lite Lunch"] {
+                        let times = dateConverter(event.startDate, date2: liteLunchEvent.endDate)
+                        cell.eateryHoursLabel.text = "Open \(times)"
+                    }
+                } else {
+                    cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
+                }
             }
             
             cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? UIColor.closedRed() : UIColor.openGreen()
