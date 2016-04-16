@@ -286,30 +286,53 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     // MARK: Menu Sharing
     
     func shareMenu() {
-        var image: UIImage = UIImage()
-        let mealVC = (pageViewController.pageViewController.viewControllers![0] as! MealTableViewController)
-        let eatery = mealVC.eatery
-      
-        if let _ = eatery.diningItems {
-            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: eatery.getDiningItemMenuIterable())
-        }
-        else if let _ = eatery.hardcodedMenu {
-            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: eatery.getHardcodeMenuIterable())
-        } else {
-            image = MenuImages.createMenuShareImage(view.frame.width, eatery: eatery, events: eatery.eventsOnDate(displayedDate), selectedMenu: mealVC.meal, menuIterable: mealVC.event!.getMenuIterable())
-        }
+        guard let mealVC = pageViewController.viewControllers?.first as? MealTableViewController else { return }
         
-        let objectsToShare = [image]
-        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        let menuIterable: [(String, [String])] = {
+            if eatery.diningItems != nil { return eatery.getDiningItemMenuIterable() }
+            if eatery.hardcodedMenu != nil { return eatery.getHardcodeMenuIterable() }
+            return mealVC.event?.getMenuIterable() ?? []
+        }()
         
+        let image = MenuImages.createMenuShareImage(view.frame.width,
+                                                    eatery: eatery,
+                                                    events: eatery.eventsOnDate(displayedDate),
+                                                    selectedMenu: mealVC.meal,
+                                                    menuIterable: menuIterable)
+        
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
         if #available(iOS 9.0, *) {
-            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail,UIActivityTypeOpenInIBooks, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
-        } else {
-            // Fallback on earlier versions
-            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+            activityVC.excludedActivityTypes?.append(UIActivityTypeOpenInIBooks)
         }
         
-        presentViewController(activityVC, animated: true, completion: nil)
+        let shareBackgroundView = UIView(frame: view.frame)
+        shareBackgroundView.backgroundColor = .eateryBlue()
+        shareBackgroundView.alpha = 0
+        
+        let messageLabel =  UILabel(frame: CGRect(x: 0.0, y: (view.superview?.frame.width ?? 0) / 3, width: view.superview?.frame.width ?? 0, height: 88))
+        messageLabel.text = "Share \(eatery.name)'s Menu:"
+        messageLabel.textAlignment = .Center
+        messageLabel.lineBreakMode = .ByWordWrapping
+        messageLabel.numberOfLines = 0
+        messageLabel.textColor = .whiteColor()
+        shareBackgroundView.addSubview(messageLabel)
+        
+        view.superview?.addSubview(shareBackgroundView)
+        
+        activityVC.completionWithItemsHandler = { _ in
+            UIView.animateWithDuration(0.4, animations: {
+                shareBackgroundView.alpha = 0
+            }, completion: { _ in
+                shareBackgroundView.removeFromSuperview()
+            })
+        }
+        
+        UIView.animateWithDuration(0.4, animations: {
+            shareBackgroundView.alpha = 1
+        }, completion: { _ in
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        })
     }
 
     // MARK: -
