@@ -9,8 +9,8 @@
 import UIKit
 
 @objc protocol FilterEateriesViewDelegate {
-    optional func didFilterMeal(sender: UIButton?)
-    optional func didFilterDate(sender: UIButton?)
+    optional func didFilterMeal(sender: UIButton)
+    optional func didFilterDate(sender: UIButton)
 }
 
 class FilterEateriesTableViewCell: UITableViewCell {
@@ -35,7 +35,7 @@ class FilterEateriesTableViewCell: UITableViewCell {
         filterTitleLabel.text = UIScreen.isNarrowScreen() ? "VIEW MENUS & HOURS FOR AN UPCOMING TIME" : "VIEW MENUS AND HOURS FOR AN UPCOMING TIME"
     }
     
-    @IBAction func didFilterMeal(sender: UIButton?) {
+    @IBAction func didFilterMeal(sender: UIButton) {
         delegate?.didFilterMeal!(sender)
     }
     

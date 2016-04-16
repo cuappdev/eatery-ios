@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol FilterDateViewDelegate {
-    optional func didFilterDate(sender: UIButton?)
+    optional func didFilterDate(sender: UIButton)
 }
 
 class FilterDateView: UIView {
@@ -46,7 +46,7 @@ class FilterDateView: UIView {
         return view
     }
     
-    @IBAction func didFilterDate(sender: UIButton?) {
+    @IBAction func didFilterDate(sender: UIButton) {
         delegate?.didFilterDate!(sender)
     }
 }

@@ -9,16 +9,15 @@
 import UIKit
 
 @objc protocol EateryHeaderCellDelegate {
-    optional func didTapInfoButton(cell: EateryHeaderTableViewCell?)
-    optional func didTapToggleMenuButton(cell: EateryHeaderTableViewCell?)
+    optional func didTapInfoButton(cell: EateryHeaderTableViewCell)
+    optional func didTapToggleMenuButton(cell: EateryHeaderTableViewCell)
 }
 
 class EateryHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var eateryNameLabel: UILabel!
     @IBOutlet weak var eateryHoursLabel: UILabel!
-    @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var toggleMenuButton: UIButton!
+    @IBOutlet weak var moreInfoButton: UIButton!
 
     private var tapGestureRecognizer: UITapGestureRecognizer?
     var delegate: EateryHeaderCellDelegate?
@@ -27,7 +26,6 @@ class EateryHeaderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .None
-        infoButton.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
     }
     
     override func didMoveToWindow() {
@@ -41,9 +39,9 @@ class EateryHeaderTableViewCell: UITableViewCell {
         let tapPoint = sender.locationInView(self)
         let hitView = hitTest(tapPoint, withEvent: nil)
         
-        if hitView == infoButton {
+        if hitView == moreInfoButton {
             delegate?.didTapInfoButton!(self)
-        } else if hitView == toggleMenuButton {
+        } else {
             delegate?.didTapToggleMenuButton!(self)
         }
     }
