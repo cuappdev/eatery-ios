@@ -73,8 +73,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         menuHeaderView.delegate = self
         
         menuHeaderView.mapButtonPressed = { [unowned self] in
-            let mapVC = MapViewController()
-            mapVC.eatery = self.eatery
+            let mapVC = MapViewController(eatery: self.eatery)
             self.presentViewController(mapVC, animated: true, completion: nil)
         }
         
@@ -135,9 +134,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     }
     
     func handleScroll(gesture: UIPanGestureRecognizer) {
-//        print("location: \(gesture.locationInView(view))")
-//        print("translation: \(gesture.translationInView(view))")
-        
         internalScrollHandler(gesture.translationInView(view), state: gesture.state, velocity: -gesture.velocityInView(view).y)
     }
     
