@@ -22,6 +22,7 @@
 		4FCD9913DFE369F3EDB74FAE /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50509AB523800758F692AA91 /* Pods_Eatery_Watch_App.framework */; };
 		5251035B4AC57673BCB6D4B4 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E8A627AA2A6DA1D7BB83A8E /* Pods_Eatery.framework */; };
 		5D231AF4D58DED90FD024320 /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6E64ED32027E3E529637D0 /* Pods_Eatery_Watch_App_Extension.framework */; };
+		60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */; };
 		652AE53F1C707EBC00B7245A /* EateriesInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */; };
 		652AE5401C707EBC00B7245A /* EateryRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53C1C707EBC00B7245A /* EateryRowController.swift */; };
 		652AE5411C707EBC00B7245A /* MenuInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */; };
@@ -175,6 +176,7 @@
 		4BA4E2B16C2C3A450EF353BE /* Pods_Today_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Today_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50509AB523800758F692AA91 /* Pods_Eatery_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.external beta.xcconfig"; sourceTree = "<group>"; };
+		60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		64AAE901E7D407EC4C6D8C67 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesInterfaceController.swift; sourceTree = "<group>"; };
 		652AE53C1C707EBC00B7245A /* EateryRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryRowController.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
 				D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */,
+				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1033,6 +1036,7 @@
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				D102463C1C7A3239000D5CD8 /* EateryMenuTableViewCell.swift in Sources */,
 				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
+				60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */,
 				FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
