@@ -307,35 +307,32 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
         
         let shareBackgroundView = UIView(frame: view.frame)
-        shareBackgroundView.backgroundColor = UIColor.eateryBlue()
-        shareBackgroundView.alpha = 0.0
+        shareBackgroundView.backgroundColor = .eateryBlue()
+        shareBackgroundView.alpha = 0
         
         let messageLabel =  UILabel(frame: CGRect(x: 0.0, y: (view.superview?.frame.width ?? 0) / 3, width: view.superview?.frame.width ?? 0, height: 88))
         messageLabel.text = "Share \(eatery.name)'s Menu:"
         messageLabel.textAlignment = .Center
         messageLabel.lineBreakMode = .ByWordWrapping
         messageLabel.numberOfLines = 0
-        messageLabel.textColor = UIColor.whiteColor()
+        messageLabel.textColor = .whiteColor()
         shareBackgroundView.addSubview(messageLabel)
         
         view.superview?.addSubview(shareBackgroundView)
         
-        activityVC.completionWithItemsHandler = { Void in
-            UIView.animateWithDuration(0.4, delay: 0, options: [], animations: {
-                shareBackgroundView.alpha = 0.0
-                }, completion: { Void in
-                    shareBackgroundView.removeFromSuperview()
-                }
-            )
+        activityVC.completionWithItemsHandler = { _ in
+            UIView.animateWithDuration(0.4, animations: {
+                shareBackgroundView.alpha = 0
+            }, completion: { _ in
+                shareBackgroundView.removeFromSuperview()
+            })
         }
         
-        UIView.animateWithDuration(0.4, delay: 0, options: [], animations: {
-            shareBackgroundView.alpha = 1.0
-            }, completion: { Void in
-                self.presentViewController(activityVC, animated: true, completion: nil)
-            }
-        )
-        
+        UIView.animateWithDuration(0.4, animations: {
+            shareBackgroundView.alpha = 1
+        }, completion: { _ in
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        })
     }
 
     // MARK: -
