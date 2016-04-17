@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,15 +13,15 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vZR-bZ-RdA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZR-bZ-RdA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
                         <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORc-vq-Dcq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ORc-vq-Dcq">
+                        <rect key="frame" x="0.0" y="14" width="320" height="66"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="EFy-xL-Yo2"/>
                         </constraints>
@@ -45,15 +45,15 @@
                             <constraint firstAttribute="width" secondItem="U8g-CV-KS1" secondAttribute="height" multiplier="18:7" id="ZrJ-LE-jJf"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="shareAltIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Mqp-sx-CRC">
-                        <rect key="frame" x="227" y="5" width="11" height="14"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareAltIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Mqp-sx-CRC">
+                        <rect key="frame" x="231" y="5" width="11" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="S1H-F3-Ur4"/>
                             <constraint firstAttribute="width" secondItem="Mqp-sx-CRC" secondAttribute="height" multiplier="77:100" id="cLu-Fv-SJt"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gxl-2g-liI">
-                        <rect key="frame" x="246" y="0.0" width="60" height="25"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gxl-2g-liI">
+                        <rect key="frame" x="250" y="0.0" width="60" height="25"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                         <state key="normal" title="Share Menu">
                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,6 +64,7 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Gxl-2g-liI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="15u-Gg-3Td"/>
                     <constraint firstItem="ORc-vq-Dcq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="H0k-oY-fPS"/>
                     <constraint firstAttribute="bottom" secondItem="ORc-vq-Dcq" secondAttribute="bottom" id="INN-1Q-uhZ"/>
                     <constraint firstItem="Mqp-sx-CRC" firstAttribute="leading" secondItem="o6D-6H-frF" secondAttribute="trailing" id="J83-1x-ApF"/>
@@ -90,7 +91,11 @@
                         <exclude reference="Vuk-hJ-Nap"/>
                         <exclude reference="J83-1x-ApF"/>
                         <exclude reference="u7K-Hf-r7x"/>
+                        <exclude reference="hBa-SC-nRf"/>
                         <exclude reference="ixZ-uc-Xye"/>
+                        <exclude reference="jwF-eN-kCs"/>
+                        <exclude reference="s91-iO-lLG"/>
+                        <exclude reference="xyK-0S-hSv"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
