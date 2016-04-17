@@ -86,6 +86,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         collectionView.dg_setPullToRefreshBackgroundColor(collectionView.backgroundColor!)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        startUserActivity()
+    }
+    
     func goToLookAheadVC() {
         navigationController?.pushViewController(LookAheadViewController(), animated: true)
     }
@@ -233,6 +238,15 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         }
         
         return eatery
+    }
+    
+    // MARK: - Handoff Functions
+    func startUserActivity() {
+        let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
+        activity.title = "View Eateries"
+        activity.webpageURL = NSURL(string: "https://now.dining.cornell.edu/eateries/")
+        userActivity = activity
+        userActivity?.becomeCurrent()
     }
     
     // MARK: - Key Value Observering
