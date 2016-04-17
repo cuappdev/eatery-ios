@@ -79,6 +79,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor.whiteColor()
         collectionView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+                Analytics.trackPullToRefresh()
                 self?.loadData(true) {
                     self?.collectionView.dg_stopLoading()
                 }
@@ -94,6 +95,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
     
     func goToLookAheadVC() {
         navigationController?.pushViewController(LookAheadViewController(), animated: true)
+        Analytics.screenGuideViewController()
     }
     
     func applicationWillEnterForeground() {
@@ -342,6 +344,10 @@ extension EateriesGridViewController: UICollectionViewDataSource {
 
 extension EateriesGridViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if self.searchBar.text != "" {
+            Analytics.trackSearchResultSelected(self.searchBar.text!)
+        }
+        Analytics.screenMenuViewController(eateryForIndexPath(indexPath).slug)
         let menuVC = MenuViewController(eatery: eateryForIndexPath(indexPath), delegate: self)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }

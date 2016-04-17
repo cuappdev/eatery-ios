@@ -63,7 +63,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let uuid = NSUUID().UUIDString
         SEGAnalytics.sharedAnalytics().identify(uuid)
         
-        Analytics.trackAppLaunch()
+        let slugStrings = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+        var sortOption = "none"
+        if let option = NSUserDefaults.standardUserDefaults().objectForKey("sortOption") as? String {
+            sortOption = option
+        }
+        var properties: [String: AnyObject] = [:]
+        properties["favorites"] = slugStrings
+        properties["sortOption"] = sortOption
+        
+        Analytics.trackAppLaunch(properties)
         
         //declaration of tools remains active in background while app runs
         if toolsEnabled {
