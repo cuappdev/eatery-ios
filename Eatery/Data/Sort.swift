@@ -11,7 +11,7 @@ import DiningStack
 
 struct Sort {
     
-    enum sortType {
+    enum SortType {
         case Time
         case LookAhead
         case Alphabetically
@@ -19,41 +19,33 @@ struct Sort {
     
     func sortMenu(menu: [(String, [MenuItem])] ) -> [(String, [MenuItem])] {
         return menu.sort {
-            if($0.0 == "Hot Traditional Station - Entrees") {
+            if $0.0 == "Hot Traditional Station - Entrees" {
                 return true
             }
-            if($0.0 == "Hot Traditional Station - Sides" && $1.0 != "Hot Traditional Station - Entrees") {
-                return true
-            }
-            return false
+            return $0.0 == "Hot Traditional Station - Sides" && $1.0 != "Hot Traditional Station - Entrees"
         }
     }
     
-    func sortEateriesByOpenOrAlph(eatery: [Eatery], date: NSDate = NSDate(), selectedMeal: String = "None", sortingType: sortType = .Time) -> [Eatery] {
+    func sortEateriesByOpenOrAlph(eatery: [Eatery], date: NSDate = NSDate(), selectedMeal: String = "None", sortingType: SortType = .Time) -> [Eatery] {
         let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
-            
-            if sortingType == .LookAhead {
+            switch sortingType {
+            case .LookAhead:
                 let eventsA = a.eventsOnDate(date)
                 let eventsB = b.eventsOnDate(date)
-                if let _ = eventsA[self.getSelectedMeal(a, date: date, meal: selectedMeal)]{
-                    if let _ = eventsB[self.getSelectedMeal(b, date: date, meal: selectedMeal)]{
+                if eventsA[self.getSelectedMeal(a, date: date, meal: selectedMeal)] != nil {
+                    if eventsB[self.getSelectedMeal(b, date: date, meal: selectedMeal)] != nil {
                         return  a.nickname.lowercaseString < b.nickname.lowercaseString
                     }
                     return true
                 }
                 return  a.nickname.lowercaseString < b.nickname.lowercaseString
-            }
                 
-            else if sortingType == .Time {
+            case .Time:
                 if a.isOpenToday() {
                     if let activeEvent = a.activeEventForDate(date) {
                         if activeEvent.occurringOnDate(date) {
                             if let bTimeInterval = b.activeEventForDate(date) {
-                                if activeEvent.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow {
-                                    return true
-                                } else {
-                                    return false
-                                }
+                                return activeEvent.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow
                             } else {
                                 return true
                             }
@@ -61,20 +53,15 @@ struct Sort {
                             let atimeTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                             if let bActiveEvent = b.activeEventForDate(date){
                                 let bTimeTillOpen = (Int)(bActiveEvent.startDate.timeIntervalSinceNow/Double(60))
-                                if atimeTillOpen < bTimeTillOpen {
-                                    return true
-                                } else {
-                                    return false
-                                }
+                                return atimeTillOpen < bTimeTillOpen
                             } else {
                                 return true
                             }
                         }
                     }
                 }
-            }
             
-            else if sortingType == .Alphabetically {
+            case .Alphabetically:
                 let aState = a.generateDescriptionOfCurrentState()
                 let bState = b.generateDescriptionOfCurrentState()
                 
@@ -105,7 +92,7 @@ struct Sort {
         let meals: [String] = Array((events ?? [:]).keys)
         var selectedMeal = meal
         
-        switch(selectedMeal) {
+        switch selectedMeal {
         case "Breakfast":
             if meals.contains("Breakfast") {
                 selectedMeal = "Breakfast"
