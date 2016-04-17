@@ -184,11 +184,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                     appendSearchItem(item)
                 }
                 
-                let hardcodedMenu = eatery.getHardcodeMenuIterable()
-                for item in hardcodedMenu.flatMap({ $0.1 }) {
-                    appendSearchItem(item)
-                }
-                
                 if let activeEvent = eatery.activeEventForDate(NSDate()) {
                     for item in activeEvent.getMenuIterable().flatMap({ $0.1 }) {
                         appendSearchItem(item)
