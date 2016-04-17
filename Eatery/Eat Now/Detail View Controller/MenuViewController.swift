@@ -321,18 +321,18 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         view.superview?.addSubview(shareBackgroundView)
         
         activityVC.completionWithItemsHandler = { _ in
-            UIView.animateWithDuration(0.4, animations: {
+            UIView.animateWithDuration(0.2, animations: {
                 shareBackgroundView.alpha = 0
             }, completion: { _ in
                 shareBackgroundView.removeFromSuperview()
             })
         }
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animateWithDuration(0.2) { 
             shareBackgroundView.alpha = 1
-        }, completion: { _ in
-            self.presentViewController(activityVC, animated: true, completion: nil)
-        })
+        }
+        
+        self.presentViewController(activityVC, animated: true, completion: nil)
     }
 
     // MARK: -
