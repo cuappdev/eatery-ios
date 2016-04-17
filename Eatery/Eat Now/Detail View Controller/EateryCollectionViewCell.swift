@@ -10,7 +10,7 @@ import UIKit
 import DiningStack
 
 class EateryCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -25,7 +25,22 @@ class EateryCollectionViewCell: UICollectionViewCell {
     
     func setEatery(eatery: Eatery) {
         // photos are enormous so commenting temporarily until we thumbnail them
-        backgroundImageView.image = eatery.photo
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            let image = eatery.photo
+            let size = CGSizeApplyAffineTransform(image!.size, CGAffineTransformMakeScale(0.5, 0.5))
+            let hasAlpha = false
+            let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+            
+            UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+            image!.drawInRect(CGRect(origin: CGPointZero, size: size))
+            
+            let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.backgroundImageView.image = scaledImage
+            }
+        }
         titleLabel.text = eatery.nickname
         statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
         statusView.layer.masksToBounds = true
@@ -51,5 +66,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             statusView.backgroundColor = .closedGray()
             timeLabel.text = message
         }
+    }
+    
+    override func preferredLayoutAttributesFittingAttributes(layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        return layoutAttributes
     }
 }
