@@ -75,6 +75,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         menuHeaderView.mapButtonPressed = { [unowned self] in
             let mapVC = MapViewController(eatery: self.eatery)
             self.presentViewController(mapVC, animated: true, completion: nil)
+            Analytics.trackLocationButtonPressed(self.eatery.slug)
         }
         
         outerScrollView.addSubview(menuHeaderView)
@@ -320,12 +321,16 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         view.superview?.addSubview(shareBackgroundView)
         
-        activityVC.completionWithItemsHandler = { _ in
+        activityVC.completionWithItemsHandler = { (activityType: String?, completed: Bool, returnedItems: [AnyObject]?, error: NSError?) in
             UIView.animateWithDuration(0.2, animations: {
                 shareBackgroundView.alpha = 0
             }, completion: { _ in
                 shareBackgroundView.removeFromSuperview()
             })
+            
+            if completed {
+                Analytics.trackShareMenu(self.eatery.slug, meal: mealVC.meal)
+            }
         }
         
         UIView.animateWithDuration(0.2) { 
