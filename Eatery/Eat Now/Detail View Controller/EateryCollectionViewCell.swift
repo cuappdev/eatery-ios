@@ -17,6 +17,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var paymentIcon: UIImageView!
     
+    @IBOutlet weak var searchTextView: UITextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

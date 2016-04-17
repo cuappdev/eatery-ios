@@ -21,6 +21,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Menu Items" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CbK-Ra-qXu">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HoN-He-Rpa">
                         <rect key="frame" x="0.0" y="250" width="300" height="50"/>
                         <subviews>
@@ -86,20 +93,31 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="eyk-u5-ZqO" secondAttribute="trailing" id="1TX-eC-YtF"/>
                 <constraint firstAttribute="bottom" secondItem="HoN-He-Rpa" secondAttribute="bottom" id="6uZ-KH-vzq"/>
+                <constraint firstAttribute="trailing" secondItem="CbK-Ra-qXu" secondAttribute="trailing" id="C08-oc-e13"/>
                 <constraint firstItem="UiS-Ib-9l5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="CYF-XF-AMd"/>
+                <constraint firstItem="CbK-Ra-qXu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="LTR-FM-RwO"/>
                 <constraint firstAttribute="bottom" secondItem="eyk-u5-ZqO" secondAttribute="bottom" id="Xgv-6v-wZT"/>
                 <constraint firstItem="eyk-u5-ZqO" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="a5c-Fe-IRP"/>
                 <constraint firstItem="HoN-He-Rpa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="bcs-2L-Qhb"/>
+                <constraint firstItem="HoN-He-Rpa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cg3-lX-e7F"/>
                 <constraint firstItem="UiS-Ib-9l5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="eCB-Cg-GKG"/>
+                <constraint firstItem="HoN-He-Rpa" firstAttribute="top" secondItem="CbK-Ra-qXu" secondAttribute="bottom" id="kre-6p-VJW"/>
                 <constraint firstAttribute="trailing" secondItem="UiS-Ib-9l5" secondAttribute="trailing" id="nU8-hP-XWU"/>
                 <constraint firstAttribute="trailing" secondItem="HoN-He-Rpa" secondAttribute="trailing" id="p7g-Xz-dmK"/>
                 <constraint firstAttribute="bottom" secondItem="UiS-Ib-9l5" secondAttribute="bottom" id="piP-PG-MVN"/>
+                <constraint firstItem="CbK-Ra-qXu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="swJ-NW-Pcy"/>
                 <constraint firstItem="eyk-u5-ZqO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vOZ-z9-3s0"/>
             </constraints>
             <size key="customSize" width="300" height="300"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="cg3-lX-e7F"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="backgroundImageView" destination="eyk-u5-ZqO" id="QIc-Wr-cpG"/>
                 <outlet property="paymentIcon" destination="dqq-z9-vBB" id="Fky-0K-BJv"/>
+                <outlet property="searchTextView" destination="CbK-Ra-qXu" id="Nvr-F2-llZ"/>
                 <outlet property="statusView" destination="Cbl-GW-iWh" id="ftu-Jw-09F"/>
                 <outlet property="timeLabel" destination="2Bk-9C-mAO" id="Hvs-fM-Ydo"/>
                 <outlet property="titleLabel" destination="15K-gp-bKu" id="biz-FT-A0u"/>
