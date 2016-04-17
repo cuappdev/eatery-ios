@@ -70,7 +70,11 @@ class MealTableViewController: UITableViewController {
         }
         
         if let menu = menu {
-            let sortedMenu = eatery.sortMenu(menu)
+            var sortedMenu = menu.map { element -> (String, [MenuItem]) in
+                return (element.0, element.1)
+            }
+            
+            sortedMenu = Sort().sortMenu(sortedMenu)
             let stationArray = sortedMenu.map { $0.0 }
             
             var title = "--"

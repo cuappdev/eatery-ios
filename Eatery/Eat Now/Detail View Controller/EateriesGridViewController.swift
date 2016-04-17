@@ -195,98 +195,20 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
             eateryData["North"] = desiredEateries.filter { $0.area == .North }
             eateryData["West"] = desiredEateries.filter { $0.area == .West }
             eateryData["Central"] = desiredEateries.filter { $0.area == .Central }
-            sortEateries()
+            //sortEateries
+            eateryData["North"] = Sort().sortEateriesByOpenOrAlph(eateryData["North"]!, date: NSDate(), sortingType: .Alphabetically)
+            eateryData["West"] = Sort().sortEateriesByOpenOrAlph(eateryData["West"]!, date: NSDate(), sortingType: .Alphabetically)
+            eateryData["Central"] = Sort().sortEateriesByOpenOrAlph(eateryData["Central"]!, date: NSDate(), sortingType: .Alphabetically)
+            
         } else if sorted == .Open {
             eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }
             eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow()}
-            sortEateriesByOpen()
+            //sortEateriesByOpen()
+            eateryData["Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Open"]!)
+            eateryData["Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Closed"]!)
         }
     }
     
-    func sortEateriesByOpen() {
-        
-    /*sorts Eateries by time in catergories of Open and Closed. If eatery a and b are Open and eatery a closes before eatery b then eatery a will be sorted first. If eatery a and b are Closed and eatery a opens before eatery b than eatery a will be sorted before eatery b
-    */
-        
-        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
-            
-            if a.isOpenToday() {
-                if let activeEvent = a.activeEventForDate(NSDate()) {
-                    if activeEvent.occurringOnDate(NSDate()) {
-                        if let bTimeInterval = b.activeEventForDate(NSDate()) {
-                            //both eateries are open
-                            if activeEvent.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow {
-                                return true
-                            } else {
-                                //a closes before b
-                                return false
-                            }
-                        } else {
-                            //a is open and b is closed (should never happen but just in case)
-                            return true
-                        }
-                    } else {
-                        //a is closed
-                        let atimeTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
-                        if let bActiveEvent = b.activeEventForDate(NSDate()){
-                            let bTimeTillOpen = (Int)(bActiveEvent.startDate.timeIntervalSinceNow/Double(60))
-                            if atimeTillOpen < bTimeTillOpen {
-                                return true
-                            } else {
-                                return false
-                            }
-                        } else {
-                            return true
-                        }
-                    }
-                }
-            }
-           return false
-  
-        }
-        
-        eateryData["Open"]!.sortInPlace(sortByHoursClosure)
-        eateryData["Closed"]!.sortInPlace(sortByHoursClosure)
-    }
-    
-    func sortEateries() {
-        let sortByOpenAndLexographicallyClosure = { (a: Eatery, b: Eatery) -> Bool in
-            
-            // If only one of the eateries is closed today, we can return the other one early
-            if a.isOpenToday() && !b.isOpenToday() {
-                return true
-            }
-            if !a.isOpenToday() && b.isOpenToday() {
-                return false
-            }
-            
-            // Sort open eateries before closed ones
-            // If they are both currently open or currently closed, sort alphabetically
-            
-            let aState = a.generateDescriptionOfCurrentState()
-            let bState = b.generateDescriptionOfCurrentState()
-            
-            switch aState {
-            case .Open(_):
-                switch bState {
-                case .Open(_):  return a.nickname <= b.nickname
-                default:        return true
-                }
-                
-            case .Closed(_):
-                switch bState {
-                case .Closed(_):return a.nickname <= b.nickname
-                default:        return false
-                }
-            }
-        }
-        
-        eateryData["North"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
-        eateryData["West"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
-        eateryData["Central"]!.sortInPlace(sortByOpenAndLexographicallyClosure)
-    }
-    
-    // MARK: -
     // MARK: MenuButtonsDelegate
     
     func favoriteButtonPressed() {
