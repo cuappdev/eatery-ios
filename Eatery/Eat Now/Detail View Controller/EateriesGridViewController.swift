@@ -160,43 +160,33 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
             desiredEateries = eateries.filter { eatery in
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
                 
-                var diningItemMenuFound = false
+                var itemFound = false
+                func appendSearchItem(item: String) {
+                    if item.rangeOfString(searchQuery, options: options) != nil {
+                        if searchedMenuItemNames[eatery] == nil {
+                            searchedMenuItemNames[eatery] = [item]
+                        } else {
+                            if !searchedMenuItemNames[eatery]!.contains(item) {
+                                searchedMenuItemNames[eatery]!.append(item)
+                            }
+                        }
+                        itemFound = true
+                    }
+                }
+                
                 let diningItemMenu = eatery.getDiningItemMenuIterable()
                 for item in diningItemMenu.flatMap({ $0.1 }) {
-                    if item.rangeOfString(searchQuery, options: options) != nil {
-                        if self.searchedMenuItemNames[eatery] == nil {
-                            self.searchedMenuItemNames[eatery] = [item]
-                        } else {
-                            self.searchedMenuItemNames[eatery]?.append(item)
-                        }
-                        diningItemMenuFound = true
-                    }
+                    appendSearchItem(item)
                 }
                 
-                var hardcodedFoodItemFound = false
                 let hardcodedMenu = eatery.getHardcodeMenuIterable()
                 for item in hardcodedMenu.flatMap({ $0.1 }) {
-                    if item.rangeOfString(searchQuery, options: options) != nil {
-                        if self.searchedMenuItemNames[eatery] == nil {
-                            self.searchedMenuItemNames[eatery] = [item]
-                        } else {
-                            self.searchedMenuItemNames[eatery]?.append(item)
-                        }
-                        hardcodedFoodItemFound = true
-                    }
+                    appendSearchItem(item)
                 }
                 
-                var currentMenuFoodItemFound = false
                 if let activeEvent = eatery.activeEventForDate(NSDate()) {
-                    for item in activeEvent.getMenuIterable().flatMap( { $0.1 }) {
-                        if item.rangeOfString(searchQuery, options: options) != nil {
-                            if self.searchedMenuItemNames[eatery] == nil {
-                                self.searchedMenuItemNames[eatery] = [item]
-                            } else {
-                                self.searchedMenuItemNames[eatery]?.append(item)
-                            }
-                            currentMenuFoodItemFound = true
-                        }
+                    for item in activeEvent.getMenuIterable().flatMap({ $0.1 }) {
+                        appendSearchItem(item)
                     }
                 }
 
@@ -204,9 +194,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
                     eatery.name.rangeOfString(searchQuery, options: options) != nil
                     || eatery.allNicknames().contains { $0.rangeOfString(searchQuery, options: options) != nil }
                     || eatery.area.rawValue.rangeOfString(searchQuery, options: options) != nil
-                    || diningItemMenuFound
-                    || hardcodedFoodItemFound
-                    || currentMenuFoodItemFound
+                    || itemFound
                 )
             }
         } else {
