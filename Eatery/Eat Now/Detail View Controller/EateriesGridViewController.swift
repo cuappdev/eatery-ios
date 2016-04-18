@@ -156,22 +156,9 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
         loadData(false, completion: nil)
     }
     
-    func findEmojis(searchBarText: String) -> String{
-        let emojiDictionary: [String: String] = ["🍔": "burger", "🍟": "fries", "🍕": "pizza", "🐔": "chicken", "🌮": "taco", "🌯": "burrito", "🍳" : "egg", "🍚" : "rice", "🍝" :  "spaghetti", "💩": "nasties"]
-        var modifiedSearchBarText = searchBarText
-        for (emoji, searchText) in emojiDictionary {
-            if searchBarText.containsString(emoji){
-                modifiedSearchBarText = modifiedSearchBarText.stringByReplacingOccurrencesOfString(emoji, withString: searchText + " ")
-            }
-        }
-        
-        return modifiedSearchBarText
-    }
-    
     func processEateries() {
         var desiredEateries: [Eatery] = []
-        let searchBarText = findEmojis(searchBar.text ?? "") //replace unicode emoji w/ text name
-        let searchQuery = searchBarText
+        let searchQuery = (searchBar.text ?? "").translateEmojiText()
         if searchQuery != "" {
             desiredEateries = eateries.filter { eatery in
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
