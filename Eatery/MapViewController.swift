@@ -104,10 +104,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func removalButtonPressed(sender: UIButton) {
         removalButton.removeFromSuperview()
-        UIView.animateWithDuration(0.2) {
-            self.mapView.alpha = 0.0
-        }
-        dismissViewControllerAnimated(true, completion: nil)
+        arrowButton.removeFromSuperview()
+        pinButton.removeFromSuperview()
+        dismissVCWithFadeOutAnimation(0.3)
     }
     
     func arrowButtonPressed(sender: UIButton) {
