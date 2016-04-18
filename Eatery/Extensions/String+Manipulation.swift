@@ -32,7 +32,7 @@ extension String {
         var translatedEmojiText = self
         for (emoji, searchText) in emojiDictionary {
             if self.containsString(emoji){
-                translatedEmojiText = translatedEmojiText.stringByReplacingOccurrencesOfString(emoji, withString: "\(searchText) ")
+                translatedEmojiText = translatedEmojiText.stringByReplacingOccurrencesOfString(emoji, withString: searchText)
             }
         }
         
