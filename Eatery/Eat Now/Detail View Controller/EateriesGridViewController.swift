@@ -160,7 +160,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate {
     func processEateries() {
         searchedMenuItemNames.removeAll()
         var desiredEateries: [Eatery] = []
-        let searchQuery = searchBar.text ?? ""
+        let searchQuery = (searchBar.text ?? "").translateEmojiText()
         if searchQuery != "" {
             desiredEateries = eateries.filter { eatery in
                 let options: NSStringCompareOptions = [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch]
