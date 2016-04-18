@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import DiningStack
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     let eatery: Eatery
     let mapView: MKMapView
@@ -29,6 +29,7 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         mapEatery()
     }
 
@@ -66,6 +67,27 @@ class MapViewController: UIViewController {
             self.mapView.alpha = 0.0
         }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - MKMapViewDelegate Methods
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if !(annotation is MKPointAnnotation) {
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("eateryPin")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        
+        annotationView!.image = UIImage(named: "eateryPin")
+        
+        return annotationView
     }
     
 }
