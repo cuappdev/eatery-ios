@@ -17,20 +17,18 @@ extension String {
     // Replace any emoji in the string with its corresponding text name
     func translateEmojiText() -> String {
         let emojiDictionary: [String: String] = [
-            "💩": "nasties", "🐮": "beef", "🐷": "pork", "🐽": "pork", "🐔": "chicken",
-            "🐝": "honey", "🐠": "fish", "🐟": "fish", "🐡": "fish", "🐄": "beef",
-            "🐐": "goat", "🐑": "lamb", "🐖": "pork", "🦃": "turkey", "🐲": "dragon",
-            "🎃": "pumpkin", "🍏": "apple", "🍎": "apple", "🍐": "pear", "🍊": "tangerine",
-            "🍋": "lemon", "🍌": "banana", "🍉": "watermelon", "🍇": "grape", "🍓": "strawberry",
-            "🍈": "melon", "🍒": "cherry", "🍑": "peach", "🍍": "pineapple", "🍅": "tomato",
-            "🍆": "aubergine", "🌶": "chile", "🌽": "corn", "🍠": "potato", "🍯": "honey",
-            "🍞": "bread", "🧀": "cheese", "🍤": "shrimp", "🍳": "egg", "🍔": "burger",
-            "🍟": "fries", "🌭": "hotdog", "🍕": "pizza", "🍝":  "spaghetti", "🌮": "taco",
-            "🌯": "burrito", "🍜": "soup", "🍣": "sushi", "🍛": "curry", "🍚": "rice",
-            "🍧": "ice cream", "🍨": "ice cream", "🍦": "ice cream", "🍰": "cake", "🎂": "cake",
+            "💩": "nasties", "🐮": "beef", "🐷": "pork", "🐔": "chicken", "🐠": "fish",
+            "🐐": "goat", "🐑": "lamb", "🦃": "turkey", "🐲": "dragon","🎃": "pumpkin",
+            "🍏": "apple", "🍐": "pear", "🍊": "tangerine", "🍋": "lemon", "🍌": "banana",
+            "🍉": "watermelon", "🍇": "grape", "🍓": "strawberry", "🍈": "melon", "🍒": "cherry",
+            "🍑": "peach", "🍍": "pineapple", "🍅": "tomato", "🍆": "aubergine", "🌶": "chile",
+            "🌽": "corn", "🍠": "potato", "🍯": "honey", "🍞": "bread", "🧀": "cheese",
+            "🍤": "shrimp", "🍳": "egg", "🍔": "burger", "🍟": "fries", "🌭": "hotdog",
+            "🍕": "pizza", "🍝":  "spaghetti", "🌮": "taco", "🌯": "burrito", "🍜": "soup",
+            "🍣": "sushi", "🍛": "curry", "🍚": "rice", "🍧": "ice cream", "🎂": "cake",
             "🍮": "custard", "🍬": "candy", "🍫": "chocolate", "🍿": "popcorn", "🍩": "donut",
-            "🍪": "cookie", "🍬": "candy", "🍺": "beer", "🍻": "beer", "🍵": "tea",
-            "☕️": "coffee", "🏠": "house", "🏡": "house","🏛": "temple", "🕍": "104West"
+            "🍪": "cookie", "🍺": "beer", "🍵": "tea", "☕️": "coffee", "🏠": "house",
+            "🏛": "temple", "🕍": "104West"
         ]
         
         var translatedEmojiText = self
