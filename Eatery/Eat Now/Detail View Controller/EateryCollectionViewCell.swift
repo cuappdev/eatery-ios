@@ -8,6 +8,7 @@
 
 import UIKit
 import DiningStack
+import Haneke
 
 class EateryCollectionViewCell: UICollectionViewCell {
 
@@ -24,8 +25,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
     
     func setEatery(eatery: Eatery) {
-        // photos are enormous so commenting temporarily until we thumbnail them
-        backgroundImageView.image = eatery.photo
+        backgroundImageView.hnk_setImage(eatery.photo ?? UIImage(), key: eatery.slug)
         titleLabel.text = eatery.nickname
         statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
         statusView.layer.masksToBounds = true

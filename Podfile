@@ -9,6 +9,7 @@ target 'Eatery' do
   pod 'DGElasticPullToRefresh', :git => 'https://github.com/dantheli/DGElasticPullToRefresh.git'
   pod 'Analytics/Segmentio'
   pod 'Tweaks'
+  pod 'HanekeSwift'
   shared_pods
 end
 
