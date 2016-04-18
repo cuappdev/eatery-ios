@@ -8,13 +8,19 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 import DiningStack
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     let eatery: Eatery
     let mapView: MKMapView
+    var locationManager: CLLocationManager!
+    var userLocation: CLLocationCoordinate2D!
+    var eateryAnnotation: MKPointAnnotation!
     let removalButton = UIButton()
+    let arrowButton = UIButton()
+    let pinButton = UIButton()
     
     init(eatery: Eatery) {
         self.eatery = eatery
@@ -29,6 +35,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set up location manager
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch (CLLocationManager.authorizationStatus()) {
+            case .AuthorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+                mapView.showsUserLocation = true
+            case .NotDetermined:
+                if locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
+                    locationManager.requestWhenInUseAuthorization()
+                }
+            default: break
+            }
+        }
+        
+        // Set up map view
         mapView.delegate = self
         mapEatery()
     }
@@ -38,27 +64,42 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapEatery() {
-        let coordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
         let annotationTitle = eatery.address
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = eatery.location.coordinate
-        annotation.title = annotationTitle
-        mapView.addAnnotation(annotation)
-        mapView.selectAnnotation(annotation, animated: true)
-        mapView.setRegion(MKCoordinateRegionMake(eatery.location.coordinate, coordinateSpan), animated: false)
+        eateryAnnotation = MKPointAnnotation()
+        eateryAnnotation.coordinate = eatery.location.coordinate
+        eateryAnnotation.title = annotationTitle
+        mapView.addAnnotation(eateryAnnotation)
+        mapView.selectAnnotation(eateryAnnotation, animated: true)
+        mapView.setRegion(MKCoordinateRegionMake(eatery.location.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
         mapView.alpha = 0.0
-        self.view.addSubview(mapView)
+        view.addSubview(mapView)
         UIView.animateWithDuration(0.2) {
             self.mapView.alpha = 1.0
         }
-        createRemovalButton()
+        
+        createMapButtons()
     }
     
-    func createRemovalButton() {
+    // MARK: - Button Methods
+    
+    func createMapButtons() {
+        // Create top left removal button
         removalButton.frame = CGRectMake(15, 25, 30, 30)
         removalButton.setImage(UIImage(named: "closeIcon"), forState: .Normal)
-        removalButton.addTarget(self, action: #selector(MapViewController.removalButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
+        removalButton.addTarget(self, action: #selector(MapViewController.removalButtonPressed), forControlEvents: .TouchUpInside)
         mapView.addSubview(removalButton)
+        
+        // Create bottom left arrow button
+        arrowButton.frame = CGRectMake(15, view.frame.size.height - 55, 30, 30)
+        arrowButton.setImage(UIImage(named: "locationArrowIcon"), forState: .Normal)
+        arrowButton.addTarget(self, action: #selector(MapViewController.arrowButtonPressed), forControlEvents: .TouchUpInside)
+        mapView.addSubview(arrowButton)
+        
+        // Create bottom right arrow
+        pinButton.frame = CGRectMake(view.frame.size.width - 40, view.frame.size.height - 60, 25, 35)
+        pinButton.setImage(UIImage(named: "blackEateryPin"), forState: .Normal)
+        pinButton.addTarget(self, action: #selector(MapViewController.pinButtonPressed), forControlEvents: .TouchUpInside)
+        mapView.addSubview(pinButton)
     }
     
     func removalButtonPressed(sender: UIButton) {
@@ -67,6 +108,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             self.mapView.alpha = 0.0
         }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func arrowButtonPressed(sender: UIButton) {
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func pinButtonPressed(sender: UIButton) {
+        let region = MKCoordinateRegion(center: eateryAnnotation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
+        mapView.selectAnnotation(eateryAnnotation, animated: true)
+        mapView.setRegion(region, animated: true)
     }
     
     // MARK: - MKMapViewDelegate Methods
@@ -88,6 +140,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         annotationView!.image = UIImage(named: "eateryPin")
         
         return annotationView
+    }
+
+    // MARK: - CLLocationManagerDelegate Methods
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Location Manager Error: \(error)")
     }
     
 }
