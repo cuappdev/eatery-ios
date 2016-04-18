@@ -13,6 +13,31 @@ extension String {
     func trim() -> String {
         return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
     }
+    
+    // Replace any emoji in the string with its corresponding text name
+    func translateEmojiText() -> String {
+        let emojiDictionary: [String: String] = [
+            "🍔": "burger",
+            "🍟": "fries",
+            "🍕": "pizza",
+            "🐔": "chicken",
+            "🌮": "taco",
+            "🌯": "burrito",
+            "🍳" : "egg",
+            "🍚" : "rice",
+            "🍝" :  "spaghetti",
+            "💩": "nasties"
+        ]
+        
+        var translatedEmojiText = self
+        for (emoji, searchText) in emojiDictionary {
+            if self.containsString(emoji){
+                translatedEmojiText = translatedEmojiText.stringByReplacingOccurrencesOfString(emoji, withString: "\(searchText) ")
+            }
+        }
+        
+        return translatedEmojiText
+    }
 }
 
 extension NSMutableAttributedString {
