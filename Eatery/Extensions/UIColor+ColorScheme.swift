@@ -19,7 +19,7 @@ extension UIColor {
     }
     
     class func eateryBlue() -> UIColor {
-        return colorFromCode(0x6AB1EC)
+        return colorFromCode(0x4881BD)
     }
     
     class func facebookBlue() -> UIColor {
