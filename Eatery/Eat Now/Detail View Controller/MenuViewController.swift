@@ -28,6 +28,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var delegate: MenuButtonsDelegate?
     var displayedDate: NSDate
     var selectedMeal: String?
+    var addedToFavoritesView: AddedToFavoritesView!
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: NSDate = NSDate(), meal: String? = nil) {
         self.eatery = eatery
@@ -79,7 +80,15 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
         
         outerScrollView.addSubview(menuHeaderView)
-
+        
+        //AddedToFavorites View
+        addedToFavoritesView = NSBundle.mainBundle().loadNibNamed("AddedToFavoritesView", owner: self, options: nil).first! as! AddedToFavoritesView
+        addedToFavoritesView.frame = CGRect(origin: CGPointZero, size: CGSize(width: 175, height: 230))
+        addedToFavoritesView.center = self.view.center
+        addedToFavoritesView.formatView()
+        addedToFavoritesView.alpha = 0
+        self.view.addSubview(addedToFavoritesView)
+        
         // TabbedPageViewController
         let eventsDict = eatery.eventsOnDate(displayedDate)
         let sortedEventsDict = eventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
@@ -132,6 +141,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
+        
     }
     
     func handleScroll(gesture: UIPanGestureRecognizer) {
@@ -277,6 +287,15 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
+        if eatery.favorite == true{
+            UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.addedToFavoritesView.alpha = 1.0
+            }, completion: nil)
+            UIView.animateWithDuration(1.0, delay: 1.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.addedToFavoritesView.alpha = 0.0
+                }, completion: nil)
+        }
+
     }
     
     func shareButtonPressed() {
