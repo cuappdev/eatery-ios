@@ -10,17 +10,26 @@ import UIKit
 
 class AddedToFavoritesView: UIView {
     
-    func formatView(){
-        self.layer.cornerRadius = 15;
-        self.layer.masksToBounds = true;
-        self.backgroundColor = UIColor(red:0.42, green:0.69, blue:0.93, alpha:0.8)
+    class func loadFromNib() -> AddedToFavoritesView {
+        let v = NSBundle.mainBundle().loadNibNamed("AddedToFavoritesView", owner: self, options: nil).first! as! AddedToFavoritesView
+        v.alpha = 0
+        v.layer.cornerRadius = 15
+        v.layer.masksToBounds = true
+        v.backgroundColor = .eateryBlue()
+        v.center = CGPointMake(UIScreen.mainScreen().bounds.midX, UIScreen.mainScreen().bounds.midY)
+        return v
     }
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    
+    func popupOnView(view: UIView) {
+        view.addSubview(self)
+        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
+            self.alpha = 1.0
+            }, completion: { _ in
+                UIView.animateWithDuration(0.5, delay: 1, options: .CurveEaseOut, animations: {
+                    self.alpha = 0.0
+                    }, completion: { _ in
+                        self.removeFromSuperview()
+                })
+        })
     }
-    */
-
 }

@@ -26,9 +26,9 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
     var delegate: MenuButtonsDelegate?
-    var displayedDate: NSDate
+    let displayedDate: NSDate
     var selectedMeal: String?
-    var addedToFavoritesView: AddedToFavoritesView!
+    lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: NSDate = NSDate(), meal: String? = nil) {
         self.eatery = eatery
@@ -80,14 +80,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
         
         outerScrollView.addSubview(menuHeaderView)
-        
-        //AddedToFavorites View
-        addedToFavoritesView = NSBundle.mainBundle().loadNibNamed("AddedToFavoritesView", owner: self, options: nil).first! as! AddedToFavoritesView
-        addedToFavoritesView.frame = CGRect(origin: CGPointZero, size: CGSize(width: 175, height: 230))
-        addedToFavoritesView.center = self.view.center
-        addedToFavoritesView.formatView()
-        addedToFavoritesView.alpha = 0
-        self.view.addSubview(addedToFavoritesView)
         
         // TabbedPageViewController
         let eventsDict = eatery.eventsOnDate(displayedDate)
@@ -287,13 +279,8 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
-        if eatery.favorite == true{
-            UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                self.addedToFavoritesView.alpha = 1.0
-            }, completion: nil)
-            UIView.animateWithDuration(1.0, delay: 1.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.addedToFavoritesView.alpha = 0.0
-                }, completion: nil)
+        if eatery.favorite {
+            addedToFavoritesView.popupOnView(view)
         }
 
     }
