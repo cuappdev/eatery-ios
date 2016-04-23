@@ -26,8 +26,9 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
     var delegate: MenuButtonsDelegate?
-    var displayedDate: NSDate
+    let displayedDate: NSDate
     var selectedMeal: String?
+    lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: NSDate = NSDate(), meal: String? = nil) {
         self.eatery = eatery
@@ -79,7 +80,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
         
         outerScrollView.addSubview(menuHeaderView)
-
+        
         // TabbedPageViewController
         let eventsDict = eatery.eventsOnDate(displayedDate)
         let sortedEventsDict = eventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
@@ -132,6 +133,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
+        
     }
     
     func handleScroll(gesture: UIPanGestureRecognizer) {
@@ -277,6 +279,10 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
+        if eatery.favorite {
+            addedToFavoritesView.popupOnView(view)
+        }
+
     }
     
     func shareButtonPressed() {
