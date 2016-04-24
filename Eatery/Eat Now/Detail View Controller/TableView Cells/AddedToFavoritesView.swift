@@ -10,6 +10,9 @@ import UIKit
 
 class AddedToFavoritesView: UIView {
     
+    @IBOutlet weak var toYourLabel: UILabel!
+    @IBOutlet weak var starImageView: UIImageView!
+    
     class func loadFromNib() -> AddedToFavoritesView {
         let v = NSBundle.mainBundle().loadNibNamed("AddedToFavoritesView", owner: self, options: nil).first! as! AddedToFavoritesView
         v.alpha = 0
@@ -20,8 +23,15 @@ class AddedToFavoritesView: UIView {
         return v
     }
     
-    func popupOnView(view: UIView) {
+    func popupOnView(view: UIView, addedToFavorites: Bool) {
         view.addSubview(self)
+        if addedToFavorites{
+            toYourLabel.text = "Added To Your"
+            starImageView.image = UIImage(named: "goldStar")
+        }else{
+            toYourLabel.text = "Removed From"
+            starImageView.image = UIImage(named: "whiteStar")
+        }
         UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
             self.alpha = 1.0
             }, completion: { _ in

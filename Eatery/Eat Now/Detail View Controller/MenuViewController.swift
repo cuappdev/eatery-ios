@@ -279,9 +279,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
-        if eatery.favorite {
-            addedToFavoritesView.popupOnView(view)
-        }
+        addedToFavoritesView.popupOnView(view, addedToFavorites: eatery.favorite)
 
     }
     
