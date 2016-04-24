@@ -18,8 +18,14 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xpu-Rz-H16">
+                    <rect key="frame" x="57" y="129" width="84" height="28"/>
+                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goldStar" translatesAutoresizingMaskIntoConstraints="NO" id="cfk-3V-OXQ">
-                    <rect key="frame" x="86" y="56.5" width="28" height="27"/>
+                    <rect key="frame" x="86" y="57" width="28" height="27"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="Jbp-vE-c5X"/>
                         <constraint firstAttribute="width" secondItem="cfk-3V-OXQ" secondAttribute="height" multiplier="28:27" id="fDc-Sp-EiS"/>
@@ -31,12 +37,6 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xpu-Rz-H16">
-                    <rect key="frame" x="57.5" y="129" width="84" height="28"/>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.33725490196078434" green="0.62352941176470589" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -54,6 +54,10 @@
                     <exclude reference="715-U9-OCC"/>
                 </mask>
             </variation>
+            <connections>
+                <outlet property="starImageView" destination="cfk-3V-OXQ" id="Sby-4B-fAs"/>
+                <outlet property="toYourLabel" destination="oaO-pM-vIb" id="Hey-xd-CLy"/>
+            </connections>
         </view>
     </objects>
     <resources>
