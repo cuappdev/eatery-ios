@@ -95,7 +95,8 @@ class MenuHeaderView: UIView {
         hoursLabel.text = hoursText
         
         // Background
-        backgroundImageView.image = eatery.photo
+        backgroundImageView.backgroundColor = .eateryBlue()
+        backgroundImageView.hnk_setImage(eatery.photo ?? UIImage(named: "eateryIcon")!, key: eatery.slug)
         renderFavoriteImage()
     }
     
