@@ -8,6 +8,7 @@
 
 import UIKit
 import DiningStack
+import CoreLocation
 
 struct Sort {
     
@@ -15,6 +16,7 @@ struct Sort {
         case Time
         case LookAhead
         case Alphabetically
+        case Location
     }
     
     func sortMenu(menu: [(String, [MenuItem])] ) -> [(String, [MenuItem])] {
@@ -26,7 +28,8 @@ struct Sort {
         }
     }
     
-    func sortEateriesByOpenOrAlph(eatery: [Eatery], date: NSDate = NSDate(), selectedMeal: String = "None", sortingType: SortType = .Time) -> [Eatery] {
+    func sortEateriesByOpenOrAlph(eatery: [Eatery], date: NSDate = NSDate(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .Time) -> [Eatery] {
+        
         let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
             switch sortingType {
             case .LookAhead:
@@ -78,6 +81,11 @@ struct Sort {
                     default:        return false
                     }
                 }
+                case .Location:
+                    //default location is Olin Library
+                    let distanceA = location.distanceFromLocation(a.location)
+                    let distanceB = location.distanceFromLocation(b.location)
+                    return distanceA < distanceB
             }
         return false
         }
