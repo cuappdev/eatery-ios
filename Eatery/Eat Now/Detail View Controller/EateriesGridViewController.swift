@@ -33,6 +33,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
     private var locationManager: CLLocationManager!
     private var userLocation: CLLocation = CLLocation()
+    private var locationError = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -237,10 +238,14 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             if CLLocationManager.locationServicesEnabled() {
                 switch (CLLocationManager.authorizationStatus()) {
                 case .AuthorizedWhenInUse:
+                    //if error default to olin library
+                    if locationError {
+                        userLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
+                    }
                     eateryData["Nearest and Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, date: NSDate(), location: userLocation, sortingType: .Location)
                     eateryData["Nearest and Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, date: NSDate(), location: userLocation, sortingType: .Location)
                  case .NotDetermined:
-                    //WE NEED TO PROMPT USER THAT THEY HAVE LOCATION TURNED OFF
+                    //WE NEED TO PROMPT USER THAT THEY HAVE LOCATION TURNED OFF AND WE WILL USE DEFAULT OF OLIN LIBRARY
                     eateryData["Nearest and Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, date: NSDate(), sortingType: .Location)
                      eateryData["Nearest and Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, date: NSDate(), sortingType: .Location)
                     
@@ -517,6 +522,7 @@ extension EateriesGridViewController: UISearchBarDelegate {
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("Location Manager Error: \(error)")
+        locationError = true
     }
     
 }
