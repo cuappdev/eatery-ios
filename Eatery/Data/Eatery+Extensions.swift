@@ -40,6 +40,10 @@ extension Eatery {
     enum Sorting: String {
         case Campus = "campus"
         case Open = "open"
+        case PaymentType = "payment type"
+        case Location = "location"
+        case Alphabetically = "alphabetically"
+        
     }
     
     //!TODO: Maybe cache this value? I don't think this is too expensive
