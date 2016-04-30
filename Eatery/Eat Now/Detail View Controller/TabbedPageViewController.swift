@@ -25,6 +25,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     
     var tabDelegate: TabbedPageViewControllerDelegate?
     var scrollDelegate: TabbedPageViewControllerScrollDelegate?
+    var tabBar: UnderlineTabBarView?
     
     var pageViewController: UIPageViewController!
     
@@ -41,7 +42,6 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
             return mealVC.meal
         })
         
-        var tabBar: UnderlineTabBarView?
         if meals.count > 1 {
             tabBar = UnderlineTabBarView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
             tabBar!.setUp(meals)
@@ -65,6 +65,15 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMoveToParentViewController(self)
+        if let tabBar = tabBar {
+            view.bringSubviewToFront(tabBar)
+        }
+    }
+    
+    func setTabBarShadow(radius: CGFloat, opacity: Float) {
+        tabBar?.layer.shadowOpacity = opacity
+        tabBar?.layer.shadowRadius = radius
+        tabBar?.layer.shadowOffset = CGSizeMake(0, radius)
     }
     
     func scrollToViewController(vc: UIViewController) {
