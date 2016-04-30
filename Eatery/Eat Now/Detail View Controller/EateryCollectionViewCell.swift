@@ -25,8 +25,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
     
     func setEatery(eatery: Eatery) {
-        backgroundImageView.backgroundColor = UIColor.eateryBlue()
-        backgroundImageView.hnk_setImage(eatery.photo ?? UIImage(named: "eateryIcon")!, key: eatery.slug)
+        if let photo = eatery.photo {
+            backgroundImageView.hnk_setImage(photo, key: eatery.slug)
+        } else {
+            backgroundImageView.image = nil
+        }
         titleLabel.text = eatery.nickname
         statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
         statusView.layer.masksToBounds = true
