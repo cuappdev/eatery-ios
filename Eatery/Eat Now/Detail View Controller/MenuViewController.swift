@@ -28,6 +28,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var delegate: MenuButtonsDelegate?
     let displayedDate: NSDate
     var selectedMeal: String?
+    var detailedTitleView: UIView?
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: NSDate = NSDate(), meal: String? = nil) {
@@ -53,13 +54,16 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         let headerAndMenuSeparation = CGFloat(-1)
         
         // Set navigation bar title
+        let navTitleView = NavigationTitleView.loadFromNib()
+        navTitleView.eateryNameLabel.text = eatery.nickname
         if dateString == todayDateString {
             let commaIndex = dateString.characters.indexOf(",")
             let dateSubstring = dateString.substringWithRange(commaIndex!..<dateString.endIndex)
-            title = "Today\(dateSubstring)"
+            navTitleView.dateLabel.text = "Today\(dateSubstring)"
         } else {
-            title = dateString
+            navTitleView.dateLabel.text = dateString
         }
+        navigationItem.titleView = navTitleView
         
         // Scroll View
         outerScrollView = UIScrollView(frame: view.frame)
@@ -214,17 +218,39 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                 
                 // Greater than header, less than max
                 if offset.y > kMenuHeaderViewFrameHeight {
+                    //calculate shadow attributes
+                    let delta = offset.y - kMenuHeaderViewFrameHeight
+                    let radius = min(4, delta/10)
+                    let opacity = min(0.2, delta/10)
+                    pageViewController.setTabBarShadow(radius, opacity: Float(opacity))
+                    //calculate nav title animation
+                    if let navView = navigationItem.titleView as? NavigationTitleView {
+                        let height = min(22, delta/5)
+                        let width = min(navView.frame.width, delta)
+                        let opacity = min(1.0, navView.frame.width/width)
+                        navView.nameLabelHeightConstraint.constant = height
+                        navView.eateryNameLabel.font = .boldSystemFontOfSize(min(17, delta/5))
+                        navView.eateryNameLabel.layer.opacity = Float(opacity)
+                        navView.dateLabel.font = .boldSystemFontOfSize(17 - min(5, delta/5))
+                    }
                     outerScrollView.contentOffset.y = kMenuHeaderViewFrameHeight
                     innerScrollView.setContentOffset(innerOffset, animated: false)
                 }
                     // Pushing header
                 else {
+                    pageViewController.setTabBarShadow(0, opacity: 0)
+                    if let navView = navigationItem.titleView as? NavigationTitleView {
+                        navView.nameLabelHeightConstraint.constant = 0
+                        navView.eateryNameLabel.font = .boldSystemFontOfSize(0)
+                        navView.eateryNameLabel.layer.opacity = 0
+                        navView.dateLabel.font = .boldSystemFontOfSize(17)
+                    }
                     outerScrollView.contentOffset = offset
                     innerScrollView.contentOffset = CGPointZero
                 }
 
             }
-            case .Ended, .Cancelled:
+        case .Ended, .Cancelled:
             if velocity != 0 {
                 // Inertia behavior
                 startingOffset = offset
