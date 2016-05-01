@@ -51,11 +51,13 @@ class MealTableViewController: UITableViewController {
 
     // MARK: - Handoff Functions
     func startUserActivity() {
-        let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
-        activity.title = "View Eateries"
-        activity.webpageURL = NSURL(string: "https://now.dining.cornell.edu/eatery/" + eatery.slug)
-        userActivity = activity
-        userActivity?.becomeCurrent()
+        if !eatery.external {
+            let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
+            activity.title = "View Eateries"
+            activity.webpageURL = NSURL(string: "https://now.dining.cornell.edu/eatery/" + eatery.slug)
+            userActivity = activity
+            userActivity?.becomeCurrent()
+        }
     }
     
     // MARK: - Table view data source
