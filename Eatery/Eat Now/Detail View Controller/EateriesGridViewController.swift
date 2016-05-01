@@ -97,7 +97,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         sortView = UIView(frame: CGRectMake(0, startingYpos, sortViewWidth, sortViewHeight))
         
         //round corners for the drop-down selections
-        let maskPath = UIBezierPath(roundedRect: sortView.bounds, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: 10.0, height: 10.0))
+        let maskPath = UIBezierPath(roundedRect: sortView.bounds, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: 8.0, height: 8.0))
         let maskLayer = CAShapeLayer(layer: maskPath)
         maskLayer.frame = sortView.bounds
         maskLayer.path = maskPath.CGPath
@@ -265,11 +265,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     func sortButtonTapped() {
         if isDropDownDisplayed { //hide it
             isDropDownDisplayed = false
-            UIView.animateWithDuration(0.3, animations: {
+            UIView.animateWithDuration(0.2, animations: {
                 self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
 
             })
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animateWithDuration(0.1, animations: {
                  self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
             })
             
@@ -279,10 +279,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             
         } else { //show it
             isDropDownDisplayed = true
-            UIView.animateWithDuration(0.3, animations: {
+            UIView.animateWithDuration(0.2, animations: {
                 self.sortView.transform = CGAffineTransformMakeScale(1, 1)
             })
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animateWithDuration(0.1, animations: {
                 self.arrowImageView.transform = CGAffineTransformMakeScale(1, 1)
             })
             
