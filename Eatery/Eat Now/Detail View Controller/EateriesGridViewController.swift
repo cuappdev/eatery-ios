@@ -21,7 +21,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     private var eateryData: [String: [Eatery]] = [:]
     
     private var searchBar: UISearchBar!
-    private var sorted = Eatery.Sorting.Location
+    private var sorted = Eatery.Sorting.Campus
     private var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     private let defaults = NSUserDefaults.standardUserDefaults()
@@ -159,7 +159,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func sortButtonTapped() {
-        sorted = sorted == .Campus ? .Location : .Campus
+        sorted = sorted == .Campus ? .Open : .Campus
         defaults.setObject(sorted.rawValue, forKey: "sortOption")
         loadData(false, completion: nil)
     }
@@ -247,7 +247,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
                  case .NotDetermined:
                     //WE NEED TO PROMPT USER THAT THEY HAVE LOCATION TURNED OFF AND WE WILL USE DEFAULT OF OLIN LIBRARY
                     eateryData["Nearest and Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, date: NSDate(), sortingType: .Location)
-                     eateryData["Nearest and Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, date: NSDate(), sortingType: .Location)
+                    eateryData["Nearest and Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, date: NSDate(), sortingType: .Location)
                     
                 default:
                     break
@@ -268,13 +268,13 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         if CLLocationManager.locationServicesEnabled() {
             switch (CLLocationManager.authorizationStatus()) {
-                case .AuthorizedWhenInUse:
-                    locationManager.startUpdatingLocation()
-                case .NotDetermined:
-                    if locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
-                        locationManager.requestWhenInUseAuthorization()
-                    }
-                default: break
+            case .AuthorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            case .NotDetermined:
+                if locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
+                    locationManager.requestWhenInUseAuthorization()
+                }
+            default: break
             }
         }
     }
