@@ -275,6 +275,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             
             collectionView.alpha = 1.0
             navigationController?.view.alpha = 1.0
+            transparencyButton.hidden = true
             
         } else { //show it
             isDropDownDisplayed = true
