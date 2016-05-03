@@ -57,7 +57,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
 
-        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: #selector(EateriesGridViewController.sortButtonTapped))
+        let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: #selector(sortButtonTapped))
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.leftBarButtonItem = leftBarButton
         
@@ -73,7 +73,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         // Add observer for user reentering app
         let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: #selector(EateriesGridViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        nc.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         // Set up bar look ahead VC
         let rightBarButton = UIBarButtonItem(title: "Guide", style: .Plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
@@ -88,25 +88,20 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.addSubview(searchBar)
         
         //sort selections
-        let startingYpos = (navigationController?.navigationBar.frame.size.height)! + UIApplication.sharedApplication().statusBarFrame.size.height
+        let startingYpos = navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height
         let sortViewWidth = UIScreen.mainScreen().bounds.width / 2.0
         let sortViewHeight = UIScreen.mainScreen().bounds.height / 8.0
         let sortOptionButtonHeight: CGFloat = sortViewHeight / 2.0
         let font = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.offBlackColor() ]
 
         sortView = UIView(frame: CGRectMake(0, startingYpos, sortViewWidth, sortViewHeight))
-        
-        //round corners for the drop-down selections
-        let maskPath = UIBezierPath(roundedRect: sortView.bounds, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: 8.0, height: 8.0))
-        let maskLayer = CAShapeLayer(layer: maskPath)
-        maskLayer.frame = sortView.bounds
-        maskLayer.path = maskPath.CGPath
-        sortView.layer.mask = maskLayer
+        sortView.layer.cornerRadius = 8
+        sortView.clipsToBounds = true
 
         let sortingOptions = ["By Campus", "By Open & Closed"]
         //create the option buttons
         for (index, sortOption) in sortingOptions.enumerate() {
-            let sortButton = UIButton(type: UIButtonType.Custom) as UIButton
+            let sortButton = UIButton(type: .Custom)
             sortButton.frame = CGRectMake(0, sortOptionButtonHeight * CGFloat(index), sortViewWidth, sortOptionButtonHeight)
             let campusTitle = NSMutableAttributedString(string: sortOption, attributes: font)
             sortButton.setAttributedTitle(campusTitle, forState: .Normal)
@@ -121,22 +116,19 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             imageView.image = UIImage(named: "checkIcon")
             imageView.hidden = true
             sortButton.addSubview(imageView)
-            
             sortButton.tag = index
-            sortButton.addTarget(self, action: #selector(EateriesGridViewController.sortingOptionsTapped(_:)), forControlEvents: .TouchUpInside)
+            sortButton.addTarget(self, action: #selector(sortingOptionsTapped(_:)), forControlEvents: .TouchUpInside)
             sortButtons.append(sortButton)
             sortView.addSubview(sortButton)
         }
         
         //arrow for drop-down menu
         let arrowHeight = startingYpos / 9
-        let arrowImageViewX = (leftBarButton.valueForKey("view")?.frame.origin.x)! + (leftBarButton.valueForKey("view")?.size.width)! / 2 - (sortViewWidth/24)
+        let arrowImageViewX = leftBarButton.valueForKey("view")!.frame.minX + leftBarButton.valueForKey("view")!.size.width / 2 - sortViewWidth / 24
         arrowImageView = UIImageView(frame: CGRectMake(arrowImageViewX, startingYpos - arrowHeight, sortViewWidth/12, arrowHeight))
         arrowImageView.image = UIImage(named: "arrow")
         setAnchorPoint(CGPointMake(0.5, 1.0), forView: arrowImageView)
-        UIView.animateWithDuration(0.0, animations: {
-            self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        })
+        self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
         UIApplication.sharedApplication().keyWindow?.addSubview(arrowImageView)
         
         //make the drop-down menu open and close from the arrow
@@ -146,26 +138,24 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         //close drop-down menu when the user taps outside of it
         transparencyButton = UIButton(frame: view.bounds)
         transparencyButton.backgroundColor = UIColor.clearColor()
-        transparencyButton.addTarget(self, action: #selector(EateriesGridViewController.tappedOutsideOfMenu), forControlEvents: .TouchUpInside)
+        transparencyButton.addTarget(self, action: #selector(tappedOutsideOfMenu), forControlEvents: .TouchUpInside)
         view.addSubview(transparencyButton)
         
         //beginning configurations
         highlightCurrentSortOption(sortButtons[0])
-        UIView.animateWithDuration(0.0) { 
-            self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        }
+        self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
         UIApplication.sharedApplication().keyWindow?.addSubview(sortView)
         
         // Pull To Refresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = UIColor.whiteColor()
+        loadingView.tintColor = .whiteColor()
         collectionView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
                 Analytics.trackPullToRefresh()
                 self?.loadData(true) {
                     self?.collectionView.dg_stopLoading()
                 }
             }, loadingView: loadingView)
-        collectionView.dg_setPullToRefreshFillColor(UIColor.eateryBlue())
+        collectionView.dg_setPullToRefreshFillColor(.eateryBlue())
         collectionView.dg_setPullToRefreshBackgroundColor(collectionView.backgroundColor!)
     }
     
