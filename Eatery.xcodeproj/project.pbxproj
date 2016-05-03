@@ -46,6 +46,7 @@
 		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
+		B0BFA46C1CD85C3F0062C62B /* Fork And Gavel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0BFA46B1CD85C3F0062C62B /* Fork And Gavel.jpg */; };
 		B0F2F2D71C6C1D000024D04A /* North-Star.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2D61C6C1D000024D04A /* North-Star.jpg */; };
 		B0F2F2D91C6C1D3A0024D04A /* Okenshields.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2D81C6C1D3A0024D04A /* Okenshields.jpg */; };
 		B0F2F2DB1C6C1D5C0024D04A /* Sweet-Sensations.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2DA1C6C1D5C0024D04A /* Sweet-Sensations.jpg */; };
@@ -216,6 +217,7 @@
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuImages.swift; path = "Eat Now/MenuImages.swift"; sourceTree = "<group>"; };
 		977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.debug.xcconfig"; sourceTree = "<group>"; };
 		9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.external beta.xcconfig"; sourceTree = "<group>"; };
+		B0BFA46B1CD85C3F0062C62B /* Fork And Gavel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Fork And Gavel.jpg"; sourceTree = "<group>"; };
 		B0F2F2D61C6C1D000024D04A /* North-Star.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "North-Star.jpg"; sourceTree = "<group>"; };
 		B0F2F2D81C6C1D3A0024D04A /* Okenshields.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Okenshields.jpg; sourceTree = "<group>"; };
 		B0F2F2DA1C6C1D5C0024D04A /* Sweet-Sensations.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Sweet-Sensations.jpg"; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 				FAC5A2F41BC60DE50001DE97 /* Carols-Cafe.jpg */,
 				FAC5A2F81BC60DE50001DE97 /* Cook-House-Dining.jpg */,
 				FAC5A2FA1BC60DE50001DE97 /* Cornell-Dairy-Bar.jpg */,
+				B0BFA46B1CD85C3F0062C62B /* Fork And Gavel.jpg */,
 				B0FEFCF51CD18B4E0014EEBA /* Frannys.jpg */,
 				B0FEFCEB1CD189100014EEBA /* Gimme Coffee.jpg */,
 				FAC5A2FC1BC60DE50001DE97 /* Goldies-Cafe.jpg */,
@@ -818,6 +821,7 @@
 				FAC5A3411BC60DE50001DE97 /* Risley-Dining.jpg in Resources */,
 				FAC5A3201BC60DE50001DE97 /* Bears-Den.jpg in Resources */,
 				FAC5A3431BC60DE50001DE97 /* Rose-House-Dining.jpg in Resources */,
+				B0BFA46C1CD85C3F0062C62B /* Fork And Gavel.jpg in Resources */,
 				FAC5A3391BC60DE50001DE97 /* Keeton-House-Dining.jpg in Resources */,
 				B0FEFCF01CD189370014EEBA /* Macs.jpg in Resources */,
 				FAC5A3291BC60DE50001DE97 /* Carols-Cafe.jpg in Resources */,
