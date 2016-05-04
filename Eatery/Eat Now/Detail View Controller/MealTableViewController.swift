@@ -87,7 +87,7 @@ class MealTableViewController: UITableViewController {
                 return (element.0, element.1)
             }
             
-            sortedMenu = Sort().sortMenu(sortedMenu)
+            sortedMenu = Sort.sortMenu(sortedMenu)
             let stationArray = sortedMenu.map { $0.0 }
             
             var title = "--"

@@ -54,7 +54,7 @@ class MenuImages: NSObject {
             return (element.0, items)
         }
         
-        let sortedMenu = Sort().sortMenu(mapMenu)
+        let sortedMenu = Sort.sortMenu(mapMenu)
         
         for category in sortedMenu {
             let categoryName = category.0

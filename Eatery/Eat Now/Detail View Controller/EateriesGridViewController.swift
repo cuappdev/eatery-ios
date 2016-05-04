@@ -21,7 +21,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     private var eateryData: [String: [Eatery]] = [:]
     
     private var searchBar: UISearchBar!
-    private var sorted = Eatery.Sorting.Campus
+    private var sortType = Eatery.Sorting.Campus
     private var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     private let defaults = NSUserDefaults.standardUserDefaults()
@@ -37,7 +37,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sorted = Eatery.Sorting(rawValue: (defaults.stringForKey("sortOption") ?? "campus"))!
+        sortType = Eatery.Sorting(rawValue: (defaults.stringForKey("sortOption") ?? "campus"))!
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
@@ -159,8 +159,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func sortButtonTapped() {
-        sorted = sorted == .Campus ? .Open : .Campus
-        defaults.setObject(sorted.rawValue, forKey: "sortOption")
+        sortType = sortType == .Campus ? .Open : .Campus
+        defaults.setObject(sortType.rawValue, forKey: "sortOption")
         loadData(false, completion: nil)
     }
     
@@ -209,29 +209,29 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         }
         
         eateryData["Favorites"] = desiredEateries.filter { $0.favorite }
-        if sorted == .Campus {
+        if sortType == .Campus {
             eateryData["North"] = desiredEateries.filter { $0.area == .North }
             eateryData["West"] = desiredEateries.filter { $0.area == .West }
             eateryData["Central"] = desiredEateries.filter { $0.area == .Central }
             //sortEateries
-            eateryData["North"] = Sort().sortEateriesByOpenOrAlph(eateryData["North"]!, date: NSDate(), location: userLocation, sortingType: .Alphabetically)
-            eateryData["West"] = Sort().sortEateriesByOpenOrAlph(eateryData["West"]!, date: NSDate(), location: userLocation, sortingType: .Alphabetically)
-            eateryData["Central"] = Sort().sortEateriesByOpenOrAlph(eateryData["Central"]!, date: NSDate(),location: userLocation, sortingType: .Alphabetically)
+            eateryData["North"] = Sort.sortEateriesByOpenOrAlph(eateryData["North"]!, location: userLocation, sortingType: .Alphabetically)
+            eateryData["West"] = Sort.sortEateriesByOpenOrAlph(eateryData["West"]!, location: userLocation, sortingType: .Alphabetically)
+            eateryData["Central"] = Sort.sortEateriesByOpenOrAlph(eateryData["Central"]!, location: userLocation, sortingType: .Alphabetically)
             
-        } else if sorted == .Open {
+        } else if sortType == .Open {
             eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }
             eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow()}
-            eateryData["Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Open"]!, location: userLocation)
-            eateryData["Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Closed"]!, location: userLocation)
-        } else if sorted == .Alphabetically {
+            eateryData["Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Open"]!, location: userLocation)
+            eateryData["Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Closed"]!, location: userLocation)
+        } else if sortType == .Alphabetically {
             eateryData["All Eateries"] = desiredEateries.sort { $0.nickname < $1.nickname }
-        } else if sorted == .PaymentType {
+        } else if sortType == .PaymentType {
             eateryData["Swipes"] = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
             eateryData["BRB"] = desiredEateries.filter { $0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
             eateryData["Cash"] = desiredEateries.filter { $0.paymentMethods.contains(.Cash) && !$0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
-            eateryData["Cash"] = Sort().sortEateriesByOpenOrAlph(eateryData["Cash"]!, date: NSDate(), location: userLocation, sortingType: .Alphabetically)
-            eateryData["Swipes"] = Sort().sortEateriesByOpenOrAlph(eateryData["Swipes"]!, date: NSDate(), location: userLocation, sortingType: .Alphabetically)
-            eateryData["BRB"] = Sort().sortEateriesByOpenOrAlph(eateryData["BRB"]!, date: NSDate(), location: userLocation, sortingType: .Alphabetically)
+            eateryData["Cash"] = Sort.sortEateriesByOpenOrAlph(eateryData["Cash"]!, location: userLocation, sortingType: .Alphabetically)
+            eateryData["Swipes"] = Sort.sortEateriesByOpenOrAlph(eateryData["Swipes"]!, location: userLocation, sortingType: .Alphabetically)
+            eateryData["BRB"] = Sort.sortEateriesByOpenOrAlph(eateryData["BRB"]!, location: userLocation, sortingType: .Alphabetically)
         } else { //sorted == .Location
             eateryData["Nearest and Open"] = desiredEateries.filter { $0.isOpenNow() }
             eateryData["Nearest and Closed"] = desiredEateries.filter { !$0.isOpenNow() }
@@ -242,12 +242,12 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
                     if locationError {
                         userLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
                     }
-                    eateryData["Nearest and Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, date: NSDate(), location: userLocation, sortingType: .Location)
-                    eateryData["Nearest and Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, date: NSDate(), location: userLocation, sortingType: .Location)
+                    eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, location: userLocation, sortingType: .Location)
+                    eateryData["Nearest and Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, location: userLocation, sortingType: .Location)
                  case .NotDetermined:
                     //WE NEED TO PROMPT USER THAT THEY HAVE LOCATION TURNED OFF AND WE WILL USE DEFAULT OF OLIN LIBRARY
-                    eateryData["Nearest and Open"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, date: NSDate(), sortingType: .Location)
-                    eateryData["Nearest and Closed"] = Sort().sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, date: NSDate(), sortingType: .Location)
+                    eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, sortingType: .Location)
+                    eateryData["Nearest and Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, sortingType: .Location)
                     
                 default:
                     break
@@ -289,20 +289,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
     func eateryForIndexPath(indexPath: NSIndexPath) -> Eatery {
         var eatery: Eatery!
-        
         var section = indexPath.section
-        var names: [String]
-        if sorted == .Campus {
-            names = Eatery.campusNames
-        } else if sorted == .Open {
-            names = Eatery.openNames
-        } else if sorted == .Alphabetically {
-            names = Eatery.alphabeticalNames
-        } else if sorted == .PaymentType {
-            names = Eatery.paymentNames
-        } else { //sorted == .Location
-            names = Eatery.locationNames
-        }
         
         if let favorites = eateryData["Favorites"] where !favorites.isEmpty {
             if section == 0 {
@@ -311,7 +298,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             section -= 1
         }
         
-        if eatery == nil, let e = eateryData[names[section]] where !e.isEmpty {
+        if eatery == nil, let e = eateryData[sortType.names[section]] where !e.isEmpty {
             eatery = e[indexPath.row]
         }
         
@@ -343,36 +330,12 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
 
 extension EateriesGridViewController: UICollectionViewDataSource {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        var section = 0
-        section += eateryData["Favorites"]?.count > 0 ? 1 : 0
-        if sorted == .Campus {
-            section += 3
-        } else if sorted == .Open {
-            section += 2
-        } else if sorted == .Alphabetically {
-            section += 1
-        } else if sorted == .PaymentType {
-            section += 3
-        } else {
-            section += 2
-        }
-        return section
+        let showFavorites = (eateryData["Favorites"] ?? []).count > 0 ? 1 : 0
+        return sortType.sectionCount + showFavorites
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var section = section
-        var names: [String]
-        if sorted == .Campus {
-            names = Eatery.campusNames
-        } else if sorted == .Open {
-            names = Eatery.openNames
-        } else if sorted == .Alphabetically {
-            names = Eatery.alphabeticalNames
-        } else if sorted == .PaymentType {
-            names = Eatery.paymentNames
-        } else { //sorted == .Location
-            names = Eatery.locationNames
-        }
         if let favorites = eateryData["Favorites"] where favorites.count > 0 {
             if section == 0 {
                 return favorites.count
@@ -380,7 +343,7 @@ extension EateriesGridViewController: UICollectionViewDataSource {
             section -= 1
         }
         
-        return eateryData[names[section]]?.count ?? 0
+        return eateryData[sortType.names[section]]?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -414,18 +377,6 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         
         if kind == UICollectionElementKindSectionHeader {
             var section = indexPath.section
-            var names: [String]
-            if sorted == .Campus {
-                names = Eatery.campusNames
-            } else if sorted == .Open {
-                names = Eatery.openNames
-            } else if sorted == .Alphabetically {
-                names = Eatery.alphabeticalNames
-            } else if sorted == .PaymentType {
-                names = Eatery.paymentNames
-            } else { //sorted == .Location
-                names = Eatery.locationNames
-            }
             let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! EateriesCollectionViewHeaderView
             
             if let favorites = eateryData["Favorites"] where favorites.count > 0 {
@@ -435,7 +386,7 @@ extension EateriesGridViewController: UICollectionViewDataSource {
                 }
                 section -= 1
             }
-            sectionTitleHeaderView.titleLabel.text = names[section]
+            sectionTitleHeaderView.titleLabel.text = sortType.names[section]
             return sectionTitleHeaderView
         }
         return UICollectionReusableView()

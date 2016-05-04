@@ -120,7 +120,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     func hasMenuIterable(eatery: Eatery) -> Bool {
         let alternateMenuIterable = eatery.getAlternateMenuIterable()
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort().getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         
         if !selectedMeal.isEmpty {
             let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
@@ -134,7 +134,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         var eateryMenuImage = UIImage()
         let alternateMenuIterable = eatery.getAlternateMenuIterable()
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort().getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         
         if !selectedMeal.isEmpty {
             let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
@@ -217,7 +217,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             cell.eateryHoursLabel.text = "Closed"
             
             events = eatery.eventsOnDate(dates[selectedDateIndex])
-            let selectedMeal = Sort().getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+            let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
 
             if let event = events[selectedMeal] {
                 cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
@@ -269,7 +269,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
         }
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort().getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         let menuVC = MenuViewController(eatery: eatery, delegate: delegate, date: date, meal: selectedMeal)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
@@ -332,7 +332,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         let selectedDate = dates[selectedDateIndex]
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort().getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         MenuImages.shareMenu(eatery, vc: self, events: events, date: selectedDate, selectedMenu: selectedMeal)
     }
     
@@ -375,9 +375,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         centralExpandedCells = Array(count: centralEateries.count, repeatedValue: 0)
         
         let selectedMeal = filterMealButtons[selectedMealIndex].titleLabel!.text!
-        filteredWestEateries = Sort().sortEateriesByOpenOrAlph(filteredWestEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
-        filteredNorthEateries = Sort().sortEateriesByOpenOrAlph(filteredNorthEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
-        filteredCentralEateries =  Sort().sortEateriesByOpenOrAlph(filteredCentralEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
+        filteredWestEateries = Sort.sortEateriesByOpenOrAlph(filteredWestEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
+        filteredNorthEateries = Sort.sortEateriesByOpenOrAlph(filteredNorthEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
+        filteredCentralEateries =  Sort.sortEateriesByOpenOrAlph(filteredCentralEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
         
         tableView.reloadData()
     }

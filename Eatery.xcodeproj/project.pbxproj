@@ -276,7 +276,7 @@
 		E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuHeaderView.xib; path = ../MenuHeaderView.xib; sourceTree = "<group>"; };
 		F173EAFB0FD786428A00D8B7 /* Pods-Today Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		F2F973D99BBC8F4DE6724792 /* Pods-Today Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
+		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Eatery+Extensions.swift"; path = "../Data/Eatery+Extensions.swift"; sourceTree = "<group>"; };
 		FAC5A2E41BC60DE50001DE97 /* 104-West.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "104-West.jpg"; sourceTree = "<group>"; };
 		FAC5A2E51BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Amit-Bhatia-Libe-Cafe.jpg"; sourceTree = "<group>"; };
 		FAC5A2E71BC60DE50001DE97 /* Atrium-Cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Atrium-Cafe.jpg"; sourceTree = "<group>"; };
@@ -484,7 +484,6 @@
 			isa = PBXGroup;
 			children = (
 				C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */,
-				FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */,
 				E9CFC0A61C0E44D900ED884A /* Extra Eatery Data */,
 			);
 			path = Data;
@@ -514,6 +513,7 @@
 		C0497AEE1B64AA1800AC1C6C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */,
 				1D0A94431CC84280000B3974 /* UIViewController+Animation.swift */,
 				D1EE77791C702469001823D8 /* String+Manipulation.swift */,
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,

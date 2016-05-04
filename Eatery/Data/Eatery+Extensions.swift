@@ -44,6 +44,19 @@ extension Eatery {
         case Location = "location"
         case Alphabetically = "alphabetically"
         
+        var names: [String] {
+            switch self {
+            case .Alphabetically: return ["All Eateries"]
+            case .Campus: return ["Central", "West", "North"]
+            case .Location: return ["Nearest and Open", "Nearest and Closed"]
+            case .Open: return ["Open", "Closed"]
+            case .PaymentType: return ["Swipes", "BRB", "Cash"]
+            }
+        }
+        
+        var sectionCount: Int {
+            return self.names.count
+        }
     }
     
     //!TODO: Maybe cache this value? I don't think this is too expensive

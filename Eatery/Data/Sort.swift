@@ -18,8 +18,7 @@ struct Sort {
         case Alphabetically
         case Location
     }
-    
-    func sortMenu(menu: [(String, [MenuItem])] ) -> [(String, [MenuItem])] {
+     static func sortMenu(menu: [(String, [MenuItem])] ) -> [(String, [MenuItem])] {
         return menu.sort {
             if $0.0 == "Hot Traditional Station - Entrees" {
                 return true
@@ -28,7 +27,7 @@ struct Sort {
         }
     }
     
-    func sortEateriesByOpenOrAlph(eatery: [Eatery], date: NSDate = NSDate(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .Time) -> [Eatery] {
+    static func sortEateriesByOpenOrAlph(eatery: [Eatery], date: NSDate = NSDate(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .Time) -> [Eatery] {
         
         let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
             switch sortingType {
@@ -94,7 +93,7 @@ struct Sort {
     
     
     //HelperFunction to get meal
-    func getSelectedMeal(eatery: Eatery, date: NSDate, meal: String) -> String {
+    static func getSelectedMeal(eatery: Eatery, date: NSDate, meal: String) -> String {
         let events = eatery.eventsOnDate(date)
         
         let meals: [String] = Array((events ?? [:]).keys)
