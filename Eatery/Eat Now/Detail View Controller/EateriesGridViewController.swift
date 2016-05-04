@@ -20,6 +20,13 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     private var eateries: [Eatery] = []
     private var eateryData: [String: [Eatery]] = [:]
     
+    private var leftBarButton: UIBarButtonItem!
+    private var sortView: UIView!
+    private var sortButtons: [UIButton] = []
+    private var arrowImageView: UIImageView!
+    private var transparencyButton: UIButton!
+    private var isDropDownDisplayed = false
+    
     private var searchBar: UISearchBar!
     private var sortType = Eatery.Sorting.Campus
     private var searchedMenuItemNames: [Eatery: [String]] = [:]
@@ -49,7 +56,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         setupCollectionView()
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
-        
+
         let leftBarButton = UIBarButtonItem(title: "Sort", style: .Plain, target: self, action: #selector(EateriesGridViewController.sortButtonTapped))
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
         navigationItem.leftBarButtonItem = leftBarButton
@@ -80,6 +87,75 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         collectionView.addObserver(self, forKeyPath: "contentOffset", options: [.New], context: nil)
         view.addSubview(searchBar)
         
+        //sort selections
+        let startingYpos = (navigationController?.navigationBar.frame.size.height)! + UIApplication.sharedApplication().statusBarFrame.size.height
+        let sortViewWidth = UIScreen.mainScreen().bounds.width / 2.0
+        let sortViewHeight = UIScreen.mainScreen().bounds.height / 8.0
+        let sortOptionButtonHeight: CGFloat = sortViewHeight / 2.0
+        let font = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.offBlackColor() ]
+
+        sortView = UIView(frame: CGRectMake(0, startingYpos, sortViewWidth, sortViewHeight))
+        
+        //round corners for the drop-down selections
+        let maskPath = UIBezierPath(roundedRect: sortView.bounds, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: 10.0, height: 10.0))
+        let maskLayer = CAShapeLayer(layer: maskPath)
+        maskLayer.frame = sortView.bounds
+        maskLayer.path = maskPath.CGPath
+        sortView.layer.mask = maskLayer
+
+        let sortingOptions = ["By Campus", "By Open & Closed"]
+        //create the option buttons
+        for (index, sortOption) in sortingOptions.enumerate() {
+            let sortButton = UIButton(type: UIButtonType.Custom) as UIButton
+            sortButton.frame = CGRectMake(0, sortOptionButtonHeight * CGFloat(index), sortViewWidth, sortOptionButtonHeight)
+            let campusTitle = NSMutableAttributedString(string: sortOption, attributes: font)
+            sortButton.setAttributedTitle(campusTitle, forState: .Normal)
+            sortButton.contentHorizontalAlignment = .Left
+            sortButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+            sortButton.backgroundColor = .whiteColor()
+            
+            let checkWidth = sortViewWidth/11.0
+            let checkHeight = sortOptionButtonHeight/3.0
+            let y = sortOptionButtonHeight / 2.0 - checkHeight / 2.0
+            let imageView = UIImageView(frame: CGRectMake(sortViewWidth-checkWidth-10, y, checkWidth, checkHeight))
+            imageView.image = UIImage(named: "checkIcon")
+            imageView.hidden = true
+            sortButton.addSubview(imageView)
+            
+            sortButton.tag = index
+            sortButton.addTarget(self, action: #selector(EateriesGridViewController.sortingOptionsTapped(_:)), forControlEvents: .TouchUpInside)
+            sortButtons.append(sortButton)
+            sortView.addSubview(sortButton)
+        }
+        
+        //arrow for drop-down menu
+        let arrowHeight = startingYpos / 9
+        let arrowImageViewX = (leftBarButton.valueForKey("view")?.frame.origin.x)! + (leftBarButton.valueForKey("view")?.size.width)! / 2 - (sortViewWidth/24)
+        arrowImageView = UIImageView(frame: CGRectMake(arrowImageViewX, startingYpos - arrowHeight, sortViewWidth/12, arrowHeight))
+        arrowImageView.image = UIImage(named: "arrow")
+        setAnchorPoint(CGPointMake(0.5, 1.0), forView: arrowImageView)
+        UIView.animateWithDuration(0.0, animations: {
+            self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        })
+        UIApplication.sharedApplication().keyWindow?.addSubview(arrowImageView)
+        
+        //make the drop-down menu open and close from the arrow
+        let anchorPoint = CGPointMake((leftBarButton.valueForKey("view")?.frame.size.width)! / 2 / sortViewWidth, 0)
+        setAnchorPoint(anchorPoint, forView: sortView)
+       
+        //close drop-down menu when the user taps outside of it
+        transparencyButton = UIButton(frame: view.bounds)
+        transparencyButton.backgroundColor = UIColor.clearColor()
+        transparencyButton.addTarget(self, action: #selector(EateriesGridViewController.tappedOutsideOfMenu), forControlEvents: .TouchUpInside)
+        view.addSubview(transparencyButton)
+        
+        //beginning configurations
+        highlightCurrentSortOption(sortButtons[0])
+        UIView.animateWithDuration(0.0) { 
+            self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        }
+        UIApplication.sharedApplication().keyWindow?.addSubview(sortView)
+        
         // Pull To Refresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor.whiteColor()
@@ -96,6 +172,16 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         startUserActivity()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        UIView.animateWithDuration(0.0, animations: {
+            self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        })
+        UIView.animateWithDuration(0.0) {
+            self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        }
+        isDropDownDisplayed = false
     }
     
     func goToLookAheadVC() {
@@ -158,9 +244,90 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         preselectedSlug = nil
     }
     
+    func setAnchorPoint(anchorPoint: CGPoint, forView view: UIView) {
+        var newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x, view.bounds.size.height * anchorPoint.y)
+        var oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x, view.bounds.size.height * view.layer.anchorPoint.y)
+        
+        newPoint = CGPointApplyAffineTransform(newPoint, view.transform)
+        oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform)
+        
+        var position = view.layer.position
+        position.x -= oldPoint.x
+        position.x += newPoint.x
+        
+        position.y -= oldPoint.y
+        position.y += newPoint.y
+        
+        view.layer.position = position
+        view.layer.anchorPoint = anchorPoint
+    }
+    
     func sortButtonTapped() {
-        sortType = sortType == .Campus ? .Open : .Campus
-        defaults.setObject(sortType.rawValue, forKey: "sortOption")
+        if isDropDownDisplayed { //hide it
+            isDropDownDisplayed = false
+            UIView.animateWithDuration(0.3, animations: {
+                self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+
+            })
+            UIView.animateWithDuration(0.2, animations: {
+                 self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+            })
+            
+            collectionView.alpha = 1.0
+            navigationController?.view.alpha = 1.0
+            
+        } else { //show it
+            isDropDownDisplayed = true
+            UIView.animateWithDuration(0.3, animations: {
+                self.sortView.transform = CGAffineTransformMakeScale(1, 1)
+            })
+            UIView.animateWithDuration(0.2, animations: {
+                self.arrowImageView.transform = CGAffineTransformMakeScale(1, 1)
+            })
+            
+            collectionView.alpha = 0.8
+            navigationController?.view.alpha = 0.8
+            transparencyButton.hidden = false
+        }
+    }
+    
+    func tappedOutsideOfMenu() {
+        if (transparencyButton.hidden) {
+            transparencyButton.hidden = false
+        } else {
+            transparencyButton.hidden = true
+            sortButtonTapped()
+        }
+    }
+    
+    func highlightCurrentSortOption(sender: UIButton) {
+        if sender.tag != 0 {
+            arrowImageView.image = UIImage(named: "white arrow")
+        } else {
+            arrowImageView.image = UIImage(named: "arrow")
+        }
+        
+        for button in sortButtons {
+            button.backgroundColor = (button == sender) ? UIColor(red: 201/255, green: 229/255, blue: 252/255, alpha: 1.0) : UIColor.whiteColor()
+            
+            for subview in button.subviews {
+                if subview.isMemberOfClass(UIImageView) {
+                    subview.hidden = (button != sender)
+                }
+            }
+        }
+    }
+    
+    func sortingOptionsTapped(sender: UIButton) {
+        if sender.tag == 0 {
+            sorted = .Campus
+        } else if sender.tag == 1 {
+            sorted = .Open
+        }
+        
+        highlightCurrentSortOption(sender)
+        sortButtonTapped()
+        defaults.setObject(sorted.rawValue, forKey: "sortOption")
         loadData(false, completion: nil)
     }
     
