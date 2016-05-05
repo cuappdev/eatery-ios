@@ -46,6 +46,7 @@
 		95434FC61BD8699F003612DB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB51BD8699F003612DB /* Tools.swift */; };
 		95434FC71BD8699F003612DB /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95434FB61BD8699F003612DB /* Tweaks.swift */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
+		98B618EE1CDAC6F100CBC9BA /* SortMenuLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B618ED1CDAC6F100CBC9BA /* SortMenuLayout.swift */; };
 		B0BFA46C1CD85C3F0062C62B /* Fork And Gavel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0BFA46B1CD85C3F0062C62B /* Fork And Gavel.jpg */; };
 		B0F2F2D71C6C1D000024D04A /* North-Star.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2D61C6C1D000024D04A /* North-Star.jpg */; };
 		B0F2F2D91C6C1D3A0024D04A /* Okenshields.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0F2F2D81C6C1D3A0024D04A /* Okenshields.jpg */; };
@@ -216,6 +217,7 @@
 		95434FB61BD8699F003612DB /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuImages.swift; path = "Eat Now/MenuImages.swift"; sourceTree = "<group>"; };
 		977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.debug.xcconfig"; sourceTree = "<group>"; };
+		98B618ED1CDAC6F100CBC9BA /* SortMenuLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortMenuLayout.swift; sourceTree = "<group>"; };
 		9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.external beta.xcconfig"; sourceTree = "<group>"; };
 		B0BFA46B1CD85C3F0062C62B /* Fork And Gavel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Fork And Gavel.jpg"; sourceTree = "<group>"; };
 		B0F2F2D61C6C1D000024D04A /* North-Star.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "North-Star.jpg"; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 			children = (
 				E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */,
 				E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */,
+				98B618ED1CDAC6F100CBC9BA /* SortMenuLayout.swift */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -1067,6 +1070,7 @@
 			files = (
 				DD0E95021CC8826D004AF507 /* AddedToFavoritesView.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
+				98B618EE1CDAC6F100CBC9BA /* SortMenuLayout.swift in Sources */,
 				95434FC51BD8699F003612DB /* SubmitBugViewController.swift in Sources */,
 				95434FC71BD8699F003612DB /* Tweaks.swift in Sources */,
 				D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */,
