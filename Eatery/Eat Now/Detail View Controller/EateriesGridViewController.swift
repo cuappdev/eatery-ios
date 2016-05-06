@@ -38,13 +38,18 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         return queue
     }()
     
-    private var locationManager: CLLocationManager!
+    private lazy var locationManager: CLLocationManager = {
+        let l = CLLocationManager()
+        l.delegate = self
+        l.desiredAccuracy = kCLLocationAccuracyBest
+        return l
+    }()
     private var userLocation: CLLocation = CLLocation()
     private var locationError = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sortType = Eatery.Sorting(rawValue: (defaults.stringForKey("sortOption") ?? "campus"))!
+        sortType = Eatery.Sorting(rawValue: (defaults.stringForKey("sortOption") ?? "Campus")) ?? .Campus
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
@@ -88,7 +93,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.addSubview(searchBar)
         
         //sort menu
-        let sortingOptions = ["By Campus", "By Open & Closed", "By Payment Type", "By Alphabetically", "By Location"]
+        let sortingOptions = Eatery.Sorting.values.map { "By \($0.rawValue)" }
         let sortOptionButtonHeight: CGFloat = UIScreen.mainScreen().bounds.height / 15
         
         let startingYpos = navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height
@@ -101,7 +106,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         //create the option buttons
         for (index, title) in sortingOptions.enumerate() {
-            let button = makeSortButton(title, index: index, sortButtons: sortButtons, sortOptionButtonHeight: sortOptionButtonHeight, sortView: sortView)
+            let button = makeSortButton(title, index: index, sortOptionButtonHeight: sortOptionButtonHeight, sortView: sortView)
             button.addTarget(self, action: #selector(sortingOptionsTapped(_:)), forControlEvents: .TouchUpInside)
             sortButtons.append(button)
             sortView.addSubview(button)
@@ -124,8 +129,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
        
         //close drop-down menu when the user taps outside of it
         transparencyButton = UIButton(frame: view.bounds)
-        transparencyButton.backgroundColor = UIColor.clearColor()
-        transparencyButton.addTarget(self, action: #selector(tappedOutsideOfMenu), forControlEvents: .TouchUpInside)
+        transparencyButton.backgroundColor = .clearColor()
+        transparencyButton.addTarget(self, action: #selector(sortButtonTapped), forControlEvents: .TouchUpInside)
         transparencyButton.hidden = true
         view.addSubview(transparencyButton)
         
@@ -223,55 +228,27 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func sortButtonTapped() {
-        if isDropDownDisplayed { //hide it
-            isDropDownDisplayed = false
-            UIView.animateWithDuration(0.2, animations: {
-                self.sortView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-                }, completion: { _ in
-                self.sortView.alpha = 0
-                })
-            UIView.animateWithDuration(0.1, animations: {
-                 self.arrowImageView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-            })
-            
-            collectionView.alpha = 1.0
-            navigationController?.view.alpha = 1.0
-            transparencyButton.hidden = true
-            
-        } else { //show it
-            isDropDownDisplayed = true
-            UIView.animateWithDuration(0.2, animations: {
-                self.sortView.transform = CGAffineTransformMakeScale(1, 1)
-                self.sortView.alpha = 1
-            })
-            UIView.animateWithDuration(0.1, animations: {
-                self.arrowImageView.transform = CGAffineTransformMakeScale(1, 1)
-            })
-            
-            collectionView.alpha = 0.8
-            navigationController?.view.alpha = 0.8
-            transparencyButton.hidden = false
+        let transform: CGFloat = isDropDownDisplayed ? 0.01 : 1
+        let alpha: CGFloat = isDropDownDisplayed ? 0 : 1
+        let outerAlpha: CGFloat = isDropDownDisplayed ? 1.0 : 0.8
+        UIView.animateWithDuration(0.2) {
+            self.sortView.transform = CGAffineTransformMakeScale(transform, transform)
+            self.sortView.alpha = alpha
         }
-    }
-    
-    func tappedOutsideOfMenu() {
-        if (transparencyButton.hidden) {
-            transparencyButton.hidden = false
-        } else {
-            transparencyButton.hidden = true
-            sortButtonTapped()
+        UIView.animateWithDuration(0.1) {
+            self.arrowImageView.transform = CGAffineTransformMakeScale(transform, transform)
         }
+        collectionView.alpha = outerAlpha
+        navigationController?.view.alpha = outerAlpha
+        transparencyButton.hidden = isDropDownDisplayed
+        isDropDownDisplayed = !isDropDownDisplayed
     }
     
     func highlightCurrentSortOption(sender: UIButton) {
-        if sender.tag != 0 {
-            arrowImageView.image = UIImage(named: "white arrow")
-        } else {
-            arrowImageView.image = UIImage(named: "arrow")
-        }
+        arrowImageView.image = UIImage(named: sender.tag != 0 ? "white arrow" : "arrow")
         
         for button in sortButtons {
-            button.backgroundColor = (button == sender) ? UIColor(red: 201/255, green: 229/255, blue: 252/255, alpha: 1.0) : UIColor.whiteColor()
+            button.backgroundColor = (button == sender) ? UIColor(red: 201/255, green: 229/255, blue: 252/255, alpha: 1.0) : .whiteColor()
             
             for subview in button.subviews {
                 if subview.isMemberOfClass(UIImageView) {
@@ -282,17 +259,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func sortingOptionsTapped(sender: UIButton) {
-        if sender.tag == 0 {
-            sortType = .Campus
-        } else if sender.tag == 1 {
-            sortType = .Open
-        } else if sender.tag == 2 {
-            sortType = .PaymentType
-        } else if sender.tag == 3 {
-            sortType = .Alphabetically
-        } else if sender.tag == 4 {
-            sortType = .Location
-        }
+        sortType = Eatery.Sorting.values[sender.tag]
         
         highlightCurrentSortOption(sender)
         sortButtonTapped()
@@ -396,20 +363,12 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     //Location Functions
     
     func nearestLocationPressed() {
-        //MapView Location
-        // Set up location manager
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
         if CLLocationManager.locationServicesEnabled() {
             switch (CLLocationManager.authorizationStatus()) {
             case .AuthorizedWhenInUse:
                 locationManager.startUpdatingLocation()
             case .NotDetermined:
-                if locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
-                    locationManager.requestWhenInUseAuthorization()
-                }
+                locationManager.requestWhenInUseAuthorization()
             default: break
             }
         }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-func makeSortButton(title:String, index:Int, sortButtons:[UIButton], sortOptionButtonHeight:CGFloat, sortView:UIView) -> UIButton {
+func makeSortButton(title:String, index:Int, sortOptionButtonHeight:CGFloat, sortView:UIView) -> UIButton {
     let font = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.offBlackColor() ]
 
         let sortButton = UIButton(type: .Custom)
