@@ -151,6 +151,5 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     deinit {
         timer?.invalidate()
     }
-
  }
 

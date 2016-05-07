@@ -36,13 +36,6 @@ class BRBConnectionHandler: WKWebView {
     var password: String = ""
     
     //MARK: -
-    //MARK: Init
-    init(frame: CGRect) {
-        super.init(frame: frame, configuration: WKWebViewConfiguration())
-    }
-
-    
-    //MARK: -
     //MARK: Connection Handling
     
     /**

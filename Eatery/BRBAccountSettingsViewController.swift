@@ -105,8 +105,6 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDataSource,
             cell.layoutMargins = UIEdgeInsetsZero
             cell.preservesSuperviewLayoutMargins = false
         }
-        
-        
     }
 
     //MARK: -
