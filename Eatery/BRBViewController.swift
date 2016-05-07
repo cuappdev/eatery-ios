@@ -52,11 +52,6 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-
-    }
-    
     func setupAccountPage() {
         
         navigationItem.rightBarButtonItem?.enabled = true

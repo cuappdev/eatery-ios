@@ -126,13 +126,9 @@ class BRBConnectionHandler: WKWebView {
      
      */
     func getFirstRegexMatchFromString(regexString: NSString, str: NSString) -> String {
-        do {
-            let regex = try NSRegularExpression(pattern: regexString as String, options: .UseUnicodeWordBoundaries)
-            if let match = regex.firstMatchInString(str as String, options: NSMatchingOptions.WithTransparentBounds , range: NSMakeRange(0, str.length)) {
-                return str.substringWithRange(match.rangeAtIndex(0)) as String
-            }
-        } catch {
-            return ""
+        let regex = try? NSRegularExpression(pattern: regexString as String, options: .UseUnicodeWordBoundaries)
+        if let match = regex?.firstMatchInString(str as String, options: NSMatchingOptions.WithTransparentBounds , range: NSMakeRange(0, str.length)) {
+            return str.substringWithRange(match.rangeAtIndex(0)) as String
         }
         return ""
     }
@@ -154,9 +150,9 @@ class BRBConnectionHandler: WKWebView {
                 self.stage = .LoginFailed
             } else if html.containsString("<h1>CUWebLogin</h1>") {
                 self.stage = .LoginScreen
-            } else if self.URL!.absoluteString == self.fundsHomeURL {
+            } else if self.URL!.absoluteString == self.fundsHomeURLString {
                 self.stage = .FundsHome
-            } else if self.URL!.absoluteString == self.diningHistoryURL {
+            } else if self.URL!.absoluteString == self.diningHistoryURLString {
                 self.stage = .DiningHistory
             } else {
                 self.stage = .Transition
