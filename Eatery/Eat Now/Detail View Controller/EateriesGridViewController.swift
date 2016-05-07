@@ -89,6 +89,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         searchBar.delegate = self
         searchBar.placeholder = "Search"
         searchBar.searchBarStyle = .Minimal
+        searchBar.autocapitalizationType = .None
         collectionView.addObserver(self, forKeyPath: "contentOffset", options: [.New], context: nil)
         view.addSubview(searchBar)
         
@@ -525,6 +526,10 @@ extension EateriesGridViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if searchBar.text?.lowercaseString == "brb" {
+            navigationController?.pushViewController(BRBViewController(), animated: true)
+            return
+        }
         processEateries()
         collectionView.reloadData()
         searchBar.setShowsCancelButton(false, animated: true)

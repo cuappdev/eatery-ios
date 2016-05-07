@@ -56,5 +56,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>DINLight.ttf</string>
+	</array>
 </dict>
 </plist>
