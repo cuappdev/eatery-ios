@@ -28,9 +28,9 @@ class BRBConnectionHandler: WKWebView {
     
     var stage: Stages = .LoginScreen
     var accountBalance: AccountBalance!
-    var loginURL = "https://get.cbord.com/cornell/full/login.php"
-    var fundsHomeURL = "https://get.cbord.com/cornell/full/funds_home.php"
-    var diningHistoryURL = "https://get.cbord.com/cornell/full/history.php"
+    let loginURLString = "https://get.cbord.com/cornell/full/login.php"
+    let fundsHomeURLString = "https://get.cbord.com/cornell/full/funds_home.php"
+    let diningHistoryURLString = "https://get.cbord.com/cornell/full/history.php"
     var loginCount = 0
     var netid: String = ""
     var password: String = ""
@@ -67,7 +67,7 @@ class BRBConnectionHandler: WKWebView {
     func handleLogin() {
         loginCount = 0
         stage = .LoginScreen
-        let loginURL = NSURL(string: "https://get.cbord.com/cornell/full/login.php")!
+        let loginURL = NSURL(string: loginURLString)!
         loadRequest(NSURLRequest(URL: loginURL))
     }
     
@@ -84,7 +84,7 @@ class BRBConnectionHandler: WKWebView {
      */
     func getDiningHistory() {
         if stage != .LoginScreen || stage != .LoginFailed || stage != .Transition {
-            let historyURL = NSURL(string: diningHistoryURL)!
+            let historyURL = NSURL(string: diningHistoryURLString)!
             loadRequest(NSURLRequest(URL: historyURL))
         }
     }
