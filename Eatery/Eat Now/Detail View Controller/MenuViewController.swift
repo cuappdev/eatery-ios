@@ -306,17 +306,9 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
         addedToFavoritesView.popupOnView(view, addedToFavorites: eatery.favorite)
-
     }
     
     func shareButtonPressed() {
-        shareMenu()
-    }
-    
-    // MARK: -
-    // MARK: Menu Sharing
-    
-    func shareMenu() {
         guard let mealVC = pageViewController.viewControllers?.first as? MealTableViewController else { return }
         
         let menuIterable: [(String, [String])] = {
