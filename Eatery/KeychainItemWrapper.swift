@@ -34,11 +34,11 @@ class KeychainItemWrapper {
         self.genericPasswordQuery[kSecClass] = kSecClassGenericPassword
         self.genericPasswordQuery[kSecAttrAccount] = identifier
         
-        if (accessGroup != nil) {
-            if TARGET_IPHONE_SIMULATOR != 1 {
+        #if !(arch(i386) || arch(x86_64))
+            if (accessGroup != nil) {
                 self.genericPasswordQuery[kSecAttrAccessGroup] = accessGroup
             }
-        }
+        #endif
         
         self.genericPasswordQuery[kSecMatchLimit] = kSecMatchLimitOne
         self.genericPasswordQuery[kSecReturnAttributes] = kCFBooleanTrue
@@ -51,11 +51,12 @@ class KeychainItemWrapper {
             self.resetKeychain()
             
             self.keychainItemData[kSecAttrAccount] = identifier
-            if (accessGroup != nil) {
-                if TARGET_IPHONE_SIMULATOR != 1 {
+            
+            #if !(arch(i386) || arch(x86_64))
+                if (accessGroup != nil) {
                     self.keychainItemData[kSecAttrAccessGroup] = accessGroup
                 }
-            }
+            #endif
         } else {
             self.keychainItemData = self.secItemDataToDict(outDict as! [NSObject: AnyObject])
         }
