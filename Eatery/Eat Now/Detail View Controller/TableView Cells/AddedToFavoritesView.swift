@@ -19,27 +19,27 @@ class AddedToFavoritesView: UIView {
         v.layer.cornerRadius = 15
         v.layer.masksToBounds = true
         v.backgroundColor = .eateryBlue()
-        v.center = CGPointMake(UIScreen.mainScreen().bounds.midX, UIScreen.mainScreen().bounds.midY)
+        v.center = CGPointMake(UIScreen.mainScreen().bounds.midX, UIScreen.mainScreen().bounds.midY-64)
         return v
     }
     
     func popupOnView(view: UIView, addedToFavorites: Bool) {
+        self.removeFromSuperview()
+        toYourLabel.text = addedToFavorites ? "Added To Your" : "Removed From"
+        starImageView.image = UIImage(named: addedToFavorites ? "goldStar" : "whiteStar")
         view.addSubview(self)
-        if addedToFavorites{
-            toYourLabel.text = "Added To Your"
-            starImageView.image = UIImage(named: "goldStar")
-        }else{
-            toYourLabel.text = "Removed From"
-            starImageView.image = UIImage(named: "whiteStar")
-        }
         UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
-            self.alpha = 1.0
-            }, completion: { _ in
+            self.alpha = 1
+        }, completion: { finished in
+            if finished {
                 UIView.animateWithDuration(0.5, delay: 1, options: .CurveEaseOut, animations: {
-                    self.alpha = 0.0
-                    }, completion: { _ in
+                    self.alpha = 0
+                }, completion: { finished in
+                    if finished {
                         self.removeFromSuperview()
+                    }
                 })
+            }
         })
     }
 }
