@@ -127,15 +127,18 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
         connectionHandler.getStageAndRunBlock {
             print(self.connectionHandler.stage)
-            if self.connectionHandler.stage == .LoginFailed {
-                self.failedToLogin("incorrect netid and/or password")
-            } else if self.connectionHandler.stage == .LoginScreen {
-                self.login()
-            } else if self.connectionHandler.stage == .FundsHome {
-                self.connectionHandler.getAccountBalance()
-            } else if self.connectionHandler.stage == .DiningHistory {
-                self.connectionHandler.getDiningHistory()
-            } 
+            switch self.connectionHandler.stage {
+                case .LoginFailed:
+                    self.failedToLogin("incorrect netid and/or password")
+                case .LoginScreen:
+                    self.login()
+                case .FundsHome:
+                    self.connectionHandler.getAccountBalance()
+                case .DiningHistory:
+                    self.connectionHandler.getDiningHistory()
+                default:
+                    print("In Transition Stage")
+            }
         }
     }
     
