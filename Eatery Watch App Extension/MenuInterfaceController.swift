@@ -32,18 +32,16 @@ class MenuInterfaceController: WKInterfaceController {
             openTimesLabel.setText(hoursText)
             menuItemsLabel.setText("No Current Menu")
             
-            if let meal = eatery.activeEventForDate(NSDate()) {
-                menuLabel.setText("MENU")
-                
-                var menu = meal.menu
-                if let hardcoded = eatery.hardcodedMenu {
-                    menu = hardcoded
-                }
-                
-                let menuItems = menu.values.flatten()
-                let menuItemsString = menuItems.reduce("") { $0 + "• \($1.name)\n" }
-                menuItemsLabel.setText(menuItemsString)
+            guard let menu = eatery.diningItems ?? eatery.hardcodedMenu ?? eatery.activeEventForDate(NSDate())?.menu else {
+                menuLabel.setText("No Menu Found")
+                return
             }
+            
+            menuLabel.setText("MENU")
+            
+            let menuItems = menu.values.flatten()
+            let menuItemsString = menuItems.reduce("") { $0 + "• \($1.name)\n" }
+            menuItemsLabel.setText(menuItemsString)
         }
     }
 
