@@ -28,7 +28,9 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         connectionHandler = BRBConnectionHandler(frame: CGRectMake(0, 0, view.frame.width, view.frame.height * 0.5))
+        connectionHandler.alpha = 0.0
         connectionHandler.navigationDelegate = self
+        view.addSubview(connectionHandler)
 
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(BRBViewController.timer(_:)), userInfo: nil, repeats: true)
         
