@@ -17,10 +17,10 @@ class NavigationTitleView: UIView {
     @IBOutlet weak var dateLabelHeightConstraint: NSLayoutConstraint!
     
     class func loadFromNib() -> NavigationTitleView {
-        let v = NSBundle.mainBundle().loadNibNamed("NavigationTitleView", owner: self, options: nil).first! as! NavigationTitleView
-        v.eateryNameLabel.textColor = .whiteColor()
-        v.dateLabel.textColor = .whiteColor()
-        v.backgroundColor = .eateryBlue()
+        let v = Bundle.main.loadNibNamed("NavigationTitleView", owner: self, options: nil)?.first! as! NavigationTitleView
+        v.eateryNameLabel.textColor = .white
+        v.dateLabel.textColor = .white
+        v.backgroundColor = .eateryBlue
         return v
     }
 }

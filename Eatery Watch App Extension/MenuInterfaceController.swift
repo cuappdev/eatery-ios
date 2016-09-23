@@ -7,7 +7,6 @@
 //
 
 import WatchKit
-import Foundation
 import DiningStack
 
 
@@ -18,28 +17,28 @@ class MenuInterfaceController: WKInterfaceController {
     @IBOutlet var menuLabel: WKInterfaceLabel!
     @IBOutlet var menuItemsLabel: WKInterfaceLabel!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         setTitle("Close")
         
         if let eatery = context as? Eatery {
             titleLabel.setText(eatery.nickname)
             
-            var hoursText = eatery.activeEventsForDate(NSDate())
+            var hoursText = eatery.activeEventsForDate(date: Date())
             if hoursText != "Closed" {
                 hoursText = "Open \(hoursText)"
             }
             openTimesLabel.setText(hoursText)
             menuItemsLabel.setText("No Current Menu")
             
-            guard let menu = eatery.diningItems ?? eatery.hardcodedMenu ?? eatery.activeEventForDate(NSDate())?.menu else {
+            guard let menu = eatery.diningItems ?? eatery.hardcodedMenu ?? eatery.activeEventForDate(Date())?.menu else {
                 menuLabel.setText("No Menu Found")
                 return
             }
             
             menuLabel.setText("MENU")
             
-            let menuItems = menu.values.flatten()
+            let menuItems = menu.values.joined()
             let menuItemsString = menuItems.reduce("") { $0 + "• \($1.name)\n" }
             menuItemsLabel.setText(menuItemsString)
         }

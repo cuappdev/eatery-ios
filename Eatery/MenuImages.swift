@@ -12,37 +12,37 @@ import DiningStack
 class MenuImages: NSObject {
 
     // Returns an image that contains the condensed menu of categories + items for LookAheadVC
-    class func createCondensedMenuImage(width: CGFloat, menuIterable: [(String,[String])]) -> UIImage {
+    class func createCondensedMenuImage(_ width: CGFloat, menuIterable: [(String,[String])]) -> UIImage {
         let bodyColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
         let categoryHeaderHeight: CGFloat = 30
         let dividerSize: CGFloat = 20
         let condensedCategoryFont = UIFont(name: "HelveticaNeue-Medium", size: 11)
         let condensedBodyFont = UIFont(name: "HelveticaNeue", size: 14)
-        let condensedBodyFontColor = UIColor.offBlackColor()
+        let condensedBodyFontColor = UIColor.offBlack
         var categoryViews: [UIView] = []
 
         
         if menuIterable.isEmpty {
             // Create header
-            let headerLabel = UILabel(frame: CGRectMake(0, 0, width, 80))
+            let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: 80))
             let headerString = NSMutableAttributedString(string: "NO MENU INFORMATION AVAILABLE")
             headerString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, headerString.length))
             headerLabel.attributedText = headerString
             headerLabel.backgroundColor = bodyColor
-            headerLabel.textAlignment = .Center
+            headerLabel.textAlignment = .center
             headerLabel.font = condensedCategoryFont
-            headerLabel.textColor = UIColor.lightGrayColor()
+            headerLabel.textColor = UIColor.lightGray
             
             // Create footer view
-            let footerView = UIView(frame: CGRectMake(0, headerLabel.frame.height + dividerSize * 2, width, headerLabel.frame.size.height/8.0))
+            let footerView = UIView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: headerLabel.frame.size.height/8.0))
             footerView.backgroundColor = bodyColor
             
             // Create container view
-            let categoryContainerView = UIView(frame: CGRectMake(0, 0, 0, 0))
+            let categoryContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
             categoryContainerView.backgroundColor = bodyColor
             categoryContainerView.addSubview(headerLabel)
             categoryContainerView.addSubview(footerView)
-            categoryContainerView.frame = CGRectMake(0, 0, width, headerLabel.frame.height + footerView.frame.height)
+            categoryContainerView.frame = CGRect(x: 0, y: 0, width: width, height: headerLabel.frame.height + footerView.frame.height)
             categoryViews.append(categoryContainerView)
         }
         
@@ -65,44 +65,44 @@ class MenuImages: NSObject {
             }
             
             // Create header for category
-            let headerLabel = UILabel(frame: CGRectMake(0, 0, width, categoryHeaderHeight))
-            let headerString = NSMutableAttributedString(string: "   \(categoryName.uppercaseString)")
+            let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: categoryHeaderHeight))
+            let headerString = NSMutableAttributedString(string: "   \(categoryName.uppercased())")
             headerString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, headerString.length))
             headerLabel.backgroundColor = bodyColor
             headerLabel.attributedText = headerString
-            headerLabel.textAlignment = .Left
+            headerLabel.textAlignment = .left
             headerLabel.font = condensedCategoryFont
-            headerLabel.textColor = UIColor.lightGrayColor()
+            headerLabel.textColor = .lightGray
             
             // Create item list for category
-            let itemTextView = UITextView(frame: CGRectMake(0, headerLabel.frame.height + dividerSize * 2, width, width * 3))
+            let itemTextView = UITextView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: width * 3))
             itemTextView.backgroundColor = bodyColor
-            itemTextView.textAlignment = .Left
+            itemTextView.textAlignment = .left
             
             let menuText = NSMutableAttributedString(string: "")
             
             for item in itemList {
-                menuText.appendAttributedString(NSAttributedString(string: "  \(item.name)\n"))
+                menuText.append(NSAttributedString(string: "  \(item.name)\n"))
             }
             
             itemTextView.attributedText = menuText
 
             itemTextView.font = condensedBodyFont
             itemTextView.textColor = condensedBodyFontColor
-            let newSize = itemTextView.sizeThatFits(CGSize(width: width, height: CGFloat.max))
-            itemTextView.frame = CGRectMake(0, headerLabel.frame.height, width, newSize.height - dividerSize)
+            let newSize = itemTextView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+            itemTextView.frame = CGRect(x: 0, y: headerLabel.frame.height, width: width, height: newSize.height - dividerSize)
             itemTextView.contentInset = UIEdgeInsetsMake(-7, 0, 0, 0)
             
             // Create container view
-            let categoryContainerView = UIView(frame: CGRectMake(0, 0, 0, 0))
+            let categoryContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
             categoryContainerView.backgroundColor = bodyColor
             categoryContainerView.addSubview(headerLabel)
             categoryContainerView.addSubview(itemTextView)
-            categoryContainerView.frame = CGRectMake(0, 0, width, headerLabel.frame.height + itemTextView.frame.height)
+            categoryContainerView.frame = CGRect(x: 0, y: 0, width: width, height: headerLabel.frame.height + itemTextView.frame.height)
             categoryViews.append(categoryContainerView)
         }
         
-        let completeMenuView = UIView(frame: CGRectMake(0, 0, width, 0))
+        let completeMenuView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 0))
         completeMenuView.backgroundColor = bodyColor
         
         // Add all components to completeMenuView
@@ -118,7 +118,7 @@ class MenuImages: NSObject {
         }
         
         // Resize the menu view to fit all contents
-        completeMenuView.frame = CGRectMake(0, 0, width, y)
+        completeMenuView.frame = CGRect(x: 0, y: 0, width: width, height: y)
         
         var menuImage = UIImage()
         
@@ -126,8 +126,8 @@ class MenuImages: NSObject {
         // Render layer of header and menu tableview to graphics context and save as UIImage
         UIGraphicsBeginImageContextWithOptions(completeMenuView.frame.size, true, 0.0)
         if let context = UIGraphicsGetCurrentContext() {
-            completeMenuView.layer.renderInContext(context)
-            menuImage = UIGraphicsGetImageFromCurrentImageContext()
+            completeMenuView.layer.render(in: context)
+            menuImage = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
         }
         
@@ -136,8 +136,8 @@ class MenuImages: NSObject {
     
     // creates an image of the full menu with info about the eatery
     // takes in a menuIterable list which can be generated from the event class or eatery class
-    class func createMenuShareImage(width: CGFloat, eatery: Eatery, events: [String : Event], selectedMenu: String, menuIterable: [(String,[String])]) -> UIImage {
-        let separatorColor = UIColor.whiteColor()
+    class func createMenuShareImage(_ width: CGFloat, eatery: Eatery, events: [String : Event], selectedMenu: String, menuIterable: [(String,[String])]) -> UIImage {
+        let separatorColor = UIColor.white
         let bodyColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         let menuHeaderHeight: CGFloat = 100
         let categoryHeaderHeight: CGFloat = 48
@@ -152,66 +152,66 @@ class MenuImages: NSObject {
         let bodyFont = UIFont(name: "Avenir", size: 16)
         let fontColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1.0)
         
-        let menuHeader = UIView(frame: CGRectMake(0, 0, width, menuHeaderHeight))
+        let menuHeader = UIView(frame: CGRect(x: 0, y: 0, width: width, height: menuHeaderHeight))
         menuHeader.backgroundColor = separatorColor
         
         //create menu header
         //open indicator
-        let openIndicatorView = UIView(frame: CGRectMake(15,20,15,15))
+        let openIndicatorView = UIView(frame: CGRect(x: 15,y: 20,width: 15,height: 15))
         // Status View
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-            case .Open(_):
-                openIndicatorView.backgroundColor = .openGreen()
-            case .Closed(_):
-                openIndicatorView.backgroundColor = .redColor()
+            case .open(_):
+                openIndicatorView.backgroundColor = .openGreen
+            case .closed(_):
+                openIndicatorView.backgroundColor = .red
         }
         openIndicatorView.layer.cornerRadius = openIndicatorView.frame.width / 2.0
         openIndicatorView.clipsToBounds = true
         menuHeader.addSubview(openIndicatorView)
       
         //create eatery name label
-        let eateryNameLabel = UILabel(frame: CGRectMake(openIndicatorView.frame.origin.x + openIndicatorView.frame.width + 5, 0, 275, 50))
+        let eateryNameLabel = UILabel(frame: CGRect(x: openIndicatorView.frame.origin.x + openIndicatorView.frame.width + 5, y: 0, width: 275, height: 50))
         eateryNameLabel.textColor = fontColor
         eateryNameLabel.text = eatery.name
         eateryNameLabel.font = headerFont
         eateryNameLabel.adjustsFontSizeToFitWidth = true
         eateryNameLabel.numberOfLines = 1
-        eateryNameLabel.baselineAdjustment = UIBaselineAdjustment.AlignCenters
+        eateryNameLabel.baselineAdjustment = UIBaselineAdjustment.alignCenters
         menuHeader.addSubview(eateryNameLabel)
-        eateryNameLabel.center = CGPointMake(eateryNameLabel.center.x, openIndicatorView.center.y)
+        eateryNameLabel.center = CGPoint(x: eateryNameLabel.center.x, y: openIndicatorView.center.y)
         
         //create eatery time label
         var text = "Closed"
         if let event = events[selectedMenu] {
             text = "Open \(event.startDateFormatted) to \(event.endDateFormatted)"
         }
-        let eateryTimeLabel = UILabel(frame: CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height, 200, 15))
+        let eateryTimeLabel = UILabel(frame: CGRect(x: eateryNameLabel.frame.origin.x, y: eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height, width: 200, height: 15))
         eateryTimeLabel.textColor = fontColor
         eateryTimeLabel.text = text
         eateryTimeLabel.font = headerTimeFont
         eateryTimeLabel.sizeToFit()
-        eateryTimeLabel.frame = CGRectMake(eateryNameLabel.frame.origin.x, eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height - 12, eateryTimeLabel.frame.width, eateryTimeLabel.frame.height)
+        eateryTimeLabel.frame = CGRect(x: eateryNameLabel.frame.origin.x, y: eateryNameLabel.frame.origin.y + eateryNameLabel.frame.height - 12, width: eateryTimeLabel.frame.width, height: eateryTimeLabel.frame.height)
         menuHeader.addSubview(eateryTimeLabel)
       
         
         //create event name label
-        let eventNameLabel = UILabel(frame: CGRectMake(0, 0, 200, 15))
+        let eventNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 15))
         eventNameLabel.textColor = UIButton().tintColor
-        eventNameLabel.text = selectedMenu.uppercaseString
+        eventNameLabel.text = selectedMenu.uppercased()
         if eatery.diningItems != nil || eatery.hardcodedMenu != nil{
             eventNameLabel.text = "MENU"
         }
         eventNameLabel.font = headerEventFont
         eventNameLabel.sizeToFit()
-        eventNameLabel.center = CGPointMake(menuHeader.center.x, menuHeader.frame.height - eventNameLabel.frame.height)
+        eventNameLabel.center = CGPoint(x: menuHeader.center.x, y: menuHeader.frame.height - eventNameLabel.frame.height)
         menuHeader.addSubview(eventNameLabel)
       
         //create event name underscore bar view
         let sections = CGFloat(events.count < 1 ? 1 : events.count)
-        let bar = UIView(frame: CGRectMake(0,menuHeader.frame.height - 2, menuHeader.frame.width / sections, 2))
+        let bar = UIView(frame: CGRect(x: 0,y: menuHeader.frame.height - 2, width: menuHeader.frame.width / sections, height: 2))
         bar.backgroundColor = UIButton().tintColor
-        bar.center = CGPointMake(menuHeader.center.x, bar.center.y)
+        bar.center = CGPoint(x: menuHeader.center.x, y: bar.center.y)
         menuHeader.addSubview(bar)
       
         //create payment options image
@@ -235,17 +235,17 @@ class MenuImages: NSObject {
             }
             
             //create header for category
-            let headerLabel = UILabel(frame: CGRectMake(0, 0, width, categoryHeaderHeight))
+            let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: categoryHeaderHeight))
             headerLabel.backgroundColor = separatorColor
-            headerLabel.text = "\(textIndent)\(categoryName.uppercaseString)"
-            headerLabel.textAlignment = .Left
+            headerLabel.text = "\(textIndent)\(categoryName.uppercased())"
+            headerLabel.textAlignment = .left
             headerLabel.font = categoryFont
             headerLabel.textColor = fontColor
             
             //create item list for category
-            let itemTextView = UITextView(frame: CGRectMake(0, headerLabel.frame.height + dividerSize * 2, width, width * 3))
+            let itemTextView = UITextView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: width * 3))
             itemTextView.backgroundColor = bodyColor
-            itemTextView.textAlignment = .Left
+            itemTextView.textAlignment = .left
             var menuText = ""
             for item in itemList {
                 menuText = "\(menuText)\(textIndent)\(item)\n"
@@ -253,19 +253,19 @@ class MenuImages: NSObject {
             itemTextView.text = menuText
             itemTextView.font = bodyFont
             itemTextView.textColor = fontColor
-            itemTextView.frame = CGRectMake(0, headerLabel.frame.height, width, itemTextView.contentSize.height - dividerSize)
+            itemTextView.frame = CGRect(x: 0, y: headerLabel.frame.height, width: width, height: itemTextView.contentSize.height - dividerSize)
             
             //create container view
-            let categoryContainerView = UIView(frame: CGRectMake(0, 0, 0, 0))
+            let categoryContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
             categoryContainerView.backgroundColor = bodyColor
             categoryContainerView.addSubview(headerLabel)
             categoryContainerView.addSubview(itemTextView)
-            categoryContainerView.frame = CGRectMake(0, 0, width, headerLabel.frame.height + itemTextView.frame.height)
+            categoryContainerView.frame = CGRect(x: 0, y: 0, width: width, height: headerLabel.frame.height + itemTextView.frame.height)
             
             categoryViews.append(categoryContainerView)
         }
         
-        let completeMenuView = UIView(frame: CGRectMake(0, 0, width, 0))
+        let completeMenuView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 0))
         completeMenuView.backgroundColor = bodyColor
         //add all components to completeMenuView
         completeMenuView.addSubview(menuHeader)
@@ -281,29 +281,29 @@ class MenuImages: NSObject {
         }
         
         //create branding view with eatery logo
-        let brandingImageView = UIImageView(frame: CGRectMake(0, y + 5, width, brandingViewHeight))
+        let brandingImageView = UIImageView(frame: CGRect(x: 0, y: y + 5, width: width, height: brandingViewHeight))
         brandingImageView.image = UIImage(named: "eateryLogo")
-        brandingImageView.contentMode = .ScaleAspectFit
+        brandingImageView.contentMode = .scaleAspectFit
       
         completeMenuView.addSubview(brandingImageView)
         y += brandingViewHeight + dividerSize
         
         //resize the menu view to fit all contents
-        completeMenuView.frame = CGRectMake(0, 0, width, y)
+        completeMenuView.frame = CGRect(x: 0, y: 0, width: width, height: y)
         
         //get image from menu view
         //render layer of header and menu tableview to graphics context and save as UIImage
         UIGraphicsBeginImageContextWithOptions(completeMenuView.frame.size, true, 0.0)
         let context = UIGraphicsGetCurrentContext()!
-        completeMenuView.layer.renderInContext(context)
+        completeMenuView.layer.render(in: context)
         let menuImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return menuImage
+        return menuImage!
     }
     
     // Shares an image of the full menu with info about the eatery
-    class func shareMenu(eatery: Eatery, vc: UIViewController, events: [String: Event], date: NSDate, selectedMenu: String?) {
+    class func shareMenu(_ eatery: Eatery, vc: UIViewController, events: [String: Event], date: Date, selectedMenu: String?) {
         // Get share image
         var imageToShare = UIImage()
       
@@ -322,13 +322,13 @@ class MenuImages: NSObject {
         activityVC.popoverPresentationController?.sourceView = vc.view
         
         if #available(iOS 9.0, *) {
-            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail,UIActivityTypeOpenInIBooks, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+            activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.mail,UIActivityType.openInIBooks, UIActivityType.print, UIActivityType.airDrop, UIActivityType.addToReadingList]
         } else {
             // Fallback on earlier versions
-            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+            activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.mail, UIActivityType.print, UIActivityType.airDrop, UIActivityType.addToReadingList]
         }
         
-        vc.presentViewController(activityVC, animated: true, completion: nil)
+        vc.present(activityVC, animated: true, completion: nil)
     }
 
 }

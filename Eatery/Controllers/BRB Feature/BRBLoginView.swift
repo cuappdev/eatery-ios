@@ -28,53 +28,53 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicator.alpha = 0.0
         
-        netidTextField = UITextField(frame: CGRectMake(0, frame.height * 0.25, frame.width * 0.8, 40))
-        passwordTextField = UITextField(frame: CGRectMake(0, netidTextField.frame.origin.y + netidTextField.frame.height + 30, frame.width * 0.8, 40))
-        loginButton = UIButton(frame: CGRectMake(0, passwordTextField.frame.origin.y + passwordTextField.frame.height + 40, 100, 75))
-        infoLabel = UILabel(frame: CGRectMake(0, netidTextField.frame.origin.y - 100, frame.width, 50))
-        errorLabel = UILabel(frame: CGRectMake(0, infoLabel.frame.origin.y + infoLabel.frame.height + 10, frame.width, 30))
+        netidTextField = UITextField(frame: CGRect(x: 0, y: frame.height * 0.25, width: frame.width * 0.8, height: 40))
+        passwordTextField = UITextField(frame: CGRect(x: 0, y: netidTextField.frame.origin.y + netidTextField.frame.height + 30, width: frame.width * 0.8, height: 40))
+        loginButton = UIButton(frame: CGRect(x: 0, y: passwordTextField.frame.origin.y + passwordTextField.frame.height + 40, width: 100, height: 75))
+        infoLabel = UILabel(frame: CGRect(x: 0, y: netidTextField.frame.origin.y - 100, width: frame.width, height: 50))
+        errorLabel = UILabel(frame: CGRect(x: 0, y: infoLabel.frame.origin.y + infoLabel.frame.height + 10, width: frame.width, height: 30))
         
         
-        netidTextField.center = CGPointMake(center.x, netidTextField.center.y)
-        passwordTextField.center = CGPointMake(center.x, passwordTextField.center.y)
-        loginButton.center = CGPointMake(center.x, loginButton.center.y)
-        infoLabel.center = CGPointMake(center.x, infoLabel.center.y)
+        netidTextField.center = CGPoint(x: center.x, y: netidTextField.center.y)
+        passwordTextField.center = CGPoint(x: center.x, y: passwordTextField.center.y)
+        loginButton.center = CGPoint(x: center.x, y: loginButton.center.y)
+        infoLabel.center = CGPoint(x: center.x, y: infoLabel.center.y)
         activityIndicator.center = loginButton.center
         
         netidTextField.layer.cornerRadius = 10
         passwordTextField.layer.cornerRadius = 10
         loginButton.layer.cornerRadius = 10
         
-        netidTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
-        passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
-        loginButton.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        netidTextField.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+        passwordTextField.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+        loginButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
         
         infoLabel.text = "BRB Login"
-        infoLabel.font = UIFont.systemFontOfSize(40)
-        infoLabel.textAlignment = NSTextAlignment.Center
+        infoLabel.font = UIFont.systemFont(ofSize: 40)
+        infoLabel.textAlignment = NSTextAlignment.center
         
         errorLabel.text = ""
-        errorLabel.font = UIFont.systemFontOfSize(15)
-        errorLabel.textAlignment = NSTextAlignment.Center
-        errorLabel.textColor = UIColor.orangeColor()
+        errorLabel.font = UIFont.systemFont(ofSize: 15)
+        errorLabel.textAlignment = NSTextAlignment.center
+        errorLabel.textColor = UIColor.orange
         
         netidTextField.placeholder = "netid"
-        netidTextField.secureTextEntry = false
-        netidTextField.autocapitalizationType = .None
-        netidTextField.textAlignment = .Center
+        netidTextField.isSecureTextEntry = false
+        netidTextField.autocapitalizationType = .none
+        netidTextField.textAlignment = .center
         passwordTextField.placeholder = "password"
-        passwordTextField.secureTextEntry = true
-        passwordTextField.autocapitalizationType = .None
-        passwordTextField.textAlignment = .Center
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocapitalizationType = .none
+        passwordTextField.textAlignment = .center
         passwordTextField.delegate = self
         
         
-        loginButton.setTitle("Login", forState: UIControlState.Normal)
+        loginButton.setTitle("Login", for: UIControlState())
         loginButton.showsTouchWhenHighlighted = true
-        loginButton.addTarget(self, action: #selector(BRBLoginView.login), forControlEvents: UIControlEvents.TouchDown)
+        loginButton.addTarget(self, action: #selector(BRBLoginView.login), for: UIControlEvents.touchDown)
         
         addSubview(netidTextField)
         addSubview(passwordTextField)
@@ -89,32 +89,32 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     }
     
     func login() {
-        let netid = (netidTextField.text ?? "").lowercaseString
+        let netid = (netidTextField.text ?? "").lowercased()
         let password = passwordTextField.text ?? ""
         errorLabel.text = ""
         
-        UIView.animateWithDuration(0.5) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.loginButton.alpha = 0.0
             self.activityIndicator.alpha = 1.0
-        }
+        }) 
         
         activityIndicator.startAnimating()
-        delegate?.brbLoginViewClickedLogin(self, netid: netid, password: password)
-        userInteractionEnabled = false
+        delegate?.brbLoginViewClickedLogin(brbLoginView: self, netid: netid, password: password)
+        isUserInteractionEnabled = false
     }
     
     func loginFailedWithError(error: String) {
         errorLabel.text = error
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.loginButton.alpha = 1.0
             self.activityIndicator.alpha = 0.0
-        }) { (complete: Bool) -> Void in
+        }, completion: { (complete: Bool) -> Void in
             self.activityIndicator.stopAnimating()
-        }
-        userInteractionEnabled = true
+        }) 
+        isUserInteractionEnabled = true
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == passwordTextField {
             login()
         }

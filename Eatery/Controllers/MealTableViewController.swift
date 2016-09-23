@@ -10,9 +10,9 @@ import UIKit
 import DiningStack
 
 protocol MealScrollDelegate {
-    func mealScrollViewDidBeginPushing(scrollView: UIScrollView)
-    func mealScrollViewDidPushOffset(scrollView: UIScrollView, offset: CGPoint) -> CGFloat
-    func mealScrollViewDidEndPushing(scrollView: UIScrollView)
+    func mealScrollViewDidBeginPushing(_ scrollView: UIScrollView)
+    func mealScrollViewDidPushOffset(_ scrollView: UIScrollView, offset: CGPoint) -> CGFloat
+    func mealScrollViewDidEndPushing(_ scrollView: UIScrollView)
     var outerScrollOffset: CGPoint { get }
     func resetOuterScrollView()
 }
@@ -23,8 +23,8 @@ class MealTableViewController: UITableViewController {
     var meal: String!
     var event: Event?
     
-    private var tracking = false
-    private var previousScrollOffset: CGFloat = 0
+    fileprivate var tracking = false
+    fileprivate var previousScrollOffset: CGFloat = 0
     var active = true
     
     var scrollDelegate: MealScrollDelegate!
@@ -35,18 +35,18 @@ class MealTableViewController: UITableViewController {
         startUserActivity()
         
         // Appearance
-        view.backgroundColor = .greenColor()
+        view.backgroundColor = .green
         
         // TableView Config
-        tableView.backgroundColor = .clearColor()
+        tableView.backgroundColor = .clear
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        tableView.registerNib(UINib(nibName: "MealTableViewCell", bundle: nil), forCellReuseIdentifier: "MealCell")
+        tableView.register(UINib(nibName: "MealTableViewCell", bundle: nil), forCellReuseIdentifier: "MealCell")
         
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         
-        tableView.scrollEnabled = false
+        tableView.isScrollEnabled = false
     }
 
     // MARK: - Handoff Functions
@@ -54,7 +54,7 @@ class MealTableViewController: UITableViewController {
         if !eatery.external {
             let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
             activity.title = "View Eateries"
-            activity.webpageURL = NSURL(string: "https://now.dining.cornell.edu/eatery/" + eatery.slug)
+            activity.webpageURL = URL(string: "https://now.dining.cornell.edu/eatery/" + eatery.slug)
             userActivity = activity
             userActivity?.becomeCurrent()
         }
@@ -62,7 +62,7 @@ class MealTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let e = event {
             return e.menu.count == 0 ? 1 : e.menu.count
         } else {
@@ -70,9 +70,9 @@ class MealTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("MealCell", forIndexPath: indexPath) as! MealTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as! MealTableViewCell
         
         var menu = event?.menu
       
@@ -106,7 +106,7 @@ class MealTableViewController: UITableViewController {
                 title = "Menu"
             }
             
-            cell.titleLabel.text = title.uppercaseString
+            cell.titleLabel.text = title.uppercased()
             cell.contentLabel.attributedText = content
         } else {
             cell.titleLabel.text = "No menu available"

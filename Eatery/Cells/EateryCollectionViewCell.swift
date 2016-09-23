@@ -24,7 +24,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    func setEatery(eatery: Eatery) {
+    func setEatery(_ eatery: Eatery) {
         if let photo = eatery.photo {
             backgroundImageView.hnk_setImage(photo, key: eatery.slug)
         } else {
@@ -48,11 +48,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .Open(let message):
-            statusView.backgroundColor = .openGreen()
+        case .open(let message):
+            statusView.backgroundColor = .openGreen
             timeLabel.text = message
-        case .Closed(let message):
-            statusView.backgroundColor = .closedGray()
+        case .closed(let message):
+            statusView.backgroundColor = .closedGray
             timeLabel.text = message
         }
     }

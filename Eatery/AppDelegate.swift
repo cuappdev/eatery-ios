@@ -16,83 +16,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var tools: Tools!
-    
     //example slack info
     let slackChannel = "C04C10672"
     let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
     let slackUsername = "Keeper of All Your Base"
-    
-    //flag to enable tools
-    let toolsEnabled = true
   
     //view controllers
     var eatNow: EateriesGridViewController!
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
-        NSURLCache.setSharedURLCache(URLCache)
+        let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        Foundation.URLCache.shared = URLCache
         
         print("Did finish launching", terminator: "")
         
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.main.bounds)
         
         // Set up navigation bar appearance
-        UINavigationBar.appearance().barTintColor = UIColor.eateryBlue()
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        UINavigationBar.appearance().barTintColor = UIColor.eateryBlue
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white]
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         
         // Set up view controllers
         eatNow = EateriesGridViewController()
         eatNow.title = "Eateries"
       
         let eatNavController = UINavigationController(rootViewController: eatNow)
-        eatNavController.navigationBar.barStyle = .Black
+        eatNavController.navigationBar.barStyle = .black
         
         window?.rootViewController = eatNavController
         window?.makeKeyAndVisible()
         
-        let statusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
-        statusBarView.backgroundColor = .eateryBlue()
+        let statusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 20.0))
+        statusBarView.backgroundColor = .eateryBlue
         window?.rootViewController!.view.addSubview(statusBarView)
         
         // Segment setup
-        SEGAnalytics.setupWithConfiguration(SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))
-        let uuid = NSUUID().UUIDString
-        SEGAnalytics.sharedAnalytics().identify(uuid)
+        SEGAnalytics.setup(with: SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))
+        let uuid = UUID().uuidString
+        SEGAnalytics.shared().identify(uuid)
         
-        let slugStrings = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+        let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
         var sortOption = "none"
-        if let option = NSUserDefaults.standardUserDefaults().objectForKey("sortOption") as? String {
+        if let option = UserDefaults.standard.object(forKey: "sortOption") as? String {
             sortOption = option
         }
         var properties: [String: AnyObject] = [:]
-        properties["favorites"] = slugStrings
-        properties["sortOption"] = sortOption
+        properties["favorites"] = slugStrings as AnyObject?
+        properties["sortOption"] = sortOption as AnyObject?
         
-        Analytics.trackAppLaunch(properties)
-        
-        //declaration of tools remains active in background while app runs
-        if toolsEnabled {
-            tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
-        }
+        Analytics.trackAppLaunch(properties: properties)
 
         return true
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         Analytics.trackEnterForeground()
     }
   
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
       if #available(iOS 9.1, *) {
           //Retrieve favorites and their nicknames
-          let slugStrings = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
-          let nicknames = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("nicknames", withExtension: "json")!) ?? NSData()).dictionaryValue
+          let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+          let nicknames = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
         
-          let favoriteNames = slugStrings.reverse().map { slug -> (String, String) in
+          let favoriteNames = slugStrings.reversed().map { slug -> (String, String) in
               if let nicknameJSON = nicknames[slug] {
                   return (slug, nicknameJSON["nickname"].arrayValue.first?.stringValue ?? "")
               } else {
@@ -103,24 +93,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           // Clear shortcuts then recreate them
           var shortcuts: [UIApplicationShortcutItem] = []
           for (slug, name) in favoriteNames {
-              let shortcutItem = UIApplicationShortcutItem(type: slug, localizedTitle: name, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Favorite), userInfo: nil)
-              UIApplication.sharedApplication().shortcutItems?.append(shortcutItem)
+              let shortcutItem = UIApplicationShortcutItem(type: slug, localizedTitle: name, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .favorite), userInfo: nil)
+              UIApplication.shared.shortcutItems?.append(shortcutItem)
               shortcuts.append(shortcutItem)
           }
-          UIApplication.sharedApplication().shortcutItems = shortcuts
+          UIApplication.shared.shortcutItems = shortcuts
       }
     }
   
     // MARK: - Force Touch Shortcut
     
     @available(iOS 9.0, *)
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let handledShortcutItem = handleShortcutItem(shortcutItem)
         completionHandler(handledShortcutItem)
     }
   
     @available(iOS 9.0, *)
-    func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         eatNow.preselectedSlug = shortcutItem.type
         return true
     }

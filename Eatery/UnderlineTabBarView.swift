@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TabBarDelegate {
-    func selectedTabDidChange(newIndex: Int)
+    func selectedTabDidChange(_ newIndex: Int)
 }
 
 private let kUnderlineHeight: CGFloat = 3
@@ -24,18 +24,18 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .whiteColor()
+        backgroundColor = .white
     }
     
-    func setUp(sections: [String]) {
+    func setUp(_ sections: [String]) {
         
         for section in sections {
             let tabButton = UIButton()
-            tabButton.setTitle(section.uppercaseString, forState: .Normal)
-            tabButton.setTitleColor(.offBlackColor(), forState: .Normal)
-            tabButton.setTitleColor(.eateryBlue(), forState: .Selected)
+            tabButton.setTitle(section.uppercased(), for: UIControlState())
+            tabButton.setTitleColor(.offBlack, for: UIControlState())
+            tabButton.setTitleColor(.eateryBlue, for: .selected)
             tabButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
-            tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), forControlEvents: .TouchUpInside)
+            tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), for: .touchUpInside)
             tabButton.sizeToFit()
             tabButtons.append(tabButton)
         }
@@ -49,7 +49,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         let kTabSpacing: CGFloat = (frame.width - kTabsWidth) / CGFloat(tabButtons.count + 1)
         var runningXOffset = kTabSpacing
         for tab in tabButtons {
-            tab.frame.offsetInPlace(dx: runningXOffset, dy: 5)
+            tab.frame.offsetBy(dx: runningXOffset, dy: 5)
             runningXOffset += tab.frame.width + kTabSpacing
         }
         
@@ -60,19 +60,19 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         // Underline
         let underlineY = frame.height - kUnderlineHeight
         underlineView = UIView(frame: CGRect(x: 0, y: underlineY, width: 0, height: kUnderlineHeight))
-        underlineView.backgroundColor = UIColor.eateryBlue()
+        underlineView.backgroundColor = UIColor.eateryBlue
         underlineView.frame = underlineFrameForIndex(0)
         
         addSubview(underlineView)
         
-        tabButtons.first!.selected = true
+        tabButtons.first!.isSelected = true
         
     }
     
-    func underlineFrameForIndex(index: Int) -> CGRect {
+    func underlineFrameForIndex(_ index: Int) -> CGRect {
         let tabFrameForIndex = tabButtons[index].frame
         
-        var rect = CGRectZero
+        var rect = CGRect.zero
         
         rect.origin.x = tabFrameForIndex.origin.x
         rect.origin.y = frame.height - kUnderlineHeight - 8
@@ -83,23 +83,23 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         return rect
     }
     
-    func updateSelectedTabAppearance(newIndex: Int) {
-        UIView.animateWithDuration(0.2) { () -> Void in
+    func updateSelectedTabAppearance(_ newIndex: Int) {
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.underlineView.frame = self.underlineFrameForIndex(newIndex)
             for tab in self.tabButtons {
-                tab.selected = false
+                tab.isSelected = false
             }
-            self.tabButtons[newIndex].selected = true
-        }
+            self.tabButtons[newIndex].isSelected = true
+        }) 
     }
     
-    func tabButtonPressed(sender: UIButton) {
-        let index = tabButtons.indexOf(sender)!
+    func tabButtonPressed(_ sender: UIButton) {
+        let index = tabButtons.index(of: sender)!
         updateSelectedTabAppearance(index)
         delegate?.selectedTabDidChange(index)
     }
     
-    func selectedTabDidChange(newIndex: Int) {
+    func selectedTabDidChange(_ newIndex: Int) {
         updateSelectedTabAppearance(newIndex)
     }
     

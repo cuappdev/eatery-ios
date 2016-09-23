@@ -10,37 +10,37 @@ import UIKit
 import SwiftyJSON
 import DiningStack
 
-private let DayDateFormatter: NSDateFormatter = {
-    let dateFormatter = NSDateFormatter()
+private let DayDateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "EEE"
     return dateFormatter
 }()
 
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
-    private var tableView: UITableView!
-    private let sectionHeaderHeight: CGFloat = 40.0
-    private let eateryHeaderHeight: CGFloat = 55.0
-    private let filterSectionHeight: CGFloat = 130.0
-    private var filterEateriesCell: FilterEateriesTableViewCell!
-    private var filterMealButtons: [UIButton]!
-    private var filterDateViews: [FilterDateView]!
-    private var selectedMealIndex: Int = 0
-    private var selectedDateIndex: Int = 0
-    private let sections: [Area] = [.West, .North, .Central]
-    private var westEateries: [Eatery] = []
-    private var northEateries: [Eatery] = []
-    private var centralEateries: [Eatery] = []
-    private var filteredWestEateries: [Eatery] = []
-    private var filteredNorthEateries: [Eatery] = []
-    private var filteredCentralEateries: [Eatery] = []
-    private var westExpandedCells: [Int] = []
-    private var northExpandedCells: [Int] = []
-    private var centralExpandedCells: [Int] = []
-    private var events: [String: Event] = [:]
-    private let dates: [NSDate] = {
+    fileprivate var tableView: UITableView!
+    fileprivate let sectionHeaderHeight: CGFloat = 40.0
+    fileprivate let eateryHeaderHeight: CGFloat = 55.0
+    fileprivate let filterSectionHeight: CGFloat = 130.0
+    fileprivate var filterEateriesCell: FilterEateriesTableViewCell!
+    fileprivate var filterMealButtons: [UIButton]!
+    fileprivate var filterDateViews: [FilterDateView]!
+    fileprivate var selectedMealIndex: Int = 0
+    fileprivate var selectedDateIndex: Int = 0
+    fileprivate let sections: [Area] = [.West, .North, .Central]
+    fileprivate var westEateries: [Eatery] = []
+    fileprivate var northEateries: [Eatery] = []
+    fileprivate var centralEateries: [Eatery] = []
+    fileprivate var filteredWestEateries: [Eatery] = []
+    fileprivate var filteredNorthEateries: [Eatery] = []
+    fileprivate var filteredCentralEateries: [Eatery] = []
+    fileprivate var westExpandedCells: [Int] = []
+    fileprivate var northExpandedCells: [Int] = []
+    fileprivate var centralExpandedCells: [Int] = []
+    fileprivate var events: [String: Event] = [:]
+    fileprivate let dates: [Date] = {
         (0..<7).flatMap {
-            NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: $0, toDate: NSDate(), options: [])
+            (Calendar.current as NSCalendar).date(byAdding: .day, value: $0, to: Date(), options: [])
         }
     }()
     
@@ -49,35 +49,35 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // View appearance
         title = "Eatery Guide"
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         
         // Table View
         let tableViewFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        tableView = UITableView(frame: tableViewFrame, style: .Grouped)
+        tableView = UITableView(frame: tableViewFrame, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0.0
         tableView.showsVerticalScrollIndicator = false
-        tableView.autoresizingMask = .FlexibleHeight
+        tableView.autoresizingMask = .flexibleHeight
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         view.addSubview(tableView)
         
         // Table View Nibs
-        tableView.registerNib(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
-        tableView.registerNib(UINib(nibName: "FilterEateriesTableViewCell", bundle: nil), forCellReuseIdentifier: "FilterEateriesCell")
-        tableView.registerNib(UINib(nibName: "EateryHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryHeaderCell")
-        tableView.registerNib(UINib(nibName: "EateryMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryMenuCell")
+        tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
+        tableView.register(UINib(nibName: "FilterEateriesTableViewCell", bundle: nil), forCellReuseIdentifier: "FilterEateriesCell")
+        tableView.register(UINib(nibName: "EateryHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryHeaderCell")
+        tableView.register(UINib(nibName: "EateryMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryMenuCell")
         
         // Filter Eateries Header View
         let dayStrings = getDayStrings(dates)
         let dateStrings = getDateStrings(dates)
-        let headerView = UIView(frame: CGRectMake(0, 0, view.frame.size.width, filterSectionHeight))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: filterSectionHeight))
 
-        filterEateriesCell = tableView.dequeueReusableCellWithIdentifier("FilterEateriesCell") as! FilterEateriesTableViewCell
+        filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
         filterMealButtons = [filterEateriesCell.filterBreakfastButton, filterEateriesCell.filterLunchButton, filterEateriesCell.filterDinnerButton]
         filterDateViews = [filterEateriesCell.firstDateView, filterEateriesCell.secondDateView, filterEateriesCell.thirdDateView, filterEateriesCell.fourthDateView, filterEateriesCell.fifthDateView, filterEateriesCell.sixthDateView, filterEateriesCell.seventhDateView]
         filterEateriesCell.delegate = self
@@ -85,7 +85,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         headerView.addSubview(filterEateriesCell)
         tableView.tableHeaderView = headerView
         
-        for (index,dateView) in filterDateViews.enumerate() {
+        for (index,dateView) in filterDateViews.enumerated() {
             dateView.delegate = self
             dateView.dateButton.tag = index
             dateView.dayLabel.text = dayStrings[index]
@@ -97,7 +97,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Fetch Eateries Data
         DATA.fetchEateries(false) { (error) -> (Void) in
-            dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
+            DispatchQueue.main.async(execute: { [unowned self] () -> Void in
                 let eateries = DATA.eateries
                 for eatery in eateries {
                     if eatery.eateryType == .Dining {
@@ -117,10 +117,10 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     // Eatery Menu Methods
     
-    func hasMenuIterable(eatery: Eatery) -> Bool {
+    func hasMenuIterable(_ eatery: Eatery) -> Bool {
         let alternateMenuIterable = eatery.getAlternateMenuIterable()
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         
         if !selectedMeal.isEmpty {
             let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
@@ -130,11 +130,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         return false
     }
     
-    func getEateryMenu(eatery: Eatery) -> UIImage {
+    func getEateryMenu(_ eatery: Eatery) -> UIImage {
         var eateryMenuImage = UIImage()
         let alternateMenuIterable = eatery.getAlternateMenuIterable()
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         
         if !selectedMeal.isEmpty {
             let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
@@ -146,23 +146,23 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     // Date Methods
     
-    func getDayStrings(dates: [NSDate]) -> [String] {
+    func getDayStrings(_ dates: [Date]) -> [String] {
         var dayStrings = ["Today"]
-        dayStrings.appendContentsOf(dates[1..<dates.count].map { DayDateFormatter.stringFromDate($0) })
+        dayStrings.append(contentsOf: dates[1..<dates.count].map { DayDateFormatter.string(from: $0) })
         return dayStrings
     }
     
-    func getDateStrings(dates: [NSDate]) -> [String] {
-        return dates.map { "\(NSCalendar.currentCalendar().component(.Day, fromDate: $0))" }
+    func getDateStrings(_ dates: [Date]) -> [String] {
+        return dates.map { "\((Calendar.current as NSCalendar).component(.day, from: $0))" }
     }
     
     // MARK: - Table View Methods
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(sections[section]) {
         case .West: return filteredWestEateries.count
         case .North: return filteredNorthEateries.count
@@ -171,16 +171,16 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return sectionHeaderHeight
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TitleSectionCell") as! TitleSectionTableViewCell
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSectionCell") as! TitleSectionTableViewCell
         
         switch(sections[section]) {
         case .West: cell.titleLabel.text = "WEST CAMPUS EATERIES"
@@ -192,7 +192,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         return cell.contentView
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var eatery: Eatery!
         var expandedCells: [Int]!
         
@@ -209,50 +209,50 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         default: break
         }
         
-        if expandedCells[indexPath.row] == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("EateryHeaderCell") as! EateryHeaderTableViewCell
+        if expandedCells[(indexPath as NSIndexPath).row] == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EateryHeaderCell") as! EateryHeaderTableViewCell
             cell.delegate = self
             cell.isExpanded = false
             cell.eateryNameLabel.text = (eatery.nameShort == "Jansen's Dining") ? "Bethe House Dining" : eatery.nameShort
             cell.eateryHoursLabel.text = "Closed"
             
             events = eatery.eventsOnDate(dates[selectedDateIndex])
-            let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+            let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
 
             if let event = events[selectedMeal] {
                 cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
             }
             
-            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? UIColor.closedRed() : UIColor.openGreen()
-            cell.moreInfoButton.hidden = (cell.eateryHoursLabel.text == "Closed")
+            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .closedRed : .openGreen
+            cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
             
-            if indexPath.row != (expandedCells.count - 1) {
-                cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
+            if (indexPath as NSIndexPath).row != (expandedCells.count - 1) {
+                cell.isExpanded = (expandedCells[(indexPath as NSIndexPath).row + 1] == 0) ? false : true
             }
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("EateryMenuCell") as! EateryMenuTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-            cell.shareMenuButton.hidden = !hasMenuIterable(eatery)
-            cell.shareIcon.hidden = !hasMenuIterable(eatery)
+            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
+            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
             cell.menuImageView.image = getEateryMenu(eatery)
             
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.layoutMargins = UIEdgeInsetsZero
-        tableView.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        tableView.layoutMargins = UIEdgeInsets.zero
+        tableView.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
     }
     
     // MARK: - Eatery Header Cell Delegate Methods
     
-    func didTapInfoButton(cell: EateryHeaderTableViewCell) {
-        let indexPath = tableView.indexPathForCell(cell)
+    func didTapInfoButton(_ cell: EateryHeaderTableViewCell) {
+        let indexPath = tableView.indexPath(for: cell)
         var eatery: Eatery!
         
         switch(sections[indexPath!.section]) {
@@ -269,25 +269,25 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
         }
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         let menuVC = MenuViewController(eatery: eatery, delegate: delegate, date: date, meal: selectedMeal)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
     
-    func didTapToggleMenuButton(cell: EateryHeaderTableViewCell) {
-        guard let indexPath = tableView.indexPathForCell(cell) else { return }
-        let row = indexPath.row
+    func didTapToggleMenuButton(_ cell: EateryHeaderTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let row = (indexPath as NSIndexPath).row
         
         let menuRow = row + 1
         if (cell.eateryHoursLabel.text != "Closed") {
             
-            func closeOrExpand(inout eateries: [Eatery], inout _ cells: [Int]) {
+            func closeOrExpand(_ eateries: inout [Eatery], _ cells: inout [Int]) {
                 if cell.isExpanded {
-                    eateries.removeAtIndex(menuRow)
-                    cells.removeAtIndex(menuRow)
+                    eateries.remove(at: menuRow)
+                    cells.remove(at: menuRow)
                 } else {
-                    eateries.insert(eateries[row], atIndex: menuRow)
-                    cells.insert(1, atIndex: menuRow)
+                    eateries.insert(eateries[row], at: menuRow)
+                    cells.insert(1, at: menuRow)
                 }
             }
         
@@ -303,24 +303,24 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             default: break
             }
             
-            let menuIndex = NSIndexPath(forRow: menuRow, inSection: indexPath.section)
+            let menuIndex = IndexPath(row: menuRow, section: (indexPath as NSIndexPath).section)
             if cell.isExpanded {
-                tableView.deleteRowsAtIndexPaths([menuIndex], withRowAnimation: .Fade)
+                tableView.deleteRows(at: [menuIndex], with: .fade)
             } else {
-                tableView.insertRowsAtIndexPaths([menuIndex], withRowAnimation: .Fade)
+                tableView.insertRows(at: [menuIndex], with: .fade)
             }
         
             tableView.endUpdates()
             
-            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            tableView.scrollToRow(at: indexPath, at: .top, animated: true)
             cell.isExpanded = !cell.isExpanded
         }
     }
     
     // MARK: - Filter Menu Cell Delegate Methods
     
-    func didTapShareMenuButton(cell: EateryMenuTableViewCell?) {
-        let indexPath = tableView.indexPathForCell(cell!)
+    func didTapShareMenuButton(_ cell: EateryMenuTableViewCell?) {
+        let indexPath = tableView.indexPath(for: cell!)
         var eatery: Eatery!
         
         switch(sections[indexPath!.section]) {
@@ -332,23 +332,23 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         let selectedDate = dates[selectedDateIndex]
         events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
+        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         MenuImages.shareMenu(eatery, vc: self, events: events, date: selectedDate, selectedMenu: selectedMeal)
     }
     
     // MARK: - Filter Eateries Cell Delegate Methods
     
-    func didFilterDate(sender: UIButton) {
+    func didFilterDate(_ sender: UIButton) {
         selectedDateIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
     }
     
-    func didFilterMeal(sender: UIButton) {
+    func didFilterMeal(_ sender: UIButton) {
         selectedMealIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
     }
     
-    func filterEateries(dateViews: [FilterDateView], buttons: [UIButton]) {
+    func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
         // Update selected date
         for dateView in dateViews {
             dateView.dayLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
@@ -363,27 +363,27 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         for button in buttons {
             button.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
             let alpha: CGFloat = button.tag == selectedMealIndex ? 0.7 : 0.3
-            button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), forState: .Normal)
+            button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), for: UIControlState())
         }
         
         // Filter eateries
         filteredWestEateries = westEateries
         filteredNorthEateries = northEateries
         filteredCentralEateries = centralEateries
-        westExpandedCells = Array(count: westEateries.count, repeatedValue: 0)
-        northExpandedCells = Array(count: northEateries.count, repeatedValue: 0)
-        centralExpandedCells = Array(count: centralEateries.count, repeatedValue: 0)
+        westExpandedCells = Array(repeating: 0, count: westEateries.count)
+        northExpandedCells = Array(repeating: 0, count: northEateries.count)
+        centralExpandedCells = Array(repeating: 0, count: centralEateries.count)
         
         let selectedMeal = filterMealButtons[selectedMealIndex].titleLabel!.text!
-        filteredWestEateries = Sort.sortEateriesByOpenOrAlph(filteredWestEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
-        filteredNorthEateries = Sort.sortEateriesByOpenOrAlph(filteredNorthEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
-        filteredCentralEateries =  Sort.sortEateriesByOpenOrAlph(filteredCentralEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .LookAhead)
+        filteredWestEateries = Sort.sortEateriesByOpenOrAlph(filteredWestEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
+        filteredNorthEateries = Sort.sortEateriesByOpenOrAlph(filteredNorthEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
+        filteredCentralEateries =  Sort.sortEateriesByOpenOrAlph(filteredCentralEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
         
         tableView.reloadData()
     }
 
     func currentMealIndex() -> Int {
-        let currentHour = NSCalendar.currentCalendar().component(.Hour, fromDate: NSDate())
+        let currentHour = (Calendar.current as NSCalendar).component(.hour, from: Date())
         switch currentHour {
         case 0...9: return 0
         case 10...15: return 1

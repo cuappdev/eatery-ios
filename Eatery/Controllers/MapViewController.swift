@@ -24,8 +24,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     init(eatery: Eatery) {
         self.eatery = eatery
-        let bounds = UIScreen.mainScreen().bounds
-        self.mapView = MKMapView(frame: CGRectMake(0, 0, bounds.width, bounds.height))
+        let bounds = UIScreen.main.bounds
+        self.mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,11 +43,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if CLLocationManager.locationServicesEnabled() {
             switch (CLLocationManager.authorizationStatus()) {
-            case .AuthorizedWhenInUse:
+            case .authorizedWhenInUse:
                 locationManager.startUpdatingLocation()
                 mapView.showsUserLocation = true
-            case .NotDetermined:
-                if locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
+            case .notDetermined:
+                if locationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)) {
                     locationManager.requestWhenInUseAuthorization()
                 }
             default: break
@@ -73,9 +73,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setRegion(MKCoordinateRegionMake(eatery.location.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
         mapView.alpha = 0.0
         view.addSubview(mapView)
-        UIView.animateWithDuration(0.2) {
+        UIView.animate(withDuration: 0.2, animations: {
             self.mapView.alpha = 1.0
-        }
+        }) 
         
         createMapButtons()
     }
@@ -84,37 +84,37 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func createMapButtons() {
         // Create top left removal button
-        removalButton.frame = CGRectMake(15, 25, 30, 30)
-        removalButton.setImage(UIImage(named: "closeIcon"), forState: .Normal)
-        removalButton.addTarget(self, action: #selector(MapViewController.removalButtonPressed), forControlEvents: .TouchUpInside)
+        removalButton.frame = CGRect(x: 15, y: 25, width: 30, height: 30)
+        removalButton.setImage(UIImage(named: "closeIcon"), for: UIControlState())
+        removalButton.addTarget(self, action: #selector(MapViewController.removalButtonPressed), for: .touchUpInside)
         mapView.addSubview(removalButton)
         
         // Create bottom left arrow button
-        arrowButton.frame = CGRectMake(15, view.frame.size.height - 55, 30, 30)
-        arrowButton.setImage(UIImage(named: "locationArrowIcon"), forState: .Normal)
-        arrowButton.addTarget(self, action: #selector(MapViewController.arrowButtonPressed), forControlEvents: .TouchUpInside)
+        arrowButton.frame = CGRect(x: 15, y: view.frame.size.height - 55, width: 30, height: 30)
+        arrowButton.setImage(UIImage(named: "locationArrowIcon"), for: UIControlState())
+        arrowButton.addTarget(self, action: #selector(MapViewController.arrowButtonPressed), for: .touchUpInside)
         mapView.addSubview(arrowButton)
         
         // Create bottom right arrow
-        pinButton.frame = CGRectMake(view.frame.size.width - 40, view.frame.size.height - 60, 25, 35)
-        pinButton.setImage(UIImage(named: "blackEateryPin"), forState: .Normal)
-        pinButton.addTarget(self, action: #selector(MapViewController.pinButtonPressed), forControlEvents: .TouchUpInside)
+        pinButton.frame = CGRect(x: view.frame.size.width - 40, y: view.frame.size.height - 60, width: 25, height: 35)
+        pinButton.setImage(UIImage(named: "blackEateryPin"), for: UIControlState())
+        pinButton.addTarget(self, action: #selector(MapViewController.pinButtonPressed), for: .touchUpInside)
         mapView.addSubview(pinButton)
     }
     
-    func removalButtonPressed(sender: UIButton) {
+    func removalButtonPressed(_ sender: UIButton) {
         removalButton.removeFromSuperview()
         arrowButton.removeFromSuperview()
         pinButton.removeFromSuperview()
         dismissVCWithFadeOutAnimation(0.3)
     }
     
-    func arrowButtonPressed(sender: UIButton) {
+    func arrowButtonPressed(_ sender: UIButton) {
         let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
         mapView.setRegion(region, animated: true)
     }
     
-    func pinButtonPressed(sender: UIButton) {
+    func pinButtonPressed(_ sender: UIButton) {
         let region = MKCoordinateRegion(center: eateryAnnotation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
         mapView.selectAnnotation(eateryAnnotation, animated: true)
         mapView.setRegion(region, animated: true)
@@ -122,12 +122,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // MARK: - MKMapViewDelegate Methods
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MKPointAnnotation) {
             return nil
         }
         
-        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("eateryPin")
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin")
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
@@ -143,11 +143,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     // MARK: - CLLocationManagerDelegate Methods
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Error: \(error)")
     }
     

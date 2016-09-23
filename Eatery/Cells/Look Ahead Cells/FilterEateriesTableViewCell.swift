@@ -9,8 +9,8 @@
 import UIKit
 
 @objc protocol FilterEateriesViewDelegate {
-    optional func didFilterMeal(sender: UIButton)
-    optional func didFilterDate(sender: UIButton)
+    @objc optional func didFilterMeal(_ sender: UIButton)
+    @objc optional func didFilterDate(_ sender: UIButton)
 }
 
 class FilterEateriesTableViewCell: UITableViewCell {
@@ -26,16 +26,16 @@ class FilterEateriesTableViewCell: UITableViewCell {
     @IBOutlet weak var filterLunchButton: UIButton!
     @IBOutlet weak var filterDinnerButton: UIButton!
     
-    private var tapGestureRecognizer: UITapGestureRecognizer?
+    fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
     var delegate: FilterEateriesViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .None
+        selectionStyle = .none
         filterTitleLabel.text = UIScreen.isNarrowScreen() ? "VIEW MENUS & HOURS FOR AN UPCOMING TIME" : "VIEW MENUS AND HOURS FOR AN UPCOMING TIME"
     }
     
-    @IBAction func didFilterMeal(sender: UIButton) {
+    @IBAction func didFilterMeal(_ sender: UIButton) {
         delegate?.didFilterMeal!(sender)
     }
     
@@ -46,15 +46,15 @@ class FilterEateriesTableViewCell: UITableViewCell {
         addGestureRecognizer(tapGestureRecognizer!)
     }
     
-    func filterEateriesCellPressed(sender: UITapGestureRecognizer) {
-        let tapPoint = sender.locationInView(self)
-        let hitView = hitTest(tapPoint, withEvent: nil)
+    func filterEateriesCellPressed(_ sender: UITapGestureRecognizer) {
+        let tapPoint = sender.location(in: self)
+        let hitView = hitTest(tapPoint, with: nil)
         
         let filterDateButtons = [firstDateView.dateButton, secondDateView.dateButton, thirdDateView.dateButton, fourthDateView.dateButton, fifthDateView.dateButton, sixthDateView.dateButton, seventhDateView.dateButton]
         
         for button in filterDateButtons {
             if hitView == button {
-                delegate?.didFilterDate!(button)
+                delegate?.didFilterDate!(button!)
                 break
             }
         }

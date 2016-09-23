@@ -9,35 +9,35 @@
 import Foundation
 import UIKit
 
-func makeSortButton(title:String, index:Int, sortOptionButtonHeight:CGFloat, sortView:UIView) -> UIButton {
-    let font = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.offBlackColor() ]
+func makeSortButton(_ title:String, index:Int, sortOptionButtonHeight:CGFloat, sortView:UIView) -> UIButton {
+    let font = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.offBlack]
 
-        let sortButton = UIButton(type: .Custom)
-        sortButton.frame = CGRectMake(0, sortOptionButtonHeight * CGFloat(index), sortView.frame.width, sortOptionButtonHeight)
+        let sortButton = UIButton(type: .custom)
+        sortButton.frame = CGRect(x: 0, y: sortOptionButtonHeight * CGFloat(index), width: sortView.frame.width, height: sortOptionButtonHeight)
         let campusTitle = NSMutableAttributedString(string: title, attributes: font)
-        sortButton.setAttributedTitle(campusTitle, forState: .Normal)
-        sortButton.contentHorizontalAlignment = .Left
+        sortButton.setAttributedTitle(campusTitle, for: UIControlState())
+        sortButton.contentHorizontalAlignment = .left
         sortButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        sortButton.backgroundColor = .whiteColor()
+        sortButton.backgroundColor = .white
         
         let checkWidth = sortView.frame.width/11.0
         let checkHeight = sortOptionButtonHeight/3.0
         let y = sortOptionButtonHeight / 2.0 - checkHeight / 2.0
-        let imageView = UIImageView(frame: CGRectMake(sortView.frame.width-checkWidth-10, y, checkWidth, checkHeight))
+        let imageView = UIImageView(frame: CGRect(x: sortView.frame.width-checkWidth-10, y: y, width: checkWidth, height: checkHeight))
         imageView.image = UIImage(named: "checkIcon")
-        imageView.hidden = true
+        imageView.isHidden = true
         sortButton.addSubview(imageView)
         sortButton.tag = index
     
         return sortButton
 }
 
-func setAnchorPoint(anchorPoint: CGPoint, forView view: UIView) {
-    var newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x, view.bounds.size.height * anchorPoint.y)
-    var oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x, view.bounds.size.height * view.layer.anchorPoint.y)
+func setAnchorPoint(_ anchorPoint: CGPoint, forView view: UIView) {
+    var newPoint = CGPoint(x: view.bounds.size.width * anchorPoint.x, y: view.bounds.size.height * anchorPoint.y)
+    var oldPoint = CGPoint(x: view.bounds.size.width * view.layer.anchorPoint.x, y: view.bounds.size.height * view.layer.anchorPoint.y)
     
-    newPoint = CGPointApplyAffineTransform(newPoint, view.transform)
-    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform)
+    newPoint = newPoint.applying(view.transform)
+    oldPoint = oldPoint.applying(view.transform)
     
     var position = view.layer.position
     position.x -= oldPoint.x

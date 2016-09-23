@@ -19,9 +19,9 @@ class CircleView: UIView {
         didSet {
             switch state {
             case .Open:
-                backgroundColor = .openGreen()
+                backgroundColor = .openGreen
             case .Closed:
-                backgroundColor = .closedGray()
+                backgroundColor = .closedGray
             }
         }
     }
