@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterDateView" customModule="Eatery" customModuleProvider="target">
@@ -15,32 +15,30 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="E9M-ar-eqG" userLabel="Filter Dates View">
             <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iry-SP-zEW" userLabel="Filter Date Button">
-                    <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
                     <connections>
                         <action selector="didFilterDate:" destination="-1" eventType="touchUpInside" id="mKi-Zo-Vyz"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3n-ra-6sM" userLabel="Day Label">
-                    <rect key="frame" x="0.0" y="0.0" width="45" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="4ee-GR-VlK"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                    <color key="textColor" red="0.67450980390000004" green="0.67843137249999996" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.67450980390000004" green="0.67843137249999996" blue="0.68235294120000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbk-aJ-eMz" userLabel="Date Label">
-                    <rect key="frame" x="0.0" y="15" width="45" height="30"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="1000" text="11" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbk-aJ-eMz" userLabel="Date Label">
                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="28"/>
-                    <color key="textColor" red="0.67450980390000004" green="0.67843137249999996" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.67450980390000004" green="0.67843137249999996" blue="0.68235294120000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Tbk-aJ-eMz" firstAttribute="leading" secondItem="E9M-ar-eqG" secondAttribute="leading" id="031-5x-HNK"/>
                 <constraint firstItem="Tbk-aJ-eMz" firstAttribute="top" secondItem="Q3n-ra-6sM" secondAttribute="bottom" id="8Hk-ty-CNB"/>
                 <constraint firstItem="Q3n-ra-6sM" firstAttribute="top" secondItem="E9M-ar-eqG" secondAttribute="top" id="C3e-9u-sB5"/>
                 <constraint firstItem="Iry-SP-zEW" firstAttribute="leading" secondItem="E9M-ar-eqG" secondAttribute="leading" id="FO1-uW-4W5"/>
@@ -49,11 +47,9 @@
                 <constraint firstItem="Q3n-ra-6sM" firstAttribute="centerX" secondItem="E9M-ar-eqG" secondAttribute="centerX" id="QTK-Nw-zII"/>
                 <constraint firstItem="Iry-SP-zEW" firstAttribute="top" secondItem="E9M-ar-eqG" secondAttribute="top" id="Vmg-dB-7mZ"/>
                 <constraint firstAttribute="bottom" secondItem="Iry-SP-zEW" secondAttribute="bottom" id="dWx-40-u2z"/>
-                <constraint firstAttribute="bottom" secondItem="Tbk-aJ-eMz" secondAttribute="bottom" id="e9i-gU-MBF"/>
-                <constraint firstItem="Tbk-aJ-eMz" firstAttribute="leading" secondItem="E9M-ar-eqG" secondAttribute="leading" id="h5X-Bk-YEJ"/>
                 <constraint firstItem="Q3n-ra-6sM" firstAttribute="leading" secondItem="E9M-ar-eqG" secondAttribute="leading" id="iwO-qa-ttT"/>
                 <constraint firstItem="Tbk-aJ-eMz" firstAttribute="centerY" secondItem="E9M-ar-eqG" secondAttribute="centerY" id="jmd-4A-oHU"/>
-                <constraint firstAttribute="trailing" secondItem="Tbk-aJ-eMz" secondAttribute="trailing" id="s8p-D0-72U"/>
+                <constraint firstAttribute="trailing" secondItem="Tbk-aJ-eMz" secondAttribute="trailing" id="sEg-Pk-1n1"/>
                 <constraint firstItem="Tbk-aJ-eMz" firstAttribute="centerX" secondItem="E9M-ar-eqG" secondAttribute="centerX" id="w0r-43-iAj"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

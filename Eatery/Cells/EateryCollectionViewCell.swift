@@ -31,7 +31,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             backgroundImageView.image = nil
         }
         titleLabel.text = eatery.nickname
-        statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
+        statusView.layer.cornerRadius = 6
         statusView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 1
         contentView.layer.masksToBounds = true

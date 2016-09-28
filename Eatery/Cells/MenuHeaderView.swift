@@ -35,7 +35,7 @@ class MenuHeaderView: UIView {
     override func awakeFromNib() {
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: UIControlState())
         shareButton.setImage(UIImage(named: "shareIcon"), for: UIControlState())
-        statusView.layer.cornerRadius = statusView.frame.width / 2.0
+        statusView.layer.cornerRadius = 6
     }
     
     func setUp(_ eatery: Eatery, date: Date) {
@@ -80,7 +80,7 @@ class MenuHeaderView: UIView {
             payViewFrame.origin.x += payViewSize + payViewPadding
         }
         
-        payTypeView.frame = CGRect(x: paymentView.frame.size.width - (payViewFrame.origin.x - 10), y: 0, width: payViewFrame.origin.x - 10, height: payViewFrame.height)
+        payTypeView.frame = CGRect(x: 95 - (payViewFrame.origin.x - 10), y: 0, width: payViewFrame.origin.x - 10, height: payViewFrame.height)
         paymentView.addSubview(payTypeView)
         
         // Title Label

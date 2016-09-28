@@ -121,9 +121,10 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         pageViewController.viewControllers = mealViewControllers
         
         pageViewController.view.frame = view.frame
-        pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight + headerAndMenuSeparation)
+        pageViewController.view.frame = pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight + headerAndMenuSeparation)
         pageViewController.scrollDelegate = self
         
+        pageViewController.willMove(toParentViewController:self)
         addChildViewController(pageViewController)
         outerScrollView.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)

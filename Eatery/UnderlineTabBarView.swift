@@ -49,7 +49,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         let kTabSpacing: CGFloat = (frame.width - kTabsWidth) / CGFloat(tabButtons.count + 1)
         var runningXOffset = kTabSpacing
         for tab in tabButtons {
-            tab.frame.offsetBy(dx: runningXOffset, dy: 5)
+            tab.frame = tab.frame.offsetBy(dx: runningXOffset, dy: 5)
             runningXOffset += tab.frame.width + kTabSpacing
         }
         
