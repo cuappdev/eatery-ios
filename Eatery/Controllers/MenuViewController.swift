@@ -12,8 +12,8 @@ import MapKit
 
 let kMenuHeaderViewFrameHeight: CGFloat = 240
 
-private let TitleDateFormatter: NSDateFormatter = {
-    let formatter = NSDateFormatter()
+private let TitleDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
     formatter.dateFormat = "E, MMM d"
     return formatter
 }()
@@ -26,12 +26,12 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
     var delegate: MenuButtonsDelegate?
-    let displayedDate: NSDate
+    let displayedDate: Date
     var selectedMeal: String?
     var detailedTitleView: UIView?
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
-    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: NSDate = NSDate(), meal: String? = nil) {
+    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = NSDate() as Date, meal: String? = nil) {
         self.eatery = eatery
         self.delegate = delegate
         self.displayedDate = date
@@ -47,18 +47,18 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         super.viewDidLoad()
 
         // Appearance
-        view.backgroundColor = .lightGray()
+        view.backgroundColor = .lightGray
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let dateString = TitleDateFormatter.stringFromDate(displayedDate)
-        let todayDateString = TitleDateFormatter.stringFromDate(NSDate())
+        let dateString = TitleDateFormatter.string(from: displayedDate)
+        let todayDateString = TitleDateFormatter.string(from: Date())
         let headerAndMenuSeparation = CGFloat(-1)
         
         // Set navigation bar title
         let navTitleView = NavigationTitleView.loadFromNib()
         navTitleView.eateryNameLabel.text = eatery.nickname
         if dateString == todayDateString {
-            let commaIndex = dateString.characters.indexOf(",")
-            let dateSubstring = dateString.substringWithRange(commaIndex!..<dateString.endIndex)
+            let commaIndex = dateString.characters.index(of: ",")
+            let dateSubstring = dateString.substring(with: commaIndex!..<dateString.endIndex)
             navTitleView.dateLabel.text = "Today\(dateSubstring)"
         } else {
             navTitleView.dateLabel.text = dateString
@@ -72,23 +72,23 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         view.addSubview(outerScrollView)
         
         // Header Views
-        menuHeaderView = NSBundle.mainBundle().loadNibNamed("MenuHeaderView", owner: self, options: nil).first! as! MenuHeaderView
+        menuHeaderView = Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first! as! MenuHeaderView
         menuHeaderView.setUp(eatery, date: displayedDate)
-        menuHeaderView.frame = CGRect(origin: CGPointZero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
+        menuHeaderView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
         
         menuHeaderView.mapButtonPressed = { [unowned self] in
             let mapVC = MapViewController(eatery: self.eatery)
             self.presentVCWithFadeInAnimation(mapVC, duration: 0.3)
-            Analytics.trackLocationButtonPressed(self.eatery.slug)
+            Analytics.trackLocationButtonPressed(eateryId: self.eatery.slug)
         }
         
         outerScrollView.addSubview(menuHeaderView)
         
         // TabbedPageViewController
         let eventsDict = eatery.eventsOnDate(displayedDate)
-        let sortedEventsDict = eventsDict.sort { (a: (String, Event), b: (String, Event)) -> Bool in
-            a.1.startDate.compare(b.1.startDate) == .OrderedAscending
+        let sortedEventsDict = eventsDict.sorted { (a: (String, Event), b: (String, Event)) -> Bool in
+            a.1.startDate.compare(b.1.startDate) == .orderedAscending
         }
         
         var meals = sortedEventsDict.map { (meal: String, _) -> String in
@@ -96,8 +96,8 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
 
         if meals.contains("Lite Lunch") {
-            if let index = meals.indexOf("Lite Lunch") {
-                meals.removeAtIndex(index)
+            if let index = meals.index(of: "Lite Lunch") {
+                meals.remove(at: index)
             }
         }
         
@@ -121,14 +121,14 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         pageViewController.viewControllers = mealViewControllers
         
         pageViewController.view.frame = view.frame
-        pageViewController.view.frame.offsetInPlace(dx: 0, dy: kMenuHeaderViewFrameHeight + headerAndMenuSeparation)
+        pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight + headerAndMenuSeparation)
         pageViewController.scrollDelegate = self
         
         addChildViewController(pageViewController)
         outerScrollView.addSubview(pageViewController.view)
-        pageViewController.didMoveToParentViewController(self)
+        pageViewController.didMove(toParentViewController: self)
         
-        outerScrollView.scrollEnabled = false
+        outerScrollView.isScrollEnabled = false
         
         let scrollGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MenuViewController.handleScroll(_:)))
         view.addGestureRecognizer(scrollGestureRecognizer)
@@ -140,20 +140,20 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
     }
     
-    func handleScroll(gesture: UIPanGestureRecognizer) {
-        internalScrollHandler(gesture.translationInView(view), state: gesture.state, velocity: -gesture.velocityInView(view).y)
+    func handleScroll(_ gesture: UIPanGestureRecognizer) {
+        internalScrollHandler(gesture.translation(in: view), state: gesture.state, velocity: -gesture.velocity(in: view).y)
     }
     
-    private var startingOffset = CGPointZero
-    private var currentOffset = CGPointZero
+    fileprivate var startingOffset = CGPoint.zero
+    fileprivate var currentOffset = CGPoint.zero
     
     var animator: UIDynamicAnimator!
     var dynamicItem = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
     var decelerationBehavior: UIDynamicItemBehavior?
     var springBehavior: UIAttachmentBehavior?
     
-    private func internalScrollHandler(translation: CGPoint, state: UIGestureRecognizerState, velocity: CGFloat) {
-        if state == .Began {
+    fileprivate func internalScrollHandler(_ translation: CGPoint, state: UIGestureRecognizerState, velocity: CGFloat) {
+        if state == .began {
             startingOffset = currentOffset
             animator.removeAllBehaviors()
             decelerationBehavior = nil
@@ -170,8 +170,8 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         let maxInnerYOffset = max(innerContentHeight - view.frame.height, 0)
         
         switch state {
-        case .Changed:
-            func rubberBandDistance(offset: CGFloat, dimension: CGFloat) -> CGFloat {
+        case .changed:
+            func rubberBandDistance(_ offset: CGFloat, dimension: CGFloat) -> CGFloat {
                 let constant: CGFloat = 0.55
                 let result = (constant * abs(offset) * dimension) / (dimension + constant * abs(offset))
                 return offset < 0 ? -result : result
@@ -181,11 +181,11 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                 let distance = rubberBandDistance(offset.y, dimension: outerScrollView.contentSize.height)
                 outerScrollView.contentOffset.y = distance
                 //stetch the header
-                menuHeaderView.frame = CGRectMake(0, distance, view.frame.width, kMenuHeaderViewFrameHeight - distance)
+                menuHeaderView.frame = CGRect(x: 0, y: distance, width: view.frame.width, height: kMenuHeaderViewFrameHeight - distance)
                 
                 
                 guard springBehavior == nil && decelerationBehavior != nil else { return }
-                let target = CGPointZero
+                let target = CGPoint.zero
                 springBehavior = createSpringWithTarget(target)
                 animator.addBehavior(springBehavior!)
             }
@@ -229,9 +229,9 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                         let width = min(navView.frame.width, delta)
                         let opacity = min(1.0, navView.frame.width/width)
                         navView.nameLabelHeightConstraint.constant = height
-                        navView.eateryNameLabel.font = .boldSystemFontOfSize(min(17, delta/5))
+                        navView.eateryNameLabel.font = .boldSystemFont(ofSize: min(17, delta/5))
                         navView.eateryNameLabel.layer.opacity = Float(opacity)
-                        navView.dateLabel.font = .boldSystemFontOfSize(17 - min(5, delta/5))
+                        navView.dateLabel.font = .boldSystemFont(ofSize: 17 - min(5, delta/5))
                     }
                     outerScrollView.contentOffset.y = kMenuHeaderViewFrameHeight
                     innerScrollView.setContentOffset(innerOffset, animated: false)
@@ -241,26 +241,26 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                     pageViewController.setTabBarShadow(0, opacity: 0)
                     if let navView = navigationItem.titleView as? NavigationTitleView {
                         navView.nameLabelHeightConstraint.constant = 0
-                        navView.eateryNameLabel.font = .boldSystemFontOfSize(0)
+                        navView.eateryNameLabel.font = .boldSystemFont(ofSize: 0)
                         navView.eateryNameLabel.layer.opacity = 0
-                        navView.dateLabel.font = .boldSystemFontOfSize(17)
+                        navView.dateLabel.font = .boldSystemFont(ofSize: 17)
                     }
                     outerScrollView.contentOffset = offset
-                    innerScrollView.contentOffset = CGPointZero
+                    innerScrollView.contentOffset = CGPoint.zero
                 }
 
             }
-        case .Ended, .Cancelled:
+        case .ended, .cancelled:
             if velocity != 0 {
                 // Inertia behavior
                 startingOffset = offset
                 dynamicItem.center = startingOffset
                 decelerationBehavior = UIDynamicItemBehavior(items: [dynamicItem])
-                decelerationBehavior!.addLinearVelocity(CGPoint(x: 0, y: velocity), forItem: dynamicItem)
+                decelerationBehavior!.addLinearVelocity(CGPoint(x: 0, y: velocity), for: dynamicItem)
                 decelerationBehavior!.resistance = 3
                 decelerationBehavior!.action = { () -> Void in
                     let translation = self.dynamicItem.center.y - self.startingOffset.y
-                    self.internalScrollHandler(CGPoint(x: 0, y: -translation), state: .Changed, velocity: 0)
+                    self.internalScrollHandler(CGPoint(x: 0, y: -translation), state: .changed, velocity: 0)
                 }
                 animator.addBehavior(decelerationBehavior!)
                 
@@ -270,7 +270,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
     }
     
-    func createSpringWithTarget(target: CGPoint) -> UIAttachmentBehavior {
+    func createSpringWithTarget(_ target: CGPoint) -> UIAttachmentBehavior {
         let spring = UIAttachmentBehavior(item: dynamicItem, attachedToAnchor: target)
         // Has to be equal to zero, because otherwise the bounds.origin wouldn't exactly match the target's position.
         spring.length = 0
@@ -305,7 +305,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
-        addedToFavoritesView.popupOnView(view, addedToFavorites: eatery.favorite)
+        addedToFavoritesView.popupOnView(view: view, addedToFavorites: eatery.favorite)
     }
     
     func shareButtonPressed() {
@@ -324,53 +324,52 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
                                                     menuIterable: menuIterable)
         
         let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+        activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.mail, UIActivityType.print, UIActivityType.airDrop, UIActivityType.addToReadingList]
         if #available(iOS 9.0, *) {
-            activityVC.excludedActivityTypes?.append(UIActivityTypeOpenInIBooks)
+            activityVC.excludedActivityTypes?.append(UIActivityType.openInIBooks)
         }
         
         let shareBackgroundView = UIView(frame: view.frame)
-        shareBackgroundView.backgroundColor = .eateryBlue()
+        shareBackgroundView.backgroundColor = .eateryBlue
         shareBackgroundView.alpha = 0
         
         let messageLabel =  UILabel(frame: CGRect(x: 0.0, y: (view.superview?.frame.width ?? 0) / 3, width: view.superview?.frame.width ?? 0, height: 88))
         messageLabel.text = "Share \(eatery.name)'s Menu:"
-        messageLabel.textAlignment = .Center
-        messageLabel.lineBreakMode = .ByWordWrapping
+        messageLabel.textAlignment = .center
+        messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
-        messageLabel.textColor = .whiteColor()
+        messageLabel.textColor = .white
         shareBackgroundView.addSubview(messageLabel)
         
         view.superview?.addSubview(shareBackgroundView)
-        
-        activityVC.completionWithItemsHandler = { (activityType: String?, completed: Bool, returnedItems: [AnyObject]?, error: NSError?) in
-            UIView.animateWithDuration(0.2, animations: {
+        activityVC.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            UIView.animate(withDuration: 0.2, animations: {
                 shareBackgroundView.alpha = 0
             }, completion: { _ in
                 shareBackgroundView.removeFromSuperview()
             })
             
             if completed {
-                Analytics.trackShareMenu(self.eatery.slug, meal: mealVC.meal)
+                Analytics.trackShareMenu(eateryId: self.eatery.slug, meal: mealVC.meal)
             }
         }
         
-        UIView.animateWithDuration(0.2) { 
+        UIView.animate(withDuration: 0.2, animations: { 
             shareBackgroundView.alpha = 1
-        }
+        }) 
         
-        self.presentViewController(activityVC, animated: true, completion: nil)
+        self.present(activityVC, animated: true, completion: nil)
     }
 
     // MARK: -
     // MARK: Scroll To Proper Time
     
-    func scrollToCurrentTimeOpening(date: NSDate) {
+    func scrollToCurrentTimeOpening(_ date: Date) {
         guard let currentEvent = eatery.activeEventForDate(date) else { return }
-        guard let mealViewControllers = pageViewController.viewControllers as? [MealTableViewController]
-            where mealViewControllers.count > 1 else { return }
+        guard let mealViewControllers = pageViewController.viewControllers as? [MealTableViewController],
+            mealViewControllers.count > 1 else { return }
         
-        let desiredMealVC: MealTableViewController -> Bool = {
+        let desiredMealVC: (MealTableViewController) -> Bool = {
             if currentEvent.desc == "Lite Lunch" {
                 return $0.meal == "Lunch"
             } else {

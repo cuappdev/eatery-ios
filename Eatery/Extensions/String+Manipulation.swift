@@ -11,7 +11,7 @@ import UIKit
 
 extension String {
     func trim() -> String {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
     
     // Replace any emoji in the string with its corresponding text name
@@ -33,8 +33,8 @@ extension String {
         
         var translatedEmojiText = self
         for (emoji, searchText) in emojiDictionary {
-            if self.containsString(emoji){
-                translatedEmojiText = translatedEmojiText.stringByReplacingOccurrencesOfString(emoji, withString: searchText)
+            if self.contains(emoji){
+                translatedEmojiText = translatedEmojiText.replacingOccurrences(of: emoji, with: searchText)
             }
         }
         
@@ -43,23 +43,23 @@ extension String {
 }
 
 extension NSMutableAttributedString {
-    func join(sequence: [NSMutableAttributedString]) -> NSMutableAttributedString {
+    func join(_ sequence: [NSMutableAttributedString]) -> NSMutableAttributedString {
         let mutableString = NSMutableAttributedString(attributedString: sequence[0])
         for index in 1 ..< sequence.count {
-            mutableString.appendAttributedString(self)
-            mutableString.appendAttributedString(sequence[index])
+            mutableString.append(self)
+            mutableString.append(sequence[index])
         }
         return NSMutableAttributedString(attributedString: mutableString)
     }
     
-    func appendImage(image: UIImage, yOffset: CGFloat) -> NSMutableAttributedString {
+    func appendImage(_ image: UIImage, yOffset: CGFloat) -> NSMutableAttributedString {
         let attachment: NSTextAttachment = NSTextAttachment()
         attachment.image = image
-        attachment.bounds = CGRectMake(0, yOffset, image.size.width, image.size.height)
+        attachment.bounds = CGRect(x: 0, y: yOffset, width: image.size.width, height: image.size.height)
         
         let attachmentString: NSAttributedString = NSAttributedString(attachment: attachment)
         let string: NSMutableAttributedString = NSMutableAttributedString(string: self.string)
-        string.appendAttributedString(attachmentString)
+        string.append(attachmentString)
         
         return string
     }

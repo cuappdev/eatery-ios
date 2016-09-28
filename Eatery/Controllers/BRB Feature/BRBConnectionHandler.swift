@@ -18,15 +18,15 @@ class BRBConnectionHandler: WKWebView {
     }
     
     enum Stages {
-        case LoginScreen
-        case LoginFailed
-        case Transition
-        case FundsHome
-        case DiningHistory
-        case Finished
+        case loginScreen
+        case loginFailed
+        case transition
+        case fundsHome
+        case diningHistory
+        case finished
     }
     
-    var stage: Stages = .LoginScreen
+    var stage: Stages = .loginScreen
     var accountBalance: AccountBalance!
     let loginURLString = "https://get.cbord.com/cornell/full/login.php"
     let fundsHomeURLString = "https://get.cbord.com/cornell/full/funds_home.php"
@@ -43,9 +43,9 @@ class BRBConnectionHandler: WKWebView {
      - Gets the HTML for the current web page and runs block after loading HTML into a string
      
      */
-    func getHTML(block: NSString -> ()){
+    func getHTML(block: @escaping (NSString) -> ()){
         evaluateJavaScript("document.documentElement.outerHTML.toString()",
-            completionHandler: { (html: AnyObject?, error: NSError?) in
+            completionHandler: { (html: Any?, error: Error?) in
                 if error == nil {
                     block(html as! NSString)
                 }
@@ -59,9 +59,9 @@ class BRBConnectionHandler: WKWebView {
      */
     func handleLogin() {
         loginCount = 0
-        stage = .LoginScreen
-        let loginURL = NSURL(string: loginURLString)!
-        loadRequest(NSURLRequest(URL: loginURL))
+        stage = .loginScreen
+        let loginURL = URL(string: loginURLString)!
+        load(URLRequest(url: loginURL))
     }
     
     func failedToLogin() -> Bool {
@@ -76,9 +76,9 @@ class BRBConnectionHandler: WKWebView {
      
      */
     func getDiningHistory() {
-        if stage != .LoginScreen || stage != .LoginFailed || stage != .Transition {
-            let historyURL = NSURL(string: diningHistoryURLString)!
-            loadRequest(NSURLRequest(URL: historyURL))
+        if stage != .loginScreen || stage != .loginFailed || stage != .transition {
+            let historyURL = URL(string: diningHistoryURLString)!
+            load(URLRequest(url: historyURL))
         }
     }
     
@@ -97,17 +97,17 @@ class BRBConnectionHandler: WKWebView {
             let swipesHTMLRegex = "<td class=\\\"first-child account_name\\\">A0.*<\\/td><td class=\\\"last-child balance\">[1-9]*[0-9]<\\/td>"
             let moneyRegex = "[0-9]+(\\.)*[0-9][0-9]"
             let swipesRegex = ">[1-9]*[0-9]<"
-            if self.stage == .FundsHome {
-                let brbString = self.getFirstRegexMatchFromString(brbHTMLRegex, str: html)
-                let brbs = self.getFirstRegexMatchFromString(moneyRegex, str: brbString)
-                let swipesString = self.getFirstRegexMatchFromString(swipesHTMLRegex, str: html)
-                let swipes = self.getFirstRegexMatchFromString(swipesRegex, str: swipesString)
+            if self.stage == .fundsHome {
+                let brbString = self.getFirstRegexMatchFromString(regexString: brbHTMLRegex as NSString, str: html)
+                let brbs = self.getFirstRegexMatchFromString(regexString: moneyRegex as NSString, str: brbString as NSString)
+                let swipesString = self.getFirstRegexMatchFromString(regexString: swipesHTMLRegex as NSString, str: html)
+                let swipes = self.getFirstRegexMatchFromString(regexString: swipesRegex as NSString, str: swipesString as NSString)
                 if brbs == "" {
                     self.getAccountBalance()
                     return
                 }
                 self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
-                self.accountBalance.swipes = swipes != "" ? swipes[swipes.startIndex.successor()..<swipes.endIndex.predecessor()] : "0"
+                self.accountBalance.swipes = swipes != "" ? swipes[swipes.characters.index(after: swipes.startIndex)..<swipes.characters.index(before: swipes.endIndex)] : "0"
             }
         }
     }
@@ -119,9 +119,9 @@ class BRBConnectionHandler: WKWebView {
      
      */
     func getFirstRegexMatchFromString(regexString: NSString, str: NSString) -> String {
-        let regex = try? NSRegularExpression(pattern: regexString as String, options: .UseUnicodeWordBoundaries)
-        if let match = regex?.firstMatchInString(str as String, options: NSMatchingOptions.WithTransparentBounds , range: NSMakeRange(0, str.length)) {
-            return str.substringWithRange(match.rangeAtIndex(0)) as String
+        let regex = try? NSRegularExpression(pattern: regexString as String, options: .useUnicodeWordBoundaries)
+        if let match = regex?.firstMatch(in: str as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, str.length)) {
+            return str.substring(with: match.rangeAt(0)) as String
         }
         return ""
     }
@@ -135,20 +135,20 @@ class BRBConnectionHandler: WKWebView {
        is executed.
      
      */
-    func getStageAndRunBlock(block: () -> ()) {
-        getHTML({ (html: NSString) -> () in
+    func getStageAndRunBlock(block: @escaping () -> ()) {
+        getHTML(block: { (html: NSString) -> () in
             if self.failedToLogin() {
-                self.stage = .LoginFailed
-            } else if self.URL!.absoluteString.containsString("https://get.cbord.com/cornell/full/update_profile.php") {
-                self.stage = .LoginFailed
-            } else if html.containsString("<h1>CUWebLogin</h1>") {
-                self.stage = .LoginScreen
-            } else if self.URL!.absoluteString == self.fundsHomeURLString {
-                self.stage = .FundsHome
-            } else if self.URL!.absoluteString == self.diningHistoryURLString {
-                self.stage = .DiningHistory
+                self.stage = .loginFailed
+            } else if self.url!.absoluteString.contains("https://get.cbord.com/cornell/full/update_profile.php") {
+                self.stage = .loginFailed
+            } else if html.contains("<h1>CUWebLogin</h1>") {
+                self.stage = .loginScreen
+            } else if self.url!.absoluteString == self.fundsHomeURLString {
+                self.stage = .fundsHome
+            } else if self.url!.absoluteString == self.diningHistoryURLString {
+                self.stage = .diningHistory
             } else {
-                self.stage = .Transition
+                self.stage = .transition
             }
             
             //run block for stage

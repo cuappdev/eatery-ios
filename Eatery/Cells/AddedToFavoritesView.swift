@@ -14,12 +14,12 @@ class AddedToFavoritesView: UIView {
     @IBOutlet weak var starImageView: UIImageView!
     
     class func loadFromNib() -> AddedToFavoritesView {
-        let v = NSBundle.mainBundle().loadNibNamed("AddedToFavoritesView", owner: self, options: nil).first! as! AddedToFavoritesView
+        let v = Bundle.main.loadNibNamed("AddedToFavoritesView", owner: self, options: nil)?.first! as! AddedToFavoritesView
         v.alpha = 0
         v.layer.cornerRadius = 15
         v.layer.masksToBounds = true
-        v.backgroundColor = .eateryBlue()
-        v.center = CGPointMake(UIScreen.mainScreen().bounds.midX, UIScreen.mainScreen().bounds.midY-64)
+        v.backgroundColor = .eateryBlue
+        v.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY-64)
         return v
     }
     
@@ -28,11 +28,11 @@ class AddedToFavoritesView: UIView {
         toYourLabel.text = addedToFavorites ? "Added To Your" : "Removed From"
         starImageView.image = UIImage(named: addedToFavorites ? "goldStar" : "whiteStar")
         view.addSubview(self)
-        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.alpha = 1
         }, completion: { finished in
             if finished {
-                UIView.animateWithDuration(0.5, delay: 1, options: .CurveEaseOut, animations: {
+                UIView.animate(withDuration: 0.5, delay: 1, options: .curveEaseOut, animations: {
                     self.alpha = 0
                 }, completion: { finished in
                     if finished {

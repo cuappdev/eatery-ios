@@ -9,39 +9,44 @@
 import Foundation
 import DiningStack
 
-extension NSTimeInterval {
-    static func intervalWithHoursAndMinutesFromNow(hours hours: Double, minutes: Double) -> NSTimeInterval {
+extension TimeInterval {
+    static func intervalWithHoursAndMinutesFromNow(hours: Double, minutes: Double) -> TimeInterval {
         return 60 * minutes + 60 * 60 * hours
     }
 }
 
-func displayTextForEvent(event: Event) -> String {
-    return dateConverter(event.startDate, date2: event.endDate)
+func displayTextForEvent(_ event: Event) -> String {
+    return dateConverter(date1: event.startDate, date2: event.endDate)
 }
 
 /// Returns: Time representation of given date measured in seconds.
-func timeOfDate(date: NSDate) -> Int {
+func timeOfDate(_ date: Date) -> Int {
     // TODO: Specify timezone?
-    let calendar = NSCalendar.currentCalendar()
-    let comp = calendar.components([.Hour, .Minute, .Second], fromDate: date)
-    return comp.hour * 3600 + comp.minute * 60 + comp.second
+    let calendar = Calendar.current
+    let hour = calendar.component(.hour, from: date)
+    let minute = calendar.component(.minute, from: date)
+    let second = calendar.component(.second, from: date)
+    return hour * 3600 + minute * 60 + second
 }
 
 // TODO: make this an extension on MXLCalendarEvent
-func dateConverter(date1: NSDate, date2: NSDate) -> String {
-    let calendar = NSCalendar.currentCalendar()
-    calendar.timeZone = NSTimeZone(name: "America/New_York")!
+func dateConverter(date1: Date, date2: Date) -> String {
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(identifier: "America/New_York")!
     
-    let comp1 = calendar.components([.Hour, .Minute], fromDate: date1)
-    let comp2 = calendar.components([.Hour, .Minute], fromDate: date2)
+    let hour1 = calendar.component(.hour, from: date1)
+    let minute1 = calendar.component(.minute, from: date1)
+    
+    let hour2 = calendar.component(.hour, from: date2)
+    let minute2 = calendar.component(.minute, from: date2)
     
     var first = ""
     var second = ""
     
-    first = "\(hourConverter(comp1.hour))\(minConverter(comp1.minute))\(amOrPm(comp1.hour))"
+    first = "\(hourConverter(hour1))\(minConverter(minute1))\(amOrPm(hour1))"
     first.convertTimeIfNeeded()
     
-    second = "\(hourConverter(comp2.hour))\(minConverter(comp2.minute))\(amOrPm(comp2.hour))"
+    second = "\(hourConverter(hour2))\(minConverter(minute2))\(amOrPm(hour2))"
     second.convertTimeIfNeeded()
     
     // TODO: incorporate eventSummary if applicable
@@ -49,7 +54,7 @@ func dateConverter(date1: NSDate, date2: NSDate) -> String {
     return "\(first) to \(second)"
 }
 
-private func hourConverter(hour: Int) -> String {
+private func hourConverter(_ hour: Int) -> String {
     let moddedHour = hour % 12
     if moddedHour == 0 {
         return "12"
@@ -57,7 +62,7 @@ private func hourConverter(hour: Int) -> String {
     return "\(moddedHour)"
 }
 
-private func minConverter(min: Int) -> String {
+private func minConverter(_ min: Int) -> String {
     if (min != 0) {
         if (min > 9) {
             return ":\(min)"
@@ -69,7 +74,7 @@ private func minConverter(min: Int) -> String {
     }
 }
 
-private func amOrPm(hour: Int) -> String {
+private func amOrPm(_ hour: Int) -> String {
     if hour >= 12 {
         return "pm"
     } else {
