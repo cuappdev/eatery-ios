@@ -29,7 +29,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     let displayedDate: Date
     var selectedMeal: String?
     var detailedTitleView: UIView?
-    
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
     
