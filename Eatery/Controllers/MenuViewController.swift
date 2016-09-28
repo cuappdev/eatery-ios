@@ -9,7 +9,6 @@
 import UIKit
 import DiningStack
 import MapKit
-//cool comment
 
 let kMenuHeaderViewFrameHeight: CGFloat = 240
 
