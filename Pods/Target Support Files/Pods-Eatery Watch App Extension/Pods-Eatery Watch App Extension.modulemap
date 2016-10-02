@@ -1,0 +1,6 @@
+framework module Pods_Eatery_Watch_App_Extension {
+  umbrella header "Pods-Eatery Watch App Extension-umbrella.h"
+
+  export *
+  module * { export * }
+}

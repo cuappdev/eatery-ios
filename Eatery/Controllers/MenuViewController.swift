@@ -9,6 +9,7 @@
 import UIKit
 import DiningStack
 import MapKit
+import MessageUI
 
 let kMenuHeaderViewFrameHeight: CGFloat = 240
 
@@ -139,6 +140,21 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        if UserDefaults.standard.integer(forKey: "feedbackUseCount") >= 3 && !UserDefaults.standard.bool(forKey: "feedbackGiven") {
+            let alertController = UIAlertController(title: "We're currently improving Eatery!", message: "If there's an issue you want fixed or a feature you want made, please let us know.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Send a message", style: .default) { Void in
+                let message = "Please describe what you want to see improved in Eatery:\n\n\n"
+                self.presentMailComposer(subject: "Eatery Feedback", message: message)
+            })
+            alertController.addAction(UIAlertAction(title: "No thanks!", style: .cancel, handler: nil))
+            present(alertController, animated: true, completion: nil)
+            UserDefaults.standard.set(true, forKey: "feedbackGiven")
+        }
     }
     
     func handleScroll(_ gesture: UIPanGestureRecognizer) {
@@ -384,3 +400,26 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         }
     }
 }
+
+extension MenuViewController: MFMailComposeViewControllerDelegate {
+    
+    func presentMailComposer(subject: String, message: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposerViewController = MFMailComposeViewController()
+            mailComposerViewController.mailComposeDelegate = self
+            mailComposerViewController.setToRecipients(["info@cuappdev.org"])
+            mailComposerViewController.setSubject(subject)
+            mailComposerViewController.setMessageBody(message, isHTML: false)
+            present(mailComposerViewController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: "Oops.", message: "Your email isn't currently set up.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
+

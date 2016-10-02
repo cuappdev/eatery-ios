@@ -36,7 +36,7 @@ class KeychainItemWrapper {
         
         #if !(arch(i386) || arch(x86_64))
             if (accessGroup != nil) {
-                self.genericPasswordQuery[kSecAttrAccessGroup] = accessGroup
+                self.genericPasswordQuery[kSecAttrAccessGroup as AnyHashable] = accessGroup
             }
         #endif
         
@@ -54,7 +54,7 @@ class KeychainItemWrapper {
             
             #if !(arch(i386) || arch(x86_64))
                 if (accessGroup != nil) {
-                    self.keychainItemData[kSecAttrAccessGroup] = accessGroup
+                    self.keychainItemData[kSecAttrAccessGroup as AnyHashable] = accessGroup
                 }
             #endif
         } else {
