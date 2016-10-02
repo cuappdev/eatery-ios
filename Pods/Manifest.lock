@@ -1,0 +1,59 @@
+PODS:
+  - Alamofire (4.0.0)
+  - Analytics/Core-iOS (2.0.17):
+    - TRVSDictionaryWithCaseInsensitivity (= 0.0.2)
+  - Analytics/Segmentio (2.0.17):
+    - Analytics/Core-iOS
+  - DGElasticPullToRefresh (1.1)
+  - DiningStack (1.0):
+    - Alamofire
+    - SwiftyJSON
+  - HanekeSwift (0.10.1)
+  - SwiftyJSON (2.3.2)
+  - TRVSDictionaryWithCaseInsensitivity (0.0.2)
+
+DEPENDENCIES:
+  - Analytics/Segmentio
+  - DGElasticPullToRefresh (from `https://github.com/dantheli/DGElasticPullToRefresh.git`)
+  - DiningStack (from `https://github.com/cuappdev/DiningStack.git`, branch `daniel/swift-3`)
+  - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, branch `feature/swift-3`)
+  - SwiftyJSON (from `https://github.com/IBM-swift/swiftyjson.git`)
+
+EXTERNAL SOURCES:
+  DGElasticPullToRefresh:
+    :git: https://github.com/dantheli/DGElasticPullToRefresh.git
+  DiningStack:
+    :branch: daniel/swift-3
+    :git: https://github.com/cuappdev/DiningStack.git
+  HanekeSwift:
+    :branch: feature/swift-3
+    :git: https://github.com/Haneke/HanekeSwift.git
+  SwiftyJSON:
+    :git: https://github.com/IBM-swift/swiftyjson.git
+
+CHECKOUT OPTIONS:
+  DGElasticPullToRefresh:
+    :commit: 8fc92769b7c895e458caee7381291e290e878f2c
+    :git: https://github.com/dantheli/DGElasticPullToRefresh.git
+  DiningStack:
+    :commit: 1fb738bbfa53e11c1fb9dcbafe941568e4e28ba3
+    :git: https://github.com/cuappdev/DiningStack.git
+  HanekeSwift:
+    :commit: 3fb394f3769303685c9e0e692c9065e6a037b30a
+    :git: https://github.com/Haneke/HanekeSwift.git
+  SwiftyJSON:
+    :commit: 73b523a107b798021ca9af74b5f7c20e435c8809
+    :git: https://github.com/IBM-swift/swiftyjson.git
+
+SPEC CHECKSUMS:
+  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  Analytics: 51d6163cb568c8ede69f2b92ef4779d91e1524e2
+  DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
+  DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
+  HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TRVSDictionaryWithCaseInsensitivity: 51d2ccf52c6d645d27b63467a98fa02c556e01b0
+
+PODFILE CHECKSUM: 2962577215a19b3d2d963272197470c74f8a158c
+
+COCOAPODS: 1.0.1

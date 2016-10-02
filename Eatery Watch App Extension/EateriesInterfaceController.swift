@@ -22,7 +22,7 @@ class EateriesInterfaceController: WKInterfaceController {
     @IBOutlet var table: WKInterfaceTable!
     
     var eateries = [Eatery]()
-    var dateLastFetched = NSDate()
+    var dateLastFetched = Date()
     var curSortingOption = SortingOption.OpenAndAlphabetical
     
     @IBAction func refreshMenuItem() {
@@ -35,16 +35,16 @@ class EateriesInterfaceController: WKInterfaceController {
         self.configureTable()
     }
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         getEateries()
     }
     
     /** Fetch list of Eateries from DataManager */
     func getEateries() {
         DATA.fetchEateries(false) { _ in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.dateLastFetched = NSDate()
+            DispatchQueue.main.async {
+                self.dateLastFetched = Date()
                 self.eateries = DATA.eateries
                 self.sortEateries()
                 self.configureTable()
@@ -69,15 +69,15 @@ class EateriesInterfaceController: WKInterfaceController {
             let bState = b.generateDescriptionOfCurrentState()
             
             switch aState {
-            case .Open(_):
+            case .open(_):
                 switch bState {
-                case .Open(_):  return a.nickname <= b.nickname
+                case .open(_):  return a.nickname <= b.nickname
                 default:        return true
                 }
                 
-            case .Closed(_):
+            case .closed(_):
                 switch bState {
-                case .Closed(_):return a.nickname <= b.nickname
+                case .closed(_):return a.nickname <= b.nickname
                 default:        return false
                 }
             }
@@ -88,28 +88,28 @@ class EateriesInterfaceController: WKInterfaceController {
             return a.nickname < b.nickname
         }
         
-        curSortingOption == .Alphabetical ? eateries.sortInPlace(sortAlphabeticallyClosure) : eateries.sortInPlace(sortAlphabeticallyAndByOpenClosure)
+        curSortingOption == .Alphabetical ? eateries.sort(by: sortAlphabeticallyClosure) : eateries.sort(by: sortAlphabeticallyAndByOpenClosure)
     }
 
     /** Updates table and stores eateries. Use this to update Eatery times in table. */
     func configureTable() {
         table.setNumberOfRows(eateries.count, withRowType: "EateryRow")
         for index in eateries.indices {
-            if let controller = table.rowControllerAtIndex(index) as? EateryRowController {
-                controller.setEatery(eateries[index])
+            if let controller = table.rowController(at: index) as? EateryRowController {
+                controller.setEatery(eatery: eateries[index])
             }
         }
     }
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
-        presentControllerWithName("Menu", context: eateries[rowIndex])
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
+        presentController(withName: "Menu", context: eateries[rowIndex])
     }
 
     override func willActivate() {
         super.willActivate()
         // If it is past midnight of the following day of last fetch, fetch.
-        let startOfNextDay = NSCalendar.currentCalendar().startOfDayForDate(dateLastFetched.dateByAddingTimeInterval(86400))
-        if NSDate().timeIntervalSinceDate(startOfNextDay) > 0 {
+        let startOfNextDay = Calendar.current.startOfDay(for: dateLastFetched.addingTimeInterval(86400))
+        if Date().timeIntervalSince(startOfNextDay) > 0 {
             getEateries()
         } else {
             configureTable()

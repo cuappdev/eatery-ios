@@ -10,6 +10,6 @@ import UIKit
 
 extension UIScreen {
     static func isNarrowScreen() -> Bool {
-        return UIScreen.mainScreen().bounds.width <= 320
+        return UIScreen.main.bounds.width <= 320
     }
 }

@@ -24,14 +24,14 @@ class EateryCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    func setEatery(eatery: Eatery) {
+    func setEatery(_ eatery: Eatery) {
         if let photo = eatery.photo {
             backgroundImageView.hnk_setImage(photo, key: eatery.slug)
         } else {
             backgroundImageView.image = nil
         }
         titleLabel.text = eatery.nickname
-        statusView.layer.cornerRadius = statusView.frame.size.width / 2.0
+        statusView.layer.cornerRadius = 6
         statusView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 1
         contentView.layer.masksToBounds = true
@@ -48,11 +48,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .Open(let message):
-            statusView.backgroundColor = .openGreen()
+        case .open(let message):
+            statusView.backgroundColor = .openGreen
             timeLabel.text = message
-        case .Closed(let message):
-            statusView.backgroundColor = .closedGray()
+        case .closed(let message):
+            statusView.backgroundColor = .closedGray
             timeLabel.text = message
         }
     }

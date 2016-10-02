@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol FilterDateViewDelegate {
-    optional func didFilterDate(sender: UIButton)
+    @objc optional func didFilterDate(_ sender: UIButton)
 }
 
 class FilterDateView: UIView {
@@ -33,20 +33,20 @@ class FilterDateView: UIView {
     func xibSetup() {
         filterDateView = loadViewFromNib()
         filterDateView.frame = bounds
-        filterDateView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
+        filterDateView.autoresizingMask = .flexibleWidth
         
         addSubview(filterDateView)
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "FilterDateView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         
         return view
     }
     
-    @IBAction func didFilterDate(sender: UIButton) {
+    @IBAction func didFilterDate(_ sender: UIButton) {
         delegate?.didFilterDate!(sender)
     }
 }

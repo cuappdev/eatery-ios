@@ -1,0 +1,6 @@
+framework module TRVSDictionaryWithCaseInsensitivity {
+  umbrella header "TRVSDictionaryWithCaseInsensitivity-umbrella.h"
+
+  export *
+  module * { export * }
+}

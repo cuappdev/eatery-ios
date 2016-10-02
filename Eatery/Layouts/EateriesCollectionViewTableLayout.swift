@@ -10,8 +10,8 @@ import UIKit
 
 class EateriesCollectionViewTableLayout: UICollectionViewFlowLayout {
     
-    override func prepareLayout() {
-        super.prepareLayout()
+    override func prepare() {
+        super.prepare()
         
         guard let collectionView = collectionView else {return}
         let width = collectionView.bounds.width - kCollectionViewGutterWidth * 1.8
@@ -19,11 +19,11 @@ class EateriesCollectionViewTableLayout: UICollectionViewFlowLayout {
         minimumLineSpacing = kCollectionViewGutterWidth / 1.2
         minimumInteritemSpacing = kCollectionViewGutterWidth / 1.8
         sectionInset = UIEdgeInsets(top: 2, left: 0, bottom: 20, right: 0)
-        headerReferenceSize = CGSizeMake(width, 40)
+        headerReferenceSize = CGSize(width: width, height: 40)
     }
     
-    override func collectionViewContentSize() -> CGSize {
-        var size = super.collectionViewContentSize()
+    override var collectionViewContentSize : CGSize {
+        var size = super.collectionViewContentSize
         if (size.height < collectionView!.frame.height + 44) {
             size.height = collectionView!.frame.height + 44
         }

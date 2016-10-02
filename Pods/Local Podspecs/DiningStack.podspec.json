@@ -1,0 +1,31 @@
+{
+  "name": "DiningStack",
+  "version": "1.0",
+  "summary": "Open Source Implementation of Cornell Dining's API",
+  "homepage": "https://github.com/cuappdev/DiningStack",
+  "license": "MIT",
+  "authors": {
+    "CUAppDev": "info@cuappdev.org"
+  },
+  "source": {
+    "git": "https://github.com/cuappdev/DiningStack.git",
+    "tag": "1.0"
+  },
+  "platforms": {
+    "ios": "9.0",
+    "watchos": "2.0"
+  },
+  "requires_arc": true,
+  "source_files": "DiningStack/*.swift",
+  "resources": "DiningStack/*.json",
+  "frameworks": "UIKit",
+  "module_name": "DiningStack",
+  "dependencies": {
+    "Alamofire": [
+
+    ],
+    "SwiftyJSON": [
+
+    ]
+  }
+}

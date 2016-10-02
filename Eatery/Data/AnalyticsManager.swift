@@ -19,37 +19,37 @@ class AnalyticsManager: NSObject {
     
     func trackAppLaunch(properties: [String: AnyObject]) {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().track("App Launch", properties: properties)
+            SEGAnalytics.shared().track("App Launch", properties: properties)
         }
     }
     
     func trackEnterForeground() {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().track("Enter Foreground")
+            SEGAnalytics.shared().track("Enter Foreground")
         }
     }
     
     func trackPullToRefresh() {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().track("Pull to refresh EateriesGridViewController")
+            SEGAnalytics.shared().track("Pull to refresh EateriesGridViewController")
         }
     }
     
     func trackSearchResultSelected(searchTerm: String) {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().track("Search result selected", properties: ["search_term" : searchTerm])
+            SEGAnalytics.shared().track("Search result selected", properties: ["search_term" : searchTerm])
         }
     }
     
     func trackLocationButtonPressed(eateryId: String) {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().track("Location button pressed", properties: ["eatery_id" : eateryId])
+            SEGAnalytics.shared().track("Location button pressed", properties: ["eatery_id" : eateryId])
         }
     }
     
     func trackShareMenu(eateryId: String, meal: String) {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().track("Menu shared", properties: ["eatery_id" : eateryId, "meal" : meal])
+            SEGAnalytics.shared().track("Menu shared", properties: ["eatery_id" : eateryId, "meal" : meal])
         }
     }
     
@@ -58,19 +58,19 @@ class AnalyticsManager: NSObject {
     
     func screenEateriesGridViewController() {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().screen("EateriesGridViewController")
+            SEGAnalytics.shared().screen("EateriesGridViewController")
         }
     }
     
     func screenMenuViewController(eateryId: String) {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().screen("MenuViewController", properties: ["eatery_id" : eateryId])
+            SEGAnalytics.shared().screen("MenuViewController", properties: ["eatery_id" : eateryId])
         }
     }
     
     func screenGuideViewController() {
         if ENABLE_ANALYTICS {
-            SEGAnalytics.sharedAnalytics().screen("GuideViewController")
+            SEGAnalytics.shared().screen("GuideViewController")
         }
     }
     

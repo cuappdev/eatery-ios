@@ -11,16 +11,16 @@ import DiningStack
 
 @objc protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
-    optional func shareButtonPressed()
+    @objc optional func shareButtonPressed()
 }
 
 class MenuHeaderView: UIView {
     
     var eatery: Eatery!
     var delegate: MenuButtonsDelegate?
-    var displayedDate: NSDate!
+    var displayedDate: Date!
     
-    var mapButtonPressed: Void -> Void = {}
+    var mapButtonPressed: (Void) -> Void = {}
 
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -33,22 +33,22 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var mapButton: UIButton!
     
     override func awakeFromNib() {
-        favoriteButton.setImage(UIImage(named: "whiteStar"), forState: .Normal)
-        shareButton.setImage(UIImage(named: "shareIcon"), forState: .Normal)
-        statusView.layer.cornerRadius = statusView.frame.width / 2.0
+        favoriteButton.setImage(UIImage(named: "whiteStar"), for: UIControlState())
+        shareButton.setImage(UIImage(named: "shareIcon"), for: UIControlState())
+        statusView.layer.cornerRadius = 6
     }
     
-    func setUp(eatery: Eatery, date: NSDate) {
+    func setUp(_ eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
 
         // Status View
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .Open(_):
-            statusView.backgroundColor = .openGreen()
-        case .Closed(_):
-            statusView.backgroundColor = .closedGray()
+        case .open(_):
+            statusView.backgroundColor = .openGreen
+        case .closed(_):
+            statusView.backgroundColor = .closedGray
         }
         
         // Payment View
@@ -72,15 +72,15 @@ class MenuHeaderView: UIView {
         let payTypeView = UIView()
         let payViewSize: CGFloat = 25.0
         let payViewPadding: CGFloat = 10.0
-        var payViewFrame = CGRectMake(0, 0, payViewSize, payViewSize)
+        var payViewFrame = CGRect(x: 0, y: 0, width: payViewSize, height: payViewSize)
         
         for payView in paymentTypeViews {
-            payView.frame = CGRectMake(payViewFrame.origin.x, 0, payViewSize, payViewSize)
+            payView.frame = CGRect(x: payViewFrame.origin.x, y: 0, width: payViewSize, height: payViewSize)
             payTypeView.addSubview(payView)
             payViewFrame.origin.x += payViewSize + payViewPadding
         }
         
-        payTypeView.frame = CGRectMake(paymentView.frame.size.width - (payViewFrame.origin.x - 10), 0, payViewFrame.origin.x - 10, payViewFrame.height)
+        payTypeView.frame = CGRect(x: 95 - (payViewFrame.origin.x - 10), y: 0, width: payViewFrame.origin.x - 10, height: payViewFrame.height)
         paymentView.addSubview(payTypeView)
         
         // Title Label
@@ -88,7 +88,7 @@ class MenuHeaderView: UIView {
         if eatery.slug == "RPCC-Marketplace" { titleLabel.text = "Robert Purcell Marketplace Eatery" }
         
         // Hours
-        var hoursText = eatery.activeEventsForDate(displayedDate)
+        var hoursText = eatery.activeEventsForDate(date: displayedDate)
         if hoursText != "Closed" {
             hoursText = "Open \(hoursText)"
         }
@@ -101,21 +101,21 @@ class MenuHeaderView: UIView {
     
     func renderFavoriteImage() {
         let name = eatery.favorite ? "goldStar" : "whiteStar"
-        favoriteButton.setImage(UIImage(named: name), forState: .Normal)
+        favoriteButton.setImage(UIImage(named: name), for: .normal)
     }
     
-    @IBAction func favoriteButtonPressed(sender: AnyObject) {
+    @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
         eatery.favorite = !eatery.favorite
         renderFavoriteImage()
         
         delegate?.favoriteButtonPressed()
     }
     
-    @IBAction func shareButtonPressed(sender: UIButton) {
+    @IBAction func shareButtonPressed(_ sender: UIButton) {
         delegate?.shareButtonPressed?()
     }
     
-    @IBAction func mapButtonPressed(sender: UIButton) {
+    @IBAction func mapButtonPressed(_ sender: UIButton) {
         mapButtonPressed()
     }
     

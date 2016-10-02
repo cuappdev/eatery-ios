@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TabbedPageViewControllerDelegate {
-    func selectedTabDidChange(newIndex: Int)
+    func selectedTabDidChange(_ newIndex: Int)
 }
 
 protocol TabbedPageViewControllerScrollDelegate {
@@ -21,7 +21,7 @@ private let kTabBarHeight: CGFloat = 44
 class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, TabBarDelegate {
     
     var viewControllers: [UIViewController]!
-    private var meals: [String] = []
+    fileprivate var meals: [String] = []
     
     var tabDelegate: TabbedPageViewControllerDelegate?
     var scrollDelegate: TabbedPageViewControllerScrollDelegate?
@@ -32,7 +32,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .lightGray()
+        view.backgroundColor = .lightGray
         
         // TODO: sort meals
         
@@ -52,60 +52,60 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         }
         
         // Page view controller
-        pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-        pageViewController.view.backgroundColor = .lightGray()
+        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        pageViewController.view.backgroundColor = .lightGray
         let pageVCYOffset: CGFloat = tabBar != nil ? tabBar!.frame.origin.y + tabBar!.frame.height : 0
         let pageVCHeight = view.frame.height - pageVCYOffset - 44 - 20
         pageViewController.view.frame = CGRect(x: 0, y: pageVCYOffset, width: view.frame.width, height: pageVCHeight)
         
         pageViewController.dataSource = self
         pageViewController.delegate = self
-        pageViewController.setViewControllers([viewControllers[0]], direction: .Forward, animated: false, completion: nil)
+        pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false, completion: nil)
         
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
-        pageViewController.didMoveToParentViewController(self)
+        pageViewController.didMove(toParentViewController: self)
         if let tabBar = tabBar {
-            view.bringSubviewToFront(tabBar)
+            view.bringSubview(toFront: tabBar)
         }
     }
     
-    func setTabBarShadow(radius: CGFloat, opacity: Float) {
+    func setTabBarShadow(_ radius: CGFloat, opacity: Float) {
         tabBar?.layer.shadowOpacity = opacity
         tabBar?.layer.shadowRadius = radius
-        tabBar?.layer.shadowOffset = CGSizeMake(0, radius)
+        tabBar?.layer.shadowOffset = CGSize(width: 0, height: radius)
     }
     
-    func scrollToViewController(vc: UIViewController) {
-        pageViewController.setViewControllers([vc], direction: .Forward, animated: false, completion: nil)
-        let index = viewControllers.indexOf(vc)!
+    func scrollToViewController(_ vc: UIViewController) {
+        pageViewController.setViewControllers([vc], direction: .forward, animated: false, completion: nil)
+        let index = viewControllers.index(of: vc)!
         tabDelegate?.selectedTabDidChange(index)
         scrollDelegate?.scrollViewDidChange()
         
         updateActiveScrollView(index)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
-        let index = viewControllers.indexOf(viewController)!
+        let index = viewControllers.index(of: viewController)!
         
         guard index != 0 else { return nil }
         
         return viewControllers[index - 1]
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        let index = viewControllers.indexOf(viewController)!
+        let index = viewControllers.index(of: viewController)!
         
         guard index != viewControllers.count - 1 else { return nil }
         
         return viewControllers[index + 1]
     }
     
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
-        let index = viewControllers.indexOf(currentViewController)!
+        let index = viewControllers.index(of: currentViewController)!
         tabDelegate?.selectedTabDidChange(index)
         scrollDelegate?.scrollViewDidChange()
         
@@ -113,15 +113,15 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     }
     
     // Tab Bar Delegate
-    func selectedTabDidChange(newIndex: Int) {
+    func selectedTabDidChange(_ newIndex: Int) {
         let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
-        let currentIndex = viewControllers.indexOf(currentViewController)!
+        let currentIndex = viewControllers.index(of: currentViewController)!
 
         guard newIndex != currentIndex else { return }
         
-        var direction: UIPageViewControllerNavigationDirection = .Forward
+        var direction: UIPageViewControllerNavigationDirection = .forward
         if newIndex < currentIndex {
-            direction = .Reverse
+            direction = .reverse
         }
         pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: true, completion: nil)
         
@@ -130,7 +130,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         updateActiveScrollView(newIndex)
     }
     
-    func updateActiveScrollView(currentIndex: Int) {
+    func updateActiveScrollView(_ currentIndex: Int) {
         
     }
     
@@ -139,7 +139,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         return currentViewController.tableView
     }
     
-    func scrollGestureDidScroll(offset: CGPoint) {
+    func scrollGestureDidScroll(_ offset: CGPoint) {
         let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
         currentViewController.tableView.setContentOffset(offset, animated: false)
     }

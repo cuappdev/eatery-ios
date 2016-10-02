@@ -12,18 +12,17 @@ import SwiftyJSON
 import UIKit
 
 enum EateryStatus {
-    case Open(String)
-    case Closed(String)
+    case open(String)
+    case closed(String)
 }
 
-private let ShortDateFormatter: NSDateFormatter = {
-    let formatter = NSDateFormatter()
+private let ShortDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
     formatter.dateFormat = "h:mma"
     return formatter
 }()
-
-private let kEateryNicknames = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("nicknames", withExtension: "json")!) ?? NSData()).dictionaryValue
-private let kEateryLocations = JSON(data: NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("locations", withExtension: "json")!) ?? NSData()).dictionaryValue
+private let kEateryNicknames = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
+private let kEateryLocations = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "locations", withExtension: "json")!)).dictionaryValue
 
 extension Eatery {
     /// Preview Image of the eatery such as a logo
@@ -64,28 +63,28 @@ extension Eatery {
     //!TODO: Maybe cache this value? I don't think this is too expensive
     var favorite: Bool {
         get {
-            let ar = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+            let ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
             return ar.contains {
                 $0 == slug
             }
         }
         
         set {
-            var ar = NSUserDefaults.standardUserDefaults().stringArrayForKey("favorites") ?? []
+            var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
             let contains = self.favorite
             if (newValue && !contains) {
                 ar.append(self.slug)
             } else if (!newValue && contains) {
-                let idx = ar.indexOf {
+                let idx = ar.index {
                     $0 == slug
                 }
                 
                 if let idx = idx {
-                    ar.removeAtIndex(idx)
+                    ar.remove(at: idx)
                 }
             }
             
-            NSUserDefaults.standardUserDefaults().setObject(ar, forKey: "favorites");
+            UserDefaults.standard.set(ar, forKey: "favorites");
         }
     }
     
@@ -100,48 +99,48 @@ extension Eatery {
     // Bool value is either stable or about to change
     func generateDescriptionOfCurrentState() -> EateryStatus {
         if isOpenToday() {
-            guard let activeEvent = activeEventForDate(NSDate()) else { return .Closed("Closed") }
-            if activeEvent.occurringOnDate(NSDate()) {
+            guard let activeEvent = activeEventForDate(Date()) else { return .closed("Closed") }
+            if activeEvent.occurringOnDate(Date()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
-                    return .Open("Closing in \(minutesTillClose+1)m")
+                    return .open("Closing in \(minutesTillClose+1)m")
                 } else {
-                    let timeString = ShortDateFormatter.stringFromDate(activeEvent.endDate)
-                    return .Open("Closes at \(timeString)")
+                    let timeString = ShortDateFormatter.string(from: activeEvent.endDate)
+                    return .open("Closes at \(timeString)")
                 }
             } else {
                 let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                 if minutesTillOpen < 60 {
-                    return .Closed("Opens in \(minutesTillOpen+1)m")
+                    return .closed("Opens in \(minutesTillOpen+1)m")
                 } else {
-                    let timeString = ShortDateFormatter.stringFromDate(activeEvent.startDate)
-                    return .Closed("Opens at \(timeString)")
+                    let timeString = ShortDateFormatter.string(from: activeEvent.startDate)
+                    return .closed("Opens at \(timeString)")
                 }
             }
         } else {
-            return .Closed("Closed")
+            return .closed("Closed")
         }
     }
     
     // Retrieves a string list of the hours of operation for a day/time
-    func activeEventsForDate(date: NSDate) -> String {
+    func activeEventsForDate(date: Date) -> String {
         var resultString = "Closed"
         
         let events = eventsOnDate(date)
         if events.count > 0 {
             let eventsArray = events.map { $0.1 }
-            let sortedEventsArray = eventsArray.sort {
-                $0.startDate.compare($1.startDate) == .OrderedAscending
+            let sortedEventsArray = eventsArray.sorted {
+                $0.startDate.compare($1.startDate) == .orderedAscending
             }
             
-            var mergedTimes = [(NSDate, NSDate)]()
-            var currentTime: (NSDate, NSDate)?
+            var mergedTimes = [(Date, Date)]()
+            var currentTime: (Date, Date)?
             for time in sortedEventsArray {
                 if currentTime == nil {
                     currentTime = (time.startDate, time.endDate)
                     continue
                 }
-                if currentTime!.1.compare(time.startDate) == .OrderedSame {
+                if currentTime!.1.compare(time.startDate) == .orderedSame {
                     currentTime = (currentTime!.0, time.endDate)
                 } else {
                     mergedTimes.append(currentTime!)
@@ -156,7 +155,7 @@ extension Eatery {
             resultString = ""
             for (start, end) in mergedTimes {
                 if resultString != "" { resultString += ", " }
-                resultString += dateConverter(start, date2: end)
+                resultString += dateConverter(date1: start, date2: end)
             }
         }
         

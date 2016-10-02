@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol EateryMenuCellDelegate {
-    optional func didTapShareMenuButton(cell: EateryMenuTableViewCell?)
+    @objc optional func didTapShareMenuButton(_ cell: EateryMenuTableViewCell?)
 }
 
 class EateryMenuTableViewCell: UITableViewCell {
@@ -23,11 +23,11 @@ class EateryMenuTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        selectionStyle = .None
-        contentView.backgroundColor = .lightGray()
+        selectionStyle = .none
+        contentView.backgroundColor = .lightGray
     }
     
-    @IBAction func didTapShareMenuButton(sender: UIButton) {
+    @IBAction func didTapShareMenuButton(_ sender: UIButton) {
         delegate?.didTapShareMenuButton!(self)
     }
 }
