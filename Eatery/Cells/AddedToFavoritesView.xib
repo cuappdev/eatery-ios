@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,19 +13,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added To Your" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oaO-pM-vIb">
-                    <rect key="frame" x="26" y="85" width="148" height="30.5"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="22"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xpu-Rz-H16">
-                    <rect key="frame" x="54" y="117" width="92" height="30.5"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="22"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goldStar" translatesAutoresizingMaskIntoConstraints="NO" id="cfk-3V-OXQ">
-                    <rect key="frame" x="86" y="48" width="28" height="27"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="Jbp-vE-c5X"/>
                         <constraint firstAttribute="width" secondItem="cfk-3V-OXQ" secondAttribute="height" multiplier="28:27" id="fDc-Sp-EiS"/>
@@ -38,7 +35,7 @@
                     </variation>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.33725490196078434" green="0.62352941176470589" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.33725490196078434" green="0.62352941176470589" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Xpu-Rz-H16" firstAttribute="top" secondItem="oaO-pM-vIb" secondAttribute="bottom" constant="2" id="1kO-wX-KTg"/>
                 <constraint firstItem="cfk-3V-OXQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-30" id="715-U9-OCC"/>
