@@ -84,15 +84,26 @@
            },
            "operatingHours": [
                 {
-                    "weekday": "monday-friday",
+                    "weekday": "monday-thursday",
                     "events": [
                          {
-                             "descr": "Lunch",
-                             "start": "10:30am",
-                             "end": "2:30pm",
+                             "descr": "General",
+                             "start": "7:30am",
+                             "end": "7:30pm",
                              "menu": []
                          }
                      ]
+                },
+                {
+                    "weekday": "friday",
+                    "events": [
+                         {
+                             "descr": "General",
+                             "start": "7:30am",
+                             "end": "2:30pm",
+                             "menu": []
+                         }
+                    ]
                 }
             ],
            "payMethods" : [
@@ -547,7 +558,7 @@
                              "end": "1:00pm",
                              "menu": []
                          }
-                        ]
+                     ]
                 }
             ],
            "payMethods" : [
@@ -596,121 +607,6 @@
                     {
                         "item": "Salad Bar",
                         "healthy": true
-                    }
-            ]
-        },
-        {
-           "slug": "Frannys",
-           "external" : true,
-           "name": "Franny's",
-           "nameshort": "Frannys",
-           "about" : "",
-           "cornellDining": false,
-           "contactPhone": "1-607-255-0293",
-           "latitude": 42.451060,
-           "longitude": -76.483995,
-           "campusArea": {
-               "descr": "Central Campus",
-               "descrshort": "Central"
-           },
-           "operatingHours": [
-                {
-                    "weekday": "monday-thursday",
-                    "events": [
-                         {
-                             "descr": "General",
-                             "start": "11:30am",
-                             "end": "7:00pm",
-                             "menu": []
-                         }
-                     ]
-                },
-                {
-                    "weekday": "friday",
-                    "events": [
-                         {
-                             "descr": "General",
-                             "start": "11:30am",
-                             "end": "4:00pm",
-                             "menu": []
-                         }
-                        ]
-                }
-            ],
-           "payMethods" : [
-                {
-                    "descr": "Cash",
-                    "descrshort": "Cash"
-                },
-                {
-                    "descr": "Major Credit Cards (VISA, MasterCard, AMEX)",
-                    "descrshort": "Major Credit Cards"
-                }
-            ],
-            "diningItems": [
-                    {
-                        "item": "Noodle Bowl",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Korean Rice Bowl",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Sprouts & Kale Salad",
-                        "healthy": true
-                    },
-                    {
-                        "item": "Dosa-Dilla",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Korean Bulgogi Taco",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Char Siu Bao",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Pork Bánh Mi",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Veggie Bánh Mi",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Pork Dumplings",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Summer Roll",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Soup of the Day",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Vietnamese iced coffee",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Horchata",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Hibiscus aqua fresca",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Tropical coconut tapioca",
-                        "healthy": false
-                    },
-                    {
-                        "item": "Coconut mango lassi",
-                        "healthy": false
                     }
             ]
         }
