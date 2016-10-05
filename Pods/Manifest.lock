@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.0.0)
+  - Alamofire (4.0.1)
   - Analytics/Core-iOS (2.0.17):
     - TRVSDictionaryWithCaseInsensitivity (= 0.0.2)
   - Analytics/Segmentio (2.0.17):
@@ -36,7 +36,7 @@ CHECKOUT OPTIONS:
     :commit: 8fc92769b7c895e458caee7381291e290e878f2c
     :git: https://github.com/dantheli/DGElasticPullToRefresh.git
   DiningStack:
-    :commit: 1fb738bbfa53e11c1fb9dcbafe941568e4e28ba3
+    :commit: 6fb1fdad419ba93b504bd5db9dbcdb82061af1e0
     :git: https://github.com/cuappdev/DiningStack.git
   HanekeSwift:
     :commit: 3fb394f3769303685c9e0e692c9065e6a037b30a
@@ -46,7 +46,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/IBM-swift/swiftyjson.git
 
 SPEC CHECKSUMS:
-  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Analytics: 51d6163cb568c8ede69f2b92ef4779d91e1524e2
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad

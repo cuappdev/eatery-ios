@@ -72,7 +72,7 @@ class MenuImages: NSObject {
             headerLabel.attributedText = headerString
             headerLabel.textAlignment = .left
             headerLabel.font = condensedCategoryFont
-            headerLabel.textColor = .lightGray
+            headerLabel.textColor = .darkGray
             
             // Create item list for category
             let itemTextView = UITextView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: width * 3))
@@ -128,8 +128,8 @@ class MenuImages: NSObject {
         if let context = UIGraphicsGetCurrentContext() {
             completeMenuView.layer.render(in: context)
             menuImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
         }
+        UIGraphicsEndImageContext()
         
         return menuImage
     }

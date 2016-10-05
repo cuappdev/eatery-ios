@@ -209,7 +209,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         default: break
         }
         
-        if expandedCells[(indexPath as NSIndexPath).row] == 0 {
+        if expandedCells[indexPath.row] == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryHeaderCell") as! EateryHeaderTableViewCell
             cell.delegate = self
             cell.isExpanded = false
@@ -226,8 +226,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .closedRed : .openGreen
             cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
             
-            if (indexPath as NSIndexPath).row != (expandedCells.count - 1) {
-                cell.isExpanded = (expandedCells[(indexPath as NSIndexPath).row + 1] == 0) ? false : true
+            if indexPath.row != (expandedCells.count - 1) {
+                cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
             }
             
             return cell
