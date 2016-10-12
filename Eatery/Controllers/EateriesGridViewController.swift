@@ -138,7 +138,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.addSubview(transparencyButton)
         
         //beginning configurations
-        highlightCurrentSortOption(sortButtons[0])
+        highlightCurrentSortOption(sortButtons[Eatery.Sorting.values.index(of: sortType)!])
         sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         UIApplication.shared.keyWindow?.addSubview(sortView)
         
