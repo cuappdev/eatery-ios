@@ -94,7 +94,7 @@ class BRBConnectionHandler: WKWebView {
         getHTML { (html: NSString) -> () in
             self.accountBalance = AccountBalance()
             let brbHTMLRegex = "<td class=\\\"first-child account_name\\\">BRB Big Red Bucks.*<\\/td><td class=\\\"last-child balance\">\\$[0-9]+.[0-9][0-9]<\\/td>"
-            let swipesHTMLRegex = "<td class=\\\"first-child account_name\\\">A0.*<\\/td><td class=\\\"last-child balance\">[1-9]*[0-9]<\\/td>"
+            let swipesHTMLRegex = "<td class=\\\"first-child account_name\\\">.*0.*<\\/td><td class=\\\"last-child balance\">[1-9]*[0-9]<\\/td>"
             let moneyRegex = "[0-9]+(\\.)*[0-9][0-9]"
             let swipesRegex = ">[1-9]*[0-9]<"
             if self.stage == .fundsHome {
