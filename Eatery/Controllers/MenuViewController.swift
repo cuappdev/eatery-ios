@@ -79,7 +79,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         menuHeaderView.delegate = self
         
         menuHeaderView.mapButtonPressed = { [unowned self] in
-            let mapVC = MapViewController(eatery: self.eatery)
+            let mapVC = MapViewController(eateries: [self.eatery])
             self.presentVCWithFadeInAnimation(mapVC, duration: 0.3)
             Analytics.trackLocationButtonPressed(eateryId: self.eatery.slug)
         }

@@ -13,17 +13,16 @@ import DiningStack
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    let eatery: Eatery
+    let eateries: [Eatery]
     let mapView: MKMapView
     var locationManager: CLLocationManager!
-    var userLocation: CLLocationCoordinate2D!
-    var eateryAnnotation: MKPointAnnotation!
+    
     let removalButton = UIButton()
     let arrowButton = UIButton()
     let pinButton = UIButton()
     
-    init(eatery: Eatery) {
-        self.eatery = eatery
+    init(eateries allEateries: [Eatery]) {
+        self.eateries = allEateries
         let bounds = UIScreen.main.bounds
         self.mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
         super.init(nibName: nil, bundle: nil)
@@ -53,7 +52,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: break
             }
         }
-        
+
         // Set up map view
         mapView.delegate = self
         mapEatery()
@@ -62,21 +61,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    func mapEatery() {
-        let annotationTitle = eatery.address
-        eateryAnnotation = MKPointAnnotation()
-        eateryAnnotation.coordinate = eatery.location.coordinate
-        eateryAnnotation.title = annotationTitle
-        mapView.addAnnotation(eateryAnnotation)
-        mapView.selectAnnotation(eateryAnnotation, animated: true)
-        mapView.setRegion(MKCoordinateRegionMake(eatery.location.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
+
+    func mapEatery()
+    {
+        for eatery in eateries
+        {
+            let annotationTitle = eatery.address
+            let eateryAnnotation = MKPointAnnotation()
+            eateryAnnotation.coordinate = eatery.location.coordinate
+            eateryAnnotation.title = annotationTitle
+            mapView.addAnnotation(eateryAnnotation)
+            mapView.selectAnnotation(eateryAnnotation, animated: true)
+            mapView.setRegion(MKCoordinateRegionMake(eatery.location.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
+        }
+        
         mapView.alpha = 0.0
         view.addSubview(mapView)
         UIView.animate(withDuration: 0.2, animations: {
             self.mapView.alpha = 1.0
-        }) 
-        
+        })
+
         createMapButtons()
     }
     
@@ -108,15 +112,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pinButton.removeFromSuperview()
         dismissVCWithFadeOutAnimation(0.3)
     }
-    
+
     func arrowButtonPressed(_ sender: UIButton) {
         let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
         mapView.setRegion(region, animated: true)
     }
     
     func pinButtonPressed(_ sender: UIButton) {
-        let region = MKCoordinateRegion(center: eateryAnnotation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
-        mapView.selectAnnotation(eateryAnnotation, animated: true)
+        let region = MKCoordinateRegion(center: mapView.annotations.first!.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
+        mapView.selectAnnotation(mapView.annotations.first!, animated: true)
         mapView.setRegion(region, animated: true)
     }
     
