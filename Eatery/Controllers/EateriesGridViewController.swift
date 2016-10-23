@@ -49,6 +49,9 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Eateries"
+        
         sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .campus
         nearestLocationPressed()
         
@@ -528,10 +531,6 @@ extension EateriesGridViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.text?.lowercased() == "brb" {
-            navigationController?.pushViewController(BRBViewController(), animated: true)
-            return
-        }
         processEateries()
         collectionView.reloadData()
         searchBar.setShowsCancelButton(false, animated: true)

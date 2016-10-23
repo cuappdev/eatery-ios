@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let slackUsername = "Keeper of All Your Base"
   
     //view controllers
-    var eatNow: EateriesGridViewController!
+    var tabBarController: UITabBarController!
+    var eateriesGridViewController: EateriesGridViewController!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -40,13 +41,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         
         // Set up view controllers
-        eatNow = EateriesGridViewController()
-        eatNow.title = "Eateries"
-      
-        let eatNavController = UINavigationController(rootViewController: eatNow)
-        eatNavController.navigationBar.barStyle = .black
+        tabBarController = UITabBarController()
         
-        window?.rootViewController = eatNavController
+        eateriesGridViewController = EateriesGridViewController()
+        
+        let eateryNavigationController = UINavigationController(rootViewController: eateriesGridViewController)
+        eateryNavigationController.navigationBar.barStyle = .black
+        eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: nil, tag: 0)
+        
+        let brbController = BRBViewController()
+        brbController.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 1)
+        tabBarController.setViewControllers([eateryNavigationController, brbController], animated: true)
+        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
         let statusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 20.0))
@@ -114,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
     @available(iOS 9.0, *)
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eatNow.preselectedSlug = shortcutItem.type
+        eateriesGridViewController.preselectedSlug = shortcutItem.type
         return true
     }
   
