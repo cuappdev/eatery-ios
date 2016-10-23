@@ -28,7 +28,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     fileprivate var isDropDownDisplayed = false
     
     fileprivate var searchBar: UISearchBar!
-    fileprivate var sortType = Eatery.Sorting.Campus
+    fileprivate var sortType: Eatery.Sorting = .campus
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     fileprivate let defaults = UserDefaults.standard
@@ -49,7 +49,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .Campus
+        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .campus
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
@@ -297,7 +297,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
                     appendSearchItem(item)
                 }
                 
-                if let activeEvent = eatery.activeEventForDate(NSDate() as Date) {
+                if let activeEvent = eatery.activeEventForDate(Date()) {
                     for item in activeEvent.getMenuIterable().flatMap({ $0.1 }) {
                         appendSearchItem(item)
                     }
@@ -315,7 +315,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         }
         
         eateryData["Favorites"] = desiredEateries.filter { $0.favorite }
-        if sortType == .Campus {
+        if sortType == .campus {
             eateryData["North"] = desiredEateries.filter { $0.area == .North }
             eateryData["West"] = desiredEateries.filter { $0.area == .West }
             eateryData["Central"] = desiredEateries.filter { $0.area == .Central }
@@ -324,14 +324,14 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             eateryData["West"] = Sort.sortEateriesByOpenOrAlph(eateryData["West"]!, location: userLocation, sortingType: .alphabetically)
             eateryData["Central"] = Sort.sortEateriesByOpenOrAlph(eateryData["Central"]!, location: userLocation, sortingType: .alphabetically)
             
-        } else if sortType == .Open {
+        } else if sortType == .open {
             eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }
             eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow()}
             eateryData["Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Open"]!, location: userLocation)
             eateryData["Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Closed"]!, location: userLocation)
-        } else if sortType == .Alphabetically {
+        } else if sortType == .alphabetically {
             eateryData["All Eateries"] = desiredEateries.sorted { $0.nickname < $1.nickname }
-        } else if sortType == .PaymentType {
+        } else if sortType == .paymentType {
             eateryData["Swipes"] = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
             eateryData["BRB"] = desiredEateries.filter { $0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
             eateryData["Cash"] = desiredEateries.filter { $0.paymentMethods.contains(.Cash) && !$0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
