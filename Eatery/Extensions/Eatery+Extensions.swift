@@ -37,21 +37,21 @@ extension Eatery {
     
     /// Option to sort by campus or by open time
     enum Sorting: String {
-        case Alphabetically = "Alphabetically"
-        case Campus = "Campus"
-        case Location = "Location"
-        case Open = "Open & Closed"
-        case PaymentType = "Payment Type"
+        case alphabetically = "Alphabetically"
+        case campus = "Campus"
+        case location = "Location"
+        case open = "Open & Closed"
+        case paymentType = "Payment Type"
         
-        static let values = [Alphabetically, Campus, Location, Open, PaymentType]
+        static let values = [alphabetically, campus, location, open, paymentType]
         
         var names: [String] {
             switch self {
-            case .Alphabetically: return ["All Eateries"]
-            case .Campus: return ["Central", "West", "North"]
-            case .Location: return ["Nearest and Open", "Nearest and Closed"]
-            case .Open: return ["Open", "Closed"]
-            case .PaymentType: return ["Swipes", "BRB", "Cash"]
+            case .alphabetically: return ["All Eateries"]
+            case .campus: return ["Central", "West", "North"]
+            case .location: return ["Nearest and Open", "Nearest and Closed"]
+            case .open: return ["Open", "Closed"]
+            case .paymentType: return ["Swipes", "BRB", "Cash"]
             }
         }
         
