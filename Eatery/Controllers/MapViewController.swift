@@ -13,7 +13,7 @@ import DiningStack
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    let eateries: [Eatery]
+    var eateries: [Eatery]
     let mapView: MKMapView
     var locationManager: CLLocationManager!
     
@@ -55,15 +55,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
         // Set up map view
         mapView.delegate = self
-        mapEatery()
+        mapEateries(self.eateries)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    func mapEatery()
+    func mapEateries(_ eateries: [Eatery])
     {
+        if self.eateries.count == 0 {
+            self.eateries = eateries
+        }
+        
         for eatery in eateries
         {
             let annotationTitle = eatery.address

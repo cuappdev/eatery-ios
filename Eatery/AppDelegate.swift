@@ -49,9 +49,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         eateryNavigationController.navigationBar.barStyle = .black
         eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: nil, tag: 0)
         
+        let mapViewController = MapViewController(eateries: DATA.eateries)
+
+        DATA.fetchEateries(true) { _ in
+            DispatchQueue.main.async {
+                mapViewController.mapEateries(DATA.eateries)
+            }
+        }
+
+        mapViewController.tabBarItem = UITabBarItem(title: "Nearby", image: nil, tag: 1)
+
         let brbController = BRBViewController()
-        brbController.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 1)
-        tabBarController.setViewControllers([eateryNavigationController, brbController], animated: true)
+        brbController.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 2)
+        tabBarController.setViewControllers([eateryNavigationController, mapViewController, brbController], animated: true)
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
