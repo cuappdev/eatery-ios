@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up view controllers
         tabBarController = UITabBarController()
+        tabBarController.tabBar.isTranslucent = false
         
         eateriesGridViewController = EateriesGridViewController()
         
@@ -51,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let brbController = BRBViewController()
         brbController.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 1)
-        tabBarController.setViewControllers([eateryNavigationController, brbController], animated: true)
+        tabBarController.setViewControllers([eateryNavigationController, brbController], animated: false)
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

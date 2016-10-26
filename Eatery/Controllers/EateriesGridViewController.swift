@@ -62,8 +62,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         navigationController?.navigationBar.clipsToBounds = true
 
         setupCollectionView()
-        extendedLayoutIncludesOpaqueBars = true
-        automaticallyAdjustsScrollViewInsets = false
 
         let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
@@ -90,7 +88,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
         searchBar.delegate = self
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = "Search Eateries and menus"
         searchBar.searchBarStyle = .minimal
         searchBar.autocapitalizationType = .none
         collectionView.addObserver(self, forKeyPath: "contentOffset", options: [.new], context: nil)
@@ -184,14 +182,13 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
     func setupCollectionView() {
         let layout = UIScreen.isNarrowScreen() ? EateriesCollectionViewTableLayout() : EateriesCollectionViewGridLayout()
-        collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)), collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         definesPresentationContext = true
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        collectionView.contentInset = UIEdgeInsets(top: navigationController!.navigationBar.frame.maxY, left: 0, bottom: 0, right: 0)
         collectionView.contentOffset = CGPoint(x: 0, y: -20)
         collectionView.showsVerticalScrollIndicator = false
     }
@@ -580,6 +577,7 @@ extension EateriesGridViewController: UISearchBarDelegate {
 }
 
 extension EateriesGridViewController: UIScrollViewDelegate {
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
@@ -594,14 +592,12 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     }
     
     func scrollSearchBar(_ scrollView: UIScrollView) {
-        if let barBottomY = navigationController?.navigationBar.frame.maxY {
-            let searchBarMiddleY = searchBar.frame.midY
-            if searchBar.frame.contains(CGPoint(x: 0, y: barBottomY)) {
-                if barBottomY < searchBarMiddleY {
-                    scrollView.setContentOffset(CGPoint(x: 0, y: -64.0), animated: true)
-                } else {
-                    scrollView.setContentOffset(CGPoint(x: 0, y: -64.0 + searchBar.frame.height), animated: true)
-                }
+        let searchBarMiddleY = searchBar.bounds.midY
+        if searchBar.bounds.contains(CGPoint(x: 0, y: scrollView.contentOffset.y)) {
+            if scrollView.contentOffset.y < searchBarMiddleY {
+                scrollView.setContentOffset(CGPoint.zero, animated: true)
+            } else {
+                scrollView.setContentOffset(CGPoint(x: 0, y: searchBar.frame.height), animated: true)
             }
         }
     }

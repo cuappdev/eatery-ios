@@ -26,7 +26,7 @@ class EateriesInterfaceController: WKInterfaceController {
     var curSortingOption = SortingOption.OpenAndAlphabetical
     
     @IBAction func refreshMenuItem() {
-        getEateries()
+        configureTable()
     }
     
     @IBAction func sortMenuItem() {
