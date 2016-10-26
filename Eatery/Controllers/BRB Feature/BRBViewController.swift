@@ -40,6 +40,13 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
             loginView.delegate = self
             view.addSubview(loginView)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    func viewTapped() {
+        view.endEditing(true)
     }
     
     func userClickedProfileButton() {
