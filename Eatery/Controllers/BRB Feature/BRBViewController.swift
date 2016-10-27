@@ -19,6 +19,10 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.clipsToBounds = true
+
         title = "BRB"
         
         let settingsIcon = UIBarButtonItem(image: UIImage(named: "profileIcon.png"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
@@ -43,8 +47,22 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tapGesture)
+        
+        //add netid + password from keychain
+        let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
+        loginView.netidTextField.text = keychainItemWrapper["Netid"] as! String?
+        loginView.passwordTextField.text = keychainItemWrapper["Password"] as! String?
+        if (loginView.netidTextField.text != nil && loginView.passwordTextField.text != nil)
+        {
+            loginView.login()
+        }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle
+    {
+        return .lightContent
+    }
+
     func viewTapped() {
         view.endEditing(true)
     }
@@ -126,6 +144,12 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     func finishedLogin() {
         print("<<<<<<<FINISHED LOGIN>>>>>>>>")
         loggedIn = true
+        
+        //add netid + password to keychain
+        let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
+        keychainItemWrapper["Netid"] = loginView.netidTextField.text! as AnyObject?
+        keychainItemWrapper["Password"] = loginView.passwordTextField.text! as AnyObject?
+
         if loginView != nil {
             loginView.removeFromSuperview()
             loginView = nil

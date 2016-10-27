@@ -23,9 +23,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
-        let bounds = UIScreen.main.bounds
-        self.mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
+        self.mapView = MKMapView()
         super.init(nibName: nil, bundle: nil)
+        
+        mapView.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,6 +35,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.clipsToBounds = true
+
+        view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
+        mapView.frame = view.bounds
         
         // Set up location manager
         locationManager = CLLocationManager()
@@ -52,12 +60,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: break
             }
         }
-
-        // Set up map view
-        mapView.delegate = self
-        mapEateries(self.eateries)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle
+    {
+        return .lightContent
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -76,9 +85,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             eateryAnnotation.title = annotationTitle
             mapView.addAnnotation(eateryAnnotation)
             mapView.selectAnnotation(eateryAnnotation, animated: true)
-            mapView.setRegion(MKCoordinateRegionMake(eatery.location.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
         }
-        
+
         mapView.alpha = 0.0
         view.addSubview(mapView)
         UIView.animate(withDuration: 0.2, animations: {
@@ -86,6 +94,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         })
 
         createMapButtons()
+        
+        mapView.setRegion(MKCoordinateRegionMake(locationManager.location!.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
     }
     
     // MARK: - Button Methods

@@ -51,18 +51,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: nil, tag: 0)
         
         let mapViewController = MapViewController(eateries: DATA.eateries)
-
         DATA.fetchEateries(true) { _ in
             DispatchQueue.main.async {
                 mapViewController.mapEateries(DATA.eateries)
             }
         }
-
-        mapViewController.tabBarItem = UITabBarItem(title: "Nearby", image: nil, tag: 1)
+        let mapNavigation = UINavigationController(rootViewController: mapViewController)
+        mapNavigation.navigationBar.barStyle = .black
+        mapNavigation.tabBarItem = UITabBarItem(title: "Nearby", image: nil, tag: 1)
 
         let brbController = BRBViewController()
-        brbController.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 2)
-        tabBarController.setViewControllers([eateryNavigationController, mapViewController, brbController], animated: true)
+        let brbNavigation = UINavigationController(rootViewController: brbController)
+        brbNavigation.navigationBar.barStyle = .black
+        brbNavigation.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 2)
+        
+        tabBarController.setViewControllers([eateryNavigationController, mapNavigation, brbNavigation], animated: true)
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
