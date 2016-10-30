@@ -142,21 +142,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        if UserDefaults.standard.integer(forKey: "feedbackUseCount") >= 3 && !UserDefaults.standard.bool(forKey: "feedbackGiven") {
-            let alertController = UIAlertController(title: "We're currently improving Eatery!", message: "If there's an issue you want fixed or a feature you want made, please let us know.", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Send a message", style: .default) { Void in
-                let message = "Please describe what you want to see improved in Eatery:\n\n\n"
-                self.presentMailComposer(subject: "Eatery Feedback", message: message)
-            })
-            alertController.addAction(UIAlertAction(title: "No thanks!", style: .cancel, handler: nil))
-            present(alertController, animated: true, completion: nil)
-            UserDefaults.standard.set(true, forKey: "feedbackGiven")
-        }
-    }
-    
     func handleScroll(_ gesture: UIPanGestureRecognizer) {
         internalScrollHandler(gesture.translation(in: view), state: gesture.state, velocity: -gesture.velocity(in: view).y)
     }

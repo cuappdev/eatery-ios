@@ -94,9 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         Analytics.trackEnterForeground()
-        
-        let feedback = UserDefaults.standard.integer(forKey: "feedbackUseCount")
-        UserDefaults.standard.set(feedback + 1, forKey: "feedbackUseCount")
     }
   
     func applicationWillResignActive(_ application: UIApplication) {

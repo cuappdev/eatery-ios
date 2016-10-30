@@ -45,7 +45,7 @@ class MealTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "MealTableViewCell", bundle: nil), forCellReuseIdentifier: "MealCell")
         
         tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: 66.0)) // Tab Bar adjustment
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: 66.0))
         
         tableView.isScrollEnabled = false
     }
