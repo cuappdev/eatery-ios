@@ -61,13 +61,12 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         navigationController?.view.backgroundColor = .white
 
+        setupSearchBar()
         setupCollectionView()
 
         let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
         leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         navigationItem.leftBarButtonItem = leftBarButton
-        
-        view.addSubview(self.collectionView)
         
         // Check for 3D Touch availability
         if traitCollection.forceTouchCapability == .available {
@@ -77,13 +76,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         let rightBarButton = UIBarButtonItem(title: "Guide", style: .plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
         rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = rightBarButton
-        
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
-        searchBar.delegate = self
-        searchBar.placeholder = "Search eateries and menus"
-        searchBar.searchBarStyle = .minimal
-        searchBar.autocapitalizationType = .none
-        view.addSubview(searchBar)
         
         //sort menu
         let sortingOptions = Eatery.Sorting.values.map { "By \($0.rawValue)" }
@@ -135,7 +127,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         UIApplication.shared.keyWindow?.addSubview(sortView)
         
         loadData(force: false, completion: nil)
-        updateTimer = Timer.scheduledTimer(timeInterval: 6.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
+        updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -158,6 +150,15 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         Analytics.screenGuideViewController()
     }
     
+    func setupSearchBar() {
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        searchBar.delegate = self
+        searchBar.placeholder = "Search eateries and menus"
+        searchBar.searchBarStyle = .minimal
+        searchBar.autocapitalizationType = .none
+        view.addSubview(searchBar)
+    }
+    
     func setupCollectionView() {
         let layout = EateriesCollectionViewTableLayout()
         collectionView = UICollectionView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)), collectionViewLayout: layout)
@@ -166,8 +167,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         definesPresentationContext = true
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
-        collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
+        collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset.top = searchBar.frame.height
+        
+        view.insertSubview(collectionView, belowSubview: searchBar)
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -485,9 +489,6 @@ extension EateriesGridViewController: UICollectionViewDelegate {
 
 extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
-            return CGSize(width: 0, height: 80)
-        }
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
     }
 }
@@ -562,12 +563,16 @@ extension EateriesGridViewController: UISearchBarDelegate {
 extension EateriesGridViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y)
-        switch scrollView.contentOffset.y {
+        switch scrollView.contentOffset.y + searchBar.frame.height {
         case -CGFloat.greatestFiniteMagnitude...0.0:
             searchBar.frame.origin.y = 0.0
-        case 0.0...CGFloat.greatestFiniteMagnitude:
-            searchBar.frame.origin.y = -scrollView.contentOffset.y
+            collectionView.contentInset.top = searchBar.frame.height
+        case 0.0..<searchBar.frame.height:
+            collectionView.contentInset.top = -scrollView.contentOffset.y
+            searchBar.frame.origin.y = -scrollView.contentOffset.y - searchBar.frame.height
+        case searchBar.frame.height...CGFloat.greatestFiniteMagnitude:
+            searchBar.frame.origin.y = -searchBar.frame.height
+            collectionView.contentInset.top = 0.0
         default:
             break
         }
@@ -588,11 +593,11 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     
     func scrollSearchBar(_ scrollView: UIScrollView) {
         let searchBarMiddleY = searchBar.bounds.midY
-        if searchBar.bounds.contains(CGPoint(x: 0, y: scrollView.contentOffset.y)) {
-            if scrollView.contentOffset.y < searchBarMiddleY {
-                scrollView.setContentOffset(CGPoint.zero, animated: true)
+        if scrollView.contentOffset.y < 0.0 {
+            if scrollView.contentOffset.y + searchBar.frame.height < searchBarMiddleY {
+                scrollView.setContentOffset(CGPoint(x: 0.0, y: -searchBar.frame.height), animated: true)
             } else {
-                scrollView.setContentOffset(CGPoint(x: 0, y: searchBar.frame.height), animated: true)
+                scrollView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
             }
         }
     }

@@ -21,31 +21,9 @@ extension UIColor {
     class var eateryBlue: UIColor {
         return colorFromCode(0x4881BD)
     }
-//    
-//    class var facebookBlue: UIColor {
-//        return UIColor(red:0.23, green:0.35, blue:0.6, alpha:1)
-//    }
-//    class var carribeanGreen: UIColor {
-//        return UIColor(red:0.11, green:0.84, blue:0.56, alpha:1)
-//    }
-//    class var burntOrange: UIColor {
-//        return UIColor(red:0.86, green:0.43, blue:0.18, alpha:1)
-//    }
-//    
-//    class var groupmeBlue: UIColor {
-//        return UIColor(red:0.11, green:0.69, blue:0.93, alpha:1)
-//    }
     
-    class var cashGreen: UIColor {
-        return UIColor(red:0.51, green:0.82, blue:0.21, alpha:1.00)
-    }
-    
-    class var swipeBlue: UIColor {
-        return UIColor(red:0.31, green:0.57, blue:0.87, alpha:1.00)
-    }
-    
-    class var brbRed: UIColor {
-        return UIColor(red:0.99, green:0.46, blue:0.46, alpha:1.00)
+    class var collectionViewBackground: UIColor {
+        return UIColor(white: 0.93, alpha: 1)
     }
     
     class var separator: UIColor {
