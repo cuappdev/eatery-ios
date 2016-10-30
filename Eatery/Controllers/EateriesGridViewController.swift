@@ -63,10 +63,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
 
         setupSearchBar()
         setupCollectionView()
-
-//        let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
-//        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
-//        navigationItem.leftBarButtonItem = leftBarButton
         
         // Check for 3D Touch availability
         if traitCollection.forceTouchCapability == .available {
@@ -77,57 +73,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = rightBarButton
         
-        //sort menu
-        let sortingOptions = Eatery.Sorting.values.map { "By \($0.rawValue)" }
-        let sortOptionButtonHeight: CGFloat = UIScreen.main.bounds.height / 15
-        
-        let startingYpos = navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
-        let sortViewWidth = UIScreen.main.bounds.width / 2.0
-        let sortViewHeight = sortOptionButtonHeight * CGFloat(sortingOptions.count)
-
-        sortView = UIView(frame: CGRect(x: 0, y: startingYpos, width: sortViewWidth, height: sortViewHeight))
-        sortView.layer.cornerRadius = 8
-        sortView.clipsToBounds = true
-        
-        //create the option buttons
-        for (index, title) in sortingOptions.enumerated() {
-            let button = makeSortButton(title, index: index, sortOptionButtonHeight: sortOptionButtonHeight, sortView: sortView)
-            button.addTarget(self, action: #selector(sortingOptionsTapped(_:)), for: .touchUpInside)
-            sortButtons.append(button)
-            sortView.addSubview(button)
-        }
-        
-        sortView.alpha = 0
-        
-        //arrow for drop-down menu
-//        let arrowHeight = startingYpos / 9
-//        let arrowImageViewX = (leftBarButton.value(forKey: "view")! as AnyObject).frame.minX + (leftBarButton.value(forKey: "view")! as AnyObject).size.width / 2 - sortViewWidth / 24
-//        arrowImageView = UIImageView(frame: CGRect(x: arrowImageViewX, y: startingYpos - arrowHeight, width: sortViewWidth/12, height: arrowHeight))
-//        arrowImageView.image = UIImage(named: "arrow")
-//        setAnchorPoint(CGPoint(x: 0.5, y: 1.0), forView: arrowImageView)
-//        arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//        UIApplication.shared.keyWindow?.addSubview(arrowImageView)
-        
-        //make the drop-down menu open and close from the arrow
-//        if let view = leftBarButton.value(forKey: "view") as? UIView {
-//            let anchorPoint = CGPoint(x: view.frame.size.width / 2 / sortViewWidth, y: 0)
-//            setAnchorPoint(anchorPoint, forView: sortView)
-//        }
-       
-        //close drop-down menu when the user taps outside of it
-//        transparencyButton = UIButton(frame: view.bounds)
-//        transparencyButton.backgroundColor = .clear
-//        transparencyButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-//        transparencyButton.isHidden = true
-//        view.addSubview(transparencyButton)
-        
-        //beginning configurations
-//        highlightCurrentSortOption(sortButtons[Eatery.Sorting.values.index(of: sortType)!])
-//        sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//        UIApplication.shared.keyWindow?.addSubview(sortView)
-        
         loadData(force: false, completion: nil)
+        
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,6 +97,61 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     func goToLookAheadVC() {
         navigationController?.pushViewController(LookAheadViewController(), animated: true)
         Analytics.screenGuideViewController()
+    }
+    
+    func setupSort() {
+        let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
+        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        navigationItem.leftBarButtonItem = leftBarButton
+        
+        //sort menu
+        let sortingOptions = Eatery.Sorting.values.map { "By \($0.rawValue)" }
+        let sortOptionButtonHeight: CGFloat = UIScreen.main.bounds.height / 15
+        
+        let startingYpos = navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
+        let sortViewWidth = UIScreen.main.bounds.width / 2.0
+        let sortViewHeight = sortOptionButtonHeight * CGFloat(sortingOptions.count)
+        
+        sortView = UIView(frame: CGRect(x: 0, y: startingYpos, width: sortViewWidth, height: sortViewHeight))
+        sortView.layer.cornerRadius = 8
+        sortView.clipsToBounds = true
+        
+        //create the option buttons
+        for (index, title) in sortingOptions.enumerated() {
+            let button = makeSortButton(title, index: index, sortOptionButtonHeight: sortOptionButtonHeight, sortView: sortView)
+            button.addTarget(self, action: #selector(sortingOptionsTapped(_:)), for: .touchUpInside)
+            sortButtons.append(button)
+            sortView.addSubview(button)
+        }
+        
+        sortView.alpha = 0
+        
+        // arrow for drop-down menu
+        let arrowHeight = startingYpos / 9
+        let arrowImageViewX = (leftBarButton.value(forKey: "view")! as AnyObject).frame.minX + (leftBarButton.value(forKey: "view")! as AnyObject).size.width / 2 - sortViewWidth / 24
+        arrowImageView = UIImageView(frame: CGRect(x: arrowImageViewX, y: startingYpos - arrowHeight, width: sortViewWidth/12, height: arrowHeight))
+        arrowImageView.image = UIImage(named: "arrow")
+        setAnchorPoint(CGPoint(x: 0.5, y: 1.0), forView: arrowImageView)
+        arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIApplication.shared.keyWindow?.addSubview(arrowImageView)
+        
+        // make the drop-down menu open and close from the arrow
+        if let view = leftBarButton.value(forKey: "view") as? UIView {
+            let anchorPoint = CGPoint(x: view.frame.size.width / 2 / sortViewWidth, y: 0)
+            setAnchorPoint(anchorPoint, forView: sortView)
+        }
+        
+        // close drop-down menu when the user taps outside of it
+        transparencyButton = UIButton(frame: view.bounds)
+        transparencyButton.backgroundColor = .clear
+        transparencyButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        transparencyButton.isHidden = true
+        view.addSubview(transparencyButton)
+        
+        // beginning configurations
+        highlightCurrentSortOption(sortButtons[Eatery.Sorting.values.index(of: sortType)!])
+        sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIApplication.shared.keyWindow?.addSubview(sortView)
     }
     
     func setupSearchBar() {
@@ -459,11 +463,16 @@ extension EateriesGridViewController: UICollectionViewDataSource {
             if let favorites = eateryData["Favorites"], favorites.count > 0 {
                 if section == 0 {
                     sectionTitleHeaderView.titleLabel.text = "Favorites"
+                    sectionTitleHeaderView.titleLabel.textColor = UIColor.darkGray
                     return sectionTitleHeaderView
                 }
                 section -= 1
             }
+            
+            sectionTitleHeaderView.titleLabel.textColor = section == 0 ? UIColor.eateryBlue : UIColor.gray
+            
             sectionTitleHeaderView.titleLabel.text = sortType.names[section]
+            
             return sectionTitleHeaderView
         }
         return UICollectionReusableView()
