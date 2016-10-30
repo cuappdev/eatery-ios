@@ -136,13 +136,13 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.0, animations: {
-            self.arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        })
-        UIView.animate(withDuration: 0.0, animations: {
-            self.sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        }) 
-        isDropDownDisplayed = false
+//        UIView.animate(withDuration: 0.0, animations: {
+//            self.arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//        })
+//        UIView.animate(withDuration: 0.0, animations: {
+//            self.sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//        }) 
+//        isDropDownDisplayed = false
     }
     
     func goToLookAheadVC() {
