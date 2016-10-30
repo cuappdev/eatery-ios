@@ -33,7 +33,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         
         netidTextField = UITextField(frame: CGRect(x: 0, y: frame.height * 0.25, width: frame.width * 0.8, height: 40))
         passwordTextField = UITextField(frame: CGRect(x: 0, y: netidTextField.frame.origin.y + netidTextField.frame.height + 30, width: frame.width * 0.8, height: 40))
-        loginButton = UIButton(frame: CGRect(x: 0, y: passwordTextField.frame.origin.y + passwordTextField.frame.height + 40, width: 100, height: 75))
+        loginButton = UIButton(frame: CGRect(x: 0, y: passwordTextField.frame.origin.y + passwordTextField.frame.height + 40, width: 100, height: 50))
         infoLabel = UILabel(frame: CGRect(x: 0, y: netidTextField.frame.origin.y - 100, width: frame.width, height: 50))
         errorLabel = UILabel(frame: CGRect(x: 0, y: infoLabel.frame.origin.y + infoLabel.frame.height + 10, width: frame.width, height: 30))
         
@@ -50,7 +50,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         
         netidTextField.backgroundColor = UIColor.white.withAlphaComponent(0.9)
         passwordTextField.backgroundColor = UIColor.white.withAlphaComponent(0.9)
-        loginButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
+        loginButton.backgroundColor = .black
         
         infoLabel.text = "BRB Login"
         infoLabel.font = UIFont.systemFont(ofSize: 40)

@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate {
+class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate {
     
     var connectionHandler: BRBConnectionHandler!
     var loginView: BRBLoginView!
@@ -20,10 +20,8 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         super.viewDidLoad()
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.clipsToBounds = true
 
-        title = "BRB"
+        title = "Meal Plan"
         
         let settingsIcon = UIBarButtonItem(image: UIImage(named: "profileIcon.png"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
         
@@ -52,23 +50,21 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
         loginView.netidTextField.text = keychainItemWrapper["Netid"] as! String?
         loginView.passwordTextField.text = keychainItemWrapper["Password"] as! String?
-        if (loginView.netidTextField.text != nil && loginView.passwordTextField.text != nil)
+        if (loginView.netidTextField.text!.characters.count > 0 &&
+            loginView.passwordTextField.text!.characters.count > 0)
         {
             loginView.login()
         }
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle
-    {
-        return .lightContent
-    }
-
     func viewTapped() {
         view.endEditing(true)
     }
     
     func userClickedProfileButton() {
-        navigationController?.pushViewController(BRBAccountSettingsViewController(), animated: true)
+        let brbVc = BRBAccountSettingsViewController()
+        brbVc.delegate = self
+        navigationController?.pushViewController(brbVc, animated: true)
     }
 
     func timer(timer: Timer) {
@@ -84,9 +80,9 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         let brbString = NSMutableAttributedString(string: "$\(connectionHandler.accountBalance.brbs)")
-        brbString.addAttributes([NSFontAttributeName: UIFont(name: "DIN-Light", size: 50.0)!], range: NSRange(location: 0, length: 1))
-        brbString.addAttributes([NSFontAttributeName: UIFont(name: "DIN-Light", size: 50.0)!], range: NSRange(location: brbString.length - 3, length: 3))
-        brbString.addAttributes([NSFontAttributeName: UIFont(name: "DIN-Light", size: 80.0)!], range: NSRange(location: 1, length: brbString.length - 4))
+        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 50.0)], range: NSRange(location: 0, length: 1))
+        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 50.0)], range: NSRange(location: brbString.length - 3, length: 3))
+        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 80.0)], range: NSRange(location: 1, length: brbString.length - 4))
         
         let brbLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.15, width: view.frame.width, height: 120))
         brbLabel.textColor = UIColor.black.withAlphaComponent(0.8)
@@ -94,24 +90,24 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         brbLabel.textAlignment = NSTextAlignment.center
         view.addSubview(brbLabel)
         
-        let brbDescriptionLabel = UILabel(frame: CGRect(x: 0, y: brbLabel.frame.origin.y + 65, width: view.frame.width, height: 50))
+        let brbDescriptionLabel = UILabel(frame: CGRect(x: 0, y: brbLabel.frame.origin.y + 85, width: view.frame.width, height: 50))
         brbDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         brbDescriptionLabel.text = "Big Red Bucks"
-        brbDescriptionLabel.font = UIFont(name: "Avenir", size: 20)
+        brbDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
         brbDescriptionLabel.textAlignment = NSTextAlignment.center
         view.addSubview(brbDescriptionLabel)
         
         let swipesLabel = UILabel(frame: CGRect(x: 0, y: brbDescriptionLabel.frame.origin.y + brbDescriptionLabel.frame.height + 50, width: view.frame.width, height: 120))
-        swipesLabel.font = UIFont(name: "DIN-Light", size: 80)
+        swipesLabel.font = UIFont.systemFont(ofSize: 80.0)
         swipesLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         swipesLabel.text = "\(connectionHandler.accountBalance.swipes)"
         swipesLabel.textAlignment = NSTextAlignment.center
         view.addSubview(swipesLabel)
         
-        let swipesDescriptionLabel = UILabel(frame: CGRect(x: 0, y: swipesLabel.frame.origin.y + 65, width: view.frame.width, height: 50))
+        let swipesDescriptionLabel = UILabel(frame: CGRect(x: 0, y: swipesLabel.frame.origin.y + 85, width: view.frame.width, height: 50))
         swipesDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         swipesDescriptionLabel.text = "Swipes"
-        swipesDescriptionLabel.font = UIFont(name: "Avenir", size: 20)
+        swipesDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
         swipesDescriptionLabel.textAlignment = NSTextAlignment.center
         view.addSubview(swipesDescriptionLabel)
     }
@@ -133,7 +129,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
                     self.failedToLogin(error: "incorrect netid and/or password")
                 }
             } else if error!.localizedDescription.contains("JavaScript") {
-                print(error?.localizedDescription)
+                print(error!.localizedDescription)
             } else {
                 self.failedToLogin(error: error!.localizedDescription)
             }
@@ -175,6 +171,31 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         }
     }
     
+    func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController) {
+        connectionHandler = BRBConnectionHandler(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 0.5))
+        connectionHandler.alpha = 0.0
+        connectionHandler.navigationDelegate = self
+        view.addSubview(connectionHandler)
+
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        loginView = BRBLoginView(frame: view.bounds)
+        loginView.delegate = self
+        view.addSubview(loginView)
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
+    }
+    
+    func brbAccountSettingsSetShouldCacheAccount(brbAccountSettings: BRBAccountSettingsViewController, shouldCache: Bool)
+    {
+        
+    }
+    
+    func brbAccountSettingsSetShouldAutoLogin(brbAccountSettings: BRBAccountSettingsViewController, shouldAutoLogin: Bool)
+    {
+        
+    }
+    
+
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {
         connectionHandler.netid = netid
         connectionHandler.password = password

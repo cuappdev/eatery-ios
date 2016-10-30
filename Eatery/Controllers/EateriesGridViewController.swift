@@ -8,10 +8,9 @@
 
 import UIKit
 import DiningStack
-import DGElasticPullToRefresh
 import CoreLocation
 
-let kCollectionViewGutterWidth: CGFloat = 8
+let kCollectionViewGutterWidth: CGFloat = 10
 
 class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
@@ -28,7 +27,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     fileprivate var isDropDownDisplayed = false
     
     fileprivate var searchBar: UISearchBar!
-    fileprivate var sortType: Eatery.Sorting = .campus
+    fileprivate var sortType: Eatery.Sorting = .open
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     fileprivate let defaults = UserDefaults.standard
@@ -42,57 +41,68 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         let l = CLLocationManager()
         l.delegate = self
         l.desiredAccuracy = kCLLocationAccuracyBest
+        l.startUpdatingLocation()
         return l
     }()
-    fileprivate var userLocation: CLLocation = CLLocation()
+    fileprivate var userLocation: CLLocation?
     fileprivate var locationError = false
+    
+    fileprivate var updateTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Eateries"
         
-        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .campus
+        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Location")) ?? .location
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.clipsToBounds = true
 
+        setupSearchBar()
         setupCollectionView()
-
-        let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
-        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
-        navigationItem.leftBarButtonItem = leftBarButton
-        
-        view.addSubview(self.collectionView)
-        loadData(force: false, completion: nil)
         
         // Check for 3D Touch availability
-        if #available(iOS 9.0, *) {
-            if traitCollection.forceTouchCapability == .available {
-                registerForPreviewing(with: self, sourceView: view)
-            }
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: view)
         }
-        
-        // Add observer for user reentering app
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        
         // Set up bar look ahead VC
         let rightBarButton = UIBarButtonItem(title: "Guide", style: .plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
-        rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = rightBarButton
         
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
-        searchBar.delegate = self
-        searchBar.placeholder = "Search Eateries and menus"
-        searchBar.searchBarStyle = .minimal
-        searchBar.autocapitalizationType = .none
-        collectionView.addObserver(self, forKeyPath: "contentOffset", options: [.new], context: nil)
-        view.addSubview(searchBar)
+        loadData(force: false, completion: nil)
+        
+        updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startUserActivity()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+//        UIView.animate(withDuration: 0.0, animations: {
+//            self.arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//        })
+//        UIView.animate(withDuration: 0.0, animations: {
+//            self.sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//        }) 
+//        isDropDownDisplayed = false
+    }
+    
+    func goToLookAheadVC() {
+        navigationController?.pushViewController(LookAheadViewController(), animated: true)
+        Analytics.screenGuideViewController()
+    }
+    
+    func setupSort() {
+        let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
+        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        navigationItem.leftBarButtonItem = leftBarButton
         
         //sort menu
         let sortingOptions = Eatery.Sorting.values.map { "By \($0.rawValue)" }
@@ -101,7 +111,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         let startingYpos = navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
         let sortViewWidth = UIScreen.main.bounds.width / 2.0
         let sortViewHeight = sortOptionButtonHeight * CGFloat(sortingOptions.count)
-
+        
         sortView = UIView(frame: CGRect(x: 0, y: startingYpos, width: sortViewWidth, height: sortViewHeight))
         sortView.layer.cornerRadius = 8
         sortView.clipsToBounds = true
@@ -116,7 +126,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         sortView.alpha = 0
         
-        //arrow for drop-down menu
+        // arrow for drop-down menu
         let arrowHeight = startingYpos / 9
         let arrowImageViewX = (leftBarButton.value(forKey: "view")! as AnyObject).frame.minX + (leftBarButton.value(forKey: "view")! as AnyObject).size.width / 2 - sortViewWidth / 24
         arrowImageView = UIImageView(frame: CGRect(x: arrowImageViewX, y: startingYpos - arrowHeight, width: sortViewWidth/12, height: arrowHeight))
@@ -125,72 +135,47 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         UIApplication.shared.keyWindow?.addSubview(arrowImageView)
         
-        //make the drop-down menu open and close from the arrow
+        // make the drop-down menu open and close from the arrow
         if let view = leftBarButton.value(forKey: "view") as? UIView {
             let anchorPoint = CGPoint(x: view.frame.size.width / 2 / sortViewWidth, y: 0)
             setAnchorPoint(anchorPoint, forView: sortView)
         }
-       
-        //close drop-down menu when the user taps outside of it
+        
+        // close drop-down menu when the user taps outside of it
         transparencyButton = UIButton(frame: view.bounds)
         transparencyButton.backgroundColor = .clear
         transparencyButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         transparencyButton.isHidden = true
         view.addSubview(transparencyButton)
         
-        //beginning configurations
+        // beginning configurations
         highlightCurrentSortOption(sortButtons[Eatery.Sorting.values.index(of: sortType)!])
         sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         UIApplication.shared.keyWindow?.addSubview(sortView)
-        
-        // Pull To Refresh
-        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = .white
-        collectionView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-                Analytics.trackPullToRefresh()
-                self?.loadData(force: true) {
-                    self?.collectionView.dg_stopLoading()
-                }
-            }, loadingView: loadingView)
-        collectionView.dg_setPullToRefreshFillColor(.eateryBlue)
-        collectionView.dg_setPullToRefreshBackgroundColor(collectionView.backgroundColor!)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        startUserActivity()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.0, animations: {
-            self.arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        })
-        UIView.animate(withDuration: 0.0, animations: {
-            self.sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        }) 
-        isDropDownDisplayed = false
-    }
-    
-    func goToLookAheadVC() {
-        navigationController?.pushViewController(LookAheadViewController(), animated: true)
-        Analytics.screenGuideViewController()
-    }
-    
-    func applicationWillEnterForeground() {
-        loadData(force: false, completion: nil)
+    func setupSearchBar() {
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        searchBar.delegate = self
+        searchBar.placeholder = "Search eateries and menus"
+        searchBar.searchBarStyle = .minimal
+        searchBar.autocapitalizationType = .none
+        view.addSubview(searchBar)
     }
     
     func setupCollectionView() {
-        let layout = UIScreen.isNarrowScreen() ? EateriesCollectionViewTableLayout() : EateriesCollectionViewGridLayout()
+        let layout = EateriesCollectionViewTableLayout()
         collectionView = UICollectionView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)), collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         definesPresentationContext = true
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
-        collectionView.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        collectionView.contentOffset = CGPoint(x: 0, y: -20)
+        collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset.top = searchBar.frame.height
+        
+        view.insertSubview(collectionView, belowSubview: searchBar)
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -203,6 +188,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
                 self.pushPreselectedEatery()
             }
         }
+    }
+    
+    func updateTimerFired() {
+        processEateries()
+        collectionView.reloadData()
     }
   
     func pushPreselectedEatery() {
@@ -267,6 +257,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         highlightCurrentSortOption(sender)
         sortButtonTapped()
         defaults.set(sortType.rawValue, forKey: "sortOption")
+        defaults.synchronize()
         loadData(force: false, completion: nil)
     }
     
@@ -319,25 +310,34 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             eateryData["North"] = desiredEateries.filter { $0.area == .North }
             eateryData["West"] = desiredEateries.filter { $0.area == .West }
             eateryData["Central"] = desiredEateries.filter { $0.area == .Central }
+            
             //sortEateries
-            eateryData["North"] = Sort.sortEateriesByOpenOrAlph(eateryData["North"]!, location: userLocation, sortingType: .alphabetically)
-            eateryData["West"] = Sort.sortEateriesByOpenOrAlph(eateryData["West"]!, location: userLocation, sortingType: .alphabetically)
-            eateryData["Central"] = Sort.sortEateriesByOpenOrAlph(eateryData["Central"]!, location: userLocation, sortingType: .alphabetically)
+            if let location = userLocation {
+                eateryData["North"] = Sort.sortEateriesByOpenOrAlph(eateryData["North"]!, location: location, sortingType: .alphabetically)
+                eateryData["West"] = Sort.sortEateriesByOpenOrAlph(eateryData["West"]!, location: location, sortingType: .alphabetically)
+                eateryData["Central"] = Sort.sortEateriesByOpenOrAlph(eateryData["Central"]!, location: location, sortingType: .alphabetically)
+            }
             
         } else if sortType == .open {
             eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }
             eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow()}
-            eateryData["Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Open"]!, location: userLocation)
-            eateryData["Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Closed"]!, location: userLocation)
+            
+            if let location = userLocation {
+                eateryData["Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Open"]!, location: location, sortingType: .alphabetically)
+                eateryData["Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Closed"]!, location: location, sortingType: .alphabetically)
+            }
         } else if sortType == .alphabetically {
             eateryData["All Eateries"] = desiredEateries.sorted { $0.nickname < $1.nickname }
         } else if sortType == .paymentType {
             eateryData["Swipes"] = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
             eateryData["BRB"] = desiredEateries.filter { $0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
             eateryData["Cash"] = desiredEateries.filter { $0.paymentMethods.contains(.Cash) && !$0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
-            eateryData["Cash"] = Sort.sortEateriesByOpenOrAlph(eateryData["Cash"]!, location: userLocation, sortingType: .alphabetically)
-            eateryData["Swipes"] = Sort.sortEateriesByOpenOrAlph(eateryData["Swipes"]!, location: userLocation, sortingType: .alphabetically)
-            eateryData["BRB"] = Sort.sortEateriesByOpenOrAlph(eateryData["BRB"]!, location: userLocation, sortingType: .alphabetically)
+            
+            if let location = userLocation {
+                eateryData["Cash"] = Sort.sortEateriesByOpenOrAlph(eateryData["Cash"]!, location: location, sortingType: .alphabetically)
+                eateryData["Swipes"] = Sort.sortEateriesByOpenOrAlph(eateryData["Swipes"]!, location: location, sortingType: .alphabetically)
+                eateryData["BRB"] = Sort.sortEateriesByOpenOrAlph(eateryData["BRB"]!, location: location, sortingType: .alphabetically)
+            }
         } else { //sorted == .Location
             eateryData["Nearest and Open"] = desiredEateries.filter { $0.isOpenNow() }
             eateryData["Nearest and Closed"] = desiredEateries.filter { !$0.isOpenNow() }
@@ -348,8 +348,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
                     if locationError {
                         userLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
                     }
-                    eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, location: userLocation, sortingType: .location)
-                    eateryData["Nearest and Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, location: userLocation, sortingType: .location)
+                    
+                    if let location = userLocation {
+                        eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, location: location, sortingType: .location)
+                        eateryData["Nearest and Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, location: location, sortingType: .location)
+                    }
                  case .notDetermined:
                     //WE NEED TO PROMPT USER THAT THEY HAVE LOCATION TURNED OFF AND WE WILL USE DEFAULT OF OLIN LIBRARY
                     eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, sortingType: .location)
@@ -412,18 +415,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         userActivity?.becomeCurrent()
     }
     
-    // MARK: - Key Value Observering
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        let keyPath = keyPath ?? ""
-        if keyPath == "contentOffset" && object is UICollectionView {
-            searchBar.frame = CGRect(x: 0, y: -collectionView.contentOffset.y, width: searchBar.frame.width, height: searchBar.frame.height)
-        }
-    }
-    
-    deinit {
-        collectionView.removeObserver(self, forKeyPath: "contentOffset")
-    }
 }
 
 extension EateriesGridViewController: UICollectionViewDataSource {
@@ -447,25 +438,28 @@ extension EateriesGridViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
-        cell.setEatery(eatery)
+        cell.set(eatery: eatery, userLocation: userLocation)
         
-        cell.searchTextView.isUserInteractionEnabled = false
-        cell.searchTextView.textColor = UIColor.white
-        
-        var searchText = NSMutableAttributedString()
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
-                let attrStrings: [NSMutableAttributedString] = names.map {
-                    NSMutableAttributedString(string: $0, attributes: [NSForegroundColorAttributeName : UIColor.white])
+                let baseString = names.joined(separator: "\n")
+                let attributedString = NSMutableAttributedString(string: baseString, attributes: [NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : UIFont.systemFont(ofSize: 11.0)])
+                do {
+                    let regex = try NSRegularExpression(pattern: searchBar.text ?? "", options: NSRegularExpression.Options.caseInsensitive)
+                    for match in regex.matches(in: baseString, options: [], range: NSRange.init(location: 0, length: baseString.utf16.count)) {
+                        attributedString.addAttributes([NSForegroundColorAttributeName : UIColor.darkGray, NSFontAttributeName : UIFont.boldSystemFont(ofSize: 11.0)], range: match.range)
+                    }
+                } catch {
+                    NSLog("Error in handling regex")
                 }
-                cell.searchTextView.isHidden = false
-                searchText = NSMutableAttributedString(string: "\n").join(attrStrings)
+                cell.menuTextView.attributedText = attributedString
+                cell.menuTextViewHeight.constant = cell.frame.height - 54.0
+            } else {
+                cell.menuTextView.text = nil
+                cell.menuTextViewHeight.constant = 0.0
             }
-        }
-        if searchText != NSMutableAttributedString() {
-            cell.searchTextView.attributedText = searchText
         } else {
-            cell.searchTextView.isHidden = true
+            cell.menuTextViewHeight.constant = 0.0
         }
         
         return cell
@@ -480,11 +474,16 @@ extension EateriesGridViewController: UICollectionViewDataSource {
             if let favorites = eateryData["Favorites"], favorites.count > 0 {
                 if section == 0 {
                     sectionTitleHeaderView.titleLabel.text = "Favorites"
+                    sectionTitleHeaderView.titleLabel.textColor = UIColor.darkGray
                     return sectionTitleHeaderView
                 }
                 section -= 1
             }
+            
+            sectionTitleHeaderView.titleLabel.textColor = section == 0 ? UIColor.eateryBlue : UIColor.gray
+            
             sectionTitleHeaderView.titleLabel.text = sortType.names[section]
+            
             return sectionTitleHeaderView
         }
         return UICollectionReusableView()
@@ -504,9 +503,6 @@ extension EateriesGridViewController: UICollectionViewDelegate {
 
 extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
-            return CGSize(width: 0, height: 80)
-        }
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
     }
 }
@@ -514,7 +510,7 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
 extension EateriesGridViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if (searchBar.text ?? "") != "" {
+        if searchBar.text != "" {
             searchBar.setShowsCancelButton(true, animated: true)
         }
     }
@@ -566,7 +562,9 @@ extension EateriesGridViewController: UISearchBarDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last as CLLocation!
-        
+        for cell in collectionView.visibleCells.flatMap({ $0 as? EateryCollectionViewCell }) {
+            cell.update(userLocation: userLocation)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -577,6 +575,22 @@ extension EateriesGridViewController: UISearchBarDelegate {
 }
 
 extension EateriesGridViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switch scrollView.contentOffset.y + searchBar.frame.height {
+        case -CGFloat.greatestFiniteMagnitude...0.0:
+            searchBar.frame.origin.y = 0.0
+            collectionView.contentInset.top = searchBar.frame.height
+        case 0.0..<searchBar.frame.height:
+            collectionView.contentInset.top = -scrollView.contentOffset.y
+            searchBar.frame.origin.y = -scrollView.contentOffset.y - searchBar.frame.height
+        case searchBar.frame.height...CGFloat.greatestFiniteMagnitude:
+            searchBar.frame.origin.y = -searchBar.frame.height
+            collectionView.contentInset.top = 0.0
+        default:
+            break
+        }
+    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.setShowsCancelButton(false, animated: true)
@@ -593,11 +607,11 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     
     func scrollSearchBar(_ scrollView: UIScrollView) {
         let searchBarMiddleY = searchBar.bounds.midY
-        if searchBar.bounds.contains(CGPoint(x: 0, y: scrollView.contentOffset.y)) {
-            if scrollView.contentOffset.y < searchBarMiddleY {
-                scrollView.setContentOffset(CGPoint.zero, animated: true)
+        if scrollView.contentOffset.y < 0.0 && scrollView.contentOffset.y > -searchBar.frame.height {
+            if scrollView.contentOffset.y + searchBar.frame.height < searchBarMiddleY {
+                scrollView.setContentOffset(CGPoint(x: 0.0, y: -searchBar.frame.height), animated: true)
             } else {
-                scrollView.setContentOffset(CGPoint(x: 0, y: searchBar.frame.height), animated: true)
+                scrollView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
             }
         }
     }

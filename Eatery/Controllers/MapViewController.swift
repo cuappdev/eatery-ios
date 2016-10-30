@@ -5,19 +5,19 @@
 //  Created by Jesse Chen on 4/13/16.
 //  Copyright © 2016 CUAppDev. All rights reserved.
 //
-
 import UIKit
 import MapKit
 import CoreLocation
 import DiningStack
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
+{
     var eateries: [Eatery]
+    var queueCursor : Int = 0 // for close-by feature
+    var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
     
-    let removalButton = UIButton()
     let arrowButton = UIButton()
     let pinButton = UIButton()
     
@@ -27,23 +27,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.init(nibName: nil, bundle: nil)
         
         mapView.delegate = self
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.clipsToBounds = true
-
-        view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
-        mapView.frame = view.bounds
-        
-        // Set up location manager
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -61,52 +45,55 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
         }
     }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle
-    {
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "Nearby"
+        
+        view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
+        mapView.frame = view.bounds
+        view.addSubview(mapView)
+        
+        createMapButtons()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     func mapEateries(_ eateries: [Eatery])
     {
-        if self.eateries.count == 0 {
-            self.eateries = eateries
-        }
+        self.eateries = eateries
         
         for eatery in eateries
         {
-            let annotationTitle = eatery.address
+            let annotationTitle = eatery.nameShort
             let eateryAnnotation = MKPointAnnotation()
             eateryAnnotation.coordinate = eatery.location.coordinate
             eateryAnnotation.title = annotationTitle
+            eateryAnnotation.subtitle = eatery.isOpenNow() ? "open" : "closed"
             mapView.addAnnotation(eateryAnnotation)
-            mapView.selectAnnotation(eateryAnnotation, animated: true)
+            eateryAnnotations.append(eateryAnnotation)
         }
-
-        mapView.alpha = 0.0
-        view.addSubview(mapView)
-        UIView.animate(withDuration: 0.2, animations: {
-            self.mapView.alpha = 1.0
-        })
-
-        createMapButtons()
         
-        mapView.setRegion(MKCoordinateRegionMake(locationManager.location!.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate,
+                                        span: MKCoordinateSpanMake(0.006, 0.015))
+        mapView.setRegion(region, animated: false)
     }
     
     // MARK: - Button Methods
     
-    func createMapButtons() {
-        // Create top left removal button
-        removalButton.frame = CGRect(x: 15, y: 25, width: 30, height: 30)
-        removalButton.setImage(UIImage(named: "closeIcon"), for: UIControlState())
-        removalButton.addTarget(self, action: #selector(MapViewController.removalButtonPressed), for: .touchUpInside)
-        mapView.addSubview(removalButton)
-        
+    func createMapButtons()
+    {
         // Create bottom left arrow button
         arrowButton.frame = CGRect(x: 15, y: view.frame.size.height - 55, width: 30, height: 30)
         arrowButton.setImage(UIImage(named: "locationArrowIcon"), for: UIControlState())
@@ -120,25 +107,62 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.addSubview(pinButton)
     }
     
-    func removalButtonPressed(_ sender: UIButton) {
-        removalButton.removeFromSuperview()
-        arrowButton.removeFromSuperview()
-        pinButton.removeFromSuperview()
-        dismissVCWithFadeOutAnimation(0.3)
-    }
-
-    func arrowButtonPressed(_ sender: UIButton) {
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
-        mapView.setRegion(region, animated: true)
+    func arrowButtonPressed(_ sender: UIButton)
+    {
+        queueCursor = 0
+        eateryAnnotations =
+            eateryAnnotations.sorted(by: { (a, b) -> Bool in
+                let distA = mapView.userLocation.location?.distance(from: CLLocation(latitude: a.coordinate.latitude,
+                                                                                     longitude: a.coordinate.longitude)) ?? 0
+                let distB = mapView.userLocation.location?.distance(from: CLLocation(latitude: b.coordinate.latitude,
+                                                                                     longitude: b.coordinate.longitude)) ?? 0
+                return distA < distB
+            })
+        eateries =
+            eateries.sorted(by: { (a, b) -> Bool in
+                let distA = mapView.userLocation.location?.distance(from: a.location) ?? 0
+                let distB = mapView.userLocation.location?.distance(from: b.location) ?? 0
+                return distA < distB
+            })
+        
+        let newCamera = mapView.camera
+        newCamera.altitude = 415
+        newCamera.heading = 180
+        newCamera.pitch = 60
+        newCamera.centerCoordinate = mapView.userLocation.coordinate
+        mapView.setCamera(newCamera, animated: true)
     }
     
-    func pinButtonPressed(_ sender: UIButton) {
-        let region = MKCoordinateRegion(center: mapView.annotations.first!.coordinate, span: MKCoordinateSpanMake(0.01, 0.01))
-        mapView.selectAnnotation(mapView.annotations.first!, animated: true)
-        mapView.setRegion(region, animated: true)
+    func pinButtonPressed(_ sender: UIButton)
+    {
+        if mapView.selectedAnnotations.count > 0 {
+            mapView.deselectAnnotation(eateryAnnotations[queueCursor], animated: true)
+        }
+        
+        queueCursor += 1
+        if queueCursor >= eateryAnnotations.count {
+            queueCursor = 0
+        }
+        
+        let newCamera = mapView.camera
+        newCamera.altitude = 415
+        newCamera.heading = 180
+        newCamera.pitch = 60
+        newCamera.centerCoordinate = eateryAnnotations[queueCursor].coordinate
+        mapView.setCamera(newCamera, animated: true)
+        
+        mapView.selectAnnotation(eateryAnnotations[queueCursor], animated: true)
     }
     
     // MARK: - MKMapViewDelegate Methods
+    
+    func mapView(_ mapView: MKMapView,
+                 annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl)
+    {
+        let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil)
+        self.navigationController?.pushViewController(menuVC, animated: true)
+    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MKPointAnnotation) {
@@ -150,22 +174,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
             annotationView!.canShowCallout = true
+            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             annotationView!.annotation = annotation
         }
         
-        annotationView!.image = UIImage(named: "eateryPin")
+        annotationView!.image = annotation.subtitle! == "open" ? #imageLiteral(resourceName: "eateryPin") : #imageLiteral(resourceName: "blackEateryPin")
         
         return annotationView
     }
-
+    
     // MARK: - CLLocationManagerDelegate Methods
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        guard let currentCoordinates = locations.last?.coordinate else { return }
+        let region = MKCoordinateRegionMake(currentCoordinates, MKCoordinateSpanMake(0.01, 0.01))
+        mapView.setRegion(region, animated: true)
+        mapView.showsBuildings = true
+        
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
         print("Location Manager Error: \(error)")
     }
     

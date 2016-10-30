@@ -9,51 +9,91 @@
 import UIKit
 import DiningStack
 import Haneke
+import CoreLocation
+
+let metersInMile: Double = 1609.344
 
 class EateryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var paymentIcon: UIImageView!
-    
-    @IBOutlet weak var searchTextView: UITextView!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var closedView: UIView!
+    @IBOutlet weak var menuTextView: UITextView!
+    @IBOutlet weak var menuTextViewHeight: NSLayoutConstraint!
+    @IBOutlet var paymentImageViews: [UIImageView]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        menuTextView.text = nil
+        menuTextView.textContainerInset = UIEdgeInsets(top: 10.0, left: 6.0, bottom: 10.0, right: 6.0)
     }
     
-    func setEatery(_ eatery: Eatery) {
+    var eatery: Eatery!
+    
+    func update(userLocation: CLLocation?) {
+        if let distance = userLocation?.distance(from: eatery.location) {
+            distanceLabel.text = "\(Double(round(10*distance/metersInMile)/10)) mi"
+        } else {
+            distanceLabel.text = "-- mi"
+        }
+    }
+    
+    func set(eatery: Eatery, userLocation: CLLocation?) {
+        self.eatery = eatery
+        
         if let photo = eatery.photo {
             backgroundImageView.hnk_setImage(photo, key: eatery.slug)
         } else {
             backgroundImageView.image = nil
         }
+        
         titleLabel.text = eatery.nickname
-        statusView.layer.cornerRadius = 6
-        statusView.layer.masksToBounds = true
+        
+        update(userLocation: userLocation)
+        
         contentView.layer.cornerRadius = 1
         contentView.layer.masksToBounds = true
         
+        var images: [UIImage] = []
+        
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            images.append(#imageLiteral(resourceName: "cashIcon"))
+        }
+        
+        if (eatery.paymentMethods.contains(.BRB)) {
+            images.append(#imageLiteral(resourceName: "brbIcon"))
+        }
+        
         if (eatery.paymentMethods.contains(.Swipes)) {
-            paymentIcon.image = UIImage(named: "swipeIcon")
-        } else if (eatery.paymentMethods.contains(.BRB)) {
-            paymentIcon.image = UIImage(named: "brbIcon")
-        } else if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            paymentIcon.image = UIImage(named: "cashIcon")
-        } else {
-            paymentIcon.image = UIImage()
+            images.append(#imageLiteral(resourceName: "swipeIcon"))
+        }
+        
+        for (index, imageView) in paymentImageViews.enumerated() {
+            if index < images.count {
+                imageView.image = images[index]
+                imageView.isHidden = false
+            } else {
+                imageView.isHidden = true
+            }
         }
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(let message):
-            statusView.backgroundColor = .openGreen
+            titleLabel.textColor = UIColor.black
             timeLabel.text = message
+            timeLabel.textColor = UIColor.darkGray
+            distanceLabel.textColor = UIColor.darkGray
+            closedView.isHidden = true
         case .closed(let message):
-            statusView.backgroundColor = .closedGray
+            titleLabel.textColor = UIColor.gray
             timeLabel.text = message
+            timeLabel.textColor = UIColor.gray
+            distanceLabel.textColor = UIColor.gray
+            closedView.isHidden = false
         }
     }
 }

@@ -34,7 +34,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
             tabButton.setTitle(section.uppercased(), for: UIControlState())
             tabButton.setTitleColor(.offBlack, for: UIControlState())
             tabButton.setTitleColor(.eateryBlue, for: .selected)
-            tabButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
+            tabButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14.0)
             tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), for: .touchUpInside)
             tabButton.sizeToFit()
             tabButtons.append(tabButton)

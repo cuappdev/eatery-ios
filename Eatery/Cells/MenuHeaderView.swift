@@ -22,7 +22,6 @@ class MenuHeaderView: UIView {
     
     var mapButtonPressed: (Void) -> Void = {}
 
-    @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var paymentView: UIView!
@@ -35,7 +34,6 @@ class MenuHeaderView: UIView {
     override func awakeFromNib() {
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: UIControlState())
         shareButton.setImage(UIImage(named: "shareIcon"), for: UIControlState())
-        statusView.layer.cornerRadius = 6
     }
     
     func setUp(_ eatery: Eatery, date: Date) {
@@ -46,17 +44,17 @@ class MenuHeaderView: UIView {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(_):
-            statusView.backgroundColor = .openGreen
+            break
         case .closed(_):
-            statusView.backgroundColor = .closedGray
+            break
         }
         
         // Payment View
         var paymentTypeViews: [UIImageView] = []
         
-        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
-            paymentTypeViews.append(cashIcon)
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
+            paymentTypeViews.append(swipeIcon)
         }
         
         if (eatery.paymentMethods.contains(.BRB)) {
@@ -64,9 +62,9 @@ class MenuHeaderView: UIView {
             paymentTypeViews.append(brbIcon)
         }
         
-        if (eatery.paymentMethods.contains(.Swipes)) {
-            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
-            paymentTypeViews.append(swipeIcon)
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
+            paymentTypeViews.append(cashIcon)
         }
         
         let payTypeView = UIView()
