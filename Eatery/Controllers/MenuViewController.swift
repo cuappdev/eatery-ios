@@ -182,9 +182,8 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         let innerOffset = CGPoint(x: 0, y: offset.y - kMenuHeaderViewFrameHeight)
         let innerScrollView = pageViewController.pluckCurrentScrollView()
         // TODO: check if tab bar is visible
-        let innerContentHeight = innerScrollView.contentSize.height + 44 // tab bar height
-        let maxOuterYOffset = max(kMenuHeaderViewFrameHeight + innerContentHeight - view.frame.height, 0)
-        let maxInnerYOffset = max(innerContentHeight - view.frame.height, 0)
+        let maxOuterYOffset = max(kMenuHeaderViewFrameHeight + innerScrollView.contentSize.height - view.frame.height, 0)
+        let maxInnerYOffset = max(innerScrollView.contentSize.height - view.frame.height, 0)
         
         switch state {
         case .changed:
