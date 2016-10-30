@@ -54,7 +54,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         title = "Eateries"
         
-//        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .campus
+        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Location")) ?? .location
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
@@ -257,6 +257,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         highlightCurrentSortOption(sender)
         sortButtonTapped()
         defaults.set(sortType.rawValue, forKey: "sortOption")
+        defaults.synchronize()
         loadData(force: false, completion: nil)
     }
     
