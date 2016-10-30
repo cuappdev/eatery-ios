@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate {
+class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate {
     
     var connectionHandler: BRBConnectionHandler!
     var loginView: BRBLoginView!
@@ -21,7 +21,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         
         navigationController?.view.backgroundColor = .white
 
-        title = "BRB"
+        title = "Meal Plan"
         
         let settingsIcon = UIBarButtonItem(image: UIImage(named: "profileIcon.png"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
         
@@ -50,7 +50,8 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
         loginView.netidTextField.text = keychainItemWrapper["Netid"] as! String?
         loginView.passwordTextField.text = keychainItemWrapper["Password"] as! String?
-        if (loginView.netidTextField.text != nil && loginView.passwordTextField.text != nil)
+        if (loginView.netidTextField.text!.characters.count > 0 &&
+            loginView.passwordTextField.text!.characters.count > 0)
         {
             loginView.login()
         }
@@ -61,7 +62,9 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     }
     
     func userClickedProfileButton() {
-        navigationController?.pushViewController(BRBAccountSettingsViewController(), animated: true)
+        let brbVc = BRBAccountSettingsViewController()
+        brbVc.delegate = self
+        navigationController?.pushViewController(brbVc, animated: true)
     }
 
     func timer(timer: Timer) {
@@ -87,7 +90,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         brbLabel.textAlignment = NSTextAlignment.center
         view.addSubview(brbLabel)
         
-        let brbDescriptionLabel = UILabel(frame: CGRect(x: 0, y: brbLabel.frame.origin.y + 65, width: view.frame.width, height: 50))
+        let brbDescriptionLabel = UILabel(frame: CGRect(x: 0, y: brbLabel.frame.origin.y + 85, width: view.frame.width, height: 50))
         brbDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         brbDescriptionLabel.text = "Big Red Bucks"
         brbDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
@@ -101,7 +104,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         swipesLabel.textAlignment = NSTextAlignment.center
         view.addSubview(swipesLabel)
         
-        let swipesDescriptionLabel = UILabel(frame: CGRect(x: 0, y: swipesLabel.frame.origin.y + 65, width: view.frame.width, height: 50))
+        let swipesDescriptionLabel = UILabel(frame: CGRect(x: 0, y: swipesLabel.frame.origin.y + 85, width: view.frame.width, height: 50))
         swipesDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         swipesDescriptionLabel.text = "Swipes"
         swipesDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
@@ -168,6 +171,31 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         }
     }
     
+    func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController) {
+        connectionHandler = BRBConnectionHandler(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 0.5))
+        connectionHandler.alpha = 0.0
+        connectionHandler.navigationDelegate = self
+        view.addSubview(connectionHandler)
+
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        loginView = BRBLoginView(frame: view.bounds)
+        loginView.delegate = self
+        view.addSubview(loginView)
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
+    }
+    
+    func brbAccountSettingsSetShouldCacheAccount(brbAccountSettings: BRBAccountSettingsViewController, shouldCache: Bool)
+    {
+        
+    }
+    
+    func brbAccountSettingsSetShouldAutoLogin(brbAccountSettings: BRBAccountSettingsViewController, shouldAutoLogin: Bool)
+    {
+        
+    }
+    
+
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {
         connectionHandler.netid = netid
         connectionHandler.password = password

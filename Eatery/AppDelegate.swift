@@ -33,11 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         
         // Set up navigation bar appearance
-        UINavigationBar.appearance().barTintColor = UIColor.eateryBlue
-        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = .eateryBlue
+        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        UITabBar.appearance().barTintColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        UITabBar.appearance().barTintColor = .white
+        UITabBar.appearance().tintColor = .eateryBlue
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.gray], for: .selected)
         
         // Set up view controllers
         tabBarController = UITabBarController()
@@ -60,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mapNavigation = UINavigationController(rootViewController: mapViewController)
         mapNavigation.navigationBar.isTranslucent = false
         mapNavigation.navigationBar.barStyle = .black
-        mapNavigation.tabBarItem = UITabBarItem(title: "Nearby", image: nil, tag: 1)
+        mapNavigation.tabBarItem = UITabBarItem(title: "Nearby", image:  #imageLiteral(resourceName: "locationArrowIcon").withRenderingMode(.alwaysTemplate), tag: 1)
 
         let brbController = BRBViewController()
         let brbNavigation = UINavigationController(rootViewController: brbController)
