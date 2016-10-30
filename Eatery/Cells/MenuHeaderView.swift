@@ -22,7 +22,6 @@ class MenuHeaderView: UIView {
     
     var mapButtonPressed: (Void) -> Void = {}
 
-    @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var paymentView: UIView!
@@ -35,7 +34,6 @@ class MenuHeaderView: UIView {
     override func awakeFromNib() {
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: UIControlState())
         shareButton.setImage(UIImage(named: "shareIcon"), for: UIControlState())
-        statusView.layer.cornerRadius = 6
     }
     
     func setUp(_ eatery: Eatery, date: Date) {
@@ -46,9 +44,9 @@ class MenuHeaderView: UIView {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(_):
-            statusView.backgroundColor = .openGreen
+            break
         case .closed(_):
-            statusView.backgroundColor = .closedGray
+            break
         }
         
         // Payment View

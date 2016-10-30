@@ -73,11 +73,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
-        
-        // Add observer for user reentering app
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        
         // Set up bar look ahead VC
         let rightBarButton = UIBarButtonItem(title: "Guide", style: .plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
         rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
@@ -140,7 +135,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         UIApplication.shared.keyWindow?.addSubview(sortView)
         
         loadData(force: false, completion: nil)
-        updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
+        updateTimer = Timer.scheduledTimer(timeInterval: 6.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -161,10 +156,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     func goToLookAheadVC() {
         navigationController?.pushViewController(LookAheadViewController(), animated: true)
         Analytics.screenGuideViewController()
-    }
-    
-    func applicationWillEnterForeground() {
-        processEateries()
     }
     
     func setupCollectionView() {
