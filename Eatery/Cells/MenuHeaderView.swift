@@ -54,9 +54,9 @@ class MenuHeaderView: UIView {
         // Payment View
         var paymentTypeViews: [UIImageView] = []
         
-        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
-            paymentTypeViews.append(cashIcon)
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
+            paymentTypeViews.append(swipeIcon)
         }
         
         if (eatery.paymentMethods.contains(.BRB)) {
@@ -64,9 +64,9 @@ class MenuHeaderView: UIView {
             paymentTypeViews.append(brbIcon)
         }
         
-        if (eatery.paymentMethods.contains(.Swipes)) {
-            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
-            paymentTypeViews.append(swipeIcon)
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
+            paymentTypeViews.append(cashIcon)
         }
         
         let payTypeView = UIView()

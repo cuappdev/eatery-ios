@@ -30,7 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-9C-mAO">
-                                <rect key="frame" x="10" y="30" width="26.5" height="14"/>
+                                <rect key="frame" x="10" y="30" width="27" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="bk5-jO-ljb"/>
                                 </constraints>
@@ -39,7 +39,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4r4-Ps-Xll">
-                                <rect key="frame" x="377.5" y="13" width="43.5" height="12"/>
+                                <rect key="frame" x="377" y="13" width="44" height="12"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -78,6 +78,10 @@
                             <constraint firstAttribute="width" constant="20" id="c3R-3l-Czb"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4D6-M7-tVj" userLabel="ClosedView">
+                        <rect key="frame" x="0.0" y="0.0" width="431" height="108"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.30234925176056338" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
                 </subviews>
             </view>
             <constraints>
@@ -85,12 +89,16 @@
                 <constraint firstItem="LVV-ju-Zle" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="5QH-mY-CcI"/>
                 <constraint firstItem="gbN-6m-frS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="6Wy-cL-8CW"/>
                 <constraint firstAttribute="bottom" secondItem="HoN-He-Rpa" secondAttribute="bottom" id="6uZ-KH-vzq"/>
+                <constraint firstItem="HoN-He-Rpa" firstAttribute="top" secondItem="4D6-M7-tVj" secondAttribute="bottom" id="MtD-Oi-qrQ"/>
+                <constraint firstAttribute="trailing" secondItem="4D6-M7-tVj" secondAttribute="trailing" id="OvA-Nh-2u4"/>
+                <constraint firstItem="4D6-M7-tVj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="V9R-Z2-fOx"/>
                 <constraint firstAttribute="bottom" secondItem="eyk-u5-ZqO" secondAttribute="bottom" id="Xgv-6v-wZT"/>
                 <constraint firstItem="eyk-u5-ZqO" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="a5c-Fe-IRP"/>
                 <constraint firstItem="HoN-He-Rpa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="bcs-2L-Qhb"/>
                 <constraint firstItem="zrr-Hk-q8j" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="c5m-Ru-ncN"/>
                 <constraint firstItem="HoN-He-Rpa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cg3-lX-e7F"/>
                 <constraint firstItem="zrr-Hk-q8j" firstAttribute="leading" secondItem="LVV-ju-Zle" secondAttribute="trailing" constant="5" id="fN6-K0-U3M"/>
+                <constraint firstItem="4D6-M7-tVj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="nRo-vj-FHm"/>
                 <constraint firstAttribute="trailing" secondItem="zrr-Hk-q8j" secondAttribute="trailing" constant="10" id="ori-Pp-mIM"/>
                 <constraint firstAttribute="trailing" secondItem="HoN-He-Rpa" secondAttribute="trailing" id="p7g-Xz-dmK"/>
                 <constraint firstItem="eyk-u5-ZqO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vOZ-z9-3s0"/>
@@ -104,10 +112,13 @@
             </variation>
             <connections>
                 <outlet property="backgroundImageView" destination="eyk-u5-ZqO" id="QIc-Wr-cpG"/>
+                <outlet property="closedView" destination="4D6-M7-tVj" id="JWK-1n-EPx"/>
                 <outlet property="distanceLabel" destination="4r4-Ps-Xll" id="c52-c8-75G"/>
                 <outlet property="timeLabel" destination="2Bk-9C-mAO" id="Hvs-fM-Ydo"/>
                 <outlet property="titleLabel" destination="15K-gp-bKu" id="biz-FT-A0u"/>
                 <outletCollection property="paymentImageViews" destination="zrr-Hk-q8j" collectionClass="NSMutableArray" id="uhd-q2-OaC"/>
+                <outletCollection property="paymentImageViews" destination="LVV-ju-Zle" collectionClass="NSMutableArray" id="9Dw-WU-UYd"/>
+                <outletCollection property="paymentImageViews" destination="gbN-6m-frS" collectionClass="NSMutableArray" id="2Ak-wS-UAw"/>
             </connections>
             <point key="canvasLocation" x="308.5" y="440"/>
         </collectionViewCell>

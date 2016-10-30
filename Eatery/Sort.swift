@@ -32,10 +32,10 @@ struct Sort {
         let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
             switch sortingType {
             case .lookAhead:
-                let eventsA = a.eventsOnDate(date as Date)
-                let eventsB = b.eventsOnDate(date as Date)
-                if eventsA[self.getSelectedMeal(eatery: a, date: date as Date, meal: selectedMeal)] != nil {
-                    if eventsB[self.getSelectedMeal(eatery: b, date: date as Date, meal: selectedMeal)] != nil {
+                let eventsA = a.eventsOnDate(date)
+                let eventsB = b.eventsOnDate(date)
+                if eventsA[self.getSelectedMeal(eatery: a, date: date, meal: selectedMeal)] != nil {
+                    if eventsB[self.getSelectedMeal(eatery: b, date: date, meal: selectedMeal)] != nil {
                         return  a.nickname.lowercased() < b.nickname.lowercased()
                     }
                     return true
@@ -44,9 +44,9 @@ struct Sort {
                 
             case .time:
                 if a.isOpenToday() {
-                    if let activeEvent = a.activeEventForDate(date as Date) {
-                        if activeEvent.occurringOnDate(date as Date) {
-                            if let bTimeInterval = b.activeEventForDate(date as Date) {
+                    if let activeEvent = a.activeEventForDate(date) {
+                        if activeEvent.occurringOnDate(date) {
+                            if let bTimeInterval = b.activeEventForDate(date) {
                                 return activeEvent.endDate.timeIntervalSinceNow <= bTimeInterval.endDate.timeIntervalSinceNow
                             } else {
                                 return true

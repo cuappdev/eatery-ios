@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up view controllers
         tabBarController = UITabBarController()
-        tabBarController.tabBar.barStyle = .black
+        tabBarController.tabBar.isTranslucent = false
         
         eateriesGridViewController = EateriesGridViewController()
         

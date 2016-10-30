@@ -64,8 +64,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
     }
 
-    func mapEateries(_ eateries: [Eatery])
-    {
+    func mapEateries(_ eateries: [Eatery]) {
         if self.eateries.count == 0 {
             self.eateries = eateries
         }
@@ -88,7 +87,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
         createMapButtons()
         
-        mapView.setRegion(MKCoordinateRegionMake(locationManager.location!.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
+        if let coordinate = locationManager.location?.coordinate {
+            mapView.setRegion(MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: false)
+        }
     }
     
     // MARK: - Button Methods

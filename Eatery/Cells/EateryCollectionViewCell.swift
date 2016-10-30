@@ -19,6 +19,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var closedView: UIView!
     @IBOutlet var paymentImageViews: [UIImageView]!
     
     override func awakeFromNib() {
@@ -31,7 +32,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         if let distance = userLocation?.distance(from: eatery.location) {
             distanceLabel.text = "\(Double(round(10*distance/metersInMile)/10)) mi"
         } else {
-            distanceLabel.text = ""
+            distanceLabel.text = "-- mi"
         }
     }
     
@@ -51,28 +52,24 @@ class EateryCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 1
         contentView.layer.masksToBounds = true
         
-        var methods = eatery.paymentMethods.filter {
-            switch $0 {
-            case .BRB, .Swipes, .Cash:
-                return true
-            default:
-                return false
-            }
+        var images: [UIImage] = []
+        
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            images.append(#imageLiteral(resourceName: "cashIcon"))
         }
         
-        for imageView in paymentImageViews {
-            imageView.clipsToBounds = true
-            if let method = methods.popLast() {
-                switch method {
-                case .Cash:
-                    imageView.image = #imageLiteral(resourceName: "cashIcon")
-                case .BRB:
-                    imageView.image = #imageLiteral(resourceName: "brbIcon")
-                case .Swipes:
-                    imageView.image = #imageLiteral(resourceName: "swipeIcon")
-                default:
-                    imageView.isHidden = true
-                }
+        if (eatery.paymentMethods.contains(.BRB)) {
+            images.append(#imageLiteral(resourceName: "brbIcon"))
+        }
+        
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            images.append(#imageLiteral(resourceName: "swipeIcon"))
+        }
+        
+        for (index, imageView) in paymentImageViews.enumerated() {
+            if index < images.count {
+                imageView.image = images[index]
+                imageView.isHidden = false
             } else {
                 imageView.isHidden = true
             }
@@ -81,9 +78,17 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(let message):
+            titleLabel.textColor = UIColor.black
             timeLabel.text = message
+            timeLabel.textColor = UIColor.darkGray
+            distanceLabel.textColor = UIColor.darkGray
+            closedView.isHidden = true
         case .closed(let message):
+            titleLabel.textColor = UIColor.gray
             timeLabel.text = message
+            timeLabel.textColor = UIColor.gray
+            distanceLabel.textColor = UIColor.gray
+            closedView.isHidden = false
         }
     }
 }
