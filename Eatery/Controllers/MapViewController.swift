@@ -37,8 +37,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.clipsToBounds = true
 
         view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
         mapView.frame = view.bounds
@@ -60,11 +58,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: break
             }
         }
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle
-    {
-        return .lightContent
     }
     
     override func didReceiveMemoryWarning() {

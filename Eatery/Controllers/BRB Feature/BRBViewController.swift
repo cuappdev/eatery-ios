@@ -20,8 +20,6 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         super.viewDidLoad()
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.clipsToBounds = true
 
         title = "BRB"
         
@@ -58,11 +56,6 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         }
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle
-    {
-        return .lightContent
-    }
-
     func viewTapped() {
         view.endEditing(true)
     }
@@ -84,9 +77,9 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         let brbString = NSMutableAttributedString(string: "$\(connectionHandler.accountBalance.brbs)")
-        brbString.addAttributes([NSFontAttributeName: UIFont(name: "DIN-Light", size: 50.0)!], range: NSRange(location: 0, length: 1))
-        brbString.addAttributes([NSFontAttributeName: UIFont(name: "DIN-Light", size: 50.0)!], range: NSRange(location: brbString.length - 3, length: 3))
-        brbString.addAttributes([NSFontAttributeName: UIFont(name: "DIN-Light", size: 80.0)!], range: NSRange(location: 1, length: brbString.length - 4))
+        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 50.0)], range: NSRange(location: 0, length: 1))
+        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 50.0)], range: NSRange(location: brbString.length - 3, length: 3))
+        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 80.0)], range: NSRange(location: 1, length: brbString.length - 4))
         
         let brbLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.15, width: view.frame.width, height: 120))
         brbLabel.textColor = UIColor.black.withAlphaComponent(0.8)
@@ -97,12 +90,12 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         let brbDescriptionLabel = UILabel(frame: CGRect(x: 0, y: brbLabel.frame.origin.y + 65, width: view.frame.width, height: 50))
         brbDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         brbDescriptionLabel.text = "Big Red Bucks"
-        brbDescriptionLabel.font = UIFont(name: "Avenir", size: 20)
+        brbDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
         brbDescriptionLabel.textAlignment = NSTextAlignment.center
         view.addSubview(brbDescriptionLabel)
         
         let swipesLabel = UILabel(frame: CGRect(x: 0, y: brbDescriptionLabel.frame.origin.y + brbDescriptionLabel.frame.height + 50, width: view.frame.width, height: 120))
-        swipesLabel.font = UIFont(name: "DIN-Light", size: 80)
+        swipesLabel.font = UIFont.systemFont(ofSize: 80.0)
         swipesLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         swipesLabel.text = "\(connectionHandler.accountBalance.swipes)"
         swipesLabel.textAlignment = NSTextAlignment.center
@@ -111,7 +104,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         let swipesDescriptionLabel = UILabel(frame: CGRect(x: 0, y: swipesLabel.frame.origin.y + 65, width: view.frame.width, height: 50))
         swipesDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
         swipesDescriptionLabel.text = "Swipes"
-        swipesDescriptionLabel.font = UIFont(name: "Avenir", size: 20)
+        swipesDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
         swipesDescriptionLabel.textAlignment = NSTextAlignment.center
         view.addSubview(swipesDescriptionLabel)
     }
@@ -133,7 +126,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
                     self.failedToLogin(error: "incorrect netid and/or password")
                 }
             } else if error!.localizedDescription.contains("JavaScript") {
-                print(error?.localizedDescription)
+                print(error!.localizedDescription)
             } else {
                 self.failedToLogin(error: error!.localizedDescription)
             }

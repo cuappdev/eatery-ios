@@ -16,8 +16,8 @@ class MenuImages: NSObject {
         let bodyColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
         let categoryHeaderHeight: CGFloat = 30
         let dividerSize: CGFloat = 20
-        let condensedCategoryFont = UIFont(name: "HelveticaNeue-Medium", size: 11)
-        let condensedBodyFont = UIFont(name: "HelveticaNeue", size: 14)
+        let condensedCategoryFont = UIFont.systemFont(ofSize: 11.0)
+        let condensedBodyFont = UIFont.systemFont(ofSize: 14.0)
         let condensedBodyFontColor = UIColor.offBlack
         var categoryViews: [UIView] = []
 
@@ -145,11 +145,11 @@ class MenuImages: NSObject {
         let dividerSize: CGFloat = 20
         let textIndent = "    "
         //fonts
-        let headerFont = UIFont(name: "Avenir-Heavy", size: 26)
-        let headerTimeFont = UIFont(name: "Avenir", size: 12)
-        let headerEventFont = UIFont(name: "Avenir-Medium", size: 12)
-        let categoryFont = UIFont(name: "Avenir-Medium", size: 16)
-        let bodyFont = UIFont(name: "Avenir", size: 16)
+        let headerFont = UIFont.boldSystemFont(ofSize: 26.0)
+        let headerTimeFont = UIFont.systemFont(ofSize: 12.0)
+        let headerEventFont = UIFont.boldSystemFont(ofSize: 12.0)
+        let categoryFont = UIFont.boldSystemFont(ofSize: 16.0)
+        let bodyFont = UIFont.boldSystemFont(ofSize: 16.0)
         let fontColor = UIColor(red: 124/255.0, green: 124/255.0, blue: 124/255.0, alpha: 1.0)
         
         let menuHeader = UIView(frame: CGRect(x: 0, y: 0, width: width, height: menuHeaderHeight))

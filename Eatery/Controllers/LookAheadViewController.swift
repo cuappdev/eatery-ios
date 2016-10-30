@@ -351,8 +351,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
         // Update selected date
         for dateView in dateViews {
-            dateView.dayLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
-            dateView.dateLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 28.0)
+            dateView.dayLabel.font = UIFont.systemFont(ofSize: 12.0)
+            dateView.dateLabel.font = UIFont.systemFont(ofSize: 28.0)
             
             let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 0.7 : 0.3
             dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
@@ -361,7 +361,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Update selected meal
         for button in buttons {
-            button.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            button.titleLabel!.font = UIFont.systemFont(ofSize: 15.0)
             let alpha: CGFloat = button.tag == selectedMealIndex ? 0.7 : 0.3
             button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), for: UIControlState())
         }

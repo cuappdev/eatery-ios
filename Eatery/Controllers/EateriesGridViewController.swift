@@ -11,7 +11,7 @@ import DiningStack
 import DGElasticPullToRefresh
 import CoreLocation
 
-let kCollectionViewGutterWidth: CGFloat = 8
+let kCollectionViewGutterWidth: CGFloat = 10
 
 class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
@@ -58,23 +58,19 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.clipsToBounds = true
 
         setupCollectionView()
 
         let leftBarButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortButtonTapped))
-        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        leftBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         navigationItem.leftBarButtonItem = leftBarButton
         
         view.addSubview(self.collectionView)
         loadData(force: false, completion: nil)
         
         // Check for 3D Touch availability
-        if #available(iOS 9.0, *) {
-            if traitCollection.forceTouchCapability == .available {
-                registerForPreviewing(with: self, sourceView: view)
-            }
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: view)
         }
         
         // Add observer for user reentering app
@@ -83,7 +79,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         // Set up bar look ahead VC
         let rightBarButton = UIBarButtonItem(title: "Guide", style: .plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
-        rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 14.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = rightBarButton
         
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
@@ -181,7 +177,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func setupCollectionView() {
-        let layout = UIScreen.isNarrowScreen() ? EateriesCollectionViewTableLayout() : EateriesCollectionViewGridLayout()
+        let layout = EateriesCollectionViewTableLayout()
         collectionView = UICollectionView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)), collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -447,10 +443,10 @@ extension EateriesGridViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
-        cell.setEatery(eatery)
+        cell.set(eatery: eatery, userLocation: userLocation)
         
-        cell.searchTextView.isUserInteractionEnabled = false
-        cell.searchTextView.textColor = UIColor.white
+//        cell.searchTextView.isUserInteractionEnabled = false
+//        cell.searchTextView.textColor = UIColor.white
         
         var searchText = NSMutableAttributedString()
         if searchBar.text != "" {
@@ -458,14 +454,14 @@ extension EateriesGridViewController: UICollectionViewDataSource {
                 let attrStrings: [NSMutableAttributedString] = names.map {
                     NSMutableAttributedString(string: $0, attributes: [NSForegroundColorAttributeName : UIColor.white])
                 }
-                cell.searchTextView.isHidden = false
+//                cell.searchTextView.isHidden = false
                 searchText = NSMutableAttributedString(string: "\n").join(attrStrings)
             }
         }
         if searchText != NSMutableAttributedString() {
-            cell.searchTextView.attributedText = searchText
+//            cell.searchTextView.attributedText = searchText
         } else {
-            cell.searchTextView.isHidden = true
+//            cell.searchTextView.isHidden = true
         }
         
         return cell
@@ -566,7 +562,9 @@ extension EateriesGridViewController: UISearchBarDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last as CLLocation!
-        
+        for cell in collectionView.visibleCells.flatMap({ $0 as? EateryCollectionViewCell }) {
+            cell.update(userLocation: userLocation)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

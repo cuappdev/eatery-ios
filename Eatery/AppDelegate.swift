@@ -30,23 +30,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         Foundation.URLCache.shared = URLCache
         
-        print("Did finish launching", terminator: "")
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
+        window = UIWindow()
         
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = UIColor.eateryBlue
         UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white]
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        UITabBar.appearance().barTintColor = UIColor.white
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         
         // Set up view controllers
         tabBarController = UITabBarController()
-        tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.barStyle = .black
         
         eateriesGridViewController = EateriesGridViewController()
         
         let eateryNavigationController = UINavigationController(rootViewController: eateriesGridViewController)
+        eateryNavigationController.navigationBar.isTranslucent = false
         eateryNavigationController.navigationBar.barStyle = .black
         eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: nil, tag: 0)
         
@@ -56,12 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 mapViewController.mapEateries(DATA.eateries)
             }
         }
+        
         let mapNavigation = UINavigationController(rootViewController: mapViewController)
+        mapNavigation.navigationBar.isTranslucent = false
         mapNavigation.navigationBar.barStyle = .black
         mapNavigation.tabBarItem = UITabBarItem(title: "Nearby", image: nil, tag: 1)
 
         let brbController = BRBViewController()
         let brbNavigation = UINavigationController(rootViewController: brbController)
+        brbNavigation.navigationBar.isTranslucent = false
         brbNavigation.navigationBar.barStyle = .black
         brbNavigation.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 2)
         
@@ -69,10 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-        
-        let statusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 20.0))
-        statusBarView.backgroundColor = .eateryBlue
-        window?.rootViewController!.view.addSubview(statusBarView)
         
         // Segment setup
         SEGAnalytics.setup(with: SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))

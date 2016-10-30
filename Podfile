@@ -6,7 +6,6 @@ end
 
 target 'Eatery' do
   platform :ios, '9.0'
-  pod 'DGElasticPullToRefresh', :git => 'https://github.com/dantheli/DGElasticPullToRefresh.git'
   pod 'Analytics/Segmentio'
   pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :branch => 'feature/swift-3'
   pod 'SwiftyJSON', :git => 'https://github.com/IBM-swift/swiftyjson.git'
