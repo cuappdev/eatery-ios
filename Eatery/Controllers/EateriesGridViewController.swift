@@ -188,6 +188,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
     func updateTimerFired() {
         processEateries()
+        collectionView.reloadData()
     }
   
     func pushPreselectedEatery() {
