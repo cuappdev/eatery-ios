@@ -20,10 +20,15 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var closedView: UIView!
+    @IBOutlet weak var menuTextView: UITextView!
+    @IBOutlet var menuTextViewHeight: NSLayoutConstraint!
     @IBOutlet var paymentImageViews: [UIImageView]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        menuTextView.text = nil
+        menuTextView.textContainerInset = UIEdgeInsets(top: 10.0, left: 6.0, bottom: 10.0, right: 6.0)
     }
     
     var eatery: Eatery!
