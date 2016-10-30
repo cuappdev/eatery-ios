@@ -69,7 +69,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         
         if (eatery.paymentMethods.contains(.Swipes)) {
             images.append(#imageLiteral(resourceName: "swipeIcon"))
-            
+        }
         
         for (index, imageView) in paymentImageViews.enumerated() {
             if index < images.count {
