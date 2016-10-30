@@ -82,7 +82,7 @@
                             <constraint firstItem="4r4-Ps-Xll" firstAttribute="centerY" secondItem="15K-gp-bKu" secondAttribute="centerY" id="wc0-oR-tPq"/>
                         </constraints>
                     </view>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Menu" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaD-ts-Y7k">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Menu" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaD-ts-Y7k">
                         <rect key="frame" x="0.0" y="263" width="431" height="0.0"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

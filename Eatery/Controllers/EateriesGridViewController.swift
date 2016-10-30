@@ -441,7 +441,17 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
-                cell.menuTextView.text = names.joined(separator: "\n")
+                let baseString = names.joined(separator: "\n")
+                let attributedString = NSMutableAttributedString(string: baseString, attributes: [NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : UIFont.systemFont(ofSize: 11.0)])
+                do {
+                    let regex = try NSRegularExpression(pattern: searchBar.text ?? "", options: NSRegularExpression.Options.caseInsensitive)
+                    for match in regex.matches(in: baseString, options: [], range: NSRange.init(location: 0, length: baseString.utf16.count)) {
+                        attributedString.addAttributes([NSForegroundColorAttributeName : UIColor.darkGray, NSFontAttributeName : UIFont.boldSystemFont(ofSize: 11.0)], range: match.range)
+                    }
+                } catch {
+                    NSLog("Error in handling regex")
+                }
+                cell.menuTextView.attributedText = attributedString
                 cell.menuTextViewHeight.constant = cell.frame.height - 54.0
             } else {
                 cell.menuTextView.text = nil
