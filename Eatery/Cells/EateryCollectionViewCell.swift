@@ -21,7 +21,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var menuTextView: UITextView!
-    @IBOutlet var menuTextViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var menuTextViewHeight: NSLayoutConstraint!
     @IBOutlet var paymentImageViews: [UIImageView]!
     
     override func awakeFromNib() {

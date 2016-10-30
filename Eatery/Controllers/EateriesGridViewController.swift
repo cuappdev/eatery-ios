@@ -436,14 +436,14 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
-                cell.menuTextView.text = names.joined(separator: "\n") + "\n\n\n\n"
-                cell.menuTextViewHeight.isActive = false
+                cell.menuTextView.text = names.joined(separator: "\n")
+                cell.menuTextViewHeight.constant = cell.frame.height - 54.0
             } else {
                 cell.menuTextView.text = nil
-                cell.menuTextViewHeight.isActive = true
+                cell.menuTextViewHeight.constant = 0.0
             }
         } else {
-            cell.menuTextViewHeight.isActive = true
+            cell.menuTextViewHeight.constant = 0.0
         }
         
         return cell
