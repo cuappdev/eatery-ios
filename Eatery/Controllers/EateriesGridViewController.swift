@@ -8,7 +8,6 @@
 
 import UIKit
 import DiningStack
-import DGElasticPullToRefresh
 import CoreLocation
 
 let kCollectionViewGutterWidth: CGFloat = 10
@@ -28,7 +27,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     fileprivate var isDropDownDisplayed = false
     
     fileprivate var searchBar: UISearchBar!
-    fileprivate var sortType: Eatery.Sorting = .campus
+    fileprivate var sortType: Eatery.Sorting = .open
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     fileprivate let defaults = UserDefaults.standard
@@ -52,7 +51,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         title = "Eateries"
         
-        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .campus
+//        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Campus")) ?? .campus
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
@@ -138,18 +137,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         highlightCurrentSortOption(sortButtons[Eatery.Sorting.values.index(of: sortType)!])
         sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         UIApplication.shared.keyWindow?.addSubview(sortView)
-        
-        // Pull To Refresh
-        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = .white
-        collectionView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-                Analytics.trackPullToRefresh()
-                self?.loadData(force: true) {
-                    self?.collectionView.dg_stopLoading()
-                }
-            }, loadingView: loadingView)
-        collectionView.dg_setPullToRefreshFillColor(.eateryBlue)
-        collectionView.dg_setPullToRefreshBackgroundColor(collectionView.backgroundColor!)
     }
     
     override func viewDidAppear(_ animated: Bool) {
