@@ -21,7 +21,7 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         
         navigationController?.view.backgroundColor = .white
 
-        title = "BRB"
+        title = "Meal Plan"
         
         let settingsIcon = UIBarButtonItem(image: UIImage(named: "profileIcon.png"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
         
