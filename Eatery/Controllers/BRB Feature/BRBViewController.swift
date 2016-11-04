@@ -9,12 +9,15 @@
 import UIKit
 import WebKit
 
-class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate {
+class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var connectionHandler: BRBConnectionHandler!
     var loginView: BRBLoginView!
     var loggedIn = false
     var timer: Timer!
+    var historyTimer: Timer!
+    
+    var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,42 +78,72 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         }
     }
     
+    func historyTimer(timer: Timer) {
+        if connectionHandler.diningHistory.count > 0 {
+            timer.invalidate()
+            let brbHistoryVc = BRBHistoryViewController()
+            brbHistoryVc.entries = connectionHandler.diningHistory
+            navigationController?.pushViewController(brbHistoryVc, animated: true)
+        }
+    }
+    
     func setupAccountPage() {
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        let brbString = NSMutableAttributedString(string: "$\(connectionHandler.accountBalance.brbs)")
-        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 50.0)], range: NSRange(location: 0, length: 1))
-        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 50.0)], range: NSRange(location: brbString.length - 3, length: 3))
-        brbString.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 80.0)], range: NSRange(location: 1, length: brbString.length - 4))
+        tableView = UITableView(frame: view.bounds, style: .grouped)
+        tableView.dataSource = self
+        tableView.delegate = self
         
-        let brbLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.15, width: view.frame.width, height: 120))
-        brbLabel.textColor = UIColor.black.withAlphaComponent(0.8)
-        brbLabel.attributedText = brbString
-        brbLabel.textAlignment = NSTextAlignment.center
-        view.addSubview(brbLabel)
-        
-        let brbDescriptionLabel = UILabel(frame: CGRect(x: 0, y: brbLabel.frame.origin.y + 85, width: view.frame.width, height: 50))
-        brbDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
-        brbDescriptionLabel.text = "Big Red Bucks"
-        brbDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
-        brbDescriptionLabel.textAlignment = NSTextAlignment.center
-        view.addSubview(brbDescriptionLabel)
-        
-        let swipesLabel = UILabel(frame: CGRect(x: 0, y: brbDescriptionLabel.frame.origin.y + brbDescriptionLabel.frame.height + 50, width: view.frame.width, height: 120))
-        swipesLabel.font = UIFont.systemFont(ofSize: 80.0)
-        swipesLabel.textColor = UIColor.black.withAlphaComponent(0.8)
-        swipesLabel.text = "\(connectionHandler.accountBalance.swipes)"
-        swipesLabel.textAlignment = NSTextAlignment.center
-        view.addSubview(swipesLabel)
-        
-        let swipesDescriptionLabel = UILabel(frame: CGRect(x: 0, y: swipesLabel.frame.origin.y + 85, width: view.frame.width, height: 50))
-        swipesDescriptionLabel.textColor = UIColor.black.withAlphaComponent(0.8)
-        swipesDescriptionLabel.text = "Swipes"
-        swipesDescriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
-        swipesDescriptionLabel.textAlignment = NSTextAlignment.center
-        view.addSubview(swipesDescriptionLabel)
+        view.addSubview(tableView)
     }
+    
+    /// MARK: Table view delegate/data source
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 4 : 1
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 1 {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "MoreCell")
+            cell.textLabel?.text = "View History"
+            cell.accessoryType = .disclosureIndicator
+            let tap = UITapGestureRecognizer(target: self, action: #selector(BRBViewController.openHistory))
+            cell.addGestureRecognizer(tap)
+            return cell
+        }
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "BRBCell")
+        switch indexPath.row {
+        case 0:
+            cell.textLabel?.text = "BRBs"
+            cell.detailTextLabel?.text = "$" + connectionHandler.accountBalance.brbs
+        case 1:
+            cell.textLabel?.text = "City Bucks"
+            cell.detailTextLabel?.text = "$" + connectionHandler.accountBalance.cityBucks
+        case 2:
+            cell.textLabel?.text = "Laundry"
+            cell.detailTextLabel?.text = "$" + connectionHandler.accountBalance.laundry
+        case 3:
+            cell.textLabel?.text = "Meal Swipes"
+            cell.detailTextLabel?.text = connectionHandler.accountBalance.swipes
+        default: break
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Woo")
+        if indexPath.section == 1 {
+            connectionHandler.loadDiningHistory()
+            historyTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
+        }
+    }
+    func openHistory() {
+        connectionHandler.loadDiningHistory()
+        historyTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
+    }
+    ///
     
     func failedToLogin(error: String) {
         print(error)
@@ -172,6 +205,9 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     }
     
     func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController) {
+        tableView.removeFromSuperview()
+        tableView = nil
+        
         connectionHandler = BRBConnectionHandler(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 0.5))
         connectionHandler.alpha = 0.0
         connectionHandler.navigationDelegate = self
