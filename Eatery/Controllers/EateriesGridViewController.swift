@@ -637,7 +637,7 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
         let menuVC = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         menuVC.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
-        eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view).offsetBy(dx: 0.0, dy: navigationController?.navigationBar.frame.maxY ?? 0.0)
+        eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
         eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
         return menuVC
     }

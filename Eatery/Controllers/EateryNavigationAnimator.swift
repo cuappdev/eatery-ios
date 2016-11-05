@@ -33,7 +33,7 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
             UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
                 eateriesGridViewController.view.alpha = 0.0
-                eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
                 menuViewController.pageViewController.view.transform = CGAffineTransform.identity
                 menuViewController.outerScrollView.subviews.forEach { $0.alpha = 1.0 }
                 menuViewController.menuHeaderView.frame = menuHeaderViewDefaultFrame
