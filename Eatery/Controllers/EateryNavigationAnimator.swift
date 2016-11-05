@@ -49,7 +49,7 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             let eateriesGridViewController = transitionContext.viewController(forKey: .to) as? EateriesGridViewController {
             containerView.addSubview(eateriesGridViewController.view)
             containerView.addSubview(menuViewController.menuHeaderView)
-            menuViewController.menuHeaderView.frame.origin.y += 64.0
+            menuViewController.menuHeaderView.frame = menuViewController.outerScrollView.convert(menuViewController.menuHeaderView.frame, to: containerView)
             UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
                 eateriesGridViewController.view.alpha = 1.0
                 eateriesGridViewController.view.transform = CGAffineTransform.identity

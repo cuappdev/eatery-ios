@@ -19,7 +19,7 @@ private let TitleDateFormatter: DateFormatter = {
     return formatter
 }()
 
-class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
+class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
     
     var eatery: Eatery
     var outerScrollView: UIScrollView!
@@ -68,6 +68,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         // Scroll View
         outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: (navigationController?.navigationBar.frame.maxY ?? 0.0), width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
         outerScrollView.contentSize = CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight)
+        outerScrollView.delegate = self
         outerScrollView.showsVerticalScrollIndicator = false
         outerScrollView.showsHorizontalScrollIndicator = false
         view.addSubview(outerScrollView)
@@ -137,6 +138,16 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         outerScrollView.bringSubview(toFront: menuHeaderView)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switch scrollView.contentOffset.y {
+        case -CGFloat.greatestFiniteMagnitude..<0:
+            menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight - scrollView.contentOffset.y
+            menuHeaderView.frame.origin = view.convert(CGPoint(x: 0.0, y: navigationController?.navigationBar.frame.maxY ?? 0.0), to: outerScrollView)
+        default:
+            menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight
+            menuHeaderView.frame.origin = CGPoint.zero
+        }
+    }
     
     func scrollViewDidChange() {
         let innerScrollView = pageViewController.pluckCurrentScrollView()
