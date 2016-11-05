@@ -8,6 +8,7 @@
 
 import UIKit
 import DiningStack
+import CoreLocation
 
 @objc protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
@@ -24,16 +25,16 @@ class MenuHeaderView: UIView {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
-    @IBOutlet weak var paymentView: UIView!
+    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet var paymentImageViews: [UIImageView]!
     
-    @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var mapButton: UIButton!
-    
-    override func awakeFromNib() {
-        favoriteButton.setImage(UIImage(named: "whiteStar"), for: UIControlState())
-        shareButton.setImage(UIImage(named: "shareIcon"), for: UIControlState())
+    func update(userLocation: CLLocation?) {
+        if let distance = userLocation?.distance(from: eatery.location) {
+            distanceLabel.text = "\(Double(round(10*distance/metersInMile)/10)) mi"
+        } else {
+            distanceLabel.text = "-- mi"
+        }
     }
     
     func setUp(_ eatery: Eatery, date: Date) {
@@ -49,37 +50,28 @@ class MenuHeaderView: UIView {
             break
         }
         
-        // Payment View
-        var paymentTypeViews: [UIImageView] = []
+        var images: [UIImage] = []
         
-        if (eatery.paymentMethods.contains(.Swipes)) {
-            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
-            paymentTypeViews.append(swipeIcon)
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            images.append(#imageLiteral(resourceName: "cashIcon"))
         }
         
         if (eatery.paymentMethods.contains(.BRB)) {
-            let brbIcon = UIImageView(image: UIImage(named: "brbIcon"))
-            paymentTypeViews.append(brbIcon)
+            images.append(#imageLiteral(resourceName: "brbIcon"))
         }
         
-        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
-            paymentTypeViews.append(cashIcon)
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            images.append(#imageLiteral(resourceName: "swipeIcon"))
         }
         
-        let payTypeView = UIView()
-        let payViewSize: CGFloat = 25.0
-        let payViewPadding: CGFloat = 10.0
-        var payViewFrame = CGRect(x: 0, y: 0, width: payViewSize, height: payViewSize)
-        
-        for payView in paymentTypeViews {
-            payView.frame = CGRect(x: payViewFrame.origin.x, y: 0, width: payViewSize, height: payViewSize)
-            payTypeView.addSubview(payView)
-            payViewFrame.origin.x += payViewSize + payViewPadding
+        for (index, imageView) in paymentImageViews.enumerated() {
+            if index < images.count {
+                imageView.image = images[index]
+                imageView.isHidden = false
+            } else {
+                imageView.isHidden = true
+            }
         }
-        
-        payTypeView.frame = CGRect(x: 95 - (payViewFrame.origin.x - 10), y: 0, width: payViewFrame.origin.x - 10, height: payViewFrame.height)
-        paymentView.addSubview(payTypeView)
         
         // Title Label
         titleLabel.text = eatery.nickname
@@ -94,17 +86,11 @@ class MenuHeaderView: UIView {
         
         // Background
         backgroundImageView.image = eatery.photo
-        renderFavoriteImage()
-    }
-    
-    func renderFavoriteImage() {
-        let name = eatery.favorite ? "goldStar" : "whiteStar"
-        favoriteButton.setImage(UIImage(named: name), for: .normal)
+        
     }
     
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
         eatery.favorite = !eatery.favorite
-        renderFavoriteImage()
         
         delegate?.favoriteButtonPressed()
     }

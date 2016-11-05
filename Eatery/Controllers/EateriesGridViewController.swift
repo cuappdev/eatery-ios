@@ -54,7 +54,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         
         title = "Eateries"
         
-        sortType = Eatery.Sorting(rawValue: (defaults.string(forKey: "sortOption") ?? "Location")) ?? .location
         nearestLocationPressed()
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
@@ -482,7 +481,7 @@ extension EateriesGridViewController: UICollectionViewDataSource {
             
             sectionTitleHeaderView.titleLabel.textColor = section == 0 ? UIColor.eateryBlue : UIColor.gray
             
-            sectionTitleHeaderView.titleLabel.text = sortType.names[section]
+            sectionTitleHeaderView.titleLabel.text = sortType.names[section].uppercased()
             
             return sectionTitleHeaderView
         }
