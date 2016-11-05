@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
+class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var connectionHandler: BRBConnectionHandler!
     var loginView: BRBLoginView!
@@ -32,13 +32,6 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        connectionHandler = BRBConnectionHandler(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 0.5))
-        connectionHandler.alpha = 0.0
-        connectionHandler.navigationDelegate = self
-        view.addSubview(connectionHandler)
-
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
-        
         if !loggedIn {
             navigationItem.rightBarButtonItem?.isEnabled = false
             loginView = BRBLoginView(frame: view.frame)
@@ -48,15 +41,29 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tapGesture)
+
+        connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
+        connectionHandler.errorDelegate = self
         
-        //add netid + password from keychain
+        // add netid + password from keychain
         let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
         loginView.netidTextField.text = keychainItemWrapper["Netid"] as! String?
         loginView.passwordTextField.text = keychainItemWrapper["Password"] as! String?
-        if (loginView.netidTextField.text!.characters.count > 0 &&
-            loginView.passwordTextField.text!.characters.count > 0)
+
+        if connectionHandler.stage == .fundsHome
         {
-            loginView.login()
+            self.finishedLogin()
+        }
+        else
+        {
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
+            
+            if UserDefaults.standard.bool(forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY) &&
+                loginView.netidTextField.text!.characters.count > 0 &&
+                loginView.passwordTextField.text!.characters.count > 0
+            {
+                loginView.login()
+            }
         }
     }
     
@@ -145,29 +152,11 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
     }
     ///
     
+    /// BRBConnectionErrorHandler delegate
+    
     func failedToLogin(error: String) {
         print(error)
         loginView.loginFailedWithError(error: error)
-    }
-    
-    func login() {
-        let javascript = "document.getElementsByName('netid')[0].value = '\(connectionHandler.netid)';document.getElementsByName('password')[0].value = '\(connectionHandler.password)';document.forms[0].submit();"
-        
-        connectionHandler.evaluateJavaScript(javascript){ (result: Any?, error: Error?) -> Void in
-            if error == nil {
-                if self.connectionHandler.failedToLogin() {
-                    if self.connectionHandler.url?.absoluteString == "https://get.cbord.com/cornell/full/update_profile.php" {
-                        self.failedToLogin(error: "need to update account")
-                    }
-                    self.failedToLogin(error: "incorrect netid and/or password")
-                }
-            } else if error!.localizedDescription.contains("JavaScript") {
-                print(error!.localizedDescription)
-            } else {
-                self.failedToLogin(error: error!.localizedDescription)
-            }
-            self.connectionHandler.loginCount += 1
-        }
     }
     
     func finishedLogin() {
@@ -186,34 +175,16 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         }
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        connectionHandler.getStageAndRunBlock {
-            print(self.connectionHandler.stage)
-            switch self.connectionHandler.stage {
-                case .loginFailed:
-                    self.failedToLogin(error: "incorrect netid and/or password")
-                case .loginScreen:
-                    self.login()
-                case .fundsHome:
-                    self.connectionHandler.getAccountBalance()
-                case .diningHistory:
-                    self.connectionHandler.getDiningHistory()
-                default:
-                    print("In Transition Stage")
-            }
-        }
-    }
-    
     func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController) {
         tableView.removeFromSuperview()
         tableView = nil
         
-        connectionHandler = BRBConnectionHandler(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 0.5))
-        connectionHandler.alpha = 0.0
-        connectionHandler.navigationDelegate = self
-        view.addSubview(connectionHandler)
-
         navigationItem.rightBarButtonItem?.isEnabled = false
+
+        (UIApplication.shared.delegate as! AppDelegate).connectionHandler = BRBConnectionHandler()
+        connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
+        connectionHandler.errorDelegate = self
+        
         loginView = BRBLoginView(frame: view.bounds)
         loginView.delegate = self
         view.addSubview(loginView)
@@ -231,7 +202,6 @@ class BRBViewController: UIViewController, WKNavigationDelegate, BRBLoginViewDel
         
     }
     
-
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {
         connectionHandler.netid = netid
         connectionHandler.password = password

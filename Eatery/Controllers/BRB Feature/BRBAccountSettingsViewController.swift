@@ -97,7 +97,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDataSource,
         cell2.accessoryView = switch2
 
         cells.append(cell1)
-        cells.append(cell2)
+        //cells.append(cell2)
         cells.append(cell3)
         cells.append(cell4)
         
@@ -150,7 +150,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath as NSIndexPath).row == 3 {
+        if (indexPath as NSIndexPath).row == 2 {
             tableView.deselectRow(at: indexPath, animated: false)
             logout()
         }

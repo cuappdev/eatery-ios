@@ -9,7 +9,11 @@
 import UIKit
 import WebKit
 
-class BRBConnectionHandler: WKWebView {
+protocol BRBConnectionErrorHandler {
+    func failedToLogin(error: String)
+}
+
+class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
     struct HistoryEntry {
         var description: String = ""
@@ -41,6 +45,16 @@ class BRBConnectionHandler: WKWebView {
     var loginCount = 0
     var netid: String = ""
     var password: String = ""
+    var errorDelegate: BRBConnectionErrorHandler?
+    
+    init() {
+        super.init(frame: .zero, configuration: WKWebViewConfiguration())
+        navigationDelegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: -
     //MARK: Connection Handling
@@ -65,10 +79,13 @@ class BRBConnectionHandler: WKWebView {
      
      */
     func handleLogin() {
-        loginCount = 0
-        stage = .loginScreen
-        let loginURL = URL(string: loginURLString)!
-        load(URLRequest(url: loginURL))
+        print("Handling login", stage)
+        if stage != .transition {
+            loginCount = 0
+            stage = .loginScreen
+            let loginURL = URL(string: loginURLString)!
+            load(URLRequest(url: loginURL))
+        }
     }
     
     func failedToLogin() -> Bool {
@@ -190,6 +207,44 @@ class BRBConnectionHandler: WKWebView {
         return ""
     }
     
+    func login() {
+        let javascript = "document.getElementsByName('netid')[0].value = '\(netid)';document.getElementsByName('password')[0].value = '\(password)';document.forms[0].submit();"
+        
+        evaluateJavaScript(javascript){ (result: Any?, error: Error?) -> Void in
+            if error == nil {
+                if self.failedToLogin() {
+                    if self.url?.absoluteString == "https://get.cbord.com/cornell/full/update_profile.php" {
+                        self.errorDelegate?.failedToLogin(error: "need to update account")
+                    }
+                    self.errorDelegate?.failedToLogin(error: "incorrect netid and/or password")
+                }
+            } else if error!.localizedDescription.contains("JavaScript") {
+                print(error!.localizedDescription)
+            } else {
+                self.errorDelegate?.failedToLogin(error: error!.localizedDescription)
+            }
+            self.loginCount += 1
+        }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.getStageAndRunBlock {
+            print(self.stage)
+            switch self.stage {
+            case .loginFailed:
+                self.errorDelegate?.failedToLogin(error: "incorrect netid and/or password")
+            case .loginScreen:
+                self.login()
+            case .fundsHome:
+                self.getAccountBalance()
+            case .diningHistory:
+                self.getDiningHistory()
+            default:
+                print("In Transition Stage")
+            }
+        }
+    }
+
     /**
      
      - Gets the stage enum for the currently displayed web page and runs a block after fetching
