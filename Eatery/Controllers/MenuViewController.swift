@@ -24,7 +24,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
     var eatery: Eatery
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
-    var previousContentOffset: CGFloat = 0
     var menuHeaderView: MenuHeaderView!
     var delegate: MenuButtonsDelegate?
     let displayedDate: Date
@@ -53,7 +52,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         
         let dateString = TitleDateFormatter.string(from: displayedDate)
         let todayDateString = TitleDateFormatter.string(from: Date())
-        let headerAndMenuSeparation = CGFloat(-1)
         
         // Set navigation bar title
         let navTitleView = NavigationTitleView.loadFromNib()
@@ -68,9 +66,10 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         navigationItem.titleView = navTitleView
         
         // Scroll View
-        outerScrollView = UIScrollView(frame: view.frame)
-        let scrollViewContentSizeHeight = view.frame.height + kMenuHeaderViewFrameHeight
-        outerScrollView.contentSize = CGSize(width: view.frame.width, height: scrollViewContentSizeHeight)
+        outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: (navigationController?.navigationBar.frame.maxY ?? 0.0), width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
+        outerScrollView.contentSize = CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight)
+        outerScrollView.showsVerticalScrollIndicator = false
+        outerScrollView.showsHorizontalScrollIndicator = false
         view.addSubview(outerScrollView)
         
         // Header Views
@@ -108,22 +107,23 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
             meals.append("General")
         }
         
-        var mealViewControllers: [MealTableViewController] = []
-        for meal in meals {
+        let mealViewControllers: [MealTableViewController] = meals.map {
             let mealVC = MealTableViewController()
             mealVC.eatery = eatery
-            mealVC.meal = meal
-            mealVC.event = eventsDict[meal]
+            mealVC.meal = $0
+            mealVC.event = eventsDict[$0]
             mealVC.tableView.layoutIfNeeded()
-            mealViewControllers.append(mealVC)
+            return mealVC
         }
+        
+        outerScrollView.contentSize.height = outerScrollView.contentSize.height + (mealViewControllers.map { $0.tableView.bounds.height }.max() ?? 0.0)
         
         // PageViewController
         pageViewController = TabbedPageViewController()
         pageViewController.viewControllers = mealViewControllers
         
         pageViewController.view.frame = view.frame
-        pageViewController.view.frame = pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight + headerAndMenuSeparation)
+        pageViewController.view.frame = pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight)
         pageViewController.scrollDelegate = self
         
         pageViewController.willMove(toParentViewController:self)
@@ -131,163 +131,14 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         outerScrollView.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
         
-        outerScrollView.isScrollEnabled = false
-        
-        let scrollGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MenuViewController.handleScroll(_:)))
-        view.addGestureRecognizer(scrollGestureRecognizer)
-        
-        animator = UIDynamicAnimator()
-        
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
         
         outerScrollView.bringSubview(toFront: menuHeaderView)
     }
     
-    func handleScroll(_ gesture: UIPanGestureRecognizer) {
-        internalScrollHandler(gesture.translation(in: view), state: gesture.state, velocity: -gesture.velocity(in: view).y)
-    }
-    
-    fileprivate var startingOffset = CGPoint.zero
-    fileprivate var currentOffset = CGPoint.zero
-    
-    var animator: UIDynamicAnimator!
-    var dynamicItem = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-    var decelerationBehavior: UIDynamicItemBehavior?
-    var springBehavior: UIAttachmentBehavior?
-    
-    fileprivate func internalScrollHandler(_ translation: CGPoint, state: UIGestureRecognizerState, velocity: CGFloat) {
-        if state == .began {
-            startingOffset = currentOffset
-            animator.removeAllBehaviors()
-            decelerationBehavior = nil
-            springBehavior = nil
-        }
-        
-        let offset = CGPoint(x: 0, y: -translation.y + startingOffset.y)
-        currentOffset = offset
-        let innerOffset = CGPoint(x: 0, y: offset.y - kMenuHeaderViewFrameHeight)
-        let innerScrollView = pageViewController.pluckCurrentScrollView()
-        // TODO: check if tab bar is visible
-        let maxOuterYOffset = max(kMenuHeaderViewFrameHeight + innerScrollView.contentSize.height - view.frame.height, 0)
-        let maxInnerYOffset = max(innerScrollView.contentSize.height - view.frame.height, 0)
-        
-        switch state {
-        case .changed:
-            func rubberBandDistance(_ offset: CGFloat, dimension: CGFloat) -> CGFloat {
-                let constant: CGFloat = 0.55
-                let result = (constant * abs(offset) * dimension) / (dimension + constant * abs(offset))
-                return offset < 0 ? -result : result
-            }
-            // Less than zero
-            if offset.y < 0 {
-                let distance = rubberBandDistance(offset.y, dimension: outerScrollView.contentSize.height)
-                outerScrollView.contentOffset.y = distance
-                //stetch the header
-                menuHeaderView.frame = CGRect(x: 0, y: distance, width: view.frame.width, height: kMenuHeaderViewFrameHeight - distance)
-                
-                
-                guard springBehavior == nil && decelerationBehavior != nil else { return }
-                let target = CGPoint.zero
-                springBehavior = createSpringWithTarget(target)
-                animator.addBehavior(springBehavior!)
-            }
-            // Greater than max
-            else if offset.y > maxOuterYOffset {
-                let delta = offset.y - maxOuterYOffset
-                let outerMaxYOffset = min(maxOuterYOffset, kMenuHeaderViewFrameHeight)
-                // Menu is short -> wont push header
-                if outerMaxYOffset < kMenuHeaderViewFrameHeight {
-                    outerScrollView.contentOffset.y = outerMaxYOffset + rubberBandDistance(delta, dimension: outerScrollView.contentSize.height)
-                    
-                    guard springBehavior == nil && decelerationBehavior != nil else { return }
-                    let target = CGPoint(x: 0, y: outerMaxYOffset)
-                    springBehavior = createSpringWithTarget(target)
-                    animator.addBehavior(springBehavior!)
-                } else {
-                    outerScrollView.contentOffset.y = kMenuHeaderViewFrameHeight
-                    innerScrollView.contentOffset.y = maxInnerYOffset + rubberBandDistance(delta, dimension: innerScrollView.contentSize.height)
-                    
-                    guard springBehavior == nil && decelerationBehavior != nil else { return }
-                    let outerMaxYOffset = min(maxOuterYOffset, kMenuHeaderViewFrameHeight)
-                    let target = CGPoint(x: 0, y: maxInnerYOffset + outerMaxYOffset)
-                    springBehavior = createSpringWithTarget(target)
-                    animator.addBehavior(springBehavior!)
-                }
-            } else {
-                if let spring = springBehavior {
-                    animator.removeBehavior(spring)
-                }
-                
-                // Greater than header, less than max
-                if offset.y > kMenuHeaderViewFrameHeight {
-                    //calculate shadow attributes
-                    let delta = offset.y - kMenuHeaderViewFrameHeight
-                    let radius = min(4, delta/10)
-                    let opacity = min(0.2, delta/10)
-                    pageViewController.setTabBarShadow(radius, opacity: Float(opacity))
-                    //calculate nav title animation
-                    if let navView = navigationItem.titleView as? NavigationTitleView {
-                        let height = min(22, delta/5)
-                        let width = min(navView.frame.width, delta)
-                        let opacity = min(1.0, navView.frame.width/width)
-                        navView.nameLabelHeightConstraint.constant = height
-                        navView.eateryNameLabel.font = .boldSystemFont(ofSize: min(17, delta/5))
-                        navView.eateryNameLabel.layer.opacity = Float(opacity)
-                        navView.dateLabel.font = .boldSystemFont(ofSize: 17 - min(5, delta/5))
-                    }
-                    outerScrollView.contentOffset.y = kMenuHeaderViewFrameHeight
-                    innerScrollView.setContentOffset(innerOffset, animated: false)
-                }
-                    // Pushing header
-                else {
-                    pageViewController.setTabBarShadow(0, opacity: 0)
-                    if let navView = navigationItem.titleView as? NavigationTitleView {
-                        navView.nameLabelHeightConstraint.constant = 0
-                        navView.eateryNameLabel.font = .boldSystemFont(ofSize: 0)
-                        navView.eateryNameLabel.layer.opacity = 0
-                        navView.dateLabel.font = .boldSystemFont(ofSize: 17)
-                    }
-                    outerScrollView.contentOffset = offset
-                    innerScrollView.contentOffset = CGPoint.zero
-                }
-
-            }
-        case .ended, .cancelled:
-            if velocity != 0 {
-                // Inertia behavior
-                startingOffset = offset
-                dynamicItem.center = startingOffset
-                decelerationBehavior = UIDynamicItemBehavior(items: [dynamicItem])
-                decelerationBehavior!.addLinearVelocity(CGPoint(x: 0, y: velocity), for: dynamicItem)
-                decelerationBehavior!.resistance = 3
-                decelerationBehavior!.action = { () -> Void in
-                    let translation = self.dynamicItem.center.y - self.startingOffset.y
-                    self.internalScrollHandler(CGPoint(x: 0, y: -translation), state: .changed, velocity: 0)
-                }
-                animator.addBehavior(decelerationBehavior!)
-                
-            }
-        default:
-            print("")
-        }
-    }
-    
-    func createSpringWithTarget(_ target: CGPoint) -> UIAttachmentBehavior {
-        let spring = UIAttachmentBehavior(item: dynamicItem, attachedToAnchor: target)
-        // Has to be equal to zero, because otherwise the bounds.origin wouldn't exactly match the target's position.
-        spring.length = 0
-        // These two values were chosen by trial and error.
-        spring.damping = 1
-        spring.frequency = 2
-        return spring
-    }
     
     func scrollViewDidChange() {
-        animator.removeAllBehaviors()
-        decelerationBehavior = nil
-        springBehavior = nil
-        
         let innerScrollView = pageViewController.pluckCurrentScrollView()
         let innerContentHeight = innerScrollView.contentSize.height + 44 // tab bar height
         let maxOuterYOffset = max(kMenuHeaderViewFrameHeight + innerContentHeight - view.frame.height, 0)
@@ -297,10 +148,6 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
             currentOuterYOffset = maxOuterYOffset
         }
         outerScrollView.setContentOffset(CGPoint(x: 0, y: currentOuterYOffset), animated: true)
-
-        let currentTotalYOffset = currentOuterYOffset + innerScrollView.contentOffset.y + 44 // tab bar height
-        currentOffset = CGPoint(x: 0, y: currentTotalYOffset)
-        startingOffset = currentOffset
     }
     
     // MARK: -

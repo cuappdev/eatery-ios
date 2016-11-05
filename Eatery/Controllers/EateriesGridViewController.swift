@@ -433,6 +433,7 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
         cell.set(eatery: eatery, userLocation: userLocation)
+        cell.isHidden = false
         
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
@@ -493,7 +494,7 @@ extension EateriesGridViewController: UICollectionViewDelegate {
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         
         if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
-            eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view).offsetBy(dx: 0.0, dy: navigationController?.navigationBar.frame.maxY ?? 0.0)
+            eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
             eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
             self.navigationController?.pushViewController(menuViewController, animated: true)
             cell.isHidden = true
@@ -628,7 +629,7 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
         let collectionViewPoint = view.convert(location, to: collectionView)
         
         guard let indexPath = collectionView.indexPathForItem(at: collectionViewPoint),
-            let cell = collectionView.cellForItem(at: indexPath) else {
+            let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell else {
                 print("Unable to get cell at location: \(location)")
                 return nil
         }
@@ -637,7 +638,7 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
         menuVC.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
         eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view).offsetBy(dx: 0.0, dy: navigationController?.navigationBar.frame.maxY ?? 0.0)
-
+        eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
         return menuVC
     }
     
