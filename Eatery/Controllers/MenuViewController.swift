@@ -48,8 +48,9 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         super.viewDidLoad()
 
         // Appearance
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .clear
         navigationController?.setNavigationBarHidden(false, animated: true)
+        
         let dateString = TitleDateFormatter.string(from: displayedDate)
         let todayDateString = TitleDateFormatter.string(from: Date())
         let headerAndMenuSeparation = CGFloat(-1)
@@ -140,6 +141,7 @@ class MenuViewController: UIViewController, MenuButtonsDelegate, TabbedPageViewC
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
         
+        outerScrollView.bringSubview(toFront: menuHeaderView)
     }
     
     func handleScroll(_ gesture: UIPanGestureRecognizer) {

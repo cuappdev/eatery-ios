@@ -26,6 +26,7 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet var paymentImageViews: [UIImageView]!
     
@@ -40,15 +41,6 @@ class MenuHeaderView: UIView {
     func setUp(_ eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
-
-        // Status View
-        let eateryStatus = eatery.generateDescriptionOfCurrentState()
-        switch eateryStatus {
-        case .open(_):
-            break
-        case .closed(_):
-            break
-        }
         
         var images: [UIImage] = []
         
@@ -77,16 +69,32 @@ class MenuHeaderView: UIView {
         titleLabel.text = eatery.nickname
         if eatery.slug == "RPCC-Marketplace" { titleLabel.text = "Robert Purcell Marketplace Eatery" }
         
-        // Hours
-        var hoursText = eatery.activeEventsForDate(date: displayedDate)
-        if hoursText != "Closed" {
-            hoursText = "Open \(hoursText)"
-        }
-        hoursLabel.text = hoursText
+//        // Hours
+//        var hoursText = eatery.activeEventsForDate(date: displayedDate)
+//        if hoursText != "Closed" {
+//            hoursText = "Open \(hoursText)"
+//        }
+//        hoursLabel.text = hoursText
         
         // Background
         backgroundImageView.image = eatery.photo
         
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+        case .open(let message):
+            titleLabel.textColor = UIColor.black
+            hoursLabel.text = message
+            hoursLabel.textColor = UIColor.darkGray
+            distanceLabel.textColor = UIColor.darkGray
+            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
+        case .closed(let message):
+            titleLabel.textColor = UIColor.gray
+            hoursLabel.text = message
+            hoursLabel.textColor = UIColor.gray
+            distanceLabel.textColor = UIColor.gray
+            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        }
+
     }
     
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {

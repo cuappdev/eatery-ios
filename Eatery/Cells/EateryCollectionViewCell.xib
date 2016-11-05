@@ -24,10 +24,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="431" height="209"/>
                         <color key="backgroundColor" white="0.0" alpha="0.24180237676056338" colorSpace="calibratedWhite"/>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4D6-M7-tVj" userLabel="ClosedView">
-                        <rect key="frame" x="0.0" y="0.0" width="431" height="209"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.30234925176056338" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zrr-Hk-q8j">
                         <rect key="frame" x="401" y="10" width="20" height="20"/>
                         <constraints>
@@ -112,11 +108,8 @@
                 <constraint firstItem="gbN-6m-frS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="6Wy-cL-8CW"/>
                 <constraint firstAttribute="trailing" secondItem="Agi-Ty-dfB" secondAttribute="trailing" constant="10" id="6m2-sG-VlK"/>
                 <constraint firstItem="Agi-Ty-dfB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="7Zl-5f-uz2"/>
-                <constraint firstItem="HoN-He-Rpa" firstAttribute="top" secondItem="4D6-M7-tVj" secondAttribute="bottom" id="MtD-Oi-qrQ"/>
                 <constraint firstItem="yaD-ts-Y7k" firstAttribute="top" secondItem="HoN-He-Rpa" secondAttribute="bottom" id="OM5-nL-IVm"/>
-                <constraint firstAttribute="trailing" secondItem="4D6-M7-tVj" secondAttribute="trailing" id="OvA-Nh-2u4"/>
                 <constraint firstAttribute="bottom" secondItem="yaD-ts-Y7k" secondAttribute="bottom" id="SZd-nu-caX"/>
-                <constraint firstItem="4D6-M7-tVj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="V9R-Z2-fOx"/>
                 <constraint firstAttribute="trailing" secondItem="eGn-bH-ye1" secondAttribute="trailing" id="W8E-F7-EQg"/>
                 <constraint firstItem="eyk-u5-ZqO" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="a5c-Fe-IRP"/>
                 <constraint firstAttribute="trailing" secondItem="yaD-ts-Y7k" secondAttribute="trailing" id="anH-nW-I2O"/>
@@ -124,7 +117,6 @@
                 <constraint firstItem="zrr-Hk-q8j" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="c5m-Ru-ncN"/>
                 <constraint firstItem="HoN-He-Rpa" firstAttribute="top" secondItem="eGn-bH-ye1" secondAttribute="bottom" id="dWX-IY-oaC"/>
                 <constraint firstItem="zrr-Hk-q8j" firstAttribute="leading" secondItem="LVV-ju-Zle" secondAttribute="trailing" constant="5" id="fN6-K0-U3M"/>
-                <constraint firstItem="4D6-M7-tVj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="nRo-vj-FHm"/>
                 <constraint firstAttribute="trailing" secondItem="zrr-Hk-q8j" secondAttribute="trailing" constant="10" id="ori-Pp-mIM"/>
                 <constraint firstItem="eGn-bH-ye1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="osL-97-3BN"/>
                 <constraint firstAttribute="trailing" secondItem="HoN-He-Rpa" secondAttribute="trailing" id="p7g-Xz-dmK"/>
@@ -137,7 +129,7 @@
             <size key="customSize" width="431" height="258"/>
             <connections>
                 <outlet property="backgroundImageView" destination="eyk-u5-ZqO" id="QIc-Wr-cpG"/>
-                <outlet property="closedView" destination="4D6-M7-tVj" id="JWK-1n-EPx"/>
+                <outlet property="closedView" destination="eGn-bH-ye1" id="3L9-XI-WIo"/>
                 <outlet property="distanceLabel" destination="4r4-Ps-Xll" id="c52-c8-75G"/>
                 <outlet property="menuTextView" destination="yaD-ts-Y7k" id="WfQ-o8-OsG"/>
                 <outlet property="menuTextViewHeight" destination="mZw-bX-GgC" id="N3K-KR-JPL"/>

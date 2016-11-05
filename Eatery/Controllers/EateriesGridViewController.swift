@@ -14,17 +14,18 @@ let kCollectionViewGutterWidth: CGFloat = 10
 
 class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
-    fileprivate var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     fileprivate let topPadding: CGFloat = 10
-    fileprivate var eateries: [Eatery] = []
-    fileprivate var eateryData: [String: [Eatery]] = [:]
-    
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var sortView: UIView!
     fileprivate var sortButtons: [UIButton] = []
     fileprivate var arrowImageView: UIImageView!
     fileprivate var transparencyButton: UIButton!
     fileprivate var isDropDownDisplayed = false
+    fileprivate let eateryNavigationAnimator = EateryNavigationAnimator()
+    
+    fileprivate var eateries: [Eatery] = []
+    fileprivate var eateryData: [String: [Eatery]] = [:]
     
     fileprivate var searchBar: UISearchBar!
     fileprivate var sortType: Eatery.Sorting = .open
@@ -59,6 +60,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         navigationController?.view.backgroundColor = .white
+        navigationController?.delegate = self
 
         setupSearchBar()
         setupCollectionView()
@@ -81,16 +83,9 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startUserActivity()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-//        UIView.animate(withDuration: 0.0, animations: {
-//            self.arrowImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//        })
-//        UIView.animate(withDuration: 0.0, animations: {
-//            self.sortView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//        }) 
-//        isDropDownDisplayed = false
+        for cell in collectionView.visibleCells {
+            cell.isHidden = false
+        }
     }
     
     func goToLookAheadVC() {
@@ -495,14 +490,26 @@ extension EateriesGridViewController: UICollectionViewDelegate {
             Analytics.trackSearchResultSelected(searchTerm: self.searchBar.text!)
         }
         Analytics.screenMenuViewController(eateryId: eatery(for: indexPath).slug)
-        let menuVC = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
-        self.navigationController?.pushViewController(menuVC, animated: true)
+        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
+        
+        if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
+            eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view).offsetBy(dx: 0.0, dy: navigationController?.navigationBar.frame.maxY ?? 0.0)
+            eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
+            self.navigationController?.pushViewController(menuViewController, animated: true)
+            cell.isHidden = true
+        }
     }
 }
 
 extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
+    }
+}
+
+extension EateriesGridViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return eateryNavigationAnimator
     }
 }
 

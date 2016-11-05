@@ -29,6 +29,7 @@
 		659B21821C70796600F3B138 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659B21811C70796600F3B138 /* NotificationController.swift */; };
 		659B21841C70796600F3B138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B21831C70796600F3B138 /* Assets.xcassets */; };
 		659B21881C70796600F3B138 /* Eatery Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 659B216A1C70796600F3B138 /* Eatery Watch App.app */; };
+		65CF18681DCD8C0600BFF21C /* EateryNavigationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CF18671DCD8C0600BFF21C /* EateryNavigationAnimator.swift */; };
 		6E0B505E1CB0B65B0054F600 /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B505D1CB0B65B0054F600 /* Sort.swift */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
@@ -199,6 +200,7 @@
 		659B21811C70796600F3B138 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		659B21831C70796600F3B138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		659B21851C70796600F3B138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65CF18671DCD8C0600BFF21C /* EateryNavigationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryNavigationAnimator.swift; sourceTree = "<group>"; };
 		6E0B505D1CB0B65B0054F600 /* Sort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		6E8A627AA2A6DA1D7BB83A8E /* Pods_Eatery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
 				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
+				65CF18671DCD8C0600BFF21C /* EateryNavigationAnimator.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -909,7 +912,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D2ADEC652AA0DC4AC17DDC27 /* [CP] Copy Pods Resources */ = {
@@ -939,7 +942,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E998725CF85B91E2E9ACF06B /* [CP] Check Pods Manifest.lock */ = {
@@ -954,7 +957,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1006,6 +1009,7 @@
 				E9CFC0B81C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
+				65CF18681DCD8C0600BFF21C /* EateryNavigationAnimator.swift in Sources */,
 				9584FE511CDD6C3B001A3AB5 /* BRBLoginView.swift in Sources */,
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */,

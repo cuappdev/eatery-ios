@@ -8,7 +8,6 @@
 
 import UIKit
 import DiningStack
-import Haneke
 import CoreLocation
 
 let metersInMile: Double = 1609.344
@@ -45,7 +44,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         self.eatery = eatery
         
         if let photo = eatery.photo {
-            backgroundImageView.hnk_setImage(photo, key: eatery.slug)
+            backgroundImageView.image = photo
         } else {
             backgroundImageView.image = nil
         }
@@ -87,13 +86,13 @@ class EateryCollectionViewCell: UICollectionViewCell {
             timeLabel.text = message
             timeLabel.textColor = UIColor.darkGray
             distanceLabel.textColor = UIColor.darkGray
-            closedView.isHidden = true
+            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
         case .closed(let message):
             titleLabel.textColor = UIColor.gray
             timeLabel.text = message
             timeLabel.textColor = UIColor.gray
             distanceLabel.textColor = UIColor.gray
-            closedView.isHidden = false
+            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         }
     }
 }

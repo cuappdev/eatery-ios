@@ -17,6 +17,10 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xJe-ai-0Pk">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="546"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hnu-be-bXz">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="546"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EEZ-qH-ero">
                     <rect key="frame" x="0.0" y="546" width="414" height="54"/>
                     <subviews>
@@ -78,6 +82,8 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="hnu-be-bXz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1Oz-c2-NJg"/>
+                <constraint firstAttribute="trailing" secondItem="hnu-be-bXz" secondAttribute="trailing" id="EgC-tC-yX3"/>
                 <constraint firstItem="EEZ-qH-ero" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="GxO-3q-Xaq"/>
                 <constraint firstAttribute="bottom" secondItem="EEZ-qH-ero" secondAttribute="bottom" id="M3a-8c-GAN"/>
                 <constraint firstItem="G0A-8O-3VE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="QZt-nU-fET"/>
@@ -86,16 +92,19 @@
                 <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dy2-HV-4ni"/>
                 <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eBA-wY-58E"/>
                 <constraint firstItem="G0A-8O-3VE" firstAttribute="top" secondItem="jxx-OI-FB8" secondAttribute="top" id="f6t-Bl-nGc"/>
+                <constraint firstItem="EEZ-qH-ero" firstAttribute="top" secondItem="hnu-be-bXz" secondAttribute="bottom" id="m10-Ac-hQG"/>
                 <constraint firstItem="fqS-ff-SWf" firstAttribute="leading" secondItem="jxx-OI-FB8" secondAttribute="trailing" constant="5" id="mkA-de-0Wf"/>
                 <constraint firstItem="G0A-8O-3VE" firstAttribute="leading" secondItem="fqS-ff-SWf" secondAttribute="trailing" constant="5" id="nYe-7v-e64"/>
                 <constraint firstItem="EEZ-qH-ero" firstAttribute="top" secondItem="xJe-ai-0Pk" secondAttribute="bottom" id="ub9-jj-Zdn"/>
                 <constraint firstAttribute="trailing" secondItem="G0A-8O-3VE" secondAttribute="trailing" constant="10" id="xmE-nj-A6c"/>
+                <constraint firstItem="hnu-be-bXz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xtM-jJ-WER"/>
                 <constraint firstItem="fqS-ff-SWf" firstAttribute="top" secondItem="jxx-OI-FB8" secondAttribute="top" id="yek-of-HYf"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="backgroundImageView" destination="xJe-ai-0Pk" id="cfF-Oj-Njg"/>
+                <outlet property="closedView" destination="hnu-be-bXz" id="1KD-w6-Rmk"/>
                 <outlet property="distanceLabel" destination="y6C-ed-egy" id="zF5-05-mw6"/>
                 <outlet property="hoursLabel" destination="Cj6-pz-pdv" id="646-On-spw"/>
                 <outlet property="titleLabel" destination="zoJ-85-Vj9" id="0bD-b3-U5L"/>
