@@ -22,6 +22,7 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
         
         if let eateriesGridViewController = transitionContext.viewController(forKey: .from) as? EateriesGridViewController,
             let menuViewController = transitionContext.viewController(forKey: .to) as? MenuViewController {
+            menuViewController.view.frame = transitionContext.finalFrame(for: menuViewController)
             containerView.addSubview(menuViewController.view)
             let menuHeaderViewDefaultFrame = menuViewController.menuHeaderView.frame
             

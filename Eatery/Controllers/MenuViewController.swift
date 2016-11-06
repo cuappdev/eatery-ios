@@ -31,7 +31,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     var detailedTitleView: UIView?
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
-    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = NSDate() as Date, meal: String? = nil) {
+    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil) {
         self.eatery = eatery
         self.delegate = delegate
         self.displayedDate = date
@@ -48,7 +48,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         // Appearance
         view.backgroundColor = .clear
-        navigationController?.setNavigationBarHidden(false, animated: true)
         
         let dateString = TitleDateFormatter.string(from: displayedDate)
         let todayDateString = TitleDateFormatter.string(from: Date())
@@ -66,7 +65,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         navigationItem.titleView = navTitleView
         
         // Scroll View
-        outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: (navigationController?.navigationBar.frame.maxY ?? 0.0), width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
+        outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
         outerScrollView.contentSize = CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight)
         outerScrollView.delegate = self
         outerScrollView.showsVerticalScrollIndicator = false
@@ -127,7 +126,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController.view.frame = pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight)
         pageViewController.scrollDelegate = self
         
-        pageViewController.willMove(toParentViewController:self)
+        pageViewController.willMove(toParentViewController: self)
         addChildViewController(pageViewController)
         outerScrollView.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
@@ -142,7 +141,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         switch scrollView.contentOffset.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight - scrollView.contentOffset.y
-            menuHeaderView.frame.origin = view.convert(CGPoint(x: 0.0, y: navigationController?.navigationBar.frame.maxY ?? 0.0), to: outerScrollView)
+            menuHeaderView.frame.origin = view.convert(CGPoint.zero, to: outerScrollView)
         default:
             menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight
             menuHeaderView.frame.origin = CGPoint.zero
