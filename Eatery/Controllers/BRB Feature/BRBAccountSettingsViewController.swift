@@ -57,16 +57,16 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Account Settings"
+        navigationItem.title = "Settings"
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        tableView = UITableView(frame: CGRect(x: 0, y: 70, width: view.frame.width, height: view.frame.height / 2.0))
+        tableView = UITableView(frame: view.bounds, style: .grouped)
         tableView.backgroundColor = UIColor.clear
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isScrollEnabled = false
-        tableView.rowHeight = 50
+        //tableView.rowHeight = 50
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsets.zero
         view.addSubview(tableView)

@@ -94,12 +94,12 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
     /**
      
-     - Loads Dining URL Page
-     
-     - TODO: Dining history is not currently being handled.
+     - Loads Full Dining History Page
      
      */
     func loadDiningHistory() {
+        self.diningHistory = []
+
         if stage != .loginScreen || stage != .loginFailed || stage != .transition {
             let historyURL = URL(string: diningHistoryURLString)!
             load(URLRequest(url: historyURL))
@@ -116,33 +116,62 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      */
     func getDiningHistory() {
         getHTML { (html: NSString) in
-            self.diningHistory = []
-            
-            let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points debit\\\" title=\\\"debit\\\">(.*?)<\\/td><\\/tr>)"
+            let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_(and_|)time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points debit\\\" title=\\\"debit\\\">(.*?)<\\/td><\\/tr>)"
 
             let regex = try? NSRegularExpression(pattern: tableHTMLRegex as String, options: .useUnicodeWordBoundaries)
-            if let matches = regex?.matches(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, html.length)) {
-                for match in matches {
+            if let matches = regex?.matches(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, html.length))
+            {
+                for match in matches
+                {
                     var entry = HistoryEntry()
-                    let innerRegex1 = try? NSRegularExpression(pattern: "account_name\\\">(.+?)<" as String, options: .useUnicodeWordBoundaries)
-                    if let accountName = innerRegex1?.firstMatch(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds, range: match.range)
-                    {
-                        entry.description = html.substring(with: NSMakeRange(accountName.range.location + 14, accountName.range.length - 15))
-                    }
-                    let innerRegex2 = try? NSRegularExpression(pattern: "(redit|debit)\\\">(.+?)<" as String, options: .useUnicodeWordBoundaries)
-                    if let amount = innerRegex2?.firstMatch(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds, range: match.range)
-                    {
-                        entry.timestamp = html.substring(with: NSMakeRange(amount.range.location + 7, amount.range.length - 8))
-                    }
+                    
+                    let htmlEntry = html.substring(with: match.range) as NSString
+                    
+                    //let accountName = self.findEntryValue(htmlEntry, fieldName: "account_name")
+                    let transDate = self.findEntryValue(htmlEntry, fieldName: "\"date")
+                    let transTime = self.findEntryValue(htmlEntry, fieldName: "\"time")
+                    let amount = self.findEntryValue(htmlEntry, fieldName: "ebit")
+                    let location = self.findEntryValue(htmlEntry, fieldName: "details")
+                    
+                    let formatter1 = DateFormatter()
+                    formatter1.dateFormat = "MMMM d, yyyy h:mma"
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MM/d h:mm a"
+                    entry.description = location
+                    entry.description += "\n" + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
+                    entry.timestamp = amount.contains("$") ? amount : amount + " swipe"
+                    
                     self.diningHistory.append(entry)
                 }
-                return
+                if self.diningHistory.count > 0 {
+                    return
+                }
             }
 
-            if self.stage == .diningHistory {
+            if self.stage == .diningHistory || self.stage == .fundsHome {
                 self.getDiningHistory()
             }
         }
+    }
+    /**
+    
+     - Finds the value that is surrounded by the HTML tag ending with [fieldName">]
+     
+    */
+    func findEntryValue(_ htmlEntry : NSString, fieldName : String) -> String {
+        let fieldRange = htmlEntry.range(of: fieldName + "\">")
+        var curIndex: Int = fieldRange.location + fieldRange.length
+        
+        var value = ""
+        
+        while htmlEntry.substring(with: NSMakeRange(curIndex, 1)) != "<"
+        {
+            value += htmlEntry.substring(with: NSMakeRange(curIndex, 1))
+            curIndex += 1
+        }
+        
+        return value
     }
     /**
      
@@ -173,7 +202,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     self.getAccountBalance()
                     return
                 }
-                
+
+                self.getDiningHistory()
+
                 self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
                 self.accountBalance.cityBucks = city != "" ? city : "0.00"
                 self.accountBalance.laundry = laundry != "" ? laundry : "0.00"

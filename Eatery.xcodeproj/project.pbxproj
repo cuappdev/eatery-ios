@@ -92,7 +92,6 @@
 		E9EC97931BFD1BD600D06823 /* EateryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */; };
 		E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */; };
 		E9EC97971BFD31BC00D06823 /* MenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */; };
-		F0808B211DCEDC110037C5EA /* BRBHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0808B201DCEDC110037C5EA /* BRBHistoryViewController.swift */; };
 		FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		FAC5A3191BC60DE50001DE97 /* 104-West.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104-West.jpg */; };
 		FAC5A31A1BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E51BC60DE50001DE97 /* Amit-Bhatia-Libe-Cafe.jpg */; };
@@ -277,7 +276,6 @@
 		E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryCollectionViewCell.xib; sourceTree = "<group>"; };
 		E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuHeaderView.xib; sourceTree = "<group>"; };
-		F0808B201DCEDC110037C5EA /* BRBHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBHistoryViewController.swift; sourceTree = "<group>"; };
 		F173EAFB0FD786428A00D8B7 /* Pods-Today Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		F2F973D99BBC8F4DE6724792 /* Pods-Today Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 				9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */,
 				9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */,
 				9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */,
-				F0808B201DCEDC110037C5EA /* BRBHistoryViewController.swift */,
 			);
 			path = "BRB Feature";
 			sourceTree = "<group>";
@@ -1013,7 +1010,6 @@
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
 				6E0B505E1CB0B65B0054F600 /* Sort.swift in Sources */,
 				C0497B151B64AA1800AC1C6C /* Macros.swift in Sources */,
-				F0808B211DCEDC110037C5EA /* BRBHistoryViewController.swift in Sources */,
 				E9CFC0B81C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
