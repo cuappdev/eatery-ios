@@ -28,6 +28,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     fileprivate var eateryData: [String: [Eatery]] = [:]
     
     fileprivate var searchBar: UISearchBar!
+    fileprivate var filterBar: FilterBar!
     fileprivate var sortType: Eatery.Sorting = .open
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
@@ -62,7 +63,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         navigationController?.view.backgroundColor = .white
         navigationController?.delegate = self
 
-        setupSearchBar()
+        setupBars()
         setupCollectionView()
         
         // Check for 3D Touch availability
@@ -148,13 +149,16 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         UIApplication.shared.keyWindow?.addSubview(sortView)
     }
     
-    func setupSearchBar() {
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+    func setupBars() {
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44.0))
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
         searchBar.searchBarStyle = .minimal
         searchBar.autocapitalizationType = .none
         view.addSubview(searchBar)
+        
+        filterBar = FilterBar(frame: CGRect(x: 0.0, y: searchBar.frame.height, width: view.frame.width, height: 44.0))
+        view.addSubview(filterBar)
     }
     
     func setupCollectionView() {
@@ -167,7 +171,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.contentInset.top = searchBar.frame.height
         
         view.insertSubview(collectionView, belowSubview: searchBar)
     }
@@ -510,7 +513,8 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
 
 extension EateriesGridViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return eateryNavigationAnimator
+        if toVC is MenuViewController || fromVC is MenuViewController { return eateryNavigationAnimator }
+        return nil
     }
 }
 
@@ -584,16 +588,20 @@ extension EateriesGridViewController: UISearchBarDelegate {
 extension EateriesGridViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        switch scrollView.contentOffset.y + searchBar.frame.height {
-        case -CGFloat.greatestFiniteMagnitude...0.0:
+        let offset = scrollView.contentOffset.y + searchBar.frame.height + filterBar.frame.height
+        switch offset {
+        case -CGFloat.greatestFiniteMagnitude..<0.0:
             searchBar.frame.origin.y = 0.0
-            collectionView.contentInset.top = searchBar.frame.height
-        case 0.0..<searchBar.frame.height:
-            collectionView.contentInset.top = -scrollView.contentOffset.y
-            searchBar.frame.origin.y = -scrollView.contentOffset.y - searchBar.frame.height
-        case searchBar.frame.height...CGFloat.greatestFiniteMagnitude:
+            filterBar.frame.origin.y = searchBar.frame.height
+            collectionView.contentInset.top = filterBar.frame.maxY
+        case 0.0..<filterBar.frame.height:
+            collectionView.contentInset.top = -offset + searchBar.frame.height + filterBar.frame.height
+            searchBar.frame.origin.y = -offset
+            filterBar.frame.origin.y = -offset + searchBar.frame.height
+        case filterBar.frame.height...CGFloat.greatestFiniteMagnitude:
             searchBar.frame.origin.y = -searchBar.frame.height
-            collectionView.contentInset.top = 0.0
+            filterBar.frame.origin.y = 0.0
+            collectionView.contentInset.top = filterBar.frame.maxY
         default:
             break
         }
