@@ -183,7 +183,13 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             cell.textLabel?.numberOfLines = 0;
             cell.textLabel?.lineBreakMode = .byWordWrapping
             
-            cell.textLabel?.text = connectionHandler.diningHistory[indexPath.row].description
+            let attributedDesc = NSMutableAttributedString(string: connectionHandler.diningHistory[indexPath.row].description, attributes:nil)
+            let newLineLoc = (attributedDesc.string as NSString).range(of: "\n").location
+            if newLineLoc != NSNotFound {
+                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.italicSystemFont(ofSize: 15), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
+            }
+            
+            cell.textLabel?.attributedText = attributedDesc
             cell.detailTextLabel?.text = connectionHandler.diningHistory[indexPath.row].timestamp
             return cell
         }
