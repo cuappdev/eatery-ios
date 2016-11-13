@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //view controllers
     var tabBarController: UITabBarController!
     var eateriesGridViewController: EateriesGridViewController!
-
+    var connectionHandler: BRBConnectionHandler!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
@@ -76,6 +77,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
+        // Set up meal plan connection handler
+        connectionHandler = BRBConnectionHandler()
+        
+        if BRBAccountSettingsViewController.shouldLoginOnStartup()
+        {
+            let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
+            let netid = keychainItemWrapper["Netid"] as! String?
+            let password = keychainItemWrapper["Password"] as! String?
+            if netid?.characters.count ?? 0 > 0 && password?.characters.count ?? 0 > 0
+            {
+                connectionHandler.netid = netid!
+                connectionHandler.password = password!
+                connectionHandler.handleLogin()
+            }
+        }
+
         // Segment setup
         SEGAnalytics.setup(with: SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))
         let uuid = UUID().uuidString
