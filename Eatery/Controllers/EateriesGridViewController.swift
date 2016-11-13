@@ -172,6 +172,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
         
+        collectionView.contentOffset.y = -filterBar.frame.height - searchBar.frame.height
+        
         view.insertSubview(collectionView, belowSubview: searchBar)
     }
     
@@ -622,7 +624,7 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     
     func scrollSearchBar(_ scrollView: UIScrollView) {
         let searchBarMiddleY = searchBar.bounds.midY
-        if scrollView.contentOffset.y < 0.0 && scrollView.contentOffset.y > -searchBar.frame.height {
+        if scrollView.contentOffset.y < 0.0 && scrollView.contentOffset.y > -searchBar.frame.height - filterBar.frame.height {
             if scrollView.contentOffset.y + searchBar.frame.height < searchBarMiddleY {
                 scrollView.setContentOffset(CGPoint(x: 0.0, y: -searchBar.frame.height), animated: true)
             } else {
