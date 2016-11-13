@@ -137,7 +137,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     formatter1.dateFormat = "MMMM d, yyyy h:mma"
                     
                     let formatter = DateFormatter()
-                    formatter.dateFormat = "MM/d h:mm a"
+                    formatter.dateFormat = "MMM d 'at' h:mm a"
                     entry.description = location
                     entry.description += "\n" + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
                     entry.timestamp = amount.contains("$") ? amount : amount + " swipe"

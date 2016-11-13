@@ -20,7 +20,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     var tableView: UITableView!
     var hasLoadedMore = 0.0
     var paginationCounter = 0
-    var ai : UIActivityIndicatorView?
+    let ai = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,10 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         connectionHandler.errorDelegate = self
         
         loginView = BRBLoginView(frame: view.frame)
-
+        ai.frame = CGRect(x: view.frame.width/2 - 10, y: 12, width:20, height:20)
+        ai.color = .black
+        ai.hidesWhenStopped = true
+        
         if connectionHandler.accountBalance != nil // already logging in
         {
             self.finishedLogin()
@@ -60,12 +63,8 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 BRBAccountSettingsViewController.shouldLoginOnStartup() &&
                 netid?.characters.count ?? 0 > 0 && password?.characters.count ?? 0 > 0
             {
-                ai = UIActivityIndicatorView()
-                ai!.frame = CGRect(x: view.frame.width/2 - 10, y: 20, width:20, height:20)
-                ai!.color = .black
-                ai!.hidesWhenStopped = true
-                ai!.startAnimating()
-                view.addSubview(ai!)
+                ai.startAnimating()
+                view.addSubview(ai)
             }
             else // show login screen
             {
@@ -92,10 +91,11 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         if connectionHandler.accountBalance != nil && connectionHandler.accountBalance.brbs != "" {
             timer.invalidate()
             
-            historyTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
-            historyTimer.fire()
+            historyTimer = Timer.scheduledTimer(timeInterval: 1.1, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
             
             finishedLogin()
+
+            historyTimer.fire()
         }
     }
     
@@ -105,12 +105,15 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 hasLoadedMore = 1.0
                 paginationCounter = 1
             }
+            ai.stopAnimating()
             timer.invalidate()
             tableView.reloadData()
         }
     }
     
     func setupAccountPage() {
+        
+        ai.startAnimating()
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
@@ -164,9 +167,10 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             }
             return cell
         }
-        else if hasLoadedMore == 0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 { // last row
+        else if hasLoadedMore != 1.0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 { // last row
             let cell = UITableViewCell(style: .default, reuseIdentifier: "MoreCell")
-            cell.textLabel?.text = "View more"
+            cell.textLabel?.text = hasLoadedMore == 0.0 ? connectionHandler.diningHistory.count > 0 ? "View more" : "" : ""
+            cell.contentView.addSubview(ai)
             cell.textLabel?.textColor = .blue
             cell.textLabel?.textAlignment = .center
             let tap = UITapGestureRecognizer(target: self, action: #selector(BRBViewController.openFullHistory))
@@ -192,13 +196,23 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     func openFullHistory() { // when View More is tapped
         if hasLoadedMore == 0.0 {
             hasLoadedMore = 0.5
+            
+            tableView.beginUpdates()
+            tableView.reloadRows(at: [IndexPath(row: tableView.numberOfRows(inSection: 1)-1, section: 1)], with: .none)
+            tableView.endUpdates()
+            
+            ai.startAnimating()
 
             connectionHandler.loadDiningHistory()
             historyTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
-        } else if hasLoadedMore == 1.0 {
-            paginationCounter += 1
-            tableView.reloadData()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "History"
+        }
+        return nil
     }
     ///
     
@@ -224,7 +238,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             keychainItemWrapper["Password"] = loginView.passwordTextField.text! as AnyObject?
         }
 
-        ai?.stopAnimating()
+        ai.stopAnimating()
         
         if loginView != nil {
             loginView.removeFromSuperview()
@@ -236,6 +250,9 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController) {
         tableView.removeFromSuperview()
         tableView = nil
+        
+        hasLoadedMore = 0.0
+        paginationCounter = 0
         
         navigationItem.rightBarButtonItem?.isEnabled = false
 
