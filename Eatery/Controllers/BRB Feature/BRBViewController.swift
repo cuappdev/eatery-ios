@@ -44,7 +44,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
         connectionHandler.errorDelegate = self
         
-        loginView = BRBLoginView(frame: view.frame)
+        loginView = BRBLoginView(frame: view.bounds)
         ai.frame = CGRect(x: view.frame.width/2 - 10, y: 12, width:20, height:20)
         ai.transform = .init(translationX: 0, y: 10)
         ai.color = .black
@@ -137,15 +137,16 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     func setupAccountPage() {
         
         ai.transform = .identity
-        ai.startAnimating()
+        if connectionHandler.diningHistory.count == 0 {
+            ai.startAnimating()
+        }
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        tableView = UITableView(frame: view.bounds, style: .plain)
+        tableView = UITableView(frame: CGRect(x:0, y:0, width: (navigationController?.view.bounds.width ?? 0), height: (navigationController?.view.bounds.height ?? 0) - (navigationController?.navigationBar.frame.maxY ?? 0) - (tabBarController?.tabBar.frame.height ?? 0)), style: .plain)
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
-
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -158,7 +159,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y, scrollView.contentSize.height - scrollView.frame.height)
         if paginationCounter > 0 && scrollView.contentOffset.y >=
             scrollView.contentSize.height - scrollView.frame.height
         {
