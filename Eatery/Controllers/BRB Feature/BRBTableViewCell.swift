@@ -10,8 +10,8 @@ import UIKit
 
 class BRBTableViewCell: UITableViewCell
 {
-    let v = UIView()
-    let cellBg = UIView()
+    let bgView = UIView() // matches background color of table view
+    let whiteView = UIView() // draws the white background
 
     let leftLabel = UILabel()
     let rightLabel = UILabel()
@@ -21,12 +21,10 @@ class BRBTableViewCell: UITableViewCell
     {
         super.init(style: reuseIdentifier == "MoreCell" ? .default : style, reuseIdentifier: reuseIdentifier)
         
-        // frames will get adjusted in BRBViewController
-        /// TODO: add auto layout and rename v, cellBg
-        cellBg.backgroundColor = .white
-        v.addSubview(cellBg)
-        v.backgroundColor = UIColor.init(white: 0.93, alpha: 1)//self.backgroundColor
-        backgroundView = v
+        whiteView.backgroundColor = .white
+        bgView.backgroundColor = UIColor.init(white: 0.93, alpha: 1)//self.backgroundColor
+        bgView.addSubview(whiteView)
+        backgroundView = bgView
         contentView.backgroundColor = .clear
         
         // add custom labels
@@ -35,7 +33,7 @@ class BRBTableViewCell: UITableViewCell
         centerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         rightLabel.textColor = .gray
-        centerLabel.textColor = .blue
+        centerLabel.textColor = .eateryBlue
         centerLabel.textAlignment = .center
 
         contentView.addSubview(leftLabel)
@@ -46,8 +44,10 @@ class BRBTableViewCell: UITableViewCell
             "left" : leftLabel,
             "right" : rightLabel,
             "center" : centerLabel,
+            "bgView" : bgView,
+            "whiteView" : whiteView
             ]
-
+        // TODO: add constraints to avoid updating frames in BRBViewController
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[center]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraint(NSLayoutConstraint(item: centerLabel, attribute: .centerY, relatedBy: .equal, toItem:contentView, attribute: .centerY, multiplier: 1, constant:0))
         

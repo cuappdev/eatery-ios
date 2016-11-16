@@ -35,7 +35,6 @@
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
 		9584FE4E1CDD6C3B001A3AB5 /* BRBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */; };
-		9584FE4F1CDD6C3B001A3AB5 /* BRBAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4A1CDD6C3B001A3AB5 /* BRBAccountSettingsViewController.swift */; };
 		9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */; };
 		9584FE511CDD6C3B001A3AB5 /* BRBLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */; };
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
@@ -92,6 +91,7 @@
 		E9EC97931BFD1BD600D06823 /* EateryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */; };
 		E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */; };
 		E9EC97971BFD31BC00D06823 /* MenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */; };
+		F06C7C111DDD032A000445E5 /* BRBAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06C7C101DDD032A000445E5 /* BRBAccountSettingsViewController.swift */; };
 		F0EFD2461DDBBF9D007D63B1 /* BRBTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */; };
 		FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		FAC5A3191BC60DE50001DE97 /* 104-West.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAC5A2E41BC60DE50001DE97 /* 104-West.jpg */; };
@@ -211,7 +211,6 @@
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImages.swift; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
 		9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBViewController.swift; sourceTree = "<group>"; };
-		9584FE4A1CDD6C3B001A3AB5 /* BRBAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBConnectionHandler.swift; sourceTree = "<group>"; };
 		9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBLoginView.swift; sourceTree = "<group>"; };
 		9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
@@ -277,6 +276,7 @@
 		E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryCollectionViewCell.xib; sourceTree = "<group>"; };
 		E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuHeaderView.xib; sourceTree = "<group>"; };
+		F06C7C101DDD032A000445E5 /* BRBAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBTableViewCell.swift; sourceTree = "<group>"; };
 		F173EAFB0FD786428A00D8B7 /* Pods-Today Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		F2F973D99BBC8F4DE6724792 /* Pods-Today Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Today Extension/Pods-Today Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -436,7 +436,7 @@
 		9584FE531CDD6C40001A3AB5 /* BRB Feature */ = {
 			isa = PBXGroup;
 			children = (
-				9584FE4A1CDD6C3B001A3AB5 /* BRBAccountSettingsViewController.swift */,
+				F06C7C101DDD032A000445E5 /* BRBAccountSettingsViewController.swift */,
 				9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */,
 				9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */,
 				9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */,
@@ -996,7 +996,6 @@
 				E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */,
 				E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */,
 				E9EC97921BFD1BD600D06823 /* EateryCollectionViewCell.swift in Sources */,
-				9584FE4F1CDD6C3B001A3AB5 /* BRBAccountSettingsViewController.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,
 				D102463A1C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift in Sources */,
 				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
@@ -1027,6 +1026,7 @@
 				9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */,
 				D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
+				F06C7C111DDD032A000445E5 /* BRBAccountSettingsViewController.swift in Sources */,
 				44E4E8F41CD54E3500422867 /* NavigationTitleView.swift in Sources */,
 				E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */,
 			);

@@ -243,9 +243,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             if error == nil {
                 if self.failedToLogin() {
                     if self.url?.absoluteString == "https://get.cbord.com/cornell/full/update_profile.php" {
-                        self.errorDelegate?.failedToLogin(error: "need to update account")
+                        self.errorDelegate?.failedToLogin(error: "Account needs to be updated")
                     }
-                    self.errorDelegate?.failedToLogin(error: "incorrect netid and/or password")
+                    self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
                 }
             } else if error!.localizedDescription.contains("JavaScript") {
                 print(error!.localizedDescription)
@@ -261,7 +261,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             print(self.stage)
             switch self.stage {
             case .loginFailed:
-                self.errorDelegate?.failedToLogin(error: "incorrect netid and/or password")
+                self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
             case .loginScreen:
                 self.login()
             case .fundsHome:
