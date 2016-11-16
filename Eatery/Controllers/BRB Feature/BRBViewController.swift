@@ -21,7 +21,10 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     var hasLoadedMore = 0.0
     var paginationCounter = 0
     let ai = UIActivityIndicatorView()
-
+    let timeout = 18.0 // seconds
+    var time = 0.0 // time of request
+    var historyHeader : EateriesCollectionViewHeaderView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +46,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         loginView = BRBLoginView(frame: view.frame)
         ai.frame = CGRect(x: view.frame.width/2 - 10, y: 12, width:20, height:20)
+        ai.transform = .init(translationX: 0, y: 10)
         ai.color = .black
         ai.hidesWhenStopped = true
         
@@ -65,14 +69,14 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             {
                 ai.startAnimating()
                 view.addSubview(ai)
+                
+                timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
             }
             else // show login screen
             {
                 loginView.delegate = self
                 view.addSubview(loginView)
             }
-            
-            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
         }
     }
     
@@ -88,6 +92,15 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
 
     func timer(timer: Timer) {
         
+        time = time + 0.1
+        
+        if time >= timeout {
+            loginView.loginFailedWithError(error: "try again")
+            timer.invalidate()
+            print("timing out")
+            self.brbLoginViewClickedLogin(brbLoginView: loginView, netid: connectionHandler.netid, password: connectionHandler.netid) // try to log in again
+        }
+        
         if connectionHandler.accountBalance != nil && connectionHandler.accountBalance.brbs != "" {
             timer.invalidate()
             
@@ -100,6 +113,16 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func historyTimer(timer: Timer) {
+        time = time + 0.1
+        
+        if time >= timeout {
+            timer.invalidate()
+            print("timing out")
+            time = 0
+            connectionHandler.loadDiningHistory()
+            historyTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
+        }
+        
         if connectionHandler.diningHistory.count > 0 {
             if hasLoadedMore == 0.5 {
                 hasLoadedMore = 1.0
@@ -113,11 +136,20 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     
     func setupAccountPage() {
         
+        ai.transform = .identity
         ai.startAnimating()
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        tableView = UITableView(frame: view.bounds, style: .grouped)
+        tableView = UITableView(frame: view.bounds, style: .plain)
+        tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
+        tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
+        tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
+
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsetsMake(10, 0, 8, 0)
         tableView.backgroundColor = UIColor(white: 0.93, alpha: 1) // same as grid view
         tableView.dataSource = self
         tableView.delegate = self
@@ -148,57 +180,106 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var pCell : UITableViewCell? // queued cell
+        var cell : BRBTableViewCell // cell that we return
+        
         if indexPath.section == 0 {
-            let cell = UITableViewCell(style: .value1, reuseIdentifier: "BRBCell")
+            pCell = tableView.dequeueReusableCell(withIdentifier: "BalanceCell")
+            if pCell != nil { cell = pCell! as! BRBTableViewCell }
+            else {
+                cell = BRBTableViewCell(style: .value1, reuseIdentifier: "BalanceCell")
+            }
+            
+            cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
+            cell.rightLabel.font = UIFont.systemFont(ofSize: 15)
+            
             switch indexPath.row {
             case 0:
-                cell.textLabel?.text = "BRBs"
-                cell.detailTextLabel?.text = "$" + connectionHandler.accountBalance.brbs
+                cell.leftLabel.text = " BRBs"
+                cell.rightLabel.text = "$" + connectionHandler.accountBalance.brbs
             case 1:
-                cell.textLabel?.text = "City Bucks"
-                cell.detailTextLabel?.text = "$" + connectionHandler.accountBalance.cityBucks
+                cell.leftLabel.text = " Meal Swipes"
+                cell.rightLabel.text = connectionHandler.accountBalance.swipes
             case 2:
-                cell.textLabel?.text = "Laundry"
-                cell.detailTextLabel?.text = "$" + connectionHandler.accountBalance.laundry
+                cell.leftLabel.text = " City Bucks"
+                cell.rightLabel.text = "$" + connectionHandler.accountBalance.cityBucks
             case 3:
-                cell.textLabel?.text = "Meal Swipes"
-                cell.detailTextLabel?.text = connectionHandler.accountBalance.swipes
+                cell.leftLabel.text = " Laundry"
+                cell.rightLabel.text = "$" + connectionHandler.accountBalance.laundry
             default: break
             }
-            return cell
+            
+            // position background frame
+            cell.v.frame = CGRect(x: 0, y: 0, width: cell.bounds.width, height: 48)
         }
-        else if hasLoadedMore != 1.0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 { // last row
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "MoreCell")
-            cell.textLabel?.text = hasLoadedMore == 0.0 ? connectionHandler.diningHistory.count > 0 ? "View more" : "" : ""
+        else if hasLoadedMore != 1.0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 {                        pCell = tableView.dequeueReusableCell(withIdentifier: "MoreCell")
+            if pCell != nil { cell = pCell! as! BRBTableViewCell }
+            else {
+                cell = BRBTableViewCell(style: .default, reuseIdentifier: "MoreCell")
+            }
+
+            cell.centerLabel.font = UIFont.systemFont(ofSize: 15)
             cell.contentView.addSubview(ai)
-            cell.textLabel?.textColor = .blue
-            cell.textLabel?.textAlignment = .center
             let tap = UITapGestureRecognizer(target: self, action: #selector(BRBViewController.openFullHistory))
             cell.addGestureRecognizer(tap)
-            return cell
+
+            cell.centerLabel.text = hasLoadedMore == 0.0 ? connectionHandler.diningHistory.count > 0 ?
+                "View more" : "" : ""
+            
+            // position background frame
+            cell.v.frame = CGRect(x: 0, y: 0, width: cell.bounds.width, height: 44)
         }
-        else { // history cell
-            let cell = UITableViewCell(style: .value1, reuseIdentifier: "HistoryCell")
-            
-            cell.textLabel?.numberOfLines = 0;
-            cell.textLabel?.lineBreakMode = .byWordWrapping
-            
-            let attributedDesc = NSMutableAttributedString(string: connectionHandler.diningHistory[indexPath.row].description, attributes:nil)
+        else {
+            pCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell")
+            if pCell != nil { cell = pCell! as! BRBTableViewCell }
+            else {
+                cell = BRBTableViewCell(style: .value1, reuseIdentifier: "HistoryCell")
+            }
+
+            cell.leftLabel.numberOfLines = 0;
+            cell.leftLabel.lineBreakMode = .byWordWrapping
+            cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
+            cell.rightLabel.font = UIFont.systemFont(ofSize: 14)
+
+            let attributedDesc = NSMutableAttributedString(string: " "+connectionHandler.diningHistory[indexPath.row].description, attributes:nil)
             let newLineLoc = (attributedDesc.string as NSString).range(of: "\n").location
             if newLineLoc != NSNotFound {
-                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.italicSystemFont(ofSize: 15), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
+                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 13), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
+                attributedDesc.addAttribute(NSForegroundColorAttributeName, value: UIColor.init(white: 0.40, alpha: 1), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
+                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 16), range: NSRange(location: 0, length: newLineLoc))
             }
             
-            cell.textLabel?.attributedText = attributedDesc
-            cell.detailTextLabel?.text = connectionHandler.diningHistory[indexPath.row].timestamp
-            return cell
+            cell.leftLabel.attributedText = attributedDesc
+            cell.rightLabel.text = connectionHandler.diningHistory[indexPath.row].timestamp
+            
+            // position background frame
+            cell.v.frame = CGRect(x: 0, y: 0, width: cell.bounds.width, height: 67)
         }
+        // position background view
+        cell.cellBg.frame = CGRect(x: 8, y: 0, width: view.bounds.width - 16, height: cell.v.frame.height - 1)
+
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 1 && indexPath.row < connectionHandler.diningHistory.count ? 70 : tableView.rowHeight
+        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < connectionHandler.diningHistory.count ? 67 : tableView.rowHeight
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0 : 40
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 { return nil }
+        
+        if historyHeader == nil {
+            historyHeader = (Bundle.main.loadNibNamed("EateriesCollectionViewHeaderView", owner: nil, options: nil)?.first! as? EateriesCollectionViewHeaderView)!
+            historyHeader!.titleLabel.text = "History"
+        }
+        
+        return historyHeader!
+    }
+
     func openFullHistory() { // when View More is tapped
         if hasLoadedMore == 0.0 {
             hasLoadedMore = 0.5
@@ -209,6 +290,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             
             ai.startAnimating()
 
+            time = 0
             connectionHandler.loadDiningHistory()
             historyTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BRBViewController.historyTimer(timer:)), userInfo: nil, repeats: true)
         }
@@ -284,9 +366,13 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {
+        time = 0.0 // start counting request time
+        
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
     }
     
     deinit {

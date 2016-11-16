@@ -80,12 +80,10 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      */
     func handleLogin() {
         print("Handling login", stage)
-        if stage != .transition {
-            loginCount = 0
-            stage = .loginScreen
-            let loginURL = URL(string: loginURLString)!
-            load(URLRequest(url: loginURL))
-        }
+        loginCount = 0
+        stage = .loginScreen
+        let loginURL = URL(string: loginURLString)!
+        load(URLRequest(url: loginURL))
     }
     
     func failedToLogin() -> Bool {
@@ -137,9 +135,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     formatter1.dateFormat = "MMMM d, yyyy h:mma"
                     
                     let formatter = DateFormatter()
-                    formatter.dateFormat = "MMM d 'at' h:mm a"
+                    formatter.dateFormat = "M/d 'at' h:mm a"
                     entry.description = location
-                    entry.description += "\n" + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
+                    entry.description += "\n " + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
                     entry.timestamp = amount.contains("$") ? amount : amount + " swipe"
                     
                     self.diningHistory.append(entry)
