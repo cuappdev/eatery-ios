@@ -624,11 +624,11 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     
     func scrollSearchBar(_ scrollView: UIScrollView) {
         let searchBarMiddleY = searchBar.bounds.midY
-        if scrollView.contentOffset.y < 0.0 && scrollView.contentOffset.y > -searchBar.frame.height - filterBar.frame.height {
-            if scrollView.contentOffset.y + searchBar.frame.height < searchBarMiddleY {
-                scrollView.setContentOffset(CGPoint(x: 0.0, y: -searchBar.frame.height), animated: true)
+        if scrollView.contentOffset.y < -filterBar.frame.height && scrollView.contentOffset.y > -searchBar.frame.height - filterBar.frame.height {
+            if scrollView.contentOffset.y + searchBar.frame.height + filterBar.frame.height < searchBarMiddleY {
+                scrollView.setContentOffset(CGPoint(x: 0.0, y: -searchBar.frame.height - filterBar.frame.height), animated: true)
             } else {
-                scrollView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
+                scrollView.setContentOffset(CGPoint(x: 0.0, y: -filterBar.frame.height), animated: true)
             }
         }
     }
