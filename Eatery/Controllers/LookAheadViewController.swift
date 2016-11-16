@@ -40,7 +40,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var events: [String: Event] = [:]
     fileprivate let dates: [Date] = {
         (0..<7).flatMap {
-            (Calendar.current as NSCalendar).date(byAdding: .day, value: $0, to: Date(), options: [])
+            Calendar.current.date(byAdding: .day, value: $0, to: Date())
         }
     }()
     

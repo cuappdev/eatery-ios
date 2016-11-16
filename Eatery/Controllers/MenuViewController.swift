@@ -116,8 +116,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             return mealVC
         }
         
-        outerScrollView.contentSize.height = outerScrollView.contentSize.height + (mealViewControllers.map { $0.tableView.bounds.height }.max() ?? 0.0)
-        
         // PageViewController
         pageViewController = TabbedPageViewController()
         pageViewController.viewControllers = mealViewControllers
@@ -130,6 +128,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         addChildViewController(pageViewController)
         outerScrollView.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
+        
+        outerScrollView.contentSize.height = outerScrollView.contentSize.height + (mealViewControllers.map { $0.tableView.bounds.height }.max() ?? 0.0)
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)

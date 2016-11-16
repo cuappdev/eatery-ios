@@ -33,6 +33,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     fileprivate let defaults = UserDefaults.standard
+    
     fileprivate lazy var sortingQueue: OperationQueue = {
         var queue = OperationQueue()
         queue.name = "Sorting queue"
@@ -46,6 +47,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         l.startUpdatingLocation()
         return l
     }()
+    
     fileprivate var userLocation: CLLocation?
     fileprivate var locationError = false
     
