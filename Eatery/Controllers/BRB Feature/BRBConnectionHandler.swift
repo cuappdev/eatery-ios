@@ -80,12 +80,10 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      */
     func handleLogin() {
         print("Handling login", stage)
-        if stage != .transition {
-            loginCount = 0
-            stage = .loginScreen
-            let loginURL = URL(string: loginURLString)!
-            load(URLRequest(url: loginURL))
-        }
+        loginCount = 0
+        stage = .loginScreen
+        let loginURL = URL(string: loginURLString)!
+        load(URLRequest(url: loginURL))
     }
     
     func failedToLogin() -> Bool {
@@ -137,9 +135,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     formatter1.dateFormat = "MMMM d, yyyy h:mma"
                     
                     let formatter = DateFormatter()
-                    formatter.dateFormat = "MM/d h:mm a"
+                    formatter.dateFormat = "M/d 'at' h:mm a"
                     entry.description = location
-                    entry.description += "\n" + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
+                    entry.description += "\n " + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
                     entry.timestamp = amount.contains("$") ? amount : amount + " swipe"
                     
                     self.diningHistory.append(entry)
@@ -245,9 +243,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             if error == nil {
                 if self.failedToLogin() {
                     if self.url?.absoluteString == "https://get.cbord.com/cornell/full/update_profile.php" {
-                        self.errorDelegate?.failedToLogin(error: "need to update account")
+                        self.errorDelegate?.failedToLogin(error: "Account needs to be updated")
                     }
-                    self.errorDelegate?.failedToLogin(error: "incorrect netid and/or password")
+                    self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
                 }
             } else if error!.localizedDescription.contains("JavaScript") {
                 print(error!.localizedDescription)
@@ -263,7 +261,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             print(self.stage)
             switch self.stage {
             case .loginFailed:
-                self.errorDelegate?.failedToLogin(error: "incorrect netid and/or password")
+                self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
             case .loginScreen:
                 self.login()
             case .fundsHome:

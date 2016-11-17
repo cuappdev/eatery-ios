@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up meal plan connection handler
         connectionHandler = BRBConnectionHandler()
         
-        if BRBAccountSettingsViewController.shouldLoginOnStartup()
+        if BRBAccountSettings.shouldLoginOnStartup()
         {
             let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
             let netid = keychainItemWrapper["Netid"] as! String?
