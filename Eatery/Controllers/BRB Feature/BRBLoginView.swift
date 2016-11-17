@@ -32,7 +32,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         headerLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: 90)
-        headerLabel.text = "Please login in to see your balance"
+        headerLabel.text = "Please login in to see your balance."
         headerLabel.numberOfLines = 0
         headerLabel.textAlignment = .center
         headerLabel.font = UIFont.systemFont(ofSize: 15)
@@ -76,7 +76,9 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         passwordTextField.addSubview(bottomLine)
         addSubview(passwordTextField)
 
-        perpetualLoginButton.frame = CGRect(x: 25, y: passwordTextField.frame.maxY + 38, width: 220, height: 20)
+        // iphone 5s.height = 568
+        perpetualLoginButton.frame = CGRect(x: 25, y: passwordTextField.frame.maxY + (frame.size.height <= 600 ? 20:38),
+                                            width: 220, height: 20)
         perpetualLoginButton.setTitle("☐   Automatically log me in every time", for: .normal)
         perpetualLoginButton.setTitle("☑ Automatically log me in every time", for: .selected)
         perpetualLoginButton.setTitleColor(.darkGray, for: .normal)

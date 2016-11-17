@@ -41,21 +41,18 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         tableView.backgroundColor = UIColor.clear
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.isScrollEnabled = false
-        //tableView.rowHeight = 50
         tableView.tableFooterView = UIView()
-        tableView.separatorInset = UIEdgeInsets.zero
+        tableView.separatorStyle = .none
         view.addSubview(tableView)
         
-        let cell1 = UITableViewCell()
+        let cell1 = BRBTableViewCell()
         cell1.selectionStyle = .none
-        cell1.textLabel?.text = "Auto Login"
-        let cell3 = UITableViewCell()
-        cell3.selectionStyle = .none
-        cell3.backgroundColor = UIColor.clear
-        let cell4 = UITableViewCell()
-        cell4.textLabel?.text = "Log out"
-        cell4.textLabel?.textAlignment = .center
+        cell1.leftLabel.text = "  Automatically log me in"
+        cell1.leftLabel.font = UIFont.systemFont(ofSize: 14)
+
+        let cell4 = BRBTableViewCell()
+        cell4.centerLabel.text = "Log out"
+        cell4.centerLabel.font = UIFont.boldSystemFont(ofSize: 15)
         
         let switch1 = UISwitch()
         switch1.isOn = BRBAccountSettings.shouldLoginOnStartup()
@@ -64,7 +61,6 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         cell1.accessoryView = switch1
         
         cells.append(cell1)
-        cells.append(cell3)
         cells.append(cell4)
         
         for cell in cells {
@@ -98,6 +94,10 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: -
     //MARK: TableView Data Source
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cells.count
     }
@@ -107,7 +107,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath as NSIndexPath).row == 2 {
+        if (indexPath as NSIndexPath).row == 1 {
             tableView.deselectRow(at: indexPath, animated: false)
             logout()
         }

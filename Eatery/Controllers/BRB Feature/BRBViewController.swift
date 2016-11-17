@@ -154,7 +154,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 8, 0)
         tableView.backgroundColor = UIColor(white: 0.93, alpha: 1) // same as grid view
         tableView.dataSource = self
@@ -195,8 +194,8 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 cell = BRBTableViewCell(style: .value1, reuseIdentifier: "BalanceCell")
             }
             
-            cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
-            cell.rightLabel.font = UIFont.boldSystemFont(ofSize: 15)
+            cell.leftLabel.font = UIFont.boldSystemFont(ofSize: 15)
+            cell.rightLabel.font = UIFont.systemFont(ofSize: 15)
             
             switch indexPath.row {
             case 0:
@@ -213,9 +212,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 cell.rightLabel.text = "$" + connectionHandler.accountBalance.laundry
             default: break
             }
-            
-            // position background frame
-            cell.bgView.frame = CGRect(x: 0, y: 0, width: cell.bounds.width, height: 48)
         }
         else if hasLoadedMore != 1.0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 {
             pCell = tableView.dequeueReusableCell(withIdentifier: "MoreCell")
@@ -234,9 +230,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             if hasLoadedMore == 0.5 {
                 ai.startAnimating()
             }
-            
-            // position background frame
-            cell.bgView.frame = CGRect(x: 0, y: 0, width: cell.bounds.width, height: 44)
         }
         else {
             pCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell")
@@ -260,14 +253,13 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             
             cell.leftLabel.attributedText = attributedDesc
             cell.rightLabel.text = diningHistory[indexPath.row].timestamp
-            
-            // position background frame
-            cell.bgView.frame = CGRect(x: 0, y: 0, width: cell.bounds.width, height: 67)
         }
-        // position white view
-        cell.whiteView.frame = CGRect(x: 8, y: 0, width: view.bounds.width - 16, height: cell.bgView.frame.height - 1)
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -275,13 +267,14 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return section == 0 ? 10 : 40
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let historyHeader1 = (Bundle.main.loadNibNamed("EateriesCollectionViewHeaderView", owner: nil, options: nil)?.first! as? EateriesCollectionViewHeaderView)!
-            historyHeader1.titleLabel.text = "Balance"
+            historyHeader1.titleLabel.text = ""
+            historyHeader1.backgroundColor = .clear
             return historyHeader1
         }
         

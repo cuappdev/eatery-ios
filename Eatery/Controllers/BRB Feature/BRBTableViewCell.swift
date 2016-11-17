@@ -17,20 +17,45 @@ class BRBTableViewCell: UITableViewCell
     let rightLabel = UILabel()
     let centerLabel = UILabel()
     
+    var leftC = UIColor(), rightC = UIColor(), centerC = UIColor()
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if selectionStyle != .none {
+            whiteView.backgroundColor = highlighted ? .eateryBlue : .white
+            leftLabel.textColor = highlighted ? .white : leftC
+            rightLabel.textColor = highlighted ? .white : rightC
+            centerLabel.textColor = highlighted ? .white : centerC
+        }
+    }
+    
+    func setTextColors(leftColor : UIColor = .black, rightColor: UIColor = .gray, centerColor: UIColor = .eateryBlue)
+    {
+        leftC = leftColor
+        leftLabel.textColor = leftC
+        rightC = rightColor
+        rightLabel.textColor = rightC
+        centerC = centerColor
+        centerLabel.textColor = centerC
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: reuseIdentifier == "MoreCell" ? .default : style, reuseIdentifier: reuseIdentifier)
-        
+
+        setTextColors() // initialize to defaults
+
         whiteView.backgroundColor = .white
         bgView.backgroundColor = UIColor.init(white: 0.93, alpha: 1)//self.backgroundColor
         bgView.addSubview(whiteView)
-        backgroundView = bgView
+        insertSubview(bgView, at: 0)
         contentView.backgroundColor = .clear
         
         // add custom labels
         leftLabel.translatesAutoresizingMaskIntoConstraints = false
         rightLabel.translatesAutoresizingMaskIntoConstraints = false
         centerLabel.translatesAutoresizingMaskIntoConstraints = false
+        whiteView.translatesAutoresizingMaskIntoConstraints = false
+        bgView.translatesAutoresizingMaskIntoConstraints = false
         
         rightLabel.textColor = .gray
         centerLabel.textColor = .eateryBlue
@@ -47,7 +72,12 @@ class BRBTableViewCell: UITableViewCell
             "bgView" : bgView,
             "whiteView" : whiteView
             ]
-        // TODO: add constraints to avoid updating frames in BRBViewController
+        
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bgView]|", options: [], metrics: nil, views: viewsDict))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bgView]|", options: [], metrics: nil, views: viewsDict))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[whiteView]-8-|", options: [], metrics: nil, views: viewsDict))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[whiteView]-1-|", options: [], metrics: nil, views: viewsDict))
+        
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[center]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraint(NSLayoutConstraint(item: centerLabel, attribute: .centerY, relatedBy: .equal, toItem:contentView, attribute: .centerY, multiplier: 1, constant:0))
         
