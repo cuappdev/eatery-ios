@@ -16,102 +16,136 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     
     var delegate: BRBLoginViewDelegate?
     
-    var netidTextField: UITextField!
-    var passwordTextField: UITextField!
-    var loginButton: UIButton!
-    var infoLabel: UILabel!
-    var errorLabel: UILabel!
-    var activityIndicator: UIActivityIndicatorView!
+    let headerLabel = UILabel()
+    let netidPrompt = UILabel()
+    let netidTextField = UITextField()
+    let passwordPrompt = UILabel()
+    let passwordTextField = UITextField()
+    let perpetualLoginButton = UIButton()
+    let loginButton = UIButton()
+    
+    var activityIndicator = UIActivityIndicatorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activityIndicator.alpha = 0.0
+        headerLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: 90)
+        headerLabel.text = "Please login in to see your balance."
+        headerLabel.numberOfLines = 0
+        headerLabel.textAlignment = .center
+        headerLabel.font = UIFont.systemFont(ofSize: 15)
+        addSubview(headerLabel)
         
-        netidTextField = UITextField(frame: CGRect(x: 0, y: frame.height * 0.25, width: frame.width * 0.8, height: 40))
-        passwordTextField = UITextField(frame: CGRect(x: 0, y: netidTextField.frame.origin.y + netidTextField.frame.height + 30, width: frame.width * 0.8, height: 40))
-        loginButton = UIButton(frame: CGRect(x: 0, y: passwordTextField.frame.origin.y + passwordTextField.frame.height + 40, width: 100, height: 50))
-        infoLabel = UILabel(frame: CGRect(x: 0, y: netidTextField.frame.origin.y - 100, width: frame.width, height: 50))
-        errorLabel = UILabel(frame: CGRect(x: 0, y: infoLabel.frame.origin.y + infoLabel.frame.height + 10, width: frame.width, height: 30))
-        
-        
-        netidTextField.center = CGPoint(x: center.x, y: netidTextField.center.y)
-        passwordTextField.center = CGPoint(x: center.x, y: passwordTextField.center.y)
-        loginButton.center = CGPoint(x: center.x, y: loginButton.center.y)
-        infoLabel.center = CGPoint(x: center.x, y: infoLabel.center.y)
-        activityIndicator.center = loginButton.center
-        
-        netidTextField.layer.cornerRadius = 10
-        passwordTextField.layer.cornerRadius = 10
-        loginButton.layer.cornerRadius = 10
-        
-        netidTextField.backgroundColor = UIColor.white.withAlphaComponent(0.9)
-        passwordTextField.backgroundColor = UIColor.white.withAlphaComponent(0.9)
-        loginButton.backgroundColor = .black
-        
-        infoLabel.text = "BRB Login"
-        infoLabel.font = UIFont.systemFont(ofSize: 40)
-        infoLabel.textAlignment = NSTextAlignment.center
-        
-        errorLabel.text = ""
-        errorLabel.font = UIFont.systemFont(ofSize: 15)
-        errorLabel.textAlignment = NSTextAlignment.center
-        errorLabel.textColor = UIColor.orange
-        
-        netidTextField.placeholder = "netid"
-        netidTextField.isSecureTextEntry = false
+        netidPrompt.frame = CGRect(x: 25, y: headerLabel.frame.maxY, width: frame.width - 50, height: 14)
+        netidPrompt.text = "NET ID"
+        netidPrompt.textColor = .darkGray
+        netidPrompt.font = UIFont.systemFont(ofSize: 12)
+        addSubview(netidPrompt)
+
+        netidTextField.frame = CGRect(x: 25, y: netidPrompt.frame.maxY, width: frame.width - 50, height: 45)
+        netidTextField.textColor = .darkGray
+        netidTextField.placeholder = "type your netid (e.g. abc123)"
+        netidTextField.font = UIFont.systemFont(ofSize: 15)
         netidTextField.autocapitalizationType = .none
-        netidTextField.textAlignment = .center
-        passwordTextField.placeholder = "password"
+        netidTextField.tintColor = .darkGray
+        let netidLine = UIView()
+        netidLine.backgroundColor = .darkGray
+        netidLine.frame = CGRect(x: 0, y: netidTextField.bounds.maxY - 1, width: netidTextField.bounds.width, height: 1)
+        netidTextField.addSubview(netidLine)
+        addSubview(netidTextField)
+
+        passwordPrompt.frame = CGRect(x: 25, y: netidTextField.frame.maxY + 25, width: frame.width - 50, height: 14)
+        passwordPrompt.text = "PASSWORD"
+        passwordPrompt.textColor = .darkGray
+        passwordPrompt.font = UIFont.systemFont(ofSize: 12)
+        passwordTextField.delegate = self
+        addSubview(passwordPrompt)
+        
+        passwordTextField.frame = CGRect(x: 25, y: passwordPrompt.frame.maxY, width: frame.width - 50, height: 45)
+        passwordTextField.textColor = .darkGray
+        passwordTextField.placeholder = "type your password"
+        passwordTextField.font = UIFont.systemFont(ofSize: 15)
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none
-        passwordTextField.textAlignment = .center
-        passwordTextField.delegate = self
-        
-        
-        loginButton.setTitle("Login", for: UIControlState())
-        loginButton.showsTouchWhenHighlighted = true
-        loginButton.addTarget(self, action: #selector(BRBLoginView.login), for: UIControlEvents.touchDown)
-        
-        addSubview(netidTextField)
+        passwordTextField.tintColor = .darkGray
+        let bottomLine = UIView()
+        bottomLine.backgroundColor = .darkGray
+        bottomLine.frame = CGRect(x: 0, y: passwordTextField.bounds.maxY - 1, width: passwordTextField.bounds.width, height: 1)
+        passwordTextField.addSubview(bottomLine)
         addSubview(passwordTextField)
+
+        // iphone 5s.height = 568
+        perpetualLoginButton.frame = CGRect(x: 25, y: passwordTextField.frame.maxY + (frame.size.height <= 600 ? 20:38),
+                                            width: 220, height: 20)
+        perpetualLoginButton.setTitle("☐   Automatically log me in every time", for: .normal)
+        perpetualLoginButton.setTitle("☑ Automatically log me in every time", for: .selected)
+        perpetualLoginButton.setTitleColor(.darkGray, for: .normal)
+        perpetualLoginButton.setTitleColor(.black, for: .highlighted)
+        perpetualLoginButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        perpetualLoginButton.titleLabel?.textAlignment = .left
+        perpetualLoginButton.addTarget(self, action: #selector(BRBLoginView.keepMeSignedIn), for: .touchUpInside)
+        addSubview(perpetualLoginButton)
+        
+        loginButton.frame = CGRect(x: 20, y: perpetualLoginButton.frame.maxY + 25, width: frame.width - 40, height: 55)
+        loginButton.setTitle("Log in", for: .normal)
+        loginButton.backgroundColor = .eateryBlue
+        loginButton.setBackgroundImage(UIImage.image(withColor: .black), for: .highlighted)
+        loginButton.titleLabel?.textAlignment = .center
+        loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        loginButton.addTarget(self, action: #selector(BRBLoginView.login), for: .touchUpInside)
         addSubview(loginButton)
-        addSubview(infoLabel)
-        addSubview(errorLabel)
+        
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.color = .black
+        activityIndicator.center = headerLabel.center
         addSubview(activityIndicator)
     }
-    
+ 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func keepMeSignedIn() { // toggle
+        if perpetualLoginButton.isSelected {
+            perpetualLoginButton.isSelected = false
+        } else {
+            perpetualLoginButton.isSelected = true
+        }
     }
     
     func login() {
         let netid = (netidTextField.text ?? "").lowercased()
         let password = passwordTextField.text ?? ""
-        errorLabel.text = ""
         
-        UIView.animate(withDuration: 0.5, animations: {
-            self.loginButton.alpha = 0.0
-            self.activityIndicator.alpha = 1.0
-        }) 
-        
-        activityIndicator.startAnimating()
-        delegate?.brbLoginViewClickedLogin(brbLoginView: self, netid: netid, password: password)
-        isUserInteractionEnabled = false
+        if netid.characters.count > 0 && password.characters.count > 0 {
+            headerLabel.text = ""
+            activityIndicator.startAnimating()
+            
+            delegate?.brbLoginViewClickedLogin(brbLoginView: self, netid: netid, password: password)
+            isUserInteractionEnabled = false
+            
+            UserDefaults.standard.set(perpetualLoginButton.isSelected, forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
+            UserDefaults.standard.synchronize()
+        } else {
+            if netid.characters.count == 0 {
+                netidTextField.becomeFirstResponder()
+            } else {
+                passwordTextField.becomeFirstResponder()
+            }
+        }
     }
     
     func loginFailedWithError(error: String) {
-        errorLabel.text = error
-        UIView.animate(withDuration: 0.2, animations: { () -> Void in
-            self.loginButton.alpha = 1.0
-            self.activityIndicator.alpha = 0.0
-        }, completion: { (complete: Bool) -> Void in
-            self.activityIndicator.stopAnimating()
-        }) 
+        headerLabel.textColor = .red
+        headerLabel.text = error
+        activityIndicator.stopAnimating()
+        
         isUserInteractionEnabled = true
+        
+        UserDefaults.standard.removeObject(forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
+        UserDefaults.standard.synchronize()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
