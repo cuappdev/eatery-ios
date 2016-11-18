@@ -120,8 +120,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController = TabbedPageViewController()
         pageViewController.viewControllers = mealViewControllers
         
-        pageViewController.view.frame = view.frame
-        pageViewController.view.frame = pageViewController.view.frame.offsetBy(dx: 0, dy: kMenuHeaderViewFrameHeight)
         pageViewController.scrollDelegate = self
         
         pageViewController.willMove(toParentViewController: self)
@@ -129,7 +127,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
         
-        outerScrollView.contentSize.height = outerScrollView.contentSize.height + (mealViewControllers.map { $0.tableView.bounds.height }.max() ?? 0.0)
+        let maxTableViewHeight: CGFloat = mealViewControllers.map { $0.tableView.contentSize.height }.max() ?? 0.0
+        outerScrollView.contentSize.height = outerScrollView.contentSize.height + (maxTableViewHeight)
+        pageViewController.view.frame = view.frame.offsetBy(dx: 0.0, dy: kMenuHeaderViewFrameHeight)
+        pageViewController.view.frame.size.height = maxTableViewHeight + (navigationController?.navigationBar.frame.maxY ?? 0.0)
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
