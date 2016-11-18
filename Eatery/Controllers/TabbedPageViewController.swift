@@ -32,7 +32,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .groupTableViewBackground
         
         // TODO: sort meals
         
@@ -53,7 +53,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         
         // Page view controller
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        pageViewController.view.backgroundColor = .lightGray
+        pageViewController.view.backgroundColor = UIColor.groupTableViewBackground
         let pageVCYOffset: CGFloat = tabBar != nil ? tabBar!.frame.origin.y + tabBar!.frame.height : 0
         let pageVCHeight = view.frame.height - pageVCYOffset - 44 - 20
         pageViewController.view.frame = CGRect(x: 0, y: pageVCYOffset, width: view.frame.width, height: pageVCHeight)

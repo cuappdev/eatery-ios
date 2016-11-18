@@ -33,14 +33,15 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             menuViewController.menuHeaderView.frame.size.width = cellFrame?.size.width ?? 0.0
             menuViewController.menuHeaderView.layoutIfNeeded()
             menuViewController.outerScrollView.subviews.forEach { $0.alpha = 0.0 }
-            menuViewController.menuHeaderView.subviews.forEach { $0.alpha = 0.0 }
-            menuViewController.menuHeaderView.backgroundImageView.alpha = 1.0
+            menuViewController.outerScrollView.backgroundColor = UIColor.clear
+            menuViewController.menuHeaderView.alpha = 0.0
             menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-            UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: [.curveEaseInOut], animations: {
                 eateriesGridViewController.view.alpha = 0.0
                 eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
                 menuViewController.pageViewController.view.transform = CGAffineTransform.identity
                 menuViewController.outerScrollView.subviews.forEach { $0.alpha = 1.0 }
+                menuViewController.outerScrollView.backgroundColor = UIColor.groupTableViewBackground
                 menuViewController.menuHeaderView.subviews.forEach { $0.alpha = 1.0 }
                 menuViewController.menuHeaderView.frame = originalHeaderFrame
                 menuViewController.menuHeaderView.layoutIfNeeded()
@@ -56,13 +57,13 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             containerView.addSubview(eateriesGridViewController.view)
             containerView.addSubview(menuViewController.menuHeaderView)
             menuViewController.menuHeaderView.frame = menuViewController.outerScrollView.convert(menuViewController.menuHeaderView.frame, to: containerView)
-            UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: [.curveEaseInOut], animations: {
                 eateriesGridViewController.view.alpha = 1.0
                 eateriesGridViewController.view.transform = CGAffineTransform.identity
                 menuViewController.view.alpha = 0.0
                 menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
                 menuViewController.menuHeaderView.frame.origin = CGPoint(x: self.cellFrame?.origin.x ?? 0.0, y: (self.cellFrame?.origin.y ?? 0.0) + 64.0)
-                menuViewController.menuHeaderView.frame.size = self.cellFrame?.size ?? CGSize.zero
+                menuViewController.menuHeaderView.frame.size.width = self.cellFrame?.size.width ?? 0.0
                 menuViewController.menuHeaderView.layoutIfNeeded()
                 menuViewController.menuHeaderView.alpha = 0.0
             }, completion: { finished in

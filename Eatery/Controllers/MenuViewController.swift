@@ -11,7 +11,7 @@ import DiningStack
 import MapKit
 import MessageUI
 
-let kMenuHeaderViewFrameHeight: CGFloat = 240
+let kMenuHeaderViewFrameHeight: CGFloat = 324
 
 private let TitleDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -62,6 +62,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         // Scroll View
         outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
+        outerScrollView.backgroundColor = UIColor.groupTableViewBackground
         outerScrollView.contentSize = CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight)
         outerScrollView.delegate = self
         outerScrollView.showsVerticalScrollIndicator = false

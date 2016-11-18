@@ -37,6 +37,8 @@ class MenuHeaderView: UIView {
         
         backgroundColor = UIColor.groupTableViewBackground
         
+        checkFavorites()
+        
         var images: [UIImage] = []
         
         if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
@@ -76,17 +78,21 @@ class MenuHeaderView: UIView {
             hoursLabel.textColor = UIColor.darkGray
             closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
         case .closed(let message):
-            hoursLabel.text = message
+            hoursLabel.text = "Closed Now (\(message))"
             hoursLabel.textColor = UIColor.gray
             closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         }
 
     }
     
+    func checkFavorites() {
+        favoriteButton.setImage(eatery.favorite ? #imageLiteral(resourceName: "goldStar") : #imageLiteral(resourceName: "whiteStar"), for: .normal)
+    }
+    
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
         eatery.favorite = !eatery.favorite
         
-        favoriteButton.setImage(eatery.favorite ? #imageLiteral(resourceName: "goldStar") : #imageLiteral(resourceName: "whiteStar"), for: .normal)
+        checkFavorites()
         
         delegate?.favoriteButtonPressed()
     }
