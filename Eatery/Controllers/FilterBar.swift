@@ -14,8 +14,7 @@ fileprivate let filters = [
     "West",
     "Central",
     "Swipes",
-    "Brb",
-    "Cash"
+    "Brb"
 ]
 
 protocol FilterBarDelegate {
@@ -40,22 +39,22 @@ class FilterBar: UIView {
             let button = UIButton()
             button.setTitle(filter, for: .normal)
             button.setTitleColor(UIColor.eateryBlue, for: .normal)
-            button.layer.borderWidth = 1.0
-            button.layer.borderColor = UIColor.eateryBlue.cgColor
             button.layer.cornerRadius = 4.0
             button.clipsToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
             button.sizeToFit()
-            button.frame.size.width += 10.0
+            button.frame.size.width += 16.0
             button.frame.size.height = frame.height - 20.0
             button.center.y = frame.height / 2
             if index > 0 {
-                button.frame.origin.x = buttons[index - 1].frame.maxX + 5.0
+                button.frame.origin.x = buttons[index - 1].frame.maxX + 10.0
             } else {
                 button.frame.origin.x = 0.0
             }
             
             button.tag = index
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.white), for: .normal)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
             button.setTitleColor(UIColor.white, for: .selected)
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)

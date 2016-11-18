@@ -52,17 +52,13 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let dateString = TitleDateFormatter.string(from: displayedDate)
         let todayDateString = TitleDateFormatter.string(from: Date())
         
-        // Set navigation bar title
-        let navTitleView = NavigationTitleView.loadFromNib()
-        navTitleView.eateryNameLabel.text = eatery.nickname
         if dateString == todayDateString {
             let commaIndex = dateString.characters.index(of: ",")
             let dateSubstring = dateString.substring(with: commaIndex!..<dateString.endIndex)
-            navTitleView.dateLabel.text = "Today\(dateSubstring)"
+            title = "Today\(dateSubstring)"
         } else {
-            navTitleView.dateLabel.text = dateString
+            title = dateString
         }
-        navigationItem.titleView = navTitleView
         
         // Scroll View
         outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
@@ -77,12 +73,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.setUp(eatery, date: displayedDate)
         menuHeaderView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
-        
-        menuHeaderView.mapButtonPressed = { [unowned self] in
-            let mapVC = MapViewController(eateries: [self.eatery])
-            self.presentVCWithFadeInAnimation(mapVC, duration: 0.3)
-            Analytics.trackLocationButtonPressed(eateryId: self.eatery.slug)
-        }
         
         outerScrollView.addSubview(menuHeaderView)
         
@@ -189,37 +179,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         if #available(iOS 9.0, *) {
             activityVC.excludedActivityTypes?.append(UIActivityType.openInIBooks)
         }
-        
-        let shareBackgroundView = UIView(frame: view.frame)
-        shareBackgroundView.backgroundColor = .eateryBlue
-        shareBackgroundView.alpha = 0
-        
-        let messageLabel =  UILabel(frame: CGRect(x: 0.0, y: (view.superview?.frame.width ?? 0) / 3, width: view.superview?.frame.width ?? 0, height: 88))
-        messageLabel.text = "Share \(eatery.name)'s Menu:"
-        messageLabel.textAlignment = .center
-        messageLabel.lineBreakMode = .byWordWrapping
-        messageLabel.numberOfLines = 0
-        messageLabel.textColor = .white
-        shareBackgroundView.addSubview(messageLabel)
-        
-        view.superview?.addSubview(shareBackgroundView)
         activityVC.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            UIView.animate(withDuration: 0.2, animations: {
-                shareBackgroundView.alpha = 0
-            }, completion: { _ in
-                shareBackgroundView.removeFromSuperview()
-            })
             
             if completed {
                 Analytics.trackShareMenu(eateryId: self.eatery.slug, meal: mealVC.meal)
             }
         }
         
-        UIView.animate(withDuration: 0.2, animations: { 
-            shareBackgroundView.alpha = 1
-        }) 
-        
         self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    func directionsButtonPressed() {
+        Analytics.trackLocationButtonPressed(eateryId: self.eatery.slug)
+        
+        
     }
 
     // MARK: -

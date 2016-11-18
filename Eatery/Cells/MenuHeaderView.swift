@@ -8,11 +8,11 @@
 
 import UIKit
 import DiningStack
-import CoreLocation
 
 @objc protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
     @objc optional func shareButtonPressed()
+    @objc optional func directionsButtonPressed()
 }
 
 class MenuHeaderView: UIView {
@@ -20,27 +20,22 @@ class MenuHeaderView: UIView {
     var eatery: Eatery!
     var delegate: MenuButtonsDelegate?
     var displayedDate: Date!
-    
-    var mapButtonPressed: (Void) -> Void = {}
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet var paymentImageViews: [UIImageView]!
-    
-    func update(userLocation: CLLocation?) {
-        if let distance = userLocation?.distance(from: eatery.location) {
-            distanceLabel.text = "\(Double(round(10*distance/metersInMile)/10)) mi"
-        } else {
-            distanceLabel.text = "-- mi"
-        }
-    }
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var directionsButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     
     func setUp(_ eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
+        
+        backgroundColor = UIColor.groupTableViewBackground
         
         var images: [UIImage] = []
         
@@ -65,33 +60,24 @@ class MenuHeaderView: UIView {
             }
         }
         
-        // Title Label
         titleLabel.text = eatery.nickname
-        if eatery.slug == "RPCC-Marketplace" { titleLabel.text = "Robert Purcell Marketplace Eatery" }
-        
-//        // Hours
-//        var hoursText = eatery.activeEventsForDate(date: displayedDate)
-//        if hoursText != "Closed" {
-//            hoursText = "Open \(hoursText)"
-//        }
-//        hoursLabel.text = hoursText
-        
-        // Background
+        locationLabel.text = eatery.address
         backgroundImageView.image = eatery.photo
+        
+        directionsButton.setBackgroundImage(UIImage.image(withColor: .white), for: .normal)
+        favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
+        shareButton.imageView?.contentMode = .scaleAspectFit
+        shareButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 10.0, bottom: 4.0, right: 10.0)
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(let message):
-            titleLabel.textColor = UIColor.black
-            hoursLabel.text = message
+            hoursLabel.text = "Open Now (\(message))"
             hoursLabel.textColor = UIColor.darkGray
-            distanceLabel.textColor = UIColor.darkGray
             closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
         case .closed(let message):
-            titleLabel.textColor = UIColor.gray
             hoursLabel.text = message
             hoursLabel.textColor = UIColor.gray
-            distanceLabel.textColor = UIColor.gray
             closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         }
 
@@ -100,6 +86,8 @@ class MenuHeaderView: UIView {
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
         eatery.favorite = !eatery.favorite
         
+        favoriteButton.setImage(eatery.favorite ? #imageLiteral(resourceName: "goldStar") : #imageLiteral(resourceName: "whiteStar"), for: .normal)
+        
         delegate?.favoriteButtonPressed()
     }
     
@@ -107,8 +95,8 @@ class MenuHeaderView: UIView {
         delegate?.shareButtonPressed?()
     }
     
-    @IBAction func mapButtonPressed(_ sender: UIButton) {
-        mapButtonPressed()
+    @IBAction func directionsButtonPressed(_ sender: UIButton) {
+        delegate?.directionsButtonPressed?()
     }
     
 }

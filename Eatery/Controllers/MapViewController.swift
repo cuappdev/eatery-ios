@@ -111,7 +111,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         // Create bottom right arrow
         pinButton.frame = CGRect(x: view.frame.size.width - 55, y: view.frame.size.height - 60, width: 35, height: 35)
-        pinButton.setImage(#imageLiteral(resourceName: "nearbyIcon"), for: UIControlState())
         pinButton.addTarget(self, action: #selector(MapViewController.pinButtonPressed), for: .touchUpInside)
         mapView.addSubview(pinButton)
     }

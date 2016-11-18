@@ -11,6 +11,7 @@ import UIKit
 class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var cellFrame: CGRect?
+    var cellImageFrame: CGRect?
     var eateryDistanceText: String?
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -24,20 +25,24 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             let menuViewController = transitionContext.viewController(forKey: .to) as? MenuViewController {
             menuViewController.view.frame = transitionContext.finalFrame(for: menuViewController)
             containerView.addSubview(menuViewController.view)
-            let menuHeaderViewDefaultFrame = menuViewController.menuHeaderView.frame
             
-            menuViewController.menuHeaderView.distanceLabel.text = eateryDistanceText
-            menuViewController.menuHeaderView.frame = self.cellFrame ?? menuViewController.menuHeaderView.frame
+            let originalHeaderFrame = menuViewController.menuHeaderView.frame
+            
+            menuViewController.menuHeaderView.backgroundImageView.frame = self.cellImageFrame ?? menuViewController.menuHeaderView.backgroundImageView.frame
+            menuViewController.menuHeaderView.frame.origin = cellFrame?.origin ?? CGPoint.zero
+            menuViewController.menuHeaderView.frame.size.width = cellFrame?.size.width ?? 0.0
             menuViewController.menuHeaderView.layoutIfNeeded()
             menuViewController.outerScrollView.subviews.forEach { $0.alpha = 0.0 }
-            menuViewController.menuHeaderView.alpha = 1.0
+            menuViewController.menuHeaderView.subviews.forEach { $0.alpha = 0.0 }
+            menuViewController.menuHeaderView.backgroundImageView.alpha = 1.0
             menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
             UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
                 eateriesGridViewController.view.alpha = 0.0
                 eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
                 menuViewController.pageViewController.view.transform = CGAffineTransform.identity
                 menuViewController.outerScrollView.subviews.forEach { $0.alpha = 1.0 }
-                menuViewController.menuHeaderView.frame = menuHeaderViewDefaultFrame
+                menuViewController.menuHeaderView.subviews.forEach { $0.alpha = 1.0 }
+                menuViewController.menuHeaderView.frame = originalHeaderFrame
                 menuViewController.menuHeaderView.layoutIfNeeded()
             }, completion: { finished in
                 transitionContext.completeTransition(finished)
@@ -56,8 +61,10 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
                 eateriesGridViewController.view.transform = CGAffineTransform.identity
                 menuViewController.view.alpha = 0.0
                 menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-                menuViewController.menuHeaderView.frame = self.cellFrame?.offsetBy(dx: 0.0, dy: 64.0) ?? menuViewController.menuHeaderView.frame
+                menuViewController.menuHeaderView.frame.origin = CGPoint(x: self.cellFrame?.origin.x ?? 0.0, y: (self.cellFrame?.origin.y ?? 0.0) + 64.0)
+                menuViewController.menuHeaderView.frame.size = self.cellFrame?.size ?? CGSize.zero
                 menuViewController.menuHeaderView.layoutIfNeeded()
+                menuViewController.menuHeaderView.alpha = 0.0
             }, completion: { finished in
                 menuViewController.menuHeaderView.removeFromSuperview()
                 transitionContext.completeTransition(finished)

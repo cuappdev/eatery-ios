@@ -86,9 +86,6 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startUserActivity()
-        for cell in collectionView.visibleCells {
-            cell.isHidden = false
-        }
     }
     
     func goToLookAheadVC() {
@@ -440,7 +437,6 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
         cell.set(eatery: eatery, userLocation: userLocation)
-        cell.isHidden = false
         
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
@@ -502,9 +498,9 @@ extension EateriesGridViewController: UICollectionViewDelegate {
         
         if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
             eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
+            eateryNavigationAnimator.cellImageFrame = collectionView.convert(cell.backgroundImageView.frame, to: view)
             eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
             self.navigationController?.pushViewController(menuViewController, animated: true)
-            cell.isHidden = true
         }
     }
 }
@@ -517,7 +513,7 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
 
 extension EateriesGridViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if toVC is MenuViewController || fromVC is MenuViewController { return eateryNavigationAnimator }
+        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
         return nil
     }
 }
