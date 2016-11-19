@@ -132,9 +132,11 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch scrollView.contentOffset.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
+            menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
             menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight - scrollView.contentOffset.y
             menuHeaderView.frame.origin = view.convert(CGPoint.zero, to: outerScrollView)
         default:
+            menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 3)
             menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight
             menuHeaderView.frame.origin = CGPoint.zero
         }

@@ -498,7 +498,6 @@ extension EateriesGridViewController: UICollectionViewDelegate {
         
         if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
             eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
-            eateryNavigationAnimator.cellImageFrame = collectionView.convert(cell.backgroundImageView.frame, to: view)
             eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
             self.navigationController?.pushViewController(menuViewController, animated: true)
         }
