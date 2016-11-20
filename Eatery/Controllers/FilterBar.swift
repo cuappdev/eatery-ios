@@ -32,6 +32,7 @@ class FilterBar: UIView {
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         scrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height))
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInset.left = 10.0
         scrollView.contentInset.right = 10.0
         
