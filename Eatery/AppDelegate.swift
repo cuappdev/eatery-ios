@@ -40,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.gray], for: .selected)
         
         // Set up view controllers
         tabBarController = UITabBarController()
@@ -52,27 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let eateryNavigationController = UINavigationController(rootViewController: eateriesGridViewController)
         eateryNavigationController.navigationBar.isTranslucent = false
         eateryNavigationController.navigationBar.barStyle = .black
-        eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: nil, tag: 0)
-        
-        let mapViewController = MapViewController(eateries: DATA.eateries)
-        DATA.fetchEateries(true) { _ in
-            DispatchQueue.main.async {
-                mapViewController.mapEateries(DATA.eateries)
-            }
-        }
-        
-        let mapNavigation = UINavigationController(rootViewController: mapViewController)
-        mapNavigation.navigationBar.isTranslucent = false
-        mapNavigation.navigationBar.barStyle = .black
-        mapNavigation.tabBarItem = UITabBarItem(title: "Nearby", image:  #imageLiteral(resourceName: "locationArrowIcon").withRenderingMode(.alwaysTemplate), tag: 1)
+        eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
 
-        let brbController = BRBViewController()
-        let brbNavigation = UINavigationController(rootViewController: brbController)
-        brbNavigation.navigationBar.isTranslucent = false
-        brbNavigation.navigationBar.barStyle = .black
-        brbNavigation.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
+        let lookAheadNavigationController = UINavigationController(rootViewController: LookAheadViewController())
+        lookAheadNavigationController.navigationBar.isTranslucent = false
+        lookAheadNavigationController.navigationBar.barStyle = .black
+        lookAheadNavigationController.tabBarItem = UITabBarItem(title: "Menus", image: #imageLiteral(resourceName: "menu icon"), tag: 1)
         
-        tabBarController.setViewControllers([eateryNavigationController, mapNavigation, brbNavigation], animated: true)
+        let brbNavigationController = UINavigationController(rootViewController: BRBViewController())
+        brbNavigationController.navigationBar.isTranslucent = false
+        brbNavigationController.navigationBar.barStyle = .black
+        brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
+        
+        tabBarController.setViewControllers([eateryNavigationController, lookAheadNavigationController, brbNavigationController], animated: true)
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

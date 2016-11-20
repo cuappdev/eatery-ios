@@ -72,10 +72,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
-        // Set up bar look ahead VC
-        let rightBarButton = UIBarButtonItem(title: "Guide", style: .plain, target: self, action: #selector(EateriesGridViewController.goToLookAheadVC))
-        rightBarButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
-        navigationItem.rightBarButtonItem = rightBarButton
+        
+        let mapButton = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapButtonPressed))
+        mapButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        navigationItem.rightBarButtonItem = mapButton
         
         loadData(force: false, completion: nil)
         
@@ -88,9 +88,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         startUserActivity()
     }
     
-    func goToLookAheadVC() {
-        navigationController?.pushViewController(LookAheadViewController(), animated: true)
-        Analytics.screenGuideViewController()
+    @objc private func mapButtonPressed() {
+        let mapViewController = MapViewController(eateries: eateries)
+        mapViewController.mapEateries(eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
     }
     
     func setupSort() {

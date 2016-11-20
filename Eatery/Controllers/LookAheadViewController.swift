@@ -48,7 +48,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         
         // View appearance
-        title = "Eatery Guide"
+        navigationItem.title = "Eatery Guide"
         edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         
