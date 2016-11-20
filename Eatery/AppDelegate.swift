@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let brbNavigation = UINavigationController(rootViewController: brbController)
         brbNavigation.navigationBar.isTranslucent = false
         brbNavigation.navigationBar.barStyle = .black
-        brbNavigation.tabBarItem = UITabBarItem(title: "Meal Plan", image: nil, tag: 2)
+        brbNavigation.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
         
         tabBarController.setViewControllers([eateryNavigationController, mapNavigation, brbNavigation], animated: true)
         

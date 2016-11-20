@@ -30,6 +30,8 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var directionsButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var timeImageView: UIImageView!
+    @IBOutlet weak var locationImageView: UIImageView!
     
     func setUp(_ eatery: Eatery, date: Date) {
         self.eatery = eatery
@@ -66,6 +68,9 @@ class MenuHeaderView: UIView {
         locationLabel.text = eatery.address
         backgroundImageView.image = eatery.photo
         
+        timeImageView.tintColor = UIColor.gray
+        locationImageView.tintColor = UIColor.gray
+        
         directionsButton.setBackgroundImage(UIImage.image(withColor: .white), for: .normal)
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         shareButton.imageView?.contentMode = .scaleAspectFit
@@ -75,7 +80,7 @@ class MenuHeaderView: UIView {
         switch eateryStatus {
         case .open(let message):
             hoursLabel.text = "Open Now (\(message))"
-            hoursLabel.textColor = UIColor.darkGray
+            hoursLabel.textColor = UIColor.gray
             closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
         case .closed(let message):
             hoursLabel.text = "Closed Now (\(message))"

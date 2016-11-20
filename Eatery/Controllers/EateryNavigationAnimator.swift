@@ -39,7 +39,7 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
                 eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
                 menuViewController.pageViewController.view.transform = CGAffineTransform.identity
                 menuViewController.outerScrollView.subviews.forEach { $0.alpha = 1.0 }
-                menuViewController.outerScrollView.backgroundColor = UIColor.groupTableViewBackground
+                menuViewController.outerScrollView.backgroundColor = UIColor.white
                 menuViewController.menuHeaderView.subviews.forEach { $0.alpha = 1.0 }
                 menuViewController.menuHeaderView.frame = originalHeaderFrame
                 menuViewController.menuHeaderView.layoutIfNeeded()
