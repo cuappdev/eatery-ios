@@ -58,10 +58,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
         
         var images: [UIImage] = []
         
-        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            images.append(#imageLiteral(resourceName: "cashIcon"))
-        }
-        
         if (eatery.paymentMethods.contains(.BRB)) {
             images.append(#imageLiteral(resourceName: "brbIcon"))
         }

@@ -43,10 +43,6 @@ class MenuHeaderView: UIView {
         
         var images: [UIImage] = []
         
-        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            images.append(#imageLiteral(resourceName: "cashIcon"))
-        }
-        
         if (eatery.paymentMethods.contains(.BRB)) {
             images.append(#imageLiteral(resourceName: "brbIcon"))
         }
@@ -71,7 +67,9 @@ class MenuHeaderView: UIView {
         timeImageView.tintColor = UIColor.gray
         locationImageView.tintColor = UIColor.gray
         
+        directionsButton.tintColor = UIColor.eateryBlue
         directionsButton.setBackgroundImage(UIImage.image(withColor: .white), for: .normal)
+        favoriteButton.tintColor = UIColor.eateryBlue
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         shareButton.imageView?.contentMode = .scaleAspectFit
         shareButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 10.0, bottom: 4.0, right: 10.0)
