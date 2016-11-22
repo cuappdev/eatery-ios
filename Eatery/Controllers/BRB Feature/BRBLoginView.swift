@@ -65,7 +65,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         
         passwordTextField.frame = CGRect(x: 25, y: passwordPrompt.frame.maxY, width: frame.width - 50, height: 45)
         passwordTextField.textColor = .darkGray
-        passwordTextField.placeholder = "type your password"
+        passwordTextField.placeholder = "your password"
         passwordTextField.font = UIFont.systemFont(ofSize: 15)
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none
