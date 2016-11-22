@@ -73,8 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if BRBAccountSettings.shouldLoginOnStartup()
         {
             let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
-            let netid = keychainItemWrapper["Netid"] as! String?
-            let password = keychainItemWrapper["Password"] as! String?
+            let netid = keychainItemWrapper["Netid"] as? String
+            let password = keychainItemWrapper["Password"] as? String
             if netid?.characters.count ?? 0 > 0 && password?.characters.count ?? 0 > 0
             {
                 connectionHandler.netid = netid!
