@@ -144,7 +144,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         
         let userLoc = locationManager.location ?? defaultLocation
-
+        
         queueCursor = -1
         eateryAnnotations =
             eateryAnnotations.filter({ (annot) -> Bool in

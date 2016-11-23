@@ -46,7 +46,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
 
         netidTextField.frame = CGRect(x: 25, y: netidPrompt.frame.maxY, width: frame.width - 50, height: 45)
         netidTextField.textColor = .darkGray
-        netidTextField.placeholder = "e.g. abc123"
+        netidTextField.placeholder = "type your netid (e.g. abc123)"
         netidTextField.font = UIFont.systemFont(ofSize: 15)
         netidTextField.autocapitalizationType = .none
         netidTextField.tintColor = .darkGray
