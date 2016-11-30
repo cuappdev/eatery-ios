@@ -195,11 +195,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     func directionsButtonPressed() {
         Analytics.trackLocationButtonPressed(eateryId: eatery.slug)
         
-        if let eateriesGridViewController = navigationController?.viewControllers.first as? EateriesGridViewController {
-            let mapViewController = MapViewController(eateries: eateriesGridViewController.eateries)
-            mapViewController.mapEateries([eatery])
-            navigationController?.pushViewController(mapViewController, animated: true)
-        }
+        let mapViewController = MapViewController(eateries: [eatery])
+        mapViewController.mapEateries([eatery])
+        navigationController?.pushViewController(mapViewController, animated: true)
     }
 
     // MARK: -

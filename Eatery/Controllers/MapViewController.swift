@@ -10,6 +10,8 @@ import MapKit
 import CoreLocation
 import DiningStack
 
+let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
+
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var eateries: [Eatery]
@@ -19,7 +21,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     let recenterButton = UIButton()
     
-    let defaultLocation = CLLocation(latitude: 42.448078,longitude: -76.484291) // olin library
+    var defaultCoordinate: CLLocationCoordinate2D {
+        return locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
+    }
     
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
@@ -63,7 +67,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         createMapButtons()
         
-        mapView.setCenter(locationManager.location?.coordinate ?? defaultLocation.coordinate, animated: true)
+        mapView.setCenter(defaultCoordinate, animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -87,9 +91,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             eateryAnnotations.append(eateryAnnotation)
         }
         
-        let userLocation = locationManager.location ?? defaultLocation
-        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01)),
-                          animated: false)
+        mapView.setRegion(MKCoordinateRegionMake(defaultCoordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
     }
     
     // MARK: - Button Methods
@@ -119,10 +121,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
         }
         
-        let userLocation = locationManager.location ?? defaultLocation
-        
         if eateryAnnotations.count == 1 {
-            let annotationPoint = MKMapPointForCoordinate(userLocation.coordinate)
+            let annotationPoint = MKMapPointForCoordinate(defaultCoordinate)
             var zoomRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1)
             for annotation in mapView.annotations {
                 let annotationPoint = MKMapPointForCoordinate(annotation.coordinate)
@@ -146,7 +146,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             }
         } else {
-            mapView.setCenter(userLocation.coordinate, animated: true)
+            mapView.setCenter(defaultCoordinate, animated: true)
         }
     }
     
