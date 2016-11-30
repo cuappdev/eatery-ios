@@ -26,6 +26,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
     fileprivate var eateries: [Eatery] = []
     fileprivate var eateryData: [String: [Eatery]] = [:]
+    fileprivate var filters: Set<Filter> = []
     
     fileprivate var searchBar: UISearchBar!
     fileprivate var filterBar: FilterBar!
@@ -158,6 +159,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.addSubview(searchBar)
         
         filterBar = FilterBar(frame: CGRect(x: 0.0, y: searchBar.frame.height, width: view.frame.width, height: 44.0))
+        filterBar.delegate = self
         view.addSubview(filterBar)
     }
     
@@ -292,11 +294,11 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
                         appendSearchItem(item)
                     }
                 }
-
+                
                 return (
                     eatery.name.range(of: searchQuery, options: options) != nil
                     || eatery.allNicknames().contains { $0.range(of: searchQuery, options: options) != nil }
-                        || eatery.area.rawValue.range(of: searchQuery, options: options) != nil
+                    || eatery.area.rawValue.range(of: searchQuery, options: options) != nil
                     || itemFound
                 )
             }
@@ -304,64 +306,28 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             desiredEateries = eateries
         }
         
-        eateryData["Favorites"] = desiredEateries.filter { $0.favorite }
-        if sortType == .campus {
-            eateryData["North"] = desiredEateries.filter { $0.area == .North }
-            eateryData["West"] = desiredEateries.filter { $0.area == .West }
-            eateryData["Central"] = desiredEateries.filter { $0.area == .Central }
-            
-            //sortEateries
-            if let location = userLocation {
-                eateryData["North"] = Sort.sortEateriesByOpenOrAlph(eateryData["North"]!, location: location, sortingType: .alphabetically)
-                eateryData["West"] = Sort.sortEateriesByOpenOrAlph(eateryData["West"]!, location: location, sortingType: .alphabetically)
-                eateryData["Central"] = Sort.sortEateriesByOpenOrAlph(eateryData["Central"]!, location: location, sortingType: .alphabetically)
+        for filter in filters {
+            switch filter {
+            case .nearest:
+                break
+            case .north:
+                desiredEateries = desiredEateries.filter { $0.area == .North }
+            case .west:
+                desiredEateries = desiredEateries.filter { $0.area == .West }
+            case .central:
+                desiredEateries = desiredEateries.filter { $0.area == .Central }
+            case .swipes:
+                desiredEateries = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
+            case .brb:
+                desiredEateries = desiredEateries.filter { $0.paymentMethods.contains(.BRB) }
             }
-            
-        } else if sortType == .open {
-            eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }
-            eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow()}
-            
-            if let location = userLocation {
-                eateryData["Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Open"]!, location: location, sortingType: .alphabetically)
-                eateryData["Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Closed"]!, location: location, sortingType: .alphabetically)
-            }
-        } else if sortType == .alphabetically {
-            eateryData["All Eateries"] = desiredEateries.sorted { $0.nickname < $1.nickname }
-        } else if sortType == .paymentType {
-            eateryData["Swipes"] = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
-            eateryData["BRB"] = desiredEateries.filter { $0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
-            eateryData["Cash"] = desiredEateries.filter { $0.paymentMethods.contains(.Cash) && !$0.paymentMethods.contains(.BRB) && !$0.paymentMethods.contains(.Swipes)}
-            
-            if let location = userLocation {
-                eateryData["Cash"] = Sort.sortEateriesByOpenOrAlph(eateryData["Cash"]!, location: location, sortingType: .alphabetically)
-                eateryData["Swipes"] = Sort.sortEateriesByOpenOrAlph(eateryData["Swipes"]!, location: location, sortingType: .alphabetically)
-                eateryData["BRB"] = Sort.sortEateriesByOpenOrAlph(eateryData["BRB"]!, location: location, sortingType: .alphabetically)
-            }
-        } else { //sorted == .Location
-            eateryData["Nearest and Open"] = desiredEateries.filter { $0.isOpenNow() }
-            eateryData["Nearest and Closed"] = desiredEateries.filter { !$0.isOpenNow() }
-            if CLLocationManager.locationServicesEnabled() {
-                switch (CLLocationManager.authorizationStatus()) {
-                case .authorizedWhenInUse:
-                    //if error default to olin library
-                    if locationError {
-                        userLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
-                    }
-                    
-                    if let location = userLocation {
-                        eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, location: location, sortingType: .location)
-                        eateryData["Nearest and Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, location: location, sortingType: .location)
-                    }
-                 case .notDetermined:
-                    //WE NEED TO PROMPT USER THAT THEY HAVE LOCATION TURNED OFF AND WE WILL USE DEFAULT OF OLIN LIBRARY
-                    eateryData["Nearest and Open"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Open"]!, sortingType: .location)
-                    eateryData["Nearest and Closed"] = Sort.sortEateriesByOpenOrAlph(eateryData["Nearest and Closed"]!, sortingType: .location)
-                    
-                default:
-                    break
-                }
-                
-            }
+        }
+        
+        eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
+        eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
+        
+        if let location = userLocation, filters.contains(.nearest) {
+            eateryData["Open"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
         }
     }
 
@@ -629,6 +595,14 @@ extension EateriesGridViewController: UIScrollViewDelegate {
                 scrollView.setContentOffset(CGPoint(x: 0.0, y: -filterBar.frame.height), animated: true)
             }
         }
+    }
+}
+
+extension EateriesGridViewController: FilterBarDelegate {
+    func updateFilters(filters: Set<Filter>) {
+        self.filters = filters
+        processEateries()
+        collectionView.reloadData()
     }
 }
 

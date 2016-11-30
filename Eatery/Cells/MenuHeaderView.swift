@@ -18,7 +18,7 @@ import DiningStack
 class MenuHeaderView: UIView {
     
     var eatery: Eatery!
-    var delegate: MenuButtonsDelegate?
+    weak var delegate: MenuButtonsDelegate?
     var displayedDate: Date!
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -42,6 +42,10 @@ class MenuHeaderView: UIView {
         checkFavorites()
         
         var images: [UIImage] = []
+        
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            images.append(#imageLiteral(resourceName: "cashIcon"))
+        }
         
         if (eatery.paymentMethods.contains(.BRB)) {
             images.append(#imageLiteral(resourceName: "brbIcon"))
@@ -73,6 +77,7 @@ class MenuHeaderView: UIView {
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         shareButton.imageView?.contentMode = .scaleAspectFit
         shareButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 10.0, bottom: 4.0, right: 10.0)
+        shareButton.isHidden = true // Temporary before hotfix
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {

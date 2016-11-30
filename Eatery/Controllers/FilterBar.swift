@@ -8,23 +8,35 @@
 
 import UIKit
 
-fileprivate let filters = [
-    "Nearest",
-    "North",
-    "West",
-    "Central",
-    "Swipes",
-    "Brb"
+enum Filter: String {
+    case nearest = "Nearest"
+    case north = "North"
+    case west = "West"
+    case central = "Central"
+    case swipes = "Swipes"
+    case brb = "Brb"
+}
+
+fileprivate let filters: [Filter] = [
+    .nearest,
+    .north,
+    .west,
+    .central,
+    .swipes,
+    .brb
 ]
 
-protocol FilterBarDelegate {
-    func updateFilters(filters: [String])
+protocol FilterBarDelegate: class {
+    func updateFilters(filters: Set<Filter>)
 }
 
 class FilterBar: UIView {
-    var buttons: [UIButton] = []
     
+    private var buttons: [UIButton] = []
+    weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
+    
+    private var selectedFilters: Set<Filter> = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,7 +50,7 @@ class FilterBar: UIView {
         
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
-            button.setTitle(filter, for: .normal)
+            button.setTitle(filter.rawValue, for: .normal)
             button.setTitleColor(UIColor.eateryBlue, for: .normal)
             button.layer.cornerRadius = 4.0
             button.clipsToBounds = true
@@ -70,6 +82,13 @@ class FilterBar: UIView {
     
     func buttonPressed(sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        if sender.isSelected {
+            selectedFilters.insert(filters[sender.tag])
+        } else {
+            selectedFilters.remove(filters[sender.tag])
+        }
+        
+        delegate?.updateFilters(filters: selectedFilters)
     }
     
     required init?(coder aDecoder: NSCoder) {

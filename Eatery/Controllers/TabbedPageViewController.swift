@@ -12,7 +12,7 @@ protocol TabbedPageViewControllerDelegate {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
-protocol TabbedPageViewControllerScrollDelegate {
+protocol TabbedPageViewControllerScrollDelegate: class {
     func scrollViewDidChange()
 }
 
@@ -24,7 +24,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     fileprivate var meals: [String] = []
     
     var tabDelegate: TabbedPageViewControllerDelegate?
-    var scrollDelegate: TabbedPageViewControllerScrollDelegate?
+    weak var scrollDelegate: TabbedPageViewControllerScrollDelegate?
     var tabBar: UnderlineTabBarView?
     
     var pageViewController: UIPageViewController!

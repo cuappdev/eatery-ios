@@ -102,9 +102,11 @@ class MealTableViewController: UITableViewController {
                 
                 content = names.isEmpty ? NSMutableAttributedString(string: "No items to show") : NSMutableAttributedString(string: "\n").join(names)
             }
-            
             if title == "General" {
-                title = "Menu"
+                title = ""
+                cell.titleLabelHeight.isActive = false
+            } else {
+                cell.titleLabelHeight.isActive = true
             }
             
             cell.titleLabel.text = title.uppercased()

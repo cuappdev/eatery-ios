@@ -28,19 +28,24 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             let originalHeaderFrame = menuViewController.menuHeaderView.frame
             
             menuViewController.menuHeaderView.frame.origin = cellFrame?.origin ?? CGPoint.zero
-            menuViewController.menuHeaderView.frame.size.width = cellFrame?.size.width ?? 0.0
+            menuViewController.menuHeaderView.frame.size = cellFrame?.size ?? CGSize.zero
             menuViewController.menuHeaderView.layoutIfNeeded()
-            menuViewController.outerScrollView.subviews.forEach { $0.alpha = 0.0 }
+            
             menuViewController.outerScrollView.backgroundColor = UIColor.clear
-            menuViewController.menuHeaderView.alpha = 0.0
-            menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            menuViewController.outerScrollView.subviews.forEach { $0.alpha = 0.0 }
+            
+            menuViewController.menuHeaderView.backgroundColor = UIColor.clear
+            
+            let widthScale = (cellFrame?.width ?? originalHeaderFrame.width) / originalHeaderFrame.width
+            menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: widthScale, y: widthScale).concatenating(CGAffineTransform(translationX: 0.0, y: 88.0))
             UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: [.curveEaseInOut], animations: {
                 eateriesGridViewController.view.alpha = 0.0
-                eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+                eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4).concatenating(CGAffineTransform(translationX: 0.0, y: menuViewController.view.center.y - (self.cellFrame?.midY ?? 0.0)))
                 menuViewController.pageViewController.view.transform = CGAffineTransform.identity
                 menuViewController.outerScrollView.subviews.forEach { $0.alpha = 1.0 }
                 menuViewController.outerScrollView.backgroundColor = UIColor.white
-                menuViewController.menuHeaderView.subviews.forEach { $0.alpha = 1.0 }
+                
+                menuViewController.menuHeaderView.backgroundColor = UIColor.groupTableViewBackground
                 menuViewController.menuHeaderView.frame = originalHeaderFrame
                 menuViewController.menuHeaderView.layoutIfNeeded()
             }, completion: { finished in
@@ -55,13 +60,16 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             containerView.addSubview(eateriesGridViewController.view)
             containerView.addSubview(menuViewController.menuHeaderView)
             menuViewController.menuHeaderView.frame = menuViewController.outerScrollView.convert(menuViewController.menuHeaderView.frame, to: containerView)
+            
+            let widthScale = (cellFrame?.width ?? menuViewController.view.frame.width) / menuViewController.view.frame.width
+            
             UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: [.curveEaseInOut], animations: {
                 eateriesGridViewController.view.alpha = 1.0
                 eateriesGridViewController.view.transform = CGAffineTransform.identity
                 menuViewController.view.alpha = 0.0
-                menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: widthScale, y: widthScale).concatenating(CGAffineTransform(translationX: 0.0, y: 88.0))
                 menuViewController.menuHeaderView.frame.origin = CGPoint(x: self.cellFrame?.origin.x ?? 0.0, y: (self.cellFrame?.origin.y ?? 0.0) + 64.0)
-                menuViewController.menuHeaderView.frame.size.width = self.cellFrame?.size.width ?? 0.0
+                menuViewController.menuHeaderView.frame.size = self.cellFrame?.size ?? CGSize.zero
                 menuViewController.menuHeaderView.layoutIfNeeded()
                 menuViewController.menuHeaderView.alpha = 0.0
             }, completion: { finished in
