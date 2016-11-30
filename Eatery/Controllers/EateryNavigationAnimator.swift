@@ -40,7 +40,7 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: widthScale, y: widthScale).concatenating(CGAffineTransform(translationX: 0.0, y: 88.0))
             UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: [.curveEaseInOut], animations: {
                 eateriesGridViewController.view.alpha = 0.0
-                eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 1.4, y: 1.4).concatenating(CGAffineTransform(translationX: 0.0, y: menuViewController.view.center.y - (self.cellFrame?.midY ?? 0.0)))
+                eateriesGridViewController.view.transform = CGAffineTransform(scaleX: 2.0, y: 2.0).concatenating(CGAffineTransform(translationX: 0.0, y: menuViewController.view.center.y - (self.cellFrame?.midY ?? 0.0)))
                 menuViewController.pageViewController.view.transform = CGAffineTransform.identity
                 menuViewController.outerScrollView.subviews.forEach { $0.alpha = 1.0 }
                 menuViewController.outerScrollView.backgroundColor = UIColor.white
