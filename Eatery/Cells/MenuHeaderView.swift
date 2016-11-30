@@ -66,7 +66,9 @@ class MenuHeaderView: UIView {
         
         titleLabel.text = eatery.nickname
         locationLabel.text = eatery.address
-        backgroundImageView.image = eatery.photo
+        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+            backgroundImageView.hnk_setImageFromURL(url)
+        }
         
         timeImageView.tintColor = UIColor.gray
         locationImageView.tintColor = UIColor.gray

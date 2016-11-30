@@ -235,7 +235,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
+//            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
+            cell.shareMenuButton.isHidden = true // temporary before hotfix
             cell.shareIcon.isHidden = !hasMenuIterable(eatery)
             cell.menuImageView.image = getEateryMenu(eatery)
             
