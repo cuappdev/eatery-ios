@@ -197,6 +197,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 cell = BRBTableViewCell(style: .value1, reuseIdentifier: "BalanceCell")
             }
             
+            cell.selectionStyle = .none
             cell.leftLabel.font = UIFont.boldSystemFont(ofSize: 15)
             cell.rightLabel.font = UIFont.systemFont(ofSize: 15)
             
@@ -223,6 +224,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 cell = BRBTableViewCell(style: .default, reuseIdentifier: "MoreCell")
             }
 
+            cell.selectionStyle = .default
             cell.centerLabel.font = UIFont.systemFont(ofSize: 15)
             cell.contentView.addSubview(activityIndicatorView)
             let tap = UITapGestureRecognizer(target: self, action: #selector(BRBViewController.openFullHistory))
@@ -241,6 +243,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 cell = BRBTableViewCell(style: .value1, reuseIdentifier: "HistoryCell")
             }
 
+            cell.selectionStyle = .none
             cell.leftLabel.numberOfLines = 0;
             cell.leftLabel.lineBreakMode = .byWordWrapping
             cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
@@ -251,7 +254,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             if newLineLoc != NSNotFound {
                 attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 12), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
                 attributedDesc.addAttribute(NSForegroundColorAttributeName, value: UIColor.init(white: 0.40, alpha: 1), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
-                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location: 0, length: newLineLoc))
+                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 16), range: NSRange(location: 0, length: newLineLoc))
             }
             
             cell.leftLabel.attributedText = attributedDesc
