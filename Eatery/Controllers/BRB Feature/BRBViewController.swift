@@ -47,7 +47,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         connectionHandler.errorDelegate = self
         
         loginView = BRBLoginView(frame: view.bounds)
-        activityIndicatorView.frame = CGRect(x: view.frame.width/2 - 10, y: 12, width:20, height:20)
+        activityIndicatorView.frame = CGRect(x: view.frame.width/2 - 10, y: 12, width: 20, height: 20)
         activityIndicatorView.transform = .init(translationX: 0, y: 10)
         activityIndicatorView.color = .black
         activityIndicatorView.hidesWhenStopped = true

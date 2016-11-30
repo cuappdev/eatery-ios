@@ -100,8 +100,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         recenterButton.layer.cornerRadius = 6
         recenterButton.setImage(UIImage(named: "locationArrowIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         recenterButton.tintColor = UIColor.colorFromCode(0x3d90e2)
-        recenterButton.imageEdgeInsets = UIEdgeInsetsMake(0, -6, 0, 0)
-        recenterButton.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0)
+        recenterButton.imageEdgeInsets.left = -6
+        recenterButton.titleEdgeInsets.left = 8
         recenterButton.backgroundColor = .white
         recenterButton.setTitle("Re-center", for: .normal)
         recenterButton.setTitleColor(.black, for: .normal)
