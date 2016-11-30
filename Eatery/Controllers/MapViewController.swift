@@ -10,6 +10,8 @@ import MapKit
 import CoreLocation
 import DiningStack
 
+let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
+
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var eateries: [Eatery]
@@ -19,12 +21,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     let recenterButton = UIButton()
     
-    let defaultLocation = CLLocation(latitude: 42.448078,longitude: -76.484291) // olin library
-    let defaultCoordinate = CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
+    var initialLocation: CLLocation?
+    var defaultCoordinate: CLLocationCoordinate2D {
+        return initialLocation?.coordinate ?? locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
+    }
     
-    init(eateries allEateries: [Eatery]) {
+    /**
+     Initializes a new MapViewController. Initial location is the initial center of the map view.
+     It is Olin Library by default. If `nil`, it is the user's current location.
+     */
+    init(eateries allEateries: [Eatery], initialLocation: CLLocation? = olinLibraryLocation) {
         self.eateries = allEateries
         self.mapView = MKMapView()
+        self.initialLocation = initialLocation
         super.init(nibName: nil, bundle: nil)
         
         mapView.delegate = self
@@ -62,7 +71,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         createMapButtons()
         
-        mapView.setCenter(locationManager.location?.coordinate ?? defaultCoordinate, animated: true)
+        mapView.setCenter(defaultCoordinate, animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if let annotation = mapView.annotations.first, mapView.annotations.count == 1 {
+            mapView.selectAnnotation(annotation, animated: true)
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -86,8 +102,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             eateryAnnotations.append(eateryAnnotation)
         }
         
-        let region = MKCoordinateRegion(center: locationManager.location?.coordinate ?? defaultCoordinate,
-                                        span: MKCoordinateSpanMake(0.006, 0.015))
+        let region = MKCoordinateRegion(center: initialLocation?.coordinate ?? locationManager.location?.coordinate ?? olinLibraryLocation.coordinate,
+                                        span: MKCoordinateSpan(latitudeDelta: 0.006, longitudeDelta: 0.015))
         mapView.setRegion(region, animated: false)
     }
     
@@ -116,9 +132,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
         }
         
-        let userLoc = locationManager.location ?? defaultLocation
-        
-        mapView.setCenter(userLoc.coordinate, animated: true)
+        mapView.setCenter(defaultCoordinate, animated: true)
     }
     
     // MARK: - MKMapViewDelegate Methods
