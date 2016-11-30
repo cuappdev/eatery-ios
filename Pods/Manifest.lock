@@ -13,13 +13,12 @@ PODS:
 
 DEPENDENCIES:
   - Analytics/Segmentio
-  - DiningStack (from `https://github.com/cuappdev/DiningStack.git`, branch `daniel/swift-3`)
+  - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
   - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, branch `feature/swift-3`)
   - SwiftyJSON (from `https://github.com/IBM-swift/swiftyjson.git`)
 
 EXTERNAL SOURCES:
   DiningStack:
-    :branch: daniel/swift-3
     :git: https://github.com/cuappdev/DiningStack.git
   HanekeSwift:
     :branch: feature/swift-3
@@ -29,7 +28,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DiningStack:
-    :commit: 6fb1fdad419ba93b504bd5db9dbcdb82061af1e0
+    :commit: ece9693aa3ffbc8f6d9dcd519985ae453acdf234
     :git: https://github.com/cuappdev/DiningStack.git
   HanekeSwift:
     :commit: 1157a124ec699f4ad926cb054f1d0bfce88ae7a9
@@ -46,6 +45,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   TRVSDictionaryWithCaseInsensitivity: 51d2ccf52c6d645d27b63467a98fa02c556e01b0
 
-PODFILE CHECKSUM: 0f14ea75e32f4e979248f3a893b4a5f8e7015656
+PODFILE CHECKSUM: 912a4b989cb2dce445bc95c5d8f79a87d33b7f32
 
 COCOAPODS: 1.1.1
