@@ -12,99 +12,95 @@ import DiningStack
 @objc protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
     @objc optional func shareButtonPressed()
+    @objc optional func directionsButtonPressed()
 }
 
 class MenuHeaderView: UIView {
     
     var eatery: Eatery!
-    var delegate: MenuButtonsDelegate?
+    weak var delegate: MenuButtonsDelegate?
     var displayedDate: Date!
-    
-    var mapButtonPressed: (Void) -> Void = {}
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
-    @IBOutlet weak var paymentView: UIView!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
-    
+    @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var directionsButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var mapButton: UIButton!
-    
-    override func awakeFromNib() {
-        favoriteButton.setImage(UIImage(named: "whiteStar"), for: UIControlState())
-        shareButton.setImage(UIImage(named: "shareIcon"), for: UIControlState())
-    }
+    @IBOutlet weak var timeImageView: UIImageView!
+    @IBOutlet weak var locationImageView: UIImageView!
     
     func setUp(_ eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
-
-        // Status View
-        let eateryStatus = eatery.generateDescriptionOfCurrentState()
-        switch eateryStatus {
-        case .open(_):
-            break
-        case .closed(_):
-            break
-        }
         
-        // Payment View
-        var paymentTypeViews: [UIImageView] = []
+        backgroundColor = UIColor.groupTableViewBackground
         
-        if (eatery.paymentMethods.contains(.Swipes)) {
-            let swipeIcon = UIImageView(image: UIImage(named: "swipeIcon"))
-            paymentTypeViews.append(swipeIcon)
+        checkFavorites()
+        
+        var images: [UIImage] = []
+        
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            images.append(#imageLiteral(resourceName: "cashIcon"))
         }
         
         if (eatery.paymentMethods.contains(.BRB)) {
-            let brbIcon = UIImageView(image: UIImage(named: "brbIcon"))
-            paymentTypeViews.append(brbIcon)
+            images.append(#imageLiteral(resourceName: "brbIcon"))
         }
         
-        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
-            let cashIcon = UIImageView(image: UIImage(named: "cashIcon"))
-            paymentTypeViews.append(cashIcon)
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            images.append(#imageLiteral(resourceName: "swipeIcon"))
         }
         
-        let payTypeView = UIView()
-        let payViewSize: CGFloat = 25.0
-        let payViewPadding: CGFloat = 10.0
-        var payViewFrame = CGRect(x: 0, y: 0, width: payViewSize, height: payViewSize)
-        
-        for payView in paymentTypeViews {
-            payView.frame = CGRect(x: payViewFrame.origin.x, y: 0, width: payViewSize, height: payViewSize)
-            payTypeView.addSubview(payView)
-            payViewFrame.origin.x += payViewSize + payViewPadding
+        for (index, imageView) in paymentImageViews.enumerated() {
+            if index < images.count {
+                imageView.image = images[index]
+                imageView.isHidden = false
+            } else {
+                imageView.isHidden = true
+            }
         }
         
-        payTypeView.frame = CGRect(x: 95 - (payViewFrame.origin.x - 10), y: 0, width: payViewFrame.origin.x - 10, height: payViewFrame.height)
-        paymentView.addSubview(payTypeView)
-        
-        // Title Label
         titleLabel.text = eatery.nickname
-        if eatery.slug == "RPCC-Marketplace" { titleLabel.text = "Robert Purcell Marketplace Eatery" }
-        
-        // Hours
-        var hoursText = eatery.activeEventsForDate(date: displayedDate)
-        if hoursText != "Closed" {
-            hoursText = "Open \(hoursText)"
-        }
-        hoursLabel.text = hoursText
-        
-        // Background
+        locationLabel.text = eatery.address
         backgroundImageView.image = eatery.photo
-        renderFavoriteImage()
+        
+        timeImageView.tintColor = UIColor.gray
+        locationImageView.tintColor = UIColor.gray
+        
+        directionsButton.tintColor = UIColor.eateryBlue
+        directionsButton.setBackgroundImage(UIImage.image(withColor: .white), for: .normal)
+        favoriteButton.tintColor = UIColor.eateryBlue
+        favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
+        shareButton.imageView?.contentMode = .scaleAspectFit
+        shareButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 10.0, bottom: 4.0, right: 10.0)
+        shareButton.isHidden = true // Temporary before hotfix
+        
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+        case .open(let message):
+            hoursLabel.text = "Open Now (\(message))"
+            hoursLabel.textColor = UIColor.gray
+            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
+        case .closed(let message):
+            hoursLabel.text = "Closed Now (\(message))"
+            hoursLabel.textColor = UIColor.gray
+            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        }
+
     }
     
-    func renderFavoriteImage() {
-        let name = eatery.favorite ? "goldStar" : "whiteStar"
-        favoriteButton.setImage(UIImage(named: name), for: .normal)
+    func checkFavorites() {
+        favoriteButton.setImage(eatery.favorite ? #imageLiteral(resourceName: "goldStar") : #imageLiteral(resourceName: "whiteStar"), for: .normal)
     }
     
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
         eatery.favorite = !eatery.favorite
-        renderFavoriteImage()
+        
+        checkFavorites()
         
         delegate?.favoriteButtonPressed()
     }
@@ -113,8 +109,8 @@ class MenuHeaderView: UIView {
         delegate?.shareButtonPressed?()
     }
     
-    @IBAction func mapButtonPressed(_ sender: UIButton) {
-        mapButtonPressed()
+    @IBAction func directionsButtonPressed(_ sender: UIButton) {
+        delegate?.directionsButtonPressed?()
     }
     
 }

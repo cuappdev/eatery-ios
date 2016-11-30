@@ -40,7 +40,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var events: [String: Event] = [:]
     fileprivate let dates: [Date] = {
         (0..<7).flatMap {
-            (Calendar.current as NSCalendar).date(byAdding: .day, value: $0, to: Date(), options: [])
+            Calendar.current.date(byAdding: .day, value: $0, to: Date())
         }
     }()
     
@@ -48,7 +48,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         
         // View appearance
-        title = "Eatery Guide"
+        navigationItem.title = "Eatery Guide"
         edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         
@@ -63,7 +63,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.autoresizingMask = .flexibleHeight
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
+        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         view.addSubview(tableView)
         
         // Table View Nibs

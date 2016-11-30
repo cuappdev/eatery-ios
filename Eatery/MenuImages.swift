@@ -31,7 +31,7 @@ class MenuImages: NSObject {
             headerLabel.backgroundColor = bodyColor
             headerLabel.textAlignment = .center
             headerLabel.font = condensedCategoryFont
-            headerLabel.textColor = UIColor.lightGray
+            headerLabel.textColor = UIColor.darkGray
             
             // Create footer view
             let footerView = UIView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: headerLabel.frame.size.height/8.0))

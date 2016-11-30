@@ -24,6 +24,8 @@ private let ShortDateFormatter: DateFormatter = {
 private let kEateryNicknames = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
 private let kEateryLocations = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "locations", withExtension: "json")!)).dictionaryValue
 
+let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
+
 extension Eatery {
     /// Preview Image of the eatery such as a logo
     var image: UIImage? {

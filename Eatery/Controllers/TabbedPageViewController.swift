@@ -12,7 +12,7 @@ protocol TabbedPageViewControllerDelegate {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
-protocol TabbedPageViewControllerScrollDelegate {
+protocol TabbedPageViewControllerScrollDelegate: class {
     func scrollViewDidChange()
 }
 
@@ -24,7 +24,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     fileprivate var meals: [String] = []
     
     var tabDelegate: TabbedPageViewControllerDelegate?
-    var scrollDelegate: TabbedPageViewControllerScrollDelegate?
+    weak var scrollDelegate: TabbedPageViewControllerScrollDelegate?
     var tabBar: UnderlineTabBarView?
     
     var pageViewController: UIPageViewController!
@@ -32,7 +32,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         
         // TODO: sort meals
         
@@ -53,7 +53,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         
         // Page view controller
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        pageViewController.view.backgroundColor = .lightGray
+        pageViewController.view.backgroundColor = .white
         let pageVCYOffset: CGFloat = tabBar != nil ? tabBar!.frame.origin.y + tabBar!.frame.height : 0
         let pageVCHeight = view.frame.height - pageVCYOffset - 44 - 20
         pageViewController.view.frame = CGRect(x: 0, y: pageVCYOffset, width: view.frame.width, height: pageVCHeight)

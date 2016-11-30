@@ -11,6 +11,7 @@ import UIKit
 class MealTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var titleLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var contentLabel: UILabel!
     
     override func awakeFromNib() {

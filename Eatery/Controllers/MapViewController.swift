@@ -13,7 +13,7 @@ import DiningStack
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
 {
     var eateries: [Eatery]
-    var queueCursor : Int = 0 // for close-by feature
+    var queueCursor : Int = -1 // for close-by feature
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
@@ -60,6 +60,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         view.addSubview(mapView)
         
         createMapButtons()
+        
+        let tiltedCamera = mapView.camera
+        tiltedCamera.altitude = 415
+        tiltedCamera.heading = 180
+        tiltedCamera.pitch = 60
+        tiltedCamera.centerCoordinate = locationManager.location?.coordinate ?? CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
+        mapView.setCamera(tiltedCamera, animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -76,7 +83,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         for eatery in eateries
         {
-            let annotationTitle = eatery.nameShort
+            let annotationTitle = eatery.nickname
             let eateryAnnotation = MKPointAnnotation()
             eateryAnnotation.coordinate = eatery.location.coordinate
             eateryAnnotation.title = annotationTitle
@@ -85,7 +92,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             eateryAnnotations.append(eateryAnnotation)
         }
         
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate,
+        let userLoc = locationManager.location?.coordinate ?? CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
+        
+        let region = MKCoordinateRegion(center: userLoc,
                                         span: MKCoordinateSpanMake(0.006, 0.015))
         mapView.setRegion(region, animated: false)
     }
@@ -96,22 +105,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     {
         // Create bottom left arrow button
         arrowButton.frame = CGRect(x: 15, y: view.frame.size.height - 55, width: 30, height: 30)
-        arrowButton.setImage(UIImage(named: "locationArrowIcon"), for: UIControlState())
+        arrowButton.setImage(#imageLiteral(resourceName: "locationArrowIcon"), for: UIControlState())
         arrowButton.addTarget(self, action: #selector(MapViewController.arrowButtonPressed), for: .touchUpInside)
         mapView.addSubview(arrowButton)
         
         // Create bottom right arrow
-        pinButton.frame = CGRect(x: view.frame.size.width - 40, y: view.frame.size.height - 60, width: 25, height: 35)
-        pinButton.setImage(UIImage(named: "blackEateryPin"), for: UIControlState())
+        pinButton.frame = CGRect(x: view.frame.size.width - 55, y: view.frame.size.height - 60, width: 35, height: 35)
         pinButton.addTarget(self, action: #selector(MapViewController.pinButtonPressed), for: .touchUpInside)
         mapView.addSubview(pinButton)
     }
     
     func arrowButtonPressed(_ sender: UIButton)
     {
-        queueCursor = 0
+        if mapView.selectedAnnotations.count > 0 {
+            mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
+        }
+        
+        queueCursor = -1
         eateryAnnotations =
-            eateryAnnotations.sorted(by: { (a, b) -> Bool in
+            eateryAnnotations.filter({ (annot) -> Bool in
+                return annot.subtitle == "open"
+            }).sorted(by: { (a, b) -> Bool in
                 let distA = mapView.userLocation.location?.distance(from: CLLocation(latitude: a.coordinate.latitude,
                                                                                      longitude: a.coordinate.longitude)) ?? 0
                 let distB = mapView.userLocation.location?.distance(from: CLLocation(latitude: b.coordinate.latitude,
@@ -119,7 +133,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 return distA < distB
             })
         eateries =
-            eateries.sorted(by: { (a, b) -> Bool in
+            eateries.filter({ (eatery) -> Bool in
+                return eatery.isOpenNow()
+            }).sorted(by: { (a, b) -> Bool in
                 let distA = mapView.userLocation.location?.distance(from: a.location) ?? 0
                 let distB = mapView.userLocation.location?.distance(from: b.location) ?? 0
                 return distA < distB
@@ -129,14 +145,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         newCamera.altitude = 415
         newCamera.heading = 180
         newCamera.pitch = 60
-        newCamera.centerCoordinate = mapView.userLocation.coordinate
+        newCamera.centerCoordinate = locationManager.location?.coordinate ?? CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
+        
         mapView.setCamera(newCamera, animated: true)
     }
     
     func pinButtonPressed(_ sender: UIButton)
     {
         if mapView.selectedAnnotations.count > 0 {
-            mapView.deselectAnnotation(eateryAnnotations[queueCursor], animated: true)
+            mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
         }
         
         queueCursor += 1
@@ -144,13 +161,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             queueCursor = 0
         }
         
-        let newCamera = mapView.camera
-        newCamera.altitude = 415
-        newCamera.heading = 180
-        newCamera.pitch = 60
-        newCamera.centerCoordinate = eateryAnnotations[queueCursor].coordinate
-        mapView.setCamera(newCamera, animated: true)
-        
+        mapView.setCenter(eateryAnnotations[queueCursor].coordinate, animated: true)
         mapView.selectAnnotation(eateryAnnotations[queueCursor], animated: true)
     }
     
