@@ -189,13 +189,17 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             }
         }
         
-        self.present(activityVC, animated: true, completion: nil)
+        present(activityVC, animated: true, completion: nil)
     }
     
     func directionsButtonPressed() {
-        Analytics.trackLocationButtonPressed(eateryId: self.eatery.slug)
+        Analytics.trackLocationButtonPressed(eateryId: eatery.slug)
         
-        
+        if let eateriesGridViewController = navigationController?.viewControllers.first as? EateriesGridViewController {
+            let mapViewController = MapViewController(eateries: eateriesGridViewController.eateries)
+            mapViewController.mapEateries([eatery])
+            navigationController?.pushViewController(mapViewController, animated: true)
+        }
     }
 
     // MARK: -

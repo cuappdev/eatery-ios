@@ -17,7 +17,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     var collectionView: UICollectionView!
     fileprivate let eateryNavigationAnimator = EateryNavigationAnimator()
     
-    fileprivate var eateries: [Eatery] = []
+    var eateries: [Eatery] = []
     fileprivate var eateryData: [String: [Eatery]] = [:]
     fileprivate var filters: Set<Filter> = []
     
