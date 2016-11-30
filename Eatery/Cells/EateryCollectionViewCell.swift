@@ -45,7 +45,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         self.eatery = eatery
         
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
-            backgroundImageView.hnk_setImageFromURL(url)
+            backgroundImageView.hnk_setImageFromURL(url, placeholder: UIImage.image(withColor: UIColor(white: 0.95, alpha: 1.0)))
         }
         
         titleLabel.text = eatery.nickname

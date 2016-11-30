@@ -32,7 +32,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         headerLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: 90)
-        headerLabel.text = "Please login in to see your balance."
+        headerLabel.text = "Login to see your balance."
         headerLabel.numberOfLines = 0
         headerLabel.textAlignment = .center
         headerLabel.font = UIFont.systemFont(ofSize: 15)
