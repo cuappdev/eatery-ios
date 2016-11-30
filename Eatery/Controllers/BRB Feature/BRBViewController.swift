@@ -244,14 +244,14 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             cell.leftLabel.numberOfLines = 0;
             cell.leftLabel.lineBreakMode = .byWordWrapping
             cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
-            cell.rightLabel.font = UIFont.boldSystemFont(ofSize: 13)
+            cell.rightLabel.font = UIFont.systemFont(ofSize: 14)
 
             let attributedDesc = NSMutableAttributedString(string: " "+diningHistory[indexPath.row].description, attributes:nil)
             let newLineLoc = (attributedDesc.string as NSString).range(of: "\n").location
             if newLineLoc != NSNotFound {
-                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 13), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
+                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 12), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
                 attributedDesc.addAttribute(NSForegroundColorAttributeName, value: UIColor.init(white: 0.40, alpha: 1), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.characters.count - newLineLoc - 1))
-                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 16), range: NSRange(location: 0, length: newLineLoc))
+                attributedDesc.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location: 0, length: newLineLoc))
             }
             
             cell.leftLabel.attributedText = attributedDesc
@@ -262,7 +262,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < diningHistory.count ? 67 : tableView.rowHeight
+        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < diningHistory.count ? 64 : tableView.rowHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
