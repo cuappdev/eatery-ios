@@ -16,7 +16,7 @@ private let kUnderlineHeight: CGFloat = 3
 
 class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     
-    var delegate: TabBarDelegate?
+    weak var delegate: TabBarDelegate?
     var tabButtons: [UIButton] = []
     
     var underlineView: UIView!

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TabbedPageViewControllerDelegate {
+protocol TabbedPageViewControllerDelegate: class {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
@@ -23,7 +23,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     var viewControllers: [UIViewController]!
     fileprivate var meals: [String] = []
     
-    var tabDelegate: TabbedPageViewControllerDelegate?
+    weak var tabDelegate: TabbedPageViewControllerDelegate?
     weak var scrollDelegate: TabbedPageViewControllerScrollDelegate?
     var tabBar: UnderlineTabBarView?
     
