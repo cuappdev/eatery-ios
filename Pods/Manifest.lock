@@ -7,18 +7,23 @@ PODS:
   - DiningStack (1.0):
     - Alamofire
     - SwiftyJSON
+  - HanekeSwift (0.10.1)
   - SwiftyJSON (2.3.2)
   - TRVSDictionaryWithCaseInsensitivity (0.0.2)
 
 DEPENDENCIES:
   - Analytics/Segmentio
   - DiningStack (from `https://github.com/cuappdev/DiningStack.git`, branch `daniel/swift-3`)
+  - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, branch `feature/swift-3`)
   - SwiftyJSON (from `https://github.com/IBM-swift/swiftyjson.git`)
 
 EXTERNAL SOURCES:
   DiningStack:
     :branch: daniel/swift-3
     :git: https://github.com/cuappdev/DiningStack.git
+  HanekeSwift:
+    :branch: feature/swift-3
+    :git: https://github.com/Haneke/HanekeSwift.git
   SwiftyJSON:
     :git: https://github.com/IBM-swift/swiftyjson.git
 
@@ -26,6 +31,9 @@ CHECKOUT OPTIONS:
   DiningStack:
     :commit: 6fb1fdad419ba93b504bd5db9dbcdb82061af1e0
     :git: https://github.com/cuappdev/DiningStack.git
+  HanekeSwift:
+    :commit: 1157a124ec699f4ad926cb054f1d0bfce88ae7a9
+    :git: https://github.com/Haneke/HanekeSwift.git
   SwiftyJSON:
     :commit: e332d9cdc201fd7d34e776897159f3dd11764fab
     :git: https://github.com/IBM-swift/swiftyjson.git
@@ -34,9 +42,10 @@ SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Analytics: 51d6163cb568c8ede69f2b92ef4779d91e1524e2
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
+  HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   TRVSDictionaryWithCaseInsensitivity: 51d2ccf52c6d645d27b63467a98fa02c556e01b0
 
-PODFILE CHECKSUM: a52fa7ffaa4528c0473edc7112fa0b9a5d6e1e64
+PODFILE CHECKSUM: 0f14ea75e32f4e979248f3a893b4a5f8e7015656
 
 COCOAPODS: 1.1.1

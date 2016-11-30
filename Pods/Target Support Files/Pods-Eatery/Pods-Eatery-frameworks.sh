@@ -87,6 +87,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Analytics/Analytics.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DiningStack-iOS/DiningStack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/HanekeSwift/Haneke.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON-iOS/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TRVSDictionaryWithCaseInsensitivity/TRVSDictionaryWithCaseInsensitivity.framework"
 fi
@@ -94,6 +95,7 @@ if [[ "$CONFIGURATION" == "External Beta" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Analytics/Analytics.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DiningStack-iOS/DiningStack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/HanekeSwift/Haneke.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON-iOS/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TRVSDictionaryWithCaseInsensitivity/TRVSDictionaryWithCaseInsensitivity.framework"
 fi
@@ -101,6 +103,7 @@ if [[ "$CONFIGURATION" == "Internal Beta" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Analytics/Analytics.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DiningStack-iOS/DiningStack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/HanekeSwift/Haneke.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON-iOS/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TRVSDictionaryWithCaseInsensitivity/TRVSDictionaryWithCaseInsensitivity.framework"
 fi
@@ -108,6 +111,7 @@ if [[ "$CONFIGURATION" == "App Store" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Analytics/Analytics.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DiningStack-iOS/DiningStack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/HanekeSwift/Haneke.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON-iOS/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TRVSDictionaryWithCaseInsensitivity/TRVSDictionaryWithCaseInsensitivity.framework"
 fi

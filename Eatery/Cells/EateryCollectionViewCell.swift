@@ -9,6 +9,7 @@
 import UIKit
 import DiningStack
 import CoreLocation
+import Haneke
 
 let metersInMile: Double = 1609.344
 
@@ -43,10 +44,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
     func set(eatery: Eatery, userLocation: CLLocation?) {
         self.eatery = eatery
         
-        if let photo = eatery.photo {
-            backgroundImageView.image = photo
-        } else {
-            backgroundImageView.image = nil
+        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+            backgroundImageView.hnk_setImageFromURL(url)
         }
         
         titleLabel.text = eatery.nickname
