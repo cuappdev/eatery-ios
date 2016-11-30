@@ -10,16 +10,17 @@ import MapKit
 import CoreLocation
 import DiningStack
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
-{
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+    
     var eateries: [Eatery]
-    var queueCursor : Int = -1 // for close-by feature
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
     
-    let arrowButton = UIButton()
-    let pinButton = UIButton()
+    let recenterButton = UIButton()
+    
+    let defaultLocation = CLLocation(latitude: 42.448078,longitude: -76.484291) // olin library
+    let defaultCoordinate = CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
     
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
@@ -53,7 +54,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Nearby"
+        title = "Map"
         
         view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
         mapView.frame = view.bounds
@@ -61,12 +62,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         createMapButtons()
         
-        let tiltedCamera = mapView.camera
-        tiltedCamera.altitude = 415
-        tiltedCamera.heading = 180
-        tiltedCamera.pitch = 60
-        tiltedCamera.centerCoordinate = locationManager.location?.coordinate ?? CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
-        mapView.setCamera(tiltedCamera, animated: true)
+        mapView.setCenter(locationManager.location?.coordinate ?? defaultCoordinate, animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -77,12 +73,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
     }
     
-    func mapEateries(_ eateries: [Eatery])
-    {
+    func mapEateries(_ eateries: [Eatery]) {
         self.eateries = eateries
         
-        for eatery in eateries
-        {
+        for eatery in eateries {
             let annotationTitle = eatery.nickname
             let eateryAnnotation = MKPointAnnotation()
             eateryAnnotation.coordinate = eatery.location.coordinate
@@ -92,9 +86,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             eateryAnnotations.append(eateryAnnotation)
         }
         
-        let userLoc = locationManager.location?.coordinate ?? CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
-        
-        let region = MKCoordinateRegion(center: userLoc,
+        let region = MKCoordinateRegion(center: locationManager.location?.coordinate ?? defaultCoordinate,
                                         span: MKCoordinateSpanMake(0.006, 0.015))
         mapView.setRegion(region, animated: false)
     }
@@ -103,66 +95,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func createMapButtons()
     {
-        // Create bottom left arrow button
-        arrowButton.frame = CGRect(x: 15, y: view.frame.size.height - 55, width: 30, height: 30)
-        arrowButton.setImage(#imageLiteral(resourceName: "locationArrowIcon"), for: UIControlState())
-        arrowButton.addTarget(self, action: #selector(MapViewController.arrowButtonPressed), for: .touchUpInside)
-        mapView.addSubview(arrowButton)
-        
-        // Create bottom right arrow
-        pinButton.frame = CGRect(x: view.frame.size.width - 55, y: view.frame.size.height - 60, width: 35, height: 35)
-        pinButton.addTarget(self, action: #selector(MapViewController.pinButtonPressed), for: .touchUpInside)
-        mapView.addSubview(pinButton)
+        // Create bottom left re-center button
+        recenterButton.frame = CGRect(x: 20, y: view.frame.size.height - 65, width: 120, height: 40)
+        recenterButton.layer.cornerRadius = 6
+        recenterButton.setImage(UIImage(named: "locationArrowIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        recenterButton.tintColor = UIColor.colorFromCode(0x3d90e2)
+        recenterButton.imageEdgeInsets.left = -6
+        recenterButton.titleEdgeInsets.left = 8
+        recenterButton.backgroundColor = .white
+        recenterButton.setTitle("Re-center", for: .normal)
+        recenterButton.setTitleColor(.black, for: .normal)
+        recenterButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        recenterButton.addTarget(self, action: #selector(recenterButtonPressed), for: .touchUpInside)
+        mapView.addSubview(recenterButton)
     }
     
-    func arrowButtonPressed(_ sender: UIButton)
+    func recenterButtonPressed(_ sender: UIButton)
     {
         if mapView.selectedAnnotations.count > 0 {
             mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
         }
         
-        queueCursor = -1
-        eateryAnnotations =
-            eateryAnnotations.filter({ (annot) -> Bool in
-                return annot.subtitle == "open"
-            }).sorted(by: { (a, b) -> Bool in
-                let distA = mapView.userLocation.location?.distance(from: CLLocation(latitude: a.coordinate.latitude,
-                                                                                     longitude: a.coordinate.longitude)) ?? 0
-                let distB = mapView.userLocation.location?.distance(from: CLLocation(latitude: b.coordinate.latitude,
-                                                                                     longitude: b.coordinate.longitude)) ?? 0
-                return distA < distB
-            })
-        eateries =
-            eateries.filter({ (eatery) -> Bool in
-                return eatery.isOpenNow()
-            }).sorted(by: { (a, b) -> Bool in
-                let distA = mapView.userLocation.location?.distance(from: a.location) ?? 0
-                let distB = mapView.userLocation.location?.distance(from: b.location) ?? 0
-                return distA < distB
-            })
+        let userLoc = locationManager.location ?? defaultLocation
         
-        let newCamera = mapView.camera
-        newCamera.altitude = 415
-        newCamera.heading = 180
-        newCamera.pitch = 60
-        newCamera.centerCoordinate = locationManager.location?.coordinate ?? CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
-        
-        mapView.setCamera(newCamera, animated: true)
-    }
-    
-    func pinButtonPressed(_ sender: UIButton)
-    {
-        if mapView.selectedAnnotations.count > 0 {
-            mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
-        }
-        
-        queueCursor += 1
-        if queueCursor >= eateryAnnotations.count {
-            queueCursor = 0
-        }
-        
-        mapView.setCenter(eateryAnnotations[queueCursor].coordinate, animated: true)
-        mapView.selectAnnotation(eateryAnnotations[queueCursor], animated: true)
+        mapView.setCenter(userLoc.coordinate, animated: true)
     }
     
     // MARK: - MKMapViewDelegate Methods

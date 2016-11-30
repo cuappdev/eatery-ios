@@ -96,7 +96,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      
      */
     func loadDiningHistory() {
-        self.diningHistory = []
+        diningHistory = []
 
         if stage != .loginScreen || stage != .loginFailed || stage != .transition {
             let historyURL = URL(string: diningHistoryURLString)!

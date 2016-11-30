@@ -73,17 +73,18 @@ class BRBTableViewCell: UITableViewCell
             "whiteView" : whiteView
             ]
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bgView]|", options: [], metrics: nil, views: viewsDict))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bgView]|", options: [], metrics: nil, views: viewsDict))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[whiteView]-8-|", options: [], metrics: nil, views: viewsDict))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[whiteView]-1-|", options: [], metrics: nil, views: viewsDict))
-        
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[center]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraint(NSLayoutConstraint(item: centerLabel, attribute: .centerY, relatedBy: .equal, toItem:contentView, attribute: .centerY, multiplier: 1, constant:0))
         
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[left]-[right]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraint(NSLayoutConstraint(item: leftLabel, attribute: .centerY, relatedBy: .equal, toItem: rightLabel, attribute: .centerY, multiplier: 1, constant:0))
         contentView.addConstraint(NSLayoutConstraint(item: rightLabel, attribute: .centerY, relatedBy: .equal, toItem:contentView, attribute: .centerY, multiplier: 1, constant:0))
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        bgView.frame = bounds
+        whiteView.frame = CGRect(x: 8, y: 0, width: bounds.width - 16, height: bounds.height - 1)
     }
     
     override func prepareForReuse() {

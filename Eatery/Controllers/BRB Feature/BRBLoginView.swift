@@ -80,6 +80,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         perpetualLoginButton.frame = CGRect(x: 25, y: passwordTextField.frame.maxY + (frame.size.height <= 600 ? 20:38),
                                             width: 220, height: 20)
         perpetualLoginButton.setTitle("☐   Automatically log me in every time", for: .normal)
+        /// NOTE: this checkbox solution is rather hacky, should be replaced with images in the future
         perpetualLoginButton.setTitle("☑ Automatically log me in every time", for: .selected)
         perpetualLoginButton.setTitleColor(.darkGray, for: .normal)
         perpetualLoginButton.setTitleColor(.black, for: .highlighted)
