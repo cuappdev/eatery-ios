@@ -20,7 +20,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let recenterButton = UIButton()
     
     let defaultLocation = CLLocation(latitude: 42.448078,longitude: -76.484291) // olin library
-    let defaultCoordinate = CLLocation(latitude: 42.448078,longitude: -76.484291).coordinate
     
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
@@ -58,11 +57,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
         mapView.frame = view.bounds
+        mapView.showsBuildings = true
+        mapView.showsUserLocation = true
         view.addSubview(mapView)
         
         createMapButtons()
         
-        mapView.setCenter(locationManager.location?.coordinate ?? defaultCoordinate, animated: true)
+        mapView.setCenter(locationManager.location?.coordinate ?? defaultLocation.coordinate, animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -86,9 +87,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             eateryAnnotations.append(eateryAnnotation)
         }
         
-        let region = MKCoordinateRegion(center: locationManager.location?.coordinate ?? defaultCoordinate,
-                                        span: MKCoordinateSpanMake(0.006, 0.015))
-        mapView.setRegion(region, animated: false)
+        let userLocation = locationManager.location ?? defaultLocation
+        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01)),
+                          animated: false)
     }
     
     // MARK: - Button Methods
@@ -112,16 +113,51 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func recenterButtonPressed(_ sender: UIButton)
     {
-        if mapView.selectedAnnotations.count > 0 {
+        if eateryAnnotations.count == 1 {
+            mapView.selectAnnotation(eateryAnnotations.first!, animated: true)
+        } else if mapView.selectedAnnotations.count > 0 {
             mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
         }
         
-        let userLoc = locationManager.location ?? defaultLocation
+        let userLocation = locationManager.location ?? defaultLocation
         
-        mapView.setCenter(userLoc.coordinate, animated: true)
+        if eateryAnnotations.count == 1 {
+            let annotationPoint = MKMapPointForCoordinate(userLocation.coordinate)
+            var zoomRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1)
+            for annotation in mapView.annotations {
+                let annotationPoint = MKMapPointForCoordinate(annotation.coordinate)
+                let pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1)
+                zoomRect = MKMapRectUnion(zoomRect, pointRect)
+            }
+            let inset = min(-2250.0, -zoomRect.size.width)
+            mapView.setVisibleMapRect(MKMapRectInset(zoomRect, inset, inset), animated: true)
+            
+            let myMapView = mapView
+            let request = MKDirectionsRequest()
+            request.source = MKMapItem.forCurrentLocation()
+            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: eateryAnnotations.first!.coordinate, addressDictionary: nil))
+            request.transportType = .walking;
+            let directions = MKDirections(request: request)
+            directions.calculate { (response, error) in
+                if let response = response, error == nil {
+                    for route in response.routes {
+                        myMapView.add(route.polyline, level: .aboveRoads)
+                    }
+                }
+            }
+        } else {
+            mapView.setCenter(userLocation.coordinate, animated: true)
+        }
     }
     
     // MARK: - MKMapViewDelegate Methods
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let lineRendered = MKPolylineRenderer(polyline: mapView.overlays.first! as! MKPolyline)
+        lineRendered.strokeColor = .eateryBlue
+        lineRendered.lineWidth = 3
+        return lineRendered
+    }
     
     func mapView(_ mapView: MKMapView,
                  annotationView view: MKAnnotationView,
@@ -155,11 +191,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        guard let currentCoordinates = locations.last?.coordinate else { return }
-        let region = MKCoordinateRegionMake(currentCoordinates, MKCoordinateSpanMake(0.01, 0.01))
-        mapView.setRegion(region, animated: true)
-        mapView.showsBuildings = true
-        
+        recenterButtonPressed(recenterButton)
         locationManager.stopUpdatingLocation()
     }
     
