@@ -376,10 +376,10 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension EateriesGridViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
-        return nil
-    }
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
+//        return nil
+//    }
 }
 
 extension EateriesGridViewController: UISearchBarDelegate {
