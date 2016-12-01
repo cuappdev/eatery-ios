@@ -95,7 +95,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func setupCollectionView() {
-        let layout = EateriesCollectionViewTableLayout()
+        let layout = (UIDevice.current.userInterfaceIdiom == .pad) ? EateriesCollectionViewGridLayout() : EateriesCollectionViewTableLayout()
         collectionView = UICollectionView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)), collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
