@@ -28,7 +28,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     var delegate: MenuButtonsDelegate?
     let displayedDate: Date
     var selectedMeal: String?
-    var detailedTitleView: UIView?
+    var navigationTitleView: NavigationTitleView!
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil) {
@@ -51,14 +51,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         let dateString = TitleDateFormatter.string(from: displayedDate)
         let todayDateString = TitleDateFormatter.string(from: Date())
+        let dateTitle: String
         
         if dateString == todayDateString {
             let commaIndex = dateString.characters.index(of: ",")
             let dateSubstring = dateString.substring(with: commaIndex!..<dateString.endIndex)
-            title = "Today\(dateSubstring)"
+            dateTitle = "Today\(dateSubstring)"
         } else {
-            title = dateString
+            dateTitle = dateString
         }
+        
+        navigationTitleView = NavigationTitleView.loadFromNib()
+        navigationTitleView.eateryNameLabel.text = eatery.nickname
+        navigationTitleView.dateLabel.text = dateTitle
+        navigationItem.titleView = navigationTitleView
         
         // Scroll View
         outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
@@ -131,6 +137,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let titleLabelFrame = view.convert(menuHeaderView.titleLabel.frame, from: menuHeaderView)
+        
         switch scrollView.contentOffset.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
@@ -140,6 +149,27 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 3)
             menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight
             menuHeaderView.frame.origin = CGPoint.zero
+        }
+        
+        let percentage = -titleLabelFrame.origin.y/titleLabelFrame.height
+        let titleLabelMaxHeight: CGFloat = 20.0
+        let dateLabelMinWidth: CGFloat = 80.0
+        
+        switch -titleLabelFrame.origin.y {
+        case -CGFloat.greatestFiniteMagnitude..<0:
+            navigationTitleView.nameLabelHeightConstraint.constant = 0
+            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width
+            navigationTitleView.eateryNameLabel.alpha = 0.0
+        case 0..<titleLabelFrame.height:
+            navigationTitleView.eateryNameLabel.alpha = percentage
+            navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight * percentage
+            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage
+        case titleLabelFrame.height..<CGFloat.greatestFiniteMagnitude:
+            navigationTitleView.eateryNameLabel.alpha = 1.0
+            navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight
+            navigationTitleView.dateLabelWidthConstraint.constant = dateLabelMinWidth
+        default:
+            break
         }
     }
     

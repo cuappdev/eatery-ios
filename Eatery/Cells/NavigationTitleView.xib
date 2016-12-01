@@ -17,60 +17,39 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cook House Dining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="fse-iN-Uba">
                     <rect key="frame" x="0.0" y="0.0" width="150" height="0.0"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="CJJ-Z2-Hjp"/>
                         <constraint firstAttribute="height" id="yju-7a-xBE"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="CJJ-Z2-Hjp"/>
-                        </mask>
-                    </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun, Apr 24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8w-W3-2qM">
-                    <rect key="frame" x="0.0" y="0.0" width="150" height="34"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun, Apr 24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="T8w-W3-2qM">
+                    <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="Ky6-aM-UBH"/>
+                        <constraint firstAttribute="width" constant="150" id="eJg-yo-5Rq"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Ky6-aM-UBH"/>
-                        </mask>
-                    </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fse-iN-Uba" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="3x8-Lv-564"/>
-                <constraint firstItem="fse-iN-Uba" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Iml-NF-wpO"/>
                 <constraint firstItem="fse-iN-Uba" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KHT-31-zls"/>
                 <constraint firstItem="fse-iN-Uba" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Kuf-HP-0fw"/>
                 <constraint firstItem="T8w-W3-2qM" firstAttribute="top" secondItem="fse-iN-Uba" secondAttribute="bottom" id="M3I-Yc-IDv"/>
-                <constraint firstItem="T8w-W3-2qM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Tyl-CS-gKZ"/>
-                <constraint firstAttribute="trailing" secondItem="fse-iN-Uba" secondAttribute="trailing" id="Y5k-2M-cqt"/>
-                <constraint firstAttribute="trailing" secondItem="T8w-W3-2qM" secondAttribute="trailing" id="djL-DY-bbC"/>
                 <constraint firstAttribute="trailing" secondItem="fse-iN-Uba" secondAttribute="trailing" id="fKZ-KR-SZP"/>
-                <constraint firstAttribute="bottom" secondItem="T8w-W3-2qM" secondAttribute="bottom" constant="10" id="nux-Jb-uqw"/>
+                <constraint firstAttribute="bottom" secondItem="T8w-W3-2qM" secondAttribute="bottom" id="nux-Jb-uqw"/>
+                <constraint firstItem="T8w-W3-2qM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xpc-I8-DdO"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Iml-NF-wpO"/>
-                    <exclude reference="Y5k-2M-cqt"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="dateLabel" destination="T8w-W3-2qM" id="tFa-uJ-Nw7"/>
-                <outlet property="dateLabelHeightConstraint" destination="Ky6-aM-UBH" id="zrN-pj-EFd"/>
+                <outlet property="dateLabelWidthConstraint" destination="eJg-yo-5Rq" id="lyP-Uf-4Dc"/>
                 <outlet property="eateryNameLabel" destination="fse-iN-Uba" id="bKU-ly-67w"/>
                 <outlet property="nameLabelHeightConstraint" destination="yju-7a-xBE" id="L8s-RT-Q1d"/>
-                <outlet property="nameLabelWidthConstraint" destination="CJJ-Z2-Hjp" id="ZIN-XC-LXO"/>
             </connections>
         </view>
     </objects>

@@ -12,9 +12,8 @@ class NavigationTitleView: UIView {
     
     @IBOutlet weak var eateryNameLabel: UILabel!
     @IBOutlet weak var nameLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dateLabelWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var nameLabelWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var dateLabelHeightConstraint: NSLayoutConstraint!
     
     class func loadFromNib() -> NavigationTitleView {
         let v = Bundle.main.loadNibNamed("NavigationTitleView", owner: self, options: nil)?.first! as! NavigationTitleView
