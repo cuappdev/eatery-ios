@@ -92,7 +92,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             timeLabel.text = message
             timeLabel.textColor = UIColor.gray
             distanceLabel.textColor = UIColor.gray
-            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+            closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.5)
         }
     }
 }
