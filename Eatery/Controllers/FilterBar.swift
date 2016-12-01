@@ -27,6 +27,7 @@ fileprivate let filters: [Filter] = [
 ]
 
 protocol FilterBarDelegate: class {
+    var filters: Set<Filter> { get set }
     func updateFilters(filters: Set<Filter>)
 }
 
@@ -59,6 +60,7 @@ class FilterBar: UIView {
             button.frame.size.width += 16.0
             button.frame.size.height = frame.height - 20.0
             button.center.y = frame.height / 2
+            
             if index > 0 {
                 button.frame.origin.x = buttons[index - 1].frame.maxX + 10.0
             } else {
@@ -80,16 +82,50 @@ class FilterBar: UIView {
         addSubview(scrollView)
     }
     
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
+            for string in prevFilters {
+                if let filter = Filter(rawValue: string),
+                    let index = filters.index(of: filter) {
+                    buttons[index].isSelected = true
+                    selectedFilters.insert(filter)
+                }
+            }
+            
+            delegate?.filters = selectedFilters
+        }
+    }
+    
     func buttonPressed(sender: UIButton) {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             selectedFilters.insert(filters[sender.tag])
+            switch filters[sender.tag] {
+            case .swipes:
+                if let index = filters.index(of: .brb) {
+                    buttons[index].isSelected = false
+                    selectedFilters.remove(.brb)
+                }
+            case .brb:
+                if let index = filters.index(of: .swipes) {
+                    buttons[index].isSelected = false
+                    selectedFilters.remove(.swipes)
+                }
+            default:
+                break
+            }
         } else {
             selectedFilters.remove(filters[sender.tag])
         }
         
+        let defaults = UserDefaults.standard
+        defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
+        
         delegate?.updateFilters(filters: selectedFilters)
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -44,8 +44,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
     func set(eatery: Eatery, userLocation: CLLocation?) {
         self.eatery = eatery
         
+        backgroundImageView.image = nil
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
-            backgroundImageView.hnk_setImageFromURL(url, placeholder: UIImage.image(withColor: UIColor(white: 0.95, alpha: 1.0)), format: Format<UIImage>(name: "original"))
+            backgroundImageView.hnk_setImageFromURL(url, placeholder: UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0)), format: Format<UIImage>(name: "original"))
         }
         
         titleLabel.text = eatery.nickname
@@ -91,7 +92,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             timeLabel.text = message
             timeLabel.textColor = UIColor.gray
             distanceLabel.textColor = UIColor.gray
-            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+            closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.5)
         }
     }
 }

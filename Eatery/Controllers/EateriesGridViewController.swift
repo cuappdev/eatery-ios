@@ -18,8 +18,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     fileprivate let eateryNavigationAnimator = EateryNavigationAnimator()
     
     var eateries: [Eatery] = []
+    var filters: Set<Filter> = []
     fileprivate var eateryData: [String: [Eatery]] = [:]
-    fileprivate var filters: Set<Filter> = []
     
     fileprivate var searchBar: UISearchBar!
     fileprivate var filterBar: FilterBar!
@@ -123,8 +123,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func updateTimerFired() {
-        processEateries()
-        collectionView.reloadData()
+        loadData(force: false, completion: nil)
     }
   
     func pushPreselectedEatery() {
@@ -196,23 +195,21 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             desiredEateries = eateries
         }
         
-        for filter in filters {
-            switch filter {
-            case .nearest:
-                break
-            case .north:
-                desiredEateries = desiredEateries.filter { $0.area == .North }
-            case .west:
-                desiredEateries = desiredEateries.filter { $0.area == .West }
-            case .central:
-                desiredEateries = desiredEateries.filter { $0.area == .Central }
-            case .swipes:
-                desiredEateries = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
-            case .brb:
-                desiredEateries = desiredEateries.filter { $0.paymentMethods.contains(.BRB) }
+        desiredEateries = desiredEateries.filter {
+            if filters.contains(.swipes) { return $0.paymentMethods.contains(.Swipes) }
+            if filters.contains(.brb) { return $0.paymentMethods.contains(.BRB) }
+            return true
+        }
+        
+        if filters.contains(.north) || filters.contains(.west) || filters.contains(.central) {
+            desiredEateries = desiredEateries.filter {
+                return (filters.contains(.north) ? $0.area == .North : false)
+                || (filters.contains(.west) ? $0.area == .West : false)
+                || (filters.contains(.central) ? $0.area == .Central : false)
             }
         }
         
+        eateryData["Favorites"] = desiredEateries.filter { $0.favorite }.sorted { $0.nickname < $1.nickname }
         eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
         eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
         
@@ -364,7 +361,6 @@ extension EateriesGridViewController: UICollectionViewDelegate {
         
         if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
             eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
-            eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
             self.navigationController?.pushViewController(menuViewController, animated: true)
         }
     }
@@ -377,10 +373,10 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension EateriesGridViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
-        return nil
-    }
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
+//        return nil
+//    }
 }
 
 extension EateriesGridViewController: UISearchBarDelegate {
@@ -503,12 +499,11 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
                 return nil
         }
         
-        let menuVC = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
-        menuVC.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
+        menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
         eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
-        eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
-        return menuVC
+        return menuViewController
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
