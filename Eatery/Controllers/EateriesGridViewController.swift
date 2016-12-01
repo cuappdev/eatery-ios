@@ -195,20 +195,17 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             desiredEateries = eateries
         }
         
-        for filter in filters {
-            switch filter {
-            case .nearest:
-                break
-            case .north:
-                desiredEateries = desiredEateries.filter { $0.area == .North }
-            case .west:
-                desiredEateries = desiredEateries.filter { $0.area == .West }
-            case .central:
-                desiredEateries = desiredEateries.filter { $0.area == .Central }
-            case .swipes:
-                desiredEateries = desiredEateries.filter { $0.paymentMethods.contains(.Swipes) }
-            case .brb:
-                desiredEateries = desiredEateries.filter { $0.paymentMethods.contains(.BRB) }
+        desiredEateries = desiredEateries.filter {
+            if filters.contains(.swipes) { return $0.paymentMethods.contains(.Swipes) }
+            if filters.contains(.brb) { return $0.paymentMethods.contains(.BRB) }
+            return true
+        }
+        
+        if filters.contains(.north) || filters.contains(.west) || filters.contains(.central) {
+            desiredEateries = desiredEateries.filter {
+                return (filters.contains(.north) ? $0.area == .North : false)
+                || (filters.contains(.west) ? $0.area == .West : false)
+                || (filters.contains(.central) ? $0.area == .Central : false)
             }
         }
         

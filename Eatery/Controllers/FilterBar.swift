@@ -101,6 +101,20 @@ class FilterBar: UIView {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             selectedFilters.insert(filters[sender.tag])
+            switch filters[sender.tag] {
+            case .swipes:
+                if let index = filters.index(of: .brb) {
+                    buttons[index].isSelected = false
+                    selectedFilters.remove(.brb)
+                }
+            case .brb:
+                if let index = filters.index(of: .swipes) {
+                    buttons[index].isSelected = false
+                    selectedFilters.remove(.swipes)
+                }
+            default:
+                break
+            }
         } else {
             selectedFilters.remove(filters[sender.tag])
         }
@@ -110,6 +124,8 @@ class FilterBar: UIView {
         
         delegate?.updateFilters(filters: selectedFilters)
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
