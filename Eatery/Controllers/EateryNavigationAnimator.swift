@@ -11,7 +11,6 @@ import UIKit
 class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var cellFrame: CGRect?
-    var eateryDistanceText: String?
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
@@ -28,7 +27,7 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             let originalHeaderFrame = menuViewController.menuHeaderView.frame
             
             menuViewController.menuHeaderView.frame.origin = cellFrame?.origin ?? CGPoint.zero
-            menuViewController.menuHeaderView.frame.size = cellFrame?.size ?? CGSize.zero
+            menuViewController.menuHeaderView.frame.size.width = cellFrame?.size.width ?? 0.0
             menuViewController.menuHeaderView.layoutIfNeeded()
             
             menuViewController.outerScrollView.backgroundColor = UIColor.clear
@@ -68,8 +67,10 @@ class EateryNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning 
                 eateriesGridViewController.view.transform = CGAffineTransform.identity
                 menuViewController.view.alpha = 0.0
                 menuViewController.pageViewController.view.transform = CGAffineTransform(scaleX: widthScale, y: widthScale).concatenating(CGAffineTransform(translationX: 0.0, y: 88.0))
-                menuViewController.menuHeaderView.frame.origin = CGPoint(x: self.cellFrame?.origin.x ?? 0.0, y: (self.cellFrame?.origin.y ?? 0.0) + 64.0)
-                menuViewController.menuHeaderView.frame.size = self.cellFrame?.size ?? CGSize.zero
+                if let cellFrame = self.cellFrame {
+                    menuViewController.menuHeaderView.frame.origin = CGPoint(x: cellFrame.origin.x, y: cellFrame.origin.y + 64.0)
+                    menuViewController.menuHeaderView.frame.size.width = cellFrame.size.width
+                }
                 menuViewController.menuHeaderView.layoutIfNeeded()
                 menuViewController.menuHeaderView.alpha = 0.0
             }, completion: { finished in

@@ -149,6 +149,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         UIView.animate(withDuration: 0.35) {
             self.outerScrollView.contentSize.height = kMenuHeaderViewFrameHeight + innerContentHeight
         }
+        print(kMenuHeaderViewFrameHeight + innerContentHeight)
     }
     
     // MARK: -

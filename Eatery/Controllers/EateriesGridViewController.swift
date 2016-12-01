@@ -364,7 +364,6 @@ extension EateriesGridViewController: UICollectionViewDelegate {
         
         if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
             eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
-            eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
             self.navigationController?.pushViewController(menuViewController, animated: true)
         }
     }
@@ -503,12 +502,11 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
                 return nil
         }
         
-        let menuVC = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
-        menuVC.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
+        menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
         eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
-        eateryNavigationAnimator.eateryDistanceText = cell.distanceLabel.text
-        return menuVC
+        return menuViewController
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
