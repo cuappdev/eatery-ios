@@ -133,13 +133,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
     // MARK: - Force Touch Shortcut
     
-    @available(iOS 9.0, *)
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let handledShortcutItem = handleShortcutItem(shortcutItem)
         completionHandler(handledShortcutItem)
     }
   
-    @available(iOS 9.0, *)
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         eateriesGridViewController.preselectedSlug = shortcutItem.type
         return true

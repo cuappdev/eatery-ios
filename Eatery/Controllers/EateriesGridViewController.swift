@@ -123,8 +123,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func updateTimerFired() {
-        processEateries()
-        collectionView.reloadData()
+        loadData(force: false, completion: nil)
     }
   
     func pushPreselectedEatery() {
@@ -213,6 +212,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
             }
         }
         
+        eateryData["Favorites"] = desiredEateries.filter { $0.favorite }.sorted { $0.nickname < $1.nickname }
         eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
         eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
         
