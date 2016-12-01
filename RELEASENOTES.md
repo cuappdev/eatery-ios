@@ -1,4 +1,4 @@
-# Eatery
+# Eatery Release Notes
 
 ### [v1.0.4 - Pei Wei](https://github.com/cuappdev/eatery/compare/v1.0.3...master)
 #### XXXXX XXth, 2016
