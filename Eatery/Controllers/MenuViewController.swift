@@ -67,6 +67,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.delegate = self
         outerScrollView.showsVerticalScrollIndicator = false
         outerScrollView.showsHorizontalScrollIndicator = false
+        outerScrollView.alwaysBounceVertical = true
         view.addSubview(outerScrollView)
         
         // Header Views
@@ -145,13 +146,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     func scrollViewDidChange() {
         let innerScrollView = pageViewController.pluckCurrentScrollView()
         let innerContentHeight = innerScrollView.contentSize.height + 44 // tab bar height
-        let maxOuterYOffset = max(kMenuHeaderViewFrameHeight + innerContentHeight - view.frame.height, 0)
-        
-        var currentOuterYOffset = outerScrollView.contentOffset.y
-        if currentOuterYOffset > maxOuterYOffset {
-            currentOuterYOffset = maxOuterYOffset
+        UIView.animate(withDuration: 0.35) {
+            self.outerScrollView.contentSize.height = kMenuHeaderViewFrameHeight + innerContentHeight
         }
-        outerScrollView.setContentOffset(CGPoint(x: 0, y: currentOuterYOffset), animated: true)
     }
     
     // MARK: -
