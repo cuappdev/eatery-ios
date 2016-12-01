@@ -237,7 +237,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             cell.delegate = self
 //            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
             cell.shareMenuButton.isHidden = true // temporary before hotfix
-            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
+//            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
+            cell.shareIcon.isHidden = true // temporary before hotfix
             cell.menuImageView.image = getEateryMenu(eatery)
             
             return cell
