@@ -254,20 +254,20 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Eatery Header Cell Delegate Methods
     
     func didTapInfoButton(_ cell: EateryHeaderTableViewCell) {
-        let indexPath = tableView.indexPath(for: cell)
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
         var eatery: Eatery!
         
-        switch(sections[indexPath!.section]) {
-        case .West: eatery = filteredWestEateries[indexPath!.row]
-        case .North: eatery = filteredNorthEateries[indexPath!.row]
-        case .Central: eatery = filteredCentralEateries[indexPath!.row]
+        switch(sections[indexPath.section]) {
+        case .West: eatery = filteredWestEateries[indexPath.row]
+        case .North: eatery = filteredNorthEateries[indexPath.row]
+        case .Central: eatery = filteredCentralEateries[indexPath.row]
         default: break
         }
         
         let date = dates[selectedDateIndex] 
         var delegate: MenuButtonsDelegate? = nil
         if let navigationController = self.navigationController {
-            let delegateIndex = navigationController.viewControllers.count - 2
+            let delegateIndex = navigationController.viewControllers.count - 1
             delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
         }
         events = eatery.eventsOnDate(dates[selectedDateIndex])
