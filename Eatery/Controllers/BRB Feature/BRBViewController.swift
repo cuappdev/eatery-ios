@@ -100,6 +100,11 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             loginView.loginFailedWithError(error: "Please try again")
             timer.invalidate()
             print("timing out")
+            
+            (UIApplication.shared.delegate as! AppDelegate).connectionHandler = BRBConnectionHandler()
+            connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
+            connectionHandler.errorDelegate = self
+
             if loginView.superview == nil {
                 view.addSubview(loginView)
             }
