@@ -14,7 +14,7 @@ enum Filter: String {
     case west = "West"
     case central = "Central"
     case swipes = "Swipes"
-    case brb = "Brb"
+    case brb = "BRB"
 }
 
 fileprivate let filters: [Filter] = [

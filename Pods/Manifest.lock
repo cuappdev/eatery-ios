@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.0.1)
+  - Alamofire (4.2.0)
   - Analytics/Core-iOS (2.0.17):
     - TRVSDictionaryWithCaseInsensitivity (= 0.0.2)
   - Analytics/Segmentio (2.0.17):
@@ -34,11 +34,11 @@ CHECKOUT OPTIONS:
     :commit: 1157a124ec699f4ad926cb054f1d0bfce88ae7a9
     :git: https://github.com/Haneke/HanekeSwift.git
   SwiftyJSON:
-    :commit: e332d9cdc201fd7d34e776897159f3dd11764fab
+    :commit: 64b0910db5beeec591ffd708888d4fdd373d970e
     :git: https://github.com/IBM-swift/swiftyjson.git
 
 SPEC CHECKSUMS:
-  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   Analytics: 51d6163cb568c8ede69f2b92ef4779d91e1524e2
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
