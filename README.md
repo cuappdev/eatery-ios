@@ -4,10 +4,12 @@
 Eatery is the first app from [CUAppDev](http://cuappdev.org), a project team at Cornell University. Eatery provides an easy and accessible way to browse the hours and menus of the dining locations on campus. You can view our [release notes](RELEASENOTES.md) to learn more about the progress of the Eatery. Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/id1089672962).
 
 ## Screenshots
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/promo/eateries.jpeg  width=350 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/promo/menus.jpeg  width=350 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/promo/guide.jpeg  width=350 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/promo/search.jpeg  width=350 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/app-store-screenshots/Eatery-Eateries-Screen.png  width=285 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/app-store-screenshots/Eatery-Menus-Screen.png  width=285 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/app-store-screenshots/Eatery-Guide-Screen.png  width=285 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/app-store-screenshots/Eatery-Search-Screen.png  width=285 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/app-store-screenshots/Eatery-Map-Screen.png  width=285 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/app-store-screenshots/Eatery-Meal-Plan-Screen.png  width=285 />
 
 ## Apple Watch Screenshots
 <img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/watch/list.png width=150 />
