@@ -21,6 +21,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     var hasLoadedMore = 0.0
     var paginationCounter = 0
     let activityIndicatorView = UIActivityIndicatorView()
+    let activityIndicatorDescriptionLabel = UILabel()
     let timeout = 15.0 // seconds
     var time = 0.0 // time of request
     var historyHeader : EateriesCollectionViewHeaderView?
@@ -39,9 +40,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         navigationItem.rightBarButtonItem = profileIcon
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-        view.addGestureRecognizer(tapGesture)
 
         connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
         connectionHandler.errorDelegate = self
@@ -51,6 +49,12 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         activityIndicatorView.transform = .init(translationX: 0, y: 10)
         activityIndicatorView.color = .black
         activityIndicatorView.hidesWhenStopped = true
+        
+        activityIndicatorDescriptionLabel.frame = CGRect(x: 0, y: activityIndicatorView.frame.maxY + 10, width: view.frame.width * 0.8, height: 20)
+        activityIndicatorDescriptionLabel.center = CGPoint(x: view.frame.width / 2.0, y: activityIndicatorDescriptionLabel.center.y)
+        activityIndicatorDescriptionLabel.text = "Logging in, this may take a minute"
+        activityIndicatorDescriptionLabel.textAlignment = .center
+        activityIndicatorDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
         
         if connectionHandler.accountBalance != nil // already logging in
         {
@@ -71,6 +75,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             {
                 activityIndicatorView.startAnimating()
                 view.addSubview(activityIndicatorView)
+                view.addSubview(activityIndicatorDescriptionLabel)
                 
                 timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
             }
@@ -80,10 +85,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 view.addSubview(loginView)
             }
         }
-    }
-    
-    func viewTapped() {
-        view.endEditing(true)
     }
     
     func userClickedProfileButton() {
@@ -97,7 +98,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         time = time + 0.1
         
         if time >= timeout {
-            loginView.loginFailedWithError(error: "Please try again")
+            loginView.loginFailedWithError(error: "Please try again later")
             timer.invalidate()
             print("timing out")
             
@@ -332,6 +333,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         }
 
         activityIndicatorView.stopAnimating()
+        activityIndicatorDescriptionLabel.removeFromSuperview()
         
         if loginView != nil {
             loginView.removeFromSuperview()

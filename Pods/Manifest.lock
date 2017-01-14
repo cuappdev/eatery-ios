@@ -34,7 +34,7 @@ CHECKOUT OPTIONS:
     :commit: 1157a124ec699f4ad926cb054f1d0bfce88ae7a9
     :git: https://github.com/Haneke/HanekeSwift.git
   SwiftyJSON:
-    :commit: 64b0910db5beeec591ffd708888d4fdd373d970e
+    :commit: 5ca3f000588b49a3184271c21d36ade1205d81b2
     :git: https://github.com/IBM-swift/swiftyjson.git
 
 SPEC CHECKSUMS:

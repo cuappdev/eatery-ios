@@ -43,6 +43,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         view.addSubview(tableView)
         
         let cell1 = BRBTableViewCell()
