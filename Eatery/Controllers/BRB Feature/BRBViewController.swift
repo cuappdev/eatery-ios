@@ -39,9 +39,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         navigationItem.rightBarButtonItem = profileIcon
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-        view.addGestureRecognizer(tapGesture)
 
         connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
         connectionHandler.errorDelegate = self
@@ -82,10 +79,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         }
     }
     
-    func viewTapped() {
-        view.endEditing(true)
-    }
-    
     func userClickedProfileButton() {
         let brbVc = BRBAccountSettingsViewController()
         brbVc.delegate = self
@@ -97,7 +90,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         time = time + 0.1
         
         if time >= timeout {
-            loginView.loginFailedWithError(error: "Please try again")
+            loginView.loginFailedWithError(error: "Please try again later")
             timer.invalidate()
             print("timing out")
             
