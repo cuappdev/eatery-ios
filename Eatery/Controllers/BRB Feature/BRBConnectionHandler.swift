@@ -114,7 +114,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      */
     func getDiningHistory() {
         getHTML { (html: NSString) in
-            let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_(and_|)time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points debit\\\" title=\\\"debit\\\">(.*?)<\\/td><\\/tr>)"
+            let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_(and_|)time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points (credit|debit)\\\" title=\\\"(credit|debit)\\\">(.*?)<\\/td><\\/tr>)"
 
             let regex = try? NSRegularExpression(pattern: tableHTMLRegex as String, options: .useUnicodeWordBoundaries)
             if let matches = regex?.matches(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, html.length))
@@ -128,7 +128,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     //let accountName = self.findEntryValue(htmlEntry, fieldName: "account_name")
                     let transDate = self.findEntryValue(htmlEntry, fieldName: "\"date")
                     let transTime = self.findEntryValue(htmlEntry, fieldName: "\"time")
-                    let amount = self.findEntryValue(htmlEntry, fieldName: "ebit")
+                    let amount = self.findEntryValue(htmlEntry, fieldName: "it")
                     let location = self.findEntryValue(htmlEntry, fieldName: "details")
                     
                     let formatter1 = DateFormatter()
