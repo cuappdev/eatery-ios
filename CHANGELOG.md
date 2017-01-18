@@ -1,8 +1,14 @@
 # Eatery Changelog
 
-### [v1.0.4 - Pei Wei](https://github.com/cuappdev/eatery/compare/v1.0.3...master)
-#### XXXXX XXth, 2016
-- TODO: On launch
+### [v2.0.0 - Chick-fil-A](https://github.com/cuappdev/eatery/compare/v1.0.3...v2.0.0)
+#### January 17th, 2017
+- [Move to Tab Bar Design](https://github.com/cuappdev/eatery/commit/9fd737c36e128626d5758f4248f81b850a40eb31)
+- [Add BRB Tab](https://github.com/cuappdev/eatery/commit/96a2888f3a2466921ad68088bb4c3c8519898410)
+- [Redesign Menu Screen](https://github.com/cuappdev/eatery/commit/06d87798ba03a9c8da1872b6f61e845df8a5b739)
+- New Search View
+- Swift 3.0 Improvements
+- [Lots Of UI Improvements and Refinement](https://github.com/cuappdev/eatery/commit/0cde03595e5763334427b2b2d47b94ed4138bb4d)
+- Many Small Bugs and Smaller Tweaks
 
 ### [v1.0.3 - In-N-Out Burger](https://github.com/cuappdev/eatery/compare/v1.0.2...v1.0.3)
 #### May 25th, 2016
@@ -27,7 +33,7 @@
 - [Emoji Search 🐔](https://github.com/cuappdev/eatery/commit/7eeff9b371e6f5e41eca96a262410a062d8b636e)
 - Many Other Misc Bug Fixes and Improvements
 
-### [v1.0.1 - Chipotle](https://github.com/cuappdev/eatery/compare/v1.0...v1.0.1)
+### [v1.0.1 - Chipotle](https://github.com/cuappdev/eatery/compare/v1.0.0...v1.0.1)
 #### March 15th, 2016
 - [Implement 3D Touch Shortcuts](https://github.com/cuappdev/eatery/commit/1bfc48df938d58ae601223fb1eff120ea6b0c058)
 - [Hide Info Button](https://github.com/cuappdev/eatery/commit/aa31f0a6e8a8d26d65cf9c67e79b3414307751ae)
@@ -39,7 +45,7 @@
 - Misc Bug Fixes, Cleanup and Improvements
 
 
-### [v1.0 - Five Guys](https://github.com/cuappdev/eatery/compare/3206a59...v1.0)
+### [v1.0.0 - Five Guys](https://github.com/cuappdev/eatery/compare/3206a59...v1.0.0)
 #### March 5th, 2016
 - Initial App Release
 - iPhone only Release
