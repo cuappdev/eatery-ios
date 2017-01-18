@@ -13,7 +13,7 @@ After months of work, we're excited to finally release Eatery 2.0!
 - Improved scrolling performance in the Eateries page
 - Various bug fixes and performance improvements as always
 
-#MakeEateryGreatAgain
+\#MakeEateryGreatAgain
 
 ### [v1.0.3 - In-N-Out Burger](https://github.com/cuappdev/eatery/compare/v1.0.2...v1.0.3)
 #### May 25th, 2016
