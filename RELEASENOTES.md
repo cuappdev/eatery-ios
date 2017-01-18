@@ -51,7 +51,7 @@ Might want to grab some Okenshields french toast sticks before reading…
 - Small graphics glitch that just annoyed us
 - Other Bug Fixes
 
-### [v1.0 - Five Guys](https://github.com/cuappdev/eatery/compare/3206a59...v1.0.0)
+### [v1.0.0 - Five Guys](https://github.com/cuappdev/eatery/compare/3206a59...v1.0.0)
 #### March 5th, 2016
 - Initial App Release
 - iPhone only Release
