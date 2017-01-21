@@ -8,17 +8,17 @@ Eatery is the first app made by [CUAppDev](http://cuappdev.org), an engineering 
 
 ## Screenshots
 ### iPhone
-<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Eateries-Screen.png  width=287 />
-<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Menus-Screen.png  width=287 />
-<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Guide-Screen.png  width=287 />
-<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Search-Screen.png  width=287 />
-<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Map-Screen.png  width=287 />
-<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Meal-Plan-Screen.png  width=287 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Eateries-Screen.png  width=290 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Menus-Screen.png  width=290 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Guide-Screen.png  width=290 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Search-Screen.png  width=290 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Map-Screen.png  width=290 />
+<img src=https://github.com/cuappdev/assets/blob/master/eatery/iphone-screenshots/Eatery-Meal-Plan-Screen.png  width=290 />
 
 ### Apple Watch
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Eatery-List-Screen.png width=287 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Dining-Hall-Detail-Screen.png width=287 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Cafe-Detail-Screen.png width=287 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Eatery-List-Screen.png width=290 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Dining-Hall-Detail-Screen.png width=290 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Cafe-Detail-Screen.png width=290 />
 
 ##Development
 
