@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import SafariServices
 
 class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -314,11 +315,29 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         timer.invalidate()
         
         print(error)
+        
+        if error == BRBConnectionHandler.Stages.updateProfile.toString() {
+            print("User needs to update profile, showing safari vc")
+            showSafariVC()
+        }
+        
         if loginView.superview == nil {
             view.addSubview(loginView)
         }
 
         loginView.loginFailedWithError(error: error)
+    }
+    
+    func showSafariVC() {
+        
+        if let url = URL(string: "https://get.cbord.com/cornell/full/login.php") {
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.modalPresentationStyle = .overCurrentContext
+
+            // not very elegant, but prevents user from switching tabs and messing up the vc structure
+            // TODO: make more elegant
+            parent?.parent?.present(safariVC, animated: true, completion: nil)
+        }
     }
     
     func finishedLogin() {

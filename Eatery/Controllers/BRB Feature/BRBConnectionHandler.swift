@@ -34,6 +34,18 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         case fundsHome
         case diningHistory
         case finished
+        case updateProfile
+        
+        func toString() -> String {
+            switch self {
+            case .loginFailed:
+                return "Incorrect netid and/or password"
+            case .updateProfile:
+                return "Login failed, please try again"
+            default:
+                return ""
+            }
+        }
     }
     
     var stage: Stages = .loginScreen
@@ -98,7 +110,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     func loadDiningHistory() {
         diningHistory = []
 
-        if stage != .loginScreen || stage != .loginFailed || stage != .transition {
+        if stage != .loginScreen || stage != .loginFailed || stage != .transition || stage != .updateProfile {
             let historyURL = URL(string: diningHistoryURLString)!
             load(URLRequest(url: historyURL))
         }
@@ -261,13 +273,15 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             print(self.stage)
             switch self.stage {
             case .loginFailed:
-                self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
+                self.errorDelegate?.failedToLogin(error: Stages.loginFailed.toString())
             case .loginScreen:
                 self.login()
             case .fundsHome:
                 self.getAccountBalance()
             case .diningHistory:
                 self.getDiningHistory()
+            case .updateProfile:
+                self.errorDelegate?.failedToLogin(error: Stages.updateProfile.toString())
             default:
                 print("In Transition Stage")
             }
@@ -288,7 +302,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             if self.failedToLogin() {
                 self.stage = .loginFailed
             } else if self.url!.absoluteString.contains("https://get.cbord.com/cornell/full/update_profile.php") {
-                self.stage = .loginFailed
+                self.stage = .updateProfile
             } else if html.contains("<h1>CUWebLogin</h1>") {
                 self.stage = .loginScreen
             } else if self.url!.absoluteString == self.fundsHomeURLString {

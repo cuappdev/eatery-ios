@@ -191,6 +191,10 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         
         isUserInteractionEnabled = true
         
+        netidTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        animateToAdjustToKeyboard(keyboardIsDisplaying: true)
+        
         UserDefaults.standard.removeObject(forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
         UserDefaults.standard.synchronize()
     }
