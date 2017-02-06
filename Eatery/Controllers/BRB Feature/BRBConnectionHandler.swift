@@ -34,18 +34,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         case fundsHome
         case diningHistory
         case finished
-        case updateProfile
-        
-        func toString() -> String {
-            switch self {
-            case .loginFailed:
-                return "Incorrect netid and/or password"
-            case .updateProfile:
-                return "Login failed, please try again"
-            default:
-                return ""
-            }
-        }
     }
     
     var stage: Stages = .loginScreen
@@ -78,10 +66,10 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      */
     func getHTML(block: @escaping (NSString) -> ()){
         evaluateJavaScript("document.documentElement.outerHTML.toString()",
-            completionHandler: { (html: Any?, error: Error?) in
-                if error == nil {
-                    block(html as! NSString)
-                }
+                           completionHandler: { (html: Any?, error: Error?) in
+                            if error == nil {
+                                block(html as! NSString)
+                            }
         })
     }
     
@@ -109,8 +97,8 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      */
     func loadDiningHistory() {
         diningHistory = []
-
-        if stage != .loginScreen || stage != .loginFailed || stage != .transition || stage != .updateProfile {
+        
+        if stage != .loginScreen || stage != .loginFailed || stage != .transition {
             let historyURL = URL(string: diningHistoryURLString)!
             load(URLRequest(url: historyURL))
         }
@@ -127,7 +115,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     func getDiningHistory() {
         getHTML { (html: NSString) in
             let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_(and_|)time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points (credit|debit)\\\" title=\\\"(credit|debit)\\\">(.*?)<\\/td><\\/tr>)"
-
+            
             let regex = try? NSRegularExpression(pattern: tableHTMLRegex as String, options: .useUnicodeWordBoundaries)
             if let matches = regex?.matches(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, html.length))
             {
@@ -149,7 +137,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "M/d 'at' h:mm a"
                     entry.description = location
-                    entry.description += "\n " + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
+                    if transDate.lengthOfBytes(using: .ascii) > 0 && transTime.lengthOfBytes(using: .ascii) > 0 {
+                        entry.description += "\n " + formatter.string(from: formatter1.date(from: transDate + " " + transTime)!)
+                    }
                     entry.timestamp = amount.contains("$") ? amount : amount + " swipe"
                     
                     self.diningHistory.append(entry)
@@ -158,24 +148,24 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     return
                 }
             }
-
+            
             if self.stage == .diningHistory || self.stage == .fundsHome {
                 self.getDiningHistory()
             }
         }
     }
     /**
-    
+     
      - Finds the value that is surrounded by the HTML tag ending with [fieldName">]
      
-    */
+     */
     func findEntryValue(_ htmlEntry : NSString, fieldName : String) -> String {
         let fieldRange = htmlEntry.range(of: fieldName + "\">")
         var curIndex: Int = fieldRange.location + fieldRange.length
         
         var value = ""
         
-        while htmlEntry.substring(with: NSMakeRange(curIndex, 1)) != "<"
+        while curIndex < htmlEntry.length && htmlEntry.substring(with: NSMakeRange(curIndex, 1)) != "<"
         {
             value += htmlEntry.substring(with: NSMakeRange(curIndex, 1))
             curIndex += 1
@@ -186,7 +176,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     /**
      
      - Fetches the HTML for the currently displayed web page and instantiates a new AccountBalance object
-       using the account information on the page.
+     using the account information on the page.
      
      - Does not guarantee that the javascript has finished executing before trying to get account info.
      
@@ -212,13 +202,13 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     self.getAccountBalance()
                     return
                 }
-
+                
                 self.getDiningHistory()
-
+                
                 self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
                 self.accountBalance.cityBucks = city != "" ? city : "0.00"
                 self.accountBalance.laundry = laundry != "" ? laundry : "0.00"
-                self.accountBalance.swipes = swipes != "" ? swipes[swipes.characters.index(after: swipes.startIndex)..<swipes.characters.index(before: swipes.endIndex)] : "0"
+                self.accountBalance.swipes = swipes != "" ? swipes[swipes.characters.index(after: swipes.startIndex)..<swipes.characters.index(before: swipes.endIndex)] : "Unlimited"
             }
         }
     }
@@ -226,7 +216,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     /**
      * Makes two passes on an html string with two different
      * regular expressions, returning the inner result
-    */
+     */
     func parseHTML(_ html: NSString, _ regex1: String, _ regex2: String) -> String
     {
         let firstPass = self.getFirstRegexMatchFromString(regexString: regex1 as NSString, str: html)
@@ -237,7 +227,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     /**
      
      - Given a regex string and and a string to match on, returns the first instance of the regex
-       string or an empty string if regex cannot be matched.
+     string or an empty string if regex cannot be matched.
      
      */
     func getFirstRegexMatchFromString(regexString: NSString, str: NSString) -> String {
@@ -267,34 +257,32 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             self.loginCount += 1
         }
     }
-
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.getStageAndRunBlock {
             print(self.stage)
             switch self.stage {
             case .loginFailed:
-                self.errorDelegate?.failedToLogin(error: Stages.loginFailed.toString())
+                self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
             case .loginScreen:
                 self.login()
             case .fundsHome:
                 self.getAccountBalance()
             case .diningHistory:
                 self.getDiningHistory()
-            case .updateProfile:
-                self.errorDelegate?.failedToLogin(error: Stages.updateProfile.toString())
             default:
                 print("In Transition Stage")
             }
         }
     }
-
+    
     /**
      
      - Gets the stage enum for the currently displayed web page and runs a block after fetching
-       the HTML for the page.
+     the HTML for the page.
      
      - Does not guarantee Javascript will finish running before the block
-       is executed.
+     is executed.
      
      */
     func getStageAndRunBlock(block: @escaping () -> ()) {
@@ -302,7 +290,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             if self.failedToLogin() {
                 self.stage = .loginFailed
             } else if self.url!.absoluteString.contains("https://get.cbord.com/cornell/full/update_profile.php") {
-                self.stage = .updateProfile
+                self.stage = .loginFailed
             } else if html.contains("<h1>CUWebLogin</h1>") {
                 self.stage = .loginScreen
             } else if self.url!.absoluteString == self.fundsHomeURLString {
