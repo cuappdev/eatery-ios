@@ -1133,9 +1133,9 @@ extension JSON {
         }
         set {
 #if os(Linux)
-            self.object = newValue?.absoluteString._bridgeToObjectiveC() as Any
+            self.object = newValue?.absoluteString._bridgeToObjectiveC()
 #else
-            self.object = newValue?.absoluteString as Any
+            self.object = newValue?.absoluteString
 #endif
         }
     }

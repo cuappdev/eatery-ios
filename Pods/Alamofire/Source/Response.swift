@@ -38,17 +38,13 @@ public struct DefaultDataResponse {
     /// The error encountered while executing or validating the request.
     public let error: Error?
 
-    /// The timeline of the complete lifecycle of the request.
-    public let timeline: Timeline
-
     var _metrics: AnyObject?
 
-    init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?, timeline: Timeline = Timeline()) {
+    init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
         self.request = request
         self.response = response
         self.data = data
         self.error = error
-        self.timeline = timeline
     }
 }
 
@@ -68,7 +64,7 @@ public struct DataResponse<Value> {
     /// The result of response serialization.
     public let result: Result<Value>
 
-    /// The timeline of the complete lifecycle of the request.
+    /// The timeline of the complete lifecycle of the `Request`.
     public let timeline: Timeline
 
     var _metrics: AnyObject?
@@ -143,9 +139,6 @@ public struct DefaultDownloadResponse {
     /// The error encountered while executing or validating the request.
     public let error: Error?
 
-    /// The timeline of the complete lifecycle of the request.
-    public let timeline: Timeline
-
     var _metrics: AnyObject?
 
     init(
@@ -154,8 +147,7 @@ public struct DefaultDownloadResponse {
         temporaryURL: URL?,
         destinationURL: URL?,
         resumeData: Data?,
-        error: Error?,
-        timeline: Timeline = Timeline())
+        error: Error?)
     {
         self.request = request
         self.response = response
@@ -163,7 +155,6 @@ public struct DefaultDownloadResponse {
         self.destinationURL = destinationURL
         self.resumeData = resumeData
         self.error = error
-        self.timeline = timeline
     }
 }
 

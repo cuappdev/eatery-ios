@@ -84,22 +84,6 @@ public struct DownloadResponseSerializer<Value>: DownloadResponseSerializerProto
     }
 }
 
-// MARK: - Timeline
-
-extension Request {
-    var timeline: Timeline {
-        let requestCompletedTime = self.endTime ?? CFAbsoluteTimeGetCurrent()
-        let initialResponseTime = self.delegate.initialResponseTime ?? requestCompletedTime
-
-        return Timeline(
-            requestStartTime: self.startTime ?? CFAbsoluteTimeGetCurrent(),
-            initialResponseTime: initialResponseTime,
-            requestCompletedTime: requestCompletedTime,
-            serializationCompletedTime: CFAbsoluteTimeGetCurrent()
-        )
-    }
-}
-
 // MARK: - Default
 
 extension DataRequest {
@@ -117,8 +101,7 @@ extension DataRequest {
                     request: self.request,
                     response: self.response,
                     data: self.delegate.data,
-                    error: self.delegate.error,
-                    timeline: self.timeline
+                    error: self.delegate.error
                 )
 
                 dataResponse.add(self.delegate.metrics)
@@ -153,12 +136,22 @@ extension DataRequest {
                 self.delegate.error
             )
 
+            let requestCompletedTime = self.endTime ?? CFAbsoluteTimeGetCurrent()
+            let initialResponseTime = self.delegate.initialResponseTime ?? requestCompletedTime
+
+            let timeline = Timeline(
+                requestStartTime: self.startTime ?? CFAbsoluteTimeGetCurrent(),
+                initialResponseTime: initialResponseTime,
+                requestCompletedTime: requestCompletedTime,
+                serializationCompletedTime: CFAbsoluteTimeGetCurrent()
+            )
+
             var dataResponse = DataResponse<T.SerializedObject>(
                 request: self.request,
                 response: self.response,
                 data: self.delegate.data,
                 result: result,
-                timeline: self.timeline
+                timeline: timeline
             )
 
             dataResponse.add(self.delegate.metrics)
@@ -191,8 +184,7 @@ extension DownloadRequest {
                     temporaryURL: self.downloadDelegate.temporaryURL,
                     destinationURL: self.downloadDelegate.destinationURL,
                     resumeData: self.downloadDelegate.resumeData,
-                    error: self.downloadDelegate.error,
-                    timeline: self.timeline
+                    error: self.downloadDelegate.error
                 )
 
                 downloadResponse.add(self.delegate.metrics)
@@ -227,6 +219,16 @@ extension DownloadRequest {
                 self.downloadDelegate.error
             )
 
+            let requestCompletedTime = self.endTime ?? CFAbsoluteTimeGetCurrent()
+            let initialResponseTime = self.delegate.initialResponseTime ?? requestCompletedTime
+
+            let timeline = Timeline(
+                requestStartTime: self.startTime ?? CFAbsoluteTimeGetCurrent(),
+                initialResponseTime: initialResponseTime,
+                requestCompletedTime: requestCompletedTime,
+                serializationCompletedTime: CFAbsoluteTimeGetCurrent()
+            )
+
             var downloadResponse = DownloadResponse<T.SerializedObject>(
                 request: self.request,
                 response: self.response,
@@ -234,7 +236,7 @@ extension DownloadRequest {
                 destinationURL: self.downloadDelegate.destinationURL,
                 resumeData: self.downloadDelegate.resumeData,
                 result: result,
-                timeline: self.timeline
+                timeline: timeline
             )
 
             downloadResponse.add(self.delegate.metrics)

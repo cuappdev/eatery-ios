@@ -33,15 +33,12 @@ open class TaskDelegate: NSObject {
     /// The serial operation queue used to execute all operations after the task completes.
     open let queue: OperationQueue
 
-    /// The data returned by the server.
-    public var data: Data? { return nil }
-
-    /// The error generated throughout the lifecyle of the task.
-    public var error: Error?
-
     var task: URLSessionTask? {
         didSet { reset() }
     }
+
+    var data: Data? { return nil }
+    var error: Error?
 
     var initialResponseTime: CFAbsoluteTime?
     var credential: URLCredential?
@@ -334,30 +331,29 @@ class DownloadTaskDelegate: TaskDelegate, URLSessionDownloadDelegate {
     {
         temporaryURL = location
 
-        guard
-            let destination = destination,
-            let response = downloadTask.response as? HTTPURLResponse
-        else { return }
+        if let destination = destination {
+            let result = destination(location, downloadTask.response as! HTTPURLResponse)
+            let destination = result.destinationURL
+            let options = result.options
 
-        let result = destination(location, response)
-        let destinationURL = result.destinationURL
-        let options = result.options
+            do {
+                destinationURL = destination
 
-        self.destinationURL = destinationURL
+                if options.contains(.removePreviousFile) {
+                    if FileManager.default.fileExists(atPath: destination.path) {
+                        try FileManager.default.removeItem(at: destination)
+                    }
+                }
 
-        do {
-            if options.contains(.removePreviousFile), FileManager.default.fileExists(atPath: destinationURL.path) {
-                try FileManager.default.removeItem(at: destinationURL)
+                if options.contains(.createIntermediateDirectories) {
+                    let directory = destination.deletingLastPathComponent()
+                    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
+                }
+
+                try FileManager.default.moveItem(at: location, to: destination)
+            } catch {
+                self.error = error
             }
-
-            if options.contains(.createIntermediateDirectories) {
-                let directory = destinationURL.deletingLastPathComponent()
-                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-            }
-
-            try FileManager.default.moveItem(at: location, to: destinationURL)
-        } catch {
-            self.error = error
         }
     }
 
