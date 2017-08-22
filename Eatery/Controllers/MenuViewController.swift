@@ -10,6 +10,7 @@ import UIKit
 import DiningStack
 import MapKit
 import MessageUI
+import Hero
 
 let kMenuHeaderViewFrameHeight: CGFloat = 344
 
@@ -81,6 +82,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.setUp(eatery, date: displayedDate)
         menuHeaderView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
+        
+        isHeroEnabled = true
+        menuHeaderView.backgroundImageView.heroID = "backgroundImage"
+        menuHeaderView.closedView.heroID = "dimmer"
+        menuHeaderView.titleLabel.heroID = "title"
+        outerScrollView.heroModifiers = [.translate(y: 100)]
         
         outerScrollView.addSubview(menuHeaderView)
         

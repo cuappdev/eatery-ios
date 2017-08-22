@@ -9,13 +9,13 @@
 import UIKit
 import DiningStack
 import CoreLocation
+import Hero
 
 let kCollectionViewGutterWidth: CGFloat = 10
 
 class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
     var collectionView: UICollectionView!
-    fileprivate let eateryNavigationAnimator = EateryNavigationAnimator()
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -50,7 +50,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.delegate = self
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType = .fade
 
         setupBars()
         setupCollectionView()
@@ -360,8 +361,10 @@ extension EateriesGridViewController: UICollectionViewDelegate {
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         
         if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
-            eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
             self.navigationController?.pushViewController(menuViewController, animated: true)
+            cell.backgroundImageView.heroID = "backgroundImage"
+            cell.closedView.heroID = "dimmer"
+            cell.titleLabel.heroID = "title"
         }
     }
 }
@@ -370,13 +373,6 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
     }
-}
-
-extension EateriesGridViewController: UINavigationControllerDelegate {
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
-//        return nil
-//    }
 }
 
 extension EateriesGridViewController: UISearchBarDelegate {
@@ -502,7 +498,6 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
-        eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
         return menuViewController
     }
     
