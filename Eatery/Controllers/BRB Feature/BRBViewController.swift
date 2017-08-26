@@ -1,14 +1,7 @@
-//
-//  ViewController.swift
-//  brbchecker
-//
-//  Created by Dennis Fedorko on 11/22/15.
-//  Copyright © 2015 Dennis Fedorko. All rights reserved.
-//
-
 import UIKit
 import WebKit
 import SafariServices
+import Crashlytics
 
 class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -312,6 +305,8 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     /// BRBConnectionErrorHandler delegate
     
     func failedToLogin(error: String) {
+        Answers.login(succeeded: false, timeLapsed: time)
+
         timer.invalidate()
         
         print(error)
@@ -337,6 +332,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     
     func finishedLogin() {
         print("<<<<<<<FINISHED LOGIN>>>>>>>>")
+        Answers.login(succeeded: true, timeLapsed: time)
         loggedIn = true
         
         //add netid + password to keychain

@@ -1,15 +1,9 @@
-//
-//  MenuViewController.swift
-//  Eatery
-//
-//  Created by Eric Appel on 11/1/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
-//
-
 import UIKit
-import DiningStack
 import MapKit
+import DiningStack
+import Crashlytics
 import MessageUI
+import Hero
 
 let kMenuHeaderViewFrameHeight: CGFloat = 344
 
@@ -78,9 +72,15 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         // Header Views
         menuHeaderView = Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first! as! MenuHeaderView
-        menuHeaderView.setUp(eatery, date: displayedDate)
+        menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
+        
+        isHeroEnabled = true
+        menuHeaderView.backgroundContainer.heroID = EateriesGridViewController.Animation.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.titleLabel.heroID = EateriesGridViewController.Animation.title.id(eatery: eatery)
+        menuHeaderView.paymentContainer.heroID = EateriesGridViewController.Animation.paymentContainer.id(eatery: eatery)
+        outerScrollView.heroModifiers = [.translate(y: 200)]
         
         outerScrollView.addSubview(menuHeaderView)
         
@@ -209,10 +209,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         if #available(iOS 9.0, *) {
             activityVC.excludedActivityTypes?.append(UIActivityType.openInIBooks)
         }
+
         activityVC.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            
             if completed {
-                Analytics.trackShareMenu(eateryId: self.eatery.slug, meal: mealVC.meal)
+                Answers.logMenuShared(eateryId: self.eatery.slug, meal: mealVC.meal)
             }
         }
         
@@ -220,7 +220,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     }
     
     func directionsButtonPressed() {
-        Analytics.trackLocationButtonPressed(eateryId: eatery.slug)
+        Answers.logDirectionsAsked(eateryId: eatery.slug)
         
         let mapViewController = MapViewController(eateries: [eatery])
         mapViewController.mapEateries([eatery])

@@ -1,77 +1,35 @@
-//
-//  AnalyticsManager.swift
-//  Eatery
-//
-//  Created by Eric Appel on 7/27/15.
-//  Copyright (c) 2015 CUAppDev. All rights reserved.
-//
+import Crashlytics
 
-import Foundation
-import Analytics
+extension Answers {
+    static func eateriesOpened() {
+        Answers.logCustomEvent(withName: "Eateries Opened", customAttributes: nil)
+    }
 
-private let ENABLE_ANALYTICS = false
+    static func logGuideOpened() {
+        Answers.logCustomEvent(withName: "Guide Opened", customAttributes: nil)
+    }
 
-class AnalyticsManager: NSObject {
-    static let sharedInstance = AnalyticsManager()
-    
-    // MARK: -
-    // MARK: Events
-    
-    func trackAppLaunch(properties: [String: AnyObject]) {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().track("App Launch", properties: properties)
-        }
+    static func logSearchResultSelected(for query: String) {
+        Answers.logCustomEvent(withName: "Search Result Selected", customAttributes: ["query": query])
     }
-    
-    func trackEnterForeground() {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().track("Enter Foreground")
-        }
+
+    static func logMenuShared(eateryId: String, meal: String) {
+        Answers.logCustomEvent(withName: "Menu Shared", customAttributes: ["eateryId": eateryId, "meal": meal])
     }
-    
-    func trackPullToRefresh() {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().track("Pull to refresh EateriesGridViewController")
-        }
+
+    static func logMenuOpened(eateryId: String) {
+        Answers.logCustomEvent(withName: "Menu Opened", customAttributes: ["eateryId": eateryId])
     }
-    
-    func trackSearchResultSelected(searchTerm: String) {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().track("Search result selected", properties: ["search_term" : searchTerm])
-        }
+
+    static func logDirectionsAsked(eateryId: String) {
+        Answers.logCustomEvent(withName: "Directions Asked", customAttributes: ["eateryId": eateryId])
     }
-    
-    func trackLocationButtonPressed(eateryId: String) {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().track("Location button pressed", properties: ["eatery_id" : eateryId])
-        }
+
+    static func logMapOpened(eateryId: String) {
+        Answers.logCustomEvent(withName: "Map Opened", customAttributes: ["eateryId": eateryId])
     }
-    
-    func trackShareMenu(eateryId: String, meal: String) {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().track("Menu shared", properties: ["eatery_id" : eateryId, "meal" : meal])
-        }
+
+    static func login(succeeded: Bool, timeLapsed: TimeInterval) {
+        Answers.logLogin(withMethod: nil, success: succeeded as NSNumber, customAttributes: ["timeLapsed": timeLapsed])
     }
-    
-    // MARK: -
-    // MARK: Screens
-    
-    func screenEateriesGridViewController() {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().screen("EateriesGridViewController")
-        }
-    }
-    
-    func screenMenuViewController(eateryId: String) {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().screen("MenuViewController", properties: ["eatery_id" : eateryId])
-        }
-    }
-    
-    func screenGuideViewController() {
-        if ENABLE_ANALYTICS {
-            SEGAnalytics.shared().screen("GuideViewController")
-        }
-    }
-    
 }

@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import Analytics
 import SwiftyJSON
 import DiningStack
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.tabBar.isTranslucent = false
         
         eateriesGridViewController = EateriesGridViewController()
-        
+
         let eateryNavigationController = UINavigationController(rootViewController: eateriesGridViewController)
         eateryNavigationController.navigationBar.isTranslucent = false
         eateryNavigationController.navigationBar.barStyle = .black
@@ -56,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lookAheadNavigationController.navigationBar.isTranslucent = false
         lookAheadNavigationController.navigationBar.barStyle = .black
         lookAheadNavigationController.tabBarItem = UITabBarItem(title: "Menus", image: #imageLiteral(resourceName: "menu icon"), tag: 1)
-        
+
         let brbNavigationController = UINavigationController(rootViewController: BRBViewController())
         brbNavigationController.navigationBar.isTranslucent = false
         brbNavigationController.navigationBar.barStyle = .black
@@ -70,40 +71,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up meal plan connection handler
         connectionHandler = BRBConnectionHandler()
         
-        if BRBAccountSettings.shouldLoginOnStartup()
-        {
+        if BRBAccountSettings.shouldLoginOnStartup() {
             let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
-            let netid = keychainItemWrapper["Netid"] as? String
-            let password = keychainItemWrapper["Password"] as? String
-            if netid?.characters.count ?? 0 > 0 && password?.characters.count ?? 0 > 0
-            {
-                connectionHandler.netid = netid!
-                connectionHandler.password = password!
+            if let netid = keychainItemWrapper["Netid"] as? String, !netid.isEmpty,
+                let password = keychainItemWrapper["Password"] as? String, !password.isEmpty {
+                connectionHandler.netid = netid
+                connectionHandler.password = password
                 connectionHandler.handleLogin()
             }
         }
 
-        // Segment setup
-        SEGAnalytics.setup(with: SEGAnalyticsConfiguration(writeKey: kSegmentWriteKey))
-        let uuid = UUID().uuidString
-        SEGAnalytics.shared().identify(uuid)
-        
-        let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-        var sortOption = "none"
-        if let option = UserDefaults.standard.object(forKey: "sortOption") as? String {
-            sortOption = option
-        }
-        var properties: [String: AnyObject] = [:]
-        properties["favorites"] = slugStrings as AnyObject?
-        properties["sortOption"] = sortOption as AnyObject?
-        
-        Analytics.trackAppLaunch(properties: properties)
-
+        #if RELEASE
+            Fabric.with([Crashlytics.self])
+        #endif
         return true
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        Analytics.trackEnterForeground()
     }
   
     func applicationWillResignActive(_ application: UIApplication) {

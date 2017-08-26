@@ -27,15 +27,6 @@ private let kEateryLocations = JSON(data: try! Data(contentsOf: Bundle.main.url(
 let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
 extension Eatery {
-    /// Preview Image of the eatery such as a logo
-    var image: UIImage? {
-        return UIImage(named: slug + "+logo.jpg")
-    }
-    
-    /// Photo of the facility
-    var photo: UIImage? {
-        return UIImage(named: slug + ".jpg")
-    }
     
     /// Option to sort by campus or by open time
     enum Sorting: String {

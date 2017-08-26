@@ -96,9 +96,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         filterEateries(filterDateViews, buttons: filterMealButtons)
         
         // Fetch Eateries Data
-        DATA.fetchEateries(false) { (error) -> (Void) in
+        DataManager.sharedInstance.fetchEateries(false) { (error) -> (Void) in
             DispatchQueue.main.async(execute: { [unowned self] () -> Void in
-                let eateries = DATA.eateries
+                let eateries = DataManager.sharedInstance.eateries
                 for eatery in eateries {
                     if eatery.eateryType == .Dining {
                         switch(eatery.area) {

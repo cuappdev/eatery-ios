@@ -9,13 +9,14 @@
 import UIKit
 import DiningStack
 import CoreLocation
+import Hero
+import Crashlytics
 
 let kCollectionViewGutterWidth: CGFloat = 10
 
 class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
     var collectionView: UICollectionView!
-    fileprivate let eateryNavigationAnimator = EateryNavigationAnimator()
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -40,6 +41,17 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
     fileprivate var updateTimer: Timer?
 
+    enum Animation: String {
+        case backgroundImageView = "backgroundImage"
+        case title = "title"
+        case dimmer = "dimmer"
+        case paymentContainer = "paymentContainer"
+
+        func id(eatery: Eatery) -> String {
+            return eatery.slug + "_" + rawValue
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,7 +62,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.delegate = self
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
 
         setupBars()
         setupCollectionView()
@@ -111,10 +124,10 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        DATA.fetchEateries(force) { _ in
+        DataManager.sharedInstance.fetchEateries(force) { _ in
             DispatchQueue.main.async {
                 completion?()
-                self.eateries = DATA.eateries
+                self.eateries = DataManager.sharedInstance.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
                 self.pushPreselectedEatery()
@@ -210,8 +223,8 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         }
         
         eateryData["Favorites"] = desiredEateries.filter { $0.favorite }.sorted { $0.nickname < $1.nickname }
-        eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
-        eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() }.sorted { $0.nickname < $1.nickname }
+        eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
+        eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
         
         if let location = userLocation, filters.contains(.nearest) {
             eateryData["Open"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
@@ -300,7 +313,11 @@ extension EateriesGridViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
         cell.set(eatery: eatery, userLocation: userLocation)
-        
+
+        cell.backgroundContainer.heroID = Animation.backgroundImageView.id(eatery: eatery)
+        cell.titleLabel.heroID = Animation.title.id(eatery: eatery)
+        cell.paymentContainer.heroID = Animation.paymentContainer.id(eatery: eatery)
+
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
                 let baseString = names.joined(separator: "\n")
@@ -353,16 +370,14 @@ extension EateriesGridViewController: UICollectionViewDataSource {
 
 extension EateriesGridViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.searchBar.text != "" {
-            Analytics.trackSearchResultSelected(searchTerm: self.searchBar.text!)
+        if let query = searchBar.text, !query.isEmpty {
+            Answers.logSearchResultSelected(for: query)
         }
-        Analytics.screenMenuViewController(eateryId: eatery(for: indexPath).slug)
+
+        Answers.logMenuOpened(eateryId: eatery(for: indexPath).slug)
+
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
-        
-        if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
-            eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
-            self.navigationController?.pushViewController(menuViewController, animated: true)
-        }
+        navigationController?.pushViewController(menuViewController, animated: true)
     }
 }
 
@@ -370,13 +385,6 @@ extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
     }
-}
-
-extension EateriesGridViewController: UINavigationControllerDelegate {
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        if (toVC is MenuViewController && fromVC is EateriesGridViewController) || (fromVC is MenuViewController && toVC is EateriesGridViewController) { return eateryNavigationAnimator }
-//        return nil
-//    }
 }
 
 extension EateriesGridViewController: UISearchBarDelegate {
@@ -502,7 +510,6 @@ extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
-        eateryNavigationAnimator.cellFrame = collectionView.convert(cell.frame, to: view)
         return menuViewController
     }
     
