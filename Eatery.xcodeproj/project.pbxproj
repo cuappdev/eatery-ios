@@ -708,9 +708,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Eatery/Pods-Eatery-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Analytics/Analytics.framework",
+				"${BUILT_PRODUCTS_DIR}/DiningStack-iOS/DiningStack.framework",
+				"${BUILT_PRODUCTS_DIR}/HanekeSwift/Haneke.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TRVSDictionaryWithCaseInsensitivity/TRVSDictionaryWithCaseInsensitivity.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Analytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DiningStack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haneke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRVSDictionaryWithCaseInsensitivity.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -723,9 +736,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-watchOS/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DiningStack-watchOS/DiningStack.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-watchOS/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DiningStack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -753,13 +773,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Eatery Watch App-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D2ADEC652AA0DC4AC17DDC27 /* [CP] Copy Pods Resources */ = {
@@ -783,13 +806,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Eatery-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E998725CF85B91E2E9ACF06B /* [CP] Check Pods Manifest.lock */ = {
@@ -798,13 +824,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Eatery Watch App Extension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

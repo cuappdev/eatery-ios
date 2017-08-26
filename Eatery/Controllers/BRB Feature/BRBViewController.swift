@@ -316,11 +316,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         print(error)
         
-        if error == BRBConnectionHandler.Stages.updateProfile.toString() {
-            print("User needs to update profile, showing safari vc")
-            showSafariVC()
-        }
-        
         if loginView.superview == nil {
             view.addSubview(loginView)
         }
