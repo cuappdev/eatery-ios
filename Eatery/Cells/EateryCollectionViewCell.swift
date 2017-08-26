@@ -8,11 +8,11 @@ let metersInMile: Double = 1609.344
 class EateryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var backgroundContainer: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var closedView: UIView!
+    @IBOutlet weak var infoContainer: UIView!
     @IBOutlet weak var menuTextView: UITextView!
     @IBOutlet weak var menuTextViewHeight: NSLayoutConstraint!
     @IBOutlet var paymentImageViews: [UIImageView]!
@@ -72,21 +72,38 @@ class EateryCollectionViewCell: UICollectionViewCell {
                 imageView.isHidden = true
             }
         }
+
+        backgroundImageView.subviews.last?.removeFromSuperview()
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(let message):
-            titleLabel.textColor = UIColor.black
+            titleLabel.textColor = .black
+            statusLabel.text = "Open"
+            statusLabel.textColor = .eateryBlue
             timeLabel.text = message
-            timeLabel.textColor = UIColor.darkGray
-            distanceLabel.textColor = UIColor.darkGray
-            closedView.backgroundColor = .clear
+            timeLabel.textColor = .gray
+            distanceLabel.textColor = .darkGray
         case .closed(let message):
-            titleLabel.textColor = UIColor.gray
-            timeLabel.text = message
-            timeLabel.textColor = UIColor.gray
-            distanceLabel.textColor = UIColor.gray
+            if !eatery.isOpenToday() {
+                statusLabel.text = "Closed Today"
+                timeLabel.text = ""
+            } else {
+                statusLabel.text = "Closed"
+                timeLabel.text = message
+            }
+
+            titleLabel.textColor = .darkGray
+            statusLabel.textColor = .gray
+            timeLabel.textColor = .gray
+            distanceLabel.textColor = .gray
+
+            let closedView = UIView()
             closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
+            backgroundImageView.addSubview(closedView)
+            closedView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
     }
 }

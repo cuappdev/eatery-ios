@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -113,29 +115,37 @@
                                 <constraint firstAttribute="height" constant="14" id="DyF-AD-RvZ"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cj6-pz-pdv">
-                            <rect key="frame" x="34" y="9" width="33" height="17"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EdB-Cf-CNe">
+                            <rect key="frame" x="34" y="33" width="58" height="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                             <color key="textColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EdB-Cf-CNe">
-                            <rect key="frame" x="34" y="32" width="57" height="17"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                            <color key="textColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Closes at 11:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k23-Rn-RnN" userLabel="Time Label">
+                            <rect key="frame" x="112" y="9" width="123" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIZ-RL-Nyp" userLabel="Status Label">
+                            <rect key="frame" x="34" y="9" width="70" height="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                            <color key="textColor" red="0.0" green="0.40622584290000002" blue="0.80155840970000003" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="EdB-Cf-CNe" firstAttribute="centerY" secondItem="mCH-Ew-DXb" secondAttribute="centerY" id="00c-RX-gfP"/>
-                        <constraint firstItem="Cj6-pz-pdv" firstAttribute="leading" secondItem="lvG-hI-taE" secondAttribute="trailing" constant="10" id="5D6-Vd-5FV"/>
+                        <constraint firstItem="YIZ-RL-Nyp" firstAttribute="leading" secondItem="lvG-hI-taE" secondAttribute="trailing" constant="10" id="6Cn-jc-klv"/>
                         <constraint firstItem="lvG-hI-taE" firstAttribute="top" secondItem="EEZ-qH-ero" secondAttribute="top" constant="10" id="7Zf-xI-CMh"/>
                         <constraint firstAttribute="height" constant="58" id="HRs-dT-cVp"/>
+                        <constraint firstItem="k23-Rn-RnN" firstAttribute="baseline" secondItem="YIZ-RL-Nyp" secondAttribute="firstBaseline" id="PS7-6s-Gw5"/>
                         <constraint firstAttribute="bottom" secondItem="mCH-Ew-DXb" secondAttribute="bottom" constant="10" id="TE7-b1-bvy"/>
-                        <constraint firstItem="Cj6-pz-pdv" firstAttribute="centerY" secondItem="lvG-hI-taE" secondAttribute="centerY" id="Urm-DT-9T4"/>
                         <constraint firstItem="mCH-Ew-DXb" firstAttribute="leading" secondItem="EEZ-qH-ero" secondAttribute="leading" constant="10" id="fIz-Ez-usi"/>
                         <constraint firstItem="lvG-hI-taE" firstAttribute="leading" secondItem="EEZ-qH-ero" secondAttribute="leading" constant="10" id="iUg-WM-W5p"/>
+                        <constraint firstItem="k23-Rn-RnN" firstAttribute="leading" secondItem="YIZ-RL-Nyp" secondAttribute="trailing" constant="8" id="imV-yw-zpe"/>
+                        <constraint firstItem="YIZ-RL-Nyp" firstAttribute="centerY" secondItem="lvG-hI-taE" secondAttribute="centerY" id="ofY-6u-hqj"/>
                         <constraint firstItem="EdB-Cf-CNe" firstAttribute="leading" secondItem="mCH-Ew-DXb" secondAttribute="trailing" constant="10" id="yYN-R2-SdB"/>
                     </constraints>
                 </view>
@@ -203,11 +213,13 @@
                 <outlet property="backgroundImageView" destination="xJe-ai-0Pk" id="cfF-Oj-Njg"/>
                 <outlet property="directionsButton" destination="grd-nl-o3R" id="Dc8-Qg-u9Q"/>
                 <outlet property="favoriteButton" destination="DY1-y0-s8T" id="R1r-7e-xgi"/>
-                <outlet property="hoursLabel" destination="Cj6-pz-pdv" id="646-On-spw"/>
+                <outlet property="hoursLabel" destination="k23-Rn-RnN" id="8Gv-cq-MGn"/>
+                <outlet property="infoContainer" destination="EEZ-qH-ero" id="sic-A9-XZd"/>
                 <outlet property="locationImageView" destination="mCH-Ew-DXb" id="EMo-Zs-XPg"/>
                 <outlet property="locationLabel" destination="EdB-Cf-CNe" id="2hW-74-BS0"/>
                 <outlet property="paymentContainer" destination="ZUX-Rh-HSg" id="UKT-uf-kxc"/>
                 <outlet property="shareButton" destination="8UR-nP-ALq" id="nTn-Vc-6p7"/>
+                <outlet property="statusLabel" destination="YIZ-RL-Nyp" id="xGB-eu-j5O"/>
                 <outlet property="timeImageView" destination="lvG-hI-taE" id="uwh-Fn-CLe"/>
                 <outlet property="titleLabel" destination="zoJ-85-Vj9" id="0bD-b3-U5L"/>
                 <outletCollection property="paymentImageViews" destination="yH3-FM-Xar" collectionClass="NSMutableArray" id="W7A-AI-Owz"/>

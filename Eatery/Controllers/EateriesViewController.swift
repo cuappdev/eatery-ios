@@ -1,5 +1,6 @@
 import UIKit
 import DiningStack
+import SnapKit
 import CoreLocation
 import Hero
 import Crashlytics
@@ -36,8 +37,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     enum Animation: String {
         case backgroundImageView = "backgroundImage"
         case title = "title"
-        case dimmer = "dimmer"
         case paymentContainer = "paymentContainer"
+        case statusLabel = "statusLabel"
+        case timeLabel = "timeLabel"
+        case infoContainer = "infoContainer"
 
         func id(eatery: Eatery) -> String {
             return eatery.slug + "_" + rawValue
@@ -85,23 +88,40 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         mapViewController.mapEateries(eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        collectionView.contentInset.top = filterBar.frame.height + searchBar.frame.height
+    }
     
     func setupBars() {
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44.0))
+        searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
         searchBar.searchBarStyle = .minimal
         searchBar.autocapitalizationType = .none
         view.addSubview(searchBar)
+        searchBar.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(44.0)
+        }
         
-        filterBar = FilterBar(frame: CGRect(x: 0.0, y: searchBar.frame.height, width: view.frame.width, height: 44.0))
+        filterBar = FilterBar()
         filterBar.delegate = self
         view.addSubview(filterBar)
+        filterBar.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(44.0)
+        }
     }
     
     func setupCollectionView() {
-        let layout = (UIDevice.current.userInterfaceIdiom == .pad) ? EateriesCollectionViewGridLayout() : EateriesCollectionViewTableLayout()
-        collectionView = UICollectionView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)), collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: EateriesCollectionViewGridLayout())
         collectionView.dataSource = self
         collectionView.delegate = self
         definesPresentationContext = true
@@ -110,9 +130,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
         
-        collectionView.contentOffset.y = -filterBar.frame.height - searchBar.frame.height
-        
         view.insertSubview(collectionView, belowSubview: searchBar)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -306,9 +327,12 @@ extension EateriesViewController: UICollectionViewDataSource {
         let eatery = self.eatery(for: indexPath)
         cell.set(eatery: eatery, userLocation: userLocation)
 
-        cell.backgroundContainer.heroID = Animation.backgroundImageView.id(eatery: eatery)
+        cell.backgroundImageView.heroID = Animation.backgroundImageView.id(eatery: eatery)
         cell.titleLabel.heroID = Animation.title.id(eatery: eatery)
+        cell.statusLabel.heroID = Animation.statusLabel.id(eatery: eatery)
+        cell.timeLabel.heroID = Animation.timeLabel.id(eatery: eatery)
         cell.paymentContainer.heroID = Animation.paymentContainer.id(eatery: eatery)
+        cell.infoContainer.heroID = Animation.infoContainer.id(eatery: eatery)
 
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
@@ -333,30 +357,6 @@ extension EateriesViewController: UICollectionViewDataSource {
         }
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        if kind == UICollectionElementKindSectionHeader {
-            var section = (indexPath as NSIndexPath).section
-            let sectionTitleHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", for: indexPath) as! EateriesCollectionViewHeaderView
-            
-            if let favorites = eateryData["Favorites"], favorites.count > 0 {
-                if section == 0 {
-                    sectionTitleHeaderView.titleLabel.text = "Favorites"
-                    sectionTitleHeaderView.titleLabel.textColor = UIColor.darkGray
-                    return sectionTitleHeaderView
-                }
-                section -= 1
-            }
-            
-            sectionTitleHeaderView.titleLabel.textColor = section == 0 ? UIColor.eateryBlue : UIColor.gray
-            
-            sectionTitleHeaderView.titleLabel.text = section == 0 ? "Open" : "Closed"
-            
-            return sectionTitleHeaderView
-        }
-        return UICollectionReusableView()
     }
 }
 
@@ -431,54 +431,23 @@ extension EateriesViewController: UISearchBarDelegate {
         print("Location Manager Error: \(error)")
         locationError = true
     }
-    
-}
 
-extension EateriesViewController: UIScrollViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y + searchBar.frame.height + filterBar.frame.height
-        switch offset {
-        case -CGFloat.greatestFiniteMagnitude..<0.0:
-            searchBar.frame.origin.y = 0.0
-            filterBar.frame.origin.y = searchBar.frame.height
-            collectionView.contentInset.top = filterBar.frame.maxY
-        case 0.0..<filterBar.frame.height:
-            collectionView.contentInset.top = -offset + searchBar.frame.height + filterBar.frame.height
-            searchBar.frame.origin.y = -offset
-            filterBar.frame.origin.y = -offset + searchBar.frame.height
-        case filterBar.frame.height...CGFloat.greatestFiniteMagnitude:
-            searchBar.frame.origin.y = -searchBar.frame.height
-            filterBar.frame.origin.y = 0.0
-            collectionView.contentInset.top = filterBar.frame.maxY
-        default:
-            break
-        }
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.resignFirstResponder()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        scrollSearchBar(scrollView)
-    }
+        let maxHeaderOffset = searchBar.frame.height + filterBar.frame.height
+        let headerOffset = min(maxHeaderOffset, offset)
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        scrollSearchBar(scrollView)
-    }
-    
-    func scrollSearchBar(_ scrollView: UIScrollView) {
-        let searchBarMiddleY = searchBar.bounds.midY
-        if scrollView.contentOffset.y < -filterBar.frame.height && scrollView.contentOffset.y > -searchBar.frame.height - filterBar.frame.height {
-            if scrollView.contentOffset.y + searchBar.frame.height + filterBar.frame.height < searchBarMiddleY {
-                scrollView.setContentOffset(CGPoint(x: 0.0, y: -searchBar.frame.height - filterBar.frame.height), animated: true)
-            } else {
-                scrollView.setContentOffset(CGPoint(x: 0.0, y: -filterBar.frame.height), animated: true)
+        if offset > 0.0 {
+            searchBar.snp.updateConstraints { make in
+                make.top.equalToSuperview().offset(-headerOffset)
+            }
+        } else {
+            searchBar.snp.updateConstraints { make in
+                make.top.equalToSuperview()
             }
         }
     }
+    
 }
 
 extension EateriesViewController: FilterBarDelegate {

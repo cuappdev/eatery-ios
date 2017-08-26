@@ -5,24 +5,27 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
     override func prepare() {
         super.prepare()
         
-        guard let collectionView = collectionView else {return}
+        guard let collectionView = collectionView else { return }
+
         let width = collectionView.bounds.width
-        var cellWidth = floor(width / 2 - kCollectionViewGutterWidth * 1.5)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            cellWidth = floor(width / 3 - kCollectionViewGutterWidth * 1.5)
+        var cellWidth = floor(width - kCollectionViewGutterWidth * 2)
+
+        switch collectionView.traitCollection.horizontalSizeClass {
+        case .compact:
+            break
+        case .regular:
+            cellWidth = (width / 2) - kCollectionViewGutterWidth * 3
+        case .unspecified:
+            break
         }
-        itemSize = CGSize(width: cellWidth, height: cellWidth * 0.8)
+
+        itemSize = CGSize(width: cellWidth, height: cellWidth * 0.4)
         minimumLineSpacing = kCollectionViewGutterWidth
-        minimumInteritemSpacing = kCollectionViewGutterWidth / 2
-        sectionInset = UIEdgeInsets(top: 2, left: kCollectionViewGutterWidth, bottom: 16, right: kCollectionViewGutterWidth)
-        headerReferenceSize = CGSize(width: cellWidth, height: 40)
+        minimumInteritemSpacing = kCollectionViewGutterWidth
+        sectionInset = UIEdgeInsets(top: 8, left: kCollectionViewGutterWidth, bottom: 16, right: kCollectionViewGutterWidth)
     }
-    
-    override var collectionViewContentSize : CGSize {
-        var size = super.collectionViewContentSize
-        if (size.height < collectionView!.frame.height + 44) {
-            size.height = collectionView!.frame.height + 44
-        }
-        return size
+
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
     }
 }

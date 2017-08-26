@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 enum Filter: String {
     case nearest = "Nearest"
@@ -36,11 +37,20 @@ class FilterBar: UIView {
         
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
-        scrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height))
+        scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInset.left = 10.0
         scrollView.contentInset.right = 10.0
-        
+        scrollView.alwaysBounceHorizontal = true
+        addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
             button.setTitle(filter.rawValue, for: .normal)
@@ -52,26 +62,25 @@ class FilterBar: UIView {
             button.frame.size.width += 16.0
             button.frame.size.height = frame.height - 20.0
             button.center.y = frame.height / 2
-            
+
             if index > 0 {
                 button.frame.origin.x = buttons[index - 1].frame.maxX + 10.0
             } else {
                 button.frame.origin.x = 0.0
             }
-            
+
             button.tag = index
             button.setBackgroundImage(UIImage.image(withColor: UIColor.white), for: .normal)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
             button.setTitleColor(UIColor.white, for: .selected)
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-            
+
             scrollView.addSubview(button)
             buttons.append(button)
         }
-        
+
         scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0.0, height: frame.height)
-        addSubview(scrollView)
     }
     
     override func didMoveToSuperview() {

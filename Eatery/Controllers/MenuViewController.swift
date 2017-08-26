@@ -77,10 +77,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.delegate = self
         
         isHeroEnabled = true
-        menuHeaderView.backgroundContainer.heroID = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.backgroundImageView.heroID = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
         menuHeaderView.titleLabel.heroID = EateriesViewController.Animation.title.id(eatery: eatery)
+        menuHeaderView.statusLabel.heroID = EateriesViewController.Animation.statusLabel.id(eatery: eatery)
+        menuHeaderView.hoursLabel.heroID = EateriesViewController.Animation.timeLabel.id(eatery: eatery)
         menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
-        outerScrollView.heroModifiers = [.translate(y: 200)]
+        menuHeaderView.infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
         
         outerScrollView.addSubview(menuHeaderView)
 

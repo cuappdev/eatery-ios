@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 import DiningStack
 import Kingfisher
 
@@ -23,11 +24,11 @@ class MenuHeaderView: UIView {
     var displayedDate: Date!
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var backgroundContainer: UIView!
+    @IBOutlet weak var infoContainer: UIView!
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
@@ -90,13 +91,26 @@ class MenuHeaderView: UIView {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(let message):
-            hoursLabel.text = "Open Now (\(message))"
+            hoursLabel.text = message
             titleLabel.textColor = .white
-            closedView.backgroundColor = .clear
+            statusLabel.text = "Open"
+            statusLabel.textColor = .eateryBlue
         case .closed(let message):
-            hoursLabel.text = "Closed Now (\(message))"
+            if !eatery.isOpenToday() {
+                statusLabel.text = "Closed Today"
+                hoursLabel.text = ""
+            } else {
+                hoursLabel.text = message
+            }
+
             titleLabel.textColor = UIColor.darkGray
+            statusLabel.textColor = .gray
+            let closedView = UIView()
             closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
+            backgroundImageView.addSubview(closedView)
+            closedView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
 
     }
