@@ -1,11 +1,3 @@
-//
-//  EateriesGridViewController.swift
-//  Eatery
-//
-//  Created by Eric Appel on 11/18/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
-//
-
 import UIKit
 import DiningStack
 import CoreLocation
@@ -14,7 +6,7 @@ import Crashlytics
 
 let kCollectionViewGutterWidth: CGFloat = 10
 
-class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
+class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
     var collectionView: UICollectionView!
     
@@ -156,7 +148,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
         let menuVC = MenuViewController(eatery: eatery, delegate: self)
         
         // Unwind back to this VC if it is not showing
-        if !(navigationController?.visibleViewController is EateriesGridViewController) {
+        if !(navigationController?.visibleViewController is EateriesViewController) {
             _ = navigationController?.popToRootViewController(animated: false)
         }
         
@@ -287,7 +279,7 @@ class EateriesGridViewController: UIViewController, MenuButtonsDelegate, CLLocat
     
 }
 
-extension EateriesGridViewController: UICollectionViewDataSource {
+extension EateriesViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let showFavorites = (eateryData["Favorites"] ?? []).count > 0 ? 1 : 0
         return 2 + showFavorites
@@ -368,7 +360,7 @@ extension EateriesGridViewController: UICollectionViewDataSource {
     }
 }
 
-extension EateriesGridViewController: UICollectionViewDelegate {
+extension EateriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let query = searchBar.text, !query.isEmpty {
             Answers.logSearchResultSelected(for: query)
@@ -381,13 +373,13 @@ extension EateriesGridViewController: UICollectionViewDelegate {
     }
 }
 
-extension EateriesGridViewController: UICollectionViewDelegateFlowLayout {
+extension EateriesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
     }
 }
 
-extension EateriesGridViewController: UISearchBarDelegate {
+extension EateriesViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if searchBar.text != "" {
@@ -442,7 +434,7 @@ extension EateriesGridViewController: UISearchBarDelegate {
     
 }
 
-extension EateriesGridViewController: UIScrollViewDelegate {
+extension EateriesViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y + searchBar.frame.height + filterBar.frame.height
@@ -489,7 +481,7 @@ extension EateriesGridViewController: UIScrollViewDelegate {
     }
 }
 
-extension EateriesGridViewController: FilterBarDelegate {
+extension EateriesViewController: FilterBarDelegate {
     func updateFilters(filters: Set<Filter>) {
         self.filters = filters
         processEateries()
@@ -497,7 +489,7 @@ extension EateriesGridViewController: FilterBarDelegate {
     }
 }
 
-extension EateriesGridViewController: UIViewControllerPreviewingDelegate {
+extension EateriesViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let collectionViewPoint = view.convert(location, to: collectionView)
         

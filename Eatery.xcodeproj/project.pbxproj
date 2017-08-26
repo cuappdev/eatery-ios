@@ -39,7 +39,6 @@
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
 		9584FE551CDD7A26001A3AB5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9584FE541CDD7A26001A3AB5 /* Security.framework */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
-		C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497ACC1B64AA1800AC1C6C /* Keys.swift */; };
 		C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */; };
 		C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
@@ -70,7 +69,7 @@
 		E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */; };
 		E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */; };
 		E9CFC0B81C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */; };
-		E9EC978F1BFD1B4B00D06823 /* EateriesGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */; };
+		E9EC978F1BFD1B4B00D06823 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */; };
 		E9EC97921BFD1BD600D06823 /* EateryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC97901BFD1BD600D06823 /* EateryCollectionViewCell.swift */; };
 		E9EC97931BFD1BD600D06823 /* EateryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */; };
 		E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */; };
@@ -179,7 +178,6 @@
 		9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.external beta.xcconfig"; sourceTree = "<group>"; };
 		BA0F42CF72757B43C3DF64BE /* Pods-Eatery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig"; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0497ACC1B64AA1800AC1C6C /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
 		C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealTableViewCell.xib; sourceTree = "<group>"; };
 		C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorScheme.swift"; sourceTree = "<group>"; };
@@ -215,7 +213,7 @@
 		E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateriesCollectionViewHeaderView.xib; sourceTree = "<group>"; };
 		E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
 		E9CFC0B71C0F688A00ED884A /* EateriesCollectionViewTableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewTableLayout.swift; sourceTree = "<group>"; };
-		E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesGridViewController.swift; sourceTree = "<group>"; };
+		E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		E9EC97901BFD1BD600D06823 /* EateryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryCollectionViewCell.swift; sourceTree = "<group>"; };
 		E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryCollectionViewCell.xib; sourceTree = "<group>"; };
 		E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
@@ -260,11 +258,8 @@
 			isa = PBXGroup;
 			children = (
 				9584FE531CDD6C40001A3AB5 /* BRB Feature */,
-				E9EC978E1BFD1B4B00D06823 /* EateriesGridViewController.swift */,
-				D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */,
-				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
-				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
-				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
+				6560D4411F51F373009E7CEF /* Eateries */,
+				6560D4421F51F37A009E7CEF /* Lookahead */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
 			);
 			path = Controllers;
@@ -308,6 +303,25 @@
 				4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */,
 			);
 			path = "Today Extension";
+			sourceTree = "<group>";
+		};
+		6560D4411F51F373009E7CEF /* Eateries */ = {
+			isa = PBXGroup;
+			children = (
+				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
+				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
+				E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */,
+				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
+			);
+			name = Eateries;
+			sourceTree = "<group>";
+		};
+		6560D4421F51F37A009E7CEF /* Lookahead */ = {
+			isa = PBXGroup;
+			children = (
+				D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */,
+			);
+			name = Lookahead;
 			sourceTree = "<group>";
 		};
 		659B216B1C70796600F3B138 /* Eatery Watch App */ = {
@@ -452,7 +466,6 @@
 			isa = PBXGroup;
 			children = (
 				654E37401DEEA738000E4FAB /* Sort.swift */,
-				C0497ACC1B64AA1800AC1C6C /* Keys.swift */,
 				C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */,
 			);
 			path = Global;
@@ -700,6 +713,7 @@
 				"${BUILT_PRODUCTS_DIR}/DiningStack-iOS/DiningStack.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -708,6 +722,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DiningStack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -872,7 +887,6 @@
 				654E37411DEEA738000E4FAB /* Sort.swift in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				D102463C1C7A3239000D5CD8 /* EateryMenuTableViewCell.swift in Sources */,
-				C0497AF61B64AA1800AC1C6C /* Keys.swift in Sources */,
 				60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */,
 				1D0A94441CC84280000B3974 /* UIViewController+Animation.swift in Sources */,
 				FAA912BE1BE6A035003475A8 /* Eatery+Extensions.swift in Sources */,
@@ -886,7 +900,7 @@
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
-				E9EC978F1BFD1B4B00D06823 /* EateriesGridViewController.swift in Sources */,
+				E9EC978F1BFD1B4B00D06823 /* EateriesViewController.swift in Sources */,
 				E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */,
 				9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */,
 				D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */,

@@ -1,11 +1,3 @@
-//
-//  BRBLoginView.swift
-//  Eatery
-//
-//  Created by Dennis Fedorko on 4/27/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 protocol BRBLoginViewDelegate {

@@ -1,11 +1,3 @@
-//
-//  FilterBar.swift
-//  Eatery
-//
-//  Created by Daniel Li on 11/6/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 enum Filter: String {

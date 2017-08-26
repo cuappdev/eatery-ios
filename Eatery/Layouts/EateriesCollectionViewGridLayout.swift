@@ -1,11 +1,3 @@
-//
-//  EateriesCollectionViewGridLayout.swift
-//  Eatery
-//
-//  Created by Eric Appel on 12/2/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {

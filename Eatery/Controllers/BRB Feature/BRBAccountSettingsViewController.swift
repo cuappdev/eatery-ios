@@ -1,11 +1,3 @@
-//
-//  BRBAccountSettings.swift
-//  Eatery
-//
-//  Created by Arman Esmaili on 11/16/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 struct BRBAccountSettings {

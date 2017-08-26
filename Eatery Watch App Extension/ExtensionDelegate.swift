@@ -1,11 +1,3 @@
-//
-//  ExtensionDelegate.swift
-//  Eatery Watch App Extension
-//
-//  Created by Daniel Li on 2/14/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import WatchKit
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {

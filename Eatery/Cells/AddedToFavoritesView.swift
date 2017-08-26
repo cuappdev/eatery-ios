@@ -1,11 +1,3 @@
-//
-//  AddedToFavoritesView.swift
-//  Eatery
-//
-//  Created by Monica Ong on 4/20/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 class AddedToFavoritesView: UIView {

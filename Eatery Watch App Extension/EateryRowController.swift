@@ -1,11 +1,3 @@
-//
-//  EateryRowController.swift
-//  Eatery
-//
-//  Created by Daniel Li on 2/8/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import WatchKit
 import DiningStack
 

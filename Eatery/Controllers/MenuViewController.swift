@@ -77,9 +77,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.delegate = self
         
         isHeroEnabled = true
-        menuHeaderView.backgroundContainer.heroID = EateriesGridViewController.Animation.backgroundImageView.id(eatery: eatery)
-        menuHeaderView.titleLabel.heroID = EateriesGridViewController.Animation.title.id(eatery: eatery)
-        menuHeaderView.paymentContainer.heroID = EateriesGridViewController.Animation.paymentContainer.id(eatery: eatery)
+        menuHeaderView.backgroundContainer.heroID = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.titleLabel.heroID = EateriesViewController.Animation.title.id(eatery: eatery)
+        menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
         outerScrollView.heroModifiers = [.translate(y: 200)]
         
         outerScrollView.addSubview(menuHeaderView)
@@ -189,36 +189,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed()
         addedToFavoritesView.popupOnView(view: view, addedToFavorites: eatery.favorite)
-    }
-    
-    func shareButtonPressed() {
-        guard let mealVC = pageViewController.viewControllers?.first as? MealTableViewController else { return }
-        
-        let menuIterable: [(String, [String])] = {
-            if eatery.diningItems != nil { return eatery.getDiningItemMenuIterable() }
-            if eatery.hardcodedMenu != nil { return eatery.getHardcodeMenuIterable() }
-            return mealVC.event?.getMenuIterable() ?? []
-        }()
-        
-        let image = MenuImages.createMenuShareImage(view.frame.width,
-                                                    eatery: eatery,
-                                                    events: eatery.eventsOnDate(displayedDate),
-                                                    selectedMenu: mealVC.meal,
-                                                    menuIterable: menuIterable)
-        
-        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.mail, UIActivityType.print, UIActivityType.airDrop, UIActivityType.addToReadingList]
-        if #available(iOS 9.0, *) {
-            activityVC.excludedActivityTypes?.append(UIActivityType.openInIBooks)
-        }
-
-        activityVC.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            if completed {
-                Answers.logMenuShared(eateryId: self.eatery.slug, meal: mealVC.meal)
-            }
-        }
-        
-        present(activityVC, animated: true, completion: nil)
     }
     
     func directionsButtonPressed() {

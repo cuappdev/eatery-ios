@@ -6,7 +6,9 @@ end
 
 target 'Eatery' do
   platform :ios, '9.0'
+
   pod 'SwiftyJSON'
+  pod 'SnapKit'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Hero'

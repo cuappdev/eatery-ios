@@ -13,10 +13,6 @@ extension Answers {
         Answers.logCustomEvent(withName: "Search Result Selected", customAttributes: ["query": query])
     }
 
-    static func logMenuShared(eateryId: String, meal: String) {
-        Answers.logCustomEvent(withName: "Menu Shared", customAttributes: ["eateryId": eateryId, "meal": meal])
-    }
-
     static func logMenuOpened(eateryId: String) {
         Answers.logCustomEvent(withName: "Menu Opened", customAttributes: ["eateryId": eateryId])
     }

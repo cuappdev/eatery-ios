@@ -1,11 +1,3 @@
-//
-//  BRBConnectionHandler.swift
-//  brbchecker
-//
-//  Created by Dennis Fedorko on 3/9/16.
-//  Copyright © 2016 Dennis Fedorko. All rights reserved.
-//
-
 import UIKit
 import WebKit
 

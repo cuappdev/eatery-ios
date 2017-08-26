@@ -1,11 +1,3 @@
-//
-//  EateryCollectionViewCell.swift
-//  Eatery
-//
-//  Created by Eric Appel on 11/18/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
-//
-
 import UIKit
 import DiningStack
 import CoreLocation

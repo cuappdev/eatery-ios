@@ -1,9 +1,8 @@
-v2.0.1 - Little Caesars
+Thanks for using Eatery!
 
-We didn't want to do it, but it had to be done.
+Look, we hear ya. Your app may be crashing a lot if something went wrong with your BRB login. So, this time around, we're gonna try to fix those.
 
-- Update screenshots
-- Fix account login bug where users would fail with an "incorrect netid/password" error even if credentials were correct
-- Minor bug fixes
-
-Pizza, Pizza
+In this update, we've:
+- Added robust crash reporting, so if your apps crash we will see exactly why
+- Added a bit of animation
+- Fixed an issue where unlimited meal plans are shown to have "0" swipes

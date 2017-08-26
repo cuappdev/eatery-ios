@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Eatery
-//
-//  Created by Eric Appel on 10/5/14.
-//  Copyright (c) 2014 CUAppDev. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import DiningStack
@@ -16,19 +8,12 @@ import Crashlytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    //example slack info
-    let slackChannel = "C04C10672"
-    let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
-    let slackUsername = "Keeper of All Your Base"
-  
-    //view controllers
-    var tabBarController: UITabBarController!
-    var eateriesGridViewController: EateriesGridViewController!
+
+    var eateriesViewController: EateriesViewController!
     var connectionHandler: BRBConnectionHandler!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         Foundation.URLCache.shared = URLCache
         
@@ -43,12 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = .eateryBlue
         
         // Set up view controllers
-        tabBarController = UITabBarController()
+        let tabBarController = UITabBarController()
         tabBarController.tabBar.isTranslucent = false
         
-        eateriesGridViewController = EateriesGridViewController()
+        eateriesViewController = EateriesViewController()
 
-        let eateryNavigationController = UINavigationController(rootViewController: eateriesGridViewController)
+        let eateryNavigationController = UINavigationController(rootViewController: eateriesViewController)
         eateryNavigationController.navigationBar.isTranslucent = false
         eateryNavigationController.navigationBar.barStyle = .black
         eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
@@ -120,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eateriesGridViewController.preselectedSlug = shortcutItem.type
+        eateriesViewController.preselectedSlug = shortcutItem.type
         return true
     }
   
