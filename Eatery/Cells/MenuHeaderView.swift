@@ -68,8 +68,6 @@ class MenuHeaderView: UIView {
         }
         
         titleLabel.text = eatery.nickname
-        titleLabel.layer.shadowRadius = 12.0
-        titleLabel.layer.shadowOpacity = 1.0
         locationLabel.text = eatery.address
         hoursLabel.textColor = UIColor.gray
 
@@ -94,12 +92,10 @@ class MenuHeaderView: UIView {
         case .open(let message):
             hoursLabel.text = "Open Now (\(message))"
             titleLabel.textColor = .white
-            titleLabel.layer.shadowColor = UIColor.black.cgColor
             closedView.backgroundColor = .clear
         case .closed(let message):
             hoursLabel.text = "Closed Now (\(message))"
             titleLabel.textColor = UIColor.darkGray
-            titleLabel.layer.shadowColor = UIColor.white.cgColor
             closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
         }
 

@@ -81,7 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        Fabric.with([Crashlytics.self])
+        #if RELEASE
+            Fabric.with([Crashlytics.self])
+        #endif
         return true
     }
   
