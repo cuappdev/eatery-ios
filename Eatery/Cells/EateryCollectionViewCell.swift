@@ -9,13 +9,14 @@
 import UIKit
 import DiningStack
 import CoreLocation
-import Haneke
+import Kingfisher
 
 let metersInMile: Double = 1609.344
 
 class EateryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var backgroundContainer: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
@@ -23,6 +24,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var menuTextView: UITextView!
     @IBOutlet weak var menuTextViewHeight: NSLayoutConstraint!
     @IBOutlet var paymentImageViews: [UIImageView]!
+    @IBOutlet weak var paymentContainer: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +37,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     
     func update(userLocation: CLLocation?) {
         if let distance = userLocation?.distance(from: eatery.location) {
-            distanceLabel.text = "\(Double(round(10*distance/metersInMile)/10)) mi"
+            distanceLabel.text = "\(Double(round(10 * distance / metersInMile) / 10)) mi"
         } else {
             distanceLabel.text = "-- mi"
         }
@@ -44,12 +46,12 @@ class EateryCollectionViewCell: UICollectionViewCell {
     func set(eatery: Eatery, userLocation: CLLocation?) {
         self.eatery = eatery
         
-        backgroundImageView.image = nil
-        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
-            backgroundImageView.hnk_setImageFromURL(url, placeholder: UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0)), format: Format<UIImage>(name: "original"))
-        }
-        
         titleLabel.text = eatery.nickname
+
+        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+            let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
+            backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
+        }
         
         update(userLocation: userLocation)
         
@@ -86,7 +88,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             timeLabel.text = message
             timeLabel.textColor = UIColor.darkGray
             distanceLabel.textColor = UIColor.darkGray
-            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
+            closedView.backgroundColor = .clear
         case .closed(let message):
             titleLabel.textColor = UIColor.gray
             timeLabel.text = message

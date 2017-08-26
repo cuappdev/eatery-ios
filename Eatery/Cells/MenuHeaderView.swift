@@ -8,6 +8,7 @@
 
 import UIKit
 import DiningStack
+import Kingfisher
 
 @objc protocol MenuButtonsDelegate {
     func favoriteButtonPressed()
@@ -26,14 +27,16 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var backgroundContainer: UIView!
     @IBOutlet var paymentImageViews: [UIImageView]!
+    @IBOutlet weak var paymentContainer: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var directionsButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var timeImageView: UIImageView!
     @IBOutlet weak var locationImageView: UIImageView!
     
-    func setUp(_ eatery: Eatery, date: Date) {
+    func set(eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
         
@@ -65,9 +68,14 @@ class MenuHeaderView: UIView {
         }
         
         titleLabel.text = eatery.nickname
+        titleLabel.layer.shadowRadius = 12.0
+        titleLabel.layer.shadowOpacity = 1.0
         locationLabel.text = eatery.address
+        hoursLabel.textColor = UIColor.gray
+
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
-            backgroundImageView.hnk_setImageFromURL(url)
+            let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
+            backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
         }
         
         timeImageView.tintColor = UIColor.gray
@@ -85,12 +93,14 @@ class MenuHeaderView: UIView {
         switch eateryStatus {
         case .open(let message):
             hoursLabel.text = "Open Now (\(message))"
-            hoursLabel.textColor = UIColor.gray
-            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)
+            titleLabel.textColor = .white
+            titleLabel.layer.shadowColor = UIColor.black.cgColor
+            closedView.backgroundColor = .clear
         case .closed(let message):
             hoursLabel.text = "Closed Now (\(message))"
-            hoursLabel.textColor = UIColor.gray
-            closedView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+            titleLabel.textColor = UIColor.darkGray
+            titleLabel.layer.shadowColor = UIColor.white.cgColor
+            closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
         }
 
     }

@@ -6,9 +6,11 @@ end
 
 target 'Eatery' do
   platform :ios, '9.0'
-  pod 'Analytics/Segmentio'
   pod 'SwiftyJSON', :git => 'https://github.com/IBM-swift/swiftyjson.git'
-  pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :branch => 'feature/swift-3'
+  pod 'Fabric'
+  pod 'Crashlytics'
+  pod 'Hero'
+  pod 'Kingfisher'
   shared_pods
 end
 
