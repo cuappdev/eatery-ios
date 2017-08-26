@@ -100,6 +100,7 @@ class MenuHeaderView: UIView {
                 statusLabel.text = "Closed Today"
                 hoursLabel.text = ""
             } else {
+                statusLabel.text = "Closed"
                 hoursLabel.text = message
             }
 

@@ -76,6 +76,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
         NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+
+        if let launchViewController = tabBarController?.childViewControllers.last {
+            UIView.animate(withDuration: 0.55, delay: 0.55, options: [.allowUserInteraction, .curveEaseIn], animations: {
+                launchViewController.view.frame.origin.y = -launchViewController.view.frame.height
+            }, completion: { complete in
+                launchViewController.removeFromParentViewController()
+                launchViewController.view.removeFromSuperview()
+                launchViewController.didMove(toParentViewController: nil)
+            })
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -143,7 +153,30 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                 self.eateries = DataManager.sharedInstance.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
+                self.animateCollectionView()
                 self.pushPreselectedEatery()
+            }
+        }
+    }
+
+    var animated = false
+    func animateCollectionView() {
+        if !animated {
+            animated = true
+            collectionView.performBatchUpdates(nil) { complete in
+                for cell in self.collectionView.visibleCells {
+                    cell.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                    cell.alpha = 0.0
+                }
+
+                var delay: TimeInterval = 0.0
+                for cell in self.collectionView.visibleCells {
+                    delay += 0.1
+                    UIView.animate(withDuration: 0.55, delay: delay, options: [.allowUserInteraction], animations: {
+                        cell.transform = .identity
+                        cell.alpha = 1.0
+                    }, completion: nil)
+                }
             }
         }
     }

@@ -49,7 +49,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
         
         tabBarController.setViewControllers([eateryNavigationController, lookAheadNavigationController, brbNavigationController], animated: true)
-        
+
+        let launchViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()!
+        tabBarController.addChildViewController(launchViewController)
+        tabBarController.view.addSubview(launchViewController.view)
+        launchViewController.didMove(toParentViewController: tabBarController)
+
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         

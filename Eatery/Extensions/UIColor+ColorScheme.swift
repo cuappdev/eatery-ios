@@ -19,7 +19,7 @@ extension UIColor {
     }
     
     class var eateryBlue: UIColor {
-        return colorFromCode(0x4881BD)
+        return colorFromCode(0x466CA4)
     }
     
     class var collectionViewBackground: UIColor {
