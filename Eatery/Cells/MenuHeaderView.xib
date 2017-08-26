@@ -17,29 +17,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hnu-be-bXz" userLabel="Image Container">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="355"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NgZ-67-dCo">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xJe-ai-0Pk">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="355"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xJe-ai-0Pk">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="355"/>
-                                </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdg-aY-hpu" userLabel="Closed View">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="355"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="NgZ-67-dCo" secondAttribute="leading" id="L82-LH-2bw"/>
-                                <constraint firstAttribute="bottom" secondItem="xJe-ai-0Pk" secondAttribute="bottom" id="LNJ-1V-aNV"/>
-                                <constraint firstAttribute="bottom" secondItem="bdg-aY-hpu" secondAttribute="bottom" id="RtG-Rn-O1o"/>
-                                <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="NgZ-67-dCo" secondAttribute="top" id="TiY-Sm-cfs"/>
-                                <constraint firstItem="bdg-aY-hpu" firstAttribute="top" secondItem="NgZ-67-dCo" secondAttribute="top" id="bTb-Ip-wxD"/>
-                                <constraint firstItem="bdg-aY-hpu" firstAttribute="leading" secondItem="NgZ-67-dCo" secondAttribute="leading" id="lH0-ql-doW"/>
-                                <constraint firstAttribute="trailing" secondItem="xJe-ai-0Pk" secondAttribute="trailing" id="nsU-AJ-Bdu"/>
-                                <constraint firstAttribute="trailing" secondItem="bdg-aY-hpu" secondAttribute="trailing" id="vNm-QK-3hv"/>
-                            </constraints>
-                        </view>
+                        </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="zoJ-85-Vj9">
                             <rect key="frame" x="10" y="314" width="42" height="26"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
@@ -100,15 +80,15 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="DY1-y0-s8T" firstAttribute="leading" secondItem="zoJ-85-Vj9" secondAttribute="trailing" constant="10" id="9nD-gR-V7a"/>
-                        <constraint firstItem="NgZ-67-dCo" firstAttribute="top" secondItem="hnu-be-bXz" secondAttribute="top" id="FUp-eI-h5z"/>
+                        <constraint firstAttribute="bottom" secondItem="xJe-ai-0Pk" secondAttribute="bottom" id="AZz-mB-m4Q"/>
                         <constraint firstItem="ZUX-Rh-HSg" firstAttribute="centerY" secondItem="zoJ-85-Vj9" secondAttribute="centerY" id="HRu-N6-fbx"/>
+                        <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" id="Hdc-K7-BD2"/>
+                        <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="hnu-be-bXz" secondAttribute="top" id="SW9-NB-Ly7"/>
                         <constraint firstItem="zoJ-85-Vj9" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" constant="10" id="ZNo-sA-yTU"/>
                         <constraint firstAttribute="trailing" secondItem="ZUX-Rh-HSg" secondAttribute="trailing" constant="10" id="ZTm-sL-aQh"/>
-                        <constraint firstAttribute="bottom" secondItem="NgZ-67-dCo" secondAttribute="bottom" id="c0O-DF-R3X"/>
-                        <constraint firstItem="NgZ-67-dCo" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" id="dlb-Pb-CD8"/>
                         <constraint firstItem="ZUX-Rh-HSg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DY1-y0-s8T" secondAttribute="trailing" constant="8" id="ihP-ab-c7A"/>
-                        <constraint firstAttribute="trailing" secondItem="NgZ-67-dCo" secondAttribute="trailing" id="leP-2w-LV0"/>
                         <constraint firstAttribute="bottom" secondItem="zoJ-85-Vj9" secondAttribute="bottom" constant="15" id="qqq-MD-vfI"/>
+                        <constraint firstAttribute="trailing" secondItem="xJe-ai-0Pk" secondAttribute="trailing" id="unf-19-mrF"/>
                         <constraint firstItem="DY1-y0-s8T" firstAttribute="centerY" secondItem="zoJ-85-Vj9" secondAttribute="centerY" id="zqe-rW-TZb"/>
                     </constraints>
                 </view>
@@ -220,9 +200,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="backgroundContainer" destination="NgZ-67-dCo" id="9Av-49-naQ"/>
                 <outlet property="backgroundImageView" destination="xJe-ai-0Pk" id="cfF-Oj-Njg"/>
-                <outlet property="closedView" destination="bdg-aY-hpu" id="hrY-LX-f44"/>
                 <outlet property="directionsButton" destination="grd-nl-o3R" id="Dc8-Qg-u9Q"/>
                 <outlet property="favoriteButton" destination="DY1-y0-s8T" id="R1r-7e-xgi"/>
                 <outlet property="hoursLabel" destination="Cj6-pz-pdv" id="646-On-spw"/>

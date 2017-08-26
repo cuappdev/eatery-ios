@@ -83,7 +83,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.heroModifiers = [.translate(y: 200)]
         
         outerScrollView.addSubview(menuHeaderView)
-        
+
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+
         // TabbedPageViewController
         let eventsDict = eatery.eventsOnDate(displayedDate)
         let sortedEventsDict = eventsDict.sorted { (a: (String, Event), b: (String, Event)) -> Bool in

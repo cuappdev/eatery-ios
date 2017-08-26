@@ -1,0 +1,7 @@
+Looking for somewhere to eat around Cornell's campus? Eatery has your back.
+
+See what's open on campus, browse menus of dining locations, search for your favorite foods, check your dining account balance, and so much more!
+
+Let us know what you think! Send us feedback or give us ideas for new features by tweeting @cornellappdev
+
+Eatery is the first app from CUAppDev, an open source iOS project team at Cornell University. Check us out at cuappdev.org or contribute at www.github.com/cuappdev/eatery

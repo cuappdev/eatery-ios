@@ -1,0 +1,9 @@
+v2.0.1 - Little Caesars
+
+We didn't want to do it, but it had to be done.
+
+- Update screenshots
+- Fix account login bug where users would fail with an "incorrect netid/password" error even if credentials were correct
+- Minor bug fixes
+
+Pizza, Pizza
