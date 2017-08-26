@@ -1,12 +1,6 @@
-//
-//  MapViewController.swift
-//  Eatery
-//
-//  Created by Jesse Chen on 4/13/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
 import UIKit
 import MapKit
+import SnapKit
 import CoreLocation
 import DiningStack
 
@@ -58,12 +52,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         
         title = "Map"
-        
-        view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0))
-        mapView.frame = view.bounds
+
         mapView.showsBuildings = true
         mapView.showsUserLocation = true
         view.addSubview(mapView)
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         createMapButtons()
         

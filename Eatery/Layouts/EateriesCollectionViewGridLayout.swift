@@ -1,7 +1,6 @@
 import UIKit
 
 class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
-    
     override func prepare() {
         super.prepare()
         
@@ -14,7 +13,7 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         case .compact:
             break
         case .regular:
-            cellWidth = (width / 2) - kCollectionViewGutterWidth * 3
+            cellWidth = (width / 2) - kCollectionViewGutterWidth * 2
         case .unspecified:
             break
         }

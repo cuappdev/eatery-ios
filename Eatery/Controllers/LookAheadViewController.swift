@@ -53,8 +53,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         
         // Table View
-        let tableViewFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        tableView = UITableView(frame: tableViewFrame, style: .grouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -65,6 +64,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         // Table View Nibs
         tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
