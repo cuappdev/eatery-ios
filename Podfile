@@ -6,7 +6,7 @@ end
 
 target 'Eatery' do
   platform :ios, '9.0'
-  pod 'SwiftyJSON', :git => 'https://github.com/IBM-swift/swiftyjson.git'
+  pod 'SwiftyJSON'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Hero'

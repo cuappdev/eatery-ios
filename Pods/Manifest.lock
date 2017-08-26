@@ -8,7 +8,7 @@ PODS:
   - Fabric (1.6.12)
   - Hero (0.3.6)
   - Kingfisher (3.11.0)
-  - SwiftyJSON (2.3.2)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Crashlytics
@@ -16,21 +16,16 @@ DEPENDENCIES:
   - Fabric
   - Hero
   - Kingfisher
-  - SwiftyJSON (from `https://github.com/IBM-swift/swiftyjson.git`)
+  - SwiftyJSON
 
 EXTERNAL SOURCES:
   DiningStack:
     :git: https://github.com/cuappdev/DiningStack.git
-  SwiftyJSON:
-    :git: https://github.com/IBM-swift/swiftyjson.git
 
 CHECKOUT OPTIONS:
   DiningStack:
     :commit: ece9693aa3ffbc8f6d9dcd519985ae453acdf234
     :git: https://github.com/cuappdev/DiningStack.git
-  SwiftyJSON:
-    :commit: 2bdc9d111f320baf93e644e6fced465da9bd5bac
-    :git: https://github.com/IBM-swift/swiftyjson.git
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
@@ -39,8 +34,8 @@ SPEC CHECKSUMS:
   Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   Hero: d3c6f4dd80cdcdbb339be64e57ae3b5c3ab9938c
   Kingfisher: c8911a7672c6217dec8c0520fb6e76ec4b7e0780
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: c7e83d72cbeb3d9c91199f0785515e8521f3ef10
+PODFILE CHECKSUM: b93a4ac0d8b2c101c2376a64409a2d3bd89a9a56
 
 COCOAPODS: 1.3.1
