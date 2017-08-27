@@ -78,7 +78,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 
         if let launchViewController = tabBarController?.childViewControllers.last {
-            UIView.animate(withDuration: 0.55, delay: 0.55, options: [.allowUserInteraction, .curveEaseIn], animations: {
+            UIView.animate(withDuration: 0.35, delay: 0.35, options: [.allowUserInteraction, .curveEaseIn], animations: {
                 launchViewController.view.frame.origin.y = -launchViewController.view.frame.height
             }, completion: { complete in
                 launchViewController.removeFromParentViewController()
@@ -170,7 +170,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                 }
 
                 var delay: TimeInterval = 0.0
-                for cell in self.collectionView.visibleCells {
+                for cell in self.collectionView.visibleCells.sorted(by: { $0.frame.origin.y < $1.frame.origin.y }) {
                     delay += 0.1
                     UIView.animate(withDuration: 0.55, delay: delay, options: [.allowUserInteraction], animations: {
                         cell.transform = .identity
