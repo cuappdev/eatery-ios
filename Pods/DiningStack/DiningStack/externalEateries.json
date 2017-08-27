@@ -10,6 +10,7 @@
            "contactPhone": "1-800-541-2501",
            "latitude": 42.446267,
            "longitude": -76.482314,
+           "location": "Statler",
            "campusArea": {
                "descr": "Central Campus",
                "descrshort": "Central"
@@ -82,6 +83,7 @@
                "descr": "Central Campus",
                "descrshort": "Central"
            },
+           "location": "Statler Hotel",
            "operatingHours": [
                 {
                     "weekday": "monday-thursday",
@@ -124,7 +126,7 @@
                 {
                   "item": "Pizza",
                   "healthy": false
-                },  
+                },
                 {
                   "item": "Pasta",
                   "healthy": false
@@ -157,6 +159,7 @@
                "descr": "Central Campus",
                "descrshort": "Central"
            },
+           "location": "Mann Library",
            "operatingHours": [
                 {
                     "weekday": "monday-wednesday",
@@ -429,6 +432,7 @@
                "descr": "Central Campus",
                "descrshort": "Central"
            },
+           "location": "Goldwin Smith Hall",
            "operatingHours": [
                 {
                     "weekday": "monday-friday",
@@ -489,6 +493,7 @@
                "descr": "Central Campus",
                "descrshort": "Central"
            },
+           "location": "Gates Hall",
            "operatingHours": [
                 {
                     "weekday": "monday-friday",
@@ -537,6 +542,7 @@
                "descr": "Central Campus",
                "descrshort": "Central"
            },
+           "location": "Myron Taylor Hall",
            "operatingHours": [
                 {
                     "weekday": "monday-thursday",

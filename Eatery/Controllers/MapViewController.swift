@@ -57,7 +57,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.showsUserLocation = true
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.bottom.equalTo(bottomLayoutGuide.snp.top)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
         
         createMapButtons()
@@ -94,7 +97,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func createMapButtons()
     {
         // Create bottom left re-center button
-        recenterButton.frame = CGRect(x: 20, y: view.frame.size.height - 65, width: 120, height: 40)
         recenterButton.layer.cornerRadius = 6
         recenterButton.setImage(UIImage(named: "locationArrowIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         recenterButton.tintColor = UIColor.colorFromCode(0x3d90e2)
@@ -106,6 +108,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         recenterButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         recenterButton.addTarget(self, action: #selector(recenterButtonPressed), for: .touchUpInside)
         mapView.addSubview(recenterButton)
+        recenterButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+            make.width.equalTo(120)
+        }
     }
     
     func recenterButtonPressed(_ sender: UIButton)

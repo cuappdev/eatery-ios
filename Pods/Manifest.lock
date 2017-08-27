@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DiningStack:
-    :commit: ece9693aa3ffbc8f6d9dcd519985ae453acdf234
+    :commit: 2aba57f4c7cfed8b96730a54b81c0a669c24ea0c
     :git: https://github.com/cuappdev/DiningStack.git
 
 SPEC CHECKSUMS:
