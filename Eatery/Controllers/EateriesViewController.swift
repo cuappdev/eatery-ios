@@ -172,10 +172,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
                 self.collectionView.isHidden = false
 
-                var delay: TimeInterval = 0.0
+                var delay: TimeInterval = 0.25
                 for cell in self.collectionView.visibleCells.sorted(by: { $0.frame.origin.y < $1.frame.origin.y }) {
                     delay += 0.1
-                    UIView.animate(withDuration: 0.55, delay: delay, options: [.allowUserInteraction], animations: {
+                    UIView.animate(withDuration: 0.35, delay: delay, options: [.allowUserInteraction], animations: {
                         cell.transform = .identity
                         cell.alpha = 1.0
                     }, completion: nil)

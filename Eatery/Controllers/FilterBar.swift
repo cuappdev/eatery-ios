@@ -88,7 +88,7 @@ class FilterBar: UIView {
         if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
             for string in prevFilters {
                 if let filter = Filter(rawValue: string),
-                    let index = filters.index(of: filter) {
+                    let index = filters.index(of: filter), index < buttons.count {
                     buttons[index].isSelected = true
                     selectedFilters.insert(filter)
                 }
