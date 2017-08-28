@@ -39,13 +39,8 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         connectionHandler.errorDelegate = self
         
         loginView = BRBLoginView(frame: view.bounds)
-        activityIndicatorView.frame = CGRect(x: view.frame.width/2 - 10, y: 12, width: 20, height: 20)
-        activityIndicatorView.transform = .init(translationX: 0, y: 10)
         activityIndicatorView.color = .black
         activityIndicatorView.hidesWhenStopped = true
-        
-        activityIndicatorDescriptionLabel.frame = CGRect(x: 0, y: activityIndicatorView.frame.maxY + 10, width: view.frame.width * 0.8, height: 20)
-        activityIndicatorDescriptionLabel.center = CGPoint(x: view.frame.width / 2.0, y: activityIndicatorDescriptionLabel.center.y)
         activityIndicatorDescriptionLabel.text = "Logging in, this may take a minute"
         activityIndicatorDescriptionLabel.textAlignment = .center
         activityIndicatorDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
@@ -69,7 +64,18 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             {
                 activityIndicatorView.startAnimating()
                 view.addSubview(activityIndicatorView)
+                activityIndicatorView.snp.makeConstraints { make in
+                    make.centerX.equalToSuperview()
+                    make.size.equalTo(20)
+                    make.top.equalTo(topLayoutGuide.snp.bottom).offset(20)
+                }
+
                 view.addSubview(activityIndicatorDescriptionLabel)
+                activityIndicatorDescriptionLabel.snp.makeConstraints { make in
+                    make.top.equalTo(activityIndicatorView.snp.bottom).offset(8)
+                    make.width.equalToSuperview().multipliedBy(0.8)
+                    make.centerX.equalToSuperview()
+                }
                 
                 timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
             }
@@ -77,6 +83,9 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             {
                 loginView.delegate = self
                 view.addSubview(loginView)
+                loginView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
             }
         }
     }
@@ -144,14 +153,13 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         diningHistory = connectionHandler.diningHistory
         
-        activityIndicatorView.transform = .identity
         if diningHistory.count == 0 {
             activityIndicatorView.startAnimating()
         }
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        tableView = UITableView(frame: CGRect(x:0, y:0, width: (navigationController?.view.bounds.width ?? 0), height: (navigationController?.view.bounds.height ?? 0) - (navigationController?.navigationBar.frame.maxY ?? 0) - (tabBarController?.tabBar.frame.height ?? 0)), style: .plain)
+        tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
@@ -163,6 +171,12 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         tableView.delegate = self
         
         view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomLayoutGuide.snp.top)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -227,6 +241,10 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             cell.selectionStyle = .default
             cell.centerLabel.font = UIFont.systemFont(ofSize: 15)
             cell.contentView.addSubview(activityIndicatorView)
+            activityIndicatorView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+
             let tap = UITapGestureRecognizer(target: self, action: #selector(BRBViewController.openFullHistory))
             cell.addGestureRecognizer(tap)
 
