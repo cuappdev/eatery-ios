@@ -139,6 +139,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isHidden = true
         
         view.insertSubview(collectionView, belowSubview: searchBar)
         collectionView.snp.makeConstraints { make in
@@ -168,6 +169,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                     cell.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
                     cell.alpha = 0.0
                 }
+
+                self.collectionView.isHidden = false
 
                 var delay: TimeInterval = 0.0
                 for cell in self.collectionView.visibleCells.sorted(by: { $0.frame.origin.y < $1.frame.origin.y }) {

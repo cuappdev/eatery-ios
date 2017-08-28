@@ -1,11 +1,3 @@
-//
-//  TabbedPageViewController.swift
-//  Eatery
-//
-//  Created by Eric Appel on 11/1/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 protocol TabbedPageViewControllerDelegate: class {
@@ -37,27 +29,30 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         // TODO: sort meals
         
         // Tab Bar
-        meals = viewControllers.map({ (vc: UIViewController) -> String in
+        meals = viewControllers.map { (vc: UIViewController) -> String in
             let mealVC = vc as! MealTableViewController
             return mealVC.meal
-        })
+        }
         
         if meals.count > 1 {
-            tabBar = UnderlineTabBarView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
-            tabBar!.setUp(meals)
-            tabBar!.delegate = self
-            view.addSubview(tabBar!)
-            
-            tabDelegate = tabBar!
+            let tabBar = UnderlineTabBarView()
+            tabBar.setUp(meals)
+            tabBar.delegate = self
+            tabDelegate = tabBar
+            view.addSubview(tabBar)
+            tabBar.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+                make.height.equalTo(kTabBarHeight)
+            }
+
+            self.tabBar = tabBar
         }
         
         // Page view controller
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         pageViewController.view.backgroundColor = .white
-        let pageVCYOffset: CGFloat = tabBar != nil ? tabBar!.frame.origin.y + tabBar!.frame.height : 0
-        let pageVCHeight = view.frame.height - pageVCYOffset - 44 - 20
-        pageViewController.view.frame = CGRect(x: 0, y: pageVCYOffset, width: view.frame.width, height: pageVCHeight)
-        
         pageViewController.dataSource = self
         pageViewController.delegate = self
         pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false, completion: nil)
@@ -65,6 +60,14 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
+
+        pageViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(tabBar?.snp.bottom ?? view)
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+
         if let tabBar = tabBar {
             view.bringSubview(toFront: tabBar)
         }
@@ -81,8 +84,6 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         let index = viewControllers.index(of: vc)!
         tabDelegate?.selectedTabDidChange(index)
         scrollDelegate?.scrollViewDidChange()
-        
-        updateActiveScrollView(index)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -108,8 +109,6 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         let index = viewControllers.index(of: currentViewController)!
         tabDelegate?.selectedTabDidChange(index)
         scrollDelegate?.scrollViewDidChange()
-        
-        updateActiveScrollView(index)
     }
     
     // Tab Bar Delegate
@@ -126,12 +125,6 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: true, completion: nil)
         
         scrollDelegate?.scrollViewDidChange()
-
-        updateActiveScrollView(newIndex)
-    }
-    
-    func updateActiveScrollView(_ currentIndex: Int) {
-        
     }
     
     func pluckCurrentScrollView() -> UIScrollView {

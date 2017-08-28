@@ -1,7 +1,0 @@
-app_identifier "org.cuappdev.eatery" # The bundle identifier of your app
-apple_id "walker.m.white@gmail.com" # Your Apple email address
-
-team_id "ZGMCXU7X3U" # Developer Portal Team ID
-
-# you can even provide different app identifiers, Apple IDs and team names per lane:
-# More information: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Appfile.md

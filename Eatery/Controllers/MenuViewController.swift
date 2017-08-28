@@ -24,6 +24,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     var selectedMeal: String?
     var navigationTitleView: NavigationTitleView!
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
+
+    var pageViewControllerHeight: CGFloat {
+        return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)
+    }
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil) {
         self.eatery = eatery
@@ -61,7 +65,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         navigationItem.titleView = navigationTitleView
         
         // Scroll View
-        outerScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height - (navigationController?.navigationBar.frame.maxY ?? 0.0) - (tabBarController?.tabBar.frame.height ?? 0.0)))
+        outerScrollView = UIScrollView()
         outerScrollView.backgroundColor = UIColor.white
         outerScrollView.contentSize = CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight)
         outerScrollView.delegate = self
@@ -69,11 +73,24 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.showsHorizontalScrollIndicator = false
         outerScrollView.alwaysBounceVertical = true
         view.addSubview(outerScrollView)
+        outerScrollView.snp.makeConstraints { make in
+            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.bottom.equalTo(bottomLayoutGuide.snp.top)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+
+        let contentView = UIView()
+        outerScrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(view).priority(.low)
+            make.width.equalTo(view)
+        }
         
         // Header Views
         menuHeaderView = Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first! as! MenuHeaderView
         menuHeaderView.set(eatery: eatery, date: displayedDate)
-        menuHeaderView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight))
         menuHeaderView.delegate = self
         
         isHeroEnabled = true
@@ -84,7 +101,13 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
         menuHeaderView.infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
         
-        outerScrollView.addSubview(menuHeaderView)
+        contentView.addSubview(menuHeaderView)
+        menuHeaderView.snp.makeConstraints { make in
+            make.height.equalTo(kMenuHeaderViewFrameHeight)
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
 
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
 
@@ -94,9 +117,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             a.1.startDate.compare(b.1.startDate) == .orderedAscending
         }
         
-        var meals = sortedEventsDict.map { (meal: String, _) -> String in
-            meal
-        }
+        var meals = sortedEventsDict.map { $0.key }
 
         if meals.contains("Lite Lunch") {
             if let index = meals.index(of: "Lite Lunch") {
@@ -126,18 +147,19 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         pageViewController.willMove(toParentViewController: self)
         addChildViewController(pageViewController)
-        outerScrollView.addSubview(pageViewController.view)
+        contentView.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
-        
-        let maxTableViewHeight: CGFloat = mealViewControllers.map { $0.tableView.contentSize.height }.max() ?? 0.0
-        outerScrollView.contentSize.height = outerScrollView.contentSize.height + (maxTableViewHeight)
-        pageViewController.view.frame = view.frame.offsetBy(dx: 0.0, dy: kMenuHeaderViewFrameHeight)
-        pageViewController.view.frame.size.height = maxTableViewHeight + (navigationController?.navigationBar.frame.maxY ?? 0.0)
+
+        pageViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(menuHeaderView.snp.bottom)
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(pageViewControllerHeight)
+        }
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
-        
-        outerScrollView.bringSubview(toFront: menuHeaderView)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -147,12 +169,16 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         switch scrollView.contentOffset.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
-            menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight - scrollView.contentOffset.y
-            menuHeaderView.frame.origin = view.convert(CGPoint.zero, to: outerScrollView)
+            menuHeaderView.snp.updateConstraints { make in
+                make.top.equalToSuperview().offset(scrollView.contentOffset.y)
+                make.height.equalTo(kMenuHeaderViewFrameHeight - scrollView.contentOffset.y)
+            }
         default:
             menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 3)
-            menuHeaderView.frame.size.height = kMenuHeaderViewFrameHeight
-            menuHeaderView.frame.origin = CGPoint.zero
+            menuHeaderView.snp.updateConstraints { make in
+                make.top.equalToSuperview()
+                make.height.equalTo(kMenuHeaderViewFrameHeight)
+            }
         }
         
         let percentage = -titleLabelFrame.origin.y/titleLabelFrame.height
@@ -178,10 +204,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     }
     
     func scrollViewDidChange() {
-        let innerScrollView = pageViewController.pluckCurrentScrollView()
-        let innerContentHeight = innerScrollView.contentSize.height + 44 // tab bar height
-        UIView.animate(withDuration: 0.35) {
-            self.outerScrollView.contentSize.height = kMenuHeaderViewFrameHeight + innerContentHeight
+        pageViewController.view.snp.updateConstraints { make in
+            make.height.equalTo(pageViewControllerHeight)
         }
     }
     

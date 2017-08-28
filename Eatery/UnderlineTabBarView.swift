@@ -12,13 +12,14 @@ protocol TabBarDelegate: class {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
-private let kUnderlineHeight: CGFloat = 3
+private let kUnderlineHeight: CGFloat = 2
 
 class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     
     weak var delegate: TabBarDelegate?
+
+    var stackView: UIStackView!
     var tabButtons: [UIButton] = []
-    
     var underlineView: UIView!
 
     override init(frame: CGRect) {
@@ -28,8 +29,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     }
     
     func setUp(_ sections: [String]) {
-        
-        for section in sections {
+        tabButtons = sections.map { section -> UIButton in
             let tabButton = UIButton()
             tabButton.setTitle(section.uppercased(), for: UIControlState())
             tabButton.setTitleColor(.offBlack, for: UIControlState())
@@ -37,60 +37,48 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
             tabButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14.0)
             tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), for: .touchUpInside)
             tabButton.sizeToFit()
-            tabButtons.append(tabButton)
+            return tabButton
         }
-        
-        // Layout
-        var kTabsWidth: CGFloat = 0
-        for tab in tabButtons {
-            kTabsWidth += tab.frame.width
+
+        stackView = UIStackView(arrangedSubviews: tabButtons)
+        stackView.alignment = .center
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        
-        let kTabSpacing: CGFloat = (frame.width - kTabsWidth) / CGFloat(tabButtons.count + 1)
-        var runningXOffset = kTabSpacing
-        for tab in tabButtons {
-            tab.frame = tab.frame.offsetBy(dx: runningXOffset, dy: 5)
-            runningXOffset += tab.frame.width + kTabSpacing
-        }
-        
-        for tab in tabButtons {
-            addSubview(tab)
-        }
-        
+
         // Underline
-        let underlineY = frame.height - kUnderlineHeight
-        underlineView = UIView(frame: CGRect(x: 0, y: underlineY, width: 0, height: kUnderlineHeight))
+        underlineView = UIView()
         underlineView.backgroundColor = UIColor.eateryBlue
-        underlineView.frame = underlineFrameForIndex(0)
-        
         addSubview(underlineView)
         
-        tabButtons.first!.isSelected = true
-        
+        tabButtons.first?.isSelected = true
+        underline(at: 0)
     }
     
-    func underlineFrameForIndex(_ index: Int) -> CGRect {
-        let tabFrameForIndex = tabButtons[index].frame
-        
-        var rect = CGRect.zero
-        
-        rect.origin.x = tabFrameForIndex.origin.x
-        rect.origin.y = frame.height - kUnderlineHeight - 8
-        
-        rect.size.width = tabFrameForIndex.width
-        rect.size.height = kUnderlineHeight
-        
-        return rect
+    func underline(at index: Int) {
+        let button = tabButtons[index]
+
+        underlineView.snp.remakeConstraints { make in
+            make.bottom.equalToSuperview().inset(kUnderlineHeight)
+            make.width.equalTo(button)
+            make.centerX.equalTo(button)
+            make.height.equalTo(kUnderlineHeight)
+        }
     }
     
     func updateSelectedTabAppearance(_ newIndex: Int) {
-        UIView.animate(withDuration: 0.2, animations: { () -> Void in
-            self.underlineView.frame = self.underlineFrameForIndex(newIndex)
+        underline(at: newIndex)
+
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
             for tab in self.tabButtons {
                 tab.isSelected = false
             }
             self.tabButtons[newIndex].isSelected = true
-        }) 
+        }
     }
     
     func tabButtonPressed(_ sender: UIButton) {
