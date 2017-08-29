@@ -1,5 +1,17 @@
 # Eatery Changelog
 
+### [v2.1.0 - Shake Shack](https://github.com/cuappdev/eatery/compare/v2.0.1...v2.1.0)
+#### August 29th, 2017
+- [Fix Bug Around Unlimited Meal Swipes](https://github.com/cuappdev/eatery/commit/92d5e0f5ceda4d765e2a7867f33334e819e404b5)
+- Move many things to AutoLayout
+- CocoaPod Cleanup
+- [Edit Collection View Layout](https://github.com/cuappdev/eatery/commit/eec5259e6f0f1f333778e6aef68a3f3d4762cd71)
+- Other minor tweaks and bug fixes
+
+### [v2.0.1 - Little Caesars](https://github.com/cuappdev/eatery/compare/v2.0.0...v2.0.1)
+#### January 25th, 2017
+- [Fix Critical Bug Around Login](https://github.com/cuappdev/eatery/commit/9221309ccf1fb36b64cf77e9cf110855c56aab4f)
+
 ### [v2.0.0 - Chick-fil-A](https://github.com/cuappdev/eatery/compare/v1.0.3...v2.0.0)
 #### January 17th, 2017
 - [Move to Tab Bar Design](https://github.com/cuappdev/eatery/commit/9fd737c36e128626d5758f4248f81b850a40eb31)
