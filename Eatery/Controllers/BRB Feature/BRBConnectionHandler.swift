@@ -71,7 +71,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      
      */
     func handleLogin() {
-        print("Handling login", stage)
         loginCount = 0
         stage = .loginScreen
         let loginURL = URL(string: loginURLString)!
@@ -234,17 +233,15 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         let javascript = "document.getElementsByName('netid')[0].value = '\(netid)';document.getElementsByName('password')[0].value = '\(password)';document.forms[0].submit();"
         
         evaluateJavaScript(javascript){ (result: Any?, error: Error?) -> Void in
-            if error == nil {
+            if let error = error {
+                self.errorDelegate?.failedToLogin(error: error.localizedDescription)
+            } else {
                 if self.failedToLogin() {
                     if self.url?.absoluteString == "https://get.cbord.com/cornell/full/update_profile.php" {
                         self.errorDelegate?.failedToLogin(error: "Account needs to be updated")
                     }
                     self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
                 }
-            } else if error!.localizedDescription.contains("JavaScript") {
-                print(error!.localizedDescription)
-            } else {
-                self.errorDelegate?.failedToLogin(error: error!.localizedDescription)
             }
             self.loginCount += 1
         }
@@ -252,7 +249,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.getStageAndRunBlock {
-            print(self.stage)
             switch self.stage {
             case .loginFailed:
                 self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
@@ -262,8 +258,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.getAccountBalance()
             case .diningHistory:
                 self.getDiningHistory()
-            default:
-                print("In Transition Stage")
+            default: break
             }
         }
     }

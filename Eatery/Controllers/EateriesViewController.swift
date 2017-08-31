@@ -500,7 +500,6 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
         
         guard let indexPath = collectionView.indexPathForItem(at: collectionViewPoint),
             let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell else {
-                print("Unable to get cell at location: \(location)")
                 return nil
         }
         

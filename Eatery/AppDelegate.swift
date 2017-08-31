@@ -71,9 +71,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        #if RELEASE
+        #if DEBUG
+            print("RUNNING EATERY IN DEBUG CONFIGURATION")
+        #else
+            print("RUNNING EATERY IN RELEASE CONFIGURATION")
             Fabric.with([Crashlytics.self])
         #endif
+
         return true
     }
   

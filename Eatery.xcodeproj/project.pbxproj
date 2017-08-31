@@ -128,17 +128,6 @@
 		1D0A94431CC84280000B3974 /* UIViewController+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Animation.swift"; sourceTree = "<group>"; };
 		295D96F3E987C9154F7D77DE /* Pods-Eatery Watch App.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.internal beta.xcconfig"; sourceTree = "<group>"; };
 		2EFE6B659BF68ECA9CE402B4 /* Pods-Eatery.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.app store.xcconfig"; sourceTree = "<group>"; };
-		4283B3761BE6A17C003DE22E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		4283B3781BE6A17C003DE22E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayExtensionTableViewController.swift; sourceTree = "<group>"; };
-		4283B3881BE6A4A4003DE22E /* LiteEatery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteEatery.swift; sourceTree = "<group>"; };
-		4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteEvent.swift; sourceTree = "<group>"; };
-		4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFavoritesTableViewCell.swift; sourceTree = "<group>"; };
-		4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoFavoritesTableViewCell.xib; sourceTree = "<group>"; };
-		4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayExtensionTableViewCell.swift; sourceTree = "<group>"; };
-		4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayExtensionTableViewCell.xib; sourceTree = "<group>"; };
-		4283B3941BE6A6DC003DE22E /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
-		42B1F4ED1BEAD587004C382A /* Today Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Today Extension.entitlements"; sourceTree = "<group>"; };
 		42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Eatery.entitlements; sourceTree = "<group>"; };
 		44E4E8F21CD54E3500422867 /* NavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
 		44E4E8F31CD54E3500422867 /* NavigationTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationTitleView.xib; sourceTree = "<group>"; };
@@ -283,24 +272,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4283B3721BE6A17C003DE22E /* Today Extension */ = {
-			isa = PBXGroup;
-			children = (
-				4283B3941BE6A6DC003DE22E /* CircleView.swift */,
-				4283B3781BE6A17C003DE22E /* Info.plist */,
-				4283B3881BE6A4A4003DE22E /* LiteEatery.swift */,
-				4283B38A1BE6A4AF003DE22E /* LiteEvent.swift */,
-				4283B3751BE6A17C003DE22E /* MainInterface.storyboard */,
-				4283B38C1BE6A5E5003DE22E /* NoFavoritesTableViewCell.swift */,
-				4283B38D1BE6A5E5003DE22E /* NoFavoritesTableViewCell.xib */,
-				42B1F4ED1BEAD587004C382A /* Today Extension.entitlements */,
-				4283B3901BE6A6B2003DE22E /* TodayExtensionTableViewCell.swift */,
-				4283B3911BE6A6B2003DE22E /* TodayExtensionTableViewCell.xib */,
-				4283B3821BE6A1F9003DE22E /* TodayExtensionTableViewController.swift */,
-			);
-			path = "Today Extension";
-			sourceTree = "<group>";
-		};
 		6560D4411F51F373009E7CEF /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,7 +355,6 @@
 				F71534A35C24A6E72160950C /* Pods */,
 				C007CAC019E1BEAC00E3BD46 /* Products */,
 				C0497B1D1B64AA3800AC1C6C /* Resources */,
-				4283B3721BE6A17C003DE22E /* Today Extension */,
 			);
 			sourceTree = "<group>";
 		};
@@ -926,15 +896,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4283B3751BE6A17C003DE22E /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4283B3761BE6A17C003DE22E /* Base */,
-			);
-			name = MainInterface.storyboard;
-			path = .;
-			sourceTree = "<group>";
-		};
 		659B216C1C70796600F3B138 /* Interface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1312,10 +1273,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1349,12 +1307,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1418,7 +1374,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

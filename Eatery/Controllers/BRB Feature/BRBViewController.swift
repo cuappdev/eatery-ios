@@ -103,7 +103,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         if time >= timeout {
             loginView.loginFailedWithError(error: "Please try again later")
             timer.invalidate()
-            print("timing out")
             
             (UIApplication.shared.delegate as! AppDelegate).connectionHandler = BRBConnectionHandler()
             connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
@@ -130,7 +129,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         if time >= timeout {
             timer.invalidate()
-            print("timing out")
             // try to load dining history again
             time = 0
             connectionHandler.loadDiningHistory()
@@ -327,8 +325,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
 
         timer.invalidate()
         
-        print(error)
-        
         if loginView.superview == nil {
             view.addSubview(loginView)
         }
@@ -349,7 +345,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func finishedLogin() {
-        print("<<<<<<<FINISHED LOGIN>>>>>>>>")
         Answers.login(succeeded: true, timeLapsed: time)
         loggedIn = true
         
