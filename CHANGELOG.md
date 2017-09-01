@@ -1,5 +1,11 @@
 # Eatery Changelog
 
+### [v2.1.1 - Jimmy John's](https://github.com/cuappdev/eatery/compare/v2.1.0...v2.1.1)
+#### August 29th, 2017
+- [Fix Analytics Freaky Fast](
+https://github.com/cuappdev/eatery/commit/111385dd602e149de636f8a5da51cbeae5de34f6)
+
+
 ### [v2.1.0 - Shake Shack](https://github.com/cuappdev/eatery/compare/v2.0.1...v2.1.0)
 #### August 29th, 2017
 - [Fix Bug Around Unlimited Meal Swipes](https://github.com/cuappdev/eatery/commit/92d5e0f5ceda4d765e2a7867f33334e819e404b5)
