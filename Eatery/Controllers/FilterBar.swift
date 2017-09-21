@@ -75,7 +75,7 @@ class FilterBar: UIView {
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
             
             scrollView.addSubview(button)
-            button.snp.makeConstraints({ (make) in
+            button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
                 if index > 0 {
@@ -84,7 +84,7 @@ class FilterBar: UIView {
                     make.leading.equalToSuperview()
                 }
                 
-            })
+            }
             buttons.append(button)
         }
         scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0.0, height: frame.height)
