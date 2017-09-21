@@ -87,14 +87,6 @@ public extension ImageProcessor {
     }
 }
 
-func ==(left: ImageProcessor, right: ImageProcessor) -> Bool {
-    return left.identifier == right.identifier
-}
-
-func !=(left: ImageProcessor, right: ImageProcessor) -> Bool {
-    return !(left == right)
-}
-
 fileprivate struct GeneralProcessor: ImageProcessor {
     let identifier: String
     let p: ProcessorImp

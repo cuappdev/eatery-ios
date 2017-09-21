@@ -37,6 +37,7 @@ class FilterBar: UIView {
         
         backgroundColor = UIColor(white: 0.93, alpha: 1)
         
+        
         scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInset.left = 10.0
@@ -46,13 +47,15 @@ class FilterBar: UIView {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        layoutButtons()
+        
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
+    
+    func layoutButtons() {
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
             button.setTitle(filter.rawValue, for: .normal)
             button.setTitleColor(UIColor.eateryBlue, for: .normal)
             button.layer.cornerRadius = 4.0
@@ -63,25 +66,32 @@ class FilterBar: UIView {
             button.frame.size.height = frame.height - 20.0
             button.center.y = frame.height / 2
 
-            if index > 0 {
-                button.frame.origin.x = buttons[index - 1].frame.maxX + 10.0
-            } else {
-                button.frame.origin.x = 0.0
-            }
-
+            
             button.tag = index
             button.setBackgroundImage(UIImage.image(withColor: UIColor.white), for: .normal)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
             button.setTitleColor(UIColor.white, for: .selected)
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-
+            
             scrollView.addSubview(button)
+            button.snp.makeConstraints { make in
+                make.centerY.equalTo(snp.centerY)
+                make.width.equalTo(button.frame.size.width)
+                if index > 0 {
+                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(10)
+                } else {
+                    make.leading.equalToSuperview()
+                }
+                
+            }
             buttons.append(button)
         }
-
         scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0.0, height: frame.height)
     }
+    
+
+    
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
@@ -119,10 +129,9 @@ class FilterBar: UIView {
         } else {
             selectedFilters.remove(filters[sender.tag])
         }
-        
         let defaults = UserDefaults.standard
         defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
-        
+
         delegate?.updateFilters(filters: selectedFilters)
     }
     

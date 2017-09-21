@@ -182,24 +182,21 @@ public class NetworkReachabilityManager {
     // MARK: - Internal - Network Reachability Status
 
     func networkReachabilityStatusForFlags(_ flags: SCNetworkReachabilityFlags) -> NetworkReachabilityStatus {
-        guard isNetworkReachable(with: flags) else { return .notReachable }
+        guard flags.contains(.reachable) else { return .notReachable }
 
-        var networkStatus: NetworkReachabilityStatus = .reachable(.ethernetOrWiFi)
+        var networkStatus: NetworkReachabilityStatus = .notReachable
 
-    #if os(iOS)
-        if flags.contains(.isWWAN) { networkStatus = .reachable(.wwan) }
-    #endif
+        if !flags.contains(.connectionRequired) { networkStatus = .reachable(.ethernetOrWiFi) }
+
+        if flags.contains(.connectionOnDemand) || flags.contains(.connectionOnTraffic) {
+            if !flags.contains(.interventionRequired) { networkStatus = .reachable(.ethernetOrWiFi) }
+        }
+
+        #if os(iOS)
+            if flags.contains(.isWWAN) { networkStatus = .reachable(.wwan) }
+        #endif
 
         return networkStatus
-    }
-
-    func isNetworkReachable(with flags: SCNetworkReachabilityFlags) -> Bool {
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        let canConnectAutomatically = flags.contains(.connectionOnDemand) || flags.contains(.connectionOnTraffic)
-        let canConnectWithoutUserInteraction = canConnectAutomatically && !flags.contains(.interventionRequired)
-
-        return isReachable && (!needsConnection || canConnectWithoutUserInteraction)
     }
 }
 
