@@ -454,7 +454,7 @@ extension Kingfisher where Base: Image {
     
     /// Create an image with blur effect based on `self`.
     ///
-    /// - parameter radius: The blur radius should be used when creating blur effect.
+    /// - parameter radius: The blur radius should be used when creating blue.
     ///
     /// - returns: An image with blur effect applied.
     ///
@@ -631,7 +631,7 @@ extension Kingfisher where Base: Image {
             assertionFailure("[Kingfisher] Decoding only works for CG-based image.")
             return base
         }
-        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
         guard let context = beginContext(size: CGSize(width: imageRef.width, height: imageRef.height)) else {
             assertionFailure("[Kingfisher] Decoding fails to create a valid context.")
             return base

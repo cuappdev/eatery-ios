@@ -88,10 +88,6 @@ public class KingfisherManager {
     /// - Note: This option will not be applied to independent using of `ImageDownloader` or `ImageCache`.
     public var defaultOptions = KingfisherEmptyOptionsInfo
     
-    var currentDefaultOptions: KingfisherOptionsInfo {
-        return [.downloader(downloader), .targetCache(cache)] + defaultOptions
-    }
-    
     convenience init() {
         self.init(downloader: .default, cache: .default)
     }
@@ -121,7 +117,7 @@ public class KingfisherManager {
         completionHandler: CompletionHandler?) -> RetrieveImageTask
     {
         let task = RetrieveImageTask()
-        let options = currentDefaultOptions + (options ?? KingfisherEmptyOptionsInfo)
+        let options = defaultOptions + (options ?? KingfisherEmptyOptionsInfo)
         if options.forceRefresh {
             _ = downloadAndCacheImage(
                 with: resource.downloadURL,
@@ -176,19 +172,6 @@ public class KingfisherManager {
                                       cacheSerializer: options.cacheSerializer,
                                       toDisk: !options.cacheMemoryOnly,
                                       completionHandler: nil)
-                    if options.cacheOriginalImage {
-                        let defaultProcessor = DefaultImageProcessor.default
-                        if let originaliImage = defaultProcessor.process(item: .data(originalData), options: options) {
-                            targetCache.store(originaliImage,
-                                              original: originalData,
-                                              forKey: key,
-                                              processorIdentifier: defaultProcessor.identifier,
-                                              cacheSerializer: options.cacheSerializer,
-                                              toDisk: !options.cacheMemoryOnly,
-                                              completionHandler: nil)
-                        }
-                        
-                    }
                 }
 
                 completionHandler?(image, error, .none, url)
@@ -203,68 +186,28 @@ public class KingfisherManager {
                               completionHandler: CompletionHandler?,
                                         options: KingfisherOptionsInfo)
     {
-        
-        
         let diskTaskCompletionHandler: CompletionHandler = { (image, error, cacheType, imageURL) -> () in
             completionHandler?(image, error, cacheType, imageURL)
         }
         
-        func handleNoCache() {
-            if options.onlyFromCache {
-                let error = NSError(domain: KingfisherErrorDomain, code: KingfisherError.notCached.rawValue, userInfo: nil)
-                diskTaskCompletionHandler(nil, error, .none, url)
-                return
-            }
-            self.downloadAndCacheImage(
-                with: url,
-                forKey: key,
-                retrieveImageTask: retrieveImageTask,
-                progressBlock: progressBlock,
-                completionHandler: diskTaskCompletionHandler,
-                options: options)
-            
-        }
-        
         let targetCache = options.targetCache
-        // First, try to get the exactly image from cache
-        targetCache.retrieveImage(forKey: key, options: options) { image, cacheType in
-            // If found, we could finish now.
-            if image != nil {
-                diskTaskCompletionHandler(image, nil, cacheType, url)
-                return
-            }
-            
-            // If not found, and we are using a default processor, download it!
-            let processor = options.processor
-            guard processor != DefaultImageProcessor.default else {
-                handleNoCache()
-                return
-            }
-            
-            // If processor is not the default one, we have a chance to check whether
-            // the original image is already in cache.
-            let optionsWithoutProcessor = options.removeAllMatchesIgnoringAssociatedValue(.processor(processor))
-            targetCache.retrieveImage(forKey: key, options: optionsWithoutProcessor) { image, cacheType in
-                // If we found the original image, there is no need to download it again.
-                // We could just apply processor to it now.
-                guard let image = image else {
-                    handleNoCache()
-                    return
+        targetCache.retrieveImage(forKey: key, options: options,
+            completionHandler: { image, cacheType in
+                if image != nil {
+                    diskTaskCompletionHandler(image, nil, cacheType, url)
+                } else if options.onlyFromCache {
+                    let error = NSError(domain: KingfisherErrorDomain, code: KingfisherError.notCached.rawValue, userInfo: nil)
+                    diskTaskCompletionHandler(nil, error, .none, url)
+                } else {
+                    self.downloadAndCacheImage(
+                        with: url,
+                        forKey: key,
+                        retrieveImageTask: retrieveImageTask,
+                        progressBlock: progressBlock,
+                        completionHandler: diskTaskCompletionHandler,
+                        options: options)
                 }
-                
-                guard let processedImage = processor.process(item: .image(image), options: options) else {
-                    diskTaskCompletionHandler(nil, nil, .none, url)
-                    return
-                }
-                targetCache.store(processedImage,
-                                  original: nil,
-                                  forKey: key,
-                                  processorIdentifier:options.processor.identifier,
-                                  cacheSerializer: options.cacheSerializer,
-                                  toDisk: !options.cacheMemoryOnly,
-                                  completionHandler: nil)
-                diskTaskCompletionHandler(processedImage, nil, .none, url)
             }
-        }
+        )
     }
 }

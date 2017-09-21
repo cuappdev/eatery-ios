@@ -86,42 +86,34 @@ extension Indicator {
 
 // MARK: - ActivityIndicator
 // Displays a NSProgressIndicator / UIActivityIndicatorView
-class ActivityIndicator: Indicator {
+struct ActivityIndicator: Indicator {
 
     #if os(macOS)
     private let activityIndicatorView: NSProgressIndicator
     #else
     private let activityIndicatorView: UIActivityIndicatorView
     #endif
-    private var animatingCount = 0
 
     var view: IndicatorView {
         return activityIndicatorView
     }
 
     func startAnimatingView() {
-        animatingCount += 1
-        // Alrady animating
-        if animatingCount == 1 {
-            #if os(macOS)
-                activityIndicatorView.startAnimation(nil)
-            #else
-                activityIndicatorView.startAnimating()
-            #endif
-            activityIndicatorView.isHidden = false
-        }
+        #if os(macOS)
+            activityIndicatorView.startAnimation(nil)
+        #else
+            activityIndicatorView.startAnimating()
+        #endif
+        activityIndicatorView.isHidden = false
     }
 
     func stopAnimatingView() {
-        animatingCount = max(animatingCount - 1, 0)
-        if animatingCount == 0 {
-            #if os(macOS)
-                activityIndicatorView.stopAnimation(nil)
-            #else
-                activityIndicatorView.stopAnimating()
-            #endif
-            activityIndicatorView.isHidden = true
-        }
+        #if os(macOS)
+            activityIndicatorView.stopAnimation(nil)
+        #else
+            activityIndicatorView.stopAnimating()
+        #endif
+        activityIndicatorView.isHidden = true
     }
 
     init() {
@@ -143,7 +135,7 @@ class ActivityIndicator: Indicator {
 
 // MARK: - ImageIndicator
 // Displays an ImageView. Supports gif
-class ImageIndicator: Indicator {
+struct ImageIndicator: Indicator {
     private let animatedImageIndicatorView: ImageView
 
     var view: IndicatorView {
@@ -164,7 +156,6 @@ class ImageIndicator: Indicator {
 
         animatedImageIndicatorView = ImageView()
         animatedImageIndicatorView.image = image
-        animatedImageIndicatorView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
         
         #if os(macOS)
             // Need for gif to animate on macOS
@@ -172,6 +163,7 @@ class ImageIndicator: Indicator {
             self.animatedImageIndicatorView.canDrawSubviewsIntoLayer = true
         #else
             animatedImageIndicatorView.contentMode = .center
+            
             animatedImageIndicatorView.autoresizingMask = [.flexibleLeftMargin,
                                                            .flexibleRightMargin,
                                                            .flexibleBottomMargin,
