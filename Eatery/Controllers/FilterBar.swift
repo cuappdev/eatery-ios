@@ -55,7 +55,6 @@ class FilterBar: UIView {
     func layoutButtons() {
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
             button.setTitle(filter.rawValue, for: .normal)
             button.setTitleColor(UIColor.eateryBlue, for: .normal)
             button.layer.cornerRadius = 4.0
