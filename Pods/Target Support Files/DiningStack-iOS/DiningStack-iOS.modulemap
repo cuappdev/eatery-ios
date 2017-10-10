@@ -1,6 +1,0 @@
-framework module DiningStack {
-  umbrella header "DiningStack-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
