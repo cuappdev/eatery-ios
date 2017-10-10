@@ -195,11 +195,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     }
     
     func keepMeSignedIn() { // toggle
-        if perpetualLoginButton.isSelected {
-            perpetualLoginButton.isSelected = false
-        } else {
-            perpetualLoginButton.isSelected = true
-        }
+        perpetualLoginButton.isSelected = !perpetualLoginButton.isSelected
     }
     
     func login() {
@@ -218,6 +214,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             
             UserDefaults.standard.set(perpetualLoginButton.isSelected, forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
             UserDefaults.standard.synchronize()
+            
         } else {
             if netid.characters.count == 0 {
                 netidTextField.becomeFirstResponder()

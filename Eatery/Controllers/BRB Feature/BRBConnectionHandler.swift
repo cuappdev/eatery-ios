@@ -34,6 +34,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     let loginURLString = "https://get.cbord.com/cornell/full/login.php"
     let fundsHomeURLString = "https://get.cbord.com/cornell/full/funds_home.php"
     let diningHistoryURLString = "https://get.cbord.com/cornell/full/history.php"
+    let updateProfileURLString = "https://get.cbord.com/cornell/full/update_profile.php"
     var loginCount = 0
     var netid: String = ""
     var password: String = ""
@@ -78,7 +79,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
     
     func failedToLogin() -> Bool {
-        return loginCount > 2
+        return loginCount > 1
     }
     
     /**
@@ -237,7 +238,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.errorDelegate?.failedToLogin(error: error.localizedDescription)
             } else {
                 if self.failedToLogin() {
-                    if self.url?.absoluteString == "https://get.cbord.com/cornell/full/update_profile.php" {
+                    if self.url?.absoluteString == self.updateProfileURLString {
                         self.errorDelegate?.failedToLogin(error: "Account needs to be updated")
                     }
                     self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
@@ -248,12 +249,13 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
         self.getStageAndRunBlock {
             switch self.stage {
             case .loginFailed:
                 self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
             case .loginScreen:
-                self.login()
+                if self.loginCount < 1 { self.login() }
             case .fundsHome:
                 self.getAccountBalance()
             case .diningHistory:
@@ -276,7 +278,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         getHTML(block: { (html: NSString) -> () in
             if self.failedToLogin() {
                 self.stage = .loginFailed
-            } else if self.url!.absoluteString.contains("https://get.cbord.com/cornell/full/update_profile.php") {
+            } else if self.url!.absoluteString.contains(self.updateProfileURLString) {
                 self.stage = .loginFailed
             } else if html.contains("<h1>CUWebLogin</h1>") {
                 self.stage = .loginScreen
