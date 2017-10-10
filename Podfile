@@ -8,11 +8,11 @@ target 'Eatery' do
   platform :ios, '9.0'
 
   pod 'SwiftyJSON'
-  pod 'SnapKit'
+  pod 'SnapKit', '~> 3.2.0'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Hero'
-  pod 'Kingfisher'
+  pod 'Kingfisher', '~> 3.13.1'
   shared_pods
 end
 
