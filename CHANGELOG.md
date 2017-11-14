@@ -1,5 +1,10 @@
 # Eatery Changelog
 
+### [v2.1.2 - Calios](https://github.com/cuappdev/eatery/compare/v2.1.1...v2.1.2)
+#### October 20th, 2017
+- [Fix BRB Meal Plan Login](
+https://github.com/cuappdev/eatery/commit/f60b8f5888b025d596e350c5750cea3012dd5705)
+
 ### [v2.1.1 - Jimmy John's](https://github.com/cuappdev/eatery/compare/v2.1.0...v2.1.1)
 #### August 29th, 2017
 - [Fix Analytics Freaky Fast](
