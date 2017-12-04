@@ -3,6 +3,7 @@ import SwiftyJSON
 import DiningStack
 import Fabric
 import Crashlytics
+import Hero
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
         
+        Hero.shared.containerColor = .collectionViewBackground
+        
         // Set up view controllers
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isTranslucent = false
@@ -49,11 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
         
         tabBarController.setViewControllers([eateryNavigationController, lookAheadNavigationController, brbNavigationController], animated: true)
-
-        let launchViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()!
-        tabBarController.addChildViewController(launchViewController)
-        tabBarController.view.addSubview(launchViewController.view)
-        launchViewController.didMove(toParentViewController: tabBarController)
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

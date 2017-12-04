@@ -7,15 +7,12 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return }
 
         let width = collectionView.bounds.width
-        var cellWidth = floor(width - kCollectionViewGutterWidth * 2)
-
-        switch collectionView.traitCollection.horizontalSizeClass {
-        case .compact:
-            break
-        case .regular:
+        let cellWidth: CGFloat
+        
+        if collectionView.traitCollection.horizontalSizeClass == .regular || UIDevice.current.orientation.isLandscape {
             cellWidth = (width / 2) - kCollectionViewGutterWidth * 2
-        case .unspecified:
-            break
+        } else {
+            cellWidth = width - kCollectionViewGutterWidth * 2
         }
 
         itemSize = CGSize(width: cellWidth, height: cellWidth * 0.4)

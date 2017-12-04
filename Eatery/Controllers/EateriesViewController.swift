@@ -76,16 +76,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
         NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-
-        if let launchViewController = tabBarController?.childViewControllers.last {
-            UIView.animate(withDuration: 0.35, delay: 0.35, options: [.allowUserInteraction, .curveEaseIn], animations: {
-                launchViewController.view.frame.origin.y = -launchViewController.view.frame.height
-            }, completion: { complete in
-                launchViewController.removeFromParentViewController()
-                launchViewController.view.removeFromSuperview()
-                launchViewController.didMove(toParentViewController: nil)
-            })
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
