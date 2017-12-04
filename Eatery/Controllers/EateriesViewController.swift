@@ -116,7 +116,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(44.0)
         }
         
         filterBar = FilterBar()

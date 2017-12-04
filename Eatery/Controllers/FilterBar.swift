@@ -62,7 +62,7 @@ class FilterBar: UIView {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
             button.sizeToFit()
             button.frame.size.width += 16.0
-            button.frame.size.height = frame.height - 20.0
+            button.frame.size.height = frame.height
             button.center.y = frame.height / 2
 
             
@@ -77,6 +77,7 @@ class FilterBar: UIView {
             button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
+                make.height.equalToSuperview().offset(-20)
                 if index > 0 {
                     make.leading.equalTo(buttons[index-1].snp.trailing).offset(10)
                 } else {
