@@ -38,7 +38,7 @@ class FilterEateriesTableViewCell: UITableViewCell {
         addGestureRecognizer(tapGestureRecognizer!)
     }
     
-    func filterEateriesCellPressed(_ sender: UITapGestureRecognizer) {
+    @objc func filterEateriesCellPressed(_ sender: UITapGestureRecognizer) {
         let tapPoint = sender.location(in: self)
         let hitView = hitTest(tapPoint, with: nil)
         

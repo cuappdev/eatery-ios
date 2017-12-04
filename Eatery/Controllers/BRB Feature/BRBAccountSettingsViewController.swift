@@ -65,7 +65,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
     //MARK: -
     //MARK: User Interaction
     
-    func autoLoginWasToggled(sender: UISwitch) {
+    @objc func autoLoginWasToggled(sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
         UserDefaults.standard.synchronize()
     }

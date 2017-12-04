@@ -26,7 +26,7 @@ class MenuImages: NSObject {
             // Create header
             let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: 80))
             let headerString = NSMutableAttributedString(string: "NO MENU INFORMATION AVAILABLE")
-            headerString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, headerString.length))
+            headerString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, headerString.length))
             headerLabel.attributedText = headerString
             headerLabel.backgroundColor = bodyColor
             headerLabel.textAlignment = .center
@@ -67,7 +67,7 @@ class MenuImages: NSObject {
             // Create header for category
             let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: categoryHeaderHeight))
             let headerString = NSMutableAttributedString(string: "   \(categoryName.uppercased())")
-            headerString.addAttribute(NSKernAttributeName, value: 1.0, range: NSMakeRange(0, headerString.length))
+            headerString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, headerString.length))
             headerLabel.backgroundColor = bodyColor
             headerLabel.attributedText = headerString
             headerLabel.textAlignment = .left

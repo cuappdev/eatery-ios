@@ -13,8 +13,8 @@ private let ShortDateFormatter: DateFormatter = {
     formatter.dateFormat = "h:mma"
     return formatter
 }()
-private let kEateryNicknames = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
-private let kEateryLocations = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "locations", withExtension: "json")!)).dictionaryValue
+private let kEateryNicknames = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
+private let kEateryLocations = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "locations", withExtension: "json")!)).dictionaryValue
 
 let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 

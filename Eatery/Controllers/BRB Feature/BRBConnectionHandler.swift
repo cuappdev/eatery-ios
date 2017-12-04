@@ -200,7 +200,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
                 self.accountBalance.cityBucks = city != "" ? city : "0.00"
                 self.accountBalance.laundry = laundry != "" ? laundry : "0.00"
-                self.accountBalance.swipes = swipes != "" ? swipes[swipes.characters.index(after: swipes.startIndex)..<swipes.characters.index(before: swipes.endIndex)] : "Unlimited"
+                self.accountBalance.swipes = swipes != "" ? String(swipes[swipes.index(after: swipes.startIndex)..<swipes.index(before: swipes.endIndex)]) : "Unlimited"
             }
         }
     }
@@ -225,7 +225,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     func getFirstRegexMatchFromString(regexString: NSString, str: NSString) -> String {
         let regex = try? NSRegularExpression(pattern: regexString as String, options: .useUnicodeWordBoundaries)
         if let match = regex?.firstMatch(in: str as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, str.length)) {
-            return str.substring(with: match.rangeAt(0)) as String
+            return str.substring(with: match.range(at: 0)) as String
         }
         return ""
     }

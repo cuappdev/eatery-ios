@@ -52,8 +52,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let dateTitle: String
         
         if dateString == todayDateString {
-            let commaIndex = dateString.characters.index(of: ",")
-            let dateSubstring = dateString.substring(with: commaIndex!..<dateString.endIndex)
+            let commaIndex = dateString.index(of: ",")
+            let dateSubstring = dateString[commaIndex!..<dateString.endIndex]
             dateTitle = "Today\(dateSubstring)"
         } else {
             dateTitle = dateString

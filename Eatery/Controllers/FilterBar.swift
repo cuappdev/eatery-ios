@@ -107,7 +107,7 @@ class FilterBar: UIView {
         }
     }
     
-    func buttonPressed(sender: UIButton) {
+    @objc func buttonPressed(sender: UIButton) {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             selectedFilters.insert(filters[sender.tag])

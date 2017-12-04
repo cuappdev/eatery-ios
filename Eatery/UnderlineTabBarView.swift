@@ -81,7 +81,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         }
     }
     
-    func tabButtonPressed(_ sender: UIButton) {
+    @objc func tabButtonPressed(_ sender: UIButton) {
         let index = tabButtons.index(of: sender)!
         updateSelectedTabAppearance(index)
         delegate?.selectedTabDidChange(index)

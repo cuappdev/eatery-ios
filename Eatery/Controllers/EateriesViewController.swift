@@ -69,7 +69,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         let mapButton = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapButtonPressed))
-        mapButton.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        mapButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14.0), NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = mapButton
         
         loadData(force: false, completion: nil)
@@ -184,7 +184,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
     }
     
-    func updateTimerFired() {
+    @objc func updateTimerFired() {
         loadData(force: false, completion: nil)
     }
   
@@ -373,11 +373,11 @@ extension EateriesViewController: UICollectionViewDataSource {
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {
                 let baseString = names.joined(separator: "\n")
-                let attributedString = NSMutableAttributedString(string: baseString, attributes: [NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : UIFont.systemFont(ofSize: 11.0)])
+                let attributedString = NSMutableAttributedString(string: baseString, attributes: [NSAttributedStringKey.foregroundColor : UIColor.gray, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11.0)])
                 do {
                     let regex = try NSRegularExpression(pattern: searchBar.text ?? "", options: NSRegularExpression.Options.caseInsensitive)
                     for match in regex.matches(in: baseString, options: [], range: NSRange.init(location: 0, length: baseString.utf16.count)) {
-                        attributedString.addAttributes([NSForegroundColorAttributeName : UIColor.darkGray, NSFontAttributeName : UIFont.boldSystemFont(ofSize: 11.0)], range: match.range)
+                        attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.darkGray, NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 11.0)], range: match.range)
                     }
                 } catch {
                     NSLog("Error in handling regex")

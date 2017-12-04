@@ -27,7 +27,7 @@ class EateryHeaderTableViewCell: UITableViewCell {
         addGestureRecognizer(tapGestureRecognizer!)
     }
     
-    func eateryHeaderCellPressed(_ sender: UITapGestureRecognizer) {
+    @objc func eateryHeaderCellPressed(_ sender: UITapGestureRecognizer) {
         let tapPoint = sender.location(in: self)
         let hitView = hitTest(tapPoint, with: nil)
         

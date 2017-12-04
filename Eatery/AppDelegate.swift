@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = .eateryBlue
         UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
         
@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       if #available(iOS 9.1, *) {
           //Retrieve favorites and their nicknames
           let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-          let nicknames = JSON(data: try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
+          let nicknames = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
         
           let favoriteNames = slugStrings.reversed().map { slug -> (String, String) in
               if let nicknameJSON = nicknames[slug] {

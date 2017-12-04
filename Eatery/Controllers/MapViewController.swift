@@ -116,7 +116,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    func recenterButtonPressed(_ sender: UIButton)
+    @objc func recenterButtonPressed(_ sender: UIButton)
     {
         if eateryAnnotations.count == 1 {
             mapView.selectAnnotation(eateryAnnotations.first!, animated: true)
