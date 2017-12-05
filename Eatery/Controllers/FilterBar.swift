@@ -56,7 +56,14 @@ class FilterBar: UIView {
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
             button.setTitle(filter.rawValue, for: .normal)
-            button.setTitleColor(UIColor.eateryBlue, for: .normal)
+
+            button.setTitleColor(.eateryBlue, for: .normal)
+            button.setTitleColor(.white, for: .highlighted)
+            button.setTitleColor(.white, for: .selected)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.white), for: .normal)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
+
             button.layer.cornerRadius = 4.0
             button.clipsToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
@@ -65,12 +72,7 @@ class FilterBar: UIView {
             button.frame.size.height = frame.height
             button.center.y = frame.height / 2
 
-            
             button.tag = index
-            button.setBackgroundImage(UIImage.image(withColor: UIColor.white), for: .normal)
-            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
-            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
-            button.setTitleColor(UIColor.white, for: .selected)
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
             
             scrollView.addSubview(button)
@@ -89,9 +91,6 @@ class FilterBar: UIView {
         }
         scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0.0, height: frame.height)
     }
-    
-
-    
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
