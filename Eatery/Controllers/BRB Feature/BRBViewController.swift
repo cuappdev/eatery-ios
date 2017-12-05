@@ -53,9 +53,9 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         {
             navigationItem.rightBarButtonItem?.isEnabled = false
             
-            let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
-            let netid = keychainItemWrapper["Netid"] as? String
-            let password = keychainItemWrapper["Password"] as? String
+            let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+            let netid = keychainItemWrapper["netid"] as? String
+            let password = keychainItemWrapper["password"] as? String
 
             // show activity indicator
             if connectionHandler.stage != .loginFailed &&
@@ -84,7 +84,8 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
                 loginView.delegate = self
                 view.addSubview(loginView)
                 loginView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
+                    make.top.equalTo(topLayoutGuide.snp.bottom)
+                    make.leading.trailing.bottom.equalToSuperview()
                 }
             }
         }
@@ -163,7 +164,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 8, 0)
         tableView.backgroundColor = UIColor(white: 0.93, alpha: 1) // same as grid view
         tableView.dataSource = self
         tableView.delegate = self
@@ -350,9 +350,9 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         //add netid + password to keychain
         if loginView != nil && loginView.netidTextField.text?.count ?? 0 > 0 { // update keychain from login view
-            let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
-            keychainItemWrapper["Netid"] = loginView.netidTextField.text! as AnyObject?
-            keychainItemWrapper["Password"] = loginView.passwordTextField.text! as AnyObject?
+            let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+            keychainItemWrapper["netid"] = loginView.netidTextField.text! as AnyObject?
+            keychainItemWrapper["password"] = loginView.passwordTextField.text! as AnyObject?
         }
 
         activityIndicatorView.stopAnimating()

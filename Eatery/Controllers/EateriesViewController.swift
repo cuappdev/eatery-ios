@@ -6,6 +6,7 @@ import Hero
 import Crashlytics
 
 let kCollectionViewGutterWidth: CGFloat = 10
+let filterBarHeight: CGFloat = 44.0
 
 class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
@@ -88,34 +89,30 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         mapViewController.mapEateries(eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
     }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        collectionView.contentInset.top = filterBar.frame.height + searchBar.frame.height
-    }
     
     func setupBars() {
         searchBar = UISearchBar()
+        searchBar.searchBarStyle = .minimal
+        searchBar.backgroundColor = .collectionViewBackground
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
-        searchBar.searchBarStyle = .minimal
         searchBar.autocapitalizationType = .none
+
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.leading.trailing.equalToSuperview()
         }
         
         filterBar = FilterBar()
         filterBar.delegate = self
+
         view.addSubview(filterBar)
         filterBar.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(44.0)
+            make.height.equalTo(filterBarHeight)
         }
     }
     
@@ -123,17 +120,18 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: EateriesCollectionViewGridLayout())
         collectionView.dataSource = self
         collectionView.delegate = self
-        definesPresentationContext = true
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isHidden = true
         
-        view.insertSubview(collectionView, belowSubview: searchBar)
+        view.insertSubview(collectionView, at: 0)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        collectionView.contentInset.top += filterBarHeight + 56.0
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -396,6 +394,29 @@ extension EateriesViewController: UICollectionViewDelegate {
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         navigationController?.pushViewController(menuViewController, animated: true)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var offset = scrollView.contentOffset.y
+        if #available(iOS 11.0, *) {
+            offset += scrollView.adjustedContentInset.top
+        } else {
+            offset += scrollView.contentInset.top
+        }
+        
+        let maxHeaderOffset = searchBar.frame.height + filterBar.frame.height
+        let headerOffset = min(maxHeaderOffset, offset)
+        
+        if offset > 0.0 {
+            let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
+            searchBar.transform = transform
+            filterBar.transform = transform
+        } else {
+            searchBar.transform = .identity
+            filterBar.transform = .identity
+        }
+        
+        view.endEditing(true)
+    }
 }
 
 extension EateriesViewController: UICollectionViewDelegateFlowLayout {
@@ -405,12 +426,6 @@ extension EateriesViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension EateriesViewController: UISearchBarDelegate {
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if searchBar.text != "" {
-            searchBar.setShowsCancelButton(true, animated: true)
-        }
-    }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
@@ -425,16 +440,6 @@ extension EateriesViewController: UISearchBarDelegate {
         collectionView.reloadData()
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
-    }
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.setShowsCancelButton(true, animated: true)
-        for subview in searchBar.subviews.first!.subviews {
-            if subview.isKind(of: UIButton.self) {
-                (subview as? UIButton)?.setTitleColor(UIColor.eateryBlue, for: UIControlState())
-            }
-        }
-        return true
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -455,22 +460,6 @@ extension EateriesViewController: UISearchBarDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Error: \(error)")
         locationError = true
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y + searchBar.frame.height + filterBar.frame.height
-        let maxHeaderOffset = searchBar.frame.height + filterBar.frame.height
-        let headerOffset = min(maxHeaderOffset, offset)
-
-        if offset > 0.0 {
-            searchBar.snp.updateConstraints { make in
-                make.top.equalToSuperview().offset(-headerOffset)
-            }
-        } else {
-            searchBar.snp.updateConstraints { make in
-                make.top.equalToSuperview()
-            }
-        }
     }
     
 }

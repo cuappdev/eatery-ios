@@ -19,7 +19,7 @@ class NavigationTitleView: UIView {
         let v = Bundle.main.loadNibNamed("NavigationTitleView", owner: self, options: nil)?.first! as! NavigationTitleView
         v.eateryNameLabel.textColor = .white
         v.dateLabel.textColor = .white
-        v.backgroundColor = .eateryBlue
+        v.backgroundColor = .clear
         return v
     }
 }

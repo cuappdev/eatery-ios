@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Foundation.URLCache.shared = URLCache
         
         window = UIWindow()
+        window?.backgroundColor = .collectionViewBackground
         
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = .eateryBlue
@@ -32,26 +33,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up view controllers
         let tabBarController = UITabBarController()
-        tabBarController.tabBar.isTranslucent = false
         
         eateriesViewController = EateriesViewController()
 
         let eateryNavigationController = UINavigationController(rootViewController: eateriesViewController)
-        eateryNavigationController.navigationBar.isTranslucent = false
         eateryNavigationController.navigationBar.barStyle = .black
         eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
 
         let lookAheadNavigationController = UINavigationController(rootViewController: LookAheadViewController())
-        lookAheadNavigationController.navigationBar.isTranslucent = false
         lookAheadNavigationController.navigationBar.barStyle = .black
         lookAheadNavigationController.tabBarItem = UITabBarItem(title: "Menus", image: #imageLiteral(resourceName: "menu icon"), tag: 1)
 
         let brbNavigationController = UINavigationController(rootViewController: BRBViewController())
-        brbNavigationController.navigationBar.isTranslucent = false
         brbNavigationController.navigationBar.barStyle = .black
         brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
         
-        tabBarController.setViewControllers([eateryNavigationController, lookAheadNavigationController, brbNavigationController], animated: true)
+        let navigationControllers = [eateryNavigationController, lookAheadNavigationController, brbNavigationController]
+        tabBarController.setViewControllers(navigationControllers, animated: true)
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

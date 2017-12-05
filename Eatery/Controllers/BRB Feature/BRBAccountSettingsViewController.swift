@@ -72,9 +72,9 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
     
     func logout() {
         //delete netid + password from keychain
-        let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
-        keychainItemWrapper["Netid"] = nil
-        keychainItemWrapper["Password"] = nil
+        let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+        keychainItemWrapper["netid"] = nil
+        keychainItemWrapper["password"] = nil
         
         //log out user here and remove data from NSUserDefaults
         let defaults = UserDefaults.standard

@@ -62,7 +62,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.autoresizingMask = .flexibleHeight
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
+        tableView.backgroundColor = .collectionViewBackground
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
