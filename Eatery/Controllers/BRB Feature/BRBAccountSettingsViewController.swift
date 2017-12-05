@@ -1,14 +1,14 @@
 import UIKit
 
 struct BRBAccountSettings {
-    static let LOGIN_ON_STARTUP_KEY = "Login On Startup Key"
+    static let SAVE_LOGIN_INFO = "save_login_info"
 
-    static func shouldLoginOnStartup() -> Bool
+    static func shouldSaveLoginInfo() -> Bool
     {
-        if let shouldLogin = UserDefaults.standard.object(forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY) as? Bool {
-            return shouldLogin
+        if let shouldSave = UserDefaults.standard.object(forKey: BRBAccountSettings.SAVE_LOGIN_INFO) as? Bool {
+            return shouldSave
         }
-        return false
+        return true
     }
 }
 
@@ -40,7 +40,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         
         let cell1 = BRBTableViewCell()
         cell1.selectionStyle = .none
-        cell1.leftLabel.text = "  Automatically log me in"
+        cell1.leftLabel.text = "  Save my login info"
         cell1.leftLabel.font = UIFont.systemFont(ofSize: 14)
 
         let cell4 = BRBTableViewCell()
@@ -48,7 +48,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         cell4.centerLabel.font = UIFont.boldSystemFont(ofSize: 15)
         
         let switch1 = UISwitch()
-        switch1.isOn = BRBAccountSettings.shouldLoginOnStartup()
+        switch1.isOn = BRBAccountSettings.shouldSaveLoginInfo()
         switch1.onTintColor = UIColor.eateryBlue
         switch1.addTarget(self, action: #selector(BRBAccountSettingsViewController.autoLoginWasToggled(sender:)), for: .valueChanged)
         cell1.accessoryView = switch1
@@ -66,8 +66,10 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
     //MARK: User Interaction
     
     @objc func autoLoginWasToggled(sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
-        UserDefaults.standard.synchronize()
+        let defaults = UserDefaults.standard
+        defaults.set(sender.isOn, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
+        defaults.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
+        defaults.synchronize()
     }
     
     func logout() {
@@ -78,7 +80,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         
         //log out user here and remove data from NSUserDefaults
         let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
+        defaults.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
         defaults.synchronize()
         
         delegate?.brbAccountSettingsDidLogoutUser(brbAccountSettings: self)

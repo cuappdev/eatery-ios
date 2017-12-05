@@ -5,7 +5,7 @@ import Crashlytics
 
 class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var connectionHandler: BRBConnectionHandler!
+    var connectionHandler: BRBConnectionHandler = BRBConnectionHandler()
     var loginView: BRBLoginView!
     var loggedIn = false
     var timer: Timer!
@@ -35,7 +35,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         view.backgroundColor = UIColor(white: 0.93, alpha: 1)
 
-        connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
         connectionHandler.errorDelegate = self
         
         loginView = BRBLoginView(frame: view.bounds)
@@ -56,37 +55,24 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
             let netid = keychainItemWrapper["netid"] as? String
             let password = keychainItemWrapper["password"] as? String
-
-            // show activity indicator
-            if connectionHandler.stage != .loginFailed &&
-                BRBAccountSettings.shouldLoginOnStartup() &&
-                netid?.count ?? 0 > 0 && password?.count ?? 0 > 0
-            {
-                activityIndicatorView.startAnimating()
-                view.addSubview(activityIndicatorView)
-                activityIndicatorView.snp.makeConstraints { make in
-                    make.centerX.equalToSuperview()
-                    make.size.equalTo(20)
-                    make.top.equalTo(topLayoutGuide.snp.bottom).offset(20)
-                }
-
-                view.addSubview(activityIndicatorDescriptionLabel)
-                activityIndicatorDescriptionLabel.snp.makeConstraints { make in
-                    make.top.equalTo(activityIndicatorView.snp.bottom).offset(8)
-                    make.width.equalToSuperview().multipliedBy(0.8)
-                    make.centerX.equalToSuperview()
-                }
-                
-                timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
+            
+            loginView.delegate = self
+            
+            if netid?.count ?? 0 > 0 && password?.count ?? 0 > 0 {
+                loginView.netidTextField.text = netid
+                loginView.passwordTextField.text = password
             }
-            else // show login screen
-            {
-                loginView.delegate = self
-                view.addSubview(loginView)
-                loginView.snp.makeConstraints { make in
-                    make.top.equalTo(topLayoutGuide.snp.bottom)
-                    make.leading.trailing.bottom.equalToSuperview()
-                }
+            
+            addLoginView()
+        }
+    }
+    
+    func addLoginView() {
+        if loginView.superview == nil {
+            view.addSubview(loginView)
+            loginView.snp.makeConstraints { make in
+                make.top.equalTo(topLayoutGuide.snp.bottom)
+                make.leading.trailing.bottom.equalToSuperview()
             }
         }
     }
@@ -109,9 +95,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
             connectionHandler.errorDelegate = self
 
-            if loginView.superview == nil {
-                view.addSubview(loginView)
-            }
+            addLoginView()
         }
         
         if connectionHandler.accountBalance != nil && connectionHandler.accountBalance.brbs != "" {
@@ -325,9 +309,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
 
         timer.invalidate()
         
-        if loginView.superview == nil {
-            view.addSubview(loginView)
-        }
+        addLoginView()
 
         loginView.loginFailedWithError(error: error)
     }
@@ -380,7 +362,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         loginView = BRBLoginView(frame: view.bounds)
         loginView.delegate = self
-        view.addSubview(loginView)
+        addLoginView()
     }
     
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {

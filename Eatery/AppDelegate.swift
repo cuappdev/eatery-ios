@@ -53,19 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-        
-        // Set up meal plan connection handler
-        connectionHandler = BRBConnectionHandler()
-        
-        if BRBAccountSettings.shouldLoginOnStartup() {
-            let keychainItemWrapper = KeychainItemWrapper(identifier: "Netid", accessGroup: nil)
-            if let netid = keychainItemWrapper["Netid"] as? String, !netid.isEmpty,
-                let password = keychainItemWrapper["Password"] as? String, !password.isEmpty {
-                connectionHandler.netid = netid
-                connectionHandler.password = password
-                connectionHandler.handleLogin()
-            }
-        }
 
         #if DEBUG
             print("RUNNING EATERY IN DEBUG CONFIGURATION")

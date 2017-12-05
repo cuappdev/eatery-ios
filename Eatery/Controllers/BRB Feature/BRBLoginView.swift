@@ -130,9 +130,9 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         }
 
         // iphone 5s.height = 568
-        perpetualLoginButton.setTitle("☐   Automatically log me in every time", for: .normal)
+        perpetualLoginButton.setTitle("☐   Save my login info", for: .normal)
         /// NOTE: this checkbox solution is rather hacky, should be replaced with images in the future
-        perpetualLoginButton.setTitle("☑ Automatically log me in every time", for: .selected)
+        perpetualLoginButton.setTitle("☑ Save my login info", for: .selected)
         perpetualLoginButton.setTitleColor(.darkGray, for: .normal)
         perpetualLoginButton.setTitleColor(.black, for: .highlighted)
         perpetualLoginButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
@@ -212,7 +212,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             delegate?.brbLoginViewClickedLogin(brbLoginView: self, netid: netid, password: password)
             isUserInteractionEnabled = false
             
-            UserDefaults.standard.set(perpetualLoginButton.isSelected, forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
+            UserDefaults.standard.set(perpetualLoginButton.isSelected, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
             UserDefaults.standard.synchronize()
             
         } else {
@@ -235,7 +235,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         
-        UserDefaults.standard.removeObject(forKey: BRBAccountSettings.LOGIN_ON_STARTUP_KEY)
+        UserDefaults.standard.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
         UserDefaults.standard.synchronize()
     }
     
