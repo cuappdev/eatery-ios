@@ -29,6 +29,8 @@ class FilterBar: UIView {
     private var buttons: [UIButton] = []
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
+
+    let padding: CGFloat = 10.0
     
     private var selectedFilters: Set<Filter> = []
     
@@ -40,8 +42,8 @@ class FilterBar: UIView {
         
         scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.contentInset.left = 10.0
-        scrollView.contentInset.right = 10.0
+        scrollView.contentInset.left = padding
+        scrollView.contentInset.right = padding
         scrollView.alwaysBounceHorizontal = true
         addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
@@ -53,6 +55,9 @@ class FilterBar: UIView {
     }
     
     func layoutButtons() {
+
+        var totalWidth: CGFloat = 0.0
+
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
             button.setTitle(filter.rawValue, for: .normal)
@@ -79,17 +84,20 @@ class FilterBar: UIView {
             button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
-                make.height.equalToSuperview().offset(-20)
+                make.height.equalToSuperview().offset(-(padding * 2))
                 if index > 0 {
-                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(10)
+                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(padding)
                 } else {
                     make.leading.equalToSuperview()
                 }
                 
             }
             buttons.append(button)
+
+            totalWidth += button.frame.width + (index == filters.count - 1 ? 0.0 : padding)
         }
-        scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0.0, height: frame.height)
+
+        scrollView.contentSize = CGSize(width: totalWidth, height: frame.height)
     }
     
     override func didMoveToSuperview() {
