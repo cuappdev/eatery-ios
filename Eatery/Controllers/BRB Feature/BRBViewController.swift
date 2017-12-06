@@ -162,7 +162,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if paginationCounter > 0 && scrollView.contentOffset.y >=
+        if paginationCounter > 0 && scrollView.contentOffset.y - scrollView.contentInset.top >=
             scrollView.contentSize.height - scrollView.frame.height
         {
             paginationCounter += 1
