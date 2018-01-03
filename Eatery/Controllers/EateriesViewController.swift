@@ -77,6 +77,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
         NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        let appDelegate = AppDelegate()
+        if let significantEvents : Int = UserDefaults.standard.integer(forKey: "significantEvents"){
+            if significantEvents > 30 {
+                appDelegate.requestReview()
+                UserDefaults.standard.set(0, forKey:"significantEvents")
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
