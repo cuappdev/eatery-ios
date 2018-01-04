@@ -30,7 +30,7 @@ class FilterBar: UIView {
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 
-    let padding: CGFloat = 10.0
+    let padding: CGFloat = kCollectionViewGutterWidth
     
     private var selectedFilters: Set<Filter> = []
     
@@ -69,7 +69,7 @@ class FilterBar: UIView {
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
 
-            button.layer.cornerRadius = 4.0
+            button.layer.cornerRadius = 8.0
             button.clipsToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
             button.sizeToFit()
@@ -84,9 +84,9 @@ class FilterBar: UIView {
             button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
-                make.height.equalToSuperview().offset(-(padding * 2))
+                make.height.equalToSuperview().offset(-padding)
                 if index > 0 {
-                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(padding)
+                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(padding / 2)
                 } else {
                     make.leading.equalToSuperview()
                 }
@@ -98,6 +98,7 @@ class FilterBar: UIView {
         }
 
         scrollView.contentSize = CGSize(width: totalWidth, height: frame.height)
+        scrollView.setContentOffset(CGPoint(x: -padding, y: 0), animated: false)
     }
     
     override func didMoveToSuperview() {

@@ -5,7 +5,7 @@ import CoreLocation
 import Hero
 import Crashlytics
 
-let kCollectionViewGutterWidth: CGFloat = 10
+let kCollectionViewGutterWidth: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
 class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
@@ -101,7 +101,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(topLayoutGuide.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(kCollectionViewGutterWidth / 2)
         }
         
         filterBar = FilterBar()
