@@ -28,7 +28,7 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var infoContainer: UIView!
+    @IBOutlet weak var container: UIView!
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
@@ -81,7 +81,6 @@ class MenuHeaderView: UIView {
         locationImageView.tintColor = UIColor.gray
         
         directionsButton.tintColor = UIColor.eateryBlue
-        directionsButton.setBackgroundImage(UIImage.image(withColor: .white), for: .normal)
         favoriteButton.tintColor = UIColor.eateryBlue
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         shareButton.imageView?.contentMode = .scaleAspectFit

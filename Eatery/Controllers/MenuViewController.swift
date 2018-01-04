@@ -99,7 +99,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.statusLabel.heroID = EateriesViewController.Animation.statusLabel.id(eatery: eatery)
         menuHeaderView.hoursLabel.heroID = EateriesViewController.Animation.timeLabel.id(eatery: eatery)
         menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
-        menuHeaderView.infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
+        menuHeaderView.container.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
         
         contentView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in

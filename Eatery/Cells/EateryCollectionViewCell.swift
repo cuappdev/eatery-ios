@@ -17,7 +17,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var menuTextViewHeight: NSLayoutConstraint!
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
-    
+
+    static let shadowRadius: CGFloat = 16
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -50,7 +52,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 8
         contentView.layer.masksToBounds = true
 
-        layer.shadowRadius = 10
+        layer.shadowRadius = EateryCollectionViewCell.shadowRadius
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
         layer.masksToBounds = false

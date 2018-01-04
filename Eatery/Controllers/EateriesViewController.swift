@@ -153,16 +153,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             animated = true
             collectionView.performBatchUpdates(nil) { complete in
                 for cell in self.collectionView.visibleCells {
-                    cell.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                    cell.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
                     cell.alpha = 0.0
                 }
 
                 self.collectionView.isHidden = false
 
-                var delay: TimeInterval = 0.25
+                var delay: TimeInterval = 0.35
                 for cell in self.collectionView.visibleCells.sorted(by: { $0.frame.origin.y < $1.frame.origin.y }) {
                     delay += 0.1
-                    UIView.animate(withDuration: 0.35, delay: delay, options: [.allowUserInteraction], animations: {
+                    UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
                         cell.transform = .identity
                         cell.alpha = 1.0
                     }, completion: nil)
@@ -378,7 +378,7 @@ extension EateriesViewController: UICollectionViewDataSource {
         } else {
             cell.menuTextViewHeight.constant = 0.0
         }
-        
+
         return cell
     }
 }
@@ -393,6 +393,35 @@ extension EateriesViewController: UICollectionViewDelegate {
 
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         navigationController?.pushViewController(menuViewController, animated: true)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
+        let animation = CABasicAnimation()
+        animation.timingFunction = CAMediaTimingFunction.easeInOut
+        animation.fromValue = EateryCollectionViewCell.shadowRadius
+        animation.toValue = 8.0
+        animation.duration = 0.35
+        cell.layer.add(animation, forKey: "shadowRadius")
+        cell.layer.shadowRadius = 8.0
+        UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+        }, completion: nil)
+
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        let animation = CABasicAnimation()
+        animation.fromValue = cell.layer.shadowRadius
+        animation.toValue = EateryCollectionViewCell.shadowRadius
+        animation.duration = 0.35
+        cell.layer.add(animation, forKey: "shadowRadius")
+        cell.layer.shadowRadius = EateryCollectionViewCell.shadowRadius
+        UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            cell.transform = .identity
+        }, completion: nil)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

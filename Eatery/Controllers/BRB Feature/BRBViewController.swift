@@ -33,7 +33,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         navigationItem.rightBarButtonItem = profileIcon
         
-        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
+        view.backgroundColor = .white
 
         connectionHandler.errorDelegate = self
         
@@ -142,13 +142,12 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        tableView = UITableView(frame: .zero, style: .plain)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(white: 0.93, alpha: 1) // same as grid view
         tableView.dataSource = self
         tableView.delegate = self
         
