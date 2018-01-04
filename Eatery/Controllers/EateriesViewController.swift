@@ -55,7 +55,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         nearestLocationPressed()
         
-        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
+        view.backgroundColor = .white
         
         navigationController?.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
@@ -100,7 +100,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.top.equalTo(topLayoutGuide.snp.bottom).offset(kCollectionViewGutterWidth / 2)
             make.leading.trailing.equalToSuperview().inset(kCollectionViewGutterWidth / 2)
         }
         

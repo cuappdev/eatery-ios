@@ -23,7 +23,7 @@ extension UIColor {
     }
     
     class var collectionViewBackground: UIColor {
-        return UIColor(white: 0.93, alpha: 1)
+        return .white
     }
     
     class var separator: UIColor {
@@ -56,10 +56,6 @@ extension UIColor {
     
     class var titleDarkGray: UIColor {
         return colorFromCode(0x7e7e7e)
-    }
-    
-    class var lightGray: UIColor {
-        return UIColor(red:0.96, green:0.96, blue:0.96, alpha:1)
     }
 }
 

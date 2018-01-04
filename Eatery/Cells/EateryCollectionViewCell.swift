@@ -47,8 +47,13 @@ class EateryCollectionViewCell: UICollectionViewCell {
         
         update(userLocation: userLocation)
         
-        contentView.layer.cornerRadius = 4
+        contentView.layer.cornerRadius = 8
         contentView.layer.masksToBounds = true
+
+        layer.shadowRadius = 10
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+        layer.masksToBounds = false
         
         var images: [UIImage] = []
         
