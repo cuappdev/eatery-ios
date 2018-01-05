@@ -9,7 +9,9 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         let width = collectionView.bounds.width
         let cellWidth: CGFloat
         
-        if collectionView.traitCollection.horizontalSizeClass == .regular || UIDevice.current.orientation.isLandscape {
+        if collectionView.traitCollection.horizontalSizeClass == .regular
+            || UIApplication.shared.statusBarOrientation == .landscapeLeft
+            || UIApplication.shared.statusBarOrientation == .landscapeRight {
             cellWidth = (width / 2) - kCollectionViewGutterWidth * 1.5
         } else {
             cellWidth = width - kCollectionViewGutterWidth * 2
