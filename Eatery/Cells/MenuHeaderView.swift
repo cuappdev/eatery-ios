@@ -12,9 +12,8 @@ import DiningStack
 import Kingfisher
 
 @objc protocol MenuButtonsDelegate {
-    func favoriteButtonPressed()
-    @objc optional func shareButtonPressed()
-    @objc optional func directionsButtonPressed()
+    @objc optional func favoriteButtonPressed()
+    @objc optional func directionsButtonPressed(sender: UIButton)
 }
 
 class MenuHeaderView: UIView {
@@ -33,7 +32,6 @@ class MenuHeaderView: UIView {
     @IBOutlet weak var paymentContainer: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var directionsButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var timeImageView: UIImageView!
     @IBOutlet weak var locationImageView: UIImageView!
     
@@ -83,10 +81,7 @@ class MenuHeaderView: UIView {
         directionsButton.tintColor = UIColor.eateryBlue
         favoriteButton.tintColor = UIColor.eateryBlue
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
-        shareButton.imageView?.contentMode = .scaleAspectFit
-        shareButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 10.0, bottom: 4.0, right: 10.0)
-        shareButton.isHidden = true // Temporary before hotfix
-        
+
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case .open(let message):
@@ -124,15 +119,11 @@ class MenuHeaderView: UIView {
         
         checkFavorites()
         
-        delegate?.favoriteButtonPressed()
-    }
-    
-    @IBAction func shareButtonPressed(_ sender: UIButton) {
-        delegate?.shareButtonPressed?()
+        delegate?.favoriteButtonPressed?()
     }
     
     @IBAction func directionsButtonPressed(_ sender: UIButton) {
-        delegate?.directionsButtonPressed?()
+        delegate?.directionsButtonPressed?(sender: sender)
     }
     
 }

@@ -156,20 +156,10 @@
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8UR-nP-ALq">
-                                    <rect key="frame" x="369" y="0.0" width="45" height="32"/>
-                                    <state key="normal" image="share"/>
-                                    <connections>
-                                        <action selector="shareButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="QVl-hI-aOw"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="pVt-3o-shW" firstAttribute="centerY" secondItem="naC-fA-l7b" secondAttribute="centerY" id="3Aj-Bo-rZH"/>
-                                <constraint firstAttribute="bottom" secondItem="8UR-nP-ALq" secondAttribute="bottom" id="7ct-XS-ZIk"/>
-                                <constraint firstItem="8UR-nP-ALq" firstAttribute="top" secondItem="naC-fA-l7b" secondAttribute="top" id="8PI-NT-UAX"/>
                                 <constraint firstAttribute="height" constant="32" id="AJk-h5-hCg"/>
-                                <constraint firstAttribute="trailing" secondItem="8UR-nP-ALq" secondAttribute="trailing" id="MRI-ek-dVA"/>
                                 <constraint firstItem="pVt-3o-shW" firstAttribute="leading" secondItem="naC-fA-l7b" secondAttribute="leading" constant="10" id="McN-M6-9N0"/>
                             </constraints>
                         </view>
@@ -221,7 +211,6 @@
                 <outlet property="locationImageView" destination="mCH-Ew-DXb" id="EMo-Zs-XPg"/>
                 <outlet property="locationLabel" destination="EdB-Cf-CNe" id="2hW-74-BS0"/>
                 <outlet property="paymentContainer" destination="ZUX-Rh-HSg" id="UKT-uf-kxc"/>
-                <outlet property="shareButton" destination="8UR-nP-ALq" id="nTn-Vc-6p7"/>
                 <outlet property="statusLabel" destination="YIZ-RL-Nyp" id="xGB-eu-j5O"/>
                 <outlet property="timeImageView" destination="lvG-hI-taE" id="uwh-Fn-CLe"/>
                 <outlet property="titleLabel" destination="zoJ-85-Vj9" id="0bD-b3-U5L"/>
@@ -234,7 +223,6 @@
     </objects>
     <resources>
         <image name="location" width="67" height="68"/>
-        <image name="share" width="45" height="64"/>
         <image name="time" width="45" height="45"/>
         <image name="whiteStar" width="28" height="27"/>
     </resources>

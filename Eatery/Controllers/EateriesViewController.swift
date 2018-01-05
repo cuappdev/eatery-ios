@@ -460,7 +460,7 @@ extension EateriesViewController: UICollectionViewDelegate {
         filterBar.transform = transform
 
         secretLogo?.alpha = (-25.0 - offset) / 100.0
-        if UIApplication.shared.statusBarOrientation != .portrait {
+        if traitCollection.verticalSizeClass == .compact {
             secretLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset)
         }
         
