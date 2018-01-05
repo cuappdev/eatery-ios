@@ -11,6 +11,8 @@ let filterBarHeight: CGFloat = 44.0
 class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
     var collectionView: UICollectionView!
+
+    var secretLogo: UIView?
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -62,12 +64,22 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         navigationController?.heroNavigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
-        } else {
-            // Fallback on earlier versions
         }
 
         setupBars()
         setupCollectionView()
+
+        if #available(iOS 11.0, *) {
+            let secretLogo = UIImageView(image: UIImage(named: "eateryIcon"))
+            secretLogo.contentMode = .scaleAspectFit
+            navigationController?.navigationBar.addSubview(secretLogo)
+            secretLogo.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.size.equalTo(44.0)
+            }
+
+            self.secretLogo = secretLogo
+        }
         
         // Check for 3D Touch availability
         if traitCollection.forceTouchCapability == .available {
@@ -129,6 +141,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.alwaysBounceVertical = true
         collectionView.isHidden = true
         
         view.insertSubview(collectionView, at: 0)
@@ -137,6 +150,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         collectionView.contentInset.top += filterBarHeight + 56.0
+
+        view.addGestureRecognizer(collectionView.panGestureRecognizer)
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -443,6 +458,11 @@ extension EateriesViewController: UICollectionViewDelegate {
         let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
         searchBar.transform = transform
         filterBar.transform = transform
+
+        secretLogo?.alpha = (-25.0 - offset) / 100.0
+        if UIApplication.shared.statusBarOrientation != .portrait {
+            secretLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset)
+        }
         
         view.endEditing(true)
     }
