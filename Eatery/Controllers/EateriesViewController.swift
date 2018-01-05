@@ -417,13 +417,7 @@ extension EateriesViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
-        let animation = CABasicAnimation()
-        animation.timingFunction = CAMediaTimingFunction.easeInOut
-        animation.fromValue = EateryCollectionViewCell.shadowRadius
-        animation.toValue = 8.0
-        animation.duration = 0.35
-        cell.layer.add(animation, forKey: "shadowRadius")
-        cell.layer.shadowRadius = 8.0
+
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
         }, completion: nil)
@@ -433,12 +427,7 @@ extension EateriesViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        let animation = CABasicAnimation()
-        animation.fromValue = cell.layer.shadowRadius
-        animation.toValue = EateryCollectionViewCell.shadowRadius
-        animation.duration = 0.35
-        cell.layer.add(animation, forKey: "shadowRadius")
-        cell.layer.shadowRadius = EateryCollectionViewCell.shadowRadius
+        
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             cell.transform = .identity
         }, completion: nil)
@@ -532,6 +521,7 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
         
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+        cell.transform = .identity
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
         return menuViewController
     }
