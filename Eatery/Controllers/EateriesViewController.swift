@@ -60,6 +60,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         navigationController?.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
         navigationController?.heroNavigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        } else {
+            // Fallback on earlier versions
+        }
 
         setupBars()
         setupCollectionView()
@@ -434,15 +439,10 @@ extension EateriesViewController: UICollectionViewDelegate {
         
         let maxHeaderOffset = searchBar.frame.height + filterBar.frame.height
         let headerOffset = min(maxHeaderOffset, offset)
-        
-        if offset > 0.0 {
-            let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
-            searchBar.transform = transform
-            filterBar.transform = transform
-        } else {
-            searchBar.transform = .identity
-            filterBar.transform = .identity
-        }
+
+        let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
+        searchBar.transform = transform
+        filterBar.transform = transform
         
         view.endEditing(true)
     }

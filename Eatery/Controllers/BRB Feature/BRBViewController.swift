@@ -24,16 +24,18 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.view.backgroundColor = .white
 
         title = "Meal Plan"
+
+        view.backgroundColor = .white
         
         let profileIcon = UIBarButtonItem(image: UIImage(named: "brbSettings"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
-        
         navigationItem.rightBarButtonItem = profileIcon
-        
-        view.backgroundColor = .white
+
+        navigationController?.view.backgroundColor = .white
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
 
         connectionHandler.errorDelegate = self
         

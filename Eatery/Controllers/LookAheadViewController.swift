@@ -48,7 +48,12 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         
         // View appearance
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
+
         navigationItem.title = "Upcoming Menus"
+
         edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         

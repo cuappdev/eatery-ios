@@ -64,6 +64,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         navigationTitleView.dateLabel.text = dateTitle
         navigationItem.titleView = navigationTitleView
         
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        } else {
+            // Fallback on earlier versions
+        }
+        
         // Scroll View
         outerScrollView = UIScrollView()
         outerScrollView.backgroundColor = UIColor.white
