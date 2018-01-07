@@ -5,12 +5,14 @@ import CoreLocation
 import Hero
 import Crashlytics
 
-let kCollectionViewGutterWidth: CGFloat = 10
+let kCollectionViewGutterWidth: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
 class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
     var collectionView: UICollectionView!
+
+    var secretLogo: UIView?
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -55,14 +57,29 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         nearestLocationPressed()
         
-        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
+        view.backgroundColor = .white
         
         navigationController?.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
         navigationController?.heroNavigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
 
         setupBars()
         setupCollectionView()
+
+        if #available(iOS 11.0, *) {
+            let secretLogo = UIImageView(image: UIImage(named: "eateryIcon"))
+            secretLogo.contentMode = .scaleAspectFit
+            navigationController?.navigationBar.addSubview(secretLogo)
+            secretLogo.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.size.equalTo(44.0)
+            }
+
+            self.secretLogo = secretLogo
+        }
         
         // Check for 3D Touch availability
         if traitCollection.forceTouchCapability == .available {
@@ -100,8 +117,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(topLayoutGuide.snp.bottom).offset(kCollectionViewGutterWidth / 2)
+            make.leading.trailing.equalToSuperview().inset(kCollectionViewGutterWidth / 2)
         }
         
         filterBar = FilterBar()
@@ -124,6 +141,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.alwaysBounceVertical = true
         collectionView.isHidden = true
         
         view.insertSubview(collectionView, at: 0)
@@ -132,6 +150,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         collectionView.contentInset.top += filterBarHeight + 56.0
+
+        view.addGestureRecognizer(collectionView.panGestureRecognizer)
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
@@ -153,16 +173,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             animated = true
             collectionView.performBatchUpdates(nil) { complete in
                 for cell in self.collectionView.visibleCells {
-                    cell.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                    cell.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
                     cell.alpha = 0.0
                 }
 
                 self.collectionView.isHidden = false
 
-                var delay: TimeInterval = 0.25
+                var delay: TimeInterval = 0.35
                 for cell in self.collectionView.visibleCells.sorted(by: { $0.frame.origin.y < $1.frame.origin.y }) {
                     delay += 0.1
-                    UIView.animate(withDuration: 0.35, delay: delay, options: [.allowUserInteraction], animations: {
+                    UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
                         cell.transform = .identity
                         cell.alpha = 1.0
                     }, completion: nil)
@@ -378,7 +398,7 @@ extension EateriesViewController: UICollectionViewDataSource {
         } else {
             cell.menuTextViewHeight.constant = 0.0
         }
-        
+
         return cell
     }
 }
@@ -394,6 +414,24 @@ extension EateriesViewController: UICollectionViewDelegate {
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         navigationController?.pushViewController(menuViewController, animated: true)
     }
+
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
+
+        UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+        }, completion: nil)
+
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        
+        UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            cell.transform = .identity
+        }, completion: nil)
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var offset = scrollView.contentOffset.y
@@ -405,14 +443,14 @@ extension EateriesViewController: UICollectionViewDelegate {
         
         let maxHeaderOffset = searchBar.frame.height + filterBar.frame.height
         let headerOffset = min(maxHeaderOffset, offset)
-        
-        if offset > 0.0 {
-            let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
-            searchBar.transform = transform
-            filterBar.transform = transform
-        } else {
-            searchBar.transform = .identity
-            filterBar.transform = .identity
+
+        let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
+        searchBar.transform = transform
+        filterBar.transform = transform
+
+        secretLogo?.alpha = (-25.0 - offset) / 100.0
+        if traitCollection.verticalSizeClass == .compact {
+            secretLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset)
         }
         
         view.endEditing(true)
@@ -483,6 +521,7 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
         
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
         menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+        cell.transform = .identity
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
         return menuViewController
     }

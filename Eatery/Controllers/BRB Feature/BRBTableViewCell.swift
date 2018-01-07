@@ -1,10 +1,6 @@
 import UIKit
 
-class BRBTableViewCell: UITableViewCell
-{
-    let bgView = UIView() // matches background color of table view
-    let whiteView = UIView() // draws the white background
-
+class BRBTableViewCell: UITableViewCell {
     let leftLabel = UILabel()
     let rightLabel = UILabel()
     let centerLabel = UILabel()
@@ -13,15 +9,14 @@ class BRBTableViewCell: UITableViewCell
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if selectionStyle != .none {
-            whiteView.backgroundColor = highlighted ? .eateryBlue : .white
+            contentView.backgroundColor = highlighted ? .eateryBlue : .white
             leftLabel.textColor = highlighted ? .white : leftC
             rightLabel.textColor = highlighted ? .white : rightC
             centerLabel.textColor = highlighted ? .white : centerC
         }
     }
     
-    func setTextColors(leftColor : UIColor = .black, rightColor: UIColor = .gray, centerColor: UIColor = .eateryBlue)
-    {
+    func setTextColors(leftColor : UIColor = .black, rightColor: UIColor = .gray, centerColor: UIColor = .eateryBlue) {
         leftC = leftColor
         leftLabel.textColor = leftC
         rightC = rightColor
@@ -30,24 +25,14 @@ class BRBTableViewCell: UITableViewCell
         centerLabel.textColor = centerC
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?)
-    {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: reuseIdentifier == "MoreCell" ? .default : style, reuseIdentifier: reuseIdentifier)
 
         setTextColors() // initialize to defaults
 
-        whiteView.backgroundColor = .white
-        bgView.backgroundColor = UIColor.init(white: 0.93, alpha: 1)//self.backgroundColor
-        bgView.addSubview(whiteView)
-        insertSubview(bgView, at: 0)
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = .white
         
         // add custom labels
-        leftLabel.translatesAutoresizingMaskIntoConstraints = false
-        rightLabel.translatesAutoresizingMaskIntoConstraints = false
-        centerLabel.translatesAutoresizingMaskIntoConstraints = false
-        whiteView.translatesAutoresizingMaskIntoConstraints = false
-        bgView.translatesAutoresizingMaskIntoConstraints = false
         
         rightLabel.textColor = .gray
         centerLabel.textColor = .eateryBlue
@@ -56,27 +41,20 @@ class BRBTableViewCell: UITableViewCell
         contentView.addSubview(leftLabel)
         contentView.addSubview(rightLabel)
         contentView.addSubview(centerLabel)
-        
-        let viewsDict = [
-            "left" : leftLabel,
-            "right" : rightLabel,
-            "center" : centerLabel,
-            "bgView" : bgView,
-            "whiteView" : whiteView
-            ]
-        
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[center]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraint(NSLayoutConstraint(item: centerLabel, attribute: .centerY, relatedBy: .equal, toItem:contentView, attribute: .centerY, multiplier: 1, constant:0))
-        
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[left]-[right]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraint(NSLayoutConstraint(item: leftLabel, attribute: .centerY, relatedBy: .equal, toItem: rightLabel, attribute: .centerY, multiplier: 1, constant:0))
-        contentView.addConstraint(NSLayoutConstraint(item: rightLabel, attribute: .centerY, relatedBy: .equal, toItem:contentView, attribute: .centerY, multiplier: 1, constant:0))
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        bgView.frame = bounds
-        whiteView.frame = CGRect(x: 8, y: 0, width: bounds.width - 16, height: bounds.height - 1)
+
+        leftLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(8.0)
+            make.centerY.equalToSuperview()
+        }
+
+        centerLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+
+        rightLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(8.0)
+            make.centerY.equalToSuperview()
+        }
     }
     
     override func prepareForReuse() {

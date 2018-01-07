@@ -17,7 +17,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var menuTextViewHeight: NSLayoutConstraint!
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
-    
+
+    static let shadowRadius: CGFloat = 8
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -46,9 +48,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
         
         update(userLocation: userLocation)
-        
-        contentView.layer.cornerRadius = 4
-        contentView.layer.masksToBounds = true
         
         var images: [UIImage] = []
         
@@ -105,5 +104,18 @@ class EateryCollectionViewCell: UICollectionViewCell {
                 make.edges.equalToSuperview()
             }
         }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.layer.cornerRadius = 8
+        contentView.layer.masksToBounds = true
+
+        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
+        layer.shadowRadius = EateryCollectionViewCell.shadowRadius
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+        layer.masksToBounds = false
     }
 }

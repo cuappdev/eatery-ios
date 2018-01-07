@@ -24,16 +24,18 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.view.backgroundColor = .white
 
         title = "Meal Plan"
+
+        view.backgroundColor = .white
         
         let profileIcon = UIBarButtonItem(image: UIImage(named: "brbSettings"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
-        
         navigationItem.rightBarButtonItem = profileIcon
-        
-        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
+
+        navigationController?.view.backgroundColor = .white
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
 
         connectionHandler.errorDelegate = self
         
@@ -142,13 +144,12 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
-        tableView = UITableView(frame: .zero, style: .plain)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "MoreCell")
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(white: 0.93, alpha: 1) // same as grid view
         tableView.dataSource = self
         tableView.delegate = self
         

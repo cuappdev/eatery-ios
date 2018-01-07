@@ -22,8 +22,6 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = UIColor(white: 0.93, alpha: 1)
 
         privacyStatementTextView.isEditable = false
         privacyStatementTextView.text = "\n\nPrivacy Statement\n\n\nWhen you log in using our system, we will use your credentials solely to fetch your account information on your behalf. Your credentials will be stored safely on this device in a manner similar to how a web browser might cache your login information.\n\nYour netid and password will never leave your device, and will never be stored on our servers or viewed by anyone on our team.\n\nYou may log out of your account at any time to erase all of your account information from this device.\n\n\nTap Anywhere To Dismiss"

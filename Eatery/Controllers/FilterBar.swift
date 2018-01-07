@@ -30,14 +30,14 @@ class FilterBar: UIView {
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 
-    let padding: CGFloat = 10.0
+    let padding: CGFloat = kCollectionViewGutterWidth
     
     private var selectedFilters: Set<Filter> = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor(white: 0.93, alpha: 1)
+        backgroundColor = .clear
         
         
         scrollView = UIScrollView()
@@ -62,14 +62,14 @@ class FilterBar: UIView {
             let button = UIButton()
             button.setTitle(filter.rawValue, for: .normal)
 
-            button.setTitleColor(.eateryBlue, for: .normal)
-            button.setTitleColor(.white, for: .highlighted)
+            button.setTitleColor(UIColor.eateryBlue.withAlphaComponent(0.8), for: .normal)
+            button.setTitleColor(UIColor.eateryBlue.withAlphaComponent(0.8), for: .highlighted)
             button.setTitleColor(.white, for: .selected)
-            button.setBackgroundImage(UIImage.image(withColor: UIColor.white), for: .normal)
-            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .highlighted)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor(white: 0.95, alpha: 1.0)), for: .normal)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor(white: 0.85, alpha: 1.0)), for: .highlighted)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
 
-            button.layer.cornerRadius = 4.0
+            button.layer.cornerRadius = 8.0
             button.clipsToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
             button.sizeToFit()
@@ -84,9 +84,9 @@ class FilterBar: UIView {
             button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
-                make.height.equalToSuperview().offset(-(padding * 2))
+                make.height.equalToSuperview().offset(-padding)
                 if index > 0 {
-                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(padding)
+                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(padding / 2)
                 } else {
                     make.leading.equalToSuperview()
                 }
@@ -98,6 +98,7 @@ class FilterBar: UIView {
         }
 
         scrollView.contentSize = CGSize(width: totalWidth, height: frame.height)
+        scrollView.setContentOffset(CGPoint(x: -padding, y: 0), animated: false)
     }
     
     override func didMoveToSuperview() {
@@ -129,6 +130,33 @@ class FilterBar: UIView {
                 if let index = filters.index(of: .swipes) {
                     buttons[index].isSelected = false
                     selectedFilters.remove(.swipes)
+                }
+            case .north:
+                if let westIndex = filters.index(of: .west) {
+                    buttons[westIndex].isSelected = false
+                    selectedFilters.remove(.west)
+                }
+                if let centralIndex = filters.index(of: .central) {
+                    buttons[centralIndex].isSelected = false
+                    selectedFilters.remove(.central)
+                }
+            case .west:
+                if let northIndex = filters.index(of: .north) {
+                    buttons[northIndex].isSelected = false
+                    selectedFilters.remove(.north)
+                }
+                if let centralIndex = filters.index(of: .central) {
+                    buttons[centralIndex].isSelected = false
+                    selectedFilters.remove(.central)
+                }
+            case .central:
+                if let westIndex = filters.index(of: .west) {
+                    buttons[westIndex].isSelected = false
+                    selectedFilters.remove(.west)
+                }
+                if let northIndex = filters.index(of: .north) {
+                    buttons[northIndex].isSelected = false
+                    selectedFilters.remove(.north)
                 }
             default:
                 break

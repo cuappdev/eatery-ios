@@ -64,6 +64,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         navigationTitleView.dateLabel.text = dateTitle
         navigationItem.titleView = navigationTitleView
         
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        } else {
+            // Fallback on earlier versions
+        }
+        
         // Scroll View
         outerScrollView = UIScrollView()
         outerScrollView.backgroundColor = UIColor.white
@@ -99,7 +105,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.statusLabel.heroID = EateriesViewController.Animation.statusLabel.id(eatery: eatery)
         menuHeaderView.hoursLabel.heroID = EateriesViewController.Animation.timeLabel.id(eatery: eatery)
         menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
-        menuHeaderView.infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
+        menuHeaderView.container.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
         
         contentView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
@@ -213,16 +219,37 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     // MARK: MenuButtonsDelegate
     
     func favoriteButtonPressed() {
-        delegate?.favoriteButtonPressed()
+        delegate?.favoriteButtonPressed?()
         addedToFavoritesView.popupOnView(view: view, addedToFavorites: eatery.favorite)
     }
+
+    func openAppleMapsDirections() {
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
+        mapItem.name = eatery.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
     
-    func directionsButtonPressed() {
+    func directionsButtonPressed(sender: UIButton) {
         Answers.logDirectionsAsked(eateryId: eatery.slug)
-        
-        let mapViewController = MapViewController(eateries: [eatery])
-        mapViewController.mapEateries([eatery])
-        navigationController?.pushViewController(mapViewController, animated: true)
+
+        let coordinate = eatery.location.coordinate
+
+        if (UIApplication.shared.canOpenURL(URL(string: "comgooglemaps://")!)) {
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alertController.addAction(UIAlertAction(title: "Open in Apple Maps", style: .default) { Void in
+                self.openAppleMapsDirections()
+            })
+            alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .default) { Void in
+                UIApplication.shared.openURL(URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking")!)
+            })
+            if let presenter = alertController.popoverPresentationController {
+                presenter.sourceView = sender
+                presenter.sourceRect = sender.bounds
+            }
+            present(alertController, animated: true, completion: nil)
+        } else {
+            openAppleMapsDirections()
+        }
     }
 
     // MARK: -
