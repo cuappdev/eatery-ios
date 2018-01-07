@@ -4,6 +4,7 @@ import DiningStack
 import Fabric
 import Crashlytics
 import Hero
+import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -54,6 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
 
+        let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
+        UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")
+
+        if significantEvents > 30 {
+            requestReview()
+            UserDefaults.standard.set(0, forKey:"significantEvents")
+        }
+
         #if DEBUG
             print("RUNNING EATERY IN DEBUG CONFIGURATION")
         #else
@@ -100,6 +109,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         eateriesViewController.preselectedSlug = shortcutItem.type
         return true
     }
-  
+    
+    // MARK: - StoreKit
+    
+    func requestReview() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+        }
+    }
 }
 

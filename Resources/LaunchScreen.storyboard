@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_0" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,47 +19,51 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cornell AppDev" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktI-S7-Xv8">
-                                <rect key="frame" x="92.5" y="493" width="135" height="21.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eateryIcon" translatesAutoresizingMaskIntoConstraints="NO" id="iT4-b8-EW9">
-                                <rect key="frame" x="80" y="204" width="160" height="160"/>
+                                <rect key="frame" x="107.5" y="253.5" width="160" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="iT4-b8-EW9" secondAttribute="height" multiplier="1:1" id="bKm-JK-Acu"/>
                                     <constraint firstAttribute="width" constant="160" id="wVX-6S-fan"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cornell University's app development project team" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsf-cl-pt5">
-                                <rect key="frame" x="16" y="514.5" width="288" height="33.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appDevTextWhite" translatesAutoresizingMaskIntoConstraints="NO" id="tJB-rF-oKX">
+                                <rect key="frame" x="133.5" y="622" width="108" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="108" id="EWz-co-Bsv"/>
+                                    <constraint firstAttribute="height" constant="15" id="o8e-A8-aSk"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appDevLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bbv-Rz-Rko" userLabel="appDevLogo">
+                                <rect key="frame" x="168" y="575" width="39" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="bbv-Rz-Rko" secondAttribute="height" multiplier="1:1" id="8VP-8Y-Kzg"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="39" id="bN3-wy-tRg"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.27450980392156865" green="0.42352941176470588" blue="0.64313725490196072" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="iT4-b8-EW9" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1I6-Zm-Xze"/>
-                            <constraint firstItem="gsf-cl-pt5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="JUc-Lf-vaj"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="gsf-cl-pt5" secondAttribute="bottom" constant="20" id="OlJ-5C-Y6A"/>
-                            <constraint firstItem="ktI-S7-Xv8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Oxd-YI-NlW"/>
-                            <constraint firstAttribute="trailing" secondItem="gsf-cl-pt5" secondAttribute="trailing" constant="16" id="X3j-Yi-UoN"/>
+                            <constraint firstItem="bbv-Rz-Rko" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6Hd-Ez-tAh"/>
+                            <constraint firstItem="bbv-Rz-Rko" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iT4-b8-EW9" secondAttribute="bottom" constant="8" id="6fm-pX-bLy"/>
+                            <constraint firstItem="tJB-rF-oKX" firstAttribute="top" secondItem="bbv-Rz-Rko" secondAttribute="bottom" constant="8" id="Ie7-9a-Rd4"/>
+                            <constraint firstItem="tJB-rF-oKX" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="XXm-dN-SvP"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="tJB-rF-oKX" secondAttribute="bottom" constant="30" id="fj4-C8-jxW"/>
                             <constraint firstItem="iT4-b8-EW9" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="gDO-a6-7wW"/>
-                            <constraint firstItem="gsf-cl-pt5" firstAttribute="top" secondItem="ktI-S7-Xv8" secondAttribute="bottom" id="t63-wV-yzB"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="50.399999999999999" y="373.76311844077964"/>
+            <point key="canvasLocation" x="48.75" y="372.88732394366195"/>
         </scene>
     </scenes>
     <resources>
+        <image name="appDevLogo" width="90" height="90"/>
+        <image name="appDevTextWhite" width="1929" height="268"/>
         <image name="eateryIcon" width="312" height="412"/>
     </resources>
 </document>
