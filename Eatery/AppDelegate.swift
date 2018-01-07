@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
         
         let navigationControllers = [eateryNavigationController, lookAheadNavigationController, brbNavigationController]
-        tabBarController.setViewControllers(navigationControllers, animated: true)
+        tabBarController.setViewControllers(navigationControllers, animated: false)
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

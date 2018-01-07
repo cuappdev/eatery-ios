@@ -5,8 +5,6 @@ import Crashlytics
 import MessageUI
 import Hero
 
-let kMenuHeaderViewFrameHeight: CGFloat = 344
-
 private let TitleDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "E, MMM d"
@@ -22,6 +20,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     var delegate: MenuButtonsDelegate?
     let displayedDate: Date
     var selectedMeal: String?
+    var userLocation: CLLocation? = nil
     var navigationTitleView: NavigationTitleView!
     lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
 
@@ -29,11 +28,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)
     }
     
-    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil) {
+    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil, userLocation: CLLocation? = nil) {
         self.eatery = eatery
         self.delegate = delegate
         self.displayedDate = date
         self.selectedMeal = meal
+        self.userLocation = userLocation
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,8 +44,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Appearance
         view.backgroundColor = .clear
+
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         let dateString = TitleDateFormatter.string(from: displayedDate)
         let todayDateString = TitleDateFormatter.string(from: Date())
@@ -66,14 +67,16 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
-        } else {
-            // Fallback on earlier versions
         }
+
+        setupScrollView()
+    }
+
+    func setupScrollView() {
         
         // Scroll View
         outerScrollView = UIScrollView()
         outerScrollView.backgroundColor = UIColor.white
-        outerScrollView.contentSize = CGSize(width: view.frame.width, height: kMenuHeaderViewFrameHeight)
         outerScrollView.delegate = self
         outerScrollView.showsVerticalScrollIndicator = false
         outerScrollView.showsHorizontalScrollIndicator = false
@@ -87,10 +90,14 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
 
         let contentView = UIView()
+        contentView.backgroundColor = .white
         outerScrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(view).priority(.low)
+
+            let navBarHeight = navigationController?.navigationBar.frame.height ?? 0.0
+            let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0.0
+            make.height.greaterThanOrEqualTo(view).offset(-navBarHeight - tabBarHeight)
             make.width.equalTo(view)
         }
         
@@ -99,25 +106,126 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.delegate = self
         
-        isHeroEnabled = true
-        menuHeaderView.backgroundImageView.heroID = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
-        menuHeaderView.titleLabel.heroID = EateriesViewController.Animation.title.id(eatery: eatery)
-        menuHeaderView.statusLabel.heroID = EateriesViewController.Animation.statusLabel.id(eatery: eatery)
-        menuHeaderView.hoursLabel.heroID = EateriesViewController.Animation.timeLabel.id(eatery: eatery)
-        menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
-        menuHeaderView.container.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
-        
         contentView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
-            make.height.equalTo(kMenuHeaderViewFrameHeight)
+            make.height.equalTo(view).dividedBy(3)
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
         }
 
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        // Eatery Info Container
+
+        let infoContainer = UIView()
+        infoContainer.backgroundColor = .white
+
+        let timeImageView = UIImageView(image: UIImage(named: "time"))
+        infoContainer.addSubview(timeImageView)
+        timeImageView.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(10.0)
+            make.size.equalTo(14.0)
+        }
+
+        let statusLabel = UILabel()
+        statusLabel.textColor = .eateryBlue
+        statusLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        infoContainer.addSubview(statusLabel)
+        statusLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(timeImageView)
+            make.leading.equalTo(timeImageView.snp.trailing).offset(10.0)
+        }
+
+        let hoursLabel = UILabel()
+        hoursLabel.textColor = .lightGray
+        hoursLabel.font = UIFont.systemFont(ofSize: 14.0)
+        infoContainer.addSubview(hoursLabel)
+        hoursLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(statusLabel)
+            make.leading.equalTo(statusLabel.snp.trailing).offset(4.0)
+        }
+
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+        case .open(let message):
+            timeImageView.tintColor = .eateryBlue
+            hoursLabel.text = message
+            statusLabel.text = "Open"
+            statusLabel.textColor = .eateryBlue
+        case .closed(let message):
+            if !eatery.isOpenToday() {
+                statusLabel.text = "Closed Today"
+                hoursLabel.text = ""
+            } else {
+                statusLabel.text = "Closed"
+                hoursLabel.text = message
+            }
+
+            timeImageView.tintColor = .gray
+            statusLabel.textColor = .gray
+        }
+
+        let locationImageView = UIImageView(image: UIImage(named: "location"))
+        locationImageView.tintColor = .gray
+        infoContainer.addSubview(locationImageView)
+        locationImageView.snp.makeConstraints { make in
+            make.top.equalTo(timeImageView.snp.bottom).offset(10.0)
+            make.leading.equalToSuperview().inset(10.0)
+            make.size.equalTo(14.0)
+        }
+
+        let locationLabel = UILabel()
+        locationLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        locationLabel.textColor = .gray
+        locationLabel.text = eatery.address
+        infoContainer.addSubview(locationLabel)
+        locationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(locationImageView.snp.trailing).offset(10.0)
+            make.centerY.equalTo(locationImageView)
+        }
+
+        let distanceLabel = UILabel()
+        distanceLabel.textColor = .gray
+        distanceLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+
+        if let distance = userLocation?.distance(from: eatery.location) {
+            distanceLabel.text = "\(Double(round(10 * distance / metersInMile) / 10)) mi"
+        } else {
+            distanceLabel.text = "-- mi"
+        }
+
+        infoContainer.addSubview(distanceLabel)
+        distanceLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(10.0)
+            make.top.equalToSuperview().inset(24.0)
+        }
+
+        // Directions Button
+        let directionsButton = UIButton(type: .system)
+        directionsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
+        directionsButton.setTitle("Get Directions", for: .normal)
+        directionsButton.tintColor = .eateryBlue
+        directionsButton.addTarget(self, action: #selector(directionsButtonPressed(sender:)), for: .touchUpInside)
+        infoContainer.addSubview(directionsButton)
+
+        directionsButton.snp.makeConstraints { make in
+            make.top.equalTo(locationImageView.snp.bottom).offset(20.0)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(44.0)
+        }
+
+        // Menu Label
+        let menuLabel = UILabel()
+        menuLabel.text = "Menu"
+        menuLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
+        infoContainer.addSubview(menuLabel)
+
+        menuLabel.snp.makeConstraints { make in
+            make.top.equalTo(directionsButton.snp.bottom).offset(10.0)
+            make.leading.equalToSuperview().offset(10.0)
+        }
 
         // TabbedPageViewController
+
         let eventsDict = eatery.eventsOnDate(displayedDate)
         let sortedEventsDict = eventsDict.sorted { (a: (String, Event), b: (String, Event)) -> Bool in
             a.1.startDate.compare(b.1.startDate) == .orderedAscending
@@ -150,22 +258,49 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController.viewControllers = mealViewControllers
         
         pageViewController.scrollDelegate = self
-        
-        pageViewController.willMove(toParentViewController: self)
+
         addChildViewController(pageViewController)
-        contentView.addSubview(pageViewController.view)
+        infoContainer.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(menuHeaderView.snp.bottom)
+            make.top.equalTo(menuLabel.snp.bottom).offset(10.0)
             make.bottom.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(pageViewControllerHeight)
         }
+
+        contentView.addSubview(infoContainer)
+        infoContainer.snp.makeConstraints { make in
+            make.top.equalTo(menuHeaderView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+
+        outerScrollView.contentSize = contentView.bounds.size
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
+
+        // Hero Animations
+        isHeroEnabled = true
+        menuHeaderView.backgroundImageView.heroID = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.titleLabel.heroID = EateriesViewController.Animation.title.id(eatery: eatery)
+        distanceLabel.heroID = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
+        menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
+        infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
+
+        let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35))]
+
+        menuHeaderView.favoriteButton.heroModifiers = fadeModifiers
+        timeImageView.heroModifiers = fadeModifiers
+        hoursLabel.heroModifiers = fadeModifiers
+        statusLabel.heroModifiers = fadeModifiers
+        locationImageView.heroModifiers = fadeModifiers
+        locationLabel.heroModifiers = fadeModifiers
+        directionsButton.heroModifiers = fadeModifiers
+        menuLabel.heroModifiers = fadeModifiers
+        pageViewController.view.heroModifiers = fadeModifiers
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -177,13 +312,13 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
             menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollView.contentOffset.y)
-                make.height.equalTo(kMenuHeaderViewFrameHeight - scrollView.contentOffset.y)
+                make.height.equalTo(view).dividedBy(3).offset(-scrollView.contentOffset.y)
             }
         default:
             menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 3)
             menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
-                make.height.equalTo(kMenuHeaderViewFrameHeight)
+                make.height.equalTo(view).dividedBy(3)
             }
         }
         
@@ -229,7 +364,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
     
-    func directionsButtonPressed(sender: UIButton) {
+    @objc func directionsButtonPressed(sender: UIButton) {
         Answers.logDirectionsAsked(eateryId: eatery.slug)
 
         let coordinate = eatery.location.coordinate
@@ -245,6 +380,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             if let presenter = alertController.popoverPresentationController {
                 presenter.sourceView = sender
                 presenter.sourceRect = sender.bounds
+            } else {
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             }
             present(alertController, animated: true, completion: nil)
         } else {

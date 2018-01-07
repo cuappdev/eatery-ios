@@ -371,18 +371,18 @@
 		C0497ACA1B64AA1800AC1C6C /* Eatery */ = {
 			isa = PBXGroup;
 			children = (
-				1D10A4151C67FF0C00772D31 /* Controllers */,
-				C0497AE41B64AA1800AC1C6C /* Views */,
-				C0497ACB1B64AA1800AC1C6C /* Data */,
-				C0497AEE1B64AA1800AC1C6C /* Extensions */,
-				C0497AF21B64AA1800AC1C6C /* Global */,
-				1D10A4161C67FF3400772D31 /* Layouts */,
 				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
 				42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */,
 				E99C63E91B6EDE12000A5886 /* Info.plist */,
 				9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */,
 				95495D2D1C0AA0790015B85E /* MenuImages.swift */,
 				E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */,
+				1D10A4151C67FF0C00772D31 /* Controllers */,
+				C0497AE41B64AA1800AC1C6C /* Views */,
+				C0497ACB1B64AA1800AC1C6C /* Data */,
+				C0497AEE1B64AA1800AC1C6C /* Extensions */,
+				C0497AF21B64AA1800AC1C6C /* Global */,
+				1D10A4161C67FF3400772D31 /* Layouts */,
 			);
 			path = Eatery;
 			sourceTree = "<group>";

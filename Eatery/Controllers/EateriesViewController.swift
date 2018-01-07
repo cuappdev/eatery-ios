@@ -12,7 +12,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
     var collectionView: UICollectionView!
 
-    var secretLogo: UIView?
+    var appDevLogo: UIView?
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -33,7 +33,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }()
     
     fileprivate var userLocation: CLLocation?
-    fileprivate var locationError = false
     
     fileprivate var updateTimer: Timer?
 
@@ -41,8 +40,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         case backgroundImageView = "backgroundImage"
         case title = "title"
         case paymentContainer = "paymentContainer"
-        case statusLabel = "statusLabel"
-        case timeLabel = "timeLabel"
+        case distanceLabel = "distanceLabel"
         case infoContainer = "infoContainer"
 
         func id(eatery: Eatery) -> String {
@@ -70,15 +68,36 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         setupCollectionView()
 
         if #available(iOS 11.0, *) {
-            let secretLogo = UIImageView(image: UIImage(named: "eateryIcon"))
-            secretLogo.contentMode = .scaleAspectFit
-            navigationController?.navigationBar.addSubview(secretLogo)
-            secretLogo.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(44.0)
+            let logo = UIView()
+            logo.tintColor = .white
+
+            let icon = UIImageView(image: UIImage(named: "appDevLogo"))
+            icon.contentMode = .scaleAspectFit
+            logo.addSubview(icon)
+
+            let text = UIImageView(image: UIImage(named: "appDevText"))
+            text.contentMode = .scaleAspectFit
+            logo.addSubview(text)
+
+            icon.snp.makeConstraints { make in
+                make.size.equalTo(28.0)
+                make.top.equalToSuperview()
+                make.centerX.equalToSuperview()
             }
 
-            self.secretLogo = secretLogo
+            text.snp.makeConstraints { make in
+                make.height.equalTo(10)
+                make.width.equalTo(80)
+                make.top.equalTo(icon.snp.bottom).offset(4.0)
+                make.leading.trailing.bottom.equalToSuperview()
+            }
+
+            navigationController?.navigationBar.addSubview(logo)
+            logo.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+
+            self.appDevLogo = logo
         }
         
         // Check for 3D Touch availability
@@ -209,7 +228,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             break
         }
         guard let eatery = preselectedEatery else { return }
-        let menuVC = MenuViewController(eatery: eatery, delegate: self)
+        let menuVC = MenuViewController(eatery: eatery, delegate: self, userLocation: userLocation)
         
         // Unwind back to this VC if it is not showing
         if !(navigationController?.visibleViewController is EateriesViewController) {
@@ -372,8 +391,9 @@ extension EateriesViewController: UICollectionViewDataSource {
 
         cell.backgroundImageView.heroID = Animation.backgroundImageView.id(eatery: eatery)
         cell.titleLabel.heroID = Animation.title.id(eatery: eatery)
-        cell.statusLabel.heroID = Animation.statusLabel.id(eatery: eatery)
-        cell.timeLabel.heroID = Animation.timeLabel.id(eatery: eatery)
+        cell.timeLabel.heroModifiers = [.fade]
+        cell.statusLabel.heroModifiers = [.fade]
+        cell.distanceLabel.heroID = Animation.distanceLabel.id(eatery: eatery)
         cell.paymentContainer.heroID = Animation.paymentContainer.id(eatery: eatery)
         cell.infoContainer.heroID = Animation.infoContainer.id(eatery: eatery)
 
@@ -411,7 +431,7 @@ extension EateriesViewController: UICollectionViewDelegate {
 
         Answers.logMenuOpened(eateryId: eatery(for: indexPath).slug)
 
-        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
+        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation)
         navigationController?.pushViewController(menuViewController, animated: true)
     }
 
@@ -448,9 +468,16 @@ extension EateriesViewController: UICollectionViewDelegate {
         searchBar.transform = transform
         filterBar.transform = transform
 
-        secretLogo?.alpha = (-25.0 - offset) / 100.0
+        appDevLogo?.alpha = min(0.8, (-25.0 - offset) / 100.0)
+
+        view.alpha = max(0.5, 1 + offset / 100.0)
+
         if traitCollection.verticalSizeClass == .compact {
-            secretLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset)
+            appDevLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset - 20.0)
+            appDevLogo?.tintColor = .eateryBlue
+        } else {
+            appDevLogo?.transform = .identity
+            appDevLogo?.tintColor = .white
         }
         
         view.endEditing(true)
@@ -489,7 +516,8 @@ extension EateriesViewController: UISearchBarDelegate {
     // MARK: - CLLocationManagerDelegate Methods
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        userLocation = locations.last as CLLocation!
+        userLocation = locations.last
+
         for cell in collectionView.visibleCells.flatMap({ $0 as? EateryCollectionViewCell }) {
             cell.update(userLocation: userLocation)
         }
@@ -497,7 +525,6 @@ extension EateriesViewController: UISearchBarDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Error: \(error)")
-        locationError = true
     }
     
 }

@@ -13,7 +13,6 @@ import Kingfisher
 
 @objc protocol MenuButtonsDelegate {
     @objc optional func favoriteButtonPressed()
-    @objc optional func directionsButtonPressed(sender: UIButton)
 }
 
 class MenuHeaderView: UIView {
@@ -23,23 +22,14 @@ class MenuHeaderView: UIView {
     var displayedDate: Date!
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var hoursLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var container: UIView!
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var directionsButton: UIButton!
-    @IBOutlet weak var timeImageView: UIImageView!
-    @IBOutlet weak var locationImageView: UIImageView!
-    
+
     func set(eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
-        
-        backgroundColor = UIColor.groupTableViewBackground
         
         checkFavorites()
         
@@ -67,39 +57,22 @@ class MenuHeaderView: UIView {
         }
         
         titleLabel.text = eatery.nickname
-        locationLabel.text = eatery.address
-        hoursLabel.textColor = UIColor.gray
 
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
             backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
         }
-        
-        timeImageView.tintColor = UIColor.gray
-        locationImageView.tintColor = UIColor.gray
-        
-        directionsButton.tintColor = UIColor.eateryBlue
+
         favoriteButton.tintColor = UIColor.eateryBlue
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .open(let message):
-            hoursLabel.text = message
+        case .open:
             titleLabel.textColor = .white
-            statusLabel.text = "Open"
-            statusLabel.textColor = .eateryBlue
-        case .closed(let message):
-            if !eatery.isOpenToday() {
-                statusLabel.text = "Closed Today"
-                hoursLabel.text = ""
-            } else {
-                statusLabel.text = "Closed"
-                hoursLabel.text = message
-            }
-
+        case .closed:
             titleLabel.textColor = UIColor.darkGray
-            statusLabel.textColor = .gray
+
             let closedView = UIView()
             closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
             backgroundImageView.addSubview(closedView)
@@ -120,10 +93,6 @@ class MenuHeaderView: UIView {
         checkFavorites()
         
         delegate?.favoriteButtonPressed?()
-    }
-    
-    @IBAction func directionsButtonPressed(_ sender: UIButton) {
-        delegate?.directionsButtonPressed?(sender: sender)
     }
     
 }
