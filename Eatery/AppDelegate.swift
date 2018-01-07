@@ -54,9 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-        
-        if let significantEvents : Int = UserDefaults.standard.integer(forKey: "significantEvents"){
-            UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")
+
+        let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
+        UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")
+
+        if significantEvents > 30 {
+            requestReview()
+            UserDefaults.standard.set(0, forKey:"significantEvents")
         }
 
         #if DEBUG
