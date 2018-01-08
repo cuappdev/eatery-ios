@@ -22,7 +22,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     var selectedMeal: String?
     var userLocation: CLLocation? = nil
     var navigationTitleView: NavigationTitleView!
-    lazy var addedToFavoritesView = AddedToFavoritesView.loadFromNib()
 
     var pageViewControllerHeight: CGFloat {
         return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)
@@ -81,6 +80,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.showsVerticalScrollIndicator = false
         outerScrollView.showsHorizontalScrollIndicator = false
         outerScrollView.alwaysBounceVertical = true
+        outerScrollView.delaysContentTouches = false
         view.addSubview(outerScrollView)
         outerScrollView.snp.makeConstraints { make in
             make.top.equalTo(topLayoutGuide.snp.bottom)
@@ -363,7 +363,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     
     func favoriteButtonPressed() {
         delegate?.favoriteButtonPressed?()
-        addedToFavoritesView.popupOnView(view: view, addedToFavorites: eatery.favorite)
     }
 
     func openAppleMapsDirections() {
