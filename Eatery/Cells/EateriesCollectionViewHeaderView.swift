@@ -5,6 +5,6 @@ class EateriesCollectionViewHeaderView: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.collectionViewBackground
+        backgroundColor = UIColor.white
     }
 }

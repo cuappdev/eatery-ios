@@ -129,7 +129,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     func setupBars() {
         searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
-        searchBar.backgroundColor = .collectionViewBackground
+        searchBar.backgroundColor = .white
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
         searchBar.autocapitalizationType = .none
@@ -158,7 +158,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
-        collectionView.backgroundColor = UIColor.collectionViewBackground
+        collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
         collectionView.delaysContentTouches = false

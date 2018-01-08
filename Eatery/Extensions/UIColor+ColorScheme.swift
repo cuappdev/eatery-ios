@@ -21,13 +21,13 @@ extension UIColor {
     class var eateryBlue: UIColor {
         return colorFromCode(0x466CA4)
     }
-    
-    class var collectionViewBackground: UIColor {
-        return .white
+
+    class var transparentEateryBlue: UIColor {
+        return UIColor.eateryBlue.withAlphaComponent(0.8)
     }
-    
-    class var separator: UIColor {
-        return UIColor(red:0.55, green:0.7, blue:0.88, alpha:1)
+
+    class var lightBackgroundGray: UIColor {
+        return UIColor(white: 0.97, alpha: 0.8)
     }
     
     class var offBlack: UIColor {

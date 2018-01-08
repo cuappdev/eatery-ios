@@ -116,8 +116,11 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         // Eatery Info Container
 
+        let contentContainer = UIView()
+        contentContainer.backgroundColor = .white
+
         let infoContainer = UIView()
-        infoContainer.backgroundColor = .white
+        infoContainer.backgroundColor = .lightBackgroundGray
 
         let timeImageView = UIImageView(image: UIImage(named: "time"))
         infoContainer.addSubview(timeImageView)
@@ -169,7 +172,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         infoContainer.addSubview(locationImageView)
         locationImageView.snp.makeConstraints { make in
             make.top.equalTo(timeImageView.snp.bottom).offset(10.0)
-            make.leading.equalToSuperview().inset(10.0)
+            make.leading.bottom.equalToSuperview().inset(10.0)
             make.size.equalTo(14.0)
         }
 
@@ -184,7 +187,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
 
         let distanceLabel = UILabel()
-        distanceLabel.textColor = .gray
+        distanceLabel.textColor = .lightGray
         distanceLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
 
         if let distance = userLocation?.distance(from: eatery.location) {
@@ -196,7 +199,13 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         infoContainer.addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10.0)
-            make.top.equalToSuperview().inset(24.0)
+            make.centerY.equalToSuperview()
+        }
+
+        contentContainer.addSubview(infoContainer)
+        infoContainer.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(10.0 + 14.0 + 10.0 + 14.0 + 10.0)
         }
 
         // Directions Button
@@ -205,10 +214,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         directionsButton.setTitle("Get Directions", for: .normal)
         directionsButton.tintColor = .eateryBlue
         directionsButton.addTarget(self, action: #selector(directionsButtonPressed(sender:)), for: .touchUpInside)
-        infoContainer.addSubview(directionsButton)
+        contentContainer.addSubview(directionsButton)
 
         directionsButton.snp.makeConstraints { make in
-            make.top.equalTo(locationImageView.snp.bottom).offset(20.0)
+            make.top.equalTo(infoContainer.snp.bottom).offset(20.0)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(44.0)
         }
@@ -217,7 +226,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let menuLabel = UILabel()
         menuLabel.text = "Menu"
         menuLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
-        infoContainer.addSubview(menuLabel)
+        contentContainer.addSubview(menuLabel)
 
         menuLabel.snp.makeConstraints { make in
             make.height.equalTo(44.0)
@@ -257,23 +266,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         // PageViewController
         pageViewController = TabbedPageViewController()
         pageViewController.viewControllers = mealViewControllers
-        
         pageViewController.scrollDelegate = self
 
         addChildViewController(pageViewController)
-        infoContainer.addSubview(pageViewController.view)
+        contentContainer.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.snp.makeConstraints { make in
             make.top.equalTo(menuLabel.snp.bottom).offset(10.0)
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(pageViewControllerHeight)
         }
 
-        contentView.addSubview(infoContainer)
-        infoContainer.snp.makeConstraints { make in
+        contentView.addSubview(contentContainer)
+        contentContainer.snp.makeConstraints { make in
             make.top.equalTo(menuHeaderView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
@@ -289,7 +295,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.titleLabel.heroID = EateriesViewController.Animation.title.id(eatery: eatery)
         distanceLabel.heroID = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
         menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
-        infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
+        contentContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
 
         let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
         let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]

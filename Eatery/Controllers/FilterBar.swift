@@ -67,7 +67,7 @@ class FilterBar: UIView {
             button.setTitleColor(.white, for: .selected)
             button.setBackgroundImage(UIImage.image(withColor: UIColor(white: 0.95, alpha: 1.0)), for: .normal)
             button.setBackgroundImage(UIImage.image(withColor: UIColor(white: 0.85, alpha: 1.0)), for: .highlighted)
-            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue.withAlphaComponent(0.8)), for: .selected)
 
             button.layer.cornerRadius = 8.0
             button.clipsToBounds = true

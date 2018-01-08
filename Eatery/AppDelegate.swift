@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Foundation.URLCache.shared = URLCache
         
         window = UIWindow()
-        window?.backgroundColor = .collectionViewBackground
+        window?.backgroundColor = .white
         
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = .eateryBlue
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
         
-        Hero.shared.containerColor = .collectionViewBackground
+        Hero.shared.containerColor = .white
         
         // Set up view controllers
         let tabBarController = UITabBarController()
