@@ -292,6 +292,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
 
         let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
+        let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]
 
         menuHeaderView.favoriteButton.heroModifiers = fadeModifiers
         timeImageView.heroModifiers = fadeModifiers
@@ -300,8 +301,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         locationImageView.heroModifiers = fadeModifiers
         locationLabel.heroModifiers = fadeModifiers
         directionsButton.heroModifiers = fadeModifiers
-        menuLabel.heroModifiers = fadeModifiers
-        pageViewController.view.heroModifiers = fadeModifiers
+        menuLabel.heroModifiers = translateModifiers
+        pageViewController.view.heroModifiers = translateModifiers
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
