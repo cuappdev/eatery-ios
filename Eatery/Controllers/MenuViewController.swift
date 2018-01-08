@@ -290,7 +290,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
         infoContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
 
-        let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35))]
+        let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
 
         menuHeaderView.favoriteButton.heroModifiers = fadeModifiers
         timeImageView.heroModifiers = fadeModifiers

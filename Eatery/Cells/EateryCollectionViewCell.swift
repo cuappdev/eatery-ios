@@ -5,6 +5,11 @@ import Kingfisher
 
 let metersInMile: Double = 1609.344
 
+protocol EateryCollectionViewCellDelegate {
+    func didHighlight(cell: EateryCollectionViewCell)
+    func didUnhighlight(cell: EateryCollectionViewCell)
+}
+
 class EateryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -20,14 +25,17 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     static let shadowRadius: CGFloat = 8
 
+    var eatery: Eatery!
+    var delegate: EateryCollectionViewCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        contentView.backgroundColor = .white
         
         menuTextView.text = nil
         menuTextView.textContainerInset = UIEdgeInsets(top: 10.0, left: 6.0, bottom: 10.0, right: 6.0)
     }
-    
-    var eatery: Eatery!
     
     func update(userLocation: CLLocation?) {
         if let distance = userLocation?.distance(from: eatery.location) {
@@ -37,14 +45,15 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func set(eatery: Eatery, userLocation: CLLocation?) {
+    func set(eatery: Eatery, delegate: EateryCollectionViewCellDelegate, userLocation: CLLocation?) {
         self.eatery = eatery
+        self.delegate = delegate
         
         titleLabel.text = eatery.nickname
 
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
-            backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
+            backgroundImageView.kf.setImage(with: url, placeholder: placeholder, options: [.transition(.fade(0.35))])
         }
         
         update(userLocation: userLocation)

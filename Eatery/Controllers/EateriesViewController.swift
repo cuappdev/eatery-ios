@@ -59,7 +59,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         navigationController?.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
+        navigationController?.heroNavigationAnimationType = .fade
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
@@ -387,12 +387,12 @@ extension EateriesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
-        cell.set(eatery: eatery, userLocation: userLocation)
+        cell.set(eatery: eatery, delegate: self, userLocation: userLocation)
 
         cell.backgroundImageView.heroID = Animation.backgroundImageView.id(eatery: eatery)
         cell.titleLabel.heroID = Animation.title.id(eatery: eatery)
-        cell.timeLabel.heroModifiers = [.fade]
-        cell.statusLabel.heroModifiers = [.fade]
+        cell.timeLabel.heroModifiers = [.useGlobalCoordinateSpace, .fade]
+        cell.statusLabel.heroModifiers = [.useGlobalCoordinateSpace, .fade]
         cell.distanceLabel.heroID = Animation.distanceLabel.id(eatery: eatery)
         cell.paymentContainer.heroID = Animation.paymentContainer.id(eatery: eatery)
         cell.infoContainer.heroID = Animation.infoContainer.id(eatery: eatery)
@@ -423,7 +423,7 @@ extension EateriesViewController: UICollectionViewDataSource {
     }
 }
 
-extension EateriesViewController: UICollectionViewDelegate {
+extension EateriesViewController: UICollectionViewDelegate, EateryCollectionViewCellDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let query = searchBar.text, !query.isEmpty {
             Answers.logSearchResultSelected(for: query)
@@ -435,19 +435,13 @@ extension EateriesViewController: UICollectionViewDelegate {
         navigationController?.pushViewController(menuViewController, animated: true)
     }
 
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
-
+    func didHighlight(cell: EateryCollectionViewCell) {
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
         }, completion: nil)
-
-        return true
     }
 
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        
+    func didUnhighlight(cell: EateryCollectionViewCell) {
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             cell.transform = .identity
         }, completion: nil)
