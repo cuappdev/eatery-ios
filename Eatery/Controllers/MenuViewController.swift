@@ -220,6 +220,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         infoContainer.addSubview(menuLabel)
 
         menuLabel.snp.makeConstraints { make in
+            make.height.equalTo(44.0)
             make.top.equalTo(directionsButton.snp.bottom).offset(10.0)
             make.leading.equalToSuperview().offset(10.0)
         }

@@ -12,6 +12,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
+    var userLocation: CLLocation?
     
     let recenterButton = UIButton()
     
@@ -166,7 +167,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                  annotationView view: MKAnnotationView,
                  calloutAccessoryControlTapped control: UIControl)
     {
-        let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil)
+        let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil, userLocation: userLocation)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
     
@@ -194,6 +195,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
+        userLocation = locations.last
         recenterButtonPressed(recenterButton)
         locationManager.stopUpdatingLocation()
     }

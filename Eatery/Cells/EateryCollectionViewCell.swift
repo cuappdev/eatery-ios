@@ -5,11 +5,6 @@ import Kingfisher
 
 let metersInMile: Double = 1609.344
 
-protocol EateryCollectionViewCellDelegate {
-    func didHighlight(cell: EateryCollectionViewCell)
-    func didUnhighlight(cell: EateryCollectionViewCell)
-}
-
 class EateryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -26,7 +21,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
     static let shadowRadius: CGFloat = 8
 
     var eatery: Eatery!
-    var delegate: EateryCollectionViewCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,9 +39,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func set(eatery: Eatery, delegate: EateryCollectionViewCellDelegate, userLocation: CLLocation?) {
+    func set(eatery: Eatery, userLocation: CLLocation?) {
         self.eatery = eatery
-        self.delegate = delegate
         
         titleLabel.text = eatery.nickname
 

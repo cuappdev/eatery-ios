@@ -161,6 +161,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.backgroundColor = UIColor.collectionViewBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
+        collectionView.delaysContentTouches = false
         collectionView.isHidden = true
         
         view.insertSubview(collectionView, at: 0)
@@ -387,7 +388,7 @@ extension EateriesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
-        cell.set(eatery: eatery, delegate: self, userLocation: userLocation)
+        cell.set(eatery: eatery, userLocation: userLocation)
 
         cell.backgroundImageView.heroID = Animation.backgroundImageView.id(eatery: eatery)
         cell.titleLabel.heroID = Animation.title.id(eatery: eatery)
@@ -423,7 +424,7 @@ extension EateriesViewController: UICollectionViewDataSource {
     }
 }
 
-extension EateriesViewController: UICollectionViewDelegate, EateryCollectionViewCellDelegate {
+extension EateriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let query = searchBar.text, !query.isEmpty {
             Answers.logSearchResultSelected(for: query)
@@ -435,13 +436,15 @@ extension EateriesViewController: UICollectionViewDelegate, EateryCollectionView
         navigationController?.pushViewController(menuViewController, animated: true)
     }
 
-    func didHighlight(cell: EateryCollectionViewCell) {
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
         }, completion: nil)
     }
 
-    func didUnhighlight(cell: EateryCollectionViewCell) {
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             cell.transform = .identity
         }, completion: nil)
