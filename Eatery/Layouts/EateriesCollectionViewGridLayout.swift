@@ -11,15 +11,15 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         
         if collectionView.traitCollection.horizontalSizeClass == .regular
             || collectionView.traitCollection.verticalSizeClass == .compact {
-            cellWidth = (width / 2) - kCollectionViewGutterWidth * 1.5
+            cellWidth = (width / 2) - collectionViewMargin * 1.5
         } else {
-            cellWidth = width - kCollectionViewGutterWidth * 2
+            cellWidth = width - collectionViewMargin * 2
         }
 
         itemSize = CGSize(width: cellWidth, height: cellWidth * 0.4)
-        minimumLineSpacing = kCollectionViewGutterWidth
-        minimumInteritemSpacing = kCollectionViewGutterWidth
-        sectionInset = UIEdgeInsets(top: kCollectionViewGutterWidth, left: kCollectionViewGutterWidth, bottom: kCollectionViewGutterWidth, right: kCollectionViewGutterWidth)
+        minimumLineSpacing = collectionViewMargin
+        minimumInteritemSpacing = collectionViewMargin
+        sectionInset = UIEdgeInsets(top: collectionViewMargin, left: collectionViewMargin, bottom: collectionViewMargin * 2, right: collectionViewMargin)
     }
 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {

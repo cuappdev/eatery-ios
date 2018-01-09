@@ -6,7 +6,7 @@ import Crashlytics
 class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var connectionHandler: BRBConnectionHandler = BRBConnectionHandler()
-    var loginView: BRBLoginView!
+    var loginView: BRBLoginView?
     var loggedIn = false
     var timer: Timer!
     var historyTimer: Timer!
@@ -38,45 +38,57 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         }
 
         connectionHandler.errorDelegate = self
-        
-        loginView = BRBLoginView(frame: view.bounds)
+
         activityIndicatorView.color = .black
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorDescriptionLabel.text = "Logging in, this may take a minute"
         activityIndicatorDescriptionLabel.textAlignment = .center
         activityIndicatorDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
         
-        if connectionHandler.accountBalance != nil // already logging in
-        {
-            finishedLogin()
-        }
-        else // either logging in, or show blank form
-        {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            
-            let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-            let netid = keychainItemWrapper["netid"] as? String
-            let password = keychainItemWrapper["password"] as? String
-            
-            loginView.delegate = self
-            
-            if netid?.count ?? 0 > 0 && password?.count ?? 0 > 0 {
-                loginView.netidTextField.text = netid
-                loginView.passwordTextField.text = password
-            }
-            
-            addLoginView()
-        }
+        navigationItem.rightBarButtonItem?.isEnabled = false
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        view.addGestureRecognizer(tapGesture)
+
+        addLoginView()
     }
     
     func addLoginView() {
-        if loginView.superview == nil {
-            view.addSubview(loginView)
-            loginView.snp.makeConstraints { make in
-                make.top.equalTo(topLayoutGuide.snp.bottom)
-                make.leading.trailing.bottom.equalToSuperview()
-            }
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor.white
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.keyboardDismissMode = .onDrag
+
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+
+        let loginView = BRBLoginView(frame: view.bounds)
+        loginView.delegate = self
+
+        let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+        let netid = keychainItemWrapper["netid"] as? String
+        let password = keychainItemWrapper["password"] as? String
+
+        if netid?.count ?? 0 > 0 && password?.count ?? 0 > 0 {
+            loginView.netidTextField.text = netid
+            loginView.passwordTextField.text = password
+        }
+
+        scrollView.addSubview(loginView)
+        loginView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(view)
+        }
+
+        self.loginView = loginView
+    }
+
+    @objc func viewTapped() {
+        view.endEditing(true)
     }
     
     @objc func userClickedProfileButton() {
@@ -90,7 +102,6 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         time = time + 0.1
         
         if time >= timeout {
-            loginView.loginFailedWithError(error: "Please try again later")
             timer.invalidate()
             
             (UIApplication.shared.delegate as! AppDelegate).connectionHandler = BRBConnectionHandler()
@@ -98,6 +109,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
             connectionHandler.errorDelegate = self
 
             addLoginView()
+            loginView?.loginFailedWithError(error: "Please try again later")
         }
         
         if connectionHandler.accountBalance != nil && connectionHandler.accountBalance.brbs != "" {
@@ -312,7 +324,7 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         
         addLoginView()
 
-        loginView.loginFailedWithError(error: error)
+        loginView?.loginFailedWithError(error: error)
     }
     
     func showSafariVC() {
@@ -332,17 +344,18 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         loggedIn = true
         
         //add netid + password to keychain
-        if loginView != nil && loginView.netidTextField.text?.count ?? 0 > 0 { // update keychain from login view
+        if loginView != nil && loginView?.netidTextField.text?.count ?? 0 > 0 { // update keychain from login view
             let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-            keychainItemWrapper["netid"] = loginView.netidTextField.text! as AnyObject?
-            keychainItemWrapper["password"] = loginView.passwordTextField.text! as AnyObject?
+            keychainItemWrapper["netid"] = loginView?.netidTextField.text! as AnyObject?
+            keychainItemWrapper["password"] = loginView?.passwordTextField.text! as AnyObject?
         }
 
         activityIndicatorView.stopAnimating()
         activityIndicatorDescriptionLabel.removeFromSuperview()
         
         if loginView != nil {
-            loginView.removeFromSuperview()
+            loginView?.superview?.removeFromSuperview()
+            loginView?.removeFromSuperview()
             loginView = nil
             self.setupAccountPage()
         }
@@ -356,13 +369,11 @@ class BRBViewController: UIViewController, BRBConnectionErrorHandler, BRBLoginVi
         paginationCounter = 1
         
         navigationItem.rightBarButtonItem?.isEnabled = false
-        
+
         (UIApplication.shared.delegate as! AppDelegate).connectionHandler = BRBConnectionHandler()
         connectionHandler = (UIApplication.shared.delegate as! AppDelegate).connectionHandler
         connectionHandler.errorDelegate = self
-        
-        loginView = BRBLoginView(frame: view.bounds)
-        loginView.delegate = self
+
         addLoginView()
     }
     

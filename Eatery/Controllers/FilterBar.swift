@@ -30,7 +30,7 @@ class FilterBar: UIView {
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 
-    let padding: CGFloat = kCollectionViewGutterWidth
+    let padding: CGFloat = collectionViewMargin
     
     private var selectedFilters: Set<Filter> = []
     

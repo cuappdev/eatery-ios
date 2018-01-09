@@ -109,9 +109,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         contentView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
             make.height.equalTo(view).dividedBy(3)
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
         }
 
         // Eatery Info Container
@@ -283,8 +281,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             make.top.equalTo(menuHeaderView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
-
-        outerScrollView.contentSize = contentView.bounds.size
         
         //scroll to currently opened event if possible
         scrollToCurrentTimeOpening(displayedDate)
