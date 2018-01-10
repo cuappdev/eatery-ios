@@ -30,12 +30,11 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         view.backgroundColor = .white
         
         tableView = UITableView(frame: view.bounds, style: .grouped)
-        tableView.backgroundColor = UIColor.clear
+        tableView.backgroundColor = .lightBackgroundGray
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
+        tableView.separatorColor = .lightSeparatorGray
         view.addSubview(tableView)
         
         let cell1 = BRBTableViewCell()
@@ -98,11 +97,11 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cells[(indexPath as NSIndexPath).row]
+        return cells[indexPath.row]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath as NSIndexPath).row == 1 {
+        if indexPath.row == 1 {
             tableView.deselectRow(at: indexPath, animated: false)
             logout()
         }

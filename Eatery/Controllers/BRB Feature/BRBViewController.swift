@@ -131,7 +131,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = UIColor(white: 0.9, alpha: 1.0)
+        tableView.separatorColor = .lightSeparatorGray
         tableView.dataSource = self
         tableView.delegate = self
         

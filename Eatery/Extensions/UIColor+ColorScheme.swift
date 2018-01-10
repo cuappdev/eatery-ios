@@ -29,7 +29,11 @@ extension UIColor {
     class var lightBackgroundGray: UIColor {
         return UIColor(white: 0.97, alpha: 0.8)
     }
-    
+
+    class var lightSeparatorGray: UIColor {
+        return UIColor(white: 0.9, alpha: 1.0)
+    }
+
     class var offBlack: UIColor {
         return colorFromCode(0x333333)
     }
