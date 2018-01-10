@@ -27,7 +27,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         
         navigationItem.title = "Settings"
         
-        view.backgroundColor = UIColor(white: 0.93, alpha: 1)
+        view.backgroundColor = .white
         
         tableView = UITableView(frame: view.bounds, style: .grouped)
         tableView.backgroundColor = UIColor.clear

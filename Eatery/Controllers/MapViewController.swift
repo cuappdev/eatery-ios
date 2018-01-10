@@ -58,10 +58,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.showsUserLocation = true
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom)
-            make.bottom.equalTo(bottomLayoutGuide.snp.top)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         createMapButtons()
@@ -111,7 +108,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.addSubview(recenterButton)
         recenterButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(20)
+            make.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-20)
             make.height.equalTo(40)
             make.width.equalTo(120)
         }

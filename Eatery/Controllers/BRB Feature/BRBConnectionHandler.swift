@@ -1,32 +1,33 @@
 import UIKit
 import WebKit
 
-protocol BRBConnectionErrorHandler {
-    func failedToLogin(error: String)
+struct HistoryEntry {
+    var description: String = ""
+    var timestamp: String = ""
+}
+
+struct AccountBalance {
+    var brbs: String = ""
+    var cityBucks: String = ""
+    var laundry: String = ""
+    var swipes: String = "0"
+}
+
+enum Stages {
+    case loginScreen
+    case loginFailed
+    case transition
+    case fundsHome
+    case diningHistory
+    case finished
+}
+
+protocol BRBConnectionDelegate {
+    func updateHistory(with entries: [HistoryEntry])
+    func loginFailed(with error: String)
 }
 
 class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
-    
-    struct HistoryEntry {
-        var description: String = ""
-        var timestamp: String = ""
-    }
-    
-    struct AccountBalance {
-        var brbs: String = ""
-        var cityBucks: String = ""
-        var laundry: String = ""
-        var swipes: String = "0"
-    }
-    
-    enum Stages {
-        case loginScreen
-        case loginFailed
-        case transition
-        case fundsHome
-        case diningHistory
-        case finished
-    }
     
     var stage: Stages = .loginScreen
     var accountBalance: AccountBalance!
@@ -38,7 +39,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     var loginCount = 0
     var netid: String = ""
     var password: String = ""
-    var errorDelegate: BRBConnectionErrorHandler?
+    var delegate: BRBConnectionDelegate?
     
     init() {
         super.init(frame: .zero, configuration: WKWebViewConfiguration())
@@ -84,20 +85,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
     /**
      
-     - Loads Full Dining History Page
-     
-     */
-    func loadDiningHistory() {
-        diningHistory = []
-        
-        if stage != .loginScreen || stage != .loginFailed || stage != .transition {
-            let historyURL = URL(string: diningHistoryURLString)!
-            load(URLRequest(url: historyURL))
-        }
-    }
-    
-    /**
-     
      - Fetches the HTML for the currently displayed web page and instantiates an DiningHistory array
      using the history information on the page.
      
@@ -136,14 +123,9 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     
                     self.diningHistory.append(entry)
                 }
-                if self.diningHistory.count > 0 {
-                    return
-                }
             }
-            
-            if self.stage == .diningHistory || self.stage == .fundsHome {
-                self.getDiningHistory()
-            }
+
+            self.delegate?.updateHistory(with: self.diningHistory)
         }
     }
     /**
@@ -195,12 +177,13 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     return
                 }
                 
-                self.getDiningHistory()
-                
                 self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
                 self.accountBalance.cityBucks = city != "" ? city : "0.00"
                 self.accountBalance.laundry = laundry != "" ? laundry : "0.00"
                 self.accountBalance.swipes = swipes != "" ? String(swipes[swipes.index(after: swipes.startIndex)..<swipes.index(before: swipes.endIndex)]) : "Unlimited"
+
+                let historyURL = URL(string: self.diningHistoryURLString)!
+                self.load(URLRequest(url: historyURL))
             }
         }
     }
@@ -235,13 +218,13 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         
         evaluateJavaScript(javascript){ (result: Any?, error: Error?) -> Void in
             if let error = error {
-                self.errorDelegate?.failedToLogin(error: error.localizedDescription)
+                self.delegate?.loginFailed(with: error.localizedDescription)
             } else {
                 if self.failedToLogin() {
                     if self.url?.absoluteString == self.updateProfileURLString {
-                        self.errorDelegate?.failedToLogin(error: "Account needs to be updated")
+                        self.delegate?.loginFailed(with: "Account needs to be updated")
                     }
-                    self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
+                    self.delegate?.loginFailed(with: "Incorrect netid and/or password")
                 }
             }
             self.loginCount += 1
@@ -253,7 +236,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         self.getStageAndRunBlock {
             switch self.stage {
             case .loginFailed:
-                self.errorDelegate?.failedToLogin(error: "Incorrect netid and/or password")
+                self.delegate?.loginFailed(with: "Incorrect netid and/or password")
             case .loginScreen:
                 if self.loginCount < 1 { self.login() }
             case .fundsHome:

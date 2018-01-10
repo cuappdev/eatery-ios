@@ -12,7 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     var eateriesViewController: EateriesViewController!
-    var connectionHandler: BRBConnectionHandler!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
