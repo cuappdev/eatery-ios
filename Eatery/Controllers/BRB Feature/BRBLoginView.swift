@@ -30,7 +30,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         privacyStatementTextView.textContainerInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
         headerLabel.text = "Log in with your Cornell NetID to see your account balance and history"
-        headerLabel.textColor = .gray
+        headerLabel.textColor = .darkGray
         headerLabel.numberOfLines = 2
         headerLabel.textAlignment = .center
         headerLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -39,7 +39,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             make.top.leading.trailing.equalToSuperview().inset(20)
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(56.0)
+            make.height.equalTo(52.0)
         }
 
         privacyStatementButton.setTitle("Privacy Statement", for: .normal)
@@ -50,8 +50,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         addSubview(privacyStatementButton)
         privacyStatementButton.snp.makeConstraints { make in
             make.top.equalTo(headerLabel.snp.bottom)
-            make.leading.equalTo(headerLabel)
-            make.trailing.equalTo(headerLabel)
+            make.centerX.equalToSuperview()
         }
 
         netidPrompt.text = "NetID"

@@ -305,9 +305,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let titleLabelFrame = view.convert(menuHeaderView.titleLabel.frame, from: menuHeaderView)
-        
         switch scrollView.contentOffset.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
@@ -322,8 +319,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
                 make.height.equalTo(view).dividedBy(3)
             }
         }
-        
-        let percentage = -titleLabelFrame.origin.y/titleLabelFrame.height
+
+        let titleLabelFrame = view.convert(menuHeaderView.titleLabel.frame, from: menuHeaderView)
+            .offsetBy(dx: 0.0, dy: -(navigationController?.navigationBar.frame.height ?? 0.0))
         let titleLabelMaxHeight: CGFloat = 20.0
         let dateLabelMinWidth: CGFloat = 80.0
         
@@ -333,6 +331,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width
             navigationTitleView.eateryNameLabel.alpha = 0.0
         case 0..<titleLabelFrame.height:
+            let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height
+
             navigationTitleView.eateryNameLabel.alpha = percentage
             navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight * percentage
             navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage

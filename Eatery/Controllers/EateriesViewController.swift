@@ -201,8 +201,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
                 let cells: [UIView] = self.collectionView.visibleCells
                 let headers: [UIView] = self.collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader)
-                let views = (cells + headers).sorted { $0.frame.origin.y < $1.frame.origin.y }
 
+                func trueY(view: UIView) -> CGFloat {
+                    if view.superview != self.view {
+                        return self.view.convert(view.frame, from: self.collectionView).origin.y
+                    }
+
+                    return view.frame.origin.y
+                }
+
+                let views = ([self.searchBar, self.filterBar] + cells + headers).sorted { trueY(view: $0) < trueY(view: $1) }
 
                 for view in views {
                     view.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
@@ -211,9 +219,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
                 self.collectionView.isHidden = false
 
-                var delay: TimeInterval = 0.35
+                var delay: TimeInterval = 0.15
                 for view in views {
-                    delay += 0.1
+                    delay += 0.08
                     UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
                         view.transform = .identity
                         view.alpha = 1.0

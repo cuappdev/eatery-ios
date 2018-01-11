@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cook House Dining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="fse-iN-Uba">
-                    <rect key="frame" x="0.0" y="0.0" width="150" height="0.0"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cook House Dining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fse-iN-Uba">
+                    <rect key="frame" x="0.0" y="4" width="150" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="height" id="yju-7a-xBE"/>
                     </constraints>
@@ -24,7 +25,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun, Apr 24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="T8w-W3-2qM">
-                    <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
+                    <rect key="frame" x="0.0" y="4" width="150" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="eJg-yo-5Rq"/>
                     </constraints>
@@ -37,10 +38,10 @@
             <constraints>
                 <constraint firstItem="fse-iN-Uba" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="3x8-Lv-564"/>
                 <constraint firstItem="fse-iN-Uba" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KHT-31-zls"/>
-                <constraint firstItem="fse-iN-Uba" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Kuf-HP-0fw"/>
+                <constraint firstItem="fse-iN-Uba" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="Kuf-HP-0fw"/>
                 <constraint firstItem="T8w-W3-2qM" firstAttribute="top" secondItem="fse-iN-Uba" secondAttribute="bottom" id="M3I-Yc-IDv"/>
                 <constraint firstAttribute="trailing" secondItem="fse-iN-Uba" secondAttribute="trailing" id="fKZ-KR-SZP"/>
-                <constraint firstAttribute="bottom" secondItem="T8w-W3-2qM" secondAttribute="bottom" id="nux-Jb-uqw"/>
+                <constraint firstAttribute="bottom" secondItem="T8w-W3-2qM" secondAttribute="bottom" constant="4" id="nux-Jb-uqw"/>
                 <constraint firstItem="T8w-W3-2qM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xpc-I8-DdO"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
