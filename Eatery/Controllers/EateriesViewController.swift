@@ -435,18 +435,45 @@ extension EateriesViewController: UICollectionViewDataSource {
         if let favorites = eateryData["Favorites"], !favorites.isEmpty {
             if section == 0 {
                 view.titleLabel.text = "Favorites"
-                view.titleLabel.textColor = .black
+                view.titleLabel.textColor = .darkGray
+                view.starIcon.tintColor = .darkGray
+                view.starIcon.isHidden = false
             }
 
             section -= 1
         }
 
         if section == 0 {
-            view.titleLabel.text = "Open"
-            view.titleLabel.textColor = .eateryBlue
-        } else {
-            view.titleLabel.text = "Closed"
-            view.titleLabel.textColor = .gray
+            if eateryData["Open"]?.isEmpty ?? true {
+                if searchBar.text == "" {
+                    view.titleLabel.text = "No eateries are open now"
+                } else {
+                    view.titleLabel.text = "No open eateries match your search"
+                }
+
+                view.titleLabel.textColor = .lightGray
+            } else {
+                view.titleLabel.text = "Open"
+                view.titleLabel.textColor = .eateryBlue
+            }
+            view.starIcon.isHidden = true
+        }
+
+        if section == 1 {
+            if eateryData["Closed"]?.isEmpty ?? true {
+                if searchBar.text == "" {
+                    view.titleLabel.text = "No eateries are closed now"
+                } else {
+                    view.titleLabel.text = "No closed eateries match your search"
+                }
+
+                view.titleLabel.textColor = .lightGray
+            } else {
+                view.titleLabel.text = "Closed"
+                view.titleLabel.textColor = .gray
+            }
+
+            view.starIcon.isHidden = true
         }
 
         return view
@@ -512,7 +539,7 @@ extension EateriesViewController: UICollectionViewDelegate {
 
 extension EateriesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
+        return CGSize(width: collectionView.frame.width, height: 56.0)
     }
 }
 

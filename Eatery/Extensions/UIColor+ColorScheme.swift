@@ -57,6 +57,10 @@ extension UIColor {
     class var closedRed: UIColor {
         return UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
     }
+
+    class var favoriteYellow: UIColor {
+        return colorFromCode(0xF8E71C)
+    }
     
     class var titleDarkGray: UIColor {
         return colorFromCode(0x7e7e7e)

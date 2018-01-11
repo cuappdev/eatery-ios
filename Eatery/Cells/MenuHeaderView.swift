@@ -63,8 +63,8 @@ class MenuHeaderView: UIView {
             backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
         }
 
-        favoriteButton.tintColor = UIColor.eateryBlue
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
+        favoriteButton.tintColor = .favoriteYellow
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {

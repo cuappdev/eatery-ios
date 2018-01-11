@@ -215,7 +215,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         contentContainer.addSubview(directionsButton)
 
         directionsButton.snp.makeConstraints { make in
-            make.top.equalTo(infoContainer.snp.bottom).offset(20.0)
+            make.top.equalTo(infoContainer.snp.bottom).offset(10.0)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(44.0)
         }
@@ -228,7 +228,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         menuLabel.snp.makeConstraints { make in
             make.height.equalTo(44.0)
-            make.top.equalTo(directionsButton.snp.bottom).offset(10.0)
+            make.top.equalTo(directionsButton.snp.bottom)
             make.leading.equalToSuperview().offset(10.0)
         }
 
@@ -271,7 +271,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(menuLabel.snp.bottom).offset(10.0)
+            make.top.equalTo(menuLabel.snp.bottom).offset(4.0)
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(pageViewControllerHeight)
         }
