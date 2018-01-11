@@ -175,15 +175,20 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        DataManager.sharedInstance.fetchEateries(force) { _ in
-            DispatchQueue.main.async {
-                completion?()
+        DataManager.sharedInstance.fetchEateries(force) { error in
+            if let error = error {
+                let alertController = UIAlertController(title: "Unable to fetch Eateries", message: error.localizedDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            } else {
                 self.eateries = DataManager.sharedInstance.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
                 self.animateCollectionView()
                 self.pushPreselectedEatery()
             }
+
+            completion?()
         }
     }
 
@@ -421,6 +426,30 @@ extension EateriesViewController: UICollectionViewDataSource {
         }
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! EateriesCollectionViewHeaderView
+
+        var section = indexPath.section
+        if let favorites = eateryData["Favorites"], !favorites.isEmpty {
+            if section == 0 {
+                view.titleLabel.text = "Favorites"
+                view.titleLabel.textColor = .black
+            }
+
+            section -= 1
+        }
+
+        if section == 0 {
+            view.titleLabel.text = "Open"
+            view.titleLabel.textColor = .eateryBlue
+        } else {
+            view.titleLabel.text = "Closed"
+            view.titleLabel.textColor = .gray
+        }
+
+        return view
     }
 }
 

@@ -19,9 +19,9 @@ private let DayDateFormatter: DateFormatter = {
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     fileprivate var tableView: UITableView!
-    fileprivate let sectionHeaderHeight: CGFloat = 40.0
+    fileprivate let sectionHeaderHeight: CGFloat = 56.0
     fileprivate let eateryHeaderHeight: CGFloat = 55.0
-    fileprivate let filterSectionHeight: CGFloat = 130.0
+    fileprivate let filterSectionHeight: CGFloat = 148.0
     fileprivate var filterEateriesCell: FilterEateriesTableViewCell!
     fileprivate var filterMealButtons: [UIButton]!
     fileprivate var filterDateViews: [FilterDateView]!
@@ -60,13 +60,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.sectionFooterHeight = 0.0
+        tableView.separatorColor = .lightSeparatorGray
         tableView.showsVerticalScrollIndicator = false
-        tableView.autoresizingMask = .flexibleHeight
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .lightBackgroundGray
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -189,9 +187,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSectionCell") as! TitleSectionTableViewCell
         
         switch(sections[section]) {
-        case .West: cell.titleLabel.text = "WEST CAMPUS EATERIES"
-        case .North: cell.titleLabel.text = "NORTH CAMPUS EATERIES"
-        case .Central: cell.titleLabel.text = "CENTRAL CAMPUS EATERIES"
+        case .West: cell.titleLabel.text = "West Campus"
+        case .North: cell.titleLabel.text = "North Campus"
+        case .Central: cell.titleLabel.text = "Central Campus"
         default: break
         }
         

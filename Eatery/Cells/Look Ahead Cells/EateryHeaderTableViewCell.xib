@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="KGk-i7-Jjw" customClass="EateryHeaderTableViewCell" customModule="Eatery" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="KGk-i7-Jjw" customClass="EateryHeaderTableViewCell" customModule="Eatery" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="313" height="56"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+                <rect key="frame" x="0.0" y="0.0" width="313" height="55.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KI1-qa-4JK" userLabel="Cell Divider">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="1Th-d9-UTd"/>
-                        </constraints>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eatery Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBb-mc-wiI">
                         <rect key="frame" x="10" y="10" width="106.5" height="22"/>
                         <constraints>
@@ -44,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1c-VV-wU0">
-                        <rect key="frame" x="243" y="15.5" width="69" height="24"/>
+                        <rect key="frame" x="228" y="16" width="69" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="69" id="Zl3-LJ-jH0"/>
                         </constraints>
@@ -57,14 +51,11 @@
                 <constraints>
                     <constraint firstItem="B9T-ip-Qiz" firstAttribute="leading" secondItem="oBb-mc-wiI" secondAttribute="leading" id="3KB-kj-mIt"/>
                     <constraint firstItem="oBb-mc-wiI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="7FA-48-a7N"/>
-                    <constraint firstItem="oBb-mc-wiI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="86e-cd-Y7M"/>
-                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="B9T-ip-Qiz" secondAttribute="bottom" constant="2" id="CRC-4r-H9r"/>
-                    <constraint firstAttribute="trailing" secondItem="KI1-qa-4JK" secondAttribute="trailing" id="JTl-Nh-OYc"/>
-                    <constraint firstItem="KI1-qa-4JK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Kno-SU-WHc"/>
+                    <constraint firstItem="l1c-VV-wU0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Hcl-m6-Tad"/>
+                    <constraint firstAttribute="bottom" secondItem="B9T-ip-Qiz" secondAttribute="bottom" constant="10" id="LW0-Cz-fQ0"/>
                     <constraint firstAttribute="bottom" secondItem="oBb-mc-wiI" secondAttribute="bottom" id="NrA-E0-2Po"/>
-                    <constraint firstAttribute="trailing" secondItem="l1c-VV-wU0" secondAttribute="trailing" constant="8" id="OMX-iY-8lq"/>
-                    <constraint firstItem="KI1-qa-4JK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VOK-lP-VNg"/>
-                    <constraint firstItem="l1c-VV-wU0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="i4U-hC-ebN"/>
+                    <constraint firstItem="oBb-mc-wiI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="WOp-0l-4VN"/>
+                    <constraint firstItem="l1c-VV-wU0" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="YDf-eg-O0r"/>
                     <constraint firstItem="B9T-ip-Qiz" firstAttribute="top" secondItem="oBb-mc-wiI" secondAttribute="bottom" id="qDw-z8-vEZ"/>
                 </constraints>
                 <variation key="default">
@@ -78,7 +69,7 @@
                 <outlet property="eateryNameLabel" destination="oBb-mc-wiI" id="O5q-2s-Bzz"/>
                 <outlet property="moreInfoButton" destination="l1c-VV-wU0" id="VjN-sp-gS4"/>
             </connections>
-            <point key="canvasLocation" x="422" y="276.5"/>
+            <point key="canvasLocation" x="389.5" y="332"/>
         </tableViewCell>
     </objects>
 </document>

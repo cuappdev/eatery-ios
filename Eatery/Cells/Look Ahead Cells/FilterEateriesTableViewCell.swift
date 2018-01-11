@@ -24,7 +24,6 @@ class FilterEateriesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        filterTitleLabel.text = UIScreen.isNarrowScreen() ? "VIEW MENUS & HOURS FOR AN UPCOMING TIME" : "VIEW MENUS AND HOURS FOR AN UPCOMING TIME"
     }
     
     @IBAction func didFilterMeal(_ sender: UIButton) {
