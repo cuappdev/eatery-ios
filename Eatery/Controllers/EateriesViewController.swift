@@ -170,6 +170,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         collectionView.contentInset.top += filterBarHeight + 56.0
+        collectionView.contentInset.bottom += 56.0
 
         view.addGestureRecognizer(collectionView.panGestureRecognizer)
     }
@@ -197,19 +198,25 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         if !animated {
             animated = true
             collectionView.performBatchUpdates(nil) { complete in
-                for cell in self.collectionView.visibleCells {
-                    cell.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
-                    cell.alpha = 0.0
+
+                let cells: [UIView] = self.collectionView.visibleCells
+                let headers: [UIView] = self.collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader)
+                let views = (cells + headers).sorted { $0.frame.origin.y < $1.frame.origin.y }
+
+
+                for view in views {
+                    view.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
+                    view.alpha = 0.0
                 }
 
                 self.collectionView.isHidden = false
 
                 var delay: TimeInterval = 0.35
-                for cell in self.collectionView.visibleCells.sorted(by: { $0.frame.origin.y < $1.frame.origin.y }) {
+                for view in views {
                     delay += 0.1
                     UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
-                        cell.transform = .identity
-                        cell.alpha = 1.0
+                        view.transform = .identity
+                        view.alpha = 1.0
                     }, completion: nil)
                 }
             }
@@ -432,6 +439,8 @@ extension EateriesViewController: UICollectionViewDataSource {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! EateriesCollectionViewHeaderView
 
         var section = indexPath.section
+
+        var hasFavorites = false
         if let favorites = eateryData["Favorites"], !favorites.isEmpty {
             if section == 0 {
                 view.titleLabel.text = "Favorites"
@@ -441,17 +450,20 @@ extension EateriesViewController: UICollectionViewDataSource {
             }
 
             section -= 1
+            hasFavorites = true
         }
+
+        let favoritesText = hasFavorites ? "other " : ""
 
         if section == 0 {
             if eateryData["Open"]?.isEmpty ?? true {
                 if searchBar.text == "" {
-                    view.titleLabel.text = "No eateries are open now"
+                    view.titleLabel.text = "No \(favoritesText)eateries are open now"
                 } else {
-                    view.titleLabel.text = "No open eateries match your search"
+                    view.titleLabel.text = "No \(favoritesText)open eateries match your search"
                 }
 
-                view.titleLabel.textColor = .lightGray
+                view.titleLabel.textColor = .gray
             } else {
                 view.titleLabel.text = "Open"
                 view.titleLabel.textColor = .eateryBlue
@@ -462,17 +474,15 @@ extension EateriesViewController: UICollectionViewDataSource {
         if section == 1 {
             if eateryData["Closed"]?.isEmpty ?? true {
                 if searchBar.text == "" {
-                    view.titleLabel.text = "No eateries are closed now"
+                    view.titleLabel.text = "No \(favoritesText)eateries are closed now"
                 } else {
-                    view.titleLabel.text = "No closed eateries match your search"
+                    view.titleLabel.text = "No \(favoritesText)closed eateries match your search"
                 }
-
-                view.titleLabel.textColor = .lightGray
             } else {
                 view.titleLabel.text = "Closed"
-                view.titleLabel.textColor = .gray
             }
 
+            view.titleLabel.textColor = .gray
             view.starIcon.isHidden = true
         }
 

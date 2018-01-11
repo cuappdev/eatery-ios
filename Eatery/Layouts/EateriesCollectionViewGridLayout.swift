@@ -19,7 +19,7 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
         itemSize = CGSize(width: cellWidth, height: cellWidth * 0.4)
         minimumLineSpacing = collectionViewMargin
         minimumInteritemSpacing = collectionViewMargin
-        sectionInset = UIEdgeInsets(top: collectionViewMargin, left: collectionViewMargin, bottom: collectionViewMargin * 2, right: collectionViewMargin)
+        sectionInset = UIEdgeInsets(top: collectionViewMargin, left: collectionViewMargin, bottom: 0.0, right: collectionViewMargin)
     }
 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {

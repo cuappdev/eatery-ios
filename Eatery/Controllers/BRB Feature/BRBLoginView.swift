@@ -140,16 +140,17 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         addSubview(perpetualLoginButton)
         perpetualLoginButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
-            make.leading.equalTo(headerLabel)
-            make.trailing.equalTo(headerLabel)
+            make.leading.trailing.equalTo(headerLabel)
             make.height.equalTo(20)
         }
 
         loginButton.setTitle("Login", for: .normal)
-        loginButton.backgroundColor = .eateryBlue
-        loginButton.setBackgroundImage(UIImage.image(withColor: .black), for: .highlighted)
+        loginButton.layer.cornerRadius = 8.0
+        loginButton.layer.masksToBounds = true
+        loginButton.setBackgroundImage(UIImage.image(withColor: .eateryBlue), for: .normal)
+        loginButton.setBackgroundImage(UIImage.image(withColor: .transparentEateryBlue), for: .highlighted)
         loginButton.titleLabel?.textAlignment = .center
-        loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
         addSubview(loginButton)
         loginButton.snp.makeConstraints { make in

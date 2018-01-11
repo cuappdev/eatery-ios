@@ -94,10 +94,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-
-            let navBarHeight = navigationController?.navigationBar.frame.height ?? 0.0
-            let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0.0
-            make.height.greaterThanOrEqualTo(view).offset(-navBarHeight - tabBarHeight)
             make.width.equalTo(view)
         }
         
@@ -223,6 +219,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         // Menu Label
         let menuLabel = UILabel()
         menuLabel.text = "Menu"
+        menuLabel.textColor = .darkGray
         menuLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
         contentContainer.addSubview(menuLabel)
 
