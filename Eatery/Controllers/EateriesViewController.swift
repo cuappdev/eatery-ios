@@ -1,18 +1,19 @@
 import UIKit
-import DiningStack
 import SnapKit
+import DiningStack
+import Crashlytics
 import CoreLocation
 import Hero
-import Crashlytics
+import NVActivityIndicatorView
 
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
 class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
 
-    var collectionView: UICollectionView!
-
     var appDevLogo: UIView?
+    var collectionView: UICollectionView!
+    var activityIndicator: NVActivityIndicatorView!
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -64,37 +65,23 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             navigationController?.navigationBar.prefersLargeTitles = true
         }
 
+        setupLoadingView()
         setupBars()
         setupCollectionView()
 
+        collectionView.isHidden = true
+        searchBar.alpha = 0.0
+        filterBar.alpha = 0.0
+
         if #available(iOS 11.0, *) {
-            let logo = UIView()
+            let logo = UIImageView(image: UIImage(named: "appDevLogo"))
             logo.tintColor = .white
-
-            let icon = UIImageView(image: UIImage(named: "appDevLogo"))
-            icon.contentMode = .scaleAspectFit
-            logo.addSubview(icon)
-
-            let text = UIImageView(image: UIImage(named: "appDevText"))
-            text.contentMode = .scaleAspectFit
-            logo.addSubview(text)
-
-            icon.snp.makeConstraints { make in
-                make.size.equalTo(28.0)
-                make.top.equalToSuperview()
-                make.centerX.equalToSuperview()
-            }
-
-            text.snp.makeConstraints { make in
-                make.height.equalTo(10)
-                make.width.equalTo(80)
-                make.top.equalTo(icon.snp.bottom).offset(4.0)
-                make.leading.trailing.bottom.equalToSuperview()
-            }
+            logo.contentMode = .scaleAspectFit
 
             navigationController?.navigationBar.addSubview(logo)
             logo.snp.makeConstraints { make in
                 make.center.equalToSuperview()
+                make.size.equalTo(28.0)
             }
 
             self.appDevLogo = logo
@@ -105,25 +92,29 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             registerForPreviewing(with: self, sourceView: view)
         }
         
-        let mapButton = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapButtonPressed))
+        let mapButton = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(mapButtonPressed))
         mapButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14.0), NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = mapButton
-        
-        loadData(force: false, completion: nil)
-        
-        updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateTimerFired), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+
+        createUpdateTimer()
+        NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startUserActivity()
     }
-    
-    @objc private func mapButtonPressed() {
-        let mapViewController = MapViewController(eateries: eateries)
-        mapViewController.mapEateries(eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
+
+    func setupLoadingView() {
+        let size: CGFloat = 44.0
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size), type: .circleStrokeSpin, color: .transparentEateryBlue)
+        view.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+
+        indicator.startAnimating()
+        self.activityIndicator = indicator
     }
     
     func setupBars() {
@@ -158,11 +149,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
         collectionView.delaysContentTouches = false
-        collectionView.isHidden = true
         
         view.insertSubview(collectionView, at: 0)
         collectionView.snp.makeConstraints { make in
@@ -185,7 +175,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                 self.eateries = DataManager.sharedInstance.eateries
                 self.processEateries()
                 self.collectionView.reloadData()
-                self.animateCollectionView()
+                self.animateInView()
                 self.pushPreselectedEatery()
             }
 
@@ -194,7 +184,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
 
     var animated = false
-    func animateCollectionView() {
+    func animateInView() {
         if !animated {
             animated = true
             collectionView.performBatchUpdates(nil) { complete in
@@ -227,11 +217,30 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                         view.alpha = 1.0
                     }, completion: nil)
                 }
+
+                UIView.animate(withDuration: 0.55) {
+                    self.activityIndicator.alpha = 0.0
+                }
             }
         }
     }
+
+    @objc func mapButtonPressed() {
+        let mapViewController = MapViewController(eateries: eateries)
+        mapViewController.mapEateries(eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
+    }
+
+    @objc func createUpdateTimer() {
+        updateTimer?.invalidate()
+
+        print("Creating update timer")
+        updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
+        updateTimer?.fire()
+    }
     
     @objc func updateTimerFired() {
+        print("Updating...", Date())
         loadData(force: false, completion: nil)
     }
   
@@ -452,8 +461,8 @@ extension EateriesViewController: UICollectionViewDataSource {
         if let favorites = eateryData["Favorites"], !favorites.isEmpty {
             if section == 0 {
                 view.titleLabel.text = "Favorites"
-                view.titleLabel.textColor = .darkGray
-                view.starIcon.tintColor = .darkGray
+                view.titleLabel.textColor = .black
+                view.starIcon.tintColor = .black
                 view.starIcon.isHidden = false
             }
 
@@ -461,16 +470,9 @@ extension EateriesViewController: UICollectionViewDataSource {
             hasFavorites = true
         }
 
-        let favoritesText = hasFavorites ? "other " : ""
-
         if section == 0 {
             if eateryData["Open"]?.isEmpty ?? true {
-                if searchBar.text == "" {
-                    view.titleLabel.text = "No \(favoritesText)eateries are open now"
-                } else {
-                    view.titleLabel.text = "No \(favoritesText)open eateries match your search"
-                }
-
+                view.titleLabel.text = ""
                 view.titleLabel.textColor = .gray
             } else {
                 view.titleLabel.text = "Open"
@@ -481,11 +483,7 @@ extension EateriesViewController: UICollectionViewDataSource {
 
         if section == 1 {
             if eateryData["Closed"]?.isEmpty ?? true {
-                if searchBar.text == "" {
-                    view.titleLabel.text = "No \(favoritesText)eateries are closed now"
-                } else {
-                    view.titleLabel.text = "No \(favoritesText)closed eateries match your search"
-                }
+                view.titleLabel.text = ""
             } else {
                 view.titleLabel.text = "Closed"
             }
@@ -539,16 +537,26 @@ extension EateriesViewController: UICollectionViewDelegate {
         searchBar.transform = transform
         filterBar.transform = transform
 
-        appDevLogo?.alpha = min(0.8, (-25.0 - offset) / 100.0)
+        appDevLogo?.alpha = min(0.9, (-15.0 - offset) / 100.0)
 
-        view.alpha = max(0.5, 1 + offset / 100.0)
+        func handleLargeBarLogo() {
+            let margin: CGFloat = 4.0
+            let width: CGFloat = appDevLogo?.frame.width ?? 0.0
+            let navBarWidth: CGFloat = (navigationController?.navigationBar.frame.width ?? 0.0) / 2
+            let navBarHeight: CGFloat = (navigationController?.navigationBar.frame.height ?? 0.0) / 2
 
-        if traitCollection.verticalSizeClass == .compact {
+            appDevLogo?.transform = CGAffineTransform(translationX: navBarWidth - margin - width, y: navBarHeight - margin - width)
+            appDevLogo?.tintColor = .white
+        }
+
+        let largeTitle: Bool
+        if #available(iOS 11.0, *) { largeTitle = true } else { largeTitle = false }
+
+        if largeTitle && traitCollection.verticalSizeClass != .compact {
+            handleLargeBarLogo()
+        } else {
             appDevLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset - 20.0)
             appDevLogo?.tintColor = .eateryBlue
-        } else {
-            appDevLogo?.transform = .identity
-            appDevLogo?.tintColor = .white
         }
         
         view.endEditing(true)
@@ -617,7 +625,7 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
                 return nil
         }
         
-        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self)
+        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation)
         menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         cell.transform = .identity
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)

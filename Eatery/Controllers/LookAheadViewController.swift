@@ -227,7 +227,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
             }
             
-            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .closedRed : .openGreen
+            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .gray : .eateryBlue
             cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
             
             if indexPath.row != (expandedCells.count - 1) {
@@ -282,7 +282,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func didTapToggleMenuButton(_ cell: EateryHeaderTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        let row = (indexPath as NSIndexPath).row
+        let row = indexPath.row
         
         let menuRow = row + 1
         if (cell.eateryHoursLabel.text != "Closed") {
@@ -309,7 +309,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             default: break
             }
             
-            let menuIndex = IndexPath(row: menuRow, section: (indexPath as NSIndexPath).section)
+            let menuIndex = IndexPath(row: menuRow, section: indexPath.section)
             if cell.isExpanded {
                 tableView.deleteRows(at: [menuIndex], with: .fade)
             } else {

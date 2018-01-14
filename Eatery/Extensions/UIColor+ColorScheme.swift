@@ -50,10 +50,6 @@ extension UIColor {
         return UIColor(red:0.86, green:0.85, blue:0, alpha:1)
     }
     
-    class var closedGray: UIColor {
-        return colorFromCode(0xD2D2D1)
-    }
-    
     class var closedRed: UIColor {
         return UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
     }

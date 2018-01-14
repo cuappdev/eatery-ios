@@ -13,7 +13,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     var tableView: UITableView!
     let activityIndicatorView = UIActivityIndicatorView()
     let activityIndicatorDescriptionLabel = UILabel()
-    let timeout = 15.0 // seconds
+    let timeout = 30.0 // seconds
     var time = 0.0 // time of request
     var historyHeader : EateriesCollectionViewHeaderView?
     

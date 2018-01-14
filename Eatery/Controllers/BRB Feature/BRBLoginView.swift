@@ -33,7 +33,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         headerLabel.textColor = .darkGray
         headerLabel.numberOfLines = 2
         headerLabel.textAlignment = .center
-        headerLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        headerLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
         addSubview(headerLabel)
         headerLabel.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(20)
@@ -44,7 +44,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
 
         privacyStatementButton.setTitle("Privacy Statement", for: .normal)
         privacyStatementButton.setTitleColor(.eateryBlue, for: .normal)
-        privacyStatementButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        privacyStatementButton.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         privacyStatementButton.setTitleColor(.black, for: .highlighted)
         privacyStatementButton.addTarget(self, action: #selector(privacyStatementButtonPressed), for: .touchUpInside)
         addSubview(privacyStatementButton)

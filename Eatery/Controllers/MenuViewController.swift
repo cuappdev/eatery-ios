@@ -219,7 +219,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         // Menu Label
         let menuLabel = UILabel()
         menuLabel.text = "Menu"
-        menuLabel.textColor = .darkGray
+        menuLabel.textColor = .black
         menuLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
         contentContainer.addSubview(menuLabel)
 
