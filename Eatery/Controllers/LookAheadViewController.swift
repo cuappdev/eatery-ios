@@ -19,9 +19,9 @@ private let DayDateFormatter: DateFormatter = {
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     fileprivate var tableView: UITableView!
-    fileprivate let sectionHeaderHeight: CGFloat = 40.0
+    fileprivate let sectionHeaderHeight: CGFloat = 56.0
     fileprivate let eateryHeaderHeight: CGFloat = 55.0
-    fileprivate let filterSectionHeight: CGFloat = 130.0
+    fileprivate let filterSectionHeight: CGFloat = 148.0
     fileprivate var filterEateriesCell: FilterEateriesTableViewCell!
     fileprivate var filterMealButtons: [UIButton]!
     fileprivate var filterDateViews: [FilterDateView]!
@@ -54,20 +54,17 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
 
         navigationItem.title = "Upcoming Menus"
 
-        edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         
         // Table View
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.sectionFooterHeight = 0.0
+        tableView.separatorColor = .lightSeparatorGray
         tableView.showsVerticalScrollIndicator = false
-        tableView.autoresizingMask = .flexibleHeight
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .lightBackgroundGray
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -190,9 +187,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSectionCell") as! TitleSectionTableViewCell
         
         switch(sections[section]) {
-        case .West: cell.titleLabel.text = "WEST CAMPUS EATERIES"
-        case .North: cell.titleLabel.text = "NORTH CAMPUS EATERIES"
-        case .Central: cell.titleLabel.text = "CENTRAL CAMPUS EATERIES"
+        case .West: cell.titleLabel.text = "West Campus"
+        case .North: cell.titleLabel.text = "North Campus"
+        case .Central: cell.titleLabel.text = "Central Campus"
         default: break
         }
         
@@ -230,7 +227,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
             }
             
-            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .closedRed : .openGreen
+            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .gray : .eateryBlue
             cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
             
             if indexPath.row != (expandedCells.count - 1) {
@@ -285,7 +282,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func didTapToggleMenuButton(_ cell: EateryHeaderTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        let row = (indexPath as NSIndexPath).row
+        let row = indexPath.row
         
         let menuRow = row + 1
         if (cell.eateryHoursLabel.text != "Closed") {
@@ -312,7 +309,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             default: break
             }
             
-            let menuIndex = IndexPath(row: menuRow, section: (indexPath as NSIndexPath).section)
+            let menuIndex = IndexPath(row: menuRow, section: indexPath.section)
             if cell.isExpanded {
                 tableView.deleteRows(at: [menuIndex], with: .fade)
             } else {

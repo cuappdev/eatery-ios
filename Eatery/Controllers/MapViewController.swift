@@ -12,6 +12,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
+    var userLocation: CLLocation?
     
     let recenterButton = UIButton()
     
@@ -57,15 +58,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.showsUserLocation = true
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom)
-            make.bottom.equalTo(bottomLayoutGuide.snp.top)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         createMapButtons()
         
         mapView.setCenter(defaultCoordinate, animated: true)
+
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -110,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.addSubview(recenterButton)
         recenterButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(20)
+            make.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-20)
             make.height.equalTo(40)
             make.width.equalTo(120)
         }
@@ -166,7 +168,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                  annotationView view: MKAnnotationView,
                  calloutAccessoryControlTapped control: UIControl)
     {
-        let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil)
+        let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil, userLocation: userLocation)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
     
@@ -194,6 +196,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
+        userLocation = locations.last
         recenterButtonPressed(recenterButton)
         locationManager.stopUpdatingLocation()
     }

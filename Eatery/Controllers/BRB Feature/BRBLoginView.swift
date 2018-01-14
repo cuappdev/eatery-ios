@@ -7,7 +7,7 @@ protocol BRBLoginViewDelegate {
 class BRBLoginView: UIView, UITextFieldDelegate {
     
     var delegate: BRBLoginViewDelegate?
-    
+
     let headerLabel = UILabel()
     let netidPrompt = UILabel()
     let netidTextField = UITextField()
@@ -27,36 +27,35 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         privacyStatementTextView.text = "\n\nPrivacy Statement\n\n\nWhen you log in using our system, we will use your credentials solely to fetch your account information on your behalf. Your credentials will be stored safely on this device in a manner similar to how a web browser might cache your login information.\n\nYour netid and password will never leave your device, and will never be stored on our servers or viewed by anyone on our team.\n\nYou may log out of your account at any time to erase all of your account information from this device.\n\n\nTap Anywhere To Dismiss"
         privacyStatementTextView.textAlignment = .center
         privacyStatementTextView.font = UIFont.systemFont(ofSize: 14)
-        privacyStatementTextView.backgroundColor = UIColor(white: 0.93, alpha: 1)
         privacyStatementTextView.textContainerInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
-        headerLabel.center = CGPoint(x: frame.width / 2.0, y: headerLabel.center.y)
         headerLabel.text = "Log in with your Cornell NetID to see your account balance and history"
+        headerLabel.textColor = .darkGray
         headerLabel.numberOfLines = 2
         headerLabel.textAlignment = .center
-        headerLabel.font = UIFont.systemFont(ofSize: 14)
+        headerLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
         addSubview(headerLabel)
         headerLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(20)
+            make.top.leading.trailing.equalToSuperview().inset(20)
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(52.0)
         }
 
         privacyStatementButton.setTitle("Privacy Statement", for: .normal)
         privacyStatementButton.setTitleColor(.eateryBlue, for: .normal)
-        privacyStatementButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        privacyStatementButton.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         privacyStatementButton.setTitleColor(.black, for: .highlighted)
         privacyStatementButton.addTarget(self, action: #selector(privacyStatementButtonPressed), for: .touchUpInside)
         addSubview(privacyStatementButton)
         privacyStatementButton.snp.makeConstraints { make in
             make.top.equalTo(headerLabel.snp.bottom)
-            make.leading.equalTo(headerLabel)
-            make.trailing.equalTo(headerLabel)
+            make.centerX.equalToSuperview()
         }
 
-        netidPrompt.text = "NET ID"
+        netidPrompt.text = "NetID"
         netidPrompt.textColor = .darkGray
-        netidPrompt.font = UIFont.systemFont(ofSize: 12)
+        netidPrompt.font = UIFont.boldSystemFont(ofSize: 14)
         addSubview(netidPrompt)
         netidPrompt.snp.makeConstraints { make in
             make.top.equalTo(privacyStatementButton.snp.bottom).offset(15)
@@ -66,14 +65,14 @@ class BRBLoginView: UIView, UITextFieldDelegate {
 
         netidTextField.textColor = .darkGray
         netidTextField.placeholder = "type your netid (e.g. abc123)"
-        netidTextField.font = UIFont.systemFont(ofSize: 15)
+        netidTextField.font = UIFont.systemFont(ofSize: 14)
         netidTextField.autocapitalizationType = .none
         netidTextField.tintColor = .darkGray
         netidTextField.delegate = self
         netidTextField.autocorrectionType = .no
 
         let netidLine = UIView()
-        netidLine.backgroundColor = .darkGray
+        netidLine.backgroundColor = .gray
         netidTextField.addSubview(netidLine)
         netidLine.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
@@ -90,9 +89,9 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             make.height.equalTo(44)
         }
 
-        passwordPrompt.text = "PASSWORD"
+        passwordPrompt.text = "Password"
         passwordPrompt.textColor = .darkGray
-        passwordPrompt.font = UIFont.systemFont(ofSize: 12)
+        passwordPrompt.font = UIFont.boldSystemFont(ofSize: 14)
         addSubview(passwordPrompt)
         passwordPrompt.snp.makeConstraints { make in
             make.top.equalTo(netidTextField.snp.bottom).offset(20)
@@ -140,31 +139,32 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         addSubview(perpetualLoginButton)
         perpetualLoginButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
-            make.leading.equalTo(headerLabel)
-            make.trailing.equalTo(headerLabel)
+            make.leading.trailing.equalTo(headerLabel)
             make.height.equalTo(20)
         }
 
-        loginButton.setTitle("Log in", for: .normal)
-        loginButton.backgroundColor = .eateryBlue
-        loginButton.setBackgroundImage(UIImage.image(withColor: .black), for: .highlighted)
+        loginButton.setTitle("Login", for: .normal)
+        loginButton.layer.cornerRadius = 8.0
+        loginButton.layer.masksToBounds = true
+        loginButton.setBackgroundImage(UIImage.image(withColor: .eateryBlue), for: .normal)
+        loginButton.setBackgroundImage(UIImage.image(withColor: .transparentEateryBlue), for: .highlighted)
         loginButton.titleLabel?.textAlignment = .center
-        loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
         addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
             make.top.equalTo(perpetualLoginButton.snp.bottom).offset(20)
             make.leading.equalTo(headerLabel)
             make.trailing.equalTo(headerLabel)
+            make.bottom.equalToSuperview().inset(20)
             make.height.equalTo(55)
         }
         
         activityIndicator = UIActivityIndicatorView()
-        activityIndicator.color = .black
+        activityIndicator.color = .white
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(4)
-            make.centerX.equalToSuperview()
+            make.center.equalTo(loginButton)
         }
     }
  
@@ -203,12 +203,14 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         
         if netid.count > 0 && password.count > 0 {
 
-            headerLabel.text = ""
-            privacyStatementButton.setTitle("Logging in, this may take a minute", for: .normal)
+            headerLabel.text = "Logging in... this may take a minute."
+            headerLabel.textColor = .gray
             activityIndicator.startAnimating()
+            loginButton.setTitle(nil, for: .normal)
             
             delegate?.brbLoginViewClickedLogin(brbLoginView: self, netid: netid, password: password)
             isUserInteractionEnabled = false
+            alpha = 0.5
             
             UserDefaults.standard.set(perpetualLoginButton.isSelected, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
             UserDefaults.standard.synchronize()
@@ -225,16 +227,6 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     func loginFailedWithError(error: String) {
         headerLabel.textColor = .red
         headerLabel.text = error
-        privacyStatementButton.setTitle("Privacy Statement", for: .normal)
-        activityIndicator.stopAnimating()
-        
-        isUserInteractionEnabled = true
-        
-        netidTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        
-        UserDefaults.standard.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
-        UserDefaults.standard.synchronize()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -246,13 +238,6 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             login()
         }
         return true
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-        netidTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
     }
     
 }

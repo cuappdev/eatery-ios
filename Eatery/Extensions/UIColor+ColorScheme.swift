@@ -21,15 +21,19 @@ extension UIColor {
     class var eateryBlue: UIColor {
         return colorFromCode(0x466CA4)
     }
-    
-    class var collectionViewBackground: UIColor {
-        return .white
+
+    class var transparentEateryBlue: UIColor {
+        return UIColor.eateryBlue.withAlphaComponent(0.8)
     }
-    
-    class var separator: UIColor {
-        return UIColor(red:0.55, green:0.7, blue:0.88, alpha:1)
+
+    class var lightBackgroundGray: UIColor {
+        return UIColor(white: 0.97, alpha: 0.8)
     }
-    
+
+    class var lightSeparatorGray: UIColor {
+        return UIColor(white: 0.9, alpha: 1.0)
+    }
+
     class var offBlack: UIColor {
         return colorFromCode(0x333333)
     }
@@ -46,12 +50,12 @@ extension UIColor {
         return UIColor(red:0.86, green:0.85, blue:0, alpha:1)
     }
     
-    class var closedGray: UIColor {
-        return colorFromCode(0xD2D2D1)
-    }
-    
     class var closedRed: UIColor {
         return UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
+    }
+
+    class var favoriteYellow: UIColor {
+        return colorFromCode(0xF8E71C)
     }
     
     class var titleDarkGray: UIColor {

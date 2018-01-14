@@ -13,6 +13,7 @@ target 'Eatery' do
   pod 'Crashlytics'
   pod 'Hero'
   pod 'Kingfisher', '~> 3.13.1'
+  pod 'NVActivityIndicatorView'
   shared_pods
 end
 

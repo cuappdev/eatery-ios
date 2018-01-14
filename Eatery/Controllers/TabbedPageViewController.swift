@@ -63,9 +63,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
 
         pageViewController.view.snp.makeConstraints { make in
             make.top.equalTo(tabBar?.snp.bottom ?? view)
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
         if let tabBar = tabBar {

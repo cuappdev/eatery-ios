@@ -12,7 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     var eateriesViewController: EateriesViewController!
-    var connectionHandler: BRBConnectionHandler!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -20,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Foundation.URLCache.shared = URLCache
         
         window = UIWindow()
-        window?.backgroundColor = .collectionViewBackground
+        window?.backgroundColor = .white
         
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = .eateryBlue
@@ -30,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
         
-        Hero.shared.containerColor = .collectionViewBackground
+        Hero.shared.containerColor = .white
         
         // Set up view controllers
         let tabBarController = UITabBarController()
@@ -50,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
         
         let navigationControllers = [eateryNavigationController, lookAheadNavigationController, brbNavigationController]
-        tabBarController.setViewControllers(navigationControllers, animated: true)
+        tabBarController.setViewControllers(navigationControllers, animated: false)
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

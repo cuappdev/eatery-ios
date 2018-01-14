@@ -30,7 +30,7 @@ class FilterBar: UIView {
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 
-    let padding: CGFloat = kCollectionViewGutterWidth
+    let padding: CGFloat = collectionViewMargin
     
     private var selectedFilters: Set<Filter> = []
     
@@ -38,8 +38,7 @@ class FilterBar: UIView {
         super.init(frame: frame)
         
         backgroundColor = .clear
-        
-        
+
         scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInset.left = padding
@@ -51,7 +50,6 @@ class FilterBar: UIView {
         }
         
         layoutButtons()
-        
     }
     
     func layoutButtons() {
@@ -68,6 +66,7 @@ class FilterBar: UIView {
             button.setBackgroundImage(UIImage.image(withColor: UIColor(white: 0.95, alpha: 1.0)), for: .normal)
             button.setBackgroundImage(UIImage.image(withColor: UIColor(white: 0.85, alpha: 1.0)), for: .highlighted)
             button.setBackgroundImage(UIImage.image(withColor: UIColor.eateryBlue), for: .selected)
+            button.setBackgroundImage(UIImage.image(withColor: UIColor.transparentEateryBlue), for: .focused)
 
             button.layer.cornerRadius = 8.0
             button.clipsToBounds = true
@@ -94,7 +93,7 @@ class FilterBar: UIView {
             }
             buttons.append(button)
 
-            totalWidth += button.frame.width + (index == filters.count - 1 ? 0.0 : padding)
+            totalWidth += button.frame.width + (index == filters.count - 1 ? 0.0 : padding / 2)
         }
 
         scrollView.contentSize = CGSize(width: totalWidth, height: frame.height)

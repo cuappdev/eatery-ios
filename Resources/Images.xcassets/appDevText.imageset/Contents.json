@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "appdev_grey_logo-ac6f7835d7ecca649832f5e2176a5c8b28bdb7a429a3ff1c8b5c91dd3abec37d.png",
+      "filename" : "appDevTextWhite.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "appdev_grey_logo-ac6f7835d7ecca649832f5e2176a5c8b28bdb7a429a3ff1c8b5c91dd3abec37d-1.png",
+      "filename" : "appDevTextWhite@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "appdev_grey_logo-ac6f7835d7ecca649832f5e2176a5c8b28bdb7a429a3ff1c8b5c91dd3abec37d-2.png",
+      "filename" : "appDevTextWhite@3x.png",
       "scale" : "3x"
     }
   ],

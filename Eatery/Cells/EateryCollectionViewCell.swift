@@ -18,16 +18,18 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
 
-    static let shadowRadius: CGFloat = 8
+    static let shadowRadius: CGFloat = 16
+
+    var eatery: Eatery!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        contentView.backgroundColor = .white
         
         menuTextView.text = nil
         menuTextView.textContainerInset = UIEdgeInsets(top: 10.0, left: 6.0, bottom: 10.0, right: 6.0)
     }
-    
-    var eatery: Eatery!
     
     func update(userLocation: CLLocation?) {
         if let distance = userLocation?.distance(from: eatery.location) {
@@ -44,7 +46,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
-            backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
+            backgroundImageView.kf.setImage(with: url, placeholder: placeholder, options: [.transition(.fade(0.35))])
         }
         
         update(userLocation: userLocation)
@@ -114,7 +116,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath
         layer.shadowRadius = EateryCollectionViewCell.shadowRadius
-        layer.shadowOpacity = 0.2
+        layer.shadowOpacity = 0.1
         layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
         layer.masksToBounds = false
     }
