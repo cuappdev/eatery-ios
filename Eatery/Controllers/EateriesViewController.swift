@@ -217,7 +217,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                     }, completion: nil)
                 }
 
-                UIView.animate(withDuration: 0.55) {
+                UIView.animate(withDuration: 0.35) {
                     self.activityIndicator.alpha = 0.0
                 }
             }

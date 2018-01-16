@@ -2,6 +2,7 @@ import UIKit
 import WebKit
 import SafariServices
 import Crashlytics
+import NVActivityIndicatorView
 
 class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -11,8 +12,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     var timer: Timer!
     
     var tableView: UITableView!
-    let activityIndicatorView = UIActivityIndicatorView()
-    let activityIndicatorDescriptionLabel = UILabel()
+    var activityIndicatorView: NVActivityIndicatorView!
     let timeout = 30.0 // seconds
     var time = 0.0 // time of request
     var historyHeader : EateriesCollectionViewHeaderView?
@@ -35,12 +35,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         }
 
         connectionHandler.delegate = self
-
-        activityIndicatorView.color = .black
-        activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorDescriptionLabel.text = "Logging in, this may take a minute"
-        activityIndicatorDescriptionLabel.textAlignment = .center
-        activityIndicatorDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
         
         navigationItem.rightBarButtonItem?.isEnabled = false
 
@@ -117,12 +111,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     }
     
     func setupAccountPage() {
-        
         diningHistory = connectionHandler.diningHistory
-        
-        if diningHistory.count == 0 {
-            activityIndicatorView.startAnimating()
-        }
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
@@ -139,6 +128,10 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         tableView.snp.makeConstraints { make in
             make.top.edges.equalToSuperview()
         }
+
+        activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 16.0, y: 8.0, width: 36.0, height: 36.0), type: .circleStrokeSpin, color: .gray)
+        activityIndicatorView.startAnimating()
+        tableView.tableFooterView = activityIndicatorView
     }
     
     /// MARK: Table view delegate/data source
@@ -240,6 +233,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
 
         let indexPaths = (0..<entries.count).map { IndexPath(row: $0, section: 1) }
         self.tableView.insertRows(at: indexPaths, with: .automatic)
+
+        tableView.tableFooterView = nil
+        activityIndicatorView.removeFromSuperview()
     }
     
     func showSafariVC() {
@@ -264,9 +260,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
             keychainItemWrapper["netid"] = loginView?.netidTextField.text! as AnyObject?
             keychainItemWrapper["password"] = loginView?.passwordTextField.text! as AnyObject?
         }
-
-        activityIndicatorView.stopAnimating()
-        activityIndicatorDescriptionLabel.removeFromSuperview()
         
         if loginView != nil {
             loginView?.superview?.removeFromSuperview()

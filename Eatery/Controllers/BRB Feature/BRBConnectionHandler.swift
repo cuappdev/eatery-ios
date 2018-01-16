@@ -95,7 +95,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         getHTML { (html: NSString) in
             let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_(and_|)time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points (credit|debit)\\\" title=\\\"(credit|debit)\\\">(.*?)<\\/td><\\/tr>)"
             
-            let regex = try? NSRegularExpression(pattern: tableHTMLRegex as String, options: .useUnicodeWordBoundaries)
+            let regex = try? NSRegularExpression(pattern: tableHTMLRegex, options: .useUnicodeWordBoundaries)
             if let matches = regex?.matches(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, html.length))
             {
                 for match in matches

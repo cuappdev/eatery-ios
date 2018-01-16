@@ -1,4 +1,5 @@
 import UIKit
+import NVActivityIndicatorView
 
 protocol BRBLoginViewDelegate {
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String)
@@ -18,7 +19,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     let privacyStatementButton = UIButton()
     let privacyStatementTextView = UITextView()
     
-    var activityIndicator = UIActivityIndicatorView()
+    var activityIndicator: NVActivityIndicatorView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -160,8 +161,7 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             make.height.equalTo(55)
         }
         
-        activityIndicator = UIActivityIndicatorView()
-        activityIndicator.color = .white
+        activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: 22.0, height: 22.0), type: .circleStrokeSpin, color: .white, padding: nil)
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
             make.center.equalTo(loginButton)
