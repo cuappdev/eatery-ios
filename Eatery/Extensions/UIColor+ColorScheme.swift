@@ -10,16 +10,31 @@ import UIKit
 
 extension UIColor {
     
-    public static func colorFromCode(_ code: Int) -> UIColor {
+    class func colorFromCode(_ code: Int) -> UIColor {
         let red = CGFloat((code & 0xFF0000) >> 16) / 255
         let green = CGFloat((code & 0xFF00) >> 8) / 255
         let blue = CGFloat(code & 0xFF) / 255
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }
+
+    /*
+     Color adjusted for iOS's arbitrary lightening of navigation bar colors. 20 pts has been found to be accurate.
+     */
+    var navigationBarAdjusted: UIColor {
+        let offset: CGFloat = 20/255
+
+        var r: CGFloat = 0.0
+        var g: CGFloat = 0.0
+        var b: CGFloat = 0.0
+        var a: CGFloat = 0.0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        return UIColor(red: r - offset, green: g - offset, blue: b - offset, alpha: a - offset)
+    }
     
     class var eateryBlue: UIColor {
-        return colorFromCode(0x466CA4)
+        return colorFromCode(0x437EC5)
     }
 
     class var transparentEateryBlue: UIColor {
@@ -27,7 +42,7 @@ extension UIColor {
     }
 
     class var lightBackgroundGray: UIColor {
-        return UIColor(white: 0.97, alpha: 0.8)
+        return UIColor(white: 0.96, alpha: 1.0)
     }
 
     class var lightSeparatorGray: UIColor {

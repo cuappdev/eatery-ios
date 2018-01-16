@@ -93,7 +93,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         let mapButton = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(mapButtonPressed))
-        mapButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14.0), NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
         navigationItem.rightBarButtonItem = mapButton
 
         createUpdateTimer()

@@ -18,7 +18,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     @IBOutlet var paymentImageViews: [UIImageView]!
     @IBOutlet weak var paymentContainer: UIView!
 
-    static let shadowRadius: CGFloat = 16
+    static let shadowRadius: CGFloat = 12
 
     var eatery: Eatery!
 
@@ -116,7 +116,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath
         layer.shadowRadius = EateryCollectionViewCell.shadowRadius
-        layer.shadowOpacity = 0.1
+        layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
         layer.masksToBounds = false
     }
