@@ -28,4 +28,8 @@ extension Answers {
     static func login(succeeded: Bool, timeLapsed: TimeInterval) {
         Answers.logLogin(withMethod: nil, success: succeeded as NSNumber, customAttributes: ["timeLapsed": timeLapsed])
     }
+
+    static func logWarning(message: String) {
+        Answers.logCustomEvent(withName: "Warning", customAttributes: ["message": message])
+    }
 }
