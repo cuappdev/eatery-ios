@@ -1,67 +1,76 @@
 {
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
   "images" : [
     {
+      "filename" : "Icon38mm@2x.png",
+      "idiom" : "watch",
+      "subtype" : "38mm",
+      "scale" : "2x",
       "size" : "24x24",
-      "idiom" : "watch",
-      "filename" : "eatery_iconx24@2x.png",
-      "scale" : "2x",
-      "role" : "notificationCenter",
-      "subtype" : "38mm"
+      "role" : "notificationCenter"
     },
     {
+      "filename" : "Icon42mm@2x.png",
+      "idiom" : "watch",
+      "subtype" : "42mm",
+      "scale" : "2x",
       "size" : "27.5x27.5",
+      "role" : "notificationCenter"
+    },
+    {
+      "filename" : "IconSettings@2x.png",
       "idiom" : "watch",
-      "filename" : "eatery_iconx27.5@2x.png",
       "scale" : "2x",
-      "role" : "notificationCenter",
-      "subtype" : "42mm"
-    },
-    {
       "size" : "29x29",
-      "idiom" : "watch",
-      "filename" : "eatery_iconx29@2x.png",
-      "role" : "companionSettings",
-      "scale" : "2x"
+      "role" : "companionSettings"
     },
     {
+      "filename" : "IconSettings@3x.png",
+      "idiom" : "watch",
+      "scale" : "3x",
       "size" : "29x29",
-      "idiom" : "watch",
-      "filename" : "eatery_iconx29@3x.png",
-      "role" : "companionSettings",
-      "scale" : "3x"
+      "role" : "companionSettings"
     },
     {
+      "filename" : "IconLauncher@2x.png",
+      "idiom" : "watch",
+      "subtype" : "38mm",
+      "scale" : "2x",
       "size" : "40x40",
-      "idiom" : "watch",
-      "filename" : "eatery_iconx80.png",
-      "scale" : "2x",
-      "role" : "appLauncher",
-      "subtype" : "38mm"
+      "role" : "appLauncher"
     },
     {
+      "filename" : "LongLook@2x.png",
+      "idiom" : "watch",
+      "subtype" : "42mm",
+      "scale" : "2x",
+      "size" : "44x44",
+      "role" : "longLook"
+    },
+    {
+      "filename" : "IconQuickLook38mm@2x.png",
+      "idiom" : "watch",
+      "subtype" : "38mm",
+      "scale" : "2x",
       "size" : "86x86",
-      "idiom" : "watch",
-      "filename" : "eatery_iconx86@2x.png",
-      "scale" : "2x",
-      "role" : "quickLook",
-      "subtype" : "38mm"
+      "role" : "quickLook"
     },
     {
+      "filename" : "IconQuickLook42mm@2x.png",
+      "idiom" : "watch",
+      "subtype" : "42mm",
+      "scale" : "2x",
       "size" : "98x98",
-      "idiom" : "watch",
-      "filename" : "eatery_iconx98@2x.png",
-      "scale" : "2x",
-      "role" : "quickLook",
-      "subtype" : "42mm"
+      "role" : "quickLook"
     },
     {
-      "idiom" : "watch-marketing",
+      "filename" : "watch-marketing.png",
       "size" : "1024x1024",
+      "idiom" : "watch-marketing",
       "scale" : "1x"
     }
-  ],
-  "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  }
+  ]
 }
