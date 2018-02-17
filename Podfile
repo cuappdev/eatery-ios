@@ -12,6 +12,7 @@ target 'Eatery' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Hero'
+  pod 'ARCL'
   pod 'Kingfisher', '~> 3.13.1'
   pod 'NVActivityIndicatorView'
   shared_pods

@@ -1,0 +1,87 @@
+import UIKit
+import SnapKit
+import DiningStack
+import Kingfisher
+
+class EateryARCard: UIView {
+
+    var titleLabel: UILabel!
+    var statusLabel: UILabel!
+    var timeLabel: UILabel!
+    var distanceLabel: UILabel!
+    var eatery: Eatery!
+
+    init(frame: CGRect, eatery: Eatery) {
+        super.init(frame: frame)
+
+        self.eatery = eatery
+
+        backgroundColor = .white
+
+        titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .semibold)
+        titleLabel.text = eatery.name
+
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(10)
+        }
+
+        statusLabel = UILabel()
+        statusLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .semibold)
+        addSubview(statusLabel)
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.leading.equalToSuperview().inset(10)
+            make.height.equalTo(14.0)
+            make.bottom.equalToSuperview().inset(10)
+        }
+
+        timeLabel = UILabel()
+        timeLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .regular)
+        addSubview(timeLabel)
+        timeLabel.snp.makeConstraints { make in
+            make.leading.equalTo(statusLabel.snp.trailing).offset(4)
+            make.centerY.equalTo(statusLabel)
+        }
+
+        distanceLabel = UILabel()
+        distanceLabel.font = UIFont.systemFont(ofSize: 11.0, weight: .medium)
+        addSubview(distanceLabel)
+        distanceLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalTo(titleLabel)
+            
+        }
+
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+        case .open(let message):
+            titleLabel.textColor = .black
+            statusLabel.text = "Open"
+            statusLabel.textColor = .eateryBlue
+            timeLabel.text = message
+            timeLabel.textColor = .gray
+            distanceLabel.textColor = .darkGray
+        case .closed(let message):
+            if !eatery.isOpenToday() {
+                statusLabel.text = "Closed Today"
+                timeLabel.text = ""
+            } else {
+                statusLabel.text = "Closed"
+                timeLabel.text = message
+            }
+
+            titleLabel.textColor = .darkGray
+            statusLabel.textColor = .gray
+            timeLabel.textColor = .gray
+            distanceLabel.textColor = .gray
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}

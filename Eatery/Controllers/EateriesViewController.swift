@@ -85,6 +85,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             }
 
             self.appDevLogo = logo
+
+            let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
+            navigationItem.leftBarButtonItem = arButton
         }
         
         // Check for 3D Touch availability
@@ -102,6 +105,13 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startUserActivity()
+    }
+
+    @available(iOS 11.0, *)
+    @objc func arButtonPressed() {
+        let arViewController = ARViewController()
+        arViewController.eateries = eateries
+        self.present(arViewController, animated: true, completion: nil)
     }
 
     func setupLoadingView() {
