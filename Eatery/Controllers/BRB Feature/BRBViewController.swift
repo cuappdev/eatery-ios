@@ -231,8 +231,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     func updateHistory(with entries: [HistoryEntry]) {
         self.diningHistory = entries
 
-        let indexPaths = (0..<entries.count).map { IndexPath(row: $0, section: 1) }
-        self.tableView.insertRows(at: indexPaths, with: .automatic)
+        self.tableView.reloadData()
 
         tableView.tableFooterView = nil
         activityIndicatorView.removeFromSuperview()
