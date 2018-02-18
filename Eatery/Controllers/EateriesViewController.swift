@@ -192,7 +192,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             } else {
                 self.eateries = DataManager.sharedInstance.eateries
                 self.processEateries()
-                self.collectionView.reloadData()
+                let range = Range(uncheckedBounds: (0, self.collectionView.numberOfSections))
+                let indexSet = IndexSet(integersIn: range)
+                self.collectionView.reloadSections(indexSet)
                 self.animateInView()
                 self.pushPreselectedEatery()
             }
@@ -362,28 +364,36 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         processEateries()
         collectionView.reloadData()
     }
-    
-    func eatery(for indexPath: IndexPath) -> Eatery {
-        var eatery: Eatery!
-        var section = indexPath.section
-        
+
+    func data(for section: Int) -> (String, [Eatery]) {
+        var section = section
+
         if let favorites = eateryData["Favorites"], !favorites.isEmpty {
             if section == 0 {
-                eatery = favorites[indexPath.row]
+                return ("Favorites", favorites)
             }
             section -= 1
         }
-        
-        if eatery == nil {
-            if let openEateries = eateryData["Open"], !openEateries.isEmpty, section == 0 {
-                eatery = openEateries[indexPath.row]
+
+        if let openEateries = eateryData["Open"], !openEateries.isEmpty {
+            if section == 0 {
+                return ("Open", openEateries)
             }
-            if let closedEateries = eateryData["Closed"], !closedEateries.isEmpty, section == 1 {
-                eatery = closedEateries[indexPath.row]
+            section -= 1
+        }
+
+        if let closedEateries = eateryData["Closed"], !closedEateries.isEmpty {
+            if section == 0 {
+                return ("Closed", closedEateries)
             }
         }
-        
-        return eatery
+
+        return ("", [])
+    }
+    
+    func eatery(for indexPath: IndexPath) -> Eatery {
+        let (_, eateries) = data(for: indexPath.section)
+        return eateries[indexPath.row]
     }
     
     // MARK: - Handoff Functions
@@ -399,24 +409,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
 extension EateriesViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        let showFavorites = (eateryData["Favorites"] ?? []).count > 0 ? 1 : 0
-        return 2 + showFavorites
+        let showFavorites = (eateryData["Favorites"] ?? []).isEmpty ? 0 : 1
+        let showOpens = (eateryData["Open"] ?? []).isEmpty ? 0 : 1
+        return 1 + showFavorites + showOpens
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var section = section
-        if let favorites = eateryData["Favorites"], favorites.count > 0 {
-            if section == 0 {
-                return favorites.count
-            }
-            section -= 1
-        }
-        
-        if section == 0 {
-            return eateryData["Open"]?.count ?? 0
-        }
-        
-        return eateryData["Closed"]?.count ?? 0
+        let (_, eateries) = data(for: section)
+        return eateries.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -460,23 +460,15 @@ extension EateriesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! EateriesCollectionViewHeaderView
 
-        var section = indexPath.section
+        let (section, eateries) = data(for: indexPath.section)
 
-        var hasFavorites = false
-        if let favorites = eateryData["Favorites"], !favorites.isEmpty {
-            if section == 0 {
-                view.titleLabel.text = "Favorites"
-                view.titleLabel.textColor = .black
-                view.starIcon.tintColor = .black
-                view.starIcon.isHidden = false
-            }
-
-            section -= 1
-            hasFavorites = true
-        }
-
-        if section == 0 {
-            if eateryData["Open"]?.isEmpty ?? true {
+        if section == "Favorites" {
+            view.titleLabel.text = "Favorites"
+            view.titleLabel.textColor = .black
+            view.starIcon.tintColor = .black
+            view.starIcon.isHidden = false
+        } else if section == "Open" {
+            if eateries.isEmpty {
                 view.titleLabel.text = ""
                 view.titleLabel.textColor = .gray
             } else {
@@ -484,10 +476,8 @@ extension EateriesViewController: UICollectionViewDataSource {
                 view.titleLabel.textColor = .eateryBlue
             }
             view.starIcon.isHidden = true
-        }
-
-        if section == 1 {
-            if eateryData["Closed"]?.isEmpty ?? true {
+        } else if section == "Closed" {
+            if eateries.isEmpty {
                 view.titleLabel.text = ""
             } else {
                 view.titleLabel.text = "Closed"
