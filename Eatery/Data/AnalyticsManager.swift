@@ -29,7 +29,7 @@ extension Answers {
         Answers.logLogin(withMethod: nil, success: succeeded as NSNumber, customAttributes: ["timeLapsed": timeLapsed])
     }
 
-    static func logWarning(message: String) {
-        Answers.logCustomEvent(withName: "Warning", customAttributes: ["message": message])
+    static func logAROpen() {
+        Answers.logCustomEvent(withName: "Augmented Reality Opened", customAttributes: nil)
     }
 }

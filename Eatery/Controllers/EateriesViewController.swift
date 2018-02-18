@@ -54,16 +54,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         
         title = "Eateries"
         
-        nearestLocationPressed()
-        
         view.backgroundColor = .white
         
         navigationController?.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
         navigationController?.heroNavigationAnimationType = .fade
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
 
         setupLoadingView()
         setupBars()
@@ -74,10 +69,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         filterBar.alpha = 0.0
 
         if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+
             let logo = UIImageView(image: UIImage(named: "appDevLogo"))
             logo.tintColor = .white
             logo.contentMode = .scaleAspectFit
-
             navigationController?.navigationBar.addSubview(logo)
             logo.snp.makeConstraints { make in
                 make.center.equalToSuperview()
@@ -88,6 +84,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
             let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
             navigationItem.leftBarButtonItem = arButton
+        }
+
+        if CLLocationManager.locationServicesEnabled() {
+            switch (CLLocationManager.authorizationStatus()) {
+            case .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            default: break
+            }
         }
         
         // Check for 3D Touch availability
@@ -110,6 +116,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
     @available(iOS 11.0, *)
     @objc func arButtonPressed() {
+        Answers.logAROpen()
+        
         let arViewController = ARViewController()
         arViewController.eateries = eateries
         self.present(arViewController, animated: true, completion: nil)
@@ -345,21 +353,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             eateryData["Open"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
         }
     }
-
-    //Location Functions
-    
-    func nearestLocationPressed() {
-        if CLLocationManager.locationServicesEnabled() {
-            switch (CLLocationManager.authorizationStatus()) {
-            case .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            default: break
-            }
-        }
-    }
-    
     
     // MARK: MenuButtonsDelegate
     

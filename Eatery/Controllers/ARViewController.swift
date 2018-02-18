@@ -28,7 +28,11 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         view.addSubview(sceneLocationView)
 
         let closeButton = UIButton(type: .system)
-        closeButton.setTitle("DONE", for: .normal)
+        closeButton.setImage(#imageLiteral(resourceName: "closeIcon"), for: .normal)
+        let inset: CGFloat = 18.0
+        closeButton.imageEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        closeButton.layer.shadowRadius = 18.0
+        closeButton.layer.shadowOpacity = 1.0
         closeButton.tintColor = .white
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
@@ -36,6 +40,9 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
             make.top.leading.equalToSuperview().inset(10.0)
             make.size.equalTo(60.0)
         }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped(sender:)))
+        sceneLocationView.addGestureRecognizer(tapGesture)
 
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] timer in
             self?.canUpdateLocation = true
@@ -54,6 +61,16 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         return true
     }
 
+    @objc func viewTapped(sender: UITapGestureRecognizer) {
+        let point = sender.location(in: sceneLocationView)
+
+        let results = sceneLocationView.hitTest(point)
+        if let node = results.first?.node.parent as? LocationAnnotationNode,
+            let eatery = nodes.first(where: { $0.value == node })?.key {
+            presentMenuViewController(eatery: eatery)
+        }
+    }
+
     @objc func closeButtonTapped() {
         for (_, node) in nodes {
             sceneLocationView.removeLocationNode(locationNode: node)
@@ -63,6 +80,12 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         sceneLocationView.pause()
         dismiss(animated: true) {
             self.sceneLocationView.removeFromSuperview()
+        }
+    }
+
+    @objc func detailCardTapped() {
+        if case let .nearby(eatery, _) = nearbyState {
+            presentMenuViewController(eatery: eatery)
         }
     }
 
@@ -113,13 +136,11 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
 
     func presentDetailCard(eatery: Eatery) {
         let card = EateryARDetailCard(eatery: eatery)
-        card.layer.cornerRadius = 8.0
-        card.clipsToBounds = true
         view.addSubview(card)
         card.snp.makeConstraints { make in
-            make.height.equalTo(140.0)
+            make.height.equalTo(200.0)
             make.leading.trailing.equalToSuperview().inset(20.0)
-            make.bottom.equalToSuperview().offset(20.0)
+            make.bottom.equalToSuperview().offset(40.0)
         }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(detailCardTapped))
@@ -147,15 +168,13 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         }
     }
 
-    @objc func detailCardTapped() {
-        if case let .nearby(eatery, _) = nearbyState {
-            let menuViewController = MenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
-            let navigationController = UINavigationController(rootViewController: menuViewController)
-            navigationController.navigationBar.barStyle = .black
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissMenuViewController))
-            menuViewController.navigationItem.leftBarButtonItem = doneButton
-            present(navigationController, animated: true, completion: nil)
-        }
+    func presentMenuViewController(eatery: Eatery) {
+        let menuViewController = MenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
+        let navigationController = UINavigationController(rootViewController: menuViewController)
+        navigationController.navigationBar.barStyle = .black
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissMenuViewController))
+        menuViewController.navigationItem.leftBarButtonItem = doneButton
+        present(navigationController, animated: true, completion: nil)
     }
 
     @objc func dismissMenuViewController() {
