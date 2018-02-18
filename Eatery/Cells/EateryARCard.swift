@@ -40,7 +40,7 @@ class EateryARCard: UIView {
         }
 
         timeLabel = UILabel()
-        timeLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .regular)
+        timeLabel.font = UIFont.systemFont(ofSize: 12.0)
         addSubview(timeLabel)
         timeLabel.snp.makeConstraints { make in
             make.leading.equalTo(statusLabel.snp.trailing).offset(4)
@@ -75,7 +75,7 @@ class EateryARCard: UIView {
             }
 
             titleLabel.textColor = .darkGray
-            statusLabel.textColor = .gray
+            statusLabel.textColor = .darkGray
             timeLabel.textColor = .gray
             distanceLabel.textColor = .gray
         }

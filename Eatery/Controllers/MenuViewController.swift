@@ -125,7 +125,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         let statusLabel = UILabel()
         statusLabel.textColor = .eateryBlue
-        statusLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        statusLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .semibold)
         infoContainer.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
             make.centerY.equalTo(timeImageView)
@@ -133,8 +133,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
 
         let hoursLabel = UILabel()
-        hoursLabel.textColor = .lightGray
-        hoursLabel.font = UIFont.systemFont(ofSize: 14.0)
+        hoursLabel.textColor = .gray
+        hoursLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
         infoContainer.addSubview(hoursLabel)
         hoursLabel.snp.makeConstraints { make in
             make.centerY.equalTo(statusLabel)
@@ -158,7 +158,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             }
 
             timeImageView.tintColor = .gray
-            statusLabel.textColor = .gray
+            statusLabel.textColor = .darkGray
         }
 
         let locationImageView = UIImageView(image: UIImage(named: "location"))
@@ -171,7 +171,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
 
         let locationLabel = UILabel()
-        locationLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        locationLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
         locationLabel.textColor = .gray
         locationLabel.text = eatery.address
         infoContainer.addSubview(locationLabel)
@@ -181,8 +181,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
 
         let distanceLabel = UILabel()
-        distanceLabel.textColor = .lightGray
-        distanceLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        distanceLabel.textColor = .gray
+        distanceLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
 
         if let distance = userLocation?.distance(from: eatery.location) {
             distanceLabel.text = "\(Double(round(10 * distance / metersInMile) / 10)) mi"
@@ -219,12 +219,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         // Menu Label
         let menuLabel = UILabel()
         menuLabel.text = "Menu"
-        menuLabel.textColor = .black
-        menuLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
+        menuLabel.textColor = .darkGray
+        menuLabel.font = UIFont.boldSystemFont(ofSize: 28.0)
         contentContainer.addSubview(menuLabel)
 
         menuLabel.snp.makeConstraints { make in
-            make.height.equalTo(44.0)
+            make.height.equalTo(52.0)
             make.top.equalTo(directionsButton.snp.bottom)
             make.leading.equalToSuperview().offset(10.0)
         }
@@ -375,7 +375,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
                 self.openAppleMapsDirections()
             })
             alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .default) { Void in
-                UIApplication.shared.openURL(URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking")!)
+                UIApplication.shared.open(URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking")!, options: [:], completionHandler: nil)
             })
             if let presenter = alertController.popoverPresentationController {
                 presenter.sourceView = sender

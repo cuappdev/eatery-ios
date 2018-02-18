@@ -101,7 +101,7 @@ class MealTableViewController: UITableViewController {
                 cell.titleLabelHeight.isActive = true
             }
             
-            cell.titleLabel.text = title.uppercased()
+            cell.titleLabel.text = title
             cell.contentLabel.attributedText = content
         } else {
             cell.titleLabel.text = "No menu available"

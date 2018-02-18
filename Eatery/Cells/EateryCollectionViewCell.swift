@@ -95,7 +95,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             }
 
             titleLabel.textColor = .darkGray
-            statusLabel.textColor = .gray
+            statusLabel.textColor = .darkGray
             timeLabel.textColor = .gray
             distanceLabel.textColor = .gray
 
