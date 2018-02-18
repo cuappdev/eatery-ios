@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 enum Filter: String {
-    case nearest = "Nearest"
+    case nearest = "Nearest First"
     case north = "North"
     case west = "West"
     case central = "Central"

@@ -350,7 +350,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
         
         if let location = userLocation, filters.contains(.nearest) {
+            eateryData["Favorites"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
             eateryData["Open"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
+            eateryData["Closed"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
         }
     }
     
