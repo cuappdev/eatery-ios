@@ -192,9 +192,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             } else {
                 self.eateries = DataManager.sharedInstance.eateries
                 self.processEateries()
-                let range = Range(uncheckedBounds: (0, self.collectionView.numberOfSections))
-                let indexSet = IndexSet(integersIn: range)
-                self.collectionView.reloadSections(indexSet)
+                self.collectionView.reloadData()
                 self.animateInView()
                 self.pushPreselectedEatery()
             }
@@ -582,8 +580,8 @@ extension EateriesViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.processEateries()
-        self.collectionView.reloadData()
+        processEateries()
+        collectionView.reloadData()
     }
     
     

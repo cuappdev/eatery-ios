@@ -21,7 +21,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var tableView: UITableView!
     fileprivate let sectionHeaderHeight: CGFloat = 56.0
     fileprivate let eateryHeaderHeight: CGFloat = 55.0
-    fileprivate let filterSectionHeight: CGFloat = 148.0
+    fileprivate let filterSectionHeight: CGFloat = 108.0
     fileprivate var filterEateriesCell: FilterEateriesTableViewCell!
     fileprivate var filterMealButtons: [UIButton]!
     fileprivate var filterDateViews: [FilterDateView]!

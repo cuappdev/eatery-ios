@@ -18,7 +18,7 @@ class EateryARDetailCard: UIView {
         layer.shadowRadius = 52.0
         layer.shadowOpacity = 0.5
 
-        topIcon = UIImageView(image: #imageLiteral(resourceName: "blackEateryPin"))
+        topIcon = UIImageView(image: #imageLiteral(resourceName: "locationArrowIcon"))
         topIcon.tintColor = .eateryBlue
         topIcon.contentMode = .scaleAspectFit
         addSubview(topIcon)
@@ -51,7 +51,6 @@ class EateryARDetailCard: UIView {
         statusLabel = UILabel()
         statusLabel.text = "Tap to view more"
         statusLabel.font = .systemFont(ofSize: 18.0, weight: .semibold)
-        statusLabel.textColor = .gray
         addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4.0)
@@ -96,7 +95,7 @@ class EateryARDetailCard: UIView {
             }
 
             titleLabel.textColor = .darkGray
-            statusLabel.textColor = .gray
+            statusLabel.textColor = .darkGray
             timeLabel.textColor = .gray
         }
 
