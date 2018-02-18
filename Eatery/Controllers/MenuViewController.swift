@@ -20,7 +20,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     var delegate: MenuButtonsDelegate?
     let displayedDate: Date
     var selectedMeal: String?
-    var userLocation: CLLocation? = nil
+    var userLocation: CLLocation?
     var navigationTitleView: NavigationTitleView!
 
     var pageViewControllerHeight: CGFloat {

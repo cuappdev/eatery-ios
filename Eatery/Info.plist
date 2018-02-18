@@ -54,8 +54,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Eatery uses your camera to enable Augmented Reality mode.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We would like to display your location on the map.</string>
+	<string>Eatery uses your location to determine how close Eateries are to you and to display it in Augmented Reality.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>org.cuappdev.eatery.view</string>

@@ -64,10 +64,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         createMapButtons()
         
         mapView.setCenter(defaultCoordinate, animated: true)
-
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
