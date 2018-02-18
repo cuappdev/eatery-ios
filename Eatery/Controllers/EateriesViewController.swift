@@ -105,6 +105,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startUserActivity()
+        pushPreselectedEatery()
     }
 
     @available(iOS 11.0, *)

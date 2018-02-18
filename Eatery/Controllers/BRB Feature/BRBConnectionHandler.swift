@@ -117,14 +117,15 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "M/d 'at' h:mm a"
                     entry.description = location
+
                     if transDate.lengthOfBytes(using: .ascii) > 0 && transTime.lengthOfBytes(using: .ascii) > 0 {
                         if let date = formatter1.date(from: transDate + " " + transTime) {
                             entry.description += "\n " + formatter.string(from: date)
                         } else {
-                            entry.description += "\n Unknown date"
-                            Answers.logWarning(message: "Bad date while parsing BRB history entry. Date: [\(transDate)] Time: [\(transTime)]")
+                            entry.description += "\n \(transDate) at \(transTime)"
                         }
                     }
+
                     entry.timestamp = amount.contains("$") ? amount : amount + " swipe"
                     
                     self.diningHistory.append(entry)

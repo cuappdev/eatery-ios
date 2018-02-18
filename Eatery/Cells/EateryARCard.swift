@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import DiningStack
 import Kingfisher
+import CoreLocation
 
 class EateryARCard: UIView {
 
@@ -11,7 +12,7 @@ class EateryARCard: UIView {
     var distanceLabel: UILabel!
     var eatery: Eatery!
 
-    init(frame: CGRect, eatery: Eatery) {
+    init(frame: CGRect, eatery: Eatery, userLocation: CLLocation?) {
         super.init(frame: frame)
 
         self.eatery = eatery
@@ -20,7 +21,7 @@ class EateryARCard: UIView {
 
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .semibold)
-        titleLabel.text = eatery.name
+        titleLabel.text = eatery.nickname
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -78,10 +79,20 @@ class EateryARCard: UIView {
             timeLabel.textColor = .gray
             distanceLabel.textColor = .gray
         }
+
+        update(userLocation: userLocation)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func update(userLocation: CLLocation?) {
+        if let distance = userLocation?.distance(from: eatery.location) {
+            distanceLabel.text = "\(Double(round(10 * distance / metersInMile) / 10)) mi"
+        } else {
+            distanceLabel.text = "-- mi"
+        }
     }
 
 }
