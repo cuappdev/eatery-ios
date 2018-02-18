@@ -24,6 +24,7 @@
 		652BEED91C70E6020079C407 /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		652BEEDA1C70E6240079C407 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		654A7A6620389C350086053B /* EateryARCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A7A6520389C350086053B /* EateryARCard.swift */; };
+		654A7A682038FF050086053B /* EateryARDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A7A672038FF050086053B /* EateryARDetailCard.swift */; };
 		654E37411DEEA738000E4FAB /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E37401DEEA738000E4FAB /* Sort.swift */; };
 		659B216E1C70796600F3B138 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659B216C1C70796600F3B138 /* Interface.storyboard */; };
 		659B21701C70796600F3B138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B216F1C70796600F3B138 /* Assets.xcassets */; };
@@ -141,6 +142,7 @@
 		652AE53C1C707EBC00B7245A /* EateryRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryRowController.swift; sourceTree = "<group>"; };
 		652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInterfaceController.swift; sourceTree = "<group>"; };
 		654A7A6520389C350086053B /* EateryARCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryARCard.swift; sourceTree = "<group>"; };
+		654A7A672038FF050086053B /* EateryARDetailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryARDetailCard.swift; sourceTree = "<group>"; };
 		654E37401DEEA738000E4FAB /* Sort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		659B216A1C70796600F3B138 /* Eatery Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eatery Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659B216D1C70796600F3B138 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				44E4E8F31CD54E3500422867 /* NavigationTitleView.xib */,
 				6502AF861DCFB9ED00390EAA /* FilterBar.swift */,
 				654A7A6520389C350086053B /* EateryARCard.swift */,
+				654A7A672038FF050086053B /* EateryARDetailCard.swift */,
 			);
 			name = Views;
 			path = Cells;
@@ -869,6 +872,7 @@
 				654A7A6620389C350086053B /* EateryARCard.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
+				654A7A682038FF050086053B /* EateryARDetailCard.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
 				F0EFD2461DDBBF9D007D63B1 /* BRBTableViewCell.swift in Sources */,
 				9584FE511CDD6C3B001A3AB5 /* BRBLoginView.swift in Sources */,
