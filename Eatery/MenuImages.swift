@@ -16,18 +16,16 @@ class MenuImages: NSObject {
         let bodyColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
         let categoryHeaderHeight: CGFloat = 30
         let dividerSize: CGFloat = 20
-        let condensedCategoryFont = UIFont.systemFont(ofSize: 11.0)
+        let condensedCategoryFont = UIFont.systemFont(ofSize: 18.0, weight: .bold)
         let condensedBodyFont = UIFont.systemFont(ofSize: 14.0)
-        let condensedBodyFontColor = UIColor.offBlack
+        let condensedBodyFontColor = UIColor.lightGray
         var categoryViews: [UIView] = []
 
         
         if menuIterable.isEmpty {
             // Create header
             let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: 80))
-            let headerString = NSMutableAttributedString(string: "NO MENU INFORMATION AVAILABLE")
-            headerString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, headerString.length))
-            headerLabel.attributedText = headerString
+            headerLabel.text = "No menu information available"
             headerLabel.backgroundColor = bodyColor
             headerLabel.textAlignment = .center
             headerLabel.font = condensedCategoryFont
@@ -66,10 +64,8 @@ class MenuImages: NSObject {
             
             // Create header for category
             let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: categoryHeaderHeight))
-            let headerString = NSMutableAttributedString(string: "   \(categoryName.uppercased())")
-            headerString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, headerString.length))
             headerLabel.backgroundColor = bodyColor
-            headerLabel.attributedText = headerString
+            headerLabel.text = "   \(categoryName)"
             headerLabel.textAlignment = .left
             headerLabel.font = condensedCategoryFont
             headerLabel.textColor = .darkGray

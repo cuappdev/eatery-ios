@@ -8,7 +8,7 @@ protocol TabbedPageViewControllerScrollDelegate: class {
     func scrollViewDidChange()
 }
 
-private let kTabBarHeight: CGFloat = 44
+private let kTabBarHeight: CGFloat = 36.0
 
 class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, TabBarDelegate {
     
@@ -42,8 +42,8 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
             view.addSubview(tabBar)
             tabBar.snp.makeConstraints { make in
                 make.top.equalToSuperview()
-                make.leading.equalToSuperview()
-                make.trailing.equalToSuperview()
+                make.leading.equalToSuperview().inset(20.0)
+                make.trailing.equalToSuperview().inset(20.0)
                 make.height.equalTo(kTabBarHeight)
             }
 
