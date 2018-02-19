@@ -228,8 +228,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             }
             
             cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .gray : .eateryBlue
-            cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
-            
+//            cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
+
             if indexPath.row != (expandedCells.count - 1) {
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
             }

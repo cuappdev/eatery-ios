@@ -42,8 +42,8 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
             view.addSubview(tabBar)
             tabBar.snp.makeConstraints { make in
                 make.top.equalToSuperview()
-                make.leading.equalToSuperview().inset(20.0)
-                make.trailing.equalToSuperview().inset(20.0)
+                make.leading.equalToSuperview().inset(10.0)
+                make.trailing.equalToSuperview().inset(10.0)
                 make.height.equalTo(kTabBarHeight)
             }
 
@@ -120,7 +120,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         if newIndex < currentIndex {
             direction = .reverse
         }
-        pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: true, completion: nil)
+        pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: false, completion: nil)
         
         scrollDelegate?.scrollViewDidChange()
     }

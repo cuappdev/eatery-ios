@@ -53,7 +53,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Eateries"
+        navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
         

@@ -28,13 +28,14 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         
         backgroundColor = .lightBackgroundGray
         layer.cornerRadius = kCornerRadius
+        clipsToBounds = true
     }
     
     func setUp(_ sections: [String]) {
         tabButtons = sections.map { section -> UIButton in
             let tabButton = UIButton()
             tabButton.setTitle(section, for: .normal)
-            tabButton.setTitleColor(.darkGray, for: .normal)
+            tabButton.setTitleColor(.eateryBlue, for: .normal)
             tabButton.setTitleColor(.white, for: .selected)
             tabButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
             tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), for: .touchUpInside)
@@ -55,7 +56,6 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         // Underline
         underlineView = UIView()
         underlineView.backgroundColor = .eateryBlue
-        underlineView.layer.cornerRadius = kCornerRadius
         insertSubview(underlineView, belowSubview: stackView)
         
         tabButtons.first?.isSelected = true
@@ -75,15 +75,12 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     func updateSelectedTabAppearance(_ newIndex: Int) {
         underline(at: newIndex)
 
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-            for tab in self.tabButtons {
-                tab.isSelected = false
-                tab.isUserInteractionEnabled = true
-            }
-            self.tabButtons[newIndex].isSelected = true
-            self.tabButtons[newIndex].isUserInteractionEnabled = false
+        for tab in self.tabButtons {
+            tab.isSelected = false
+            tab.isUserInteractionEnabled = true
         }
+        self.tabButtons[newIndex].isSelected = true
+        self.tabButtons[newIndex].isUserInteractionEnabled = false
     }
     
     @objc func tabButtonPressed(_ sender: UIButton) {
