@@ -20,9 +20,9 @@ Eatery is the first app made by [CUAppDev](http://cuappdev.org), an engineering 
 <img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Dining-Hall-Detail-Screen.png width=290 />
 <img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/apple-watch-screenshots/Cafe-Detail-Screen.png width=290 />
 
-##Development
+## Development
 
-###Installation
+### Installation
 We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
 
 To access the project, run the following:
