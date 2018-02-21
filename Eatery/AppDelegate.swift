@@ -80,11 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       if #available(iOS 9.1, *) {
           //Retrieve favorites and their nicknames
           let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-          let nicknames = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
+          let appendix = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "appendix", withExtension: "json")!)).dictionaryValue
         
           let favoriteNames = slugStrings.reversed().map { slug -> (String, String) in
-              if let nicknameJSON = nicknames[slug] {
-                  return (slug, nicknameJSON["nickname"].arrayValue.first?.stringValue ?? "")
+              if let appendixJSON = appendix[slug] {
+                  return (slug, appendixJSON["nickname"].arrayValue.first?.stringValue ?? "")
               } else {
                   return (slug, slug)
               }

@@ -23,6 +23,20 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        runARView()
+
+        NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { notification in
+            self.dismissARViewController()
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        alertBeta()
+    }
+
+    func runARView() {
         sceneLocationView.locationDelegate = self
         sceneLocationView.run()
         view.addSubview(sceneLocationView)
@@ -34,7 +48,7 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         closeButton.layer.shadowRadius = 18.0
         closeButton.layer.shadowOpacity = 1.0
         closeButton.tintColor = .white
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(dismissARViewController), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(10.0)
@@ -49,6 +63,23 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         }
 
         timer?.fire()
+    }
+
+    func alertBeta() {
+        let alertController = UIAlertController(title: "AR View is in Beta", message: "Please mind the rough edges! Make sure Eatery is allowed access to your Camera and Location Services.", preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { action in
+            if let url = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(url, options: [:]) { success in
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        alertController.addAction(settingsAction)
+
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+
+        present(alertController, animated: true, completion: nil)
     }
 
     override func viewDidLayoutSubviews() {
@@ -71,7 +102,7 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         }
     }
 
-    @objc func closeButtonTapped() {
+    @objc func dismissARViewController() {
         for (_, node) in nodes {
             sceneLocationView.removeLocationNode(locationNode: node)
         }
