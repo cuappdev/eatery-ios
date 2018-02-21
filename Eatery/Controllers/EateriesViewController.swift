@@ -202,10 +202,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                 self.collectionView.reloadData()
                 self.animateInView()
                 self.pushPreselectedEatery()
-
-                for eatery in self.eateries {
-                    print(eatery.nickname, "long: \(eatery.location.coordinate.longitude)", "lat: \(eatery.location.coordinate.latitude)")
-                }
             }
 
             completion?()

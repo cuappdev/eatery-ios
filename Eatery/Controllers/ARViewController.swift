@@ -12,6 +12,7 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     var timer: Timer?
     var userLocation: CLLocation?
     var canUpdateLocation = true
+    var alertedBeta = false
 
     var nearbyState: NearbyState = .none
 
@@ -66,6 +67,9 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     }
 
     func alertBeta() {
+        guard !alertedBeta else { return }
+        alertedBeta = true
+        
         let alertController = UIAlertController(title: "AR View is in Beta", message: "Please mind the rough edges! Make sure Eatery is allowed access to your Camera and Location Services.", preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { action in
             if let url = URL(string: UIApplicationOpenSettingsURLString) {
@@ -137,7 +141,7 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
 
             let scaledImage = UIImage(cgImage: image.cgImage!, scale: 0.1, orientation: image.imageOrientation)
 
-            let location = CLLocation(coordinate: eatery.location.coordinate, altitude: 225)
+            let location = CLLocation(coordinate: eatery.location.coordinate, altitude: eatery.altitude)
 
             let node = LocationAnnotationNode(location: location, image: scaledImage)
             node.scaleRelativeToDistance = true
