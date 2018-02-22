@@ -12,7 +12,7 @@ protocol TabBarDelegate: class {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
-private let kUnderlineHeight: CGFloat = 2
+private let kCornerRadius: CGFloat = 12.0
 
 class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     
@@ -25,18 +25,21 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .white
+        backgroundColor = .lightBackgroundGray
+        layer.cornerRadius = kCornerRadius
+        clipsToBounds = true
     }
     
     func setUp(_ sections: [String]) {
         tabButtons = sections.map { section -> UIButton in
             let tabButton = UIButton()
-            tabButton.setTitle(section, for: UIControlState())
-            tabButton.setTitleColor(.offBlack, for: UIControlState())
-            tabButton.setTitleColor(.eateryBlue, for: .selected)
-            tabButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
+            tabButton.setTitle(section, for: .normal)
+            tabButton.setTitleColor(.eateryBlue, for: .normal)
+            tabButton.setTitleColor(.white, for: .selected)
+            tabButton.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
             tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), for: .touchUpInside)
             tabButton.sizeToFit()
+            tabButton.frame.size.height = frame.height
             return tabButton
         }
 
@@ -51,8 +54,8 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
 
         // Underline
         underlineView = UIView()
-        underlineView.backgroundColor = UIColor.eateryBlue
-        addSubview(underlineView)
+        underlineView.backgroundColor = .eateryBlue
+        insertSubview(underlineView, belowSubview: stackView)
         
         tabButtons.first?.isSelected = true
         underline(at: 0)
@@ -62,23 +65,21 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         let button = tabButtons[index]
 
         underlineView.snp.remakeConstraints { make in
-            make.bottom.equalToSuperview().inset(kUnderlineHeight)
+            make.top.bottom.equalToSuperview()
             make.width.equalTo(button)
             make.centerX.equalTo(button)
-            make.height.equalTo(kUnderlineHeight)
         }
     }
     
     func updateSelectedTabAppearance(_ newIndex: Int) {
         underline(at: newIndex)
 
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-            for tab in self.tabButtons {
-                tab.isSelected = false
-            }
-            self.tabButtons[newIndex].isSelected = true
+        for tab in self.tabButtons {
+            tab.isSelected = false
+            tab.isUserInteractionEnabled = true
         }
+        self.tabButtons[newIndex].isSelected = true
+        self.tabButtons[newIndex].isUserInteractionEnabled = false
     }
     
     @objc func tabButtonPressed(_ sender: UIButton) {

@@ -13,8 +13,7 @@ private let ShortDateFormatter: DateFormatter = {
     formatter.dateFormat = "h:mma"
     return formatter
 }()
-private let kEateryNicknames = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
-private let kEateryLocations = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "locations", withExtension: "json")!)).dictionaryValue
+private let kEateryAppendix = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "appendix", withExtension: "json")!)).dictionaryValue
 
 let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
@@ -148,17 +147,25 @@ extension Eatery {
     }
     
     var nickname: String {
-        guard let nicknameJSON = kEateryNicknames[slug] else {
+        guard let appendixJSON = kEateryAppendix[slug] else {
             return name
         }
-        return nicknameJSON["nickname"].arrayValue.first?.stringValue ?? ""
+        return appendixJSON["nickname"].arrayValue.first?.stringValue ?? ""
     }
     
     func allNicknames() -> [String] {
-        guard let nicknameJSON = kEateryNicknames[slug] else {
+        guard let appendixJSON = kEateryAppendix[slug] else {
             return [name]
         }
-        return nicknameJSON["nickname"].arrayValue.map { $0.string! }
+        return appendixJSON["nickname"].arrayValue.map { $0.string! }
+    }
+
+    var altitude: Double {
+        guard let appendixJSON = kEateryAppendix[slug],
+            let altitude = appendixJSON["altitude"].double else {
+            return 250.0
+        }
+        return altitude
     }
         
 }

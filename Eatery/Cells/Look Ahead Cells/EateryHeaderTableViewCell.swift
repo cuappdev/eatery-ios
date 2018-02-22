@@ -31,11 +31,11 @@ class EateryHeaderTableViewCell: UITableViewCell {
         let tapPoint = sender.location(in: self)
         let hitView = hitTest(tapPoint, with: nil)
         
-        if hitView == moreInfoButton {
-            delegate?.didTapInfoButton!(self)
-        } else {
+//        if hitView == moreInfoButton {
+//            delegate?.didTapInfoButton!(self)
+//        } else {
             delegate?.didTapToggleMenuButton!(self)
-        }
+//        }
     }
     
 }

@@ -112,6 +112,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         let contentContainer = UIView()
         contentContainer.backgroundColor = .white
+        contentContainer.layer.cornerRadius = 16.0
+        contentContainer.clipsToBounds = true
 
         let infoContainer = UIView()
         infoContainer.backgroundColor = .lightBackgroundGray
@@ -219,8 +221,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         // Menu Label
         let menuLabel = UILabel()
         menuLabel.text = "Menu"
-        menuLabel.textColor = .darkGray
-        menuLabel.font = UIFont.boldSystemFont(ofSize: 28.0)
+        menuLabel.textColor = .black
+        menuLabel.font = UIFont.boldSystemFont(ofSize: 32.0)
         contentContainer.addSubview(menuLabel)
 
         menuLabel.snp.makeConstraints { make in
@@ -238,10 +240,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         var meals = sortedEventsDict.map { $0.key }
 
-        if meals.contains("Lite Lunch") {
-            if let index = meals.index(of: "Lite Lunch") {
-                meals.remove(at: index)
-            }
+        if let index = meals.index(of: "Lite Lunch") {
+            meals.remove(at: index)
+        }
+
+        if eatery.eateryType != .Dining {
+            meals = []
         }
         
         // Add a "General" tag so we dont get a crash for eateries that have no events
@@ -306,7 +310,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch scrollView.contentOffset.y {
-        case -CGFloat.greatestFiniteMagnitude..<0:
+        case -CGFloat.greatestFiniteMagnitude..<0.0:
             menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
             menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollView.contentOffset.y)

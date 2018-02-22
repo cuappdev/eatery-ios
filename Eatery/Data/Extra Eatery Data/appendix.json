@@ -1,0 +1,125 @@
+{
+    "104-West": {
+        "nickname": ["104West!"],
+        "altitude": 205
+    },
+    "Amit-Bhatia-Libe-Cafe": {
+        "nickname": ["Libe Café"],
+        "altitude": 243
+    },
+    "Atrium-Cafe": {
+        "nickname": ["Atrium Café", "Sage"],
+        "altitude": 246
+    },
+    "Bear-Necessities": {
+        "nickname": ["Bear Necessities", "Nasties"],
+        "altitude": 261
+    },
+    "Bears-Den": {
+        "nickname": ["Bear's Den", "Bears Den"],
+        "altitude": 238
+    },
+    "Becker-House-Dining": {
+        "nickname": ["Becker House"],
+        "altitude": 204
+    },
+    "Big-Red-Barn": {
+        "nickname": ["Big Red Barn"],
+        "altitude": 264
+    },
+    "Bug-Stop-Bagels": {
+        "nickname": ["Bus Stop Bagels"],
+        "altitude": 268
+    },
+    "Cafe-Jennie": {
+        "nickname": ["Café Jennie"],
+        "altitude": 246
+    },
+    "Carols-Cafe": {
+        "nickname": ["Carol's Café", "Carols Cafe"],
+        "altitude": 250
+    },
+    "Cook-House-Dining": {
+        "nickname": ["Cook House"],
+        "altitude": 204
+    },
+    "Cornell-Dairy-Bar": {
+        "nickname": ["Cornell Dairy Bar"],
+        "altitude": 274
+    },
+    "Goldies-Cafe": {
+        "nickname": ["Goldie's Café", "Goldies Cafe"],
+        "altitude": 263
+    },
+    "Green-Dragon": {
+        "nickname": ["Green Dragon"],
+        "altitude": 248
+    },
+    "Hot-Dog-Cart": {
+        "nickname": ["Hot Dog Cart"],
+        "altitude": 253
+    },
+    "Ivy-Room": {
+        "nickname": ["Ivy Room"],
+        "altitude": 238
+    },
+    "Jansens-Dining": {
+        "nickname": ["Bethe House"],
+        "altitude": 207
+    },
+    "Jansens-Market": {
+        "nickname": ["Jansen's Market", "Jansens Market"],
+        "altitude": 209
+    },
+    "Keeton-House-Dining": {
+        "nickname": ["Keeton House"],
+        "altitude": 202
+    },
+    "Macs": {
+        "nickname": ["Mac's Café"],
+        "altitude": 251
+    },
+    "Marthas-Cafe": {
+        "nickname": ["Martha's Café", "Marthas Cafe"],
+        "altitude": 269
+    },
+    "Mattins-Cafe": {
+        "nickname": ["Mattins Café"],
+        "altitude": 246
+    },
+    "North-Star": {
+        "nickname": ["North Star", "Appel"],
+        "altitude": 266
+    },
+    "Okenshields": {
+        "nickname": ["Okenshields"],
+        "altitude": 238
+    },
+    "Risley-Dining": {
+        "nickname": ["Risley"],
+        "altitude": 242
+    },
+    "RPCC-Marketplace": {
+        "nickname": ["RPCC", "RPME", "Robert Purcell Marketplace Eatery"],
+        "altitude": 265
+    },
+    "Rose-House-Dining": {
+        "nickname": ["Rose House"],
+        "altitude": 206
+    },
+    "Rustys": {
+        "nickname": ["Rusty's", "Rustys"],
+        "altitude": 252
+    },
+    "Sweet-Sensations": {
+        "nickname": ["Sweet Sensations"],
+        "altitude": 266
+    },
+    "Synapsis-Cafe": {
+        "nickname": ["Synapsis Café"]
+    },
+    "Trillium": {
+        "nickname": ["Trillium"],
+        "altitude": 268
+    }
+}

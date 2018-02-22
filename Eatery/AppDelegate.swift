@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
+        UITabBar.appearance().shadowImage = UIImage()
         
         Hero.shared.containerColor = .white
         
@@ -36,19 +37,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         eateriesViewController = EateriesViewController()
 
+
+
         let eateryNavigationController = UINavigationController(rootViewController: eateriesViewController)
         eateryNavigationController.navigationBar.barStyle = .black
-        eateryNavigationController.tabBarItem = UITabBarItem(title: "Eateries", image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
+        eateryNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
 
         let lookAheadNavigationController = UINavigationController(rootViewController: LookAheadViewController())
         lookAheadNavigationController.navigationBar.barStyle = .black
-        lookAheadNavigationController.tabBarItem = UITabBarItem(title: "Menus", image: #imageLiteral(resourceName: "menu icon"), tag: 1)
+        lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "menu icon"), tag: 1)
 
         let brbNavigationController = UINavigationController(rootViewController: BRBViewController())
         brbNavigationController.navigationBar.barStyle = .black
-        brbNavigationController.tabBarItem = UITabBarItem(title: "Meal Plan", image: #imageLiteral(resourceName: "balance"), tag: 2)
+        brbNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "balance"), tag: 2)
         
         let navigationControllers = [eateryNavigationController, lookAheadNavigationController, brbNavigationController]
+        navigationControllers.forEach { $0.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0) }
         tabBarController.setViewControllers(navigationControllers, animated: false)
 
         window?.rootViewController = tabBarController
@@ -76,11 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       if #available(iOS 9.1, *) {
           //Retrieve favorites and their nicknames
           let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-          let nicknames = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "nicknames", withExtension: "json")!)).dictionaryValue
+          let appendix = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "appendix", withExtension: "json")!)).dictionaryValue
         
           let favoriteNames = slugStrings.reversed().map { slug -> (String, String) in
-              if let nicknameJSON = nicknames[slug] {
-                  return (slug, nicknameJSON["nickname"].arrayValue.first?.stringValue ?? "")
+              if let appendixJSON = appendix[slug] {
+                  return (slug, appendixJSON["nickname"].arrayValue.first?.stringValue ?? "")
               } else {
                   return (slug, slug)
               }

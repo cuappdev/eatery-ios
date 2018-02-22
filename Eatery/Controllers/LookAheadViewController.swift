@@ -228,8 +228,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             }
             
             cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .gray : .eateryBlue
-            cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
-            
+//            cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
+
             if indexPath.row != (expandedCells.count - 1) {
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
             }
@@ -357,9 +357,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
         // Update selected date
         for dateView in dateViews {
-            dateView.dayLabel.font = UIFont.systemFont(ofSize: 12.0)
-            dateView.dateLabel.font = UIFont.systemFont(ofSize: 28.0)
-            
             let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 0.7 : 0.3
             dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
             dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
@@ -367,7 +364,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Update selected meal
         for button in buttons {
-            button.titleLabel!.font = UIFont.systemFont(ofSize: 15.0)
             let alpha: CGFloat = button.tag == selectedMealIndex ? 0.7 : 0.3
             button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), for: UIControlState())
         }
@@ -389,7 +385,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     func currentMealIndex() -> Int {
-        let currentHour = (Calendar.current as NSCalendar).component(.hour, from: Date())
+        let currentHour = Calendar.current.component(.hour, from: Date())
         switch currentHour {
         case 0...9: return 0
         case 10...15: return 1

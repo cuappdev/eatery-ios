@@ -19,7 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="235"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xJe-ai-0Pk">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="235"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="251"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="zoJ-85-Vj9">
                             <rect key="frame" x="10" y="186.33333333333334" width="57" height="33.666666666666657"/>
@@ -81,7 +81,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="DY1-y0-s8T" firstAttribute="leading" secondItem="zoJ-85-Vj9" secondAttribute="trailing" constant="10" id="9nD-gR-V7a"/>
-                        <constraint firstAttribute="bottom" secondItem="xJe-ai-0Pk" secondAttribute="bottom" id="AZz-mB-m4Q"/>
+                        <constraint firstAttribute="bottom" secondItem="xJe-ai-0Pk" secondAttribute="bottom" constant="-16" id="AZz-mB-m4Q"/>
                         <constraint firstItem="ZUX-Rh-HSg" firstAttribute="centerY" secondItem="zoJ-85-Vj9" secondAttribute="centerY" id="HRu-N6-fbx"/>
                         <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" id="Hdc-K7-BD2"/>
                         <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="hnu-be-bXz" secondAttribute="top" id="SW9-NB-Ly7"/>

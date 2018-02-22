@@ -20,7 +20,7 @@
 		652AE5401C707EBC00B7245A /* EateryRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53C1C707EBC00B7245A /* EateryRowController.swift */; };
 		652AE5411C707EBC00B7245A /* MenuInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53D1C707EBC00B7245A /* MenuInterfaceController.swift */; };
 		652BEED71C70E5F00079C407 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
-		652BEED81C70E5F70079C407 /* nicknames.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* nicknames.json */; };
+		652BEED81C70E5F70079C407 /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
 		652BEED91C70E6020079C407 /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		652BEEDA1C70E6240079C407 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		654A7A6620389C350086053B /* EateryARCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A7A6520389C350086053B /* EateryARCard.swift */; };
@@ -65,7 +65,7 @@
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
 		E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */; };
 		E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */; };
-		E9CFC0AA1C0E4A3000ED884A /* nicknames.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* nicknames.json */; };
+		E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
 		E9CFC0AE1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0AD1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift */; };
 		E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */; };
 		E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */; };
@@ -198,7 +198,7 @@
 		E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewController.swift; sourceTree = "<group>"; };
 		E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineTabBarView.swift; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9CFC0A81C0E4A3000ED884A /* nicknames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = nicknames.json; path = "Extra Eatery Data/nicknames.json"; sourceTree = "<group>"; };
+		E9CFC0A81C0E4A3000ED884A /* appendix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = appendix.json; path = "Extra Eatery Data/appendix.json"; sourceTree = "<group>"; };
 		E9CFC0AD1C0E545700ED884A /* EateriesCollectionViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateriesCollectionViewHeaderView.xib; sourceTree = "<group>"; };
 		E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
@@ -393,7 +393,7 @@
 		C0497ACB1B64AA1800AC1C6C /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				E9CFC0A81C0E4A3000ED884A /* nicknames.json */,
+				E9CFC0A81C0E4A3000ED884A /* appendix.json */,
 				C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */,
 			);
 			path = Data;
@@ -633,7 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				659B21841C70796600F3B138 /* Assets.xcassets in Resources */,
-				652BEED81C70E5F70079C407 /* nicknames.json in Resources */,
+				652BEED81C70E5F70079C407 /* appendix.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +646,7 @@
 				C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */,
 				44E4E8F51CD54E3500422867 /* NavigationTitleView.xib in Resources */,
 				E9EC97931BFD1BD600D06823 /* EateryCollectionViewCell.xib in Resources */,
-				E9CFC0AA1C0E4A3000ED884A /* nicknames.json in Resources */,
+				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
 				E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */,

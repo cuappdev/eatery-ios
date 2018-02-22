@@ -19,16 +19,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4Q-A5-K5i">
-                        <rect key="frame" x="10" y="0.0" width="300" height="51"/>
+                        <rect key="frame" x="10" y="16" width="300" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="51" id="8IY-x1-spy"/>
+                            <constraint firstAttribute="height" constant="32" id="8IY-x1-spy"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxK-EI-Ui9">
-                        <rect key="frame" x="10" y="51" width="300" height="72.5"/>
+                        <rect key="frame" x="10" y="48" width="300" height="75.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                     <constraint firstAttribute="trailing" secondItem="r4Q-A5-K5i" secondAttribute="trailing" constant="10" id="52e-2s-Ihd"/>
                     <constraint firstAttribute="bottom" secondItem="kxK-EI-Ui9" secondAttribute="bottom" id="HfE-2J-Ldh"/>
                     <constraint firstAttribute="trailing" secondItem="kxK-EI-Ui9" secondAttribute="trailing" constant="10" id="jRy-nk-XQj"/>
-                    <constraint firstItem="r4Q-A5-K5i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="meh-XD-DUY"/>
+                    <constraint firstItem="r4Q-A5-K5i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="meh-XD-DUY"/>
                     <constraint firstItem="r4Q-A5-K5i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="y3P-iA-v3H"/>
                     <constraint firstItem="kxK-EI-Ui9" firstAttribute="top" secondItem="r4Q-A5-K5i" secondAttribute="bottom" id="ygh-x6-LH0"/>
                     <constraint firstItem="kxK-EI-Ui9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="yjZ-dZ-kME"/>

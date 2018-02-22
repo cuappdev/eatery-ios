@@ -40,6 +40,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     enum Animation: String {
         case backgroundImageView = "backgroundImage"
         case title = "title"
+        case starIcon = "starIcon"
         case paymentContainer = "paymentContainer"
         case distanceLabel = "distanceLabel"
         case infoContainer = "infoContainer"
@@ -52,7 +53,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Eateries"
+        navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
         
@@ -67,6 +68,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.isHidden = true
         searchBar.alpha = 0.0
         filterBar.alpha = 0.0
+
+        let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(mapButtonPressed))
+        mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
 
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -83,7 +87,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             self.appDevLogo = logo
 
             let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-            navigationItem.leftBarButtonItem = arButton
+            navigationItem.rightBarButtonItems = [mapButton, UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton]
+        } else {
+            navigationItem.rightBarButtonItems = [mapButton]
         }
 
         if CLLocationManager.locationServicesEnabled() {
@@ -100,9 +106,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
-        
-        let mapButton = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(mapButtonPressed))
-        navigationItem.rightBarButtonItem = mapButton
 
         createUpdateTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -112,6 +115,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         super.viewDidAppear(animated)
         startUserActivity()
         pushPreselectedEatery()
+    }
+
+    @objc func appDevButtonPressed() {
+
     }
 
     @available(iOS 11.0, *)
@@ -409,7 +416,8 @@ extension EateriesViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let showFavorites = (eateryData["Favorites"] ?? []).isEmpty ? 0 : 1
         let showOpens = (eateryData["Open"] ?? []).isEmpty ? 0 : 1
-        return 1 + showFavorites + showOpens
+        let showClosed = (eateryData["Closed"] ?? []).isEmpty ? 0 : 1
+        return showFavorites + showOpens + showClosed
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -463,8 +471,6 @@ extension EateriesViewController: UICollectionViewDataSource {
         if section == "Favorites" {
             view.titleLabel.text = "Favorites"
             view.titleLabel.textColor = .black
-            view.starIcon.tintColor = .black
-            view.starIcon.isHidden = false
         } else if section == "Open" {
             if eateries.isEmpty {
                 view.titleLabel.text = ""
@@ -473,7 +479,6 @@ extension EateriesViewController: UICollectionViewDataSource {
                 view.titleLabel.text = "Open"
                 view.titleLabel.textColor = .eateryBlue
             }
-            view.starIcon.isHidden = true
         } else if section == "Closed" {
             if eateries.isEmpty {
                 view.titleLabel.text = ""
@@ -482,7 +487,6 @@ extension EateriesViewController: UICollectionViewDataSource {
             }
 
             view.titleLabel.textColor = .gray
-            view.starIcon.isHidden = true
         }
 
         return view

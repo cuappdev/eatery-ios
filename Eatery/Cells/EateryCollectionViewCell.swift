@@ -83,8 +83,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
             statusLabel.text = "Open"
             statusLabel.textColor = .eateryBlue
             timeLabel.text = message
-            timeLabel.textColor = .gray
-            distanceLabel.textColor = .darkGray
+            timeLabel.textColor = .lightGray
+            distanceLabel.textColor = .lightGray
         case .closed(let message):
             if !eatery.isOpenToday() {
                 statusLabel.text = "Closed Today"
@@ -96,8 +96,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
             titleLabel.textColor = .darkGray
             statusLabel.textColor = .darkGray
-            timeLabel.textColor = .gray
-            distanceLabel.textColor = .gray
+            timeLabel.textColor = .lightGray
+            distanceLabel.textColor = .lightGray
 
             let closedView = UIView()
             closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)

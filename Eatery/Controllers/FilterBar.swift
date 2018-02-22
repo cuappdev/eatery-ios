@@ -70,7 +70,7 @@ class FilterBar: UIView {
 
             button.layer.cornerRadius = 8.0
             button.clipsToBounds = true
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
             button.sizeToFit()
             button.frame.size.width += 16.0
             button.frame.size.height = frame.height

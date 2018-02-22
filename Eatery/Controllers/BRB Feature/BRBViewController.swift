@@ -22,7 +22,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Meal Plan"
+        navigationItem.title = "Meal Plan"
 
         view.backgroundColor = .white
         

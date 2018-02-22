@@ -15,35 +15,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a5k-wW-POb">
-                    <rect key="frame" x="16" y="53" width="0.0" height="0.0"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a5k-wW-POb">
+                    <rect key="frame" x="16" y="27.5" width="288" height="26"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goldStar" translatesAutoresizingMaskIntoConstraints="NO" id="gN4-c6-Tjw">
-                    <rect key="frame" x="24" y="44.5" width="18" height="18"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="18" id="PbG-jo-lVX"/>
-                        <constraint firstAttribute="width" constant="18" id="eJ3-mv-hp9"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="a5k-wW-POb" secondAttribute="bottom" constant="10" id="hOi-OM-c1J"/>
+                <constraint firstAttribute="trailing" secondItem="a5k-wW-POb" secondAttribute="trailing" constant="16" id="l4O-te-WFr"/>
                 <constraint firstItem="a5k-wW-POb" firstAttribute="leading" secondItem="QOJ-fU-Qfd" secondAttribute="leading" constant="16" id="piR-lL-5ZI"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gN4-c6-Tjw" secondAttribute="trailing" constant="16" id="qjd-N8-Ycn"/>
-                <constraint firstItem="gN4-c6-Tjw" firstAttribute="centerY" secondItem="a5k-wW-POb" secondAttribute="centerY" id="twS-Dr-62t"/>
-                <constraint firstItem="gN4-c6-Tjw" firstAttribute="leading" secondItem="a5k-wW-POb" secondAttribute="trailing" constant="8" id="ysI-j1-fyw"/>
             </constraints>
             <connections>
-                <outlet property="starIcon" destination="gN4-c6-Tjw" id="UCA-Gj-OKE"/>
                 <outlet property="titleLabel" destination="a5k-wW-POb" id="TEF-Fu-ear"/>
             </connections>
             <point key="canvasLocation" x="239" y="505.5"/>
         </collectionReusableView>
     </objects>
-    <resources>
-        <image name="goldStar" width="28" height="27"/>
-    </resources>
 </document>
