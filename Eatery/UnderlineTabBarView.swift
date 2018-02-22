@@ -12,7 +12,6 @@ protocol TabBarDelegate: class {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
-private let kUnderlineHeight: CGFloat = 2
 private let kCornerRadius: CGFloat = 12.0
 
 class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
@@ -37,7 +36,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
             tabButton.setTitle(section, for: .normal)
             tabButton.setTitleColor(.eateryBlue, for: .normal)
             tabButton.setTitleColor(.white, for: .selected)
-            tabButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: .medium)
+            tabButton.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
             tabButton.addTarget(self, action: #selector(UnderlineTabBarView.tabButtonPressed(_:)), for: .touchUpInside)
             tabButton.sizeToFit()
             tabButton.frame.size.height = frame.height

@@ -8,7 +8,7 @@ protocol TabbedPageViewControllerScrollDelegate: class {
     func scrollViewDidChange()
 }
 
-private let kTabBarHeight: CGFloat = 36.0
+private let kTabBarHeight: CGFloat = 32.0
 
 class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, TabBarDelegate {
     

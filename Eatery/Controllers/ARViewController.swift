@@ -69,7 +69,7 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     func alertBeta() {
         guard !alertedBeta else { return }
         alertedBeta = true
-        
+
         let alertController = UIAlertController(title: "AR View is in Beta", message: "Please mind the rough edges! Make sure Eatery is allowed access to your Camera and Location Services.", preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { action in
             if let url = URL(string: UIApplicationOpenSettingsURLString) {

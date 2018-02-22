@@ -240,10 +240,12 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         var meals = sortedEventsDict.map { $0.key }
 
-        if meals.contains("Lite Lunch") {
-            if let index = meals.index(of: "Lite Lunch") {
-                meals.remove(at: index)
-            }
+        if let index = meals.index(of: "Lite Lunch") {
+            meals.remove(at: index)
+        }
+
+        if eatery.eateryType != .Dining {
+            meals = []
         }
         
         // Add a "General" tag so we dont get a crash for eateries that have no events
