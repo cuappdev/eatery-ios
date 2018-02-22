@@ -71,6 +71,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
         let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(mapButtonPressed))
         mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
+        navigationItem.rightBarButtonItems = [mapButton]
 
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -86,8 +87,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
             self.appDevLogo = logo
 
-            let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-            navigationItem.rightBarButtonItems = [mapButton, UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton]
+            if ARViewController.isSupported() {
+                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
+                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
+            }
         } else {
             navigationItem.rightBarButtonItems = [mapButton]
         }

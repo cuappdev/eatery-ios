@@ -1,5 +1,6 @@
 import UIKit
 import ARCL
+import ARKit
 import SceneKit
 import CoreLocation
 import DiningStack
@@ -19,6 +20,10 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     enum NearbyState {
         case nearby(eatery: Eatery, detailCard: EateryARDetailCard)
         case none
+    }
+
+    static func isSupported() -> Bool {
+        return ARWorldTrackingConfiguration.isSupported
     }
 
     override func viewDidLoad() {
