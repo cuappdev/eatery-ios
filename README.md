@@ -4,7 +4,7 @@
 
 <p align="center"><img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/Eatery-Long-Logo.png width=500 /></p>
 
-Eatery is the first app made by [CUAppDev](http://cuappdev.org), an engineering project team at Cornell University focused on mobile app development. Eatery provides an easy and accessible way to browse the hours/menus of the dining locations on campus as well as keep track of your dining history. You can view our [release notes](RELEASENOTES.md) to learn more about the progress of Eatery. Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/id1089672962).
+Eatery is the first app made by [AppDev](http://cornellappdev.com/), an engineering project team at Cornell University focused on mobile app development. Eatery provides an easy and accessible way to browse the hours/menus of the dining locations on campus as well as keep track of your dining history. Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/id1089672962).
 
 ## Screenshots
 ### iPhone
