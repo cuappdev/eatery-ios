@@ -4,7 +4,7 @@
 
 <p align="center"><img src=https://raw.githubusercontent.com/cuappdev/assets/master/eatery/Eatery-Long-Logo.png width=500 /></p>
 
-Eatery is the first app made by [AppDev](http://cornellappdev.com/), an engineering project team at Cornell University focused on mobile app development. Eatery provides an easy and accessible way to browse the hours/menus of the dining locations on campus as well as keep track of your dining history. Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/id1089672962)
+Eatery was the first app made by [AppDev](http://cornellappdev.com/), an engineering project team at Cornell University focused on mobile app development. Eatery provides an easy and accessible way to browse the hours/menus of the dining locations on campus as well as keep track of your dining history. Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/id1089672962)
 
 ## Development
 
@@ -14,7 +14,7 @@ We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should
 To access the project, clone the project, and run `pod install` in the project directory.
 
 ### 2. Configuration
-We use Fabric and Crashlytics for our user analytics. To run the project without a Fabric account, comment out this line in `AppDelegate.swift`:
+We use [Fabric](https://fabric.io) and Crashlytics for our user analytics. To run the project without a Fabric account, comment out this line in `AppDelegate.swift`:
 ```swift
 Crashlytics.start(withAPIKey: Keys.fabricAPIKey.value)
 ```
