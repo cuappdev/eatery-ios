@@ -58,8 +58,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         view.backgroundColor = .white
         
         navigationController?.view.backgroundColor = .white
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
+        navigationController?.hero.isEnabled = true
+        navigationController?.hero.navigationAnimationType = .fade
 
         setupLoadingView()
         setupBars()
@@ -433,13 +433,13 @@ extension EateriesViewController: UICollectionViewDataSource {
         let eatery = self.eatery(for: indexPath)
         cell.set(eatery: eatery, userLocation: userLocation)
 
-        cell.backgroundImageView.heroID = Animation.backgroundImageView.id(eatery: eatery)
-        cell.titleLabel.heroID = Animation.title.id(eatery: eatery)
-        cell.timeLabel.heroModifiers = [.useGlobalCoordinateSpace, .fade]
-        cell.statusLabel.heroModifiers = [.useGlobalCoordinateSpace, .fade]
-        cell.distanceLabel.heroID = Animation.distanceLabel.id(eatery: eatery)
-        cell.paymentContainer.heroID = Animation.paymentContainer.id(eatery: eatery)
-        cell.infoContainer.heroID = Animation.infoContainer.id(eatery: eatery)
+        cell.backgroundImageView.hero.id = Animation.backgroundImageView.id(eatery: eatery)
+        cell.titleLabel.hero.id = Animation.title.id(eatery: eatery)
+        cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
+        cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
+        cell.distanceLabel.hero.id = Animation.distanceLabel.id(eatery: eatery)
+        cell.paymentContainer.hero.id = Animation.paymentContainer.id(eatery: eatery)
+        cell.infoContainer.hero.id = Animation.infoContainer.id(eatery: eatery)
 
         if searchBar.text != "" {
             if let names = searchedMenuItemNames[eatery] {

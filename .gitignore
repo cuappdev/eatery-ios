@@ -1,3 +1,5 @@
+Secrets/
+
 build/
 *.pbxuser
 !default.pbxuser

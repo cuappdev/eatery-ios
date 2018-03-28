@@ -34,6 +34,8 @@
 		659B21841C70796600F3B138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B21831C70796600F3B138 /* Assets.xcassets */; };
 		659B21881C70796600F3B138 /* Eatery Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 659B216A1C70796600F3B138 /* Eatery Watch App.app */; };
 		65C36A722037D058005D8831 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C36A712037D058005D8831 /* ARViewController.swift */; };
+		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
+		65E9317B206C19A200547D14 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65E9317A206C19A200547D14 /* Keys.plist */; };
 		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
 		9584FE4E1CDD6C3B001A3AB5 /* BRBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */; };
@@ -155,6 +157,8 @@
 		659B21831C70796600F3B138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		659B21851C70796600F3B138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65C36A712037D058005D8831 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		65E93178206C186B00547D14 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		65E9317A206C19A200547D14 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Keys.plist; path = Secrets/Keys.plist; sourceTree = SOURCE_ROOT; };
 		6E8A627AA2A6DA1D7BB83A8E /* Pods_Eatery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
@@ -378,6 +382,8 @@
 				42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */,
 				E99C63E91B6EDE12000A5886 /* Info.plist */,
 				9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */,
+				65E93178206C186B00547D14 /* Keys.swift */,
+				65E9317A206C19A200547D14 /* Keys.plist */,
 				95495D2D1C0AA0790015B85E /* MenuImages.swift */,
 				E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */,
 				1D10A4151C67FF0C00772D31 /* Controllers */,
@@ -650,6 +656,7 @@
 				D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
 				E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */,
+				65E9317B206C19A200547D14 /* Keys.plist in Resources */,
 				E9EC97971BFD31BC00D06823 /* MenuHeaderView.xib in Resources */,
 				D102463D1C7A3239000D5CD8 /* EateryMenuTableViewCell.xib in Resources */,
 				D10246351C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib in Resources */,
@@ -756,7 +763,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 50d77fbd594f6229f8bb9a3669ce18dce7dac38e 0f35fd962076cda8200e58ca1763bfa75f7f2d5942bcdbad450417d0b01a3739";
+			shellScript = "FABRIC_API_KEY=$(/usr/libexec/PlistBuddy -c \"Print :fabric-api-key\" \"${PROJECT_DIR}/Secrets/Keys.plist\")\nFABRIC_BUILD_SECRET=$(/usr/libexec/PlistBuddy -c \"Print :fabric-build-secret\" \"${PROJECT_DIR}/Secrets/Keys.plist\")\n\"${PODS_ROOT}/Fabric/run\" $FABRIC_API_KEY $FABRIC_BUILD_SECRET";
 		};
 		C5E0BBD5F13466B5292E8062 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -853,6 +860,7 @@
 				D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */,
 				D10246341C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift in Sources */,
 				65C36A722037D058005D8831 /* ARViewController.swift in Sources */,
+				65E93179206C186B00547D14 /* Keys.swift in Sources */,
 				E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */,
 				E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */,
 				E9EC97921BFD1BD600D06823 /* EateryCollectionViewCell.swift in Sources */,
@@ -937,6 +945,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -985,6 +994,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1034,6 +1044,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1083,6 +1094,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1093,7 +1105,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1105,7 +1116,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1115,7 +1126,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1152,7 +1162,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1163,7 +1173,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1200,7 +1209,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1211,7 +1220,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E418A28B1A4C3F8781B50F84 /* Pods-Eatery Watch App Extension.app store.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1248,7 +1256,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;

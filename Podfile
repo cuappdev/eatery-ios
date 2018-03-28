@@ -8,12 +8,12 @@ target 'Eatery' do
   platform :ios, '9.0'
 
   pod 'SwiftyJSON'
-  pod 'SnapKit', '~> 3.2.0'
+  pod 'SnapKit'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Hero'
   pod 'ARCL'
-  pod 'Kingfisher', '~> 3.13.1'
+  pod 'Kingfisher'
   pod 'NVActivityIndicatorView'
   shared_pods
 end
@@ -26,12 +26,4 @@ end
 target 'Eatery Watch App Extension' do
   platform :watchos, '2.0'
   shared_pods
-end
-
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '3.0'
-        end
-    end
 end

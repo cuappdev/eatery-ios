@@ -28,14 +28,7 @@ class EateryHeaderTableViewCell: UITableViewCell {
     }
     
     @objc func eateryHeaderCellPressed(_ sender: UITapGestureRecognizer) {
-        let tapPoint = sender.location(in: self)
-        let hitView = hitTest(tapPoint, with: nil)
-        
-//        if hitView == moreInfoButton {
-//            delegate?.didTapInfoButton!(self)
-//        } else {
-            delegate?.didTapToggleMenuButton!(self)
-//        }
+        delegate?.didTapToggleMenuButton?(self)
     }
     
 }

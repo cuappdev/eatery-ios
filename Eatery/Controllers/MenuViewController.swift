@@ -287,25 +287,25 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         scrollToCurrentTimeOpening(displayedDate)
 
         // Hero Animations
-        isHeroEnabled = true
-        menuHeaderView.backgroundImageView.heroID = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
-        menuHeaderView.titleLabel.heroID = EateriesViewController.Animation.title.id(eatery: eatery)
-        distanceLabel.heroID = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
-        menuHeaderView.paymentContainer.heroID = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
-        contentContainer.heroID = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
+        hero.isEnabled = true
+        menuHeaderView.backgroundImageView.hero.id = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.titleLabel.hero.id = EateriesViewController.Animation.title.id(eatery: eatery)
+        distanceLabel.hero.id = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
+        menuHeaderView.paymentContainer.hero.id = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
+        contentContainer.hero.id = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
 
         let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
         let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]
 
-        menuHeaderView.favoriteButton.heroModifiers = fadeModifiers
-        timeImageView.heroModifiers = fadeModifiers
-        hoursLabel.heroModifiers = fadeModifiers
-        statusLabel.heroModifiers = fadeModifiers
-        locationImageView.heroModifiers = fadeModifiers
-        locationLabel.heroModifiers = fadeModifiers
-        directionsButton.heroModifiers = fadeModifiers
-        menuLabel.heroModifiers = translateModifiers
-        pageViewController.view.heroModifiers = translateModifiers
+        menuHeaderView.favoriteButton.hero.modifiers = fadeModifiers
+        timeImageView.hero.modifiers = fadeModifiers
+        hoursLabel.hero.modifiers = fadeModifiers
+        statusLabel.hero.modifiers = fadeModifiers
+        locationImageView.hero.modifiers = fadeModifiers
+        locationLabel.hero.modifiers = fadeModifiers
+        directionsButton.hero.modifiers = fadeModifiers
+        menuLabel.hero.modifiers = translateModifiers
+        pageViewController.view.hero.modifiers = translateModifiers
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
