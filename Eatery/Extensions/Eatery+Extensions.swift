@@ -4,8 +4,8 @@ import SwiftyJSON
 import UIKit
 
 enum EateryStatus {
-    case open(String)
-    case closed(String)
+    case open(String, String)
+    case closed(String, String)
 }
 
 private let ShortDateFormatter: DateFormatter = {
@@ -83,26 +83,29 @@ extension Eatery {
     // Bool value is either stable or about to change
     func generateDescriptionOfCurrentState() -> EateryStatus {
         if isOpenToday() {
-            guard let activeEvent = activeEventForDate(Date()) else { return .closed("Closed") }
+            guard let activeEvent = activeEventForDate(Date()) else {
+                return .closed("Closed", "")
+            }
+            
             if activeEvent.occurringOnDate(Date()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
-                    return .open("Closing in \(minutesTillClose+1)m")
+                    return .open("Closing", "in \(minutesTillClose+1)m")
                 } else {
                     let timeString = ShortDateFormatter.string(from: activeEvent.endDate)
-                    return .open("Closes at \(timeString)")
+                    return .open("Open", "until \(timeString)")
                 }
             } else {
                 let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                 if minutesTillOpen < 60 {
-                    return .closed("Opens in \(minutesTillOpen+1)m")
+                    return .closed("Opening", "in \(minutesTillOpen+1)m")
                 } else {
                     let timeString = ShortDateFormatter.string(from: activeEvent.startDate)
-                    return .closed("Opens at \(timeString)")
+                    return .closed("Closed", "until \(timeString)")
                 }
             }
         } else {
-            return .closed("Closed")
+            return .closed("Closed Today", "")
         }
     }
     

@@ -141,7 +141,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 4
+            return connectionHandler.accountBalance.swipes != "" ? 4 : 3
         }
         return diningHistory.count
     }
@@ -157,17 +157,17 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
             
             switch indexPath.row {
             case 0:
-                cell.leftLabel.text = " BRBs"
-                cell.rightLabel.text = "$" + connectionHandler.accountBalance.brbs
-            case 1:
-                cell.leftLabel.text = " Meal Swipes"
-                cell.rightLabel.text = connectionHandler.accountBalance.swipes
-            case 2:
                 cell.leftLabel.text = " City Bucks"
                 cell.rightLabel.text = "$" + connectionHandler.accountBalance.cityBucks
-            case 3:
+            case 1:
                 cell.leftLabel.text = " Laundry"
                 cell.rightLabel.text = "$" + connectionHandler.accountBalance.laundry
+            case 2:
+                cell.leftLabel.text = " BRBs"
+                cell.rightLabel.text = "$" + connectionHandler.accountBalance.brbs
+            case 3 where connectionHandler.accountBalance.swipes != "":
+                cell.leftLabel.text = " Meal Swipes"
+                cell.rightLabel.text = connectionHandler.accountBalance.swipes
             default: break
             }
         } else {

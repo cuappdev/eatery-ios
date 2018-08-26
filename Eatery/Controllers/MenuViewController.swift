@@ -140,24 +140,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         infoContainer.addSubview(hoursLabel)
         hoursLabel.snp.makeConstraints { make in
             make.centerY.equalTo(statusLabel)
-            make.leading.equalTo(statusLabel.snp.trailing).offset(4.0)
+            make.leading.equalTo(statusLabel.snp.trailing).offset(2.0)
         }
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .open(let message):
-            timeImageView.tintColor = .eateryBlue
+        case let .open(status, message):
+            statusLabel.text = status
             hoursLabel.text = message
-            statusLabel.text = "Open"
+            
+            timeImageView.tintColor = .eateryBlue
             statusLabel.textColor = .eateryBlue
-        case .closed(let message):
-            if !eatery.isOpenToday() {
-                statusLabel.text = "Closed Today"
-                hoursLabel.text = ""
-            } else {
-                statusLabel.text = "Closed"
-                hoursLabel.text = message
-            }
+        case let .closed(status, message):
+            statusLabel.text = status
+            hoursLabel.text = message
 
             timeImageView.tintColor = .gray
             statusLabel.textColor = .darkGray

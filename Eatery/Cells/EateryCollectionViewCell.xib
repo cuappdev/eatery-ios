@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -71,7 +71,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Closes at 11:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-9C-mAO">
-                                <rect key="frame" x="75" y="30" width="110.5" height="14.5"/>
+                                <rect key="frame" x="73" y="30" width="110.5" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -98,7 +98,7 @@
                             <constraint firstItem="2Bk-9C-mAO" firstAttribute="baseline" secondItem="lKF-KZ-pvV" secondAttribute="firstBaseline" id="8Ot-sY-wSc"/>
                             <constraint firstItem="lKF-KZ-pvV" firstAttribute="leading" secondItem="15K-gp-bKu" secondAttribute="leading" id="MOf-BZ-CUl"/>
                             <constraint firstItem="15K-gp-bKu" firstAttribute="leading" secondItem="HoN-He-Rpa" secondAttribute="leading" constant="10" id="RVC-vY-LDl"/>
-                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" secondItem="lKF-KZ-pvV" secondAttribute="trailing" constant="4" id="dbO-VA-Kym"/>
+                            <constraint firstItem="2Bk-9C-mAO" firstAttribute="leading" secondItem="lKF-KZ-pvV" secondAttribute="trailing" constant="2" id="dbO-VA-Kym"/>
                             <constraint firstAttribute="trailing" secondItem="4r4-Ps-Xll" secondAttribute="trailing" constant="10" id="fI0-SQ-N5M"/>
                             <constraint firstItem="15K-gp-bKu" firstAttribute="top" secondItem="HoN-He-Rpa" secondAttribute="top" constant="10" id="fs4-1W-r5I"/>
                             <constraint firstAttribute="bottom" secondItem="lKF-KZ-pvV" secondAttribute="bottom" constant="10" id="grM-7m-eKz"/>

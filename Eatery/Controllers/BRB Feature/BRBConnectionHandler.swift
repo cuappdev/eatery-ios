@@ -28,15 +28,18 @@ protocol BRBConnectionDelegate {
     func loginFailed(with error: String)
 }
 
+let loginURLString = "https://get.cbord.com/cornell/full/login.php"
+let fundsHomeURLString = "https://get.cbord.com/cornell/full/funds_home.php"
+let diningHistoryURLString = "https://get.cbord.com/cornell/full/history.php"
+let updateProfileURLString = "https://get.cbord.com/cornell/full/update_profile.php"
+let maxTrials = 3
+let trialDelay = 500
+
 class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
     var stage: Stages = .loginScreen
     var accountBalance: AccountBalance!
     var diningHistory: [HistoryEntry] = []
-    let loginURLString = "https://get.cbord.com/cornell/full/login.php"
-    let fundsHomeURLString = "https://get.cbord.com/cornell/full/funds_home.php"
-    let diningHistoryURLString = "https://get.cbord.com/cornell/full/history.php"
-    let updateProfileURLString = "https://get.cbord.com/cornell/full/update_profile.php"
     var loginCount = 0
     var netid: String = ""
     var password: String = ""
@@ -162,7 +165,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
      - Does not guarantee that the javascript has finished executing before trying to get account info.
      
      */
-    func getAccountBalance() {
+    func getAccountBalance(trials: Int = maxTrials) {
         getHTML { (html: NSString) -> () in
             self.accountBalance = AccountBalance()
             let brbHTMLRegex = "<td class=\\\"first-child account_name\\\">BRB.*<\\/td><td class=\\\"last-child balance\">\\$[0-9]+.[0-9][0-9]<\\/td>"
@@ -179,17 +182,23 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 let laundry = self.parseHTML(html, laundryHTMLRegex, moneyRegex)
                 let swipes = self.parseHTML(html, swipesHTMLRegex, swipesRegex)
                 
-                if brbs == "" {
-                    self.getAccountBalance()
+                // Funds does not load immediately
+                // Try again with delay until trials run out
+                if brbs == "" && city == "" && laundry == "" && swipes == "" && trials > 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(trialDelay)) {
+                        self.getAccountBalance(trials: trials - 1)
+                    }
                     return
                 }
+                
+                print("Done after \(maxTrials + 1 - trials) trials")
                 
                 self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
                 self.accountBalance.cityBucks = city != "" ? city : "0.00"
                 self.accountBalance.laundry = laundry != "" ? laundry : "0.00"
-                self.accountBalance.swipes = swipes != "" ? String(swipes[swipes.index(after: swipes.startIndex)..<swipes.index(before: swipes.endIndex)]) : "Unlimited"
+                self.accountBalance.swipes = swipes != "" ? String(swipes[swipes.index(after: swipes.startIndex)..<swipes.index(before: swipes.endIndex)]) : ""
 
-                let historyURL = URL(string: self.diningHistoryURLString)!
+                let historyURL = URL(string: diningHistoryURLString)!
                 self.load(URLRequest(url: historyURL))
             }
         }
@@ -228,7 +237,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.delegate?.loginFailed(with: error.localizedDescription)
             } else {
                 if self.failedToLogin() {
-                    if self.url?.absoluteString == self.updateProfileURLString {
+                    if self.url?.absoluteString == updateProfileURLString {
                         self.delegate?.loginFailed(with: "Account needs to be updated")
                     }
                     self.delegate?.loginFailed(with: "Incorrect netid and/or password")
@@ -268,13 +277,13 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         getHTML(block: { (html: NSString) -> () in
             if self.failedToLogin() {
                 self.stage = .loginFailed
-            } else if self.url!.absoluteString.contains(self.updateProfileURLString) {
+            } else if self.url!.absoluteString.contains(updateProfileURLString) {
                 self.stage = .loginFailed
             } else if html.contains("<h1>CUWebLogin</h1>") {
                 self.stage = .loginScreen
-            } else if self.url!.absoluteString == self.fundsHomeURLString {
+            } else if self.url!.absoluteString == fundsHomeURLString {
                 self.stage = .fundsHome
-            } else if self.url!.absoluteString == self.diningHistoryURLString {
+            } else if self.url!.absoluteString == diningHistoryURLString {
                 self.stage = .diningHistory
             } else {
                 self.stage = .transition

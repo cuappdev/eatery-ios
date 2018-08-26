@@ -58,21 +58,17 @@ class EateryARCard: UIView {
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .open(let message):
-            titleLabel.textColor = .black
-            statusLabel.text = "Open"
-            statusLabel.textColor = .eateryBlue
+        case let .open(status, message):
+            statusLabel.text = status
             timeLabel.text = message
+            
+            titleLabel.textColor = .black
+            statusLabel.textColor = .eateryBlue
             timeLabel.textColor = .gray
             distanceLabel.textColor = .darkGray
-        case .closed(let message):
-            if !eatery.isOpenToday() {
-                statusLabel.text = "Closed Today"
-                timeLabel.text = ""
-            } else {
-                statusLabel.text = "Closed"
-                timeLabel.text = message
-            }
+        case let .closed(status, message):
+            statusLabel.text = status
+            timeLabel.text = message
 
             titleLabel.textColor = .darkGray
             statusLabel.textColor = .darkGray

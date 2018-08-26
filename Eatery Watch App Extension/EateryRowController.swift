@@ -11,17 +11,12 @@ class EateryRowController: NSObject {
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .open(let message):
+        case let .open(status, message):
             statusSeparator.setColor(UIColor.openTextGreen)
-            timeLabel.setText(message)
-        case .closed(let message):
+            timeLabel.setText(status + " " + message)
+        case let .closed(status, message):
             statusSeparator.setColor(UIColor.titleDarkGray)
-            if message == "Closed" {
-                timeLabel.setText("Closed")
-                timeLabel.setTextColor(UIColor.titleDarkGray)
-            } else {
-                timeLabel.setText(message)
-            }
+            timeLabel.setText(status + " " + message)
         }
     }
 }

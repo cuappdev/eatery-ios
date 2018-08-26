@@ -36,12 +36,6 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        alertBeta()
-    }
-
     func runARView() {
         sceneLocationView.locationDelegate = self
         sceneLocationView.run()
@@ -69,26 +63,6 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         }
 
         timer?.fire()
-    }
-
-    func alertBeta() {
-        guard !alertedBeta else { return }
-        alertedBeta = true
-
-        let alertController = UIAlertController(title: "AR View is in Beta", message: "Please mind the rough edges! Make sure Eatery is allowed access to your Camera and Location Services.", preferredStyle: .alert)
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { action in
-            if let url = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.open(url, options: [:]) { success in
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-        }
-        alertController.addAction(settingsAction)
-
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(okAction)
-
-        present(alertController, animated: true, completion: nil)
     }
 
     override func viewDidLayoutSubviews() {

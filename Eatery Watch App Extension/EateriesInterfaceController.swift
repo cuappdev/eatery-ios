@@ -61,16 +61,20 @@ class EateriesInterfaceController: WKInterfaceController {
             let bState = b.generateDescriptionOfCurrentState()
             
             switch aState {
-            case .open(_):
+            case let .open:
                 switch bState {
-                case .open(_):  return a.nickname <= b.nickname
-                default:        return true
+                case .open:
+                    return a.nickname <= b.nickname
+                default:
+                    return true
                 }
                 
-            case .closed(_):
+            case .closed:
                 switch bState {
-                case .closed(_):return a.nickname <= b.nickname
-                default:        return false
+                case .closed:
+                    return a.nickname <= b.nickname
+                default:
+                    return false
                 }
             }
         }
