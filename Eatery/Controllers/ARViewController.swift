@@ -31,8 +31,8 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
 
         runARView()
 
-        NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { notification in
-            self.dismissARViewController()
+        NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { [weak self] notification in
+            self?.dismissARViewController()
         }
     }
 
@@ -92,8 +92,8 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
 
         timer?.invalidate()
         sceneLocationView.pause()
-        dismiss(animated: true) {
-            self.sceneLocationView.removeFromSuperview()
+        dismiss(animated: true) { [weak self] in
+            self?.sceneLocationView.removeFromSuperview()
         }
     }
 
