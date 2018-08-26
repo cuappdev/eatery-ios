@@ -45,7 +45,7 @@ class MealTableViewController: UITableViewController {
     // MARK: - Handoff Functions
     func startUserActivity() {
         if !eatery.external {
-            let activity = NSUserActivity(activityType: "com.cornellappdev.eatery.view")
+            let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
             activity.title = "View Eateries"
             activity.webpageURL = URL(string: "https://now.dining.cornell.edu/eatery/" + eatery.slug)
             userActivity = activity

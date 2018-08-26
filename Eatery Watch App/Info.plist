@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.cornellappdev.eatery</string>
+	<string>org.cuappdev.eatery</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>

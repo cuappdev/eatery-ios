@@ -42,7 +42,7 @@
 	<string>Eatery uses your location to determine how close Eateries are to you and to display it in Augmented Reality.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>com.cornellappdev.eatery.view</string>
+		<string>org.cuappdev.eatery.view</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

@@ -406,7 +406,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     
     // MARK: - Handoff Functions
     func startUserActivity() {
-        let activity = NSUserActivity(activityType: "com.cornellappdev.eatery.view")
+        let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
         activity.title = "View Eateries"
         activity.webpageURL = URL(string: "https://now.dining.cornell.edu/eateries/")
         userActivity = activity
