@@ -882,6 +882,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -907,6 +908,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 063BB995A36FB9F04B5D1D5F /* Pods-Eatery Watch App.external beta.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -957,6 +959,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 295D96F3E987C9154F7D77DE /* Pods-Eatery Watch App.internal beta.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1007,6 +1010,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 019B364D52B66BC8F8B6C25F /* Pods-Eatery Watch App.app store.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
