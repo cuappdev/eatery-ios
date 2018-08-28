@@ -253,11 +253,20 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         Answers.login(succeeded: true, timeLapsed: time)
         loggedIn = true
         
-        //add netid + password to keychain
-        if loginView != nil && loginView?.netidTextField.text?.count ?? 0 > 0 { // update keychain from login view
+        // add netid + password to keychain
+        
+        // update keychain from login view
+        if let loginView = loginView, loginView.netidTextField.text != "" {
             let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-            keychainItemWrapper["netid"] = loginView?.netidTextField.text! as AnyObject?
-            keychainItemWrapper["password"] = loginView?.passwordTextField.text! as AnyObject?
+            
+            if loginView.perpetualLoginButton.isSelected {
+                keychainItemWrapper["netid"] = loginView.netidTextField.text as AnyObject
+                keychainItemWrapper["password"] = loginView.passwordTextField.text as AnyObject
+            } else {
+                keychainItemWrapper["netid"] = nil
+                keychainItemWrapper["password"] = nil
+                UserDefaults.standard.set(false, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
+            }
         }
         
         if loginView != nil {

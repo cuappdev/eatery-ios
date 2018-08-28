@@ -2,7 +2,7 @@ import Foundation
 
 /* hidden Keys.plist for sensitive information */
 enum Keys: String {
-    case fabricAPIKey = "fabric-api-key"
+    case fabricAPIKey = "FabricAPIKey"
 
     var value: String {
         return Keys.keyDict[rawValue] as! String

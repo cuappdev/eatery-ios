@@ -68,7 +68,6 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         let defaults = UserDefaults.standard
         defaults.set(sender.isOn, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
         defaults.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
-        defaults.synchronize()
     }
     
     func logout() {
@@ -78,9 +77,7 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         keychainItemWrapper["password"] = nil
         
         //log out user here and remove data from NSUserDefaults
-        let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
-        defaults.synchronize()
+        UserDefaults.standard.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
         
         delegate?.brbAccountSettingsDidLogoutUser(brbAccountSettings: self)
         _ = navigationController?.popViewController(animated: true)

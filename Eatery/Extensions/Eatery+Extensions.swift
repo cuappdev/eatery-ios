@@ -105,7 +105,7 @@ extension Eatery {
                 }
             }
         } else {
-            return .closed("Closed Today", "")
+            return .closed("Closed", "today")
         }
     }
     
