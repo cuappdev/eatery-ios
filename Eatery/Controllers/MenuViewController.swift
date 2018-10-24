@@ -150,7 +150,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             hoursLabel.text = message
             
             timeImageView.tintColor = .eateryBlue
-            statusLabel.textColor = .eateryBlue
+            statusLabel.textColor = .openGreen
         case let .closed(status, message):
             statusLabel.text = status
             hoursLabel.text = message

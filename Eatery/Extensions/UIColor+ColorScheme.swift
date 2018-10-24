@@ -33,49 +33,28 @@ extension UIColor {
         return UIColor(red: r - offset, green: g - offset, blue: b - offset, alpha: a - offset)
     }
     
-    class var eateryBlue: UIColor {
-        return colorFromCode(0x437EC5)
-    }
+    static let eateryBlue = colorFromCode(0x437EC5)
 
-    class var transparentEateryBlue: UIColor {
-        return UIColor.eateryBlue.withAlphaComponent(0.8)
-    }
+    static let transparentEateryBlue = UIColor.eateryBlue.withAlphaComponent(0.8)
 
-    class var lightBackgroundGray: UIColor {
-        return UIColor(white: 0.96, alpha: 1.0)
-    }
+    static let lightBackgroundGray = UIColor(white: 0.96, alpha: 1.0)
 
-    class var lightSeparatorGray: UIColor {
-        return UIColor(white: 0.9, alpha: 1.0)
-    }
+    static let lightSeparatorGray = UIColor(white: 0.9, alpha: 1.0)
 
-    class var offBlack: UIColor {
-        return colorFromCode(0x333333)
-    }
-    
-    class var openGreen: UIColor {
-        return colorFromCode(0x7ECC7E)
-    }
-    
-    class var openTextGreen: UIColor {
-        return UIColor(red:0.34, green:0.74, blue:0.38, alpha:1)
-    }
-    
-    class var openYellow: UIColor {
-        return UIColor(red:0.86, green:0.85, blue:0, alpha:1)
-    }
-    
-    class var closedRed: UIColor {
-        return UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
-    }
+    static let offBlack = colorFromCode(0x333333)
 
-    class var favoriteYellow: UIColor {
-        return colorFromCode(0xF8E71C)
-    }
+    static let openGreen = colorFromCode(0x63c774)
     
-    class var titleDarkGray: UIColor {
-        return colorFromCode(0x7e7e7e)
-    }
+    static let openTextGreen = UIColor(red:0.34, green:0.74, blue:0.38, alpha:1)
+
+    static let openYellow = UIColor(red:0.86, green:0.85, blue:0, alpha:1)
+
+    static let closedRed = UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
+
+    static let favoriteYellow = colorFromCode(0xF8E71C)
+
+    static let titleDarkGray = colorFromCode(0x7e7e7e)
+
 }
 
 extension UIImage {

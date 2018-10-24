@@ -16,6 +16,9 @@ private let DayDateFormatter: DateFormatter = {
     return dateFormatter
 }()
 
+/*
+ See upcoming menus for various eateries
+ */
 class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     fileprivate var tableView: UITableView!
@@ -40,7 +43,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var events: [String: Event] = [:]
     fileprivate let dates: [Date] = {
         (0..<7).flatMap {
-            Calendar.current.date(byAdding: .day, value: $0, to: Date())
+            Calendar.current.date(byAdding: .day, value: $0, to: Date())!
         }
     }()
     

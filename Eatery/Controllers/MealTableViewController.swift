@@ -67,47 +67,53 @@ class MealTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as! MealTableViewCell
         
-        var menu = event?.menu
-      
+        var menu: [String: [MenuItem]]
+
         if let diningItems = eatery.diningItems {
             menu = diningItems
         } else if let hardcoded = eatery.hardcodedMenu {
             menu = hardcoded
-        }
-        
-        if let menu = menu {
-            var sortedMenu = menu.map { element -> (String, [MenuItem]) in
-                return (element.0, element.1)
-            }
-            
-            sortedMenu = Sort.sortMenu(sortedMenu)
-            let stationArray = sortedMenu.map { $0.0 }
-            
-            var title = "--"
-            var content: NSMutableAttributedString = NSMutableAttributedString(string: "No menu available")
-            
-            if !stationArray.isEmpty {
-                title = stationArray[indexPath.row]
-                let allItems = menu[title]
-                let names: [NSMutableAttributedString] = allItems!.map { $0.healthy ? NSMutableAttributedString(string: "\($0.name.trim()) ").appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: $0.name)
-                }
-                
-                content = names.isEmpty ? NSMutableAttributedString(string: "No items to show") : NSMutableAttributedString(string: "\n").join(names)
-            }
-            if title == "General" {
-                title = ""
-                cell.titleLabelHeight.isActive = false
-            } else {
-                cell.titleLabelHeight.isActive = true
-            }
-            
-            cell.titleLabel.text = title
-            cell.contentLabel.attributedText = content
+        } else if let eventMenu = event?.menu {
+            menu = eventMenu
         } else {
+            // we can't get a menu
+
             cell.titleLabel.text = "No menu available"
             cell.contentLabel.attributedText = NSAttributedString(string: "")
+
+            return cell
         }
+
+        var sortedMenu = menu.map { element -> (String, [MenuItem]) in
+            return (element.0, element.1)
+        }
+
+        sortedMenu = Sort.sortMenu(sortedMenu)
+        let stationArray = sortedMenu.map { $0.0 }
+
+        var title = "--"
+        var content: NSMutableAttributedString = NSMutableAttributedString(string: "No menu available")
+
+        if !stationArray.isEmpty {
+            title = stationArray[indexPath.row]
+            let allItems = menu[title]
+            let names: [NSMutableAttributedString] = allItems!.map { $0.healthy ? NSMutableAttributedString(string: "\($0.name.trim()) ").appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: $0.name)
+            }
+
+            content = names.isEmpty ? NSMutableAttributedString(string: "No items to show") : NSMutableAttributedString(string: "\n").join(names)
+        }
+
+        if title == "General" {
+            title = ""
+            cell.titleLabelHeight.isActive = false
+        } else {
+            cell.titleLabelHeight.isActive = true
+        }
+
+        cell.titleLabel.text = title
+        cell.contentLabel.attributedText = content
 
         return cell
     }
+    
 }
