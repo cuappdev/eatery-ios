@@ -96,6 +96,7 @@ class MealTableViewController: UITableViewController {
 
         if !stationArray.isEmpty {
             title = stationArray[indexPath.row]
+ 
             let allItems = menu[title]
             let names: [NSMutableAttributedString] = allItems!.map { $0.healthy ? NSMutableAttributedString(string: "\($0.name.trim()) ").appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: $0.name)
             }

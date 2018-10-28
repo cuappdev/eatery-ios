@@ -18,7 +18,6 @@ class MenuImages: NSObject {
         let dividerSize: CGFloat = 20
         let condensedCategoryFont = UIFont.systemFont(ofSize: 18.0, weight: .bold)
         let condensedBodyFont = UIFont.systemFont(ofSize: 14.0)
-        let condensedBodyFontColor = UIColor.lightGray
         var categoryViews: [UIView] = []
 
         
@@ -29,7 +28,7 @@ class MenuImages: NSObject {
             headerLabel.backgroundColor = bodyColor
             headerLabel.textAlignment = .center
             headerLabel.font = condensedCategoryFont
-            headerLabel.textColor = UIColor.darkGray
+            headerLabel.textColor = .primary
             
             // Create footer view
             let footerView = UIView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: headerLabel.frame.size.height/8.0))
@@ -68,7 +67,7 @@ class MenuImages: NSObject {
             headerLabel.text = "   \(categoryName)"
             headerLabel.textAlignment = .left
             headerLabel.font = condensedCategoryFont
-            headerLabel.textColor = .darkGray
+            headerLabel.textColor = .black
             
             // Create item list for category
             let itemTextView = UITextView(frame: CGRect(x: 0, y: headerLabel.frame.height + dividerSize * 2, width: width, height: width * 3))
@@ -84,7 +83,7 @@ class MenuImages: NSObject {
             itemTextView.attributedText = menuText
 
             itemTextView.font = condensedBodyFont
-            itemTextView.textColor = condensedBodyFontColor
+            itemTextView.textColor = .secondary
             let newSize = itemTextView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
             itemTextView.frame = CGRect(x: 0, y: headerLabel.frame.height, width: width, height: newSize.height - dividerSize)
             itemTextView.contentInset = UIEdgeInsetsMake(-7, 0, 0, 0)

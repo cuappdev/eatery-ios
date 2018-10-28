@@ -9,7 +9,7 @@ class EateryHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var eateryNameLabel: UILabel!
     @IBOutlet weak var eateryHoursLabel: UILabel!
-    @IBOutlet weak var moreInfoButton: UIButton!
+    @IBOutlet weak var moreInfoIndicatorImageView: UIImageView!
 
     fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
     var delegate: EateryHeaderCellDelegate?

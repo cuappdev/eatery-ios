@@ -480,7 +480,7 @@ extension EateriesViewController: UICollectionViewDataSource {
                 view.titleLabel.textColor = .gray
             } else {
                 view.titleLabel.text = "Open"
-                view.titleLabel.textColor = .eateryBlue
+                view.titleLabel.textColor = .primary
             }
         } else if section == "Closed" {
             if eateries.isEmpty {
