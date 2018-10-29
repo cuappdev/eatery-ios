@@ -33,10 +33,18 @@ extension UIColor {
         return UIColor(red: r - offset, green: g - offset, blue: b - offset, alpha: a - offset)
     }
     
-    static let eateryBlue = colorFromCode(0x437EC5)
+    static let eateryBlue = colorFromCode(0x4A90E2)
 
     static let transparentEateryBlue = UIColor.eateryBlue.withAlphaComponent(0.8)
 
+    static let primary = colorFromCode(0x222222)
+    
+    static let secondary = colorFromCode(0x7d8288)
+    
+    static let inactive = colorFromCode(0xE1E1E1)
+    
+    static let wash = colorFromCode(0xF5F5F5)
+    
     static let lightBackgroundGray = UIColor(white: 0.96, alpha: 1.0)
 
     static let lightSeparatorGray = UIColor(white: 0.9, alpha: 1.0)
