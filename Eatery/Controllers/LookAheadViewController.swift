@@ -228,7 +228,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
 
             if let event = events[selectedMeal] {
                 let textInfo = "Open \(displayTextForEvent(event))"
-                let openLabelText = NSMutableAttributedString(string: textInfo, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12, weight: .semibold)])
+                let openLabelText = NSMutableAttributedString(string: textInfo, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: .semibold)])
                 openLabelText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.openGreen, range: NSRange(location:0,length:4))
                 openLabelText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.secondary, range: NSRange(location: 4, length: (textInfo.count - 4)))
                 cell.eateryHoursLabel.attributedText = openLabelText

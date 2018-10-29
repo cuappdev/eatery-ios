@@ -226,7 +226,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         contentContainer.addSubview(directionsButton)
 
         directionsButton.snp.makeConstraints { make in
-            make.top.equalTo(infoSeparatorView.snp.bottom).offset(4.0)
+            make.top.equalTo(infoSeparatorView.snp.bottom).offset(2.0)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(34.0)
         }
@@ -235,7 +235,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let directionsLineSeparatorView = makeSeparatorView(topItem: directionsButton, leftInset: 0, rightInset: 0, topInset: 0)
         
         let directionsSeparatorView = UIView()
-        directionsSeparatorView.backgroundColor = UIColor.colorFromCode(0xF3F2F2)
+        directionsSeparatorView.backgroundColor = .wash
         contentContainer.addSubview(directionsSeparatorView)
         
         directionsSeparatorView.snp.makeConstraints { make in
@@ -257,9 +257,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             make.top.equalTo(directionsSeparatorView.snp.bottom)
             make.leading.equalToSuperview().offset(10.0)
         }
-        
-        // Separator view
-        let menuLabelSeparatorView = makeSeparatorView(topItem: menuLabel, leftInset: 0, rightInset: 0, topInset: 0)
 
         // TabbedPageViewController
 
@@ -302,7 +299,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(menuLabelSeparatorView.snp.bottom).offset(4.0)
+            make.top.equalTo(menuLabel.snp.bottom).offset(4.0)
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(pageViewControllerHeight)
         }
@@ -336,7 +333,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         infoSeparatorView.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
         menuLabel.hero.modifiers = translateModifiers
-        menuLabelSeparatorView.hero.modifiers = fadeModifiers
         pageViewController.view.hero.modifiers = translateModifiers
     }
     

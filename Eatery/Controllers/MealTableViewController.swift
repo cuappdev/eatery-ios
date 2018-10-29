@@ -101,7 +101,11 @@ class MealTableViewController: UITableViewController {
             let names: [NSMutableAttributedString] = allItems!.map { $0.healthy ? NSMutableAttributedString(string: "\($0.name.trim()) ").appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: $0.name)
             }
 
-            content = names.isEmpty ? NSMutableAttributedString(string: "No items to show") : NSMutableAttributedString(string: "\n").join(names)
+            let contentText = names.isEmpty ? "No items to show" : NSMutableAttributedString(string: "\n").join(names).string
+            let font = UIFont.systemFont(ofSize: 14)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
+            content = NSMutableAttributedString(string: contentText, attributes: [NSAttributedStringKey.foregroundColor: UIColor.primary, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.paragraphStyle: paragraphStyle])
         }
 
         if title == "General" {

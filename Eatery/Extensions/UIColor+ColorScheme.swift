@@ -43,6 +43,8 @@ extension UIColor {
     
     static let inactive = colorFromCode(0xE1E1E1)
     
+    static let wash = colorFromCode(0xF5F5F5)
+    
     static let lightBackgroundGray = UIColor(white: 0.96, alpha: 1.0)
 
     static let lightSeparatorGray = UIColor(white: 0.9, alpha: 1.0)
