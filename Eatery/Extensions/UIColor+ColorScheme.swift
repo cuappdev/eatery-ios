@@ -33,7 +33,11 @@ extension UIColor {
         return UIColor(red: r - offset, green: g - offset, blue: b - offset, alpha: a - offset)
     }
     
+    static let eateryRed = colorFromCode(0xF2655D)
+    
     static let eateryBlue = colorFromCode(0x4A90E2)
+    
+    static let eateryGreen = colorFromCode(0x63C774)
 
     static let transparentEateryBlue = UIColor.eateryBlue.withAlphaComponent(0.8)
 
@@ -47,13 +51,11 @@ extension UIColor {
     
     static let wash = colorFromCode(0xF5F5F5)
     
-    static let lightBackgroundGray = UIColor(white: 0.96, alpha: 1.0)
+    /*static let lightBackgroundGray = UIColor(white: 0.96, alpha: 1.0)
 
     static let lightSeparatorGray = UIColor(white: 0.9, alpha: 1.0)
 
     static let offBlack = colorFromCode(0x333333)
-
-    static let openGreen = colorFromCode(0x63c774)
     
     static let openTextGreen = UIColor(red:0.34, green:0.74, blue:0.38, alpha:1)
 
@@ -61,9 +63,9 @@ extension UIColor {
 
     static let closedRed = UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
 
-    static let favoriteYellow = colorFromCode(0xF8E71C)
+    */static let favoriteYellow = colorFromCode(0xF8E71C)/*
 
-    static let titleDarkGray = colorFromCode(0x7e7e7e)
+    static let titleDarkGray = colorFromCode(0x7e7e7e)*/
 
 }
 
