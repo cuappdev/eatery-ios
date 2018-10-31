@@ -13,7 +13,7 @@ class MenuImages: NSObject {
 
     // Returns an image that contains the condensed menu of categories + items for LookAheadVC
     class func createCondensedMenuImage(_ width: CGFloat, menuIterable: [(String,[String])]) -> UIImage {
-        let bodyColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
+        let bodyColor = UIColor.wash//UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1.0)
         let categoryHeaderHeight: CGFloat = 30
         let dividerSize: CGFloat = 20
         let condensedCategoryFont = UIFont.systemFont(ofSize: 18.0, weight: .bold)
@@ -157,7 +157,7 @@ class MenuImages: NSObject {
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
             case .open(_):
-                openIndicatorView.backgroundColor = .openGreen
+                openIndicatorView.backgroundColor = .eateryGreen
             case .closed(_):
                 openIndicatorView.backgroundColor = .red
         }

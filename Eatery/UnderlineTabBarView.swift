@@ -25,7 +25,7 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .lightBackgroundGray
+        backgroundColor = .wash
         layer.cornerRadius = kCornerRadius
         clipsToBounds = true
     }

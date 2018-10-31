@@ -116,11 +116,11 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = .lightBackgroundGray
+        tableView.backgroundColor = .wash
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .lightSeparatorGray
+        tableView.separatorColor = .wash
         tableView.dataSource = self
         tableView.delegate = self
         
