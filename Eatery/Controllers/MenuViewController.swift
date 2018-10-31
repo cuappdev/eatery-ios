@@ -299,7 +299,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(menuLabel.snp.bottom).offset(4.0)
+            make.top.equalTo(menuLabel.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(pageViewControllerHeight)
         }
