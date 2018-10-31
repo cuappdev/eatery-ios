@@ -122,13 +122,12 @@ class FilterBar: UIView {
         } else {
             selectedFilters.remove(filters[sender.tag])
         }
+        
         let defaults = UserDefaults.standard
         defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
 
         delegate?.updateFilters(filters: selectedFilters)
     }
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

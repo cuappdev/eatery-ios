@@ -14,10 +14,7 @@
 		4FCD9913DFE369F3EDB74FAE /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50509AB523800758F692AA91 /* Pods_Eatery_Watch_App.framework */; };
 		5251035B4AC57673BCB6D4B4 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E8A627AA2A6DA1D7BB83A8E /* Pods_Eatery.framework */; };
 		5D231AF4D58DED90FD024320 /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6E64ED32027E3E529637D0 /* Pods_Eatery_Watch_App_Extension.framework */; };
-		5DA9482B2181163300DD76B6 /* MealTableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9482A2181163300DD76B6 /* MealTableSectionHeaderView.swift */; };
-		5DA9482D2181163F00DD76B6 /* MealTableSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9482C2181163F00DD76B6 /* MealTableSectionHeaderView.xib */; };
-		5DA9483021811A3200DD76B6 /* MealFoodItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9482E21811A3200DD76B6 /* MealFoodItemTableViewCell.swift */; };
-		5DA9483121811A3200DD76B6 /* MealFoodItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9482F21811A3200DD76B6 /* MealFoodItemTableViewCell.xib */; };
+		5DA9483021811A3200DD76B6 /* MealItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9482E21811A3200DD76B6 /* MealItemTableViewCell.swift */; };
 		60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */; };
 		6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6502AF861DCFB9ED00390EAA /* FilterBar.swift */; };
 		652AE53F1C707EBC00B7245A /* EateriesInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */; };
@@ -48,8 +45,8 @@
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
 		9584FE551CDD7A26001A3AB5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9584FE541CDD7A26001A3AB5 /* Security.framework */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
-		C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */; };
-		C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */; };
+		C0497B0B1B64AA1800AC1C6C /* MealStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AE71B64AA1800AC1C6C /* MealStationTableViewCell.swift */; };
+		C0497B0C1B64AA1800AC1C6C /* MealStationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0497AE81B64AA1800AC1C6C /* MealStationTableViewCell.xib */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
@@ -141,10 +138,7 @@
 		4BA4E2B16C2C3A450EF353BE /* Pods_Today_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Today_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50509AB523800758F692AA91 /* Pods_Eatery_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.external beta.xcconfig"; sourceTree = "<group>"; };
-		5DA9482A2181163300DD76B6 /* MealTableSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTableSectionHeaderView.swift; sourceTree = "<group>"; };
-		5DA9482C2181163F00DD76B6 /* MealTableSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MealTableSectionHeaderView.xib; sourceTree = "<group>"; };
-		5DA9482E21811A3200DD76B6 /* MealFoodItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealFoodItemTableViewCell.swift; sourceTree = "<group>"; };
-		5DA9482F21811A3200DD76B6 /* MealFoodItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MealFoodItemTableViewCell.xib; sourceTree = "<group>"; };
+		5DA9482E21811A3200DD76B6 /* MealItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealItemTableViewCell.swift; sourceTree = "<group>"; };
 		60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		64AAE901E7D407EC4C6D8C67 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6502AF861DCFB9ED00390EAA /* FilterBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterBar.swift; path = ../Controllers/FilterBar.swift; sourceTree = "<group>"; };
@@ -182,8 +176,8 @@
 		9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.external beta.xcconfig"; sourceTree = "<group>"; };
 		BA0F42CF72757B43C3DF64BE /* Pods-Eatery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig"; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
-		C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealTableViewCell.xib; sourceTree = "<group>"; };
+		C0497AE71B64AA1800AC1C6C /* MealStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealStationTableViewCell.swift; sourceTree = "<group>"; };
+		C0497AE81B64AA1800AC1C6C /* MealStationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealStationTableViewCell.xib; sourceTree = "<group>"; };
 		C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorScheme.swift"; sourceTree = "<group>"; };
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -421,12 +415,9 @@
 				E9CFC0B11C0E549500ED884A /* EateriesCollectionViewHeaderView.xib */,
 				E9EC97901BFD1BD600D06823 /* EateryCollectionViewCell.swift */,
 				E9EC97911BFD1BD600D06823 /* EateryCollectionViewCell.xib */,
-				C0497AE71B64AA1800AC1C6C /* MealTableViewCell.swift */,
-				C0497AE81B64AA1800AC1C6C /* MealTableViewCell.xib */,
-				5DA9482A2181163300DD76B6 /* MealTableSectionHeaderView.swift */,
-				5DA9482C2181163F00DD76B6 /* MealTableSectionHeaderView.xib */,
-				5DA9482E21811A3200DD76B6 /* MealFoodItemTableViewCell.swift */,
-				5DA9482F21811A3200DD76B6 /* MealFoodItemTableViewCell.xib */,
+				C0497AE71B64AA1800AC1C6C /* MealStationTableViewCell.swift */,
+				C0497AE81B64AA1800AC1C6C /* MealStationTableViewCell.xib */,
+				5DA9482E21811A3200DD76B6 /* MealItemTableViewCell.swift */,
 				E9EC97941BFD31B400D06823 /* MenuHeaderView.swift */,
 				E9EC97961BFD31BC00D06823 /* MenuHeaderView.xib */,
 				44E4E8F21CD54E3500422867 /* NavigationTitleView.swift */,
@@ -657,21 +648,19 @@
 			files = (
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				D102463B1C7A3239000D5CD8 /* EateryHeaderTableViewCell.xib in Resources */,
-				C0497B0C1B64AA1800AC1C6C /* MealTableViewCell.xib in Resources */,
+				C0497B0C1B64AA1800AC1C6C /* MealStationTableViewCell.xib in Resources */,
 				44E4E8F51CD54E3500422867 /* NavigationTitleView.xib in Resources */,
 				E9EC97931BFD1BD600D06823 /* EateryCollectionViewCell.xib in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
 				E9CFC0B21C0E549500ED884A /* EateriesCollectionViewHeaderView.xib in Resources */,
-				5DA9483121811A3200DD76B6 /* MealFoodItemTableViewCell.xib in Resources */,
 				65E9317B206C19A200547D14 /* Keys.plist in Resources */,
 				E9EC97971BFD31BC00D06823 /* MenuHeaderView.xib in Resources */,
 				D102463D1C7A3239000D5CD8 /* EateryMenuTableViewCell.xib in Resources */,
 				D10246351C7A3228000D5CD8 /* FilterEateriesTableViewCell.xib in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,
 				D10246311C7A320C000D5CD8 /* TitleSectionTableViewCell.xib in Resources */,
-				5DA9482D2181163F00DD76B6 /* MealTableSectionHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,7 +811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
-				5DA9483021811A3200DD76B6 /* MealFoodItemTableViewCell.swift in Sources */,
+				5DA9483021811A3200DD76B6 /* MealItemTableViewCell.swift in Sources */,
 				D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */,
 				D10246341C7A3228000D5CD8 /* FilterEateriesTableViewCell.swift in Sources */,
 				65C36A722037D058005D8831 /* ARViewController.swift in Sources */,
@@ -832,7 +821,7 @@
 				E9EC97921BFD1BD600D06823 /* EateryCollectionViewCell.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,
 				D102463A1C7A3239000D5CD8 /* EateryHeaderTableViewCell.swift in Sources */,
-				C0497B0B1B64AA1800AC1C6C /* MealTableViewCell.swift in Sources */,
+				C0497B0B1B64AA1800AC1C6C /* MealStationTableViewCell.swift in Sources */,
 				9584FE4E1CDD6C3B001A3AB5 /* BRBViewController.swift in Sources */,
 				D10246291C7A31C4000D5CD8 /* LookAheadViewController.swift in Sources */,
 				9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */,
@@ -860,7 +849,6 @@
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				F06C7C111DDD032A000445E5 /* BRBAccountSettingsViewController.swift in Sources */,
 				44E4E8F41CD54E3500422867 /* NavigationTitleView.swift in Sources */,
-				5DA9482B2181163300DD76B6 /* MealTableSectionHeaderView.swift in Sources */,
 				E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

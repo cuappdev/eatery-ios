@@ -46,6 +46,8 @@ extension UIColor {
     static let secondary = colorFromCode(0x7d8288)
     
     static let inactive = colorFromCode(0xE1E1E1)
+
+    static let separator = colorFromCode(0xE1E1E1)
     
     static let wash = colorFromCode(0xF5F5F5)
     

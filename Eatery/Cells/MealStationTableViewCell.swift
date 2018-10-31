@@ -1,5 +1,5 @@
 //
-//  MealTableViewCell.swift
+//  MealStationTableViewCell.swift
 //  Eatery
 //
 //  Created by Eric Appel on 5/6/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class MealTableViewCell: UITableViewCell {
+class MealStationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var titleLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var contentLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none

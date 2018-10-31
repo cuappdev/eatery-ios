@@ -1,25 +1,47 @@
 import UIKit
 import DiningStack
 
-protocol MealScrollDelegate {
-    func mealScrollViewDidBeginPushing(_ scrollView: UIScrollView)
-    func mealScrollViewDidPushOffset(_ scrollView: UIScrollView, offset: CGPoint) -> CGFloat
-    func mealScrollViewDidEndPushing(_ scrollView: UIScrollView)
-    var outerScrollOffset: CGPoint { get }
-    func resetOuterScrollView()
-}
-
 class MealTableViewController: UITableViewController {
-    
-    var eatery: Eatery!
+
     var meal: String!
-    var event: Event?
-    
-    fileprivate var tracking = false
-    fileprivate var previousScrollOffset: CGFloat = 0
-    var active = true
-    
-    var scrollDelegate: MealScrollDelegate!
+
+    var eatery: Eatery! {
+        didSet {
+            recomputeMenu()
+        }
+    }
+    var event: Event? {
+        didSet {
+            recomputeMenu()
+        }
+    }
+
+    private func recomputeMenu() {
+        if let eventMenu = event?.menu, !eventMenu.isEmpty {
+            menu = eventMenu
+        } else if let diningItems = eatery.diningItems {
+            menu = diningItems
+        } else if let hardcodedItems = eatery.hardcodedMenu {
+            menu = hardcodedItems
+        } else {
+            // don't know the menu
+            menu = nil
+        }
+    }
+
+    private var menu: [String: [MenuItem]]? {
+        didSet {
+            if let menu = menu, menu.count == 1 {
+                topSeparator.isHidden = false
+                tableView.separatorStyle = .singleLine
+            } else {
+                topSeparator.isHidden = true
+                tableView.separatorStyle = .none
+            }
+        }
+    }
+
+    private let topSeparator = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,16 +55,20 @@ class MealTableViewController: UITableViewController {
         tableView.backgroundColor = .clear
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
-        
-        tableView.register(UINib(nibName: "MealTableViewCell", bundle: nil), forCellReuseIdentifier: "MealCell")
-        
-        tableView.separatorStyle = .none
+
+        tableView.register(MealItemTableViewCell.self, forCellReuseIdentifier: "MealItem")
+        tableView.register(UINib(nibName: "MealStationTableViewCell", bundle: nil), forCellReuseIdentifier: "MealStation")
+
         tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: 66.0))
-        
         tableView.isScrollEnabled = false
+
+        topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
+        topSeparator.backgroundColor = .separator
+        tableView.tableHeaderView = topSeparator
     }
 
     // MARK: - Handoff Functions
+
     func startUserActivity() {
         if !eatery.external {
             let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
@@ -52,71 +78,98 @@ class MealTableViewController: UITableViewController {
             userActivity?.becomeCurrent()
         }
     }
-    
+
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let e = event {
-            return e.menu.count == 0 ? 1 : e.menu.count
-        } else {
+        guard let menu = menu else {
+            // display the unknown menu cell
             return 1
+        }
+
+        if menu.count == 1 {
+            // display menu items (of the only "dining station") as a table
+            return menu.first!.value.count
+        } else {
+            // display the menu items
+            return menu.count
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as! MealTableViewCell
-        
-        var menu: [String: [MenuItem]]
+        guard let menu = menu else {
+            return emptyMenuCell(in: tableView, forRowAt: indexPath)
+        }
 
-        if let diningItems = eatery.diningItems {
-            menu = diningItems
-        } else if let hardcoded = eatery.hardcodedMenu {
-            menu = hardcoded
-        } else if let eventMenu = event?.menu {
-            menu = eventMenu
+        if menu.count == 1 {
+            return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
-            // we can't get a menu
+            return diningStationsCell(in: tableView, forRowAt: indexPath)
+        }
+    }
 
-            cell.titleLabel.text = "No menu available"
-            cell.contentLabel.attributedText = NSAttributedString(string: "")
+    /// Create a table view cell when there is no menu for an eatery
+    private func emptyMenuCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
 
-            return cell
+        cell.titleLabel.text = "No menu available"
+        cell.contentLabel.attributedText = NSAttributedString(string: "")
+
+        return cell
+    }
+
+    /// Create a table view cell when there is a single dining station in the menu
+    private func menuItemCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let menu = menu else {
+            return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        var sortedMenu = menu.map { element -> (String, [MenuItem]) in
-            return (element.0, element.1)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MealItem", for: indexPath) as! MealItemTableViewCell
+        cell.nameLabel.text = menu.first!.value[indexPath.row].name
+        return cell
+    }
+
+    /// Create a table view cell when there are multiple dining stations in the menu
+    private func diningStationsCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
+
+        guard let menu = menu else {
+            return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        sortedMenu = Sort.sortMenu(sortedMenu)
-        let stationArray = sortedMenu.map { $0.0 }
+        let sortedMenu = Sort.sortMenu(menu.map { ($0, $1) })
+        let stationTitles = sortedMenu.map { $0.0 }
 
-        var title = "--"
-        var content: NSMutableAttributedString = NSMutableAttributedString(string: "No menu available")
-
-        if !stationArray.isEmpty {
-            title = stationArray[indexPath.row]
- 
-            let allItems = menu[title]
-            let names: [NSMutableAttributedString] = allItems!.map { $0.healthy ? NSMutableAttributedString(string: "\($0.name.trim()) ").appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: $0.name)
-            }
-
-            let contentText = names.isEmpty ? "No items to show" : NSMutableAttributedString(string: "\n").join(names).string
-            let font = UIFont.systemFont(ofSize: 14)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
-            content = NSMutableAttributedString(string: contentText, attributes: [NSAttributedStringKey.foregroundColor: UIColor.primary, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.paragraphStyle: paragraphStyle])
-        }
-
-        if title == "General" {
-            title = ""
+        // set title
+        let possibleTitle = stationTitles[indexPath.row]
+        if possibleTitle == "General" {
+            cell.titleLabel.text = ""
             cell.titleLabelHeight.isActive = false
         } else {
+            cell.titleLabel.text = possibleTitle
             cell.titleLabelHeight.isActive = true
         }
 
-        cell.titleLabel.text = title
-        cell.contentLabel.attributedText = content
+        // generate content label attributed text
+        do {
+            let stationTitle = stationTitles[indexPath.row]
+            let menuItems = menu[stationTitle]!
+            let names = menuItems.map { $0.name }
+
+            let content = names.isEmpty
+                ? "No items to show"
+                : names.joined(separator: "\n")
+
+            let font = UIFont.systemFont(ofSize: 14)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
+            
+            let text = NSMutableAttributedString(string: content,
+                                                 attributes: [.foregroundColor: UIColor.primary,
+                                                              .font: UIFont.systemFont(ofSize: 14),
+                                                              .paragraphStyle: paragraphStyle])
+            cell.contentLabel.attributedText = text
+        }
 
         return cell
     }
