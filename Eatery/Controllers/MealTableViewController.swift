@@ -150,26 +150,33 @@ class MealTableViewController: UITableViewController {
             cell.titleLabelHeight.isActive = true
         }
 
-        // generate content label attributed text
-        do {
-            let stationTitle = stationTitles[indexPath.row]
-            let menuItems = menu[stationTitle]!
-            let names = menuItems.map { $0.name }
-
-            let content = names.isEmpty
-                ? "No items to show"
-                : names.joined(separator: "\n")
-
-            let font = UIFont.systemFont(ofSize: 14)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
-            
-            let text = NSMutableAttributedString(string: content,
-                                                 attributes: [.foregroundColor: UIColor.primary,
-                                                              .font: UIFont.systemFont(ofSize: 14),
-                                                              .paragraphStyle: paragraphStyle])
-            cell.contentLabel.attributedText = text
+        // set content
+        let stationTitle = stationTitles[indexPath.row]
+        let menuItems = menu[stationTitle]!
+        let names = menuItems.map { item -> NSMutableAttributedString in
+            if item.healthy {
+                return NSMutableAttributedString(string: "\(item.name.trim()) ")
+                    .appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
+            } else {
+                return NSMutableAttributedString(string: item.name)
+            }
         }
+
+        let font = UIFont.systemFont(ofSize: 14)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
+        let content = NSMutableAttributedString(string: "",
+                                                attributes: [.foregroundColor: UIColor.primary,
+                                                             .font: font,
+                                                             .paragraphStyle: paragraphStyle])
+
+        if names.isEmpty {
+            content.append(NSMutableAttributedString(string: "No items to show"))
+        } else {
+            content.append(NSMutableAttributedString(string: "\n").join(names))
+        }
+
+        cell.contentLabel.attributedText = content
 
         return cell
     }

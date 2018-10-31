@@ -597,7 +597,7 @@ extension EateriesViewController: UISearchBarDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
 
-        for cell in collectionView.visibleCells.flatMap({ $0 as? EateryCollectionViewCell }) {
+        for cell in collectionView.visibleCells.compactMap({ $0 as? EateryCollectionViewCell }) {
             cell.update(userLocation: userLocation)
         }
     }

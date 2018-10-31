@@ -13,11 +13,18 @@ class EateryHeaderTableViewCell: UITableViewCell {
 
     fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
     var delegate: EateryHeaderCellDelegate?
-    var isExpanded: Bool = false
+    var isExpanded: Bool = false {
+        didSet {
+            moreInfoIndicatorImageView.image =
+                (isExpanded) ? UIImage(named: "upArrow.png") : UIImage(named: "downArrow.png")
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
+
+        moreInfoIndicatorImageView.image = UIImage(named: "upArrow.png")
     }
     
     override func didMoveToWindow() {

@@ -85,8 +85,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.snp.makeConstraints { make in
             make.top.equalTo(topLayoutGuide.snp.bottom)
             make.bottom.equalTo(bottomLayoutGuide.snp.top)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
 
         let contentView = UIView()
@@ -98,7 +97,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
         
         // Header Views
-        menuHeaderView = Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first! as! MenuHeaderView
+        menuHeaderView = (Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first as! MenuHeaderView)
         menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.delegate = self
         
@@ -240,8 +239,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         
         directionsSeparatorView.snp.makeConstraints { make in
             make.top.equalTo(directionsLineSeparatorView.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(20.0)
         }
 
@@ -255,7 +253,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuLabel.snp.makeConstraints { make in
             make.height.equalTo(52.0)
             make.top.equalTo(directionsSeparatorView.snp.bottom)
-            make.leading.equalToSuperview().offset(10.0)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
 
         // TabbedPageViewController

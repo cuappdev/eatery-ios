@@ -240,6 +240,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
 
             if indexPath.row != (expandedCells.count - 1) {
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
+
             }
             
             return cell
@@ -323,14 +324,13 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             } else {
                 tableView.insertRows(at: [menuIndex], with: .fade)
             }
-            
-            cell.moreInfoIndicatorImageView.isHidden = false
-            cell.moreInfoIndicatorImageView.image = (cell.isExpanded) ? UIImage(named: "downArrow.png") : UIImage(named: "upArrow.png")
         
             tableView.endUpdates()
             
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)
             cell.isExpanded = !cell.isExpanded
+
+            cell.moreInfoIndicatorImageView.isHidden = false
         } else {
             cell.moreInfoIndicatorImageView.isHidden = true
         }
