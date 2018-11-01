@@ -120,12 +120,14 @@ class MealTableViewController: UITableViewController {
 
     /// Create a table view cell when there is a single dining station in the menu
     private func menuItemCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let menu = menu else {
+        guard let menu = menu, let station = menu.first else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
+        let name = station.value[indexPath.row].name
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealItem", for: indexPath) as! MealItemTableViewCell
-        cell.nameLabel.text = menu.first!.value[indexPath.row].name
+        cell.nameLabel.text = name
         return cell
     }
 
@@ -151,8 +153,7 @@ class MealTableViewController: UITableViewController {
         }
 
         // set content
-        let stationTitle = stationTitles[indexPath.row]
-        let menuItems = menu[stationTitle]!
+        let menuItems = sortedMenu[indexPath.row].1
         let names = menuItems.map { item -> NSMutableAttributedString in
             if item.healthy {
                 return NSMutableAttributedString(string: "\(item.name.trim()) ")

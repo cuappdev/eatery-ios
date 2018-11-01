@@ -115,7 +115,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         contentContainer.clipsToBounds = true
 
         let infoContainer = UIView()
-        //infoContainer.backgroundColor = .white
 
         let timeImageView = UIImageView(image: UIImage(named: "time"))
         infoContainer.addSubview(timeImageView)

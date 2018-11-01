@@ -16,7 +16,7 @@ class EateryHeaderTableViewCell: UITableViewCell {
     var isExpanded: Bool = false {
         didSet {
             moreInfoIndicatorImageView.image =
-                (isExpanded) ? UIImage(named: "upArrow.png") : UIImage(named: "downArrow.png")
+                isExpanded ? UIImage(named: "upArrow.png") : UIImage(named: "downArrow.png")
         }
     }
     

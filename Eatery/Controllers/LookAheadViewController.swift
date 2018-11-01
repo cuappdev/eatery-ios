@@ -328,7 +328,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             tableView.endUpdates()
             
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-            cell.isExpanded = !cell.isExpanded
+            cell.isExpanded.toggle()
 
             cell.moreInfoIndicatorImageView.isHidden = false
         } else {
