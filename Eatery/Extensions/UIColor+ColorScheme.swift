@@ -50,22 +50,8 @@ extension UIColor {
     static let separator = colorFromCode(0xE1E1E1)
     
     static let wash = colorFromCode(0xF5F5F5)
-    
-    /*static let lightBackgroundGray = UIColor(white: 0.96, alpha: 1.0)
 
-    static let lightSeparatorGray = UIColor(white: 0.9, alpha: 1.0)
-
-    static let offBlack = colorFromCode(0x333333)
-    
-    static let openTextGreen = UIColor(red:0.34, green:0.74, blue:0.38, alpha:1)
-
-    static let openYellow = UIColor(red:0.86, green:0.85, blue:0, alpha:1)
-
-    static let closedRed = UIColor(red:0.85, green:0.28, blue:0.25, alpha:1)
-
-    */static let favoriteYellow = colorFromCode(0xF8E71C)/*
-
-    static let titleDarkGray = colorFromCode(0x7e7e7e)*/
+    static let favoriteYellow = colorFromCode(0xF8E71C)
 
 }
 
