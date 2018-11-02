@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import DiningStack
 
 private let DayDateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -100,9 +99,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         filterEateries(filterDateViews, buttons: filterMealButtons)
         
         // Fetch Eateries Data
-        DataManager.sharedInstance.fetchEateries(false) { (error) -> (Void) in
+        NetworkManager.shared.getEateries { (eateries, error) in
             DispatchQueue.main.async(execute: { [unowned self] () -> Void in
-                let eateries = DataManager.sharedInstance.eateries
+                guard let eateries = eateries else { return }
                 for eatery in eateries {
                     if eatery.eateryType == .Dining {
                         switch(eatery.area) {

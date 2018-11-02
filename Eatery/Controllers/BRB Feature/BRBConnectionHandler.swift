@@ -16,22 +16,17 @@ struct AccountBalance {
 
 enum Stages {
     case loginScreen
-    case loginFailed
     case transition
-    case fundsHome
-    case diningHistory
-    case finished
+    case loginFailed
+    case finished(sessionId: String)
 }
 
 protocol BRBConnectionDelegate {
-    func updateHistory(with entries: [HistoryEntry])
+    func retrievedSessionId(id: String)
     func loginFailed(with error: String)
 }
 
-let loginURLString = "https://get.cbord.com/cornell/full/login.php"
-let fundsHomeURLString = "https://get.cbord.com/cornell/full/funds_home.php"
-let diningHistoryURLString = "https://get.cbord.com/cornell/full/history.php"
-let updateProfileURLString = "https://get.cbord.com/cornell/full/update_profile.php"
+let loginURLString = "https://get.cbord.com/cornell/full/login.php?mobileapp=1"
 let maxTrials = 3
 let trialDelay = 500
 
@@ -87,148 +82,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         return loginCount > 1
     }
     
-    /**
-     
-     - Fetches the HTML for the currently displayed web page and instantiates an DiningHistory array
-     using the history information on the page.
-     
-     - Does not guarantee that the javascript has finished executing before trying to get dining history.
-     
-     */
-    func getDiningHistory() {
-        getHTML { (html: NSString) in
-            let tableHTMLRegex = "(<tr class=\\\"(?:even|odd|odd first-child)\\\"><td class=\\\"first-child account_name\\\">(.*?)<\\/td><td class=\\\"date_(and_|)time\\\"><span class=\\\"date\\\">(.*?)<\\/span><\\/td><td class=\\\"activity_details\\\">(.*?)<\\/td><td class=\\\"last-child amount_points (credit|debit)\\\" title=\\\"(credit|debit)\\\">(.*?)<\\/td><\\/tr>)"
-            
-            let regex = try? NSRegularExpression(pattern: tableHTMLRegex, options: .useUnicodeWordBoundaries)
-            if let matches = regex?.matches(in: html as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, html.length))
-            {
-                for match in matches
-                {
-                    var entry = HistoryEntry()
-                    
-                    let htmlEntry = html.substring(with: match.range) as NSString
-                    
-                    //let accountName = self.findEntryValue(htmlEntry, fieldName: "account_name")
-                    let transDate = self.findEntryValue(htmlEntry, fieldName: "\"date")
-                    let transTime = self.findEntryValue(htmlEntry, fieldName: "\"time")
-                    let amount = self.findEntryValue(htmlEntry, fieldName: "it")
-                    let location = self.findEntryValue(htmlEntry, fieldName: "details")
-                    
-                    let formatter1 = DateFormatter()
-                    formatter1.dateFormat = "MMMM d, yyyy h:mma"
-                    
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "M/d 'at' h:mm a"
-                    entry.description = location
-
-                    if transDate.lengthOfBytes(using: .ascii) > 0 && transTime.lengthOfBytes(using: .ascii) > 0 {
-                        if let date = formatter1.date(from: transDate + " " + transTime) {
-                            entry.description += "\n " + formatter.string(from: date)
-                        } else {
-                            entry.description += "\n \(transDate) at \(transTime)"
-                        }
-                    }
-
-                    entry.timestamp = amount.contains("$") ? amount : amount + " swipe"
-                    
-                    self.diningHistory.append(entry)
-                }
-            }
-
-            self.delegate?.updateHistory(with: self.diningHistory)
-        }
-    }
-    /**
-     
-     - Finds the value that is surrounded by the HTML tag ending with [fieldName">]
-     
-     */
-    func findEntryValue(_ htmlEntry : NSString, fieldName : String) -> String {
-        let fieldRange = htmlEntry.range(of: fieldName + "\">")
-        var curIndex: Int = fieldRange.location + fieldRange.length
-        
-        var value = ""
-        
-        while curIndex < htmlEntry.length && htmlEntry.substring(with: NSMakeRange(curIndex, 1)) != "<"
-        {
-            value += htmlEntry.substring(with: NSMakeRange(curIndex, 1))
-            curIndex += 1
-        }
-        
-        return value
-    }
-    /**
-     
-     - Fetches the HTML for the currently displayed web page and instantiates a new AccountBalance object
-     using the account information on the page.
-     
-     - Does not guarantee that the javascript has finished executing before trying to get account info.
-     
-     */
-    func getAccountBalance(trials: Int = maxTrials) {
-        getHTML { (html: NSString) -> () in
-            self.accountBalance = AccountBalance()
-            let brbHTMLRegex = "<td class=\\\"first-child account_name\\\">BRB.*<\\/td><td class=\\\"last-child balance\">\\$[0-9]+.[0-9][0-9]<\\/td>"
-            let cityHTMLRegex = "<td class=\\\"first-child account_name\\\">CB.*<\\/td><td class=\\\"last-child balance\">\\$[0-9]+.[0-9][0-9]<\\/td>"
-            let laundryHTMLRegex = "<td class=\\\"first-child account_name\\\">LAU.*<\\/td><td class=\\\"last-child balance\">\\$[0-9]+.[0-9][0-9]<\\/td>"
-            let swipesHTMLRegex = "<td class=\\\"first-child account_name\\\">.*0.*<\\/td><td class=\\\"last-child balance\">[1-9]*[0-9]<\\/td>"
-            
-            let moneyRegex = "[0-9]+(\\.)*[0-9][0-9]"
-            let swipesRegex = ">[1-9]*[0-9]<"
-            
-            if self.stage == .fundsHome {
-                let brbs = self.parseHTML(html, brbHTMLRegex, moneyRegex)
-                let city = self.parseHTML(html, cityHTMLRegex, moneyRegex)
-                let laundry = self.parseHTML(html, laundryHTMLRegex, moneyRegex)
-                let swipes = self.parseHTML(html, swipesHTMLRegex, swipesRegex)
-                
-                // Funds does not load immediately
-                // Try again with delay until trials run out
-                if brbs == "" && city == "" && laundry == "" && swipes == "" && trials > 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(trialDelay)) {
-                        self.getAccountBalance(trials: trials - 1)
-                    }
-                    return
-                }
-                
-                print("Done after \(maxTrials + 1 - trials) trials")
-                
-                self.accountBalance.brbs = brbs != "" ? brbs : "0.00"
-                self.accountBalance.cityBucks = city != "" ? city : "0.00"
-                self.accountBalance.laundry = laundry != "" ? laundry : "0.00"
-                self.accountBalance.swipes = swipes != "" ? String(swipes[swipes.index(after: swipes.startIndex)..<swipes.index(before: swipes.endIndex)]) : ""
-
-                let historyURL = URL(string: diningHistoryURLString)!
-                self.load(URLRequest(url: historyURL))
-            }
-        }
-    }
-    
-    /**
-     * Makes two passes on an html string with two different
-     * regular expressions, returning the inner result
-     */
-    func parseHTML(_ html: NSString, _ regex1: String, _ regex2: String) -> String
-    {
-        let firstPass = self.getFirstRegexMatchFromString(regexString: regex1 as NSString, str: html)
-        let result = self.getFirstRegexMatchFromString(regexString: regex2 as NSString, str: firstPass as NSString)
-        return result;
-    }
-    
-    /**
-     
-     - Given a regex string and and a string to match on, returns the first instance of the regex
-     string or an empty string if regex cannot be matched.
-     
-     */
-    func getFirstRegexMatchFromString(regexString: NSString, str: NSString) -> String {
-        let regex = try? NSRegularExpression(pattern: regexString as String, options: .useUnicodeWordBoundaries)
-        if let match = regex?.firstMatch(in: str as String, options: NSRegularExpression.MatchingOptions.withTransparentBounds , range: NSMakeRange(0, str.length)) {
-            return str.substring(with: match.range(at: 0)) as String
-        }
-        return ""
-    }
-    
     func login() {
         let javascript = "document.getElementsByName('netid')[0].value = '\(netid)';document.getElementsByName('password')[0].value = '\(password)';document.forms[0].submit();"
         
@@ -237,9 +90,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.delegate?.loginFailed(with: error.localizedDescription)
             } else {
                 if self.failedToLogin() {
-                    if self.url?.absoluteString == updateProfileURLString {
-                        self.delegate?.loginFailed(with: "Account needs to be updated")
-                    }
                     self.delegate?.loginFailed(with: "Incorrect netid and/or password")
                 }
             }
@@ -255,10 +105,8 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.delegate?.loginFailed(with: "Incorrect netid and/or password")
             case .loginScreen:
                 if self.loginCount < 1 { self.login() }
-            case .fundsHome:
-                self.getAccountBalance()
-            case .diningHistory:
-                self.getDiningHistory()
+            case .finished(let sessionId):
+                self.delegate?.retrievedSessionId(id: sessionId)
             default: break
             }
         }
@@ -277,14 +125,15 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         getHTML(block: { (html: NSString) -> () in
             if self.failedToLogin() {
                 self.stage = .loginFailed
-            } else if self.url!.absoluteString.contains(updateProfileURLString) {
-                self.stage = .loginFailed
             } else if html.contains("<h1>CUWebLogin</h1>") {
                 self.stage = .loginScreen
-            } else if self.url!.absoluteString == fundsHomeURLString {
-                self.stage = .fundsHome
-            } else if self.url!.absoluteString == diningHistoryURLString {
-                self.stage = .diningHistory
+            } else if self.url?.absoluteString.contains("sessionId") ?? false {
+                guard let url = self.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
+
+                if let sessionId = urlComponents.queryItems?.first(where: { $0.name == "sessionId" })?.value {
+                    self.stage = .finished(sessionId: sessionId)
+                    print(sessionId)
+                }
             } else {
                 self.stage = .transition
             }

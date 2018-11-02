@@ -1,6 +1,5 @@
 import UIKit
 import SnapKit
-import DiningStack
 import Crashlytics
 import CoreLocation
 import Hero
@@ -88,8 +87,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             self.appDevLogo = logo
 
             if ARViewController.isSupported() {
-                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
+                // TODO - Removing for now
+                //let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
+               // navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
             }
         } else {
             navigationItem.rightBarButtonItems = [mapButton]
@@ -194,13 +194,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        DataManager.sharedInstance.fetchEateries(force) { error in
+        NetworkManager.shared.getEateries { (eateries, error) in
             if let error = error {
                 let alertController = UIAlertController(title: "Unable to fetch Eateries", message: error.localizedDescription, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alertController, animated: true, completion: nil)
             } else {
-                self.eateries = DataManager.sharedInstance.eateries
+                guard let eateries = eateries else { return }
+                self.eateries = eateries
                 self.processEateries()
                 self.collectionView.reloadData()
                 self.animateInView()

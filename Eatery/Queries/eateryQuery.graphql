@@ -1,0 +1,34 @@
+query AllEateries {
+    eateries {
+        id
+        name
+        paymentMethods {
+            swipes
+            brbs
+            cash
+            credit
+            cornellCard
+            mobile
+        }
+        coordinates {
+            latitude
+            longitude
+        }
+        operatingHours {
+            date
+            events {
+                startTime
+                endTime
+                description
+                menu {
+                    category
+                    items {
+                        item
+                        healthy
+                    }
+                }
+            }
+        }
+    }
+}
+
