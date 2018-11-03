@@ -61,7 +61,7 @@ class EateriesInterfaceController: WKInterfaceController {
             let bState = b.generateDescriptionOfCurrentState()
             
             switch aState {
-            case let .open:
+            case .open:
                 switch bState {
                 case .open:
                     return a.nickname <= b.nickname

@@ -41,11 +41,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var northExpandedCells: [Int] = []
     fileprivate var centralExpandedCells: [Int] = []
     fileprivate var events: [String: Event] = [:]
-    fileprivate let dates: [Date] = {
-        (0..<7).flatMap {
-            Calendar.current.date(byAdding: .day, value: $0, to: Date())!
-        }
-    }()
+    fileprivate let dates: [Date] = (0..<7).map {
+        Calendar.current.date(byAdding: .day, value: $0, to: Date())!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +82,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let dateStrings = getDateStrings(dates)
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: filterSectionHeight))
 
-        filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
+        filterEateriesCell = (tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell)
         filterMealButtons = [filterEateriesCell.filterBreakfastButton, filterEateriesCell.filterLunchButton, filterEateriesCell.filterDinnerButton]
         filterDateViews = [filterEateriesCell.firstDateView, filterEateriesCell.secondDateView, filterEateriesCell.thirdDateView, filterEateriesCell.fourthDateView, filterEateriesCell.fifthDateView, filterEateriesCell.sixthDateView, filterEateriesCell.seventhDateView]
         filterEateriesCell.delegate = self
@@ -248,9 +246,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-//            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
+            //            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
             cell.shareMenuButton.isHidden = true // temporary before hotfix
-//            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
+            //            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
             cell.shareIcon.isHidden = true // temporary before hotfix
             cell.menuImageView.image = getEateryMenu(eatery)
             
@@ -305,7 +303,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                     cells.insert(1, at: menuRow)
                 }
             }
-        
+
             tableView.beginUpdates()
             
             switch(sections[indexPath.section]) {
@@ -324,7 +322,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             } else {
                 tableView.insertRows(at: [menuIndex], with: .fade)
             }
-        
+
             tableView.endUpdates()
             
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)
