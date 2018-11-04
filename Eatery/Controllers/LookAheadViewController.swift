@@ -82,7 +82,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let dateStrings = getDateStrings(dates)
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: filterSectionHeight))
 
-        filterEateriesCell = (tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell)
+        filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
         filterMealButtons = [filterEateriesCell.filterBreakfastButton, filterEateriesCell.filterLunchButton, filterEateriesCell.filterDinnerButton]
         filterDateViews = [filterEateriesCell.firstDateView, filterEateriesCell.secondDateView, filterEateriesCell.thirdDateView, filterEateriesCell.fourthDateView, filterEateriesCell.fifthDateView, filterEateriesCell.sixthDateView, filterEateriesCell.seventhDateView]
         filterEateriesCell.delegate = self
@@ -246,9 +246,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-            //            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
             cell.shareMenuButton.isHidden = true // temporary before hotfix
-            //            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
             cell.shareIcon.isHidden = true // temporary before hotfix
             cell.menuImageView.image = getEateryMenu(eatery)
             
