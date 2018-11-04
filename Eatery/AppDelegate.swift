@@ -36,9 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController = UITabBarController()
         
         eateriesViewController = EateriesViewController()
-
-
-
+        tabBarController.delegate = eateriesViewController
+        
         let eateryNavigationController = UINavigationController(rootViewController: eateriesViewController)
         eateryNavigationController.navigationBar.barStyle = .black
         eateryNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
@@ -75,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+
   
     func applicationWillResignActive(_ application: UIApplication) {
       if #available(iOS 9.1, *) {

@@ -9,7 +9,7 @@ import NVActivityIndicatorView
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
-class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
+class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
 
     var appDevLogo: UIView?
     var collectionView: UICollectionView!
@@ -49,10 +49,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             return eatery.slug + "_" + rawValue
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
@@ -122,6 +121,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
     @objc func appDevButtonPressed() {
 
+    }
+    
+    // Scrolls users to the top of the menu when the eatery tab bar item is pressed
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if viewController == tabBarController.viewControllers![0] {
+            if collectionView.contentOffset.y > 0 {
+                let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height)!)
+                collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
+            }
+        }
     }
 
     @available(iOS 11.0, *)
