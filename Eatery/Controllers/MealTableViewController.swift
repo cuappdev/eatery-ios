@@ -31,7 +31,7 @@ class MealTableViewController: UITableViewController {
 
     private var menu: [String: [MenuItem]]? {
         didSet {
-            if let menu = menu, menu.count == 1 {
+            if let menu = menu, menu.count == 1, eatery.eventsOnDate(Date()).count == 1 {
                 topSeparator.isHidden = false
                 tableView.separatorStyle = .singleLine
             } else {
@@ -87,7 +87,7 @@ class MealTableViewController: UITableViewController {
             return 1
         }
 
-        if menu.count == 1 {
+        if menu.count == 1, eatery.eventsOnDate(Date()).count == 1 {
             // display menu items (of the only "dining station") as a table
             return menu.first!.value.count
         } else {
@@ -101,7 +101,7 @@ class MealTableViewController: UITableViewController {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        if menu.count == 1 {
+        if menu.count == 1, eatery.eventsOnDate(Date()).count == 1 {
             return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
             return diningStationsCell(in: tableView, forRowAt: indexPath)

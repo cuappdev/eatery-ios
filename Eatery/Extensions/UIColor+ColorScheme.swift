@@ -17,21 +17,6 @@ extension UIColor {
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }
-
-    /*
-     Color adjusted for iOS's arbitrary lightening of navigation bar colors. 20 pts has been found to be accurate.
-     */
-    var navigationBarAdjusted: UIColor {
-        let offset: CGFloat = 20/255
-
-        var r: CGFloat = 0.0
-        var g: CGFloat = 0.0
-        var b: CGFloat = 0.0
-        var a: CGFloat = 0.0
-        self.getRed(&r, green: &g, blue: &b, alpha: &a)
-
-        return UIColor(red: r - offset, green: g - offset, blue: b - offset, alpha: a - offset)
-    }
     
     static let eateryRed = colorFromCode(0xF2655D)
     
@@ -56,6 +41,7 @@ extension UIColor {
 }
 
 extension UIImage {
+
     class func image(withColor color: UIColor) -> UIImage {
         
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
@@ -73,4 +59,5 @@ extension UIImage {
         
         return image!
     }
+
 }
