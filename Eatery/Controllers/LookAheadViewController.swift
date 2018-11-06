@@ -61,7 +61,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorColor = .secondary
+        tableView.separatorColor = .separator
         tableView.showsVerticalScrollIndicator = false
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
