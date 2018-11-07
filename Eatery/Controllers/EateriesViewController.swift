@@ -86,10 +86,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
             self.appDevLogo = logo
 
-            if ARViewController.isSupported() {
-                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
-            }
+//            if ARViewController.isSupported() {
+//                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
+//                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
+//            }
         } else {
             navigationItem.rightBarButtonItems = [mapButton]
         }
