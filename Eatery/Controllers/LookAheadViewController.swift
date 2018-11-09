@@ -24,10 +24,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var tableView: UITableView!
     fileprivate let sectionHeaderHeight: CGFloat = 56.0
     fileprivate let eateryHeaderHeight: CGFloat = 55.0
-    fileprivate let filterSectionHeight: CGFloat = 108.0
+    fileprivate let filterSectionHeight: CGFloat = 43.0
     fileprivate var filterEateriesCell: FilterEateriesTableViewCell!
     fileprivate var filterMealButtons: [UIButton]!
-    fileprivate var filterDateViews: [FilterDateView]!
     fileprivate var selectedMealIndex: Int = 0
     fileprivate var selectedDateIndex: Int = 0
     fileprivate let sections: [Area] = [.West, .North, .Central]
@@ -84,21 +83,13 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
 
         filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
         filterMealButtons = [filterEateriesCell.filterBreakfastButton, filterEateriesCell.filterLunchButton, filterEateriesCell.filterDinnerButton]
-        filterDateViews = [filterEateriesCell.firstDateView, filterEateriesCell.secondDateView, filterEateriesCell.thirdDateView, filterEateriesCell.fourthDateView, filterEateriesCell.fifthDateView, filterEateriesCell.sixthDateView, filterEateriesCell.seventhDateView]
         filterEateriesCell.delegate = self
         filterEateriesCell.frame = headerView.frame
         headerView.addSubview(filterEateriesCell)
         tableView.tableHeaderView = headerView
         
-        for (index,dateView) in filterDateViews.enumerated() {
-            dateView.delegate = self
-            dateView.dateButton.tag = index
-            dateView.dayLabel.text = dayStrings[index]
-            dateView.dateLabel.text = dateStrings[index]
-        }
-        
         selectedMealIndex = currentMealIndex()
-        filterEateries(filterDateViews, buttons: filterMealButtons)
+        filterEateries(buttons: filterMealButtons)
         
         // Fetch Eateries Data
         DataManager.sharedInstance.fetchEateries(false) { (error) -> (Void) in
@@ -114,7 +105,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                         }
                     }
                 }
-                self.filterEateries(self.filterDateViews, buttons: self.filterMealButtons)
+                self.filterEateries(buttons: self.filterMealButtons)
                 self.tableView.reloadData()
             })
         }
@@ -351,22 +342,15 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func didFilterDate(_ sender: UIButton) {
         selectedDateIndex = sender.tag
-        filterEateries(filterDateViews, buttons: filterMealButtons)
+        filterEateries(buttons: filterMealButtons)
     }
     
     func didFilterMeal(_ sender: UIButton) {
         selectedMealIndex = sender.tag
-        filterEateries(filterDateViews, buttons: filterMealButtons)
+        filterEateries(buttons: filterMealButtons)
     }
     
-    func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
-        // Update selected date
-        for dateView in dateViews {
-            let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 1 : 0.3
-            dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
-            dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
-        }
-        
+    func filterEateries(buttons: [UIButton]) {
         // Update selected meal
         for button in buttons {
             let alpha: CGFloat = button.tag == selectedMealIndex ? 1 : 0.3
