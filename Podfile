@@ -11,6 +11,7 @@ target 'Eatery' do
   pod 'SnapKit'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
   pod 'Hero'
   pod 'ARCL'
   pod 'Kingfisher'

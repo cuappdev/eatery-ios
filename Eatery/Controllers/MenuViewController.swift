@@ -357,7 +357,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         switch -titleLabelFrame.origin.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             navigationTitleView.nameLabelHeightConstraint.constant = 0
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width
+            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width > dateLabelMinWidth ? navigationTitleView.frame.width : dateLabelMinWidth
             navigationTitleView.eateryNameLabel.alpha = 0.0
         case 0..<titleLabelFrame.height:
             let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height
