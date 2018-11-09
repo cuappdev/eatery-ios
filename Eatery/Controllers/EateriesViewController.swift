@@ -159,6 +159,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
         searchBar.autocapitalizationType = .none
+        searchBar.enablesReturnKeyAutomatically = false
 
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
@@ -587,8 +588,10 @@ extension EateriesViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        processEateries()
-        collectionView.reloadData()
+        if let searchText = searchBar.text, searchText != "" {
+            processEateries()
+            collectionView.reloadData()
+        }
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
