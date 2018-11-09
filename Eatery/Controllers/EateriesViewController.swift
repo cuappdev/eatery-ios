@@ -124,12 +124,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     // Scrolls users to the top of the menu when the eatery tab bar item is pressed
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if viewController == tabBarController.viewControllers![0] {
-            if collectionView.contentOffset.y > 0 {
-                let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height)!)
-                collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
-            }
+    func scrollToTop() {
+        if collectionView != nil && collectionView.contentOffset.y > 0 {
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height)!)
+            collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
 

@@ -52,6 +52,7 @@
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
+		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
 		D10246291C7A31C4000D5CD8 /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */; };
 		D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */; };
 		D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */; };
@@ -183,6 +184,7 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
 		D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
 		D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDateView.swift; sourceTree = "<group>"; };
 		D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterDateView.xib; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				6560D4411F51F373009E7CEF /* Eateries */,
 				6560D4421F51F37A009E7CEF /* Lookahead */,
 				9584FE531CDD6C40001A3AB5 /* BRB Feature */,
+				C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				654A7A6620389C350086053B /* EateryARCard.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
+				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				654A7A682038FF050086053B /* EateryARDetailCard.swift in Sources */,
 				E9EC97951BFD31B400D06823 /* MenuHeaderView.swift in Sources */,
 				F0EFD2461DDBBF9D007D63B1 /* BRBTableViewCell.swift in Sources */,
