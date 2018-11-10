@@ -1,12 +1,20 @@
 import UIKit
 
 @objc protocol FilterEateriesViewDelegate {
+
     @objc optional func didFilterMeal(_ sender: UIButton)
     @objc optional func didFilterDate(_ sender: UIButton)
+
 }
 
-class FilterEateriesTableViewCell: UITableViewCell {
-    @IBOutlet weak var filterTitleLabel: UILabel!
+class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
+
+    static func loadFromNib() -> FilterEateriesView {
+        return UINib(nibName: "FilterEateriesView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! FilterEateriesView
+    }
+
+    @IBOutlet private weak var filterContainerView: UIView!
+
     @IBOutlet weak var firstDateView: FilterDateView!
     @IBOutlet weak var secondDateView: FilterDateView!
     @IBOutlet weak var thirdDateView: FilterDateView!
@@ -14,16 +22,21 @@ class FilterEateriesTableViewCell: UITableViewCell {
     @IBOutlet weak var fifthDateView: FilterDateView!
     @IBOutlet weak var sixthDateView: FilterDateView!
     @IBOutlet weak var seventhDateView: FilterDateView!
+
+    @IBOutlet private weak var filterMealsView: UIView!
     @IBOutlet weak var filterBreakfastButton: UIButton!
     @IBOutlet weak var filterLunchButton: UIButton!
     @IBOutlet weak var filterDinnerButton: UIButton!
+
+    var filterDateHeight: CGFloat {
+        return filterContainerView.frame.height - filterMealsView.frame.height
+    }
     
     fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
-    var delegate: FilterEateriesViewDelegate?
+    weak var delegate: FilterEateriesViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .none
     }
     
     @IBAction func didFilterMeal(_ sender: UIButton) {
@@ -31,8 +44,7 @@ class FilterEateriesTableViewCell: UITableViewCell {
     }
     
     override func didMoveToWindow() {
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(FilterEateriesTableViewCell.filterEateriesCellPressed(_:)))
-        tapGestureRecognizer?.delegate = self
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(filterEateriesCellPressed))
         tapGestureRecognizer?.cancelsTouchesInView = false
         addGestureRecognizer(tapGestureRecognizer!)
     }
@@ -50,4 +62,5 @@ class FilterEateriesTableViewCell: UITableViewCell {
             }
         }
     }
+
 }

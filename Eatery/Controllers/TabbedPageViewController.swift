@@ -73,8 +73,6 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         if let tabBar = tabBar {
             view.bringSubview(toFront: tabBar)
         }
-
-        view.layoutIfNeeded()
     }
     
     func setTabBarShadow(_ radius: CGFloat, opacity: Float) {

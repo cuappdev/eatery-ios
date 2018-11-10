@@ -25,7 +25,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate let sectionHeaderHeight: CGFloat = 56.0
     fileprivate let eateryHeaderHeight: CGFloat = 55.0
     fileprivate let filterSectionHeight: CGFloat = 108.0
-    fileprivate var filterEateriesCell: FilterEateriesTableViewCell!
+    fileprivate var filterEateriesView: FilterEateriesView!
     fileprivate var filterMealButtons: [UIButton]!
     fileprivate var filterDateViews: [FilterDateView]!
     fileprivate var selectedMealIndex: Int = 0
@@ -73,23 +73,23 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Table View Nibs
         tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
-        tableView.register(UINib(nibName: "FilterEateriesTableViewCell", bundle: nil), forCellReuseIdentifier: "FilterEateriesCell")
         tableView.register(UINib(nibName: "EateryHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryHeaderCell")
         tableView.register(UINib(nibName: "EateryMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryMenuCell")
         
         // Filter Eateries Header View
         let dayStrings = getDayStrings(dates)
         let dateStrings = getDateStrings(dates)
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: filterSectionHeight))
 
-        let filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
-        filterMealButtons = [filterEateriesCell.filterBreakfastButton, filterEateriesCell.filterLunchButton, filterEateriesCell.filterDinnerButton]
-        filterDateViews = [filterEateriesCell.firstDateView, filterEateriesCell.secondDateView, filterEateriesCell.thirdDateView, filterEateriesCell.fourthDateView, filterEateriesCell.fifthDateView, filterEateriesCell.sixthDateView, filterEateriesCell.seventhDateView]
-        filterEateriesCell.delegate = self
-        filterEateriesCell.frame = headerView.frame
-        headerView.addSubview(filterEateriesCell)
-        self.filterEateriesCell = filterEateriesCell
-        tableView.tableHeaderView = headerView
+        let filterEateriesView = FilterEateriesView.loadFromNib()
+        filterEateriesView.backgroundColor = .white
+        filterMealButtons = [filterEateriesView.filterBreakfastButton, filterEateriesView.filterLunchButton, filterEateriesView.filterDinnerButton]
+        filterDateViews = [filterEateriesView.firstDateView, filterEateriesView.secondDateView, filterEateriesView.thirdDateView, filterEateriesView.fourthDateView, filterEateriesView.fifthDateView, filterEateriesView.sixthDateView, filterEateriesView.seventhDateView]
+        filterEateriesView.delegate = self
+        self.filterEateriesView = filterEateriesView
+
+        view.addSubview(filterEateriesView)
+        filterEateriesView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: filterSectionHeight)
+        tableView.contentInset.top = filterSectionHeight
         
         for (index,dateView) in filterDateViews.enumerated() {
             dateView.delegate = self
@@ -398,5 +398,16 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         default: return 2
         }
     }
-}
 
+    // MARK: - Scroll View Delegate
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y + filterSectionHeight
+        if (yOffset > filterEateriesView.filterDateHeight) {
+            filterEateriesView.frame.origin.y = -filterEateriesView.filterDateHeight
+        } else {
+            filterEateriesView.frame.origin.y = -yOffset
+        }
+    }
+
+}

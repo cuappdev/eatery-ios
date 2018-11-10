@@ -114,13 +114,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         let infoContainer = UIView()
 
-//        let timeImageView = UIImageView(image: UIImage(named: "time"))
-//        infoContainer.addSubview(timeImageView)
-//        timeImageView.snp.makeConstraints { make in
-//            make.top.leading.equalToSuperview().inset(10.0)
-//            make.size.equalTo(14.0)
-//        }
-
         let statusLabel = UILabel()
         statusLabel.textColor = .eateryBlue
         statusLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .semibold)
@@ -158,15 +151,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
             statusLabel.textColor = .darkGray
         }
-
-//        let locationImageView = UIImageView(image: UIImage(named: "location"))
-//        locationImageView.tintColor = .gray
-//        infoContainer.addSubview(locationImageView)
-//        locationImageView.snp.makeConstraints { make in
-//            make.top.equalTo(timeImageView.snp.bottom).offset(10.0)
-//            make.leading.bottom.equalToSuperview().inset(10.0)
-//            make.size.equalTo(14.0)
-//        }
 
         let locationLabel = UILabel()
         locationLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
