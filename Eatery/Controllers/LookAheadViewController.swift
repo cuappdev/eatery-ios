@@ -370,10 +370,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Update selected meal
         for button in buttons {
-            let alpha: CGFloat = button.tag == selectedMealIndex ? 1 : 0.3
-            button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), for: UIControlState())
+            button.isSelected = button.tag == selectedMealIndex
         }
-        
+
         // Filter eateries
         filteredWestEateries = westEateries
         filteredNorthEateries = northEateries
