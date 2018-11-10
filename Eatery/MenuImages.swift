@@ -158,8 +158,8 @@ class MenuImages: NSObject {
         switch eateryStatus {
             case .open(_):
                 openIndicatorView.backgroundColor = .eateryGreen
-            case .closed(_):
-                openIndicatorView.backgroundColor = .red
+            case .closing, .closed:
+                openIndicatorView.backgroundColor = .eateryRed
         }
         openIndicatorView.layer.cornerRadius = openIndicatorView.frame.width / 2.0
         openIndicatorView.clipsToBounds = true

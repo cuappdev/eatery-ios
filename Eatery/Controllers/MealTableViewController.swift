@@ -31,7 +31,7 @@ class MealTableViewController: UITableViewController {
 
     private var menu: [String: [MenuItem]]? {
         didSet {
-            if let menu = menu, menu.count == 1 {
+            if let menu = menu, menu.count == 1, eatery.eateryType != .Dining {
                 topSeparator.isHidden = false
                 tableView.separatorStyle = .singleLine
             } else {
@@ -53,18 +53,24 @@ class MealTableViewController: UITableViewController {
         
         // TableView Config
         tableView.backgroundColor = .clear
-        tableView.estimatedRowHeight = 120
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableViewAutomaticDimension;
 
         tableView.register(MealItemTableViewCell.self, forCellReuseIdentifier: "MealItem")
         tableView.register(UINib(nibName: "MealStationTableViewCell", bundle: nil), forCellReuseIdentifier: "MealStation")
 
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: 66.0))
         tableView.isScrollEnabled = false
 
         topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
         topSeparator.backgroundColor = .separator
         tableView.tableHeaderView = topSeparator
+
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+
+        tableView.layoutIfNeeded()
     }
 
     // MARK: - Handoff Functions
@@ -87,9 +93,9 @@ class MealTableViewController: UITableViewController {
             return 1
         }
 
-        if menu.count == 1 {
+        if menu.count == 1, eatery.eateryType != .Dining, let first = menu.first {
             // display menu items (of the only "dining station") as a table
-            return menu.first!.value.count
+            return first.value.count
         } else {
             // display the menu items
             return menu.count
@@ -101,7 +107,7 @@ class MealTableViewController: UITableViewController {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        if menu.count == 1 {
+        if menu.count == 1 && eatery.eateryType != .Dining {
             return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
             return diningStationsCell(in: tableView, forRowAt: indexPath)

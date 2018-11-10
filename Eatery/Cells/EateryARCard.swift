@@ -66,6 +66,16 @@ class EateryARCard: UIView {
             statusLabel.textColor = .eateryBlue
             timeLabel.textColor = .gray
             distanceLabel.textColor = .darkGray
+
+        case let .closing(status, message):
+            statusLabel.text = status
+            timeLabel.text = message
+
+            titleLabel.textColor = .black
+            statusLabel.textColor = .eateryRed
+            timeLabel.textColor = .gray
+            distanceLabel.textColor = .darkGray
+
         case let .closed(status, message):
             statusLabel.text = status
             timeLabel.text = message
