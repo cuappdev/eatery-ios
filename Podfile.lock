@@ -7,6 +7,7 @@ PODS:
     - Alamofire
     - SwiftyJSON
   - Fabric (1.7.13)
+  - FLEX (2.4.0)
   - Hero (1.4.0)
   - Kingfisher (4.10.0)
   - NVActivityIndicatorView (4.4.0):
@@ -20,6 +21,7 @@ DEPENDENCIES:
   - Crashlytics
   - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
   - Fabric
+  - FLEX (~> 2.0)
   - Hero
   - Kingfisher
   - NVActivityIndicatorView
@@ -32,6 +34,7 @@ SPEC REPOS:
     - ARCL
     - Crashlytics
     - Fabric
+    - FLEX
     - Hero
     - Kingfisher
     - NVActivityIndicatorView
@@ -53,12 +56,13 @@ SPEC CHECKSUMS:
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
+  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 33cde1152d67cd13aa451a7e43fa292e8e317b1a
+PODFILE CHECKSUM: 050270a61e33a0bb2ac78f9a4a504c536915b56a
 
 COCOAPODS: 1.5.3

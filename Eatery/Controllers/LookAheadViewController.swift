@@ -19,7 +19,7 @@ private let DayDateFormatter: DateFormatter = {
 /*
  See upcoming menus for various eateries
  */
-class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
+class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     fileprivate var tableView: UITableView!
     fileprivate let sectionHeaderHeight: CGFloat = 56.0
@@ -117,6 +117,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 self.filterEateries(self.filterDateViews, buttons: self.filterMealButtons)
                 self.tableView.reloadData()
             })
+        }
+    }
+
+    // Scrolls users to the top of screen when the look ahead tab bar item is pressed
+    func scrollToTop() {
+        if tableView != nil && tableView.contentOffset.y > 0 {
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
+            tableView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
     

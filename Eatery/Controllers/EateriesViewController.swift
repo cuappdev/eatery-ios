@@ -124,12 +124,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     // Scrolls users to the top of the menu when the eatery tab bar item is pressed
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if viewController == tabBarController.viewControllers![0] {
-            if collectionView.contentOffset.y > 0 {
-                let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height)!)
-                collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
-            }
+    func scrollToTop() {
+        if collectionView != nil && collectionView.contentOffset.y > 0 {
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
+            collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
 
@@ -161,6 +159,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
         searchBar.autocapitalizationType = .none
+        searchBar.enablesReturnKeyAutomatically = false
 
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
@@ -589,8 +588,10 @@ extension EateriesViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        processEateries()
-        collectionView.reloadData()
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            processEateries()
+            collectionView.reloadData()
+        }
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
