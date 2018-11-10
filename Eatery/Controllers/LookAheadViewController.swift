@@ -123,7 +123,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     // Scrolls users to the top of screen when the look ahead tab bar item is pressed
     func scrollToTop() {
         if tableView != nil && tableView.contentOffset.y > 0 {
-            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height)!)
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
             tableView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }

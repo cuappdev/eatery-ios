@@ -126,7 +126,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     // Scrolls users to the top of the menu when the eatery tab bar item is pressed
     func scrollToTop() {
         if collectionView != nil && collectionView.contentOffset.y > 0 {
-            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height)!)
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
             collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
@@ -588,7 +588,7 @@ extension EateriesViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchText = searchBar.text, searchText != "" {
+        if let searchText = searchBar.text, !searchText.isEmpty {
             processEateries()
             collectionView.reloadData()
         }
