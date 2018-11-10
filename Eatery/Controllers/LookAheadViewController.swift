@@ -82,12 +82,13 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let dateStrings = getDateStrings(dates)
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: filterSectionHeight))
 
-        filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
+        let filterEateriesCell = tableView.dequeueReusableCell(withIdentifier: "FilterEateriesCell") as! FilterEateriesTableViewCell
         filterMealButtons = [filterEateriesCell.filterBreakfastButton, filterEateriesCell.filterLunchButton, filterEateriesCell.filterDinnerButton]
         filterDateViews = [filterEateriesCell.firstDateView, filterEateriesCell.secondDateView, filterEateriesCell.thirdDateView, filterEateriesCell.fourthDateView, filterEateriesCell.fifthDateView, filterEateriesCell.sixthDateView, filterEateriesCell.seventhDateView]
         filterEateriesCell.delegate = self
         filterEateriesCell.frame = headerView.frame
         headerView.addSubview(filterEateriesCell)
+        self.filterEateriesCell = filterEateriesCell
         tableView.tableHeaderView = headerView
         
         for (index,dateView) in filterDateViews.enumerated() {
