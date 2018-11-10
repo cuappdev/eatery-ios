@@ -64,6 +64,14 @@ class MealTableViewController: UITableViewController {
         topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
         topSeparator.backgroundColor = .separator
         tableView.tableHeaderView = topSeparator
+
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+
+        tableView.layoutIfNeeded()
     }
 
     // MARK: - Handoff Functions
