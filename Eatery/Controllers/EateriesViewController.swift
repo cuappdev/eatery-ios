@@ -55,6 +55,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
+
+        loadData(force: true, completion: nil)
         
         navigationController?.view.backgroundColor = .white
         navigationController?.hero.isEnabled = true
@@ -110,8 +112,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             registerForPreviewing(with: self, sourceView: view)
         }
 
-        createUpdateTimer()
-        NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+//        createUpdateTimer()
+//        NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

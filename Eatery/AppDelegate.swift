@@ -1,6 +1,5 @@
 import UIKit
 import SwiftyJSON
-import DiningStack
 import Fabric
 import Crashlytics
 import Hero

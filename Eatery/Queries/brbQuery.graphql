@@ -1,0 +1,13 @@
+query BrbInfo($accountId: String) {
+    accountInfo(id: $accountId) {
+        cityBucks
+        laundry
+        brbs
+        swipes
+        history {
+            name
+            timestamp
+        }
+    }
+}
+

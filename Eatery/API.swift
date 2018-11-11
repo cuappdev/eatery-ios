@@ -4,7 +4,7 @@ import Apollo
 
 public final class AllEateriesQuery: GraphQLQuery {
   public let operationDefinition =
-    "query AllEateries {\n  eateries {\n    __typename\n    id\n    name\n    paymentMethods {\n      __typename\n      swipes\n      brbs\n      cash\n      credit\n      cornellCard\n      mobile\n    }\n    coordinates {\n      __typename\n      latitude\n      longitude\n    }\n    operatingHours {\n      __typename\n      date\n      events {\n        __typename\n        startTime\n        endTime\n        description\n        menu {\n          __typename\n          category\n          items {\n            __typename\n            item\n            healthy\n          }\n        }\n      }\n    }\n  }\n}"
+    "query AllEateries {\n  eateries {\n    __typename\n    id\n    name\n    nameShort\n    slug\n    eateryType\n    about\n    phone\n    location\n    campusArea {\n      __typename\n      descriptionShort\n    }\n    paymentMethods {\n      __typename\n      swipes\n      brbs\n      cash\n      credit\n      cornellCard\n      mobile\n    }\n    coordinates {\n      __typename\n      latitude\n      longitude\n    }\n    operatingHours {\n      __typename\n      date\n      events {\n        __typename\n        startTime\n        endTime\n        description\n        calSummary\n        menu {\n          __typename\n          category\n          items {\n            __typename\n            item\n            healthy\n          }\n        }\n      }\n    }\n  }\n}"
 
   public init() {
   }
@@ -42,7 +42,14 @@ public final class AllEateriesQuery: GraphQLQuery {
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(Int.self))),
         GraphQLField("name", type: .nonNull(.scalar(String.self))),
-        GraphQLField("paymentMethods", type: .object(PaymentMethod.selections)),
+        GraphQLField("nameShort", type: .nonNull(.scalar(String.self))),
+        GraphQLField("slug", type: .nonNull(.scalar(String.self))),
+        GraphQLField("eateryType", type: .nonNull(.scalar(String.self))),
+        GraphQLField("about", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+        GraphQLField("location", type: .nonNull(.scalar(String.self))),
+        GraphQLField("campusArea", type: .nonNull(.object(CampusArea.selections))),
+        GraphQLField("paymentMethods", type: .nonNull(.object(PaymentMethod.selections))),
         GraphQLField("coordinates", type: .nonNull(.object(Coordinate.selections))),
         GraphQLField("operatingHours", type: .nonNull(.list(.object(OperatingHour.selections)))),
       ]
@@ -53,8 +60,8 @@ public final class AllEateriesQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: Int, name: String, paymentMethods: PaymentMethod? = nil, coordinates: Coordinate, operatingHours: [OperatingHour?]) {
-        self.init(unsafeResultMap: ["__typename": "EateryType", "id": id, "name": name, "paymentMethods": paymentMethods.flatMap { (value: PaymentMethod) -> ResultMap in value.resultMap }, "coordinates": coordinates.resultMap, "operatingHours": operatingHours.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }])
+      public init(id: Int, name: String, nameShort: String, slug: String, eateryType: String, about: String, phone: String, location: String, campusArea: CampusArea, paymentMethods: PaymentMethod, coordinates: Coordinate, operatingHours: [OperatingHour?]) {
+        self.init(unsafeResultMap: ["__typename": "EateryType", "id": id, "name": name, "nameShort": nameShort, "slug": slug, "eateryType": eateryType, "about": about, "phone": phone, "location": location, "campusArea": campusArea.resultMap, "paymentMethods": paymentMethods.resultMap, "coordinates": coordinates.resultMap, "operatingHours": operatingHours.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }])
       }
 
       public var __typename: String {
@@ -84,12 +91,75 @@ public final class AllEateriesQuery: GraphQLQuery {
         }
       }
 
-      public var paymentMethods: PaymentMethod? {
+      public var nameShort: String {
         get {
-          return (resultMap["paymentMethods"] as? ResultMap).flatMap { PaymentMethod(unsafeResultMap: $0) }
+          return resultMap["nameShort"]! as! String
         }
         set {
-          resultMap.updateValue(newValue?.resultMap, forKey: "paymentMethods")
+          resultMap.updateValue(newValue, forKey: "nameShort")
+        }
+      }
+
+      public var slug: String {
+        get {
+          return resultMap["slug"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "slug")
+        }
+      }
+
+      public var eateryType: String {
+        get {
+          return resultMap["eateryType"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "eateryType")
+        }
+      }
+
+      public var about: String {
+        get {
+          return resultMap["about"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "about")
+        }
+      }
+
+      public var phone: String {
+        get {
+          return resultMap["phone"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "phone")
+        }
+      }
+
+      public var location: String {
+        get {
+          return resultMap["location"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "location")
+        }
+      }
+
+      public var campusArea: CampusArea {
+        get {
+          return CampusArea(unsafeResultMap: resultMap["campusArea"]! as! ResultMap)
+        }
+        set {
+          resultMap.updateValue(newValue.resultMap, forKey: "campusArea")
+        }
+      }
+
+      public var paymentMethods: PaymentMethod {
+        get {
+          return PaymentMethod(unsafeResultMap: resultMap["paymentMethods"]! as! ResultMap)
+        }
+        set {
+          resultMap.updateValue(newValue.resultMap, forKey: "paymentMethods")
         }
       }
 
@@ -108,6 +178,43 @@ public final class AllEateriesQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }, forKey: "operatingHours")
+        }
+      }
+
+      public struct CampusArea: GraphQLSelectionSet {
+        public static let possibleTypes = ["CampusAreaType"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("descriptionShort", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(descriptionShort: String) {
+          self.init(unsafeResultMap: ["__typename": "CampusAreaType", "descriptionShort": descriptionShort])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var descriptionShort: String {
+          get {
+            return resultMap["descriptionShort"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "descriptionShort")
+          }
         }
       }
 
@@ -203,8 +310,8 @@ public final class AllEateriesQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("latitude", type: .nonNull(.scalar(Int.self))),
-          GraphQLField("longitude", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("latitude", type: .nonNull(.scalar(Double.self))),
+          GraphQLField("longitude", type: .nonNull(.scalar(Double.self))),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -213,7 +320,7 @@ public final class AllEateriesQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(latitude: Int, longitude: Int) {
+        public init(latitude: Double, longitude: Double) {
           self.init(unsafeResultMap: ["__typename": "CoordinatesType", "latitude": latitude, "longitude": longitude])
         }
 
@@ -226,18 +333,18 @@ public final class AllEateriesQuery: GraphQLQuery {
           }
         }
 
-        public var latitude: Int {
+        public var latitude: Double {
           get {
-            return resultMap["latitude"]! as! Int
+            return resultMap["latitude"]! as! Double
           }
           set {
             resultMap.updateValue(newValue, forKey: "latitude")
           }
         }
 
-        public var longitude: Int {
+        public var longitude: Double {
           get {
-            return resultMap["longitude"]! as! Int
+            return resultMap["longitude"]! as! Double
           }
           set {
             resultMap.updateValue(newValue, forKey: "longitude")
@@ -299,6 +406,7 @@ public final class AllEateriesQuery: GraphQLQuery {
             GraphQLField("startTime", type: .nonNull(.scalar(String.self))),
             GraphQLField("endTime", type: .nonNull(.scalar(String.self))),
             GraphQLField("description", type: .nonNull(.scalar(String.self))),
+            GraphQLField("calSummary", type: .nonNull(.scalar(String.self))),
             GraphQLField("menu", type: .nonNull(.list(.object(Menu.selections)))),
           ]
 
@@ -308,8 +416,8 @@ public final class AllEateriesQuery: GraphQLQuery {
             self.resultMap = unsafeResultMap
           }
 
-          public init(startTime: String, endTime: String, description: String, menu: [Menu?]) {
-            self.init(unsafeResultMap: ["__typename": "EventType", "startTime": startTime, "endTime": endTime, "description": description, "menu": menu.map { (value: Menu?) -> ResultMap? in value.flatMap { (value: Menu) -> ResultMap in value.resultMap } }])
+          public init(startTime: String, endTime: String, description: String, calSummary: String, menu: [Menu?]) {
+            self.init(unsafeResultMap: ["__typename": "EventType", "startTime": startTime, "endTime": endTime, "description": description, "calSummary": calSummary, "menu": menu.map { (value: Menu?) -> ResultMap? in value.flatMap { (value: Menu) -> ResultMap in value.resultMap } }])
           }
 
           public var __typename: String {
@@ -345,6 +453,15 @@ public final class AllEateriesQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "description")
+            }
+          }
+
+          public var calSummary: String {
+            get {
+              return resultMap["calSummary"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "calSummary")
             }
           }
 
@@ -449,6 +566,172 @@ public final class AllEateriesQuery: GraphQLQuery {
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class BrbInfoQuery: GraphQLQuery {
+  public let operationDefinition =
+    "query BrbInfo($accountId: String) {\n  accountInfo(id: $accountId) {\n    __typename\n    cityBucks\n    laundry\n    brbs\n    swipes\n    history {\n      __typename\n      name\n      timestamp\n    }\n  }\n}"
+
+  public var accountId: String?
+
+  public init(accountId: String? = nil) {
+    self.accountId = accountId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["accountId": accountId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("accountInfo", arguments: ["id": GraphQLVariable("accountId")], type: .object(AccountInfo.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(accountInfo: AccountInfo? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "accountInfo": accountInfo.flatMap { (value: AccountInfo) -> ResultMap in value.resultMap }])
+    }
+
+    public var accountInfo: AccountInfo? {
+      get {
+        return (resultMap["accountInfo"] as? ResultMap).flatMap { AccountInfo(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "accountInfo")
+      }
+    }
+
+    public struct AccountInfo: GraphQLSelectionSet {
+      public static let possibleTypes = ["AccountInfoType"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("cityBucks", type: .nonNull(.scalar(String.self))),
+        GraphQLField("laundry", type: .nonNull(.scalar(String.self))),
+        GraphQLField("brbs", type: .nonNull(.scalar(String.self))),
+        GraphQLField("swipes", type: .nonNull(.scalar(String.self))),
+        GraphQLField("history", type: .nonNull(.list(.object(History.selections)))),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(cityBucks: String, laundry: String, brbs: String, swipes: String, history: [History?]) {
+        self.init(unsafeResultMap: ["__typename": "AccountInfoType", "cityBucks": cityBucks, "laundry": laundry, "brbs": brbs, "swipes": swipes, "history": history.map { (value: History?) -> ResultMap? in value.flatMap { (value: History) -> ResultMap in value.resultMap } }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var cityBucks: String {
+        get {
+          return resultMap["cityBucks"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "cityBucks")
+        }
+      }
+
+      public var laundry: String {
+        get {
+          return resultMap["laundry"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "laundry")
+        }
+      }
+
+      public var brbs: String {
+        get {
+          return resultMap["brbs"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "brbs")
+        }
+      }
+
+      public var swipes: String {
+        get {
+          return resultMap["swipes"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "swipes")
+        }
+      }
+
+      public var history: [History?] {
+        get {
+          return (resultMap["history"] as! [ResultMap?]).map { (value: ResultMap?) -> History? in value.flatMap { (value: ResultMap) -> History in History(unsafeResultMap: value) } }
+        }
+        set {
+          resultMap.updateValue(newValue.map { (value: History?) -> ResultMap? in value.flatMap { (value: History) -> ResultMap in value.resultMap } }, forKey: "history")
+        }
+      }
+
+      public struct History: GraphQLSelectionSet {
+        public static let possibleTypes = ["TransactionType"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          GraphQLField("timestamp", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(name: String, timestamp: String) {
+          self.init(unsafeResultMap: ["__typename": "TransactionType", "name": name, "timestamp": timestamp])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var name: String {
+          get {
+            return resultMap["name"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "name")
+          }
+        }
+
+        public var timestamp: String {
+          get {
+            return resultMap["timestamp"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "timestamp")
           }
         }
       }

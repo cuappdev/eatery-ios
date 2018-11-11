@@ -1,6 +1,5 @@
 import UIKit
 import SnapKit
-import DiningStack
 
 class EateryARDetailCard: UIView {
     var topIcon: UIImageView!

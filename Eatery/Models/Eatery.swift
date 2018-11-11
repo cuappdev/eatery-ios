@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import CoreLocation
 
+
 /**
  Different meals served by eateries
 
@@ -62,8 +63,8 @@ public enum PaymentType: String {
  - CoffeeShop:       Coffee Shops + Some Food
  */
 public enum EateryType: String {
-    case Unknown          = ""
-    case Dining           = "all you care to eat"
+    case Unknown          = "unknown"
+    case Dining           = "all you care to eat dining room"
     case Cafe             = "cafe"
     case Cart             = "cart"
     case FoodCourt        = "food court"
@@ -106,6 +107,7 @@ public struct Eatery: Hashable {
     public var hashValue: Int {
         return id
     }
+    
 
     /// Unique Identifier
     public let id: Int
@@ -155,10 +157,11 @@ public struct Eatery: Hashable {
     /// Maps the date the event occurs to a list of the event name
     /// to the event itself e.g.:
     /// [ "2015-03-01": ["Lunch": Event]]
-    private(set) var events: [String: [String: Event]] = [:]
+    public let events: [String: [String: Event]] = [:]
 
     /// ="This is an external eatery, i.e. a completely hardcoded eatery"
     public let external: Bool
+
 
     // Gives a string full of all the menus for this eatery today
     // this is used for searching.
@@ -176,6 +179,24 @@ public struct Eatery: Hashable {
             _todaysEventsString = strings.joined(separator: "\n")
             return _todaysEventsString!
         }
+    }
+
+
+    init(id: Int, name: String, nameShort: String, slug: String, eateryType: EateryType, about: String, phone: String, area: Area, address: String, paymentMethods: [PaymentType], diningItems: [String : [MenuItem]]?, hardcodedMenu: [String : [MenuItem]]?, location: CLLocation, external: Bool) {
+        self.id = id
+        self.name = name
+        self.nameShort = nameShort
+        self.slug = slug
+        self.eateryType = eateryType
+        self.about = about
+        self.phone = phone
+        self.area = area
+        self.address = address
+        self.paymentMethods = paymentMethods
+        self.diningItems = diningItems
+        self.hardcodedMenu = hardcodedMenu
+        self.location = location
+        self.external = external
     }
 
     /**

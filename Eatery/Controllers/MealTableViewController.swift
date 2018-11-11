@@ -1,5 +1,4 @@
 import UIKit
-import DiningStack
 
 protocol MealScrollDelegate {
     func mealScrollViewDidBeginPushing(_ scrollView: UIScrollView)

@@ -3,7 +3,6 @@ import ARCL
 import ARKit
 import SceneKit
 import CoreLocation
-import DiningStack
 
 @available(iOS 11.0, *)
 class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocationViewDelegate {

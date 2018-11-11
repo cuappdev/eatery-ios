@@ -2,6 +2,15 @@ query AllEateries {
     eateries {
         id
         name
+        nameShort
+        slug
+        eateryType
+        about
+        phone
+        location
+        campusArea {
+            descriptionShort
+        }
         paymentMethods {
             swipes
             brbs
@@ -20,6 +29,7 @@ query AllEateries {
                 startTime
                 endTime
                 description
+                calSummary
                 menu {
                     category
                     items {
