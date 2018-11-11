@@ -1,6 +1,5 @@
 import WatchKit
 import Foundation
-import DiningStack
 
 enum SortingOption {
     case OpenAndAlphabetical
