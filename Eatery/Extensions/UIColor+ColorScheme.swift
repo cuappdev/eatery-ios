@@ -19,7 +19,9 @@ extension UIColor {
     }
     
     static let eateryRed = colorFromCode(0xF2655D)
-    
+
+    static let navigationBarBlue = colorFromCode(0x2c7edf)
+
     static let eateryBlue = colorFromCode(0x4A90E2)
     
     static let eateryGreen = colorFromCode(0x63C774)
