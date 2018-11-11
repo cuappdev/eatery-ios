@@ -95,7 +95,7 @@ class MealTableViewController: UITableViewController {
 
         if menu.count == 1, eatery.eateryType != .Dining, let first = menu.first {
             // display menu items (of the only "dining station") as a table
-            return first.value.count
+            return menu.first?.value.count ?? 0
         } else {
             // display the menu items
             return menu.count

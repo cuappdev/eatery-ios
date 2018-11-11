@@ -19,7 +19,7 @@ class MealItemTableViewCell: UITableViewCell {
 
         selectionStyle = .none
 
-        nameLabel.font = UIFont.systemFont(ofSize: 14)
+        nameLabel.font = UIFont.systemFont(ofSize: 12)
         addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.snp.makeConstraints { make in

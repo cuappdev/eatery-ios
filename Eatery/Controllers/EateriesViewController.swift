@@ -481,14 +481,14 @@ extension EateriesViewController: UICollectionViewDataSource {
 
         if section == "Favorites" {
             view.titleLabel.text = "Favorites"
-            view.titleLabel.textColor = .black
+            view.titleLabel.textColor = .eateryBlue
         } else if section == "Open" {
             if eateries.isEmpty {
                 view.titleLabel.text = ""
                 view.titleLabel.textColor = .gray
             } else {
                 view.titleLabel.text = "Open"
-                view.titleLabel.textColor = .primary
+                view.titleLabel.textColor = .eateryBlue
             }
         } else if section == "Closed" {
             if eateries.isEmpty {
