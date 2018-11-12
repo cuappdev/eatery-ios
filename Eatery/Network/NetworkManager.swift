@@ -55,7 +55,7 @@ struct NetworkManager {
                 dateFormatter.dateFormat = "YYYY-MM-dd"
 
                 let timeDateFormatter = DateFormatter()
-                timeDateFormatter.dateFormat = "YYYY-MM-dd h:mm a"
+                timeDateFormatter.dateFormat = "YYYY-MM-dd:h:mma"
                 eatery.operatingHours.compactMap { $0 }.forEach { operatingHour in
                     let dateString = operatingHour.date
                     let date = dateFormatter.date(from: dateString) ?? Date()
@@ -75,8 +75,9 @@ struct NetworkManager {
                                 return MenuItem(name: itemForEvent.item, healthy: itemForEvent.healthy)
                             }
                         }
-                        let startDate = timeDateFormatter.date(from: "\(dateString) \(event.startTime)") ?? Date()
-                        let endDate = timeDateFormatter.date(from: "\(dateString) \(event.endTime)") ?? Date()
+                        let startDate = timeDateFormatter.date(from: event.startTime) ?? Date()
+                        //handle late end
+                        let endDate = timeDateFormatter.date(from: event.endTime) ?? Date()
 
                         let eventFinal = Event(startDate: startDate, startDateFormatted: event.startTime, endDate: endDate, endDateFormatted: event.endTime, desc: event.description, summary: event.calSummary, menu: categoryToMenu)
                         eventsDictionary[event.description] = eventFinal
@@ -86,7 +87,7 @@ struct NetworkManager {
                 }
 
 
-                return Eatery(id: eatery.id, name: eatery.name, nameShort: eatery.nameShort, slug: eatery.slug, eateryType: eateryType, about: eatery.about, phone: eatery.phone, area: area, address: eatery.location, paymentMethods: paymentTypes, diningItems: diningItems, hardcodedMenu: nil, location: location, external: false)
+                return Eatery(id: eatery.id, name: eatery.name, nameShort: eatery.nameShort, slug: eatery.slug, eateryType: eateryType, about: eatery.about, phone: eatery.phone, area: area, address: eatery.location, paymentMethods: paymentTypes, diningItems: diningItems, events: eventItems, hardcodedMenu: nil, location: location, external: false)
 
             }
             completion(finalEateries, nil)

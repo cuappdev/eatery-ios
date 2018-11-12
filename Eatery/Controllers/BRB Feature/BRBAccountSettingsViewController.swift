@@ -30,11 +30,11 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         view.backgroundColor = .white
         
         tableView = UITableView(frame: view.bounds, style: .grouped)
-        tableView.backgroundColor = .lightBackgroundGray
+        tableView.backgroundColor = .wash
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.separatorColor = .lightSeparatorGray
+        tableView.separatorColor = .inactive
         view.addSubview(tableView)
         
         let cell1 = BRBTableViewCell()

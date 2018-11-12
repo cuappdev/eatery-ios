@@ -15,7 +15,10 @@ private let DayDateFormatter: DateFormatter = {
     return dateFormatter
 }()
 
-class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
+/*
+ See upcoming menus for various eateries
+ */
+class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
     
     fileprivate var tableView: UITableView!
     fileprivate let sectionHeaderHeight: CGFloat = 56.0
@@ -37,11 +40,9 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     fileprivate var northExpandedCells: [Int] = []
     fileprivate var centralExpandedCells: [Int] = []
     fileprivate var events: [String: Event] = [:]
-    fileprivate let dates: [Date] = {
-        (0..<7).flatMap {
-            Calendar.current.date(byAdding: .day, value: $0, to: Date())
-        }
-    }()
+    fileprivate let dates: [Date] = (0..<7).map {
+        Calendar.current.date(byAdding: .day, value: $0, to: Date())!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +60,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorColor = .lightSeparatorGray
+        tableView.separatorColor = .separator
         tableView.showsVerticalScrollIndicator = false
         tableView.estimatedRowHeight = eateryHeaderHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = .lightBackgroundGray
+        tableView.backgroundColor = .wash
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -117,6 +118,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             })
         }
     }
+
+    // Scrolls users to the top of screen when the look ahead tab bar item is pressed
+    func scrollToTop() {
+        if tableView != nil && tableView.contentOffset.y > 0 {
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
+            tableView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
+        }
+    }
     
     // Eatery Menu Methods
     
@@ -140,7 +149,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         
         if !selectedMeal.isEmpty {
-            let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
+            let menuIterable = events[selectedMeal]!.getMenuIterable()
             eateryMenuImage = MenuImages.createCondensedMenuImage(view.frame.width, menuIterable: menuIterable)
         }
         
@@ -176,10 +185,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return sectionHeaderHeight
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -223,14 +228,20 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
 
             if let event = events[selectedMeal] {
-                cell.eateryHoursLabel.text = "Open \(displayTextForEvent(event))"
+                let textInfo = "Open \(displayTextForEvent(event))"
+                let openLabelText = NSMutableAttributedString(string: textInfo, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: .semibold)])
+                openLabelText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.eateryGreen, range: NSRange(location:0,length:4))
+                openLabelText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.secondary, range: NSRange(location: 4, length: (textInfo.count - 4)))
+                cell.eateryHoursLabel.attributedText = openLabelText
+                cell.moreInfoIndicatorImageView.isHidden = false
+            } else {
+                cell.eateryHoursLabel.textColor = .secondary
+                cell.moreInfoIndicatorImageView.isHidden = true
             }
-            
-            cell.eateryHoursLabel.textColor = (cell.eateryHoursLabel.text == "Closed") ? .gray : .eateryBlue
-//            cell.moreInfoButton.isHidden = (cell.eateryHoursLabel.text == "Closed")
 
             if indexPath.row != (expandedCells.count - 1) {
                 cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
+
             }
             
             return cell
@@ -238,9 +249,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-//            cell.shareMenuButton.isHidden = !hasMenuIterable(eatery)
             cell.shareMenuButton.isHidden = true // temporary before hotfix
-//            cell.shareIcon.isHidden = !hasMenuIterable(eatery)
             cell.shareIcon.isHidden = true // temporary before hotfix
             cell.menuImageView.image = getEateryMenu(eatery)
             
@@ -295,7 +304,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                     cells.insert(1, at: menuRow)
                 }
             }
-        
+
             tableView.beginUpdates()
             
             switch(sections[indexPath.section]) {
@@ -314,11 +323,15 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             } else {
                 tableView.insertRows(at: [menuIndex], with: .fade)
             }
-        
+
             tableView.endUpdates()
             
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-            cell.isExpanded = !cell.isExpanded
+            cell.isExpanded.toggle()
+
+            cell.moreInfoIndicatorImageView.isHidden = false
+        } else {
+            cell.moreInfoIndicatorImageView.isHidden = true
         }
     }
     
@@ -356,14 +369,14 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
         // Update selected date
         for dateView in dateViews {
-            let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 0.7 : 0.3
+            let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 1 : 0.3
             dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
             dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
         }
         
         // Update selected meal
         for button in buttons {
-            let alpha: CGFloat = button.tag == selectedMealIndex ? 0.7 : 0.3
+            let alpha: CGFloat = button.tag == selectedMealIndex ? 1 : 0.3
             button.setTitleColor(UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha), for: UIControlState())
         }
         

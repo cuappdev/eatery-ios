@@ -8,7 +8,7 @@ import NVActivityIndicatorView
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
-class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate {
+class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
 
     var appDevLogo: UIView?
     var collectionView: UICollectionView!
@@ -33,6 +33,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }()
     
     fileprivate var userLocation: CLLocation?
+    fileprivate let dateFormatter = DateFormatter()
     
     fileprivate var updateTimer: Timer?
 
@@ -48,13 +49,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             return eatery.slug + "_" + rawValue
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
+
+        dateFormatter.dateFormat = "YYYY-MM-dd"
 
         loadData(force: true, completion: nil)
         
@@ -88,11 +90,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
             self.appDevLogo = logo
 
-            if ARViewController.isSupported() {
-                // TODO - Removing for now
-                //let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-               // navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
-            }
+
+//            if ARViewController.isSupported() {
+//                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
+//                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
+//            }
         } else {
             navigationItem.rightBarButtonItems = [mapButton]
         }
@@ -112,8 +114,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             registerForPreviewing(with: self, sourceView: view)
         }
 
-//        createUpdateTimer()
-//        NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        createUpdateTimer()
+        NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -124,6 +126,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 
     @objc func appDevButtonPressed() {
 
+    }
+    
+    // Scrolls users to the top of the menu when the eatery tab bar item is pressed
+    func scrollToTop() {
+        if collectionView != nil && collectionView.contentOffset.y > 0 {
+            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
+            collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
+        }
     }
 
     @available(iOS 11.0, *)
@@ -154,6 +164,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         searchBar.delegate = self
         searchBar.placeholder = "Search eateries and menus"
         searchBar.autocapitalizationType = .none
+        searchBar.enablesReturnKeyAutomatically = false
 
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
@@ -196,6 +207,13 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
+        if !force {
+            processEateries()
+            collectionView.reloadData()
+            animateInView()
+            pushPreselectedEatery()
+            return
+        }
         NetworkManager.shared.getEateries { (eateries, error) in
             if let error = error {
                 let alertController = UIAlertController(title: "Unable to fetch Eateries", message: error.localizedDescription, preferredStyle: .alert)
@@ -265,7 +283,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     @objc func createUpdateTimer() {
         updateTimer?.invalidate()
 
-        print("Creating update timer")
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
         updateTimer?.fire()
     }
@@ -321,9 +338,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                         itemFound = true
                     }
                 }
-                
-                let diningItemMenu = eatery.getDiningItemMenuIterable()
-                for item in diningItemMenu.flatMap({ $0.1 }) {
+
+                let todayMenu = eatery.diningItems?[dateFormatter.string(from: Date())] ?? []
+                for item in todayMenu.map({ $0.name }) {
                     appendSearchItem(item)
                 }
                 
@@ -483,7 +500,7 @@ extension EateriesViewController: UICollectionViewDataSource {
                 view.titleLabel.textColor = .gray
             } else {
                 view.titleLabel.text = "Open"
-                view.titleLabel.textColor = .eateryBlue
+                view.titleLabel.textColor = .primary
             }
         } else if section == "Closed" {
             if eateries.isEmpty {
@@ -583,8 +600,10 @@ extension EateriesViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        processEateries()
-        collectionView.reloadData()
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            processEateries()
+            collectionView.reloadData()
+        }
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
@@ -600,7 +619,7 @@ extension EateriesViewController: UISearchBarDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
 
-        for cell in collectionView.visibleCells.flatMap({ $0 as? EateryCollectionViewCell }) {
+        for cell in collectionView.visibleCells.compactMap({ $0 as? EateryCollectionViewCell }) {
             cell.update(userLocation: userLocation)
         }
     }

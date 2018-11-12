@@ -4,6 +4,7 @@ import UIKit
 
 enum EateryStatus {
     case open(String, String)
+    case closing(String, String)
     case closed(String, String)
 }
 
@@ -89,7 +90,7 @@ extension Eatery {
             if activeEvent.occurringOnDate(Date()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
-                    return .open("Closing", "in \(minutesTillClose+1)m")
+                    return .closing("Closing", "in \(minutesTillClose+1)m")
                 } else {
                     let timeString = ShortDateFormatter.string(from: activeEvent.endDate)
                     return .open("Open", "until \(timeString)")

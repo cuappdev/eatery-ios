@@ -157,7 +157,7 @@ public struct Eatery: Hashable {
     /// Maps the date the event occurs to a list of the event name
     /// to the event itself e.g.:
     /// [ "2015-03-01": ["Lunch": Event]]
-    public let events: [String: [String: Event]] = [:]
+    public let events: [String: [String: Event]]
 
     /// ="This is an external eatery, i.e. a completely hardcoded eatery"
     public let external: Bool
@@ -182,7 +182,7 @@ public struct Eatery: Hashable {
     }
 
 
-    init(id: Int, name: String, nameShort: String, slug: String, eateryType: EateryType, about: String, phone: String, area: Area, address: String, paymentMethods: [PaymentType], diningItems: [String : [MenuItem]]?, hardcodedMenu: [String : [MenuItem]]?, location: CLLocation, external: Bool) {
+    init(id: Int, name: String, nameShort: String, slug: String, eateryType: EateryType, about: String, phone: String, area: Area, address: String, paymentMethods: [PaymentType], diningItems: [String : [MenuItem]]?, events: [String: [String: Event]], hardcodedMenu: [String : [MenuItem]]?, location: CLLocation, external: Bool) {
         self.id = id
         self.name = name
         self.nameShort = nameShort
@@ -194,6 +194,7 @@ public struct Eatery: Hashable {
         self.address = address
         self.paymentMethods = paymentMethods
         self.diningItems = diningItems
+        self.events = events
         self.hardcodedMenu = hardcodedMenu
         self.location = location
         self.external = external

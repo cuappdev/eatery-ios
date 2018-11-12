@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,13 +32,6 @@
                                 <exclude reference="EFy-xL-Yo2"/>
                             </mask>
                         </variation>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carrot" translatesAutoresizingMaskIntoConstraints="NO" id="U8g-CV-KS1">
-                        <rect key="frame" x="148.5" y="0.0" width="23" height="9"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="9" id="VLC-75-f8A"/>
-                            <constraint firstAttribute="width" secondItem="U8g-CV-KS1" secondAttribute="height" multiplier="18:7" id="ZrJ-LE-jJf"/>
-                        </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareAltIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Mqp-sx-CRC">
                         <rect key="frame" x="228" y="9" width="11" height="14"/>
@@ -73,10 +64,8 @@
                     <constraint firstAttribute="trailing" secondItem="Gxl-2g-liI" secondAttribute="trailing" constant="10" id="iIN-WS-5NK"/>
                     <constraint firstItem="Gxl-2g-liI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="ixZ-uc-Xye"/>
                     <constraint firstItem="Gxl-2g-liI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="jwF-eN-kCs"/>
-                    <constraint firstItem="U8g-CV-KS1" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="pVK-RJ-Nb7"/>
                     <constraint firstItem="Gxl-2g-liI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="s91-iO-lLG"/>
                     <constraint firstItem="Mqp-sx-CRC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="u7K-Hf-r7x"/>
-                    <constraint firstItem="U8g-CV-KS1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="u8z-aR-rbm"/>
                     <constraint firstItem="Gxl-2g-liI" firstAttribute="leading" secondItem="Mqp-sx-CRC" secondAttribute="trailing" constant="5" id="xyK-0S-hSv"/>
                 </constraints>
                 <variation key="default">
@@ -107,7 +96,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="carrot" width="21" height="9"/>
         <image name="shareAltIcon" width="38" height="50"/>
     </resources>
 </document>

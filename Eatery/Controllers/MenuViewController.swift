@@ -84,8 +84,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         outerScrollView.snp.makeConstraints { make in
             make.top.equalTo(topLayoutGuide.snp.bottom)
             make.bottom.equalTo(bottomLayoutGuide.snp.top)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
 
         let contentView = UIView()
@@ -97,7 +96,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
         
         // Header Views
-        menuHeaderView = Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first! as! MenuHeaderView
+        menuHeaderView = (Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first as! MenuHeaderView)
         menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.delegate = self
         
@@ -115,7 +114,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         contentContainer.clipsToBounds = true
 
         let infoContainer = UIView()
-        infoContainer.backgroundColor = .lightBackgroundGray
 
         let timeImageView = UIImageView(image: UIImage(named: "time"))
         infoContainer.addSubview(timeImageView)
@@ -148,8 +146,16 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             statusLabel.text = status
             hoursLabel.text = message
             
-            timeImageView.tintColor = .eateryBlue
-            statusLabel.textColor = .eateryBlue
+            timeImageView.tintColor = .eateryGreen
+            statusLabel.textColor = .eateryGreen
+
+        case let .closing(status, message):
+            statusLabel.text = status
+            hoursLabel.text = message
+
+            timeImageView.tintColor = .eateryRed
+            statusLabel.textColor = .eateryRed
+
         case let .closed(status, message):
             statusLabel.text = status
             hoursLabel.text = message
@@ -198,32 +204,62 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(10.0 + 14.0 + 10.0 + 14.0 + 10.0)
         }
+        
+        // Separator view
+        func makeSeparatorView(topItem: UIView, leftInset: Float, rightInset: Float, topInset: Float) -> UIView {
+            let separatorView = UIView()
+            separatorView.backgroundColor = .inactive
+            contentContainer.addSubview(separatorView)
+            
+            separatorView.snp.makeConstraints { make in
+                make.top.equalTo(topItem.snp.bottom).offset(topInset)
+                make.leading.equalToSuperview().offset(leftInset)
+                make.trailing.equalToSuperview().inset(rightInset)
+                make.height.equalTo(1)
+            }
+            
+            return separatorView
+        }
+        let infoSeparatorView = makeSeparatorView(topItem: infoContainer, leftInset: 10.0, rightInset: 10.0, topInset: 10.0)
 
         // Directions Button
         let directionsButton = UIButton(type: .system)
-        directionsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
+        directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         directionsButton.setTitle("Get Directions", for: .normal)
         directionsButton.tintColor = .eateryBlue
         directionsButton.addTarget(self, action: #selector(directionsButtonPressed(sender:)), for: .touchUpInside)
         contentContainer.addSubview(directionsButton)
 
         directionsButton.snp.makeConstraints { make in
-            make.top.equalTo(infoContainer.snp.bottom).offset(10.0)
+            make.top.equalTo(infoSeparatorView.snp.bottom).offset(2.0)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(44.0)
+            make.height.equalTo(34.0)
+        }
+        
+        // Separator view
+        let directionsLineSeparatorView = makeSeparatorView(topItem: directionsButton, leftInset: 0, rightInset: 0, topInset: 0)
+        
+        let directionsSeparatorView = UIView()
+        directionsSeparatorView.backgroundColor = .wash
+        contentContainer.addSubview(directionsSeparatorView)
+        
+        directionsSeparatorView.snp.makeConstraints { make in
+            make.top.equalTo(directionsLineSeparatorView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(20.0)
         }
 
         // Menu Label
         let menuLabel = UILabel()
         menuLabel.text = "Menu"
         menuLabel.textColor = .black
-        menuLabel.font = UIFont.boldSystemFont(ofSize: 32.0)
+        menuLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
         contentContainer.addSubview(menuLabel)
 
         menuLabel.snp.makeConstraints { make in
             make.height.equalTo(52.0)
-            make.top.equalTo(directionsButton.snp.bottom)
-            make.leading.equalToSuperview().offset(10.0)
+            make.top.equalTo(directionsSeparatorView.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
 
         // TabbedPageViewController
@@ -267,7 +303,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(menuLabel.snp.bottom).offset(4.0)
+            make.top.equalTo(menuLabel.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(pageViewControllerHeight)
         }
@@ -298,6 +334,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         statusLabel.hero.modifiers = fadeModifiers
         locationImageView.hero.modifiers = fadeModifiers
         locationLabel.hero.modifiers = fadeModifiers
+        infoSeparatorView.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
         menuLabel.hero.modifiers = translateModifiers
         pageViewController.view.hero.modifiers = translateModifiers
@@ -327,7 +364,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         switch -titleLabelFrame.origin.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             navigationTitleView.nameLabelHeightConstraint.constant = 0
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width
+            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width > dateLabelMinWidth ? navigationTitleView.frame.width : dateLabelMinWidth
             navigationTitleView.eateryNameLabel.alpha = 0.0
         case 0..<titleLabelFrame.height:
             let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height

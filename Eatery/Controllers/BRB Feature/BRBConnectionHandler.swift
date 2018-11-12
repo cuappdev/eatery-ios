@@ -43,6 +43,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     init() {
         super.init(frame: .zero, configuration: WKWebViewConfiguration())
         navigationDelegate = self
+
     }
     
     required init?(coder: NSCoder) {
@@ -82,11 +83,12 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         return loginCount > 1
     }
     
-    func login() {
+    @objc func login() {
         let javascript = "document.getElementsByName('netid')[0].value = '\(netid)';document.getElementsByName('password')[0].value = '\(password)';document.forms[0].submit();"
         
         evaluateJavaScript(javascript){ (result: Any?, error: Error?) -> Void in
             if let error = error {
+                print(error)
                 self.delegate?.loginFailed(with: error.localizedDescription)
             } else {
                 if self.failedToLogin() {
@@ -98,13 +100,14 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
         self.getStageAndRunBlock {
             switch self.stage {
             case .loginFailed:
                 self.delegate?.loginFailed(with: "Incorrect netid and/or password")
             case .loginScreen:
-                if self.loginCount < 1 { self.login() }
+                if self.loginCount < 1 {
+                    self.login()
+                }
             case .finished(let sessionId):
                 self.delegate?.retrievedSessionId(id: sessionId)
             default: break
@@ -132,7 +135,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
 
                 if let sessionId = urlComponents.queryItems?.first(where: { $0.name == "sessionId" })?.value {
                     self.stage = .finished(sessionId: sessionId)
-                    print(sessionId)
                 }
             } else {
                 self.stage = .transition

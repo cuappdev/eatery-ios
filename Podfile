@@ -11,6 +11,7 @@ target 'Eatery' do
   pod 'SnapKit'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
   pod 'Hero'
   pod 'ARCL'
   pod 'Kingfisher'
@@ -19,12 +20,12 @@ target 'Eatery' do
   shared_pods
 end
 
-target 'Eatery Watch App' do
-  platform :watchos, '2.0'
-  shared_pods
-end
-
-target 'Eatery Watch App Extension' do
-  platform :watchos, '2.0'
-  shared_pods
-end
+#target 'Eatery Watch App' do
+#  platform :watchos, '2.0'
+#  shared_pods
+#end
+#
+#target 'Eatery Watch App Extension' do
+#  platform :watchos, '2.0'
+#  shared_pods
+#end

@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "search-glass.png",
+      "filename" : "search.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "search-glass-1.png",
+      "filename" : "search@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "search@3x.png",
       "scale" : "3x"
     }
   ],

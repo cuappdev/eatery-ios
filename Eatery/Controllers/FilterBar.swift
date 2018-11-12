@@ -119,57 +119,15 @@ class FilterBar: UIView {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             selectedFilters.insert(filters[sender.tag])
-            switch filters[sender.tag] {
-            case .swipes:
-                if let index = filters.index(of: .brb) {
-                    buttons[index].isSelected = false
-                    selectedFilters.remove(.brb)
-                }
-            case .brb:
-                if let index = filters.index(of: .swipes) {
-                    buttons[index].isSelected = false
-                    selectedFilters.remove(.swipes)
-                }
-            case .north:
-                if let westIndex = filters.index(of: .west) {
-                    buttons[westIndex].isSelected = false
-                    selectedFilters.remove(.west)
-                }
-                if let centralIndex = filters.index(of: .central) {
-                    buttons[centralIndex].isSelected = false
-                    selectedFilters.remove(.central)
-                }
-            case .west:
-                if let northIndex = filters.index(of: .north) {
-                    buttons[northIndex].isSelected = false
-                    selectedFilters.remove(.north)
-                }
-                if let centralIndex = filters.index(of: .central) {
-                    buttons[centralIndex].isSelected = false
-                    selectedFilters.remove(.central)
-                }
-            case .central:
-                if let westIndex = filters.index(of: .west) {
-                    buttons[westIndex].isSelected = false
-                    selectedFilters.remove(.west)
-                }
-                if let northIndex = filters.index(of: .north) {
-                    buttons[northIndex].isSelected = false
-                    selectedFilters.remove(.north)
-                }
-            default:
-                break
-            }
         } else {
             selectedFilters.remove(filters[sender.tag])
         }
+        
         let defaults = UserDefaults.standard
         defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
 
         delegate?.updateFilters(filters: selectedFilters)
     }
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

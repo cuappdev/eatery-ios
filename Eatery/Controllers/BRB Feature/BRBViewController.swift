@@ -41,6 +41,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tapGesture)
 
+        //Need to add to subview so it works on an actual device
+        view.addSubview(connectionHandler)
+
         addLoginView()
     }
     
@@ -115,11 +118,11 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = .lightBackgroundGray
+        tableView.backgroundColor = .wash
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "HistoryCell")
         tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .lightSeparatorGray
+        tableView.separatorColor = .wash
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -130,7 +133,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
 
         activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 16.0, y: 8.0, width: 36.0, height: 36.0), type: .circleStrokeSpin, color: .gray)
         activityIndicatorView.startAnimating()
-        tableView.tableFooterView = activityIndicatorView
+
+        //leaving uncommented for now incase we ever decide to load more history
+//        tableView.tableFooterView = activityIndicatorView
     }
     
     /// MARK: Table view delegate/data source
@@ -286,8 +291,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
+
         
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
+        //timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
     }
     
     deinit {

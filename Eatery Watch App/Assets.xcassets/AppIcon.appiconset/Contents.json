@@ -1,76 +1,89 @@
 {
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
-  },
   "images" : [
     {
-      "filename" : "Icon38mm@2x.png",
-      "idiom" : "watch",
-      "subtype" : "38mm",
-      "scale" : "2x",
       "size" : "24x24",
-      "role" : "notificationCenter"
+      "idiom" : "watch",
+      "filename" : "Icon-24@2x.png",
+      "scale" : "2x",
+      "role" : "notificationCenter",
+      "subtype" : "38mm"
     },
     {
-      "filename" : "Icon42mm@2x.png",
-      "idiom" : "watch",
-      "subtype" : "42mm",
-      "scale" : "2x",
       "size" : "27.5x27.5",
-      "role" : "notificationCenter"
-    },
-    {
-      "filename" : "IconSettings@2x.png",
       "idiom" : "watch",
+      "filename" : "Icon-27.5@2x.png",
       "scale" : "2x",
-      "size" : "29x29",
-      "role" : "companionSettings"
+      "role" : "notificationCenter",
+      "subtype" : "42mm"
     },
     {
-      "filename" : "IconSettings@3x.png",
-      "idiom" : "watch",
-      "scale" : "3x",
       "size" : "29x29",
-      "role" : "companionSettings"
+      "idiom" : "watch",
+      "filename" : "Icon-29@2x.png",
+      "role" : "companionSettings",
+      "scale" : "2x"
     },
     {
-      "filename" : "IconLauncher@2x.png",
+      "size" : "29x29",
       "idiom" : "watch",
-      "subtype" : "38mm",
-      "scale" : "2x",
+      "filename" : "Icon-29@3x.png",
+      "role" : "companionSettings",
+      "scale" : "3x"
+    },
+    {
       "size" : "40x40",
-      "role" : "appLauncher"
+      "idiom" : "watch",
+      "filename" : "Icon-40@2x.png",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "38mm"
     },
     {
-      "filename" : "LongLook@2x.png",
-      "idiom" : "watch",
-      "subtype" : "42mm",
-      "scale" : "2x",
       "size" : "44x44",
-      "role" : "longLook"
+      "idiom" : "watch",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "40mm"
     },
     {
-      "filename" : "IconQuickLook38mm@2x.png",
+      "size" : "50x50",
       "idiom" : "watch",
-      "subtype" : "38mm",
       "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "44mm"
+    },
+    {
       "size" : "86x86",
-      "role" : "quickLook"
-    },
-    {
-      "filename" : "IconQuickLook42mm@2x.png",
       "idiom" : "watch",
-      "subtype" : "42mm",
+      "filename" : "Icon-86@2x.png",
       "scale" : "2x",
-      "size" : "98x98",
-      "role" : "quickLook"
+      "role" : "quickLook",
+      "subtype" : "38mm"
     },
     {
-      "filename" : "watch-marketing.png",
+      "size" : "98x98",
+      "idiom" : "watch",
+      "filename" : "Icon-98@2x.png",
+      "scale" : "2x",
+      "role" : "quickLook",
+      "subtype" : "42mm"
+    },
+    {
+      "size" : "108x108",
+      "idiom" : "watch",
+      "scale" : "2x",
+      "role" : "quickLook",
+      "subtype" : "44mm"
+    },
+    {
       "size" : "1024x1024",
       "idiom" : "watch-marketing",
+      "filename" : "ItunesArtwork@2x.png",
       "scale" : "1x"
     }
-  ]
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
 }

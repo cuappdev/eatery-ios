@@ -82,9 +82,19 @@ class EateryCollectionViewCell: UICollectionViewCell {
             timeLabel.text = message
             
             titleLabel.textColor = .black
-            statusLabel.textColor = .eateryBlue
+            statusLabel.textColor = .eateryGreen
             timeLabel.textColor = .lightGray
             distanceLabel.textColor = .lightGray
+
+        case let .closing(status, message):
+            statusLabel.text = status
+            timeLabel.text = message
+
+            titleLabel.textColor = .black
+            statusLabel.textColor = .eateryRed
+            timeLabel.textColor = .lightGray
+            distanceLabel.textColor = .lightGray
+
         case let .closed(status, message):
             statusLabel.text = status
             timeLabel.text = message
