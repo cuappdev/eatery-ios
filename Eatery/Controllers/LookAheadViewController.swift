@@ -412,7 +412,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let yOffset = scrollView.contentOffset.y + filterSectionHeight
         if yOffset > filterEateriesView.filterDateHeight - view.layoutMargins.top {
             filterEateriesView.frame.origin.y = -filterEateriesView.filterDateHeight + view.layoutMargins.top
-            print(filterEateriesView.frame.origin.y, view.layoutMargins.top)
         } else {
             filterEateriesView.frame.origin.y = -yOffset
         }

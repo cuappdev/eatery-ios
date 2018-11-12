@@ -168,17 +168,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             return nil
         }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin")
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
-            annotationView!.canShowCallout = true
-            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        let annotationView: MKAnnotationView
+
+        if let dequeued = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin") {
+            annotationView = dequeued
+            annotationView.annotation = annotation
         } else {
-            annotationView!.annotation = annotation
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
+            annotationView.canShowCallout = true
+            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         
-        annotationView!.image = annotation.subtitle! == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
+        annotationView.image = annotation.subtitle == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
         
         return annotationView
     }
