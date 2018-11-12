@@ -33,7 +33,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }()
     
     fileprivate var userLocation: CLLocation?
-    fileprivate let dateFormatter = DateFormatter()
+    fileprivate let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter
+    }()
     
     fileprivate var updateTimer: Timer?
 
@@ -55,8 +59,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
-
-        dateFormatter.dateFormat = "YYYY-MM-dd"
 
         loadData(force: true, completion: nil)
         

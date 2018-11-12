@@ -134,8 +134,8 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 16.0, y: 8.0, width: 36.0, height: 36.0), type: .circleStrokeSpin, color: .gray)
         activityIndicatorView.startAnimating()
 
-        //leaving uncommented for now incase we ever decide to load more history
-//        tableView.tableFooterView = activityIndicatorView
+        // leaving commented for now incase we ever decide to load more history
+        // tableView.tableFooterView = activityIndicatorView
     }
     
     /// MARK: Table view delegate/data source
@@ -291,9 +291,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
-
-        
-        //timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
     }
     
     deinit {

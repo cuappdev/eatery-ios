@@ -149,7 +149,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         
         if !selectedMeal.isEmpty {
-            let menuIterable = events[selectedMeal]!.getMenuIterable()
+            let menuIterable = events[selectedMeal]?.getMenuIterable() ?? []
             eateryMenuImage = MenuImages.createCondensedMenuImage(view.frame.width, menuIterable: menuIterable)
         }
         

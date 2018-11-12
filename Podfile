@@ -1,7 +1,6 @@
 use_frameworks!
 
 def shared_pods
-    #pod 'DiningStack', :git => 'https://github.com/cuappdev/DiningStack.git'
 end
 
 target 'Eatery' do

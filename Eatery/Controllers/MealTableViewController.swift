@@ -15,7 +15,11 @@ class MealTableViewController: UITableViewController {
         }
     }
 
-    private let dateFormatter = DateFormatter()
+    fileprivate let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter
+    }()
 
     private func recomputeMenu() {
         if let eventMenu = event?.menu, !eventMenu.isEmpty {
@@ -52,8 +56,6 @@ class MealTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        
         startUserActivity()
         
         // Appearance

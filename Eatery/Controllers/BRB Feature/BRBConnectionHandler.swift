@@ -131,10 +131,16 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             } else if html.contains("<h1>CUWebLogin</h1>") {
                 self.stage = .loginScreen
             } else if self.url?.absoluteString.contains("sessionId") ?? false {
-                guard let url = self.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
+                guard let url = self.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                    self.stage = .loginFailed
+                    block()
+                    return
+                }
 
                 if let sessionId = urlComponents.queryItems?.first(where: { $0.name == "sessionId" })?.value {
                     self.stage = .finished(sessionId: sessionId)
+                } else {
+                    self.stage = .loginFailed
                 }
             } else {
                 self.stage = .transition
