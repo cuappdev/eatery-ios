@@ -17,7 +17,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     var time = 0.0 // time of request
     var historyHeader : EateriesCollectionViewHeaderView?
     
-    var diningHistory: [HistoryEntry] = []
+    var brbAccount: BRBAccount!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tapGesture)
+
+        //Need to add to subview so it works on an actual device
+        view.addSubview(connectionHandler)
 
         addLoginView()
     }
@@ -111,7 +114,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     }
     
     func setupAccountPage() {
-        diningHistory = connectionHandler.diningHistory
         
         navigationItem.rightBarButtonItem?.isEnabled = true
         
@@ -131,7 +133,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
 
         activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 16.0, y: 8.0, width: 36.0, height: 36.0), type: .circleStrokeSpin, color: .gray)
         activityIndicatorView.startAnimating()
-        tableView.tableFooterView = activityIndicatorView
+
+        // leaving commented for now incase we ever decide to load more history
+        // tableView.tableFooterView = activityIndicatorView
     }
     
     /// MARK: Table view delegate/data source
@@ -141,9 +145,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return connectionHandler.accountBalance.swipes != "" ? 4 : 3
+            return brbAccount.swipes != "" ? 4 : 3
         }
-        return diningHistory.count
+        return brbAccount.history.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -158,16 +162,16 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
             switch indexPath.row {
             case 0:
                 cell.leftLabel.text = " City Bucks"
-                cell.rightLabel.text = "$" + connectionHandler.accountBalance.cityBucks
+                cell.rightLabel.text = "$" + brbAccount.cityBucks
             case 1:
                 cell.leftLabel.text = " Laundry"
-                cell.rightLabel.text = "$" + connectionHandler.accountBalance.laundry
+                cell.rightLabel.text = "$" + brbAccount.laundry
             case 2:
                 cell.leftLabel.text = " BRBs"
-                cell.rightLabel.text = "$" + connectionHandler.accountBalance.brbs
-            case 3 where connectionHandler.accountBalance.swipes != "":
+                cell.rightLabel.text = "$" + brbAccount.brbs
+            case 3 where brbAccount.swipes != "":
                 cell.leftLabel.text = " Meal Swipes"
-                cell.rightLabel.text = connectionHandler.accountBalance.swipes
+                cell.rightLabel.text = brbAccount.swipes
             default: break
             }
         } else {
@@ -178,7 +182,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
             cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
             cell.rightLabel.font = UIFont.systemFont(ofSize: 14)
 
-            let attributedDesc = NSMutableAttributedString(string: " "+diningHistory[indexPath.row].description, attributes:nil)
+            let attributedDesc = NSMutableAttributedString(string: " "+brbAccount.history[indexPath.row].name, attributes:nil)
             let newLineLoc = (attributedDesc.string as NSString).range(of: "\n").location
             if newLineLoc != NSNotFound {
                 attributedDesc.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 12), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.count - newLineLoc - 1))
@@ -187,14 +191,14 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
             }
             
             cell.leftLabel.attributedText = attributedDesc
-            cell.rightLabel.text = diningHistory[indexPath.row].timestamp
+            cell.rightLabel.text = brbAccount.history[indexPath.row].timestamp
         }
 
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < diningHistory.count ? 64 : tableView.rowHeight
+        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < brbAccount.history.count ? 64 : tableView.rowHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -228,15 +232,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         loginView?.loginFailedWithError(error: error)
     }
 
-    func updateHistory(with entries: [HistoryEntry]) {
-        self.diningHistory = entries
-
-        self.tableView.reloadData()
-
-        tableView.tableFooterView = nil
-        activityIndicatorView.removeFromSuperview()
-    }
-    
     func showSafariVC() {
         
         if let url = URL(string: "https://get.cbord.com/cornell/full/login.php") {
@@ -296,8 +291,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
-        
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BRBViewController.timer(timer:)), userInfo: nil, repeats: true)
     }
     
     deinit {
@@ -305,3 +298,14 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     }
  }
 
+extension BRBViewController {
+
+    func retrievedSessionId(id: String) {
+        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { (brbAccount, error) in
+            if let brbAccount = brbAccount {
+                self.brbAccount = brbAccount
+                self.finishedLogin()
+            }
+        }
+    }
+}

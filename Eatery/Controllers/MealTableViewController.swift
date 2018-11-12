@@ -1,5 +1,4 @@
 import UIKit
-import DiningStack
 
 class MealTableViewController: UITableViewController {
 
@@ -16,11 +15,22 @@ class MealTableViewController: UITableViewController {
         }
     }
 
+    fileprivate let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter
+    }()
+
     private func recomputeMenu() {
         if let eventMenu = event?.menu, !eventMenu.isEmpty {
             menu = eventMenu
-        } else if let diningItems = eatery.diningItems {
-            menu = diningItems
+        } else if let diningItems = eatery.diningItems, let eatery = eatery {
+            if eatery.eateryType != .Dining {
+                let currentDate = dateFormatter.string(from: Date())
+                menu = [currentDate: diningItems[currentDate] ?? []]
+            } else {
+                menu = diningItems
+            }
         } else if let hardcodedItems = eatery.hardcodedMenu {
             menu = hardcodedItems
         } else {
@@ -45,7 +55,7 @@ class MealTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         startUserActivity()
         
         // Appearance

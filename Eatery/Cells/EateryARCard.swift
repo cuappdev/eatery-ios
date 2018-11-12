@@ -1,6 +1,5 @@
 import UIKit
 import SnapKit
-import DiningStack
 import Kingfisher
 import CoreLocation
 

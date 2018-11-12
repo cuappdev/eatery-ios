@@ -2,7 +2,6 @@ import UIKit
 import MapKit
 import SnapKit
 import CoreLocation
-import DiningStack
 
 let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
 

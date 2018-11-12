@@ -1,25 +1,24 @@
 PODS:
-  - Alamofire (4.7.3)
+  - Apollo (0.9.3):
+    - Apollo/Core (= 0.9.3)
+  - Apollo/Core (0.9.3)
   - ARCL (1.0.4)
-  - Crashlytics (3.10.9):
-    - Fabric (~> 1.7.13)
-  - DiningStack (1.0):
-    - Alamofire
-    - SwiftyJSON
-  - Fabric (1.7.13)
+  - Crashlytics (3.10.8):
+    - Fabric (~> 1.7.12)
+  - Fabric (1.7.12)
   - FLEX (2.4.0)
-  - Hero (1.4.0)
+  - Hero (1.3.1)
   - Kingfisher (4.10.0)
   - NVActivityIndicatorView (4.4.0):
     - NVActivityIndicatorView/Presenter (= 4.4.0)
   - NVActivityIndicatorView/Presenter (4.4.0)
-  - SnapKit (4.2.0)
-  - SwiftyJSON (4.1.0)
+  - SnapKit (4.0.1)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
+  - Apollo
   - ARCL
   - Crashlytics
-  - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
   - Fabric
   - FLEX (~> 2.0)
   - Hero
@@ -30,7 +29,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
+    - Apollo
     - ARCL
     - Crashlytics
     - Fabric
@@ -41,28 +40,18 @@ SPEC REPOS:
     - SnapKit
     - SwiftyJSON
 
-EXTERNAL SOURCES:
-  DiningStack:
-    :git: https://github.com/cuappdev/DiningStack.git
-
-CHECKOUT OPTIONS:
-  DiningStack:
-    :commit: e4f4f39da4df70336b95518c8e30cf49a542454a
-    :git: https://github.com/cuappdev/DiningStack.git
-
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Apollo: 38270f8bdc031ac07d4de3ec068a2289d7d287e0
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
-  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
-  DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
-  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
+  Crashlytics: 058dc1ba579f6c100bc60a6878703779bff383c4
+  Fabric: d7387db9a31aadff63b147a4b91d982c53afaa4f
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  Hero: 1c3c625ba05856f305d29f5c270f8766c5ff2df7
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
-  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 050270a61e33a0bb2ac78f9a4a504c536915b56a
+PODFILE CHECKSUM: 8254ce1ad36d3863e66f83969f51ae9bd7483227
 
 COCOAPODS: 1.5.3

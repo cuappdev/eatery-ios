@@ -7,7 +7,6 @@
 //
 
 import WatchKit
-import DiningStack
 
 
 class MenuInterfaceController: WKInterfaceController {

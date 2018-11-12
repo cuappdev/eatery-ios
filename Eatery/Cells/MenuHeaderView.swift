@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import DiningStack
 import Kingfisher
 
 @objc protocol MenuButtonsDelegate {

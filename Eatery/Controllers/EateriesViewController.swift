@@ -1,6 +1,5 @@
 import UIKit
 import SnapKit
-import DiningStack
 import Crashlytics
 import CoreLocation
 import Hero
@@ -34,6 +33,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }()
     
     fileprivate var userLocation: CLLocation?
+    fileprivate let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter
+    }()
     
     fileprivate var updateTimer: Timer?
 
@@ -55,6 +59,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
+
+        loadData(force: true, completion: nil)
         
         navigationController?.view.backgroundColor = .white
         navigationController?.hero.isEnabled = true
@@ -85,6 +91,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             }
 
             self.appDevLogo = logo
+
 
 //            if ARViewController.isSupported() {
 //                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
@@ -202,13 +209,21 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        DataManager.sharedInstance.fetchEateries(force) { error in
+        if !force {
+            processEateries()
+            collectionView.reloadData()
+            animateInView()
+            pushPreselectedEatery()
+            return
+        }
+        NetworkManager.shared.getEateries { (eateries, error) in
             if let error = error {
                 let alertController = UIAlertController(title: "Unable to fetch Eateries", message: error.localizedDescription, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alertController, animated: true, completion: nil)
             } else {
-                self.eateries = DataManager.sharedInstance.eateries
+                guard let eateries = eateries else { return }
+                self.eateries = eateries
                 self.processEateries()
                 self.collectionView.reloadData()
                 self.animateInView()
@@ -270,7 +285,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     @objc func createUpdateTimer() {
         updateTimer?.invalidate()
 
-        print("Creating update timer")
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateTimerFired), userInfo: nil, repeats: true)
         updateTimer?.fire()
     }
@@ -326,9 +340,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                         itemFound = true
                     }
                 }
-                
-                let diningItemMenu = eatery.getDiningItemMenuIterable()
-                for item in diningItemMenu.flatMap({ $0.1 }) {
+
+                let todayMenu = eatery.diningItems?[dateFormatter.string(from: Date())] ?? []
+                for item in todayMenu.map({ $0.name }) {
                     appendSearchItem(item)
                 }
                 

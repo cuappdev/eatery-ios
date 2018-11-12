@@ -1,6 +1,5 @@
 import UIKit
 import MapKit
-import DiningStack
 import Crashlytics
 import MessageUI
 import Hero

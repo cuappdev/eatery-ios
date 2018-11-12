@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DiningStack
 
 class MenuImages: NSObject {
 

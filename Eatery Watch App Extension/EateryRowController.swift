@@ -1,5 +1,4 @@
 import WatchKit
-import DiningStack
 
 class EateryRowController: NSObject {
     @IBOutlet var statusSeparator: WKInterfaceSeparator!

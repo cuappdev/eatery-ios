@@ -1,5 +1,4 @@
 import Foundation
-import DiningStack
 
 extension TimeInterval {
     static func intervalWithHoursAndMinutesFromNow(hours: Double, minutes: Double) -> TimeInterval {
