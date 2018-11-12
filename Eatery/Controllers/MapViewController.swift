@@ -92,8 +92,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // MARK: - Button Methods
     
-    func createMapButtons()
-    {
+    func createMapButtons() {
         // Create bottom left re-center button
         recenterButton.layer.cornerRadius = 6
         recenterButton.setImage(UIImage(named: "locationArrowIcon"), for: .normal)
@@ -114,8 +113,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    @objc func recenterButtonPressed(_ sender: UIButton)
-    {
+    @objc func recenterButtonPressed(_ sender: UIButton) {
         if eateryAnnotations.count == 1 {
             mapView.selectAnnotation(eateryAnnotations.first!, animated: true)
         } else if mapView.selectedAnnotations.count > 0 {
@@ -160,10 +158,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         return lineRendered
     }
     
-    func mapView(_ mapView: MKMapView,
-                 annotationView view: MKAnnotationView,
-                 calloutAccessoryControlTapped control: UIControl)
-    {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil, userLocation: userLocation)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
@@ -183,22 +178,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotationView!.annotation = annotation
         }
         
-        annotationView!.image = annotation.subtitle! == "open" ? #imageLiteral(resourceName: "eateryPin") : #imageLiteral(resourceName: "blackEateryPin")
+        annotationView!.image = annotation.subtitle! == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
         
         return annotationView
     }
     
     // MARK: - CLLocationManagerDelegate Methods
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
         recenterButtonPressed(recenterButton)
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
-    {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Error: \(error)")
     }
     
