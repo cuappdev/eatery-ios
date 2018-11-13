@@ -71,6 +71,8 @@
 		D971431A219A7EDB00E2EE05 /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		D971431D219A7F3D00E2EE05 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D971431C219A7F3D00E2EE05 /* TimeFactory.swift */; };
 		D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D971431E219A7FE100E2EE05 /* Eatery+Extension.swift */; };
+		D9714321219B953800E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B216F1C70796600F3B138 /* Assets.xcassets */; };
+		D9714322219B953D00E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B21831C70796600F3B138 /* Assets.xcassets */; };
 		E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* MenuViewController.swift */; };
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
 		E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */; };
@@ -710,6 +712,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9714321219B953800E2EE05 /* Assets.xcassets in Resources */,
 				D9714318219A7B6A00E2EE05 /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -718,6 +721,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9714322219B953D00E2EE05 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
