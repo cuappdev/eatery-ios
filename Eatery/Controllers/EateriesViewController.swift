@@ -210,7 +210,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
-        if initialLoad && !force { return }
+        guard force || !initialLoad else { return }
         if !force {
             processEateries()
             collectionView.reloadData()
