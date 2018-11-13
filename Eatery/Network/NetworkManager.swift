@@ -10,16 +10,25 @@ import Foundation
 import Apollo
 import CoreLocation
 
+struct NetworkError: Error {
+    var message: String
+}
+
 struct NetworkManager {
     internal let apollo = ApolloClient(url: URL(string: "http://eatery-backend.cornellappdev.com")!)
     static let shared = NetworkManager()
 
-    func getEateries(completion: @escaping ([Eatery]?, Error?) -> Void) {
+    func getEateries(completion: @escaping ([Eatery]?, NetworkError?) -> Void) {
 
         apollo.fetch(query: AllEateriesQuery()) { (result, error) in
-            if let error = error { completion(nil, error); return }
-            guard let result = result, let data = result.data else { return }
-            guard let eateriesArray = data.eateries else { return }
+            guard error == nil else { completion(nil, NetworkError(message: error?.localizedDescription ?? "")); return }
+
+            guard let result = result,
+                let data = result.data,
+                let eateriesArray = data.eateries else {
+                    completion(nil, NetworkError(message: "Could not parse response"))
+                    return
+            }
             let eateries = eateriesArray.compactMap { $0 }
 
             let finalEateries: [Eatery] = eateries.map { eatery in
@@ -94,14 +103,27 @@ struct NetworkManager {
         }
     }
 
-    func getBRBAccountInfo(sessionId: String, completion: @escaping (BRBAccount?, Error?) -> Void) {
+    func getBRBAccountInfo(sessionId: String, completion: @escaping (BRBAccount?, NetworkError?) -> Void) {
         apollo.fetch(query: BrbInfoQuery(accountId: sessionId)) { (result, error) in
-            if let error = error { completion(nil, error); return }
-            guard let result = result, let data = result.data, let accountInfo = data.accountInfo else { return }
+            guard error == nil else {
+                completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
+                return
+            }
+
+            guard let result = result,
+                let data = result.data,
+                let accountInfo = data.accountInfo else {
+                    completion(nil, NetworkError(message: "could not safely unwrap response"))
+                    return
+
+            }
+
             let brbHistory = accountInfo.history.compactMap { $0 }.map { historyItem in
                 return BRBHistory(name: historyItem.name, timestamp: historyItem.timestamp)
             }
+
             let brbAccount = BRBAccount(cityBucks: accountInfo.cityBucks, laundry: accountInfo.laundry, brbs: accountInfo.brbs, swipes: accountInfo.swipes, history: brbHistory)
+            
             completion(brbAccount, nil)
         }
     }

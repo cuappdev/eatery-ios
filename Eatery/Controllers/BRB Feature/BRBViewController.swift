@@ -41,10 +41,10 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tapGesture)
 
+        addLoginView()
+        
         //Need to add to subview so it works on an actual device
         view.addSubview(connectionHandler)
-
-        addLoginView()
     }
     
     func addLoginView() {
@@ -305,6 +305,9 @@ extension BRBViewController {
             if let brbAccount = brbAccount {
                 self.brbAccount = brbAccount
                 self.finishedLogin()
+            } else {
+                //ERROR Handling
+                self.loginFailed(with: error?.message ?? "")
             }
         }
     }

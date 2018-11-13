@@ -1,4 +1,5 @@
 import WatchKit
+import DiningStack
 
 class EateryRowController: NSObject {
     @IBOutlet var statusSeparator: WKInterfaceSeparator!
@@ -6,7 +7,7 @@ class EateryRowController: NSObject {
     @IBOutlet var timeLabel: WKInterfaceLabel!
     
     func setEatery(eatery: Eatery) {
-        titleLabel.setText(eatery.nickname)
+        titleLabel.setText(eatery.name)
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {

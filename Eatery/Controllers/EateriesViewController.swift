@@ -16,6 +16,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
+    var initialLoad = true
     fileprivate var eateryData: [String: [Eatery]] = [:]
     
     fileprivate var searchBar: UISearchBar!
@@ -209,6 +210,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
+        if initialLoad && !force { return }
         if !force {
             processEateries()
             collectionView.reloadData()
@@ -292,6 +294,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     @objc func updateTimerFired() {
         print("Updating...", Date())
         loadData(force: false, completion: nil)
+        initialLoad = false
     }
   
     func pushPreselectedEatery() {

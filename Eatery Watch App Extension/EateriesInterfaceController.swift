@@ -1,5 +1,6 @@
 import WatchKit
 import Foundation
+import DiningStack
 
 enum SortingOption {
     case OpenAndAlphabetical
@@ -63,7 +64,7 @@ class EateriesInterfaceController: WKInterfaceController {
             case .open:
                 switch bState {
                 case .open:
-                    return a.nickname < b.nickname
+                    return a.name < b.name
 
                 default:
                     return true
@@ -74,7 +75,7 @@ class EateriesInterfaceController: WKInterfaceController {
                 case .open:
                     return false
                 case .closing:
-                    return a.nickname < b.nickname
+                    return a.name < a.name
                 case .closed:
                     return true
                 }
@@ -82,7 +83,7 @@ class EateriesInterfaceController: WKInterfaceController {
             case .closed:
                 switch bState {
                 case .closed:
-                    return a.nickname < b.nickname
+                    return a.name < a.name
                 default:
                     return false
                 }
@@ -91,7 +92,7 @@ class EateriesInterfaceController: WKInterfaceController {
         
         // Sort eateries just alphabetically
         let sortAlphabeticallyClosure = { (a: Eatery, b: Eatery) -> Bool in
-            return a.nickname < b.nickname
+            return a.name < a.name
         }
         
         curSortingOption == .Alphabetical ? eateries.sort(by: sortAlphabeticallyClosure) : eateries.sort(by: sortAlphabeticallyAndByOpenClosure)
