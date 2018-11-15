@@ -6,9 +6,5 @@
 	<array>
 		<string>group.org.cuappdev.eatery.TodayExtensionSharingDefaults</string>
 	</array>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>$(AppIdentifierPrefix)org.cuappdev.eatery</string>
-	</array>
 </dict>
 </plist>

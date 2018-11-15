@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DiningStack
 import CoreLocation
 
 struct Sort {
@@ -18,7 +17,7 @@ struct Sort {
         case alphabetically
         case location
     }
-     static func sortMenu(_ menu: [(String, [MenuItem])] ) -> [(String, [MenuItem])] {
+    static func sortMenu(_ menu: [(String, [MenuItem])] ) -> [(String, [MenuItem])] {
         return menu.sorted {
             if $0.0 == "Hot Traditional Station - Entrees" {
                 return true
@@ -62,31 +61,46 @@ struct Sort {
                         }
                     }
                 }
-            
+
             case .alphabetically:
                 let aState = a.generateDescriptionOfCurrentState()
                 let bState = b.generateDescriptionOfCurrentState()
-                
+
                 switch aState {
-                case .open(_):
+                case .open:
                     switch bState {
-                    case .open(_):  return a.nickname <= b.nickname
-                    default:        return true
+                    case .open:
+                        return a.nickname < b.nickname
+
+                    default:
+                        return true
                     }
-                    
-                case .closed(_):
+
+                case .closing:
                     switch bState {
-                    case .closed(_):return a.nickname <= b.nickname
-                    default:        return false
+                    case .open:
+                        return false
+                    case .closing:
+                        return a.nickname < b.nickname
+                    case .closed:
+                        return true
+                    }
+
+                case .closed:
+                    switch bState {
+                    case .closed:
+                        return a.nickname < b.nickname
+                    default:
+                        return false
                     }
                 }
-                case .location:
-                    //default location is Olin Library
-                    let distanceA = location.distance(from: a.location)
-                    let distanceB = location.distance(from: b.location)
-                    return distanceA < distanceB
+            case .location:
+                //default location is Olin Library
+                let distanceA = location.distance(from: a.location)
+                let distanceB = location.distance(from: b.location)
+                return distanceA < distanceB
             }
-        return false
+            return false
         }
         return eatery.sorted(by: sortByHoursClosure)
     }

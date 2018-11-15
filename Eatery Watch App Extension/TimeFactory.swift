@@ -1,4 +1,5 @@
 import Foundation
+import DiningStack
 
 extension TimeInterval {
     static func intervalWithHoursAndMinutesFromNow(hours: Double, minutes: Double) -> TimeInterval {
@@ -24,24 +25,24 @@ func timeOfDate(_ date: Date) -> Int {
 func dateConverter(date1: Date, date2: Date) -> String {
     var calendar = Calendar.current
     calendar.timeZone = TimeZone(identifier: "America/New_York")!
-    
+
     let hour1 = calendar.component(.hour, from: date1)
     let minute1 = calendar.component(.minute, from: date1)
-    
+
     let hour2 = calendar.component(.hour, from: date2)
     let minute2 = calendar.component(.minute, from: date2)
-    
+
     var first = ""
     var second = ""
-    
+
     first = "\(hourConverter(hour1))\(minConverter(minute1))\(amOrPm(hour1))"
     first.convertTimeIfNeeded()
-    
+
     second = "\(hourConverter(hour2))\(minConverter(minute2))\(amOrPm(hour2))"
     second.convertTimeIfNeeded()
-    
+
     // TODO: incorporate eventSummary if applicable
-    
+
     return "\(first) to \(second)"
 }
 
@@ -82,4 +83,3 @@ extension String {
         }
     }
 }
-

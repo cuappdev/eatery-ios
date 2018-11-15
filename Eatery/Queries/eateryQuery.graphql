@@ -1,0 +1,44 @@
+query AllEateries {
+    eateries {
+        id
+        name
+        nameShort
+        slug
+        eateryType
+        about
+        phone
+        location
+        campusArea {
+            descriptionShort
+        }
+        paymentMethods {
+            swipes
+            brbs
+            cash
+            credit
+            cornellCard
+            mobile
+        }
+        coordinates {
+            latitude
+            longitude
+        }
+        operatingHours {
+            date
+            events {
+                startTime
+                endTime
+                description
+                calSummary
+                menu {
+                    category
+                    items {
+                        item
+                        healthy
+                    }
+                }
+            }
+        }
+    }
+}
+

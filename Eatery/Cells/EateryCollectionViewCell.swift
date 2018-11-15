@@ -1,5 +1,4 @@
 import UIKit
-import DiningStack
 import CoreLocation
 import Kingfisher
 
@@ -86,6 +85,16 @@ class EateryCollectionViewCell: UICollectionViewCell {
             statusLabel.textColor = .eateryGreen
             timeLabel.textColor = .lightGray
             distanceLabel.textColor = .lightGray
+
+        case let .closing(status, message):
+            statusLabel.text = status
+            timeLabel.text = message
+
+            titleLabel.textColor = .black
+            statusLabel.textColor = .eateryRed
+            timeLabel.textColor = .lightGray
+            distanceLabel.textColor = .lightGray
+
         case let .closed(status, message):
             statusLabel.text = status
             timeLabel.text = message

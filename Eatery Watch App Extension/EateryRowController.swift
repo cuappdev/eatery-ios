@@ -7,12 +7,15 @@ class EateryRowController: NSObject {
     @IBOutlet var timeLabel: WKInterfaceLabel!
     
     func setEatery(eatery: Eatery) {
-        titleLabel.setText(eatery.nickname)
+        titleLabel.setText(eatery.name)
         
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
         case let .open(status, message):
             statusSeparator.setColor(UIColor.eateryGreen)
+            timeLabel.setText(status + " " + message)
+        case let .closing(status, message):
+            statusSeparator.setColor(UIColor.eateryRed)
             timeLabel.setText(status + " " + message)
         case let .closed(status, message):
             statusSeparator.setColor(UIColor.primary)

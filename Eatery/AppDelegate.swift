@@ -1,6 +1,5 @@
 import UIKit
 import SwiftyJSON
-import DiningStack
 import Fabric
 import Crashlytics
 import Hero
@@ -10,9 +9,8 @@ import StoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var eateryTabBarController: EateryTabBarController!
 
-    var eateriesViewController: EateriesViewController!
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
@@ -22,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
         
         // Set up navigation bar appearance
-        UINavigationBar.appearance().barTintColor = UIColor.eateryBlue.navigationBarAdjusted
+        UINavigationBar.appearance().barTintColor = UIColor.navigationBarBlue
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
@@ -32,29 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Hero.shared.containerColor = .white
         
-        // Set up view controllers
-        let tabBarController = UITabBarController()
-        
-        eateriesViewController = EateriesViewController()
-        tabBarController.delegate = eateriesViewController
-        
-        let eateryNavigationController = UINavigationController(rootViewController: eateriesViewController)
-        eateryNavigationController.navigationBar.barStyle = .black
-        eateryNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)
-
-        let lookAheadNavigationController = UINavigationController(rootViewController: LookAheadViewController())
-        lookAheadNavigationController.navigationBar.barStyle = .black
-        lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "menu icon"), tag: 1)
-
-        let brbNavigationController = UINavigationController(rootViewController: BRBViewController())
-        brbNavigationController.navigationBar.barStyle = .black
-        brbNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "infoIcon.png"), tag: 2)
-        
-        let navigationControllers = [eateryNavigationController, lookAheadNavigationController, brbNavigationController]
-        navigationControllers.forEach { $0.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0) }
-        tabBarController.setViewControllers(navigationControllers, animated: false)
-
-        window?.rootViewController = tabBarController
+        // Set up tab bar controllers
+        eateryTabBarController = EateryTabBarController()
+        window?.rootViewController = eateryTabBarController
         window?.makeKeyAndVisible()
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
@@ -109,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eateriesViewController.preselectedSlug = shortcutItem.type
+        eateryTabBarController.eateriesViewController.preselectedSlug = shortcutItem.type
         return true
     }
     

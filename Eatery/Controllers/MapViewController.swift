@@ -2,7 +2,6 @@ import UIKit
 import MapKit
 import SnapKit
 import CoreLocation
-import DiningStack
 
 let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
 
@@ -92,8 +91,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // MARK: - Button Methods
     
-    func createMapButtons()
-    {
+    func createMapButtons() {
         // Create bottom left re-center button
         recenterButton.layer.cornerRadius = 6
         recenterButton.setImage(UIImage(named: "locationArrowIcon"), for: .normal)
@@ -114,8 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    @objc func recenterButtonPressed(_ sender: UIButton)
-    {
+    @objc func recenterButtonPressed(_ sender: UIButton) {
         if eateryAnnotations.count == 1 {
             mapView.selectAnnotation(eateryAnnotations.first!, animated: true)
         } else if mapView.selectedAnnotations.count > 0 {
@@ -160,10 +157,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         return lineRendered
     }
     
-    func mapView(_ mapView: MKMapView,
-                 annotationView view: MKAnnotationView,
-                 calloutAccessoryControlTapped control: UIControl)
-    {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil, userLocation: userLocation)
         self.navigationController?.pushViewController(menuVC, animated: true)
     }
@@ -173,32 +167,31 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             return nil
         }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin")
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
-            annotationView!.canShowCallout = true
-            annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        let annotationView: MKAnnotationView
+
+        if let dequeued = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin") {
+            annotationView = dequeued
+            annotationView.annotation = annotation
         } else {
-            annotationView!.annotation = annotation
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
+            annotationView.canShowCallout = true
+            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         
-        annotationView!.image = annotation.subtitle! == "open" ? #imageLiteral(resourceName: "eateryPin") : #imageLiteral(resourceName: "blackEateryPin")
+        annotationView.image = annotation.subtitle == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
         
         return annotationView
     }
     
     // MARK: - CLLocationManagerDelegate Methods
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
         recenterButtonPressed(recenterButton)
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
-    {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Error: \(error)")
     }
     

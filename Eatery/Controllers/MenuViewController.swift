@@ -1,6 +1,5 @@
 import UIKit
 import MapKit
-import DiningStack
 import Crashlytics
 import MessageUI
 import Hero
@@ -111,25 +110,16 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         let contentContainer = UIView()
         contentContainer.backgroundColor = .white
-        contentContainer.layer.cornerRadius = 16.0
-        contentContainer.clipsToBounds = true
 
         let infoContainer = UIView()
-
-        let timeImageView = UIImageView(image: UIImage(named: "time"))
-        infoContainer.addSubview(timeImageView)
-        timeImageView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(10.0)
-            make.size.equalTo(14.0)
-        }
 
         let statusLabel = UILabel()
         statusLabel.textColor = .eateryBlue
         statusLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .semibold)
         infoContainer.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(timeImageView)
-            make.leading.equalTo(timeImageView.snp.trailing).offset(10.0)
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(16)
         }
 
         let hoursLabel = UILabel()
@@ -146,24 +136,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         case let .open(status, message):
             statusLabel.text = status
             hoursLabel.text = message
-            
-            timeImageView.tintColor = .eateryGreen
+
             statusLabel.textColor = .eateryGreen
+
+        case let .closing(status, message):
+            statusLabel.text = status
+            hoursLabel.text = message
+
+            statusLabel.textColor = .eateryRed
+
         case let .closed(status, message):
             statusLabel.text = status
             hoursLabel.text = message
 
-            timeImageView.tintColor = .gray
             statusLabel.textColor = .darkGray
-        }
-
-        let locationImageView = UIImageView(image: UIImage(named: "location"))
-        locationImageView.tintColor = .gray
-        infoContainer.addSubview(locationImageView)
-        locationImageView.snp.makeConstraints { make in
-            make.top.equalTo(timeImageView.snp.bottom).offset(10.0)
-            make.leading.bottom.equalToSuperview().inset(10.0)
-            make.size.equalTo(14.0)
         }
 
         let locationLabel = UILabel()
@@ -172,8 +158,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         locationLabel.text = eatery.address
         infoContainer.addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(locationImageView.snp.trailing).offset(10.0)
-            make.centerY.equalTo(locationImageView)
+            make.leading.equalTo(infoContainer.snp.leading).offset(16.0)
+            make.top.equalTo(statusLabel.snp.bottom).offset(10)
         }
 
         let distanceLabel = UILabel()
@@ -188,7 +174,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         infoContainer.addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(10.0)
+            make.trailing.equalToSuperview().inset(16.0)
             make.centerY.equalToSuperview()
         }
 
@@ -217,7 +203,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         // Directions Button
         let directionsButton = UIButton(type: .system)
-        directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         directionsButton.setTitle("Get Directions", for: .normal)
         directionsButton.tintColor = .eateryBlue
         directionsButton.addTarget(self, action: #selector(directionsButtonPressed(sender:)), for: .touchUpInside)
@@ -250,9 +236,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         contentContainer.addSubview(menuLabel)
 
         menuLabel.snp.makeConstraints { make in
-            make.height.equalTo(52.0)
+            make.height.equalTo(40.0)
             make.top.equalTo(directionsSeparatorView.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
 
         // TabbedPageViewController
@@ -322,10 +308,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]
 
         menuHeaderView.favoriteButton.hero.modifiers = fadeModifiers
-        timeImageView.hero.modifiers = fadeModifiers
+        // timeImageView.hero.modifiers = fadeModifiers
         hoursLabel.hero.modifiers = fadeModifiers
         statusLabel.hero.modifiers = fadeModifiers
-        locationImageView.hero.modifiers = fadeModifiers
+        // locationImageView.hero.modifiers = fadeModifiers
         locationLabel.hero.modifiers = fadeModifiers
         infoSeparatorView.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
@@ -357,7 +343,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         switch -titleLabelFrame.origin.y {
         case -CGFloat.greatestFiniteMagnitude..<0:
             navigationTitleView.nameLabelHeightConstraint.constant = 0
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width
+            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width > dateLabelMinWidth ? navigationTitleView.frame.width : dateLabelMinWidth
             navigationTitleView.eateryNameLabel.alpha = 0.0
         case 0..<titleLabelFrame.height:
             let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height

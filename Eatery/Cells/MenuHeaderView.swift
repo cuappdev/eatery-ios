@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import DiningStack
 import Kingfisher
 
 @objc protocol MenuButtonsDelegate {
@@ -68,8 +67,9 @@ class MenuHeaderView: UIView {
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case .open:
+        case .open, .closing:
             titleLabel.textColor = .white
+
         case .closed:
             titleLabel.textColor = UIColor.darkGray
 

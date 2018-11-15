@@ -1,5 +1,6 @@
 Secrets/
-
+Eatery/schema.json
+Eatery/API.swift
 build/
 *.pbxuser
 !default.pbxuser
@@ -23,6 +24,7 @@ Private/
 Keys.plist
 Pods/
 
+node_modules/
 
 ## Other
 *.xccheckout

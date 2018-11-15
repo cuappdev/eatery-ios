@@ -23,7 +23,7 @@ class MealItemTableViewCell: UITableViewCell {
         addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.snp.makeConstraints { make in
-            make.edges.equalTo(self).inset(UIEdgeInsets(top: 8, left: 24, bottom: 8, right: 16))
+            make.edges.equalTo(self).inset(UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
         }
     }
 

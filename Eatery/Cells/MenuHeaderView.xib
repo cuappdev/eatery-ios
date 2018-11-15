@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,13 +22,13 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="251"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="zoJ-85-Vj9">
-                            <rect key="frame" x="10" y="186.33333333333334" width="57" height="33.666666666666657"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                            <rect key="frame" x="16" y="179.33333333333334" width="69" height="40.666666666666657"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DY1-y0-s8T">
-                            <rect key="frame" x="77" y="190.66666666666666" width="27" height="27"/>
+                            <rect key="frame" x="95" y="186.33333333333334" width="27" height="27"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="27" id="Glk-By-dtV"/>
                                 <constraint firstAttribute="height" constant="27" id="aCd-22-2rs"/>
@@ -39,7 +39,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZUX-Rh-HSg" userLabel="Payment Container">
-                            <rect key="frame" x="334" y="193.66666666666666" width="70" height="20"/>
+                            <rect key="frame" x="328" y="189.66666666666666" width="70" height="20"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="054-e2-f5t">
                                     <rect key="frame" x="25" y="0.0" width="20" height="20"/>
@@ -85,8 +85,8 @@
                         <constraint firstItem="ZUX-Rh-HSg" firstAttribute="centerY" secondItem="zoJ-85-Vj9" secondAttribute="centerY" id="HRu-N6-fbx"/>
                         <constraint firstItem="xJe-ai-0Pk" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" id="Hdc-K7-BD2"/>
                         <constraint firstItem="xJe-ai-0Pk" firstAttribute="top" secondItem="hnu-be-bXz" secondAttribute="top" id="SW9-NB-Ly7"/>
-                        <constraint firstItem="zoJ-85-Vj9" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" constant="10" id="ZNo-sA-yTU"/>
-                        <constraint firstAttribute="trailing" secondItem="ZUX-Rh-HSg" secondAttribute="trailing" constant="10" id="ZTm-sL-aQh"/>
+                        <constraint firstItem="zoJ-85-Vj9" firstAttribute="leading" secondItem="hnu-be-bXz" secondAttribute="leading" constant="16" id="ZNo-sA-yTU"/>
+                        <constraint firstAttribute="trailing" secondItem="ZUX-Rh-HSg" secondAttribute="trailing" constant="16" id="ZTm-sL-aQh"/>
                         <constraint firstItem="ZUX-Rh-HSg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DY1-y0-s8T" secondAttribute="trailing" constant="8" id="ihP-ab-c7A"/>
                         <constraint firstAttribute="bottom" secondItem="zoJ-85-Vj9" secondAttribute="bottom" constant="15" id="qqq-MD-vfI"/>
                         <constraint firstAttribute="trailing" secondItem="xJe-ai-0Pk" secondAttribute="trailing" id="unf-19-mrF"/>

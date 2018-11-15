@@ -1,10 +1,10 @@
 import Foundation
-import DiningStack
 import SwiftyJSON
 import UIKit
 
 enum EateryStatus {
     case open(String, String)
+    case closing(String, String)
     case closed(String, String)
 }
 
@@ -17,8 +17,10 @@ private let kEateryAppendix = JSON(try! Data(contentsOf: Bundle.main.url(forReso
 
 let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
+
+
 extension Eatery {
-    
+
     /// Option to sort by campus or by open time
     enum Sorting: String {
         case alphabetically = "Alphabetically"
@@ -26,9 +28,9 @@ extension Eatery {
         case location = "Location"
         case open = "Open & Closed"
         case paymentType = "Payment Type"
-        
+
         static let values = [alphabetically, campus, location, open, paymentType]
-        
+
         var names: [String] {
             switch self {
             case .alphabetically: return ["All Eateries"]
@@ -38,12 +40,12 @@ extension Eatery {
             case .paymentType: return ["Swipes", "BRB", "Cash"]
             }
         }
-        
+
         var sectionCount: Int {
             return self.names.count
         }
     }
-    
+
     //!TODO: Maybe cache this value? I don't think this is too expensive
     var favorite: Bool {
         get {
@@ -52,7 +54,7 @@ extension Eatery {
                 $0 == slug
             }
         }
-        
+
         set {
             var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
             let contains = self.favorite
@@ -62,16 +64,16 @@ extension Eatery {
                 let idx = ar.index {
                     $0 == slug
                 }
-                
+
                 if let idx = idx {
                     ar.remove(at: idx)
                 }
             }
-            
+
             UserDefaults.standard.set(ar, forKey: "favorites");
         }
     }
-    
+
     // ** COPY OF IMPLEMENTATION IN LiteEatery.swift
     // TODO: refactor to avoid repeated code
     //
@@ -86,11 +88,11 @@ extension Eatery {
             guard let activeEvent = activeEventForDate(Date()) else {
                 return .closed("Closed", "")
             }
-            
+
             if activeEvent.occurringOnDate(Date()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
-                    return .open("Closing", "in \(minutesTillClose+1)m")
+                    return .closing("Closing", "in \(minutesTillClose+1)m")
                 } else {
                     let timeString = ShortDateFormatter.string(from: activeEvent.endDate)
                     return .open("Open", "until \(timeString)")
@@ -108,18 +110,18 @@ extension Eatery {
             return .closed("Closed", "today")
         }
     }
-    
+
     // Retrieves a string list of the hours of operation for a day/time
     func activeEventsForDate(date: Date) -> String {
         var resultString = "Closed"
-        
+
         let events = eventsOnDate(date)
         if events.count > 0 {
             let eventsArray = events.map { $0.1 }
             let sortedEventsArray = eventsArray.sorted {
                 $0.startDate.compare($1.startDate) == .orderedAscending
             }
-            
+
             var mergedTimes = [(Date, Date)]()
             var currentTime: (Date, Date)?
             for time in sortedEventsArray {
@@ -134,28 +136,28 @@ extension Eatery {
                     currentTime = (time.startDate, time.endDate)
                 }
             }
-            
+
             if let time = currentTime {
                 mergedTimes.append(time)
             }
-            
+
             resultString = ""
             for (start, end) in mergedTimes {
                 if resultString != "" { resultString += ", " }
                 resultString += dateConverter(date1: start, date2: end)
             }
         }
-        
+
         return resultString
     }
-    
+
     var nickname: String {
         guard let appendixJSON = kEateryAppendix[slug] else {
             return name
         }
         return appendixJSON["nickname"].arrayValue.first?.stringValue ?? ""
     }
-    
+
     func allNicknames() -> [String] {
         guard let appendixJSON = kEateryAppendix[slug] else {
             return [name]
@@ -166,9 +168,9 @@ extension Eatery {
     var altitude: Double {
         guard let appendixJSON = kEateryAppendix[slug],
             let altitude = appendixJSON["altitude"].double else {
-            return 250.0
+                return 250.0
         }
         return altitude
     }
-        
+
 }

@@ -20,7 +20,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     var tabBar: UnderlineTabBarView?
     
     var pageViewController: UIPageViewController!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,6 +64,10 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         pageViewController.view.snp.makeConstraints { make in
             make.top.equalTo(tabBar?.snp.bottom ?? view)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+
+        if meals.count == 1 {
+            pageViewController.view.isUserInteractionEnabled = viewControllers.count != 1
         }
 
         if let tabBar = tabBar {
@@ -121,11 +125,14 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
             direction = .reverse
         }
         pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: false, completion: nil)
-        
         scrollDelegate?.scrollViewDidChange()
     }
     
     func pluckCurrentScrollView() -> UIScrollView {
+        return pluckCurrentTableView()
+    }
+
+    private func pluckCurrentTableView() -> UITableView {
         let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
         return currentViewController.tableView
     }
