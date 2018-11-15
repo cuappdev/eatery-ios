@@ -24,6 +24,7 @@ Private/
 Keys.plist
 Pods/
 
+node_modules/
 
 ## Other
 *.xccheckout
