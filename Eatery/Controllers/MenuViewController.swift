@@ -118,7 +118,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         statusLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .semibold)
         infoContainer.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(16)
         }
 
         let hoursLabel = UILabel()
@@ -157,7 +158,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         locationLabel.text = eatery.address
         infoContainer.addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(infoContainer.snp.leading).offset(10.0)
+            make.leading.equalTo(infoContainer.snp.leading).offset(16.0)
             make.top.equalTo(statusLabel.snp.bottom).offset(10)
         }
 
@@ -173,7 +174,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         infoContainer.addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(10.0)
+            make.trailing.equalToSuperview().inset(16.0)
             make.centerY.equalToSuperview()
         }
 
@@ -237,7 +238,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuLabel.snp.makeConstraints { make in
             make.height.equalTo(40.0)
             make.top.equalTo(directionsSeparatorView.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
 
         // TabbedPageViewController
