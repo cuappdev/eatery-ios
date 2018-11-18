@@ -23,6 +23,7 @@ Private/
 *.orig
 Keys.plist
 Pods/
+schema.json
 
 node_modules/
 
