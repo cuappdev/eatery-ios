@@ -62,7 +62,7 @@ class MealTableViewController: UITableViewController {
         view.backgroundColor = .green
         
         // TableView Config
-        tableView.estimatedRowHeight = 1 // force table view to underestimate row height
+        tableView.estimatedRowHeight = 44
         tableView.backgroundColor = .clear
         tableView.rowHeight = UITableViewAutomaticDimension;
 
