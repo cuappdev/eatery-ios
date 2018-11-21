@@ -1,4 +1,5 @@
 import UIKit
+import Crashlytics
 import NVActivityIndicatorView
 
 protocol BRBLoginViewDelegate {
@@ -166,6 +167,8 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         activityIndicator.snp.makeConstraints { make in
             make.center.equalTo(loginButton)
         }
+        
+        Answers.logBRBLoginOpened()
     }
  
     required init?(coder aDecoder: NSCoder) {

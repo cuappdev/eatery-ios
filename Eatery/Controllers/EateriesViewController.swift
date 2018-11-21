@@ -279,6 +279,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
 
     @objc func mapButtonPressed() {
+        Answers.logMapOpened()
+        
         let mapViewController = MapViewController(eateries: eateries)
         mapViewController.mapEateries(eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
@@ -527,7 +529,12 @@ extension EateriesViewController: UICollectionViewDelegate {
             Answers.logSearchResultSelected(for: query)
         }
 
-        Answers.logMenuOpened(eateryId: eatery(for: indexPath).slug)
+        let eaterySlug = eatery(for: indexPath).slug
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            Answers.logMenuOpenedFromSearch(eateryId: eaterySlug)
+        } else {
+            Answers.logMenuOpenedFromHome(eateryId: eaterySlug)
+        }
 
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation)
         navigationController?.pushViewController(menuViewController, animated: true)

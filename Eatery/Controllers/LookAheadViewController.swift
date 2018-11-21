@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Crashlytics
 
 private let DayDateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -118,6 +119,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                 self.tableView.reloadData()
             })
         }
+        
+        Answers.logWeeklyMenuOpened()
     }
 
     // Scrolls users to the top of screen when the look ahead tab bar item is pressed
@@ -301,8 +304,11 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
                     eateries.remove(at: menuRow)
                     cells.remove(at: menuRow)
                 } else {
-                    eateries.insert(eateries[row], at: menuRow)
+                    let eatery = eateries[row]
+                    eateries.insert(eatery, at: menuRow)
                     cells.insert(1, at: menuRow)
+                    
+                    Answers.logMenuOpenedFromWeeklyMenus(eateryId: eatery.slug)
                 }
             }
 
@@ -360,11 +366,17 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     func didFilterDate(_ sender: UIButton) {
         selectedDateIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
+        
+        Answers.logLookedAheadDate()
     }
     
     func didFilterMeal(_ sender: UIButton) {
         selectedMealIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
+        
+        if selectedMealIndex != currentMealIndex() {
+            Answers.logLookedAheadForMeal()
+        }
     }
     
     func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {

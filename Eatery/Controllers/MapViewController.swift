@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import SnapKit
+import Crashlytics
 import CoreLocation
 
 let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
@@ -158,8 +159,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let menuVC = MenuViewController(eatery: eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0], delegate: nil, userLocation: userLocation)
+        let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
+        let menuVC = MenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
         self.navigationController?.pushViewController(menuVC, animated: true)
+        
+        Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
+        Answers.logMapAnnotationOpened(eateryId: eatery.slug)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

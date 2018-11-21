@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import Crashlytics
 
 enum Filter: String {
     case nearest = "Nearest First"
@@ -116,9 +117,11 @@ class FilterBar: UIView {
     }
     
     @objc func buttonPressed(sender: UIButton) {
-        sender.isSelected = !sender.isSelected
+        sender.isSelected.toggle()
         if sender.isSelected {
-            selectedFilters.insert(filters[sender.tag])
+            let filter = filters[sender.tag]
+            selectedFilters.insert(filter)
+            Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
             selectedFilters.remove(filters[sender.tag])
         }

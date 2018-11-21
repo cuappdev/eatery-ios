@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Crashlytics
 import Kingfisher
 
 @objc protocol MenuButtonsDelegate {
@@ -88,11 +89,16 @@ class MenuHeaderView: UIView {
     }
     
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
-        eatery.favorite = !eatery.favorite
+        eatery.favorite.toggle()
         
         checkFavorites()
         
         delegate?.favoriteButtonPressed?()
+        if eatery.favorite {
+            Answers.logEateryFavorited(eateryId: eatery.slug)
+        } else {
+            Answers.logEateryUnfavorited(eateryId: eatery.slug)
+        }
     }
     
 }
