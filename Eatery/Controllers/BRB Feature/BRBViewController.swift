@@ -225,7 +225,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     func loginFailed(with error: String) {
         Answers.login(succeeded: false, timeLapsed: time)
 
-        timer.invalidate()
         
         addLoginView()
 
@@ -283,6 +282,9 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         connectionHandler.delegate = self
 
         addLoginView()
+
+        //Need to add to subview so it works on an actual device
+        view.addSubview(connectionHandler)
     }
     
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {

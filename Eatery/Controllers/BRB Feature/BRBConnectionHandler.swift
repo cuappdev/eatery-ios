@@ -43,6 +43,8 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     init() {
         super.init(frame: .zero, configuration: WKWebViewConfiguration())
         navigationDelegate = self
+        URLCache.shared.diskCapacity = 0
+        URLCache.shared.memoryCapacity = 0
 
     }
     
@@ -75,6 +77,10 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     func handleLogin() {
         loginCount = 0
         stage = .loginScreen
+
+        // Remove cache
+        URLCache.shared.removeAllCachedResponses()
+
         let loginURL = URL(string: loginURLString)!
         load(URLRequest(url: loginURL))
     }
@@ -128,8 +134,14 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         getHTML(block: { (html: NSString) -> () in
             if self.failedToLogin() {
                 self.stage = .loginFailed
+            } else if html.contains("<h2>Login OK</h2>") {
+                self.stage = .transition
             } else if html.contains("<h1>CUWebLogin</h1>") {
-                self.stage = .loginScreen
+                if self.loginCount < 1 {
+                    self.stage = .loginScreen
+                } else {
+                    self.stage = .loginFailed
+                }
             } else if self.url?.absoluteString.contains("sessionId") ?? false {
                 guard let url = self.url, let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
                     self.stage = .loginFailed
