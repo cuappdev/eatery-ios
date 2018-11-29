@@ -563,6 +563,7 @@
 			buildConfigurationList = C007CADE19E1BEAC00E3BD46 /* Build configuration list for PBXNativeTarget "Eatery" */;
 			buildPhases = (
 				E78631FC014922E867F30913 /* [CP] Check Pods Manifest.lock */,
+				5D854A8521AF85A00067F745 /* ShellScript */,
 				C007CABB19E1BEAC00E3BD46 /* Sources */,
 				C007CABC19E1BEAC00E3BD46 /* Frameworks */,
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
@@ -758,6 +759,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eatery/Pods-Eatery-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		5D854A8521AF85A00067F745 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"$APOLLO_FRAMEWORK_PATH\"/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift\n";
 		};
 		8D8D55004514B9B99C04DE0B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
