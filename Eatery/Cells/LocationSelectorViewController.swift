@@ -1,0 +1,120 @@
+//
+//  LocationSelectorView.swift
+//  Eatery
+//
+//  Created by Ethan Fine on 12/1/18.
+//  Copyright © 2018 CUAppDev. All rights reserved.
+//
+
+import UIKit
+import SnapKit
+
+enum Location: String {
+    case campus = "Campus"
+    case collegetown = "Collegetown"
+}
+
+class LocationSelectorViewController: UIViewController {
+    
+    var selectedLocation = Location.campus
+    
+    var campusStackView: UIStackView!
+    var separatorView: UIView!
+    var collegetownStackView: UIStackView!
+    
+    override func viewDidLoad() {
+        view.backgroundColor = .white
+        
+        view.layer.cornerRadius = 20
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 1
+        
+        let campusIconImage = UIImage(named: "campusIcon")?.withRenderingMode(.alwaysTemplate)
+        let campusImageView = UIImageView(image: campusIconImage)
+        campusImageView.tintColor = UIColor.eateryBlue
+        
+        let campusLabel = UILabel(frame: CGRect.zero)
+        campusLabel.text = Location.campus.rawValue
+        campusLabel.textColor = UIColor.eateryBlue
+        campusLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        campusStackView = UIStackView(arrangedSubviews: [campusImageView, campusLabel])
+        setupLocationStackView(stackView: campusStackView)
+        
+        separatorView = UIView(frame: CGRect.zero)
+        separatorView.backgroundColor = UIColor.inactive
+        view.addSubview(separatorView)
+        
+        let collegetownIconImage = UIImage(named: "collegetownIcon")?.withRenderingMode(.alwaysTemplate)
+        let collegetownImageView = UIImageView(image: collegetownIconImage)
+        collegetownImageView.tintColor = UIColor.inactive
+        
+        let collegetownLabel = UILabel(frame: CGRect.zero)
+        collegetownLabel.text = Location.collegetown.rawValue
+        collegetownLabel.textColor = UIColor.secondary
+        collegetownLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        collegetownStackView = UIStackView(arrangedSubviews: [collegetownImageView, collegetownLabel])
+        setupLocationStackView(stackView: collegetownStackView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        campusStackView.subviews[0].snp.makeConstraints { (make) in
+            make.width.equalTo(16)
+            make.height.equalTo(16)
+        }
+        campusStackView.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview().dividedBy(2)
+        }
+        separatorView.snp.makeConstraints { (make) in
+            make.width.equalTo(2)
+            make.height.equalToSuperview()
+            make.centerX.centerY.equalToSuperview()
+        }
+        collegetownStackView.subviews[0].snp.makeConstraints { (make) in
+            make.width.equalTo(16)
+            make.height.equalTo(16)
+        }
+        collegetownStackView.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview().multipliedBy(1.5)
+        }
+    }
+    
+    func setupLocationStackView(stackView: UIStackView) {
+        stackView.axis = .horizontal
+        stackView.spacing = 6
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+    }
+    
+    func swapSelectedLocation() {
+        selectedLocation = selectedLocation == .collegetown ? .campus : .collegetown
+        campusStackView.subviews[0].tintColor = campusStackView.subviews[0].tintColor == UIColor.eateryBlue ?
+            UIColor.inactive : UIColor.eateryBlue
+        let campusLabel = campusStackView.subviews[1] as! UILabel
+        campusLabel.textColor = campusLabel.textColor == UIColor.eateryBlue ?
+            UIColor.secondary : UIColor.eateryBlue
+        collegetownStackView.subviews[0].tintColor = collegetownStackView.subviews[0].tintColor == UIColor.eateryBlue ?
+            UIColor.inactive : UIColor.eateryBlue
+        let collegetownLabel = collegetownStackView.subviews[1] as! UILabel
+        collegetownLabel.textColor = collegetownLabel.textColor == UIColor.eateryBlue ?
+            UIColor.secondary : UIColor.eateryBlue
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let location = touch.location(in: view)
+            if location.x > (view.frame.width / 2) && selectedLocation == .campus {
+                swapSelectedLocation()
+            }
+            if location.x < (view.frame.width / 2) && selectedLocation == .collegetown {
+                swapSelectedLocation()
+            }
+        }
+    }
+    
+}

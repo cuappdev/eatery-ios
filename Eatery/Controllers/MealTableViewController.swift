@@ -72,7 +72,7 @@ class MealTableViewController: UITableViewController {
         tableView.isScrollEnabled = false
 
         topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
-        topSeparator.backgroundColor = .separator
+        topSeparator.backgroundColor = .inactive
         tableView.tableHeaderView = topSeparator
 
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))

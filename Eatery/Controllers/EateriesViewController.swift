@@ -13,6 +13,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     var appDevLogo: UIView?
     var collectionView: UICollectionView!
     var activityIndicator: NVActivityIndicatorView!
+    var locationSelectorViewController: LocationSelectorViewController!
+    
+    var lastContentOffset: CGFloat = 0
+    var lastScrollWasUserInitiated = false
+    var locationSelectorAnimating = false
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
@@ -116,6 +121,15 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
+        
+        /*locationSelectorViewController = LocationSelectorViewController()
+        addChildViewController(locationSelectorViewController)
+        view.addSubview(locationSelectorViewController.view)
+        locationSelectorViewController.view.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview().inset(55)
+            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(25)
+            make.height.equalTo(40)
+        }*/
 
         createUpdateTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -209,6 +223,17 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         view.addGestureRecognizer(collectionView.panGestureRecognizer)
     }
     
+    func setupLocationSelectorView() {
+        locationSelectorViewController = LocationSelectorViewController()
+        addChildViewController(locationSelectorViewController)
+        view.addSubview(locationSelectorViewController.view)
+        locationSelectorViewController.view.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview().inset(55)
+            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(25)
+            make.height.equalTo(40)
+        }
+    }
+    
     func loadData(force: Bool, completion:(() -> Void)?) {
         guard force || !initialLoad else { return }
         if !force {
@@ -230,6 +255,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                 self.collectionView.reloadData()
                 self.animateInView()
                 self.pushPreselectedEatery()
+                self.setupLocationSelectorView()
             }
 
             completion?()
@@ -390,6 +416,42 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             eateryData["Favorites"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
             eateryData["Open"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
             eateryData["Closed"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
+        }
+    }
+    
+    func hideLocationSelectorView() {
+        guard let tabBarMinY = tabBarController?.tabBar.frame.minY else { return }
+        if locationSelectorViewController.view.frame.minY < tabBarMinY && !locationSelectorAnimating {
+            locationSelectorAnimating.toggle()
+            
+            locationSelectorViewController.view.snp.updateConstraints() { (make) in
+                make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).offset(40)
+            }
+            view.setNeedsUpdateConstraints()
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                self.locationSelectorAnimating = false
+            }
+        }
+    }
+    
+    func showLocationSelectorView() {
+        guard let tabBarMinY = tabBarController?.tabBar.frame.minY else { return }
+        if locationSelectorViewController.view.frame.minY >= tabBarMinY && !locationSelectorAnimating {
+            locationSelectorAnimating.toggle()
+            
+            self.locationSelectorViewController.view.snp.updateConstraints() { (make) in
+                make.bottom.equalTo(self.view.layoutMarginsGuide.snp.bottom).inset(25)
+            }
+            view.setNeedsUpdateConstraints()
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                self.locationSelectorAnimating = false
+            }
         }
     }
     
@@ -554,8 +616,23 @@ extension EateriesViewController: UICollectionViewDelegate {
         }, completion: nil)
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        lastContentOffset = scrollView.contentOffset.y
+        lastScrollWasUserInitiated = true
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var offset = scrollView.contentOffset.y
+        
+        if lastScrollWasUserInitiated && lastContentOffset > offset {
+            showLocationSelectorView()
+        } else if lastScrollWasUserInitiated && lastContentOffset < offset {
+            hideLocationSelectorView()
+        }
+        
+        lastContentOffset = offset
+        lastScrollWasUserInitiated = false
+        
         if #available(iOS 11.0, *) {
             offset += scrollView.adjustedContentInset.top
         } else {
