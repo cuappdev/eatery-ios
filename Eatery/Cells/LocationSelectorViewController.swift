@@ -31,6 +31,8 @@ class LocationSelectorViewController: UIViewController {
         view.layer.shadowOffset = CGSize.zero
         view.layer.shadowRadius = 1
         
+        let fontSize = getSelectionSizeAttributes().fontSize
+        
         let campusIconImage = UIImage(named: "campusIcon")?.withRenderingMode(.alwaysTemplate)
         let campusImageView = UIImageView(image: campusIconImage)
         campusImageView.tintColor = UIColor.eateryBlue
@@ -38,7 +40,7 @@ class LocationSelectorViewController: UIViewController {
         let campusLabel = UILabel(frame: CGRect.zero)
         campusLabel.text = Location.campus.rawValue
         campusLabel.textColor = UIColor.eateryBlue
-        campusLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        campusLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
         
         campusStackView = UIStackView(arrangedSubviews: [campusImageView, campusLabel])
         setupLocationStackView(stackView: campusStackView)
@@ -54,16 +56,17 @@ class LocationSelectorViewController: UIViewController {
         let collegetownLabel = UILabel(frame: CGRect.zero)
         collegetownLabel.text = Location.collegetown.rawValue
         collegetownLabel.textColor = UIColor.secondary
-        collegetownLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        collegetownLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
         
         collegetownStackView = UIStackView(arrangedSubviews: [collegetownImageView, collegetownLabel])
         setupLocationStackView(stackView: collegetownStackView)
     }
     
     override func viewDidLayoutSubviews() {
+        let iconSideLength = getSelectionSizeAttributes().iconSideLength
         campusStackView.subviews[0].snp.makeConstraints { (make) in
-            make.width.equalTo(16)
-            make.height.equalTo(16)
+            make.width.equalTo(iconSideLength)
+            make.height.equalTo(iconSideLength)
         }
         campusStackView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
@@ -75,13 +78,17 @@ class LocationSelectorViewController: UIViewController {
             make.centerX.centerY.equalToSuperview()
         }
         collegetownStackView.subviews[0].snp.makeConstraints { (make) in
-            make.width.equalTo(16)
-            make.height.equalTo(16)
+            make.width.equalTo(iconSideLength)
+            make.height.equalTo(iconSideLength)
         }
         collegetownStackView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.centerX.equalToSuperview().multipliedBy(1.5)
         }
+    }
+    
+    func getSelectionSizeAttributes() -> (iconSideLength: Int, fontSize: CGFloat) {
+        return UIScreen.main.nativeBounds.height <= 1136 ? (14, 12) : (16, 14)
     }
     
     func setupLocationStackView(stackView: UIStackView) {
@@ -93,15 +100,15 @@ class LocationSelectorViewController: UIViewController {
     
     func swapSelectedLocation() {
         selectedLocation = selectedLocation == .collegetown ? .campus : .collegetown
-        campusStackView.subviews[0].tintColor = campusStackView.subviews[0].tintColor == UIColor.eateryBlue ?
+        campusStackView.subviews[0].tintColor = selectedLocation == .collegetown ?
             UIColor.inactive : UIColor.eateryBlue
         let campusLabel = campusStackView.subviews[1] as! UILabel
-        campusLabel.textColor = campusLabel.textColor == UIColor.eateryBlue ?
+        campusLabel.textColor = selectedLocation == .collegetown ?
             UIColor.secondary : UIColor.eateryBlue
-        collegetownStackView.subviews[0].tintColor = collegetownStackView.subviews[0].tintColor == UIColor.eateryBlue ?
+        collegetownStackView.subviews[0].tintColor = selectedLocation == .campus ?
             UIColor.inactive : UIColor.eateryBlue
         let collegetownLabel = collegetownStackView.subviews[1] as! UILabel
-        collegetownLabel.textColor = collegetownLabel.textColor == UIColor.eateryBlue ?
+        collegetownLabel.textColor = selectedLocation == .campus ?
             UIColor.secondary : UIColor.eateryBlue
     }
     

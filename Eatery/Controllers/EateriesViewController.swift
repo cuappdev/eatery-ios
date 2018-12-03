@@ -121,15 +121,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
-        
-        /*locationSelectorViewController = LocationSelectorViewController()
-        addChildViewController(locationSelectorViewController)
-        view.addSubview(locationSelectorViewController.view)
-        locationSelectorViewController.view.snp.makeConstraints { (make) in
-            make.leading.trailing.equalToSuperview().inset(55)
-            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(25)
-            make.height.equalTo(40)
-        }*/
 
         createUpdateTimer()
         NotificationCenter.default.addObserver(self, selector: #selector(createUpdateTimer), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -229,7 +220,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         view.addSubview(locationSelectorViewController.view)
         locationSelectorViewController.view.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(55)
-            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(25)
+            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(8)
             make.height.equalTo(40)
         }
     }
@@ -443,7 +434,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             locationSelectorAnimating.toggle()
             
             self.locationSelectorViewController.view.snp.updateConstraints() { (make) in
-                make.bottom.equalTo(self.view.layoutMarginsGuide.snp.bottom).inset(25)
+                make.bottom.equalTo(self.view.layoutMarginsGuide.snp.bottom).inset(8)
             }
             view.setNeedsUpdateConstraints()
             
