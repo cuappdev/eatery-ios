@@ -56,7 +56,6 @@ struct NetworkManager {
                     paymentTypes.append(.Swipes)
                 }
 
-
                 var diningItems: [String: [MenuItem]] = [:]
                 var eventItems: [String : [String : Event]] = [:]
 
@@ -65,6 +64,7 @@ struct NetworkManager {
 
                 let timeDateFormatter = DateFormatter()
                 timeDateFormatter.dateFormat = "YYYY-MM-dd:h:mma"
+                timeDateFormatter.locale = Locale(identifier: "en_US_POSIX")
                 eatery.operatingHours.compactMap { $0 }.forEach { operatingHour in
                     let dateString = operatingHour.date
                     let date = dateFormatter.date(from: dateString) ?? Date()
