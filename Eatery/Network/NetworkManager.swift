@@ -64,10 +64,9 @@ struct NetworkManager {
 
                 let timeDateFormatter = DateFormatter()
                 timeDateFormatter.dateFormat = "YYYY-MM-dd:h:mma"
-                timeDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                timeDateFormatter.locale = Locale(identifier: "en_US_POSIX") // force the date formatter to use 12-hour time
                 eatery.operatingHours.compactMap { $0 }.forEach { operatingHour in
                     let dateString = operatingHour.date
-                    let date = dateFormatter.date(from: dateString) ?? Date()
 
                     let events = operatingHour.events.compactMap { $0 }
                     var allMenuItems: [MenuItem] = []
