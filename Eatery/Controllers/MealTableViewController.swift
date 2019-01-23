@@ -104,9 +104,9 @@ class MealTableViewController: UITableViewController {
             return 1
         }
 
-        if menu.count == 1, eatery.eateryType != .Dining, let first = menu.first {
+        if menu.count == 1, eatery.eateryType != .Dining, let item = menu.first {
             // display menu items (of the only "dining station") as a table
-            return menu.first?.value.count ?? 0
+            return item.value.count
         } else {
             // display the menu items
             return menu.count
@@ -118,7 +118,7 @@ class MealTableViewController: UITableViewController {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        if menu.count == 1 && eatery.eateryType != .Dining {
+        if menu.count == 1, eatery.eateryType != .Dining {
             return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
             return diningStationsCell(in: tableView, forRowAt: indexPath)

@@ -88,26 +88,32 @@ public enum Area: String {
     case Central = "Central"
 }
 
-private func makeFormatter () -> DateFormatter {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "YYYY-MM-dd"
-    return formatter
-}
-
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
 public struct Eatery: Hashable {
+
+    public typealias MenuCategory = String
+
+    public typealias Menu = [MenuCategory: [MenuItem]]
+
+    /// A string of the form YYYY-MM-dd
+    public typealias DateString = String
+
+    public typealias EventName = String
 
     public static func == (lhs: Eatery, rhs: Eatery) -> Bool {
         return lhs.id == rhs.id
     }
 
-    private static let dateFormatter = makeFormatter()
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-dd"
+        return formatter
+    }()
 
     public var hashValue: Int {
         return id
     }
-    
 
     /// Unique Identifier
     public let id: Int
@@ -141,11 +147,11 @@ public struct Eatery: Hashable {
 
     /// A menu of constant dining items. Exists if this eatery's menu
     /// never changes. This should be used if it exists.
-    public var diningItems: [String: [MenuItem]]?
+    public var diningItems: Menu?
 
     /// A constant hardcoded menu if this Eatery has one.
     /// This should be used if it exists yet diningItems does not.
-    public let hardcodedMenu: [String: [MenuItem]]?
+    public let hardcodedMenu: Menu?
 
     /// GPS Location
     public let location: CLLocation
@@ -157,11 +163,10 @@ public struct Eatery: Hashable {
     /// Maps the date the event occurs to a list of the event name
     /// to the event itself e.g.:
     /// [ "2015-03-01": ["Lunch": Event]]
-    public let events: [String: [String: Event]]
+    public let events: [DateString: [EventName: Event]]
 
     /// ="This is an external eatery, i.e. a completely hardcoded eatery"
     public let external: Bool
-
 
     // Gives a string full of all the menus for this eatery today
     // this is used for searching.
@@ -180,7 +185,6 @@ public struct Eatery: Hashable {
             return _todaysEventsString!
         }
     }
-
 
     init(id: Int, name: String, nameShort: String, slug: String, eateryType: EateryType, about: String, phone: String, area: Area, address: String, paymentMethods: [PaymentType], diningItems: [String : [MenuItem]]?, events: [String: [String: Event]], hardcodedMenu: [String : [MenuItem]]?, location: CLLocation, external: Bool) {
         self.id = id
@@ -224,7 +228,6 @@ public struct Eatery: Hashable {
         return false
     }
 
-    //
     /**
      Tells if eatery is open within the calendar date given. This is distinct from `isOpenOnDate` in that it does not check a specific time, just the day, month, and year.
 
@@ -310,18 +313,18 @@ public struct Eatery: Hashable {
      and the food items available for the category as a string list. Used to easily iterate
      over all items in the hardcoded menu. Ex: [("Entrees",["Chicken", "Steak", "Fish"]), ("Fruit", ["Apples"])]
      */
-    private func getMenuIterable(_ menuList: [String: [MenuItem]]?) -> [(String,[String])] {
-        guard let menu = menuList else { return [] }
+    private func getMenuIterable(_ menu: Menu?) -> [(String,[String])] {
+        guard let menu = menu else { return [] }
         return menu.map({ (name, items) -> (String, [String]) in
             (name, items.map({ ($0.name) }))
         })
     }
 
-    public func getHardcodeMenuIterable() -> [(String,[String])] {
+    public func getHardcodeMenuIterable() -> [(String, [String])] {
         return getMenuIterable(hardcodedMenu)
     }
 
-    public func getDiningItemMenuIterable() -> [(String,[String])] {
+    public func getDiningItemMenuIterable() -> [(String, [String])] {
         return getMenuIterable(diningItems)
     }
 
