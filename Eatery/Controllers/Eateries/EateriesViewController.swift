@@ -192,7 +192,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
-        collectionView.register(UINib(nibName: "EateriesCollectionViewHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
+        collectionView.register(EateriesCollectionViewHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
@@ -494,32 +494,38 @@ extension EateriesViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! EateriesCollectionViewHeaderView
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! EateriesCollectionViewHeaderView
 
         let (section, eateries) = data(for: indexPath.section)
 
-        if section == "Favorites" {
-            view.titleLabel.text = "Favorites"
-            view.titleLabel.textColor = .eateryBlue
-        } else if section == "Open" {
+        switch section {
+        case "Favorites":
+            header.title = "Favorites"
+            header.titleColor = .eateryBlue
+
+        case "Open":
             if eateries.isEmpty {
-                view.titleLabel.text = ""
-                view.titleLabel.textColor = .gray
+                header.title = ""
+                header.titleColor = .gray
             } else {
-                view.titleLabel.text = "Open"
-                view.titleLabel.textColor = .eateryBlue
-            }
-        } else if section == "Closed" {
-            if eateries.isEmpty {
-                view.titleLabel.text = ""
-            } else {
-                view.titleLabel.text = "Closed"
+                header.title = "Open"
+                header.titleColor = .eateryBlue
             }
 
-            view.titleLabel.textColor = .gray
+        case "Closed":
+            if eateries.isEmpty {
+                header.title = ""
+            } else {
+                header.title = "Closed"
+            }
+
+            header.titleColor = .gray
+            
+        default:
+            break
         }
 
-        return view
+        return header
     }
 }
 

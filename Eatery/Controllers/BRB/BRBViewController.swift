@@ -15,7 +15,11 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     var activityIndicatorView: NVActivityIndicatorView!
     let timeout = 30.0 // seconds
     var time = 0.0 // time of request
-    var historyHeader : EateriesCollectionViewHeaderView?
+    lazy var historyHeader: EateriesCollectionViewHeaderView = {
+        let header = EateriesCollectionViewHeaderView()
+        header.title = "History"
+        return header
+    }()
     
     var brbAccount: BRBAccount!
     
@@ -209,13 +213,8 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         if section == 0 {
             return UIView()
         }
-        
-        if historyHeader == nil {
-            historyHeader = (Bundle.main.loadNibNamed("EateriesCollectionViewHeaderView", owner: nil, options: nil)?.first! as? EateriesCollectionViewHeaderView)!
-            historyHeader!.titleLabel.text = "History"
-        }
-        
-        return historyHeader!
+
+        return historyHeader
     }
 
     /// -- end tableView
