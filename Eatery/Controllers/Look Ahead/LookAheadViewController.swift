@@ -148,7 +148,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     
     func getEateryMenu(_ eatery: Eatery) -> UIImage {
         var eateryMenuImage = UIImage()
-        let alternateMenuIterable = eatery.getAlternateMenuIterable()
         events = eatery.eventsOnDate(dates[selectedDateIndex])
         let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
         

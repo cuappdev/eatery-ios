@@ -105,7 +105,11 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     func displayEateries() {
         guard let location = sceneLocationView.currentLocation() else { return }
 
-        for eatery in eateries.filter({ $0.location.distance(from: location) / metersInMile < 0.5 }) {
+        let closeEateries = eateries.filter {
+            return location.distance(from: $0.location, in: .miles) < 0.5
+        }
+
+        for eatery in closeEateries {
             let frame = CGRect(x: 0.0, y: 0.0, width: 270.0, height: 54.0)
             let card = EateryARCard(frame: frame, eatery: eatery, userLocation: location)
             card.alpha = 0.8
@@ -129,7 +133,9 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
         }
 
         if let closestEatery = eateries.min(by: { $0.location.distance(from: location) < $1.location.distance(from: location) }),
-            closestEatery.location.distance(from: location) / metersInMile < 0.05, let node = nodes[closestEatery] {
+            closestEatery.location.distance(from: location, in: .miles) < 0.05,
+            let node = nodes[closestEatery] {
+
             sceneLocationView.removeLocationNode(locationNode: node)
 
             switch nearbyState {

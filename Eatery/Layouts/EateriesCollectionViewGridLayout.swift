@@ -1,14 +1,15 @@
 import UIKit
 
 class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
+
     override func prepare() {
         super.prepare()
-        
+
         guard let collectionView = collectionView else { return }
 
         let width = collectionView.bounds.width
         let cellWidth: CGFloat
-        
+
         if collectionView.traitCollection.horizontalSizeClass == .regular
             || collectionView.traitCollection.verticalSizeClass == .compact {
             cellWidth = (width / 2) - collectionViewMargin * 1.5
@@ -25,4 +26,5 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
+
 }

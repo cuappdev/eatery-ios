@@ -166,8 +166,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         distanceLabel.textColor = .gray
         distanceLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
 
-        if let distance = userLocation?.distance(from: eatery.location) {
-            distanceLabel.text = "\(Double(round(10 * distance / metersInMile) / 10)) mi"
+        if let userLocation = userLocation {
+            let distance = userLocation.distance(from: eatery.location, in: .miles)
+            distanceLabel.text = "\(Double(round(10 * distance) / 10)) mi"
         } else {
             distanceLabel.text = "-- mi"
         }
