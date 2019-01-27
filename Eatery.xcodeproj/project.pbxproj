@@ -31,6 +31,7 @@
 		5D218C4121FBE39700327516 /* EateryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C2A21FBE39700327516 /* EateryCollectionViewCell.xib */; };
 		5D218C4221FBE39700327516 /* EateryARCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2B21FBE39700327516 /* EateryARCard.swift */; };
 		5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */; };
+		5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C4721FC136E00327516 /* CLLocation+Distance.swift */; };
 		5DDD93A4C245320F6F3ECDE6 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */; };
 		6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6502AF861DCFB9ED00390EAA /* FilterBar.swift */; };
@@ -164,6 +165,7 @@
 		5D218C2A21FBE39700327516 /* EateryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryCollectionViewCell.xib; sourceTree = "<group>"; };
 		5D218C2B21FBE39700327516 /* EateryARCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryARCard.swift; sourceTree = "<group>"; };
 		5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewHeaderView.swift; sourceTree = "<group>"; };
+		5D218C4721FC136E00327516 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6502AF861DCFB9ED00390EAA /* FilterBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBar.swift; sourceTree = "<group>"; };
 		652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesInterfaceController.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				1D07D27A1C86F9D400FABB7B /* UIScreen+Device.swift */,
 				1D0A94431CC84280000B3974 /* UIViewController+Animation.swift */,
 				D971431E219A7FE100E2EE05 /* Eatery+Extension.swift */,
+				5D218C4721FC136E00327516 /* CLLocation+Distance.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 			files = (
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
+				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				65C36A722037D058005D8831 /* ARViewController.swift in Sources */,
 				65E93179206C186B00547D14 /* Keys.swift in Sources */,
 				D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */,

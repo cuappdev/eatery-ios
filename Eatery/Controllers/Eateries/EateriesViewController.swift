@@ -191,7 +191,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: EateriesCollectionViewGridLayout())
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UINib(nibName: "EateryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        collectionView.register(EateryCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.register(EateriesCollectionViewHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
@@ -443,6 +443,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 }
 
 extension EateriesViewController: UICollectionViewDataSource {
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let showFavorites = (eateryData["Favorites"] ?? []).isEmpty ? 0 : 1
         let showOpens = (eateryData["Open"] ?? []).isEmpty ? 0 : 1
@@ -458,7 +459,8 @@ extension EateriesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! EateryCollectionViewCell
         let eatery = self.eatery(for: indexPath)
-        cell.set(eatery: eatery, userLocation: userLocation)
+        cell.eatery = eatery
+        cell.userLocation = userLocation
 
         cell.backgroundImageView.hero.id = Animation.backgroundImageView.id(eatery: eatery)
         cell.titleLabel.hero.id = Animation.title.id(eatery: eatery)
@@ -468,26 +470,29 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.paymentContainer.hero.id = Animation.paymentContainer.id(eatery: eatery)
         cell.infoContainer.hero.id = Animation.infoContainer.id(eatery: eatery)
 
-        if searchBar.text != "" {
-            if let names = searchedMenuItemNames[eatery] {
-                let baseString = names.joined(separator: "\n")
-                let attributedString = NSMutableAttributedString(string: baseString, attributes: [NSAttributedStringKey.foregroundColor : UIColor.gray, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11.0)])
-                do {
-                    let regex = try NSRegularExpression(pattern: searchBar.text ?? "", options: NSRegularExpression.Options.caseInsensitive)
-                    for match in regex.matches(in: baseString, options: [], range: NSRange.init(location: 0, length: baseString.utf16.count)) {
-                        attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.darkGray, NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 11.0)], range: match.range)
-                    }
-                } catch {
-                    NSLog("Error in handling regex")
+        if searchBar.text != "", let names = searchedMenuItemNames[eatery] {
+            let baseString = names.joined(separator: "\n")
+            let attributedString = NSMutableAttributedString(string: baseString,
+                                                             attributes: [.foregroundColor : UIColor.gray,
+                                                                          .font : UIFont.systemFont(ofSize: 11)])
+
+            do {
+                let regex = try NSRegularExpression(pattern: searchBar.text ?? "", options: .caseInsensitive)
+                for match in regex.matches(in: baseString,
+                                           options: [],
+                                           range: NSRange(location: 0, length: baseString.utf16.count)) {
+                                            attributedString.addAttributes([.foregroundColor : UIColor.darkGray,
+                                                                            .font : UIFont.boldSystemFont(ofSize: 11)],
+                                                                           range: match.range)
                 }
-                cell.menuTextView.attributedText = attributedString
-                cell.menuTextViewHeight.constant = cell.frame.height - 54.0
-            } else {
-                cell.menuTextView.text = nil
-                cell.menuTextViewHeight.constant = 0.0
+            } catch {
+                NSLog("Error in handling regex")
             }
+
+            cell.menuTextView.attributedText = attributedString
+            cell.isMenuTextViewVisible = true
         } else {
-            cell.menuTextViewHeight.constant = 0.0
+            cell.isMenuTextViewVisible = false
         }
 
         return cell
@@ -520,7 +525,7 @@ extension EateriesViewController: UICollectionViewDataSource {
             }
 
             header.titleColor = .gray
-            
+
         default:
             break
         }
@@ -530,6 +535,7 @@ extension EateriesViewController: UICollectionViewDataSource {
 }
 
 extension EateriesViewController: UICollectionViewDelegate {
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let query = searchBar.text, !query.isEmpty {
             Answers.logSearchResultSelected(for: query)
@@ -602,9 +608,11 @@ extension EateriesViewController: UICollectionViewDelegate {
 }
 
 extension EateriesViewController: UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 56.0)
     }
+
 }
 
 extension EateriesViewController: UISearchBarDelegate {
@@ -638,7 +646,7 @@ extension EateriesViewController: UISearchBarDelegate {
         userLocation = locations.last
 
         for cell in collectionView.visibleCells.compactMap({ $0 as? EateryCollectionViewCell }) {
-            cell.update(userLocation: userLocation)
+            cell.userLocation = userLocation
         }
     }
     
@@ -657,6 +665,7 @@ extension EateriesViewController: FilterBarDelegate {
 }
 
 extension EateriesViewController: UIViewControllerPreviewingDelegate {
+
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let collectionViewPoint = view.convert(location, to: collectionView)
         
@@ -675,4 +684,5 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         show(viewControllerToCommit, sender: self)
     }
+    
 }
