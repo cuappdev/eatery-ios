@@ -7,21 +7,27 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     private static let shadowRadius: CGFloat = 12
 
-    let paymentContainer: UIView
-    let paymentImageViews: [UIImageView]
+    let paymentContainer: UIView = UIView()
+    let paymentImageViews: [UIImageView] = [
+        UIImageView(),
+        UIImageView(),
+        UIImageView()
+    ]
 
-    let backgroundImageView: UIImageView
-    let closedOverlay: UIView
+    let backgroundImageView = UIImageView()
+    let closedOverlay = UIView()
 
-    let infoContainer: UIView
-    let titleLabel: UILabel
-    let statusLabel: UILabel
-    let timeLabel: UILabel
-    let distanceLabel: UILabel
+    let infoContainer = UIView()
+    let titleLabel = UILabel()
+    let statusLabel = UILabel()
+    let timeLabel = UILabel()
+    let distanceLabel = UILabel()
 
-    let menuTextView: UITextView
-    private var menuTextViewHiddenConstraints: [Constraint]
-    private var menuTextViewVisibleConstraints: [Constraint]
+    let separator = UIView()
+
+    let menuTextView = UITextView()
+    private var menuTextViewHiddenConstraints = [Constraint]()
+    private var menuTextViewVisibleConstraints = [Constraint]()
 
     var isMenuTextViewVisible: Bool = false {
         didSet {
@@ -46,26 +52,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     override init(frame: CGRect) {
-        backgroundImageView = UIImageView()
-        closedOverlay = UIView()
-
-        infoContainer = UIView()
-        titleLabel = UILabel()
-        statusLabel = UILabel()
-        timeLabel = UILabel()
-        distanceLabel = UILabel()
-
-        paymentContainer = UIView()
-        paymentImageViews = [
-            UIImageView(),
-            UIImageView(),
-            UIImageView()
-        ]
-
-        menuTextView = UITextView()
-        menuTextViewHiddenConstraints = []
-        menuTextViewVisibleConstraints = []
-
         super.init(frame: frame)
 
         contentView.layer.cornerRadius = 8
@@ -78,8 +64,17 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         contentView.backgroundColor = .white
 
-        // background
+        setUpBackgroundViews()
+        setUpPaymentViews()
+        setUpInfoViews()
+        setUpSeparator()
+        setUpMenuView()
 
+        // activate constraints to hide text view
+        hideMenuTextView()
+    }
+
+    private func setUpBackgroundViews() {
         backgroundImageView.contentMode = .scaleAspectFill
         contentView.addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { make in
@@ -91,9 +86,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
         closedOverlay.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
 
-        // payment
-
+    private func setUpPaymentViews() {
         contentView.addSubview(paymentContainer)
         paymentContainer.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview().inset(10)
@@ -118,9 +113,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(paymentImageViews[1].snp.trailing).offset(5)
             make.width.height.equalTo(20)
         }
+    }
 
-        // info
-
+    private func setUpInfoViews() {
         infoContainer.backgroundColor = .white
         contentView.addSubview(infoContainer)
         infoContainer.snp.makeConstraints { make in
@@ -168,10 +163,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             make.lastBaseline.equalTo(statusLabel.snp.lastBaseline)
             make.trailing.equalToSuperview().inset(10)
         }
+    }
 
-        // separator
-
-        let separator = UIView()
+    private func setUpSeparator() {
         separator.backgroundColor = .separator
         contentView.addSubview(separator)
         separator.snp.makeConstraints { make in
@@ -179,9 +173,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(1)
             make.leading.trailing.equalToSuperview().inset(10)
         }
+    }
 
-        // menu
-
+    private func setUpMenuView() {
         menuTextView.font = .systemFont(ofSize: 11)
         menuTextView.isEditable = false
         menuTextView.isSelectable = false
@@ -199,9 +193,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
         menuTextViewHiddenConstraints.append(contentsOf: menuTextView.snp.prepareConstraints { make in
             make.height.equalTo(0)
         })
-
-        // activate the hidden constraints initially
-        hideMenuTextView()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -262,7 +253,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             imageView.isHidden = true
         }
 
-        // status label, time label, text color, overlay
+        // text of status label, time label
+        // text color of all info labels
+        // overlay visibility
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {

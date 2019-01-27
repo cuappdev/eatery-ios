@@ -105,8 +105,8 @@ class ARViewController: UIViewController, CLLocationManagerDelegate, SceneLocati
     func displayEateries() {
         guard let location = sceneLocationView.currentLocation() else { return }
 
-        let closeEateries = eateries.filter { eatery -> Bool in
-            return location.distance(from: eatery.location, in: .miles) < 0.5
+        let closeEateries = eateries.filter {
+            return location.distance(from: $0.location, in: .miles) < 0.5
         }
 
         for eatery in closeEateries {
