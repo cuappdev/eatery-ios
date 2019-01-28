@@ -11,70 +11,50 @@ import SnapKit
 import Crashlytics
 import Kingfisher
 
-protocol MenuButtonsDelegate: class {
-
-    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView)
-
+@objc protocol MenuButtonsDelegate {
+    @objc optional func favoriteButtonPressed()
 }
 
 class MenuHeaderView: UIView {
     
-    var eatery: Eatery?
-    var displayedDate: Date?
-
+    var eatery: Eatery!
     weak var delegate: MenuButtonsDelegate?
+    var displayedDate: Date!
 
-    let backgroundImageView = UIImageView()
-    let titleLabel = UILabel()
-    let favoriteButton = UIButton()
-    let paymentView = PaymentMethodsView()
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet var paymentImageViews: [UIImageView]!
+    @IBOutlet weak var paymentContainer: UIView!
+    @IBOutlet weak var favoriteButton: UIButton!
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        backgroundImageView.contentMode = .scaleAspectFill
-        addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        titleLabel.font = .boldSystemFont(ofSize: 34)
-        titleLabel.textColor = .white
-        titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.minimumScaleFactor = 0.25
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(15)
-        }
-
-        favoriteButton.setImage(UIImage(named: "whiteStar"), for: .normal)
-        addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY)
-            make.leading.equalTo(titleLabel.snp.trailing).offset(10)
-            make.width.height.equalTo(27)
-        }
-
-        addSubview(paymentView)
-        paymentView.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(favoriteButton.snp.trailing)
-            make.trailing.equalToSuperview().inset(16)
-            make.centerY.equalTo(titleLabel.snp.centerY)
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) will not be implemented")
-    }
-    
     func set(eatery: Eatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
         
-        updateFavoriteButtonImage()
-
-        paymentView.paymentMethods = eatery.paymentMethods
+        checkFavorites()
+        
+        var images: [UIImage] = []
+        
+        if (eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard)) {
+            images.append(#imageLiteral(resourceName: "cashIcon"))
+        }
+        
+        if (eatery.paymentMethods.contains(.BRB)) {
+            images.append(#imageLiteral(resourceName: "brbIcon"))
+        }
+        
+        if (eatery.paymentMethods.contains(.Swipes)) {
+            images.append(#imageLiteral(resourceName: "swipeIcon"))
+        }
+        
+        for (index, imageView) in paymentImageViews.enumerated() {
+            if index < images.count {
+                imageView.image = images[index]
+                imageView.isHidden = false
+            } else {
+                imageView.isHidden = true
+            }
+        }
         
         titleLabel.text = eatery.nickname
 
@@ -101,33 +81,24 @@ class MenuHeaderView: UIView {
                 make.edges.equalToSuperview()
             }
         }
+
     }
     
-    func updateFavoriteButtonImage() {
-        guard let eatery = eatery else {
-            return
-        }
-
-        favoriteButton.setImage(eatery.favorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
+    func checkFavorites() {
+        favoriteButton.setImage(eatery.favorite ? #imageLiteral(resourceName: "goldStar") : #imageLiteral(resourceName: "whiteStar"), for: .normal)
     }
     
     @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
-        guard var eatery = eatery else {
-            return
-        }
-
         eatery.favorite.toggle()
         
-        updateFavoriteButtonImage()
+        checkFavorites()
         
-        delegate?.favoriteButtonPressed(on: self)
+        delegate?.favoriteButtonPressed?()
         if eatery.favorite {
             Answers.logEateryFavorited(eateryId: eatery.slug)
         } else {
             Answers.logEateryUnfavorited(eateryId: eatery.slug)
         }
-
-        self.eatery = eatery
     }
     
 }

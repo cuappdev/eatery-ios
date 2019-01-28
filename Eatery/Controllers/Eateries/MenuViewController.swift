@@ -11,7 +11,7 @@ private let TitleDateFormatter: DateFormatter = {
 }()
 
 class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
-
+    
     var eatery: Eatery
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
@@ -96,9 +96,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
         
         // Header Views
-        menuHeaderView = MenuHeaderView()
+        menuHeaderView = (Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first as! MenuHeaderView)
         menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.delegate = self
+        
         contentView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
             make.height.equalTo(view).dividedBy(3)
@@ -301,7 +302,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.backgroundImageView.hero.id = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
         menuHeaderView.titleLabel.hero.id = EateriesViewController.Animation.title.id(eatery: eatery)
         distanceLabel.hero.id = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
-        menuHeaderView.paymentView.hero.id = EateriesViewController.Animation.paymentView.id(eatery: eatery)
+        menuHeaderView.paymentContainer.hero.id = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
         contentContainer.hero.id = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
 
         let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
@@ -369,8 +370,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     // MARK: -
     // MARK: MenuButtonsDelegate
     
-    func favoriteButtonPressed(on view: MenuHeaderView) {
-        delegate?.favoriteButtonPressed(on: view)
+    func favoriteButtonPressed() {
+        delegate?.favoriteButtonPressed?()
         
     }
 
