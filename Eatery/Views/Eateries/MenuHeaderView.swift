@@ -24,6 +24,8 @@ class MenuHeaderView: UIView {
 
     weak var delegate: MenuButtonsDelegate?
 
+    let container = UIView()
+
     let backgroundImageView = UIImageView()
     let titleLabel = UILabel()
     let favoriteButton = UIButton()
@@ -32,8 +34,13 @@ class MenuHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        addSubview(container)
+        container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
         backgroundImageView.contentMode = .scaleAspectFill
-        addSubview(backgroundImageView)
+        container.addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -42,21 +49,22 @@ class MenuHeaderView: UIView {
         titleLabel.textColor = .white
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.25
-        addSubview(titleLabel)
+        container.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(15)
         }
 
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: .normal)
-        addSubview(favoriteButton)
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed(_:)), for: .touchUpInside)
+        container.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.leading.equalTo(titleLabel.snp.trailing).offset(10)
             make.width.height.equalTo(27)
         }
 
-        addSubview(paymentView)
+        container.addSubview(paymentView)
         paymentView.snp.makeConstraints { make in
             make.leading.greaterThanOrEqualTo(favoriteButton.snp.trailing)
             make.trailing.equalToSuperview().inset(16)
@@ -111,7 +119,7 @@ class MenuHeaderView: UIView {
         favoriteButton.setImage(eatery.favorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
     }
     
-    @IBAction func favoriteButtonPressed(_ sender: AnyObject) {
+    @objc private func favoriteButtonPressed(_ sender: AnyObject) {
         guard var eatery = eatery else {
             return
         }

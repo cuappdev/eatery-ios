@@ -67,7 +67,7 @@ class MealTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension;
 
         tableView.register(MealItemTableViewCell.self, forCellReuseIdentifier: "MealItem")
-        tableView.register(UINib(nibName: "MealStationTableViewCell", bundle: nil), forCellReuseIdentifier: "MealStation")
+        tableView.register(MealStationTableViewCell.self, forCellReuseIdentifier: "MealStation")
 
         tableView.isScrollEnabled = false
 
@@ -129,8 +129,8 @@ class MealTableViewController: UITableViewController {
     private func emptyMenuCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
 
-        cell.titleLabel.text = "No menu available"
-        cell.contentLabel.attributedText = NSAttributedString(string: "")
+        cell.titleText = "No menu available"
+        cell.contentText = NSAttributedString(string: "")
 
         return cell
     }
@@ -162,11 +162,11 @@ class MealTableViewController: UITableViewController {
         // set title
         let possibleTitle = stationTitles[indexPath.row]
         if possibleTitle == "General" {
-            cell.titleLabel.text = ""
-            cell.titleLabelHeight.isActive = false
+            cell.titleText = ""
+            cell.titleCollapsed = true
         } else {
-            cell.titleLabel.text = possibleTitle
-            cell.titleLabelHeight.isActive = true
+            cell.titleText = possibleTitle
+            cell.titleCollapsed = false
         }
 
         // set content
@@ -194,7 +194,7 @@ class MealTableViewController: UITableViewController {
             content.append(NSMutableAttributedString(string: "\n").join(names))
         }
 
-        cell.contentLabel.attributedText = content
+        cell.contentText = content
 
         return cell
     }

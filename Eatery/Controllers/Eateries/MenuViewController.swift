@@ -371,7 +371,6 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     
     func favoriteButtonPressed(on view: MenuHeaderView) {
         delegate?.favoriteButtonPressed(on: view)
-        
     }
 
     func openAppleMapsDirections() {

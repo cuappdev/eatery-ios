@@ -14,7 +14,6 @@
 		5D218C3021FBE39700327516 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1821FBE39700327516 /* MenuHeaderView.swift */; };
 		5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */; };
 		5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1A21FBE39700327516 /* NavigationTitleView.swift */; };
-		5D218C3321FBE39700327516 /* MealStationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C1B21FBE39700327516 /* MealStationTableViewCell.xib */; };
 		5D218C3421FBE39700327516 /* EateryARDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1C21FBE39700327516 /* EateryARDetailCard.swift */; };
 		5D218C3521FBE39700327516 /* NavigationTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C1D21FBE39700327516 /* NavigationTitleView.xib */; };
 		5D218C3621FBE39700327516 /* EateryHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C1F21FBE39700327516 /* EateryHeaderTableViewCell.xib */; };
@@ -148,7 +147,6 @@
 		5D218C1821FBE39700327516 /* MenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealItemTableViewCell.swift; sourceTree = "<group>"; };
 		5D218C1A21FBE39700327516 /* NavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
-		5D218C1B21FBE39700327516 /* MealStationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealStationTableViewCell.xib; sourceTree = "<group>"; };
 		5D218C1C21FBE39700327516 /* EateryARDetailCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryARDetailCard.swift; sourceTree = "<group>"; };
 		5D218C1D21FBE39700327516 /* NavigationTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationTitleView.xib; sourceTree = "<group>"; };
 		5D218C1F21FBE39700327516 /* EateryHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryHeaderTableViewCell.xib; sourceTree = "<group>"; };
@@ -303,7 +301,6 @@
 				5DC06B7921FE36020043701A /* PaymentMethodsView.swift */,
 				5D218C1621FBE39700327516 /* MenuHeaderView.xib */,
 				5D218C1821FBE39700327516 /* MenuHeaderView.swift */,
-				5D218C1B21FBE39700327516 /* MealStationTableViewCell.xib */,
 				5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */,
 				5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */,
 				5D218C1D21FBE39700327516 /* NavigationTitleView.xib */,
@@ -705,7 +702,6 @@
 				D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
 				5D218C3521FBE39700327516 /* NavigationTitleView.xib in Resources */,
-				5D218C3321FBE39700327516 /* MealStationTableViewCell.xib in Resources */,
 				5D218C3921FBE39700327516 /* EateryMenuTableViewCell.xib in Resources */,
 				5D218C2E21FBE39700327516 /* MenuHeaderView.xib in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,
