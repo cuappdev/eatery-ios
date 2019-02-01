@@ -72,7 +72,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         // Table View Nibs
-        tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
+        tableView.register(TitleSectionTableViewCell.self, forCellReuseIdentifier: "TitleSectionCell")
         tableView.register(EateryHeaderTableViewCell.self, forCellReuseIdentifier: "EateryHeaderCell")
         tableView.register(EateryMenuTableViewCell.self, forCellReuseIdentifier: "EateryMenuCell")
         

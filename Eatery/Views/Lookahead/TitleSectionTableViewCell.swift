@@ -10,10 +10,23 @@ import UIKit
 
 class TitleSectionTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    var titleLabel = UILabel()
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         selectionStyle = .none
+
+        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(5)
+            make.leading.trailing.equalToSuperview().inset(10)
+        }
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }
