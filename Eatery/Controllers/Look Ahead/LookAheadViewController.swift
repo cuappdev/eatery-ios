@@ -74,7 +74,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         // Table View Nibs
         tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
         tableView.register(EateryHeaderTableViewCell.self, forCellReuseIdentifier: "EateryHeaderCell")
-        tableView.register(UINib(nibName: "EateryMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryMenuCell")
+        tableView.register(EateryMenuTableViewCell.self, forCellReuseIdentifier: "EateryMenuCell")
         
         // Filter Eateries Header View
         let dayStrings = getDayStrings(dates)
@@ -251,8 +251,8 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-            cell.shareMenuButton.isHidden = true // temporary before hotfix
-            cell.shareIcon.isHidden = true // temporary before hotfix
+            // cell.shareMenuButton.isHidden = true
+            // cell.shareIcon.isHidden = true
             cell.menuImageView.image = getEateryMenu(eatery)
             
             return cell

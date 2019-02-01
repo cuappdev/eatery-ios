@@ -1,25 +1,39 @@
 import UIKit
 
-@objc protocol EateryMenuCellDelegate {
-    @objc optional func didTapShareMenuButton(_ cell: EateryMenuTableViewCell?)
+protocol EateryMenuCellDelegate: class {
+    func didTapShareMenuButton(_ cell: EateryMenuTableViewCell?)
 }
 
 class EateryMenuTableViewCell: UITableViewCell {
+
+    // Share features may be removed soon
+    // var shareMenuButton = UIButton()
+    // var shareIcon = UIImageView()
+
+    var menuImageView = UIImageView()
     
-    @IBOutlet weak var shareMenuButton: UIButton!
-    @IBOutlet weak var menuImageView: UIImageView!
-    @IBOutlet weak var shareIcon: UIImageView!
-    
-    var delegate: EateryMenuCellDelegate?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
+    weak var delegate: EateryMenuCellDelegate?
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         selectionStyle = .none
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = .wash
+
+        menuImageView.contentMode = .scaleToFill
+        contentView.addSubview(menuImageView)
+        menuImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(14)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
-    
-    @IBAction func didTapShareMenuButton(_ sender: UIButton) {
-        delegate?.didTapShareMenuButton!(self)
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) will not be implemented")
     }
+
+    private func didTapShareMenuButton(_ sender: UIButton) {
+        delegate?.didTapShareMenuButton(self)
+    }
+
 }
