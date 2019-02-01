@@ -258,12 +258,12 @@ class EateryCollectionViewCell: UICollectionViewCell {
         // overlay visibility
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        statusLabel.textColor = eateryStatus.statusColor
         switch eateryStatus {
         case let .open(message):
             timeLabel.text = message
 
             titleLabel.textColor = .black
-            statusLabel.textColor = .eateryGreen
             timeLabel.textColor = .lightGray
             distanceLabel.textColor = .lightGray
 
@@ -273,7 +273,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
             timeLabel.text = message
 
             titleLabel.textColor = .black
-            statusLabel.textColor = .orange
             timeLabel.textColor = .lightGray
             distanceLabel.textColor = .lightGray
 
