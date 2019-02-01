@@ -58,7 +58,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             dateTitle = dateString
         }
         
-        navigationTitleView = NavigationTitleView.loadFromNib()
+        navigationTitleView = NavigationTitleView()
         navigationTitleView.eateryNameLabel.text = eatery.nickname
         navigationTitleView.dateLabel.text = dateTitle
         navigationItem.titleView = navigationTitleView
@@ -341,20 +341,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let dateLabelMinWidth: CGFloat = 80.0
         
         switch -titleLabelFrame.origin.y {
-        case -CGFloat.greatestFiniteMagnitude..<0:
-            navigationTitleView.nameLabelHeightConstraint.constant = 0
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width > dateLabelMinWidth ? navigationTitleView.frame.width : dateLabelMinWidth
+        case ..<0:
+            navigationTitleView.nameLabelHeight = 0
+            navigationTitleView.dateLabelWidth = nil
             navigationTitleView.eateryNameLabel.alpha = 0.0
         case 0..<titleLabelFrame.height:
             let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height
 
             navigationTitleView.eateryNameLabel.alpha = percentage
-            navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight * percentage
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage
-        case titleLabelFrame.height..<CGFloat.greatestFiniteMagnitude:
+            navigationTitleView.nameLabelHeight = titleLabelMaxHeight * percentage
+            navigationTitleView.dateLabelWidth = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage
+        case titleLabelFrame.height...:
             navigationTitleView.eateryNameLabel.alpha = 1.0
-            navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight
-            navigationTitleView.dateLabelWidthConstraint.constant = dateLabelMinWidth
+            navigationTitleView.nameLabelHeight = titleLabelMaxHeight
+            navigationTitleView.dateLabelWidth = dateLabelMinWidth
         default:
             break
         }
