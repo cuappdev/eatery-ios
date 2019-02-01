@@ -15,7 +15,6 @@
 		5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */; };
 		5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1A21FBE39700327516 /* NavigationTitleView.swift */; };
 		5D218C3421FBE39700327516 /* EateryARDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1C21FBE39700327516 /* EateryARDetailCard.swift */; };
-		5D218C3621FBE39700327516 /* EateryHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C1F21FBE39700327516 /* EateryHeaderTableViewCell.xib */; };
 		5D218C3721FBE39700327516 /* FilterEateriesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C2021FBE39700327516 /* FilterEateriesView.xib */; };
 		5D218C3821FBE39700327516 /* TitleSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C2121FBE39700327516 /* TitleSectionTableViewCell.xib */; };
 		5D218C3921FBE39700327516 /* EateryMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D218C2221FBE39700327516 /* EateryMenuTableViewCell.xib */; };
@@ -147,7 +146,6 @@
 		5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealItemTableViewCell.swift; sourceTree = "<group>"; };
 		5D218C1A21FBE39700327516 /* NavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
 		5D218C1C21FBE39700327516 /* EateryARDetailCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryARDetailCard.swift; sourceTree = "<group>"; };
-		5D218C1F21FBE39700327516 /* EateryHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		5D218C2021FBE39700327516 /* FilterEateriesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterEateriesView.xib; sourceTree = "<group>"; };
 		5D218C2121FBE39700327516 /* TitleSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleSectionTableViewCell.xib; sourceTree = "<group>"; };
 		5D218C2221FBE39700327516 /* EateryMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EateryMenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -311,7 +309,6 @@
 		5D218C4521FBE42C00327516 /* Lookahead */ = {
 			isa = PBXGroup;
 			children = (
-				5D218C1F21FBE39700327516 /* EateryHeaderTableViewCell.xib */,
 				5D218C2521FBE39700327516 /* EateryHeaderTableViewCell.swift */,
 				5D218C2221FBE39700327516 /* EateryMenuTableViewCell.xib */,
 				5D218C2321FBE39700327516 /* EateryMenuTableViewCell.swift */,
@@ -690,7 +687,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D218C3821FBE39700327516 /* TitleSectionTableViewCell.xib in Resources */,
-				5D218C3621FBE39700327516 /* EateryHeaderTableViewCell.xib in Resources */,
 				D956DCB12187B2BF001BB9B0 /* eateryQuery.graphql in Resources */,
 				5D218C3721FBE39700327516 /* FilterEateriesView.xib in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,

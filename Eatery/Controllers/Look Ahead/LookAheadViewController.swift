@@ -73,7 +73,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Table View Nibs
         tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
-        tableView.register(UINib(nibName: "EateryHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryHeaderCell")
+        tableView.register(EateryHeaderTableViewCell.self, forCellReuseIdentifier: "EateryHeaderCell")
         tableView.register(UINib(nibName: "EateryMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryMenuCell")
         
         // Filter Eateries Header View
@@ -243,8 +243,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             }
 
             if indexPath.row != (expandedCells.count - 1) {
-                cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
-
+                cell.isExpanded = expandedCells[indexPath.row + 1] != 0
             }
             
             return cell
