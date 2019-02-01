@@ -42,11 +42,24 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     
     fileprivate var updateTimer: Timer?
     
-    enum EateryUserStatus: String {
-        case favorites = "Favorites"
-        case open = "Open"
-        case closed = "Closed"
-        case unknown = "Unknown-Status"
+    enum EateryUserStatus {
+        case favorites
+        case open
+        case closed
+        case unknown
+        
+        var description: String {
+            switch self {
+            case .favorites:
+                return "Favorites"
+            case .open:
+                return "Open"
+            case .closed:
+                return "Closed"
+            case .unknown:
+                return "Unknown-Status"
+            }
+        }
     }
 
     enum Animation: String {
@@ -510,29 +523,23 @@ extension EateriesViewController: UICollectionViewDataSource {
 
         let (section, eateries) = data(for: indexPath.section)
 
+        header.title = section.description
         switch section {
         case .favorites:
-            header.title = section.rawValue
             header.titleColor = .eateryBlue
-
         case .open:
             if eateries.isEmpty {
                 header.title = ""
                 header.titleColor = .gray
             } else {
-                header.title = section.rawValue
                 header.titleColor = .eateryBlue
             }
-
         case .closed:
             if eateries.isEmpty {
                 header.title = ""
-            } else {
-                header.title = section.rawValue
             }
 
             header.titleColor = .gray
-
         default:
             break
         }

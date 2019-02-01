@@ -132,17 +132,15 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        hoursLabel.text = eateryStatus.message
+        statusLabel.text = eateryStatus.statusText
         statusLabel.textColor = eateryStatus.statusColor
         switch eateryStatus {
-        case let .open(message):
-            hoursLabel.text = message
-        case let .closing(message):
-            hoursLabel.text = message
-        case let .closed(message), let .opening(message):
+        case .closed, .opening:
             statusLabel.textColor = .darkGray
-            hoursLabel.text = message
+        default:
+            statusLabel.textColor = eateryStatus.statusColor
         }
-        statusLabel.text = eateryStatus.statusString
 
         let locationLabel = UILabel()
         locationLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)

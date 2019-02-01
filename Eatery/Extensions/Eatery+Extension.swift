@@ -19,7 +19,7 @@ enum EateryStatus {
         }
     }
     
-    var statusString: String {
+    var statusText: String {
         switch self {
         case .open:
             return "Open"
@@ -32,7 +32,7 @@ enum EateryStatus {
         }
     }
     
-    var detailString: String {
+    var message: String {
         switch self {
         case .open(let message), .opening(let message), .closing(let message), .closed(let message):
             return message
@@ -121,7 +121,6 @@ extension Eatery {
                 return .closed("")
             }
             
-            //let eventInfo = (activeEvent.occurringOnDate(Date())) ? (30, "Closing", activeEvent.endDate, ) // TODO-ETHAN
             if activeEvent.occurringOnDate(Date()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {

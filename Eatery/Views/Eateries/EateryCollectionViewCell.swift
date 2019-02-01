@@ -286,7 +286,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
             closedOverlay.isHidden = false
         }
-        statusLabel.text = eateryStatus.statusString
+        statusLabel.text = eateryStatus.statusText
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
     }
