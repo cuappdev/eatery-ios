@@ -78,22 +78,21 @@ class EateryARDetailCard: UIView {
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case let .open(status, message), let .closing(status, message):
-            statusLabel.text = status
+        case let .open(message), let .closing(message):
             timeLabel.text = message
             
             statusLabel.textColor = .eateryBlue
             titleLabel.textColor = .black
             timeLabel.textColor = .gray
 
-        case let .closed(status, message):
-            statusLabel.text = status
+        case let .closed(message), let .opening(message):
             timeLabel.text = message
 
             titleLabel.textColor = .darkGray
             statusLabel.textColor = .darkGray
             timeLabel.textColor = .gray
         }
+        statusLabel.text = eateryStatus.statusText
 
     }
 

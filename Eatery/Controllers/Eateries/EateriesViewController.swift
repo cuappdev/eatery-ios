@@ -17,7 +17,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
     var initialLoad = true
-    fileprivate var eateryData: [String: [Eatery]] = [:]
+    fileprivate var eateryData: [EateryUserStatus: [Eatery]] = [:]
     
     fileprivate var searchBar: UISearchBar!
     fileprivate var filterBar: FilterBar!
@@ -41,6 +41,26 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }()
     
     fileprivate var updateTimer: Timer?
+    
+    enum EateryUserStatus {
+        case favorites
+        case open
+        case closed
+        case unknown
+        
+        var description: String {
+            switch self {
+            case .favorites:
+                return "Favorites"
+            case .open:
+                return "Open"
+            case .closed:
+                return "Closed"
+            case .unknown:
+                return "Unknown-Status"
+            }
+        }
+    }
 
     enum Animation: String {
         case backgroundImageView = "backgroundImage"
@@ -382,14 +402,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             }
         }
         
-        eateryData["Favorites"] = desiredEateries.filter { $0.favorite }.sorted { $0.nickname < $1.nickname }
-        eateryData["Open"] = desiredEateries.filter { $0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
-        eateryData["Closed"] = desiredEateries.filter { !$0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
+        eateryData[.favorites] = desiredEateries.filter { $0.favorite }.sorted { $0.nickname < $1.nickname }
+        eateryData[.open] = desiredEateries.filter { $0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
+        eateryData[.closed] = desiredEateries.filter { !$0.isOpenNow() && !$0.favorite }.sorted { $0.nickname < $1.nickname }
         
         if let location = userLocation, filters.contains(.nearest) {
-            eateryData["Favorites"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
-            eateryData["Open"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
-            eateryData["Closed"]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
+            eateryData[.favorites]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
+            eateryData[.open]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
+            eateryData[.closed]?.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
         }
     }
     
@@ -400,30 +420,30 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.reloadData()
     }
 
-    func data(for section: Int) -> (String, [Eatery]) {
+    func data(for section: Int) -> (EateryUserStatus, [Eatery]) {
         var section = section
 
-        if let favorites = eateryData["Favorites"], !favorites.isEmpty {
+        if let favorites = eateryData[.favorites], !favorites.isEmpty {
             if section == 0 {
-                return ("Favorites", favorites)
+                return (.favorites, favorites)
             }
             section -= 1
         }
 
-        if let openEateries = eateryData["Open"], !openEateries.isEmpty {
+        if let openEateries = eateryData[.open], !openEateries.isEmpty {
             if section == 0 {
-                return ("Open", openEateries)
+                return (.open, openEateries)
             }
             section -= 1
         }
 
-        if let closedEateries = eateryData["Closed"], !closedEateries.isEmpty {
+        if let closedEateries = eateryData[.closed], !closedEateries.isEmpty {
             if section == 0 {
-                return ("Closed", closedEateries)
+                return (.closed, closedEateries)
             }
         }
 
-        return ("", [])
+        return (.unknown, [])
     }
     
     func eatery(for indexPath: IndexPath) -> Eatery {
@@ -445,9 +465,9 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
 extension EateriesViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        let showFavorites = (eateryData["Favorites"] ?? []).isEmpty ? 0 : 1
-        let showOpens = (eateryData["Open"] ?? []).isEmpty ? 0 : 1
-        let showClosed = (eateryData["Closed"] ?? []).isEmpty ? 0 : 1
+        let showFavorites = (eateryData[.favorites] ?? []).isEmpty ? 0 : 1
+        let showOpens = (eateryData[.open] ?? []).isEmpty ? 0 : 1
+        let showClosed = (eateryData[.closed] ?? []).isEmpty ? 0 : 1
         return showFavorites + showOpens + showClosed
     }
     
@@ -503,29 +523,23 @@ extension EateriesViewController: UICollectionViewDataSource {
 
         let (section, eateries) = data(for: indexPath.section)
 
+        header.title = section.description
         switch section {
-        case "Favorites":
-            header.title = "Favorites"
+        case .favorites:
             header.titleColor = .eateryBlue
-
-        case "Open":
+        case .open:
             if eateries.isEmpty {
                 header.title = ""
                 header.titleColor = .gray
             } else {
-                header.title = "Open"
                 header.titleColor = .eateryBlue
             }
-
-        case "Closed":
+        case .closed:
             if eateries.isEmpty {
                 header.title = ""
-            } else {
-                header.title = "Closed"
             }
 
             header.titleColor = .gray
-
         default:
             break
         }
