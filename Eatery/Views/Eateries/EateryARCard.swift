@@ -57,8 +57,7 @@ class EateryARCard: UIView {
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case let .open(status, message):
-            statusLabel.text = status
+        case let .open(message):
             timeLabel.text = message
             
             titleLabel.textColor = .black
@@ -66,8 +65,7 @@ class EateryARCard: UIView {
             timeLabel.textColor = .gray
             distanceLabel.textColor = .darkGray
 
-        case let .closing(status, message):
-            statusLabel.text = status
+        case let .closing(message):
             timeLabel.text = message
 
             titleLabel.textColor = .black
@@ -75,8 +73,7 @@ class EateryARCard: UIView {
             timeLabel.textColor = .gray
             distanceLabel.textColor = .darkGray
 
-        case let .closed(status, message):
-            statusLabel.text = status
+        case let .closed(message), let .opening(message):
             timeLabel.text = message
 
             titleLabel.textColor = .darkGray
@@ -84,6 +81,7 @@ class EateryARCard: UIView {
             timeLabel.textColor = .gray
             distanceLabel.textColor = .gray
         }
+        statusLabel.text = eateryStatus.statusString
 
         update(userLocation: userLocation)
     }

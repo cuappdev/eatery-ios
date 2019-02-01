@@ -3,9 +3,41 @@ import SwiftyJSON
 import UIKit
 
 enum EateryStatus {
-    case open(String, String)
-    case closing(String, String)
-    case closed(String, String)
+    case open(String)
+    case opening(String)
+    case closing(String)
+    case closed(String)
+    
+    var statusColor: UIColor {
+        switch self {
+        case .open:
+            return .eateryGreen
+        case .opening, .closing:
+            return .orange
+        case .closed:
+            return .eateryRed
+        }
+    }
+    
+    var statusString: String {
+        switch self {
+        case .open:
+            return "Open"
+        case .opening:
+            return "Opening"
+        case .closing:
+            return "Closing"
+        case .closed:
+            return "Closed"
+        }
+    }
+    
+    var detailString: String {
+        switch self {
+        case .open(let message), .opening(let message), .closing(let message), .closed(let message):
+            return message
+        }
+    }
 }
 
 private let ShortDateFormatter: DateFormatter = {
@@ -86,28 +118,29 @@ extension Eatery {
     func generateDescriptionOfCurrentState() -> EateryStatus {
         if isOpenToday() {
             guard let activeEvent = activeEventForDate(Date()) else {
-                return .closed("Closed", "")
+                return .closed("")
             }
-
+            
+            //let eventInfo = (activeEvent.occurringOnDate(Date())) ? (30, "Closing", activeEvent.endDate, ) // TODO-ETHAN
             if activeEvent.occurringOnDate(Date()) {
                 let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
                 if minutesTillClose < 30 {
-                    return .closing("Closing", "in \(minutesTillClose+1)m")
+                    return .closing("in \(minutesTillClose+1)m")
                 } else {
                     let timeString = ShortDateFormatter.string(from: activeEvent.endDate)
-                    return .open("Open", "until \(timeString)")
+                    return .open("until \(timeString)")
                 }
             } else {
                 let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
                 if minutesTillOpen < 60 {
-                    return .closed("Opening", "in \(minutesTillOpen+1)m")
+                    return .opening("in \(minutesTillOpen+1)m")
                 } else {
                     let timeString = ShortDateFormatter.string(from: activeEvent.startDate)
-                    return .closed("Closed", "until \(timeString)")
+                    return .closed("until \(timeString)")
                 }
             }
         } else {
-            return .closed("Closed", "today")
+            return .closed("today")
         }
     }
 

@@ -71,7 +71,7 @@ class MenuHeaderView: UIView {
         case .open, .closing:
             titleLabel.textColor = .white
 
-        case .closed:
+        case .closed, .opening:
             titleLabel.textColor = UIColor.darkGray
 
             let closedView = UIView()

@@ -259,8 +259,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
         switch eateryStatus {
-        case let .open(status, message):
-            statusLabel.text = status
+        case let .open(message):
             timeLabel.text = message
 
             titleLabel.textColor = .black
@@ -270,28 +269,27 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
             closedOverlay.isHidden = true
 
-        case let .closing(status, message):
-            statusLabel.text = status
+        case let .closing(message):
             timeLabel.text = message
 
             titleLabel.textColor = .black
-            statusLabel.textColor = .eateryRed
+            statusLabel.textColor = .orange
             timeLabel.textColor = .lightGray
             distanceLabel.textColor = .lightGray
 
             closedOverlay.isHidden = true
 
-        case let .closed(status, message):
-            statusLabel.text = status
+        case let .closed(message), let .opening(message):
             timeLabel.text = message
 
             titleLabel.textColor = .darkGray
             statusLabel.textColor = .darkGray
-            timeLabel.textColor = .lightGray
-            distanceLabel.textColor = .lightGray
 
             closedOverlay.isHidden = false
         }
+        statusLabel.text = eateryStatus.statusString
+        timeLabel.textColor = .lightGray
+        distanceLabel.textColor = .lightGray
     }
 
     override func layoutSubviews() {

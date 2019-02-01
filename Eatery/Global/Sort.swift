@@ -82,13 +82,13 @@ struct Sort {
                         return false
                     case .closing:
                         return a.nickname < b.nickname
-                    case .closed:
+                    case .closed, .opening:
                         return true
                     }
 
-                case .closed:
+                case .closed, .opening:
                     switch bState {
-                    case .closed:
+                    case .closed, .opening:
                         return a.nickname < b.nickname
                     default:
                         return false
