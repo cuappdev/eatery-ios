@@ -11,7 +11,7 @@ import SnapKit
 import Crashlytics
 import Kingfisher
 
-protocol MenuButtonsDelegate: class {
+protocol MenuButtonsDelegate: AnyObject {
 
     func favoriteButtonPressed(on menuHeaderView: MenuHeaderView)
 

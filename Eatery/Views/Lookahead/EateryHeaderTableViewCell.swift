@@ -1,6 +1,6 @@
 import UIKit
 
-protocol EateryHeaderCellDelegate: class {
+protocol EateryHeaderCellDelegate: AnyObject {
 
     func didTapInfoButton(_ cell: EateryHeaderTableViewCell)
     func didTapToggleMenuButton(_ cell: EateryHeaderTableViewCell)

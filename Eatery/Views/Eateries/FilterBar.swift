@@ -20,7 +20,7 @@ fileprivate let filters: [Filter] = [
     .brb
 ]
 
-protocol FilterBarDelegate: class {
+protocol FilterBarDelegate: AnyObject {
     var filters: Set<Filter> { get set }
     func updateFilters(filters: Set<Filter>)
 }

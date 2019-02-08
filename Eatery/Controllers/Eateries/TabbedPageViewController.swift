@@ -1,10 +1,10 @@
 import UIKit
 
-protocol TabbedPageViewControllerDelegate: class {
+protocol TabbedPageViewControllerDelegate: AnyObject {
     func selectedTabDidChange(_ newIndex: Int)
 }
 
-protocol TabbedPageViewControllerScrollDelegate: class {
+protocol TabbedPageViewControllerScrollDelegate: AnyObject {
     func scrollViewDidChange()
 }
 

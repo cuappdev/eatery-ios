@@ -1,6 +1,6 @@
 import UIKit
 
-protocol FilterEateriesViewDelegate: class {
+protocol FilterEateriesViewDelegate: AnyObject {
 
     func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton)
     func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: UIButton)

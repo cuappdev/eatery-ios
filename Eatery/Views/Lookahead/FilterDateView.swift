@@ -1,6 +1,6 @@
 import UIKit
 
-protocol FilterDateViewDelegate: class {
+protocol FilterDateViewDelegate: AnyObject {
 
     func filterDateViewWasSelected(_ filterDateView: FilterDateView, sender button: UIButton)
 

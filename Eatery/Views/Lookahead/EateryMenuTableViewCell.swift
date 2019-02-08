@@ -1,6 +1,6 @@
 import UIKit
 
-protocol EateryMenuCellDelegate: class {
+protocol EateryMenuCellDelegate: AnyObject {
     func didTapShareMenuButton(_ cell: EateryMenuTableViewCell?)
 }
 
