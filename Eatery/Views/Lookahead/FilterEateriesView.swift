@@ -1,66 +1,160 @@
 import UIKit
 
-@objc protocol FilterEateriesViewDelegate {
+protocol FilterEateriesViewDelegate: AnyObject {
 
-    @objc optional func didFilterMeal(_ sender: UIButton)
-    @objc optional func didFilterDate(_ sender: UIButton)
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton)
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: UIButton)
 
 }
 
 class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
-    static func loadFromNib() -> FilterEateriesView {
-        return UINib(nibName: "FilterEateriesView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! FilterEateriesView
-    }
+    let filterDatesContainer = UIView()
+    let dateViews: [FilterDateView] =
+        (1...7).map { _ in FilterDateView() }
 
-    @IBOutlet private weak var filterContainerView: UIView!
-
-    @IBOutlet weak var firstDateView: FilterDateView!
-    @IBOutlet weak var secondDateView: FilterDateView!
-    @IBOutlet weak var thirdDateView: FilterDateView!
-    @IBOutlet weak var fourthDateView: FilterDateView!
-    @IBOutlet weak var fifthDateView: FilterDateView!
-    @IBOutlet weak var sixthDateView: FilterDateView!
-    @IBOutlet weak var seventhDateView: FilterDateView!
-
-    @IBOutlet private weak var filterMealsView: UIView!
-    @IBOutlet weak var filterBreakfastButton: UIButton!
-    @IBOutlet weak var filterLunchButton: UIButton!
-    @IBOutlet weak var filterDinnerButton: UIButton!
+    let filterMealsContainer = UIView()
+    let filterBreakfastButton = UIButton()
+    let filterLunchButton = UIButton()
+    let filterDinnerButton = UIButton()
 
     var filterDateHeight: CGFloat {
-        return filterContainerView.frame.height - filterMealsView.frame.height
+        // the filterDatesContainer does not necessarily touch the filterMealsContainer,
+        // so we must compute the height of the date view plus the whitespace between
+        // the two containers
+        return bounds.height - filterMealsContainer.frame.height
     }
-    
-    fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
+
     weak var delegate: FilterEateriesViewDelegate?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
+
+    convenience init() {
+        self.init(frame: .zero)
     }
-    
-    @IBAction func didFilterMeal(_ sender: UIButton) {
-        delegate?.didFilterMeal!(sender)
-    }
-    
-    override func didMoveToWindow() {
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(filterEateriesCellPressed))
-        tapGestureRecognizer?.cancelsTouchesInView = false
-        addGestureRecognizer(tapGestureRecognizer!)
-    }
-    
-    @objc func filterEateriesCellPressed(_ sender: UITapGestureRecognizer) {
-        let tapPoint = sender.location(in: self)
-        let hitView = hitTest(tapPoint, with: nil)
-        
-        let filterDateButtons = [firstDateView.dateButton, secondDateView.dateButton, thirdDateView.dateButton, fourthDateView.dateButton, fifthDateView.dateButton, sixthDateView.dateButton, seventhDateView.dateButton]
-        
-        for button in filterDateButtons {
-            if hitView == button {
-                delegate?.didFilterDate!(button!)
-                break
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        for view in dateViews {
+            view.delegate = self
+        }
+
+        addSubview(filterDatesContainer)
+        filterDatesContainer.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview().inset(10)
+            make.height.equalTo(44)
+        }
+
+        filterDatesContainer.addSubview(dateViews[0])
+        dateViews[0].snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview()
+        }
+        for (prev, view) in zip(dateViews[..<(dateViews.count - 1)], dateViews[1...]) {
+            filterDatesContainer.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.leading.equalTo(prev.snp.trailing)
+                make.width.equalTo(dateViews[0])
             }
         }
+        dateViews.last?.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+        }
+
+        let dateAndMealSeparator = UIView()
+        dateAndMealSeparator.backgroundColor = .wash
+        addSubview(dateAndMealSeparator)
+        dateAndMealSeparator.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
+        }
+
+        let filterMealsContainer = UIView()
+        addSubview(filterMealsContainer)
+        filterMealsContainer.snp.makeConstraints { make in
+            make.top.equalTo(dateAndMealSeparator.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(44)
+        }
+
+        filterBreakfastButton.tag = 0
+        filterBreakfastButton.setTitle("Breakfast", for: .normal)
+        filterBreakfastButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        filterBreakfastButton.setTitleColor(UIColor.black.withAlphaComponent(0.5), for: .normal)
+        filterBreakfastButton.setTitleColor(UIColor.eateryBlue, for: .selected)
+        filterBreakfastButton.addTarget(self, action: #selector(didFilterMeal(_:)), for: .touchUpInside)
+        filterMealsContainer.addSubview(filterBreakfastButton)
+        filterBreakfastButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
+        }
+
+        let leftSeparator = UIView()
+        leftSeparator.backgroundColor = .wash
+        filterMealsContainer.addSubview(leftSeparator)
+        leftSeparator.snp.makeConstraints { make in
+            make.leading.equalTo(filterBreakfastButton.snp.trailing).inset(8)
+            make.width.equalTo(1)
+        }
+
+        filterLunchButton.tag = 1
+        filterLunchButton.setTitle("Lunch", for: .normal)
+        filterLunchButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        filterLunchButton.setTitleColor(UIColor.black.withAlphaComponent(0.5), for: .normal)
+        filterLunchButton.setTitleColor(UIColor.eateryBlue, for: .selected)
+        filterLunchButton.addTarget(self, action: #selector(didFilterMeal(_:)), for: .touchUpInside)
+        filterMealsContainer.addSubview(filterLunchButton)
+        filterLunchButton.snp.makeConstraints { make in
+            make.leading.equalTo(filterBreakfastButton.snp.trailing).inset(8)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(filterBreakfastButton.snp.width)
+        }
+
+        let rightSeparator = UIView()
+        rightSeparator.backgroundColor = .wash
+        filterMealsContainer.addSubview(rightSeparator)
+        rightSeparator.snp.makeConstraints { make in
+            make.leading.equalTo(filterLunchButton.snp.trailing).inset(8)
+            make.width.equalTo(1)
+        }
+
+        filterDinnerButton.tag = 2
+        filterDinnerButton.setTitle("Dinner", for: .normal)
+        filterDinnerButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        filterDinnerButton.setTitleColor(UIColor.black.withAlphaComponent(0.5), for: .normal)
+        filterDinnerButton.setTitleColor(UIColor.eateryBlue, for: .selected)
+        filterDinnerButton.addTarget(self, action: #selector(didFilterMeal(_:)), for: .touchUpInside)
+        filterMealsContainer.addSubview(filterDinnerButton)
+        filterDinnerButton.snp.makeConstraints { make in
+            make.leading.equalTo(rightSeparator.snp.trailing).inset(8)
+            make.trailing.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(filterLunchButton.snp.width)
+        }
+
+        let bottomSeparator = UIView()
+        bottomSeparator.backgroundColor = .wash
+        addSubview(bottomSeparator)
+        bottomSeparator.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.top.equalTo(filterMealsContainer.snp.bottom)
+            make.height.equalTo(1)
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) will not be implemented")
+    }
+
+    @objc private func didFilterMeal(_ sender: UIButton) {
+        delegate?.filterEateriesView(self, didFilterMeal: sender)
+    }
+
+}
+
+extension FilterEateriesView: FilterDateViewDelegate {
+
+    func filterDateViewWasSelected(_ filterDateView: FilterDateView, sender button: UIButton) {
+        delegate?.filterEateriesView(self, didFilterDate: button)
     }
 
 }

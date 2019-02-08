@@ -1,21 +1,21 @@
 PODS:
-  - Alamofire (4.7.3)
-  - Apollo (0.9.4):
-    - Apollo/Core (= 0.9.4)
-  - Apollo/Core (0.9.4)
+  - Alamofire (4.8.1)
+  - Apollo (0.9.5):
+    - Apollo/Core (= 0.9.5)
+  - Apollo/Core (0.9.5)
   - ARCL (1.0.4)
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - DiningStack (1.0):
     - Alamofire
     - SwiftyJSON
-  - Fabric (1.8.2)
+  - Fabric (1.9.0)
   - FLEX (2.4.0)
   - Hero (1.4.0)
   - Kingfisher (4.10.1)
-  - NVActivityIndicatorView (4.4.0):
-    - NVActivityIndicatorView/Presenter (= 4.4.0)
-  - NVActivityIndicatorView/Presenter (4.4.0)
+  - NVActivityIndicatorView (4.6.1):
+    - NVActivityIndicatorView/Presenter (= 4.6.1)
+  - NVActivityIndicatorView/Presenter (4.6.1)
   - SnapKit (4.2.0)
   - SwiftyJSON (4.1.0)
 
@@ -52,20 +52,20 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DiningStack:
-    :commit: a41bc559bae22ff4246590cd0d52fa889664043d
+    :commit: a730c7acc1dbee567a41606b101fb569c8ade01d
     :git: https://github.com/cuappdev/DiningStack.git
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  Apollo: 450856adbdebcdf28c3c671f81732ac3f9944065
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Apollo: 19caf3246d292bbb69ecad1bd098661f78222aba
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
-  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
+  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TabBarDelegate: class {
+protocol TabBarDelegate: AnyObject {
     func selectedTabDidChange(_ newIndex: Int)
 }
 

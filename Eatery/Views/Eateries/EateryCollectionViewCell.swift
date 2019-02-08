@@ -7,12 +7,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     private static let shadowRadius: CGFloat = 12
 
-    let paymentContainer: UIView = UIView()
-    let paymentImageViews: [UIImageView] = [
-        UIImageView(),
-        UIImageView(),
-        UIImageView()
-    ]
+    let paymentView = PaymentMethodsView()
 
     let backgroundImageView = UIImageView()
     let closedOverlay = UIView()
@@ -65,7 +60,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .white
 
         setUpBackgroundViews()
-        setUpPaymentViews()
+        setUpPaymentView()
         setUpInfoViews()
         setUpSeparator()
         setUpMenuView()
@@ -88,30 +83,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private func setUpPaymentViews() {
-        contentView.addSubview(paymentContainer)
-        paymentContainer.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(10)
-        }
-
-        paymentContainer.addSubview(paymentImageViews[2])
-        paymentImageViews[2].snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
-            make.width.height.equalTo(20)
-        }
-
-        paymentContainer.addSubview(paymentImageViews[1])
-        paymentImageViews[1].snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalTo(paymentImageViews[2].snp.trailing).offset(5)
-            make.width.height.equalTo(20)
-        }
-
-        paymentContainer.addSubview(paymentImageViews[0])
-        paymentImageViews[0].snp.makeConstraints { make in
-            make.top.trailing.bottom.equalToSuperview()
-            make.leading.equalTo(paymentImageViews[1].snp.trailing).offset(5)
-            make.width.height.equalTo(20)
+    private func setUpPaymentView() {
+        contentView.addSubview(paymentView)
+        paymentView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(10)
         }
     }
 
@@ -128,6 +104,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             make.top.equalToSuperview()
         })
 
+        titleLabel.isOpaque = false
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority(751), for: .vertical)
         titleLabel.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
@@ -230,28 +207,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         // payment
 
-        var images: [UIImage] = []
-
-        if eatery.paymentMethods.contains(.Cash) || eatery.paymentMethods.contains(.CreditCard), let icon = UIImage(named: "cashIcon") {
-            images.append(icon)
-        }
-
-        if eatery.paymentMethods.contains(.BRB), let icon = UIImage(named: "brbIcon") {
-            images.append(icon)
-        }
-
-        if eatery.paymentMethods.contains(.Swipes), let icon = UIImage(named: "swipeIcon") {
-            images.append(icon)
-        }
-
-        for (image, imageView) in zip(images, paymentImageViews) {
-            imageView.image = image
-            imageView.isHidden = false
-        }
-
-        for imageView in paymentImageViews[images.count...] {
-            imageView.isHidden = true
-        }
+        paymentView.paymentMethods = eatery.paymentMethods
 
         // text of status label, time label
         // text color of all info labels

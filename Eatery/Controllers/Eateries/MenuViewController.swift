@@ -11,7 +11,7 @@ private let TitleDateFormatter: DateFormatter = {
 }()
 
 class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
-    
+
     var eatery: Eatery
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
@@ -58,7 +58,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             dateTitle = dateString
         }
         
-        navigationTitleView = NavigationTitleView.loadFromNib()
+        navigationTitleView = NavigationTitleView()
         navigationTitleView.eateryNameLabel.text = eatery.nickname
         navigationTitleView.dateLabel.text = dateTitle
         navigationItem.titleView = navigationTitleView
@@ -96,10 +96,9 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         }
         
         // Header Views
-        menuHeaderView = (Bundle.main.loadNibNamed("MenuHeaderView", owner: self, options: nil)?.first as! MenuHeaderView)
+        menuHeaderView = MenuHeaderView()
         menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.delegate = self
-        
         contentView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
             make.height.equalTo(view).dividedBy(3)
@@ -286,7 +285,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         menuHeaderView.backgroundImageView.hero.id = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
         menuHeaderView.titleLabel.hero.id = EateriesViewController.Animation.title.id(eatery: eatery)
         distanceLabel.hero.id = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
-        menuHeaderView.paymentContainer.hero.id = EateriesViewController.Animation.paymentContainer.id(eatery: eatery)
+        menuHeaderView.paymentView.hero.id = EateriesViewController.Animation.paymentView.id(eatery: eatery)
         contentContainer.hero.id = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
 
         let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
@@ -326,20 +325,20 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         let dateLabelMinWidth: CGFloat = 80.0
         
         switch -titleLabelFrame.origin.y {
-        case -CGFloat.greatestFiniteMagnitude..<0:
-            navigationTitleView.nameLabelHeightConstraint.constant = 0
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width > dateLabelMinWidth ? navigationTitleView.frame.width : dateLabelMinWidth
+        case ..<0:
+            navigationTitleView.nameLabelHeight = 0
+            navigationTitleView.dateLabelWidth = nil
             navigationTitleView.eateryNameLabel.alpha = 0.0
         case 0..<titleLabelFrame.height:
             let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height
 
             navigationTitleView.eateryNameLabel.alpha = percentage
-            navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight * percentage
-            navigationTitleView.dateLabelWidthConstraint.constant = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage
-        case titleLabelFrame.height..<CGFloat.greatestFiniteMagnitude:
+            navigationTitleView.nameLabelHeight = titleLabelMaxHeight * percentage
+            navigationTitleView.dateLabelWidth = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage
+        case titleLabelFrame.height...:
             navigationTitleView.eateryNameLabel.alpha = 1.0
-            navigationTitleView.nameLabelHeightConstraint.constant = titleLabelMaxHeight
-            navigationTitleView.dateLabelWidthConstraint.constant = dateLabelMinWidth
+            navigationTitleView.nameLabelHeight = titleLabelMaxHeight
+            navigationTitleView.dateLabelWidth = dateLabelMinWidth
         default:
             break
         }
@@ -354,9 +353,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     // MARK: -
     // MARK: MenuButtonsDelegate
     
-    func favoriteButtonPressed() {
-        delegate?.favoriteButtonPressed?()
-        
+    func favoriteButtonPressed(on view: MenuHeaderView) {
+        delegate?.favoriteButtonPressed(on: view)
     }
 
     func openAppleMapsDirections() {

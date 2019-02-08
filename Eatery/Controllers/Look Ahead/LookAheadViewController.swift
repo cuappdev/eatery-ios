@@ -19,7 +19,7 @@ private let DayDateFormatter: DateFormatter = {
 /*
  See upcoming menus for various eateries
  */
-class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, FilterDateViewDelegate, EateryMenuCellDelegate {
+class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, EateryMenuCellDelegate {
     
     fileprivate var tableView: UITableView!
     fileprivate let sectionHeaderHeight: CGFloat = 56.0
@@ -72,18 +72,18 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         // Table View Nibs
-        tableView.register(UINib(nibName: "TitleSectionTableViewCell", bundle: nil), forCellReuseIdentifier: "TitleSectionCell")
-        tableView.register(UINib(nibName: "EateryHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryHeaderCell")
-        tableView.register(UINib(nibName: "EateryMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "EateryMenuCell")
+        tableView.register(TitleSectionTableViewCell.self, forCellReuseIdentifier: "TitleSectionCell")
+        tableView.register(EateryHeaderTableViewCell.self, forCellReuseIdentifier: "EateryHeaderCell")
+        tableView.register(EateryMenuTableViewCell.self, forCellReuseIdentifier: "EateryMenuCell")
         
         // Filter Eateries Header View
         let dayStrings = getDayStrings(dates)
         let dateStrings = getDateStrings(dates)
 
-        let filterEateriesView = FilterEateriesView.loadFromNib()
+        let filterEateriesView = FilterEateriesView()
         filterEateriesView.backgroundColor = .white
         filterMealButtons = [filterEateriesView.filterBreakfastButton, filterEateriesView.filterLunchButton, filterEateriesView.filterDinnerButton]
-        filterDateViews = [filterEateriesView.firstDateView, filterEateriesView.secondDateView, filterEateriesView.thirdDateView, filterEateriesView.fourthDateView, filterEateriesView.fifthDateView, filterEateriesView.sixthDateView, filterEateriesView.seventhDateView]
+        filterDateViews = filterEateriesView.dateViews
         filterEateriesView.delegate = self
         self.filterEateriesView = filterEateriesView
 
@@ -92,7 +92,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.contentInset.top = filterSectionHeight
         
         for (index,dateView) in filterDateViews.enumerated() {
-            dateView.delegate = self
+//            dateView.delegate = self
             dateView.dateButton.tag = index
             dateView.dayLabel.text = dayStrings[index]
             dateView.dateLabel.text = dateStrings[index]
@@ -243,8 +243,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             }
 
             if indexPath.row != (expandedCells.count - 1) {
-                cell.isExpanded = (expandedCells[indexPath.row + 1] == 0) ? false : true
-
+                cell.isExpanded = expandedCells[indexPath.row + 1] != 0
             }
             
             return cell
@@ -252,8 +251,6 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
             
             cell.delegate = self
-            cell.shareMenuButton.isHidden = true // temporary before hotfix
-            cell.shareIcon.isHidden = true // temporary before hotfix
             cell.menuImageView.image = getEateryMenu(eatery)
             
             return cell
@@ -361,21 +358,21 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     // MARK: - Filter Eateries Cell Delegate Methods
-    
-    func didFilterDate(_ sender: UIButton) {
-        selectedDateIndex = sender.tag
-        filterEateries(filterDateViews, buttons: filterMealButtons)
-        
-        Answers.logLookedAheadDate()
-    }
-    
-    func didFilterMeal(_ sender: UIButton) {
+
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton) {
         selectedMealIndex = sender.tag
         filterEateries(filterDateViews, buttons: filterMealButtons)
-        
+
         if selectedMealIndex != currentMealIndex() {
             Answers.logLookedAheadForMeal()
         }
+    }
+
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: UIButton) {
+        selectedDateIndex = sender.tag
+        filterEateries(filterDateViews, buttons: filterMealButtons)
+
+        Answers.logLookedAheadDate()
     }
     
     func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
@@ -399,7 +396,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
         northExpandedCells = Array(repeating: 0, count: northEateries.count)
         centralExpandedCells = Array(repeating: 0, count: centralEateries.count)
         
-        let selectedMeal = filterMealButtons[selectedMealIndex].titleLabel!.text!
+        let selectedMeal = filterMealButtons[selectedMealIndex].titleLabel?.text ?? ""
         filteredWestEateries = Sort.sortEateriesByOpenOrAlph(filteredWestEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
         filteredNorthEateries = Sort.sortEateriesByOpenOrAlph(filteredNorthEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
         filteredCentralEateries =  Sort.sortEateriesByOpenOrAlph(filteredCentralEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
@@ -419,12 +416,7 @@ class LookAheadViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Scroll View Delegate
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y + filterSectionHeight
-        if yOffset > filterEateriesView.filterDateHeight - view.layoutMargins.top {
-            filterEateriesView.frame.origin.y = -filterEateriesView.filterDateHeight + view.layoutMargins.top
-        } else {
-            filterEateriesView.frame.origin.y = -yOffset
-        }
+        filterEateriesView.frame.origin.y = max(0, -(scrollView.contentOffset.y + filterSectionHeight))
     }
 
 }

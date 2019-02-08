@@ -63,10 +63,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }
 
     enum Animation: String {
+
         case backgroundImageView = "backgroundImage"
         case title = "title"
         case starIcon = "starIcon"
-        case paymentContainer = "paymentContainer"
+        case paymentView = "paymentView"
         case distanceLabel = "distanceLabel"
         case infoContainer = "infoContainer"
 
@@ -415,7 +416,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     
     // MARK: MenuButtonsDelegate
     
-    func favoriteButtonPressed() {
+    func favoriteButtonPressed(on view: MenuHeaderView) {
         processEateries()
         collectionView.reloadData()
     }
@@ -487,7 +488,7 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
         cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
         cell.distanceLabel.hero.id = Animation.distanceLabel.id(eatery: eatery)
-        cell.paymentContainer.hero.id = Animation.paymentContainer.id(eatery: eatery)
+        cell.paymentView.hero.id = Animation.paymentView.id(eatery: eatery)
         cell.infoContainer.hero.id = Animation.infoContainer.id(eatery: eatery)
 
         if searchBar.text != "", let names = searchedMenuItemNames[eatery] {
