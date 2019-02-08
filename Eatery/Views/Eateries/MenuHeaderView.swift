@@ -45,6 +45,7 @@ class MenuHeaderView: UIView {
             make.edges.equalToSuperview()
         }
 
+        titleLabel.isOpaque = false
         titleLabel.font = .boldSystemFont(ofSize: 34)
         titleLabel.textColor = .white
         titleLabel.adjustsFontSizeToFitWidth = true

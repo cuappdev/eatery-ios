@@ -104,6 +104,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             make.top.equalToSuperview()
         })
 
+        titleLabel.isOpaque = false
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority(751), for: .vertical)
         titleLabel.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)

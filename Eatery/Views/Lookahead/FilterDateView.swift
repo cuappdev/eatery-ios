@@ -1,44 +1,55 @@
 import UIKit
 
-@objc protocol FilterDateViewDelegate {
-    @objc optional func didFilterDate(_ sender: UIButton)
+protocol FilterDateViewDelegate: class {
+
+    func filterDateViewWasSelected(_ filterDateView: FilterDateView, sender button: UIButton)
+
 }
 
 class FilterDateView: UIView {
-    @IBOutlet weak var dayLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var dateButton: UIButton!
-    
-    var filterDateView: UIView!
-    var delegate: FilterDateViewDelegate?
+
+    var dayLabel = UILabel()
+    var dateLabel = UILabel()
+    var dateButton = UIButton()
+
+    weak var delegate: FilterDateViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        xibSetup()
+
+        dateButton.setTitle(nil, for: .normal)
+        addSubview(dateButton)
+        dateButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        dayLabel.textAlignment = .center
+        dayLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        dayLabel.textColor = UIColor.colorFromCode(0xACADAE)
+        addSubview(dayLabel)
+        dayLabel.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(15)
+        }
+
+        dateLabel.textAlignment = .center
+        dateLabel.font = .systemFont(ofSize: 28, weight: .semibold)
+        dateLabel.textColor = UIColor.colorFromCode(0xACADAE)
+        addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(dayLabel.snp.bottom)
+        }
+
+        dateButton.addTarget(self, action: #selector(dateButtonPressed(_:)), for: .touchUpInside)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        xibSetup()
+        fatalError("init(coder:) will not be implemented")
     }
-    
-    func xibSetup() {
-        filterDateView = loadViewFromNib()
-        filterDateView.frame = bounds
-        filterDateView.autoresizingMask = .flexibleWidth
-        
-        addSubview(filterDateView)
+
+    @objc private func dateButtonPressed(_ sender: UIButton) {
+        delegate?.filterDateViewWasSelected(self, sender: sender)
     }
-    
-    func loadViewFromNib() -> UIView {
-        let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: "FilterDateView", bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-        
-        return view
-    }
-    
-    @IBAction func didFilterDate(_ sender: UIButton) {
-        delegate?.didFilterDate!(sender)
-    }
+
 }
