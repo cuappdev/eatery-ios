@@ -15,21 +15,15 @@ class MealTableViewController: UITableViewController {
         }
     }
 
-    fileprivate let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        return dateFormatter
-    }()
-
     private func recomputeMenu() {
         if let eventMenu = event?.menu, !eventMenu.isEmpty {
             menu = eventMenu
-        } else if let diningItems = eatery.diningItems, let eatery = eatery {
+        } else if let diningItems = eatery.diningItems {
             if eatery.eateryType != .Dining {
                 let currentDate = dateFormatter.string(from: Date())
                 menu = [currentDate: diningItems[currentDate] ?? []]
             } else {
-                menu = diningItems
+                menu = nil
             }
         } else if let hardcodedItems = eatery.hardcodedMenu {
             menu = hardcodedItems
@@ -38,6 +32,12 @@ class MealTableViewController: UITableViewController {
             menu = nil
         }
     }
+
+    fileprivate let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter
+    }()
 
     private var menu: [String: [MenuItem]]? {
         didSet {
