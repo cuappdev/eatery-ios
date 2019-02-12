@@ -313,22 +313,22 @@ public struct Eatery: Hashable {
      and the food items available for the category as a string list. Used to easily iterate
      over all items in the hardcoded menu. Ex: [("Entrees",["Chicken", "Steak", "Fish"]), ("Fruit", ["Apples"])]
      */
-    private func getMenuIterable(_ menu: Menu?) -> [(String,[String])] {
+    private func getMenuIterable(_ menu: Menu?) -> [(MenuCategory,[String])] {
         guard let menu = menu else { return [] }
         return menu.map({ (name, items) -> (String, [String]) in
             (name, items.map({ ($0.name) }))
         })
     }
 
-    public func getHardcodeMenuIterable() -> [(String, [String])] {
+    public func getHardcodeMenuIterable() -> [(MenuCategory, [String])] {
         return getMenuIterable(hardcodedMenu)
     }
 
-    public func getDiningItemMenuIterable() -> [(String, [String])] {
+    public func getDiningItemMenuIterable() -> [(MenuCategory, [String])] {
         return getMenuIterable(diningItems)
     }
 
-    public func getAlternateMenuIterable() -> [(String, [String])] {
+    public func getAlternateMenuIterable() -> [(MenuCategory, [String])] {
         if diningItems != nil {
             return getDiningItemMenuIterable()
         } else if hardcodedMenu != nil {
