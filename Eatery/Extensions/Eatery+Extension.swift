@@ -176,7 +176,7 @@ extension Eatery {
             resultString = ""
             for (start, end) in mergedTimes {
                 if resultString != "" { resultString += ", " }
-                resultString += dateConverter(date1: start, date2: end)
+                resultString += TimeFactory.dateConverter(date1: start, date2: end)
             }
         }
 
