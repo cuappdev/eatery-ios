@@ -2,35 +2,15 @@ import UIKit
 
 protocol FilterDateViewDelegate: AnyObject {
 
-    func filterDateViewWasSelected(_ filterDateView: FilterDateView, sender button: UIButton)
+    func filterDateViewWasSelected(_ filterDateView: FilterDateView)
 
 }
 
 class FilterDateView: UIView {
 
-    private let dayLabel = UILabel()
-    var dayText: String? {
-        get { return dayLabel.text }
-        set { dayLabel.text = newValue }
-    }
-
-    private let dateLabel = UILabel()
-    var dateText: String? {
-        get { return dateLabel.text }
-        set { dateLabel.text = newValue }
-    }
-
+    let dayLabel = UILabel()
+    let dateLabel = UILabel()
     private let dateButton = UIButton()
-
-    var textColor: UIColor! {
-        get {
-            return dayLabel.textColor
-        }
-        set {
-            dayLabel.textColor = newValue
-            dateLabel.textColor = newValue
-        }
-    }
 
     weak var delegate: FilterDateViewDelegate?
     
@@ -67,7 +47,7 @@ class FilterDateView: UIView {
     }
 
     @objc private func dateButtonPressed(_ sender: UIButton) {
-        delegate?.filterDateViewWasSelected(self, sender: sender)
+        delegate?.filterDateViewWasSelected(self)
     }
 
 }

@@ -14,43 +14,13 @@ class LookAheadTableViewCell: UITableViewCell {
     private static let upArrow = UIImage(named: "upArrow.png")
     private static let downArrow = UIImage(named: "downArrow.png")
 
-    private let eateryNameLabel = UILabel()
-    var eateryName: String? {
-        get { return eateryNameLabel.text }
-        set { eateryNameLabel.text = newValue }
-    }
+    let eateryNameLabel = UILabel()
+    let eateryStatusLabel = UILabel()
+    let eateryHoursLabel = UILabel()
 
-    private let eateryStatusLabel = UILabel()
-    var eateryStatus: String? {
-        get { return eateryStatusLabel.text }
-        set { eateryStatusLabel.text = newValue }
-    }
-    var eateryStatusColor: UIColor? {
-        get { return eateryStatusLabel.textColor }
-        set { eateryStatusLabel.textColor = newValue }
-    }
+    let moreInfoIndicatorImageView = UIImageView()
 
-    private let eateryHoursLabel = UILabel()
-    var eateryHours: String? {
-        get { return eateryHoursLabel.text }
-        set { eateryHoursLabel.text = newValue }
-    }
-    var eateryHoursColor: UIColor? {
-        get { return eateryHoursLabel.textColor }
-        set { eateryHoursLabel.textColor = newValue }
-    }
-
-    private let moreInfoIndicatorImageView = UIImageView()
-    var moreInfoIndicatorIsHidden: Bool {
-        get { return moreInfoIndicatorImageView.isHidden }
-        set { moreInfoIndicatorImageView.isHidden = newValue }
-    }
-
-    private let menuView = LookAheadMenuView()
-    var menu: [(Eatery.MenuCategory, [String])] {
-        get { return menuView.menu }
-        set { menuView.menu = newValue }
-    }
+    let menuView = LookAheadMenuView()
 
     private var collapseMenuViewConstraints = [Constraint]()
     private var expandMenuViewConstraints = [Constraint]()
@@ -136,12 +106,12 @@ class LookAheadTableViewCell: UITableViewCell {
             make.leading.trailing.equalToSuperview()
         }
 
-        collapseMenuViewConstraints = menuViewLayoutGuide.snp.prepareConstraints { make in
+        collapseMenuViewConstraints.append(contentsOf: menuViewLayoutGuide.snp.prepareConstraints { make in
             make.height.equalTo(0).priority(.high)
-        }
-        expandMenuViewConstraints = menuViewLayoutGuide.snp.prepareConstraints { make in
+        })
+        expandMenuViewConstraints.append(contentsOf: menuViewLayoutGuide.snp.prepareConstraints { make in
             make.height.equalTo(menuView.snp.height).priority(.high)
-        }
+        })
 
         collapseMenuView()
     }

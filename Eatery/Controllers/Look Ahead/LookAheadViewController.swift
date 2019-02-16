@@ -85,9 +85,13 @@ class LookAheadViewController: UIViewController {
         didSet {
             for (index, dateView) in filterView.dateViews.enumerated() {
                 if index == selectedDay.rawValue {
-                    dateView.textColor = .black
+                    let color = UIColor.black
+                    dateView.dayLabel.textColor = color
+                    dateView.dateLabel.textColor = color
                 } else {
-                    dateView.textColor = UIColor.black.withAlphaComponent(0.3)
+                    let color = UIColor.black.withAlphaComponent(0.3)
+                    dateView.dayLabel.textColor = color
+                    dateView.dateLabel.textColor = color
                 }
             }
 
@@ -241,23 +245,23 @@ extension LookAheadViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.eatery.rawValue) as! LookAheadTableViewCell
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
-        cell.eateryName = eatery.nameShort
+        cell.eateryNameLabel.text = eatery.nameShort
 
         let events = eatery.eventsOnDate(selectedDate)
         if let event = findEvent(from: events, matching: selectedMeal) {
-            cell.eateryStatus = "Open"
-            cell.eateryStatusColor = .eateryGreen
-            cell.eateryHours = TimeFactory.displayTextForEvent(event)
-            cell.eateryHoursColor = .secondary
-            cell.moreInfoIndicatorIsHidden = false
+            cell.eateryStatusLabel.text = "Open"
+            cell.eateryStatusLabel.textColor = .eateryGreen
+            cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
+            cell.eateryHoursLabel.textColor = .secondary
+            cell.moreInfoIndicatorImageView.isHidden = false
 
-            cell.menu = event.getMenuIterable()
+            cell.menuView.menu = event.getMenuIterable()
             cell.isExpanded = expandedCellPaths.contains(indexPath)
         } else {
-            cell.eateryStatus = "Closed"
-            cell.eateryStatusColor = .secondary
-            cell.eateryHours = nil
-            cell.moreInfoIndicatorIsHidden = true
+            cell.eateryStatusLabel.text = "Closed"
+            cell.eateryStatusLabel.textColor = .secondary
+            cell.eateryHoursLabel.text = nil
+            cell.moreInfoIndicatorImageView.isHidden = true
 
             cell.isExpanded = false
         }
@@ -267,7 +271,7 @@ extension LookAheadViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderIdentifier.header.rawValue) as! LookAheadHeaderView
-        header.title = eateriesByArea[section].area.rawValue
+        header.titleLabel.text = eateriesByArea[section].area.rawValue
         return header
     }
 
