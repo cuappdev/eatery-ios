@@ -2,19 +2,9 @@ import UIKit
 
 class EateriesCollectionViewHeaderView: UICollectionReusableView {
 
-    private let titleLabel: UILabel
-    var title: String? {
-        get { return titleLabel.text }
-        set { titleLabel.text = newValue }
-    }
-    var titleColor: UIColor? {
-        get { return titleLabel.textColor }
-        set { titleLabel.textColor = newValue }
-    }
+    let titleLabel = UILabel()
 
     override init(frame: CGRect) {
-        titleLabel = UILabel()
-
         super.init(frame: frame)
 
         titleLabel.font = .boldSystemFont(ofSize: 24)

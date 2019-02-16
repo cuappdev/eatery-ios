@@ -11,7 +11,7 @@ import UIKit
 
 class NavigationTitleView: UIView {
     
-    var eateryNameLabel = UILabel()
+    let eateryNameLabel = UILabel()
 
     private var nameLabelHeightConstraint: NSLayoutConstraint
     var nameLabelHeight: CGFloat? {
@@ -32,7 +32,7 @@ class NavigationTitleView: UIView {
         }
     }
 
-    var dateLabel = UILabel()
+    let dateLabel = UILabel()
 
     private var dateLabelWidthConstraint: NSLayoutConstraint
     var dateLabelWidth: CGFloat? {

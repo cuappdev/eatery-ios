@@ -10,11 +10,7 @@ import UIKit
 
 class LookAheadHeaderView: UITableViewHeaderFooterView {
 
-    private let titleLabel = UILabel()
-    var title: String? {
-        get { return titleLabel.text }
-        set { titleLabel.text = newValue }
-    }
+    let titleLabel = UILabel()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

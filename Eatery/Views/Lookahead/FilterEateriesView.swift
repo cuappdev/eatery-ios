@@ -177,8 +177,8 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         }
 
         for (view, (day, date)) in zip(dateViews, zip(dayStrings, dateStrings)) {
-            view.dayText = day
-            view.dateText = date
+            view.dayLabel.text = day
+            view.dateLabel.text = date
         }
     }
 
@@ -190,7 +190,7 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
 extension FilterEateriesView: FilterDateViewDelegate {
 
-    func filterDateViewWasSelected(_ filterDateView: FilterDateView, sender button: UIButton) {
+    func filterDateViewWasSelected(_ filterDateView: FilterDateView) {
         delegate?.filterEateriesView(self, didFilterDate: filterDateView)
     }
 

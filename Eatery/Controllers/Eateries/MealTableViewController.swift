@@ -129,8 +129,8 @@ class MealTableViewController: UITableViewController {
     private func emptyMenuCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
 
-        cell.titleText = "No menu available"
-        cell.contentText = NSAttributedString(string: "")
+        cell.titleLabel.text = "No menu available"
+        cell.contentLabel.attributedText = NSAttributedString(string: "")
 
         return cell
     }
@@ -162,10 +162,10 @@ class MealTableViewController: UITableViewController {
         // set title
         let possibleTitle = stationTitles[indexPath.row]
         if possibleTitle == "General" {
-            cell.titleText = ""
+            cell.titleLabel.text = ""
             cell.titleCollapsed = true
         } else {
-            cell.titleText = possibleTitle
+            cell.titleLabel.text = possibleTitle
             cell.titleCollapsed = false
         }
 
@@ -194,7 +194,7 @@ class MealTableViewController: UITableViewController {
             content.append(NSMutableAttributedString(string: "\n").join(names))
         }
 
-        cell.contentText = content
+        cell.contentLabel.attributedText = content
 
         return cell
     }
