@@ -11,11 +11,7 @@ import UIKit
 
 class MealStationTableViewCell: UITableViewCell {
 
-    private var titleLabel = UILabel()
-    var titleText: String? {
-        get { return titleLabel.text }
-        set { titleLabel.text = newValue }
-    }
+    let titleLabel = UILabel()
 
     private var collapseTitleLabelConstraint: Constraint?
     var titleCollapsed: Bool {
@@ -23,11 +19,7 @@ class MealStationTableViewCell: UITableViewCell {
         set { collapseTitleLabelConstraint?.isActive = newValue }
     }
 
-    private var contentLabel = UILabel()
-    var contentText: NSAttributedString? {
-        get { return contentLabel.attributedText }
-        set { contentLabel.attributedText = newValue }
-    }
+    let contentLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

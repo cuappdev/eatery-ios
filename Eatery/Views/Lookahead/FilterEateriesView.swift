@@ -3,27 +3,29 @@ import UIKit
 protocol FilterEateriesViewDelegate: AnyObject {
 
     func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton)
-    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: UIButton)
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: FilterDateView)
 
 }
 
 class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
-    let filterDatesContainer = UIView()
-    let dateViews: [FilterDateView] =
-        (1...7).map { _ in FilterDateView() }
+    private static let dayFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE"
+        return dateFormatter
+    }()
 
-    let filterMealsContainer = UIView()
-    let filterBreakfastButton = UIButton()
-    let filterLunchButton = UIButton()
-    let filterDinnerButton = UIButton()
+    private let filterDatesContainer = UIView()
+    let dateViews: [FilterDateView] = (1...7).map { _ in FilterDateView() }
 
-    var filterDateHeight: CGFloat {
-        // the filterDatesContainer does not necessarily touch the filterMealsContainer,
-        // so we must compute the height of the date view plus the whitespace between
-        // the two containers
-        return bounds.height - filterMealsContainer.frame.height
-    }
+    private let dateAndMealSeparator = UIView()
+
+    private let filterMealsContainer = UIView()
+    private let filterBreakfastButton = UIButton()
+    private let filterLunchButton = UIButton()
+    private let filterDinnerButton = UIButton()
+
+    let mealButtons: [UIButton]
 
     weak var delegate: FilterEateriesViewDelegate?
 
@@ -32,12 +34,32 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
     }
 
     override init(frame: CGRect) {
+        mealButtons = [filterBreakfastButton, filterLunchButton, filterDinnerButton]
+
         super.init(frame: frame)
+
+        backgroundColor = .white
 
         for view in dateViews {
             view.delegate = self
         }
 
+        setUpDateViews()
+
+        dateAndMealSeparator.backgroundColor = .wash
+        addSubview(dateAndMealSeparator)
+        dateAndMealSeparator.snp.makeConstraints { make in
+            make.top.equalTo(filterDatesContainer.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
+        }
+
+        setUpMealViews()
+
+        updateDisplayedDates()
+    }
+
+    private func setUpDateViews() {
         addSubview(filterDatesContainer)
         filterDatesContainer.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(10)
@@ -59,16 +81,9 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         dateViews.last?.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
         }
+    }
 
-        let dateAndMealSeparator = UIView()
-        dateAndMealSeparator.backgroundColor = .wash
-        addSubview(dateAndMealSeparator)
-        dateAndMealSeparator.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(1)
-        }
-
-        let filterMealsContainer = UIView()
+    private func setUpMealViews() {
         addSubview(filterMealsContainer)
         filterMealsContainer.snp.makeConstraints { make in
             make.top.equalTo(dateAndMealSeparator.snp.bottom)
@@ -92,7 +107,8 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         leftSeparator.backgroundColor = .wash
         filterMealsContainer.addSubview(leftSeparator)
         leftSeparator.snp.makeConstraints { make in
-            make.leading.equalTo(filterBreakfastButton.snp.trailing).inset(8)
+            make.top.bottom.equalToSuperview().inset(8)
+            make.leading.equalTo(filterBreakfastButton.snp.trailing).offset(8)
             make.width.equalTo(1)
         }
 
@@ -104,7 +120,7 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         filterLunchButton.addTarget(self, action: #selector(didFilterMeal(_:)), for: .touchUpInside)
         filterMealsContainer.addSubview(filterLunchButton)
         filterLunchButton.snp.makeConstraints { make in
-            make.leading.equalTo(filterBreakfastButton.snp.trailing).inset(8)
+            make.leading.equalTo(filterBreakfastButton.snp.trailing).offset(8)
             make.centerY.equalToSuperview()
             make.width.equalTo(filterBreakfastButton.snp.width)
         }
@@ -113,7 +129,8 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         rightSeparator.backgroundColor = .wash
         filterMealsContainer.addSubview(rightSeparator)
         rightSeparator.snp.makeConstraints { make in
-            make.leading.equalTo(filterLunchButton.snp.trailing).inset(8)
+            make.top.bottom.equalToSuperview().inset(8)
+            make.leading.equalTo(filterLunchButton.snp.trailing).offset(8)
             make.width.equalTo(1)
         }
 
@@ -125,7 +142,7 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         filterDinnerButton.addTarget(self, action: #selector(didFilterMeal(_:)), for: .touchUpInside)
         filterMealsContainer.addSubview(filterDinnerButton)
         filterDinnerButton.snp.makeConstraints { make in
-            make.leading.equalTo(rightSeparator.snp.trailing).inset(8)
+            make.leading.equalTo(rightSeparator.snp.trailing).offset(8)
             make.trailing.equalToSuperview().inset(8)
             make.centerY.equalToSuperview()
             make.width.equalTo(filterLunchButton.snp.width)
@@ -145,6 +162,26 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
         fatalError("init(coder:) will not be implemented")
     }
 
+    /// Set the day and date of the dateViews based on the current date
+    func updateDisplayedDates() {
+        let dates: [Date] = (0..<7).map {
+            Calendar.current.date(byAdding: .day, value: $0, to: Date()) ?? Date()
+        }
+
+        let dayStrings = ["Today"] + dates[1..<dates.count].map {
+            FilterEateriesView.dayFormatter.string(from: $0)
+        }
+
+        let dateStrings = dates.map {
+            "\((Calendar.current as NSCalendar).component(.day, from: $0))"
+        }
+
+        for (view, (day, date)) in zip(dateViews, zip(dayStrings, dateStrings)) {
+            view.dayLabel.text = day
+            view.dateLabel.text = date
+        }
+    }
+
     @objc private func didFilterMeal(_ sender: UIButton) {
         delegate?.filterEateriesView(self, didFilterMeal: sender)
     }
@@ -153,8 +190,8 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
 extension FilterEateriesView: FilterDateViewDelegate {
 
-    func filterDateViewWasSelected(_ filterDateView: FilterDateView, sender button: UIButton) {
-        delegate?.filterEateriesView(self, didFilterDate: button)
+    func filterDateViewWasSelected(_ filterDateView: FilterDateView) {
+        delegate?.filterEateriesView(self, didFilterDate: filterDateView)
     }
 
 }

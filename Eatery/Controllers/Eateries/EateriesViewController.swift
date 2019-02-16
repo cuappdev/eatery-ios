@@ -524,23 +524,23 @@ extension EateriesViewController: UICollectionViewDataSource {
 
         let (section, eateries) = data(for: indexPath.section)
 
-        header.title = section.description
+        header.titleLabel.text = section.description
         switch section {
         case .favorites:
-            header.titleColor = .eateryBlue
+            header.titleLabel.textColor = .eateryBlue
         case .open:
             if eateries.isEmpty {
-                header.title = ""
-                header.titleColor = .gray
+                header.titleLabel.text = ""
+                header.titleLabel.textColor = .gray
             } else {
-                header.titleColor = .eateryBlue
+                header.titleLabel.textColor = .eateryBlue
             }
         case .closed:
             if eateries.isEmpty {
-                header.title = ""
+                header.titleLabel.text = ""
             }
 
-            header.titleColor = .gray
+            header.titleLabel.textColor = .gray
         default:
             break
         }

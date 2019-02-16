@@ -1,5 +1,5 @@
 //
-//  TitleSectionTableViewCell.swift
+//  LookAheadHeaderView.swift
 //  Eatery
 //
 //  Created by Annie Cheng on 11/28/15.
@@ -8,14 +8,12 @@
 
 import UIKit
 
-class TitleSectionTableViewCell: UITableViewCell {
+class LookAheadHeaderView: UITableViewHeaderFooterView {
 
-    var titleLabel = UILabel()
+    let titleLabel = UILabel()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        selectionStyle = .none
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
 
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
         contentView.addSubview(titleLabel)

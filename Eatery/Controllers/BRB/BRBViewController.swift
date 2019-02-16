@@ -17,7 +17,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     var time = 0.0 // time of request
     lazy var historyHeader: EateriesCollectionViewHeaderView = {
         let header = EateriesCollectionViewHeaderView()
-        header.title = "History"
+        header.titleLabel.text = "History"
         return header
     }()
     

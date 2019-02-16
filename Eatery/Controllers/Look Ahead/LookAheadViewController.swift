@@ -2,421 +2,333 @@
 //  LookAheadViewController.swift
 //  Eatery
 //
-//  Created by Annie Cheng on 11/28/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
+//  Created by William Ma on 2/11/19.
+//  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import Crashlytics
 import UIKit
 import SwiftyJSON
-import Crashlytics
+import NVActivityIndicatorView
 
-private let DayDateFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "EEE"
-    return dateFormatter
-}()
+class LookAheadViewController: UIViewController {
 
-/*
- See upcoming menus for various eateries
- */
-class LookAheadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate, FilterEateriesViewDelegate, EateryHeaderCellDelegate, EateryMenuCellDelegate {
-    
-    fileprivate var tableView: UITableView!
-    fileprivate let sectionHeaderHeight: CGFloat = 56.0
-    fileprivate let eateryHeaderHeight: CGFloat = 55.0
-    fileprivate let filterSectionHeight: CGFloat = 108.0
-    fileprivate var filterEateriesView: FilterEateriesView!
-    fileprivate var filterMealButtons: [UIButton]!
-    fileprivate var filterDateViews: [FilterDateView]!
-    fileprivate var selectedMealIndex: Int = 0
-    fileprivate var selectedDateIndex: Int = 0
-    fileprivate let sections: [Area] = [.West, .North, .Central]
-    fileprivate var westEateries: [Eatery] = []
-    fileprivate var northEateries: [Eatery] = []
-    fileprivate var centralEateries: [Eatery] = []
-    fileprivate var filteredWestEateries: [Eatery] = []
-    fileprivate var filteredNorthEateries: [Eatery] = []
-    fileprivate var filteredCentralEateries: [Eatery] = []
-    fileprivate var westExpandedCells: [Int] = []
-    fileprivate var northExpandedCells: [Int] = []
-    fileprivate var centralExpandedCells: [Int] = []
-    fileprivate var events: [String: Event] = [:]
-    fileprivate let dates: [Date] = (0..<7).map {
-        Calendar.current.date(byAdding: .day, value: $0, to: Date())!
+    typealias EateryArea = (area: Area, eateries: [Eatery])
+
+    private enum CellIdentifier: String {
+
+        case eatery
+
     }
-    
+
+    private enum HeaderIdentifier: String {
+
+        case header
+
+    }
+
+    private enum MealChoice: Int, CustomStringConvertible {
+
+        case breakfast
+        case lunch
+        case dinner
+
+        var description: String {
+            switch self {
+            case .breakfast: return "Breakfast"
+            case .lunch: return "Lunch"
+            case .dinner: return "Dinner"
+            }
+        }
+
+    }
+
+    private enum DayChoice: Int, CaseIterable {
+
+        case today
+        case dayOne
+        case dayTwo
+        case dayThree
+        case dayFour
+        case dayFive
+        case daySix
+
+    }
+
+    // views
+
+    private var activityIndicator: NVActivityIndicatorView?
+
+    private let filterView = FilterEateriesView(frame: .zero)
+    private let tableView = UITableView(frame: .zero, style: .grouped)
+
+    // data
+
+    private var eateriesByArea = [EateryArea]()
+
+    // state
+
+    private var expandedCellPaths: Set<IndexPath> = []
+
+    private var selectedMeal: MealChoice = .breakfast {
+        didSet {
+            for (index, button) in filterView.mealButtons.enumerated() {
+                button.isSelected = index == selectedMeal.rawValue
+            }
+
+            expandedCellPaths.removeAll()
+            tableView.reloadData()
+        }
+    }
+
+    private var selectedDay: DayChoice = .today {
+        didSet {
+            for (index, dateView) in filterView.dateViews.enumerated() {
+                if index == selectedDay.rawValue {
+                    let color = UIColor.black
+                    dateView.dayLabel.textColor = color
+                    dateView.dateLabel.textColor = color
+                } else {
+                    let color = UIColor.black.withAlphaComponent(0.3)
+                    dateView.dayLabel.textColor = color
+                    dateView.dateLabel.textColor = color
+                }
+            }
+
+            expandedCellPaths.removeAll()
+            tableView.reloadData()
+        }
+    }
+    private let dates: [Date] = DayChoice.allCases.map {
+        Calendar.current.date(byAdding: .day, value: $0.rawValue, to: Date()) ?? Date()
+    }
+    private var selectedDate: Date {
+        return dates[selectedDay.rawValue]
+    }
+
+    /// Try and find the event that most closely matches the specified meal
+    private func findEvent(from events: [Eatery.EventName: Event], matching meal: MealChoice) -> Event? {
+        switch meal {
+        case .breakfast: return events["Breakfast"] ?? events["Brunch"]
+        case .lunch: return events["Lunch"] ?? events["Brunch"] ?? events["Lite Lunch"]
+        case .dinner: return events["Dinner"]
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // View appearance
+
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
-
         navigationItem.title = "Upcoming Menus"
+        view.backgroundColor = .wash
 
-        view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
-        
-        // Table View
-        tableView = UITableView(frame: .zero, style: .grouped)
+        setUpTableView()
+
+        setUpFilterView()
+
+        tableView.contentInset.top = filterView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        computeFilterViewPosition()
+
+
+
+        Answers.logWeeklyMenuOpened()
+
+        computeCurrentSelectedMeal()
+        selectedDay = .today
+
+        queryEateries()
+        startLoadingView()
+    }
+
+    private func setUpTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorColor = .separator
         tableView.showsVerticalScrollIndicator = false
-        tableView.estimatedRowHeight = eateryHeaderHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.backgroundColor = .wash
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        // Table View Nibs
-        tableView.register(TitleSectionTableViewCell.self, forCellReuseIdentifier: "TitleSectionCell")
-        tableView.register(EateryHeaderTableViewCell.self, forCellReuseIdentifier: "EateryHeaderCell")
-        tableView.register(EateryMenuTableViewCell.self, forCellReuseIdentifier: "EateryMenuCell")
-        
-        // Filter Eateries Header View
-        let dayStrings = getDayStrings(dates)
-        let dateStrings = getDateStrings(dates)
 
-        let filterEateriesView = FilterEateriesView()
-        filterEateriesView.backgroundColor = .white
-        filterMealButtons = [filterEateriesView.filterBreakfastButton, filterEateriesView.filterLunchButton, filterEateriesView.filterDinnerButton]
-        filterDateViews = filterEateriesView.dateViews
-        filterEateriesView.delegate = self
-        self.filterEateriesView = filterEateriesView
-
-        view.addSubview(filterEateriesView)
-        filterEateriesView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: filterSectionHeight)
-        tableView.contentInset.top = filterSectionHeight
-        
-        for (index,dateView) in filterDateViews.enumerated() {
-//            dateView.delegate = self
-            dateView.dateButton.tag = index
-            dateView.dayLabel.text = dayStrings[index]
-            dateView.dateLabel.text = dateStrings[index]
-        }
-        
-        selectedMealIndex = currentMealIndex()
-        filterEateries(filterDateViews, buttons: filterMealButtons)
-        
-        // Fetch Eateries Data
-        NetworkManager.shared.getEateries { (eateries, error) in
-            DispatchQueue.main.async(execute: { [unowned self] () -> Void in
-                guard let eateries = eateries else { return }
-                for eatery in eateries {
-                    if eatery.eateryType == .Dining {
-                        switch(eatery.area) {
-                        case .West: self.westEateries.append(eatery)
-                        case .North: self.northEateries.append(eatery)
-                        case .Central: self.centralEateries.append(eatery)
-                        default: break
-                        }
-                    }
-                }
-                self.filterEateries(self.filterDateViews, buttons: self.filterMealButtons)
-                self.tableView.reloadData()
-            })
-        }
-        
-        Answers.logWeeklyMenuOpened()
+        tableView.register(LookAheadTableViewCell.self, forCellReuseIdentifier: CellIdentifier.eatery.rawValue)
+        tableView.register(LookAheadHeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderIdentifier.header.rawValue)
     }
 
-    // Scrolls users to the top of screen when the look ahead tab bar item is pressed
+    private func setUpFilterView() {
+        filterView.delegate = self
+
+        view.addSubview(filterView)
+        filterView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view)
+        }
+    }
+
+    private func startLoadingView() {
+        let indicator = NVActivityIndicatorView(frame: .zero, type: .circleStrokeSpin, color: .transparentEateryBlue)
+        view.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(44)
+        }
+
+        indicator.startAnimating()
+        activityIndicator = indicator
+    }
+
+    private func queryEateries() {
+        NetworkManager.shared.getEateries { (eateries, error) in
+            DispatchQueue.main.async(execute: { [weak self] in
+                guard let `self` = self else { return }
+
+                guard let eateries = eateries else { return }
+                var eateriesByArea: [Area: [Eatery]] = [:]
+                let displayedAreas: [Area] = [.West, .North, .Central]
+
+                for eatery in eateries where eatery.eateryType == .Dining && displayedAreas.contains(eatery.area) {
+                    eateriesByArea[eatery.area, default: []].append(eatery)
+                }
+
+                self.eateriesByArea = [
+                    (area: .West, eateries: eateriesByArea[.West] ?? []),
+                    (area: .North, eateries: eateriesByArea[.North] ?? []),
+                    (area: .Central, eateries: eateriesByArea[.Central] ?? [])
+                ]
+
+                self.tableView.reloadData()
+
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.activityIndicator?.alpha = 0.0
+                })
+            })
+        }
+    }
+
     func scrollToTop() {
-        if tableView != nil && tableView.contentOffset.y > 0 {
+        if tableView.contentOffset.y > 0 {
             let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
             tableView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
-    
-    // Eatery Menu Methods
-    
-    func hasMenuIterable(_ eatery: Eatery) -> Bool {
-        let alternateMenuIterable = eatery.getAlternateMenuIterable()
-        events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
-        
-        if !selectedMeal.isEmpty {
-            let menuIterable = alternateMenuIterable.count > 0 ? alternateMenuIterable : events[selectedMeal]!.getMenuIterable()
-            return !menuIterable.isEmpty
-        }
-        
-        return false
-    }
-    
-    func getEateryMenu(_ eatery: Eatery) -> UIImage {
-        var eateryMenuImage = UIImage()
-        events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
-        
-        if !selectedMeal.isEmpty {
-            let menuIterable = events[selectedMeal]?.getMenuIterable() ?? []
-            eateryMenuImage = MenuImages.createCondensedMenuImage(view.frame.width, menuIterable: menuIterable)
-        }
-        
-        return eateryMenuImage
-    }
-    
-    // Date Methods
-    
-    func getDayStrings(_ dates: [Date]) -> [String] {
-        var dayStrings = ["Today"]
-        dayStrings.append(contentsOf: dates[1..<dates.count].map { DayDateFormatter.string(from: $0) })
-        return dayStrings
-    }
-    
-    func getDateStrings(_ dates: [Date]) -> [String] {
-        return dates.map { "\((Calendar.current as NSCalendar).component(.day, from: $0))" }
-    }
-    
-    // MARK: - Table View Methods
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch(sections[section]) {
-        case .West: return filteredWestEateries.count
-        case .North: return filteredNorthEateries.count
-        case .Central: return filteredCentralEateries.count
-        default: return 1
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sectionHeaderHeight
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TitleSectionCell") as! TitleSectionTableViewCell
-        
-        switch(sections[section]) {
-        case .West: cell.titleLabel.text = "West Campus"
-        case .North: cell.titleLabel.text = "North Campus"
-        case .Central: cell.titleLabel.text = "Central Campus"
-        default: break
-        }
-        
-        return cell.contentView
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var eatery: Eatery!
-        var expandedCells: [Int]!
-        
-        switch(sections[indexPath.section]) {
-        case .West:
-            eatery = filteredWestEateries[indexPath.row]
-            expandedCells = westExpandedCells
-        case .North:
-            eatery = filteredNorthEateries[indexPath.row]
-            expandedCells = northExpandedCells
-        case .Central:
-            eatery = filteredCentralEateries[indexPath.row]
-            expandedCells = centralExpandedCells
-        default: break
-        }
-        
-        if expandedCells[indexPath.row] == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EateryHeaderCell") as! EateryHeaderTableViewCell
-            cell.delegate = self
-            cell.isExpanded = false
-            cell.eateryNameLabel.text = (eatery.nameShort == "Jansen's Dining") ? "Bethe House Dining" : eatery.nameShort
-            cell.eateryHoursLabel.text = "Closed"
-            
-            events = eatery.eventsOnDate(dates[selectedDateIndex])
-            let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
 
-            if let event = events[selectedMeal] {
-                let textInfo = "Open \(displayTextForEvent(event))"
-                let openLabelText = NSMutableAttributedString(string: textInfo, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: .semibold)])
-                openLabelText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.eateryGreen, range: NSRange(location:0,length:4))
-                openLabelText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.secondary, range: NSRange(location: 4, length: (textInfo.count - 4)))
-                cell.eateryHoursLabel.attributedText = openLabelText
-                cell.moreInfoIndicatorImageView.isHidden = false
-            } else {
-                cell.eateryHoursLabel.textColor = .secondary
-                cell.moreInfoIndicatorImageView.isHidden = true
-            }
-
-            if indexPath.row != (expandedCells.count - 1) {
-                cell.isExpanded = expandedCells[indexPath.row + 1] != 0
-            }
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EateryMenuCell") as! EateryMenuTableViewCell
-            
-            cell.delegate = self
-            cell.menuImageView.image = getEateryMenu(eatery)
-            
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        tableView.layoutMargins = UIEdgeInsets.zero
-        tableView.separatorInset = UIEdgeInsets.zero
-        cell.layoutMargins = UIEdgeInsets.zero
-    }
-    
-    // MARK: - Eatery Header Cell Delegate Methods
-    
-    func didTapInfoButton(_ cell: EateryHeaderTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-        var eatery: Eatery!
-        
-        switch(sections[indexPath.section]) {
-        case .West: eatery = filteredWestEateries[indexPath.row]
-        case .North: eatery = filteredNorthEateries[indexPath.row]
-        case .Central: eatery = filteredCentralEateries[indexPath.row]
-        default: break
-        }
-        
-        let date = dates[selectedDateIndex] 
-        var delegate: MenuButtonsDelegate? = nil
-        if let navigationController = self.navigationController {
-            let delegateIndex = navigationController.viewControllers.count - 1
-            delegate = navigationController.viewControllers[delegateIndex] as? MenuButtonsDelegate
-        }
-        events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
-        let menuVC = MenuViewController(eatery: eatery, delegate: delegate, date: date, meal: selectedMeal)
-        self.navigationController?.pushViewController(menuVC, animated: true)
-    }
-    
-    func didTapToggleMenuButton(_ cell: EateryHeaderTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-        let row = indexPath.row
-        
-        let menuRow = row + 1
-        if (cell.eateryHoursLabel.text != "Closed") {
-            
-            func closeOrExpand(_ eateries: inout [Eatery], _ cells: inout [Int]) {
-                if cell.isExpanded {
-                    eateries.remove(at: menuRow)
-                    cells.remove(at: menuRow)
-                } else {
-                    let eatery = eateries[row]
-                    eateries.insert(eatery, at: menuRow)
-                    cells.insert(1, at: menuRow)
-                    
-                    Answers.logMenuOpenedFromWeeklyMenus(eateryId: eatery.slug)
-                }
-            }
-
-            tableView.beginUpdates()
-            
-            switch(sections[indexPath.section]) {
-            case .West:
-                closeOrExpand(&filteredWestEateries, &westExpandedCells)
-            case .North:
-                closeOrExpand(&filteredNorthEateries, &northExpandedCells)
-            case .Central:
-                closeOrExpand(&filteredCentralEateries, &centralExpandedCells)
-            default: break
-            }
-            
-            let menuIndex = IndexPath(row: menuRow, section: indexPath.section)
-            if cell.isExpanded {
-                tableView.deleteRows(at: [menuIndex], with: .fade)
-            } else {
-                tableView.insertRows(at: [menuIndex], with: .fade)
-            }
-
-            tableView.endUpdates()
-            
-            tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-            cell.isExpanded.toggle()
-
-            cell.moreInfoIndicatorImageView.isHidden = false
-        } else {
-            cell.moreInfoIndicatorImageView.isHidden = true
-        }
-    }
-    
-    // MARK: - Filter Menu Cell Delegate Methods
-    
-    func didTapShareMenuButton(_ cell: EateryMenuTableViewCell?) {
-        let indexPath = tableView.indexPath(for: cell!)
-        var eatery: Eatery!
-        
-        switch(sections[indexPath!.section]) {
-        case .West: eatery = filteredWestEateries[indexPath!.row]
-        case .North: eatery = filteredNorthEateries[indexPath!.row]
-        case .Central: eatery = filteredCentralEateries[indexPath!.row]
-        default: break
-        }
-        
-        let selectedDate = dates[selectedDateIndex]
-        events = eatery.eventsOnDate(dates[selectedDateIndex])
-        let selectedMeal = Sort.getSelectedMeal(eatery: eatery, date: dates[selectedDateIndex], meal: filterMealButtons[selectedMealIndex].titleLabel!.text!)
-        MenuImages.shareMenu(eatery, vc: self, events: events, date: selectedDate, selectedMenu: selectedMeal)
-    }
-    
-    // MARK: - Filter Eateries Cell Delegate Methods
-
-    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton) {
-        selectedMealIndex = sender.tag
-        filterEateries(filterDateViews, buttons: filterMealButtons)
-
-        if selectedMealIndex != currentMealIndex() {
-            Answers.logLookedAheadForMeal()
-        }
+    private func computeFilterViewPosition() {
+        filterView.frame.origin.y = max(0, -(tableView.contentOffset.y + filterView.frame.height))
     }
 
-    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: UIButton) {
-        selectedDateIndex = sender.tag
-        filterEateries(filterDateViews, buttons: filterMealButtons)
-
-        Answers.logLookedAheadDate()
-    }
-    
-    func filterEateries(_ dateViews: [FilterDateView], buttons: [UIButton]) {
-        // Update selected date
-        for dateView in dateViews {
-            let alpha: CGFloat = dateView.dateButton.tag == selectedDateIndex ? 1 : 0.3
-            dateView.dayLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
-            dateView.dateLabel.textColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha)
-        }
-        
-        // Update selected meal
-        for button in buttons {
-            button.isSelected = button.tag == selectedMealIndex
-        }
-
-        // Filter eateries
-        filteredWestEateries = westEateries
-        filteredNorthEateries = northEateries
-        filteredCentralEateries = centralEateries
-        westExpandedCells = Array(repeating: 0, count: westEateries.count)
-        northExpandedCells = Array(repeating: 0, count: northEateries.count)
-        centralExpandedCells = Array(repeating: 0, count: centralEateries.count)
-        
-        let selectedMeal = filterMealButtons[selectedMealIndex].titleLabel?.text ?? ""
-        filteredWestEateries = Sort.sortEateriesByOpenOrAlph(filteredWestEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
-        filteredNorthEateries = Sort.sortEateriesByOpenOrAlph(filteredNorthEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
-        filteredCentralEateries =  Sort.sortEateriesByOpenOrAlph(filteredCentralEateries, date: dates[selectedDateIndex], selectedMeal: selectedMeal, sortingType: .lookAhead)
-        
-        tableView.reloadData()
-    }
-
-    func currentMealIndex() -> Int {
+    /// Compute the selectedMeal based on the current hour
+    private func computeCurrentSelectedMeal() {
         let currentHour = Calendar.current.component(.hour, from: Date())
         switch currentHour {
-        case 0...9: return 0
-        case 10...15: return 1
-        default: return 2
+        case 0...9: selectedMeal = .breakfast
+        case 10...15: selectedMeal = .lunch
+        case 15...23: selectedMeal = .dinner
+        default: selectedMeal = .breakfast
         }
     }
 
-    // MARK: - Scroll View Delegate
+}
+
+extension LookAheadViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return eateriesByArea.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return eateriesByArea[section].eateries.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.eatery.rawValue) as! LookAheadTableViewCell
+
+        let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
+        cell.eateryNameLabel.text = eatery.nameShort
+
+        let events = eatery.eventsOnDate(selectedDate)
+        if let event = findEvent(from: events, matching: selectedMeal) {
+            cell.eateryStatusLabel.text = "Open"
+            cell.eateryStatusLabel.textColor = .eateryGreen
+            cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
+            cell.eateryHoursLabel.textColor = .secondary
+            cell.moreInfoIndicatorImageView.isHidden = false
+
+            cell.menuView.menu = event.getMenuIterable()
+            cell.isExpanded = expandedCellPaths.contains(indexPath)
+        } else {
+            cell.eateryStatusLabel.text = "Closed"
+            cell.eateryStatusLabel.textColor = .secondary
+            cell.eateryHoursLabel.text = nil
+            cell.moreInfoIndicatorImageView.isHidden = true
+
+            cell.isExpanded = false
+        }
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderIdentifier.header.rawValue) as! LookAheadHeaderView
+        header.titleLabel.text = eateriesByArea[section].area.rawValue
+        return header
+    }
+
+}
+
+extension LookAheadViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        guard let cell = tableView.cellForRow(at: indexPath) as? LookAheadTableViewCell else {
+            return
+        }
+
+        let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
+        guard let _ = findEvent(from: eatery.eventsOnDate(selectedDate), matching: selectedMeal) else {
+            return
+        }
+
+        if expandedCellPaths.contains(indexPath) {
+            expandedCellPaths.remove(indexPath)
+            cell.isExpanded = false
+        } else {
+            expandedCellPaths.insert(indexPath)
+            cell.isExpanded = true
+        }
+
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
+
+}
+
+extension LookAheadViewController: FilterEateriesViewDelegate {
+
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: FilterDateView) {
+        guard let index = filterEateriesView.dateViews.firstIndex(of: sender), let day = DayChoice(rawValue: index) else {
+            return
+        }
+
+        selectedDay = day
+    }
+
+    func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton) {
+        guard let index = filterEateriesView.mealButtons.firstIndex(of: sender), let meal = MealChoice(rawValue: index) else {
+            return
+        }
+
+        selectedMeal = meal
+    }
+
+}
+
+extension LookAheadViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        filterEateriesView.frame.origin.y = max(0, -(scrollView.contentOffset.y + filterSectionHeight))
+        computeFilterViewPosition()
     }
 
 }

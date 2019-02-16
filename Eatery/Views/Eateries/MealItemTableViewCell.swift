@@ -10,11 +10,9 @@ import UIKit
 
 class MealItemTableViewCell: UITableViewCell {
 
-    var nameLabel: UILabel
+    let nameLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        nameLabel = UILabel(frame: .zero)
-
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
