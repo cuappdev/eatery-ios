@@ -33,8 +33,8 @@ class LookAheadMenuView: UIView {
         textView.isScrollEnabled = false
         addSubview(textView)
         textView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(8)
-            make.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(4)
+            make.leading.trailing.equalToSuperview().inset(4)
         }
     }
 

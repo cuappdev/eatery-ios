@@ -15,7 +15,7 @@ struct NetworkError: Error {
 }
 
 struct NetworkManager {
-    internal let apollo = ApolloClient(url: URL(string: "http://eatery-backend.cornellappdev.com")!)
+    internal let apollo = ApolloClient(url: URL(string: "https://eatery-backend.cornellappdev.com")!)
     static let shared = NetworkManager()
 
     func getEateries(completion: @escaping ([Eatery]?, NetworkError?) -> Void) {
