@@ -106,6 +106,9 @@ class LookAheadViewController: UIViewController {
         return dates[selectedDay.rawValue]
     }
 
+    // used to prevent table view jitter when recomputing layout
+    private var cellHeights: [IndexPath: CGFloat] = [:]
+
     /// Try and find the event that most closely matches the specified meal
     private func findEvent(from events: [Eatery.EventName: Event], matching meal: MealChoice) -> Event? {
         switch meal {
@@ -130,8 +133,6 @@ class LookAheadViewController: UIViewController {
 
         tableView.contentInset.top = filterView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         computeFilterViewPosition()
-
-
 
         Answers.logWeeklyMenuOpened()
 
@@ -250,7 +251,7 @@ extension LookAheadViewController: UITableViewDataSource {
         let events = eatery.eventsOnDate(selectedDate)
         if let event = findEvent(from: events, matching: selectedMeal) {
             cell.eateryStatusLabel.text = "Open"
-            cell.eateryStatusLabel.textColor = .eateryGreen
+            cell.eateryStatusLabel.textColor = .eateryBlue
             cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
             cell.eateryHoursLabel.textColor = .secondary
             cell.moreInfoIndicatorImageView.isHidden = false
@@ -282,25 +283,38 @@ extension LookAheadViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard let cell = tableView.cellForRow(at: indexPath) as? LookAheadTableViewCell else {
-            return
-        }
-
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
         guard let _ = findEvent(from: eatery.eventsOnDate(selectedDate), matching: selectedMeal) else {
             return
         }
 
+        let cell = tableView.cellForRow(at: indexPath) as? LookAheadTableViewCell
+
         if expandedCellPaths.contains(indexPath) {
             expandedCellPaths.remove(indexPath)
-            cell.isExpanded = false
+            cell?.isExpanded = false
+
+            // beginUpdates followed by endUpdates forces the tableView to recompute
+            // cell geometry without needing to reload the cell
+            tableView.beginUpdates()
+            tableView.endUpdates()
         } else {
             expandedCellPaths.insert(indexPath)
-            cell.isExpanded = true
-        }
+            cell?.isExpanded = true
 
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+
+            tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeights[indexPath] = cell.frame.height
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeights[indexPath] ?? UITableViewAutomaticDimension
     }
 
 }
