@@ -6,6 +6,9 @@ class MealTableViewController: UITableViewController {
     
     typealias Menu = [(String, [MenuItem])]
     var sortedMenu: Menu?
+    
+    let defaults = UserDefaults.standard
+    let favoriteItemsKey = "FavoriteMealItems"
 
     var eatery: Eatery! {
         didSet {
@@ -17,6 +20,10 @@ class MealTableViewController: UITableViewController {
             recomputeMenu()
         }
     }
+    
+    lazy var favoritedMealItems = { ()  -> [String] in
+        self.defaults.value(forKey: self.favoriteItemsKey) as? [String] ?? [String]()
+    }()
 
     private func recomputeMenu() {
         if let eventMenu = event?.menu, !eventMenu.isEmpty {
@@ -158,6 +165,25 @@ class MealTableViewController: UITableViewController {
             return menu.count
         }
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let _ = menu, let sortedMenu = sortedMenu else {
+            return
+        }
+        
+        let itemSectionItems = sortedMenu[indexPath.section].1
+        let itemName = itemSectionItems[indexPath.row].name.trim()
+        
+        let mealItemCell = tableView.cellForRow(at: indexPath) as! MealItemTableViewCell
+        if favoritedMealItems.contains(itemName) {
+            favoritedMealItems.removeAll(where: { $0 == itemName })
+            // TODO: modify mealItemCell visually
+        } else {
+            favoritedMealItems.append(itemName)
+            // TODO: modify mealItemCell visually
+        }
+        defaults.set(favoritedMealItems, forKey: favoriteItemsKey)
+    }
   
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .white
@@ -202,12 +228,15 @@ class MealTableViewController: UITableViewController {
         }
         
         var itemName: NSAttributedString
+        var rawItemName: String?
         if menu.count == 1 {
             itemName = NSAttributedString(string: menu.first!.value[indexPath.row].name)
         } else {
             if let sortedMenu = sortedMenu {
                 let stationItems = sortedMenu[indexPath.section].1
-                itemName = formatMenuItem(stationItems[indexPath.row])
+                let rawItem = stationItems[indexPath.row]
+                rawItemName = rawItem.name.trim()
+                itemName = formatMenuItem(rawItem)
             } else {
                 itemName = NSAttributedString(string: "No items to show")
             }
@@ -215,6 +244,12 @@ class MealTableViewController: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealItem", for: indexPath) as! MealItemTableViewCell
         cell.nameLabel.attributedText = itemName
+        
+        if let rawItemName = rawItemName, favoritedMealItems.contains(rawItemName) {
+            // modify cell visually to reflect favorite meal item
+        } else {
+            // modify cell visually to reflect regular meal item
+        }
         
         return cell
     }
