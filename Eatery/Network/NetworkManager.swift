@@ -87,13 +87,17 @@ struct NetworkManager {
                         //handle late end
                         let endDate = timeDateFormatter.date(from: event.endTime) ?? Date()
 
-                        let eventFinal = Event(startDate: startDate, startDateFormatted: event.startTime, endDate: endDate, endDateFormatted: event.endTime, desc: event.description, summary: event.calSummary, menu: categoryToMenu)
+                        let eventFinal = Event(start: startDate,
+                                               end: endDate,
+                                               desc: event.description,
+                                               summary: event.calSummary,
+                                               menu: categoryToMenu)
                         eventsDictionary[event.description] = eventFinal
                     }
+
                     diningItems[dateString] = allMenuItems
                     eventItems[dateString] = eventsDictionary
                 }
-
 
                 return Eatery(id: eatery.id, name: eatery.name, nameShort: eatery.nameShort, slug: eatery.slug, eateryType: eateryType, about: eatery.about, phone: eatery.phone, area: area, address: eatery.location, paymentMethods: paymentTypes, diningItems: diningItems, events: eventItems, hardcodedMenu: nil, location: location, external: false)
 

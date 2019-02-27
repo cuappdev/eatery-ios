@@ -9,14 +9,18 @@
 import Foundation
 
 struct BRBAccount: Codable {
+
     var cityBucks: String
     var laundry: String
     var brbs: String
     var swipes: String
     var history: [BRBHistory]
+
 }
 
 struct BRBHistory: Codable {
+
     var name: String
     var timestamp: String
+
 }

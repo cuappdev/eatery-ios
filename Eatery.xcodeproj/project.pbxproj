@@ -32,7 +32,6 @@
 		65C36A722037D058005D8831 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C36A712037D058005D8831 /* ARViewController.swift */; };
 		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
 		892A06E061931FC9506733A0 /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */; };
-		95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95495D2D1C0AA0790015B85E /* MenuImages.swift */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
 		9584FE4E1CDD6C3B001A3AB5 /* BRBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */; };
 		9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */; };
@@ -856,7 +855,6 @@
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				D956DCC32187B979001BB9B0 /* MenuItem.swift in Sources */,
 				D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */,
-				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				5D218C3421FBE39700327516 /* EateryARDetailCard.swift in Sources */,

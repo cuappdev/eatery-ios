@@ -27,17 +27,48 @@ class LookAheadViewController: UIViewController {
 
     }
 
-    private enum MealChoice: Int, CustomStringConvertible {
+    private enum MealChoice: Int, CaseIterable, CustomStringConvertible, Comparable {
 
         case breakfast
         case lunch
         case dinner
+
+        static func <(lhs: MealChoice, rhs: MealChoice) -> Bool {
+            return lhs.rawValue < rhs.rawValue
+        }
+
+        init?(hour: Int) {
+            for choice in MealChoice.allCases {
+                if choice.hours.contains(hour) {
+                    self = choice
+                    break
+                }
+            }
+
+            return nil
+        }
+
+        init(from date: Date) {
+            var calendar = Calendar.current
+            calendar.timeZone = TimeZone(identifier: "America/New_York")!
+
+            let hour = calendar.component(.hour, from: date)
+            self = MealChoice(hour: hour) ?? .breakfast
+        }
 
         var description: String {
             switch self {
             case .breakfast: return "Breakfast"
             case .lunch: return "Lunch"
             case .dinner: return "Dinner"
+            }
+        }
+
+        var hours: CountableClosedRange<Int> {
+            switch self {
+            case .breakfast: return 0...9
+            case .lunch: return 10...15
+            case .dinner: return 15...23
             }
         }
 
@@ -136,7 +167,7 @@ class LookAheadViewController: UIViewController {
 
         Answers.logWeeklyMenuOpened()
 
-        computeCurrentSelectedMeal()
+        selectedMeal = MealChoice(from: Date())
         selectedDay = .today
 
         queryEateries()
@@ -219,17 +250,6 @@ class LookAheadViewController: UIViewController {
         filterView.frame.origin.y = max(0, -(tableView.contentOffset.y + filterView.frame.height))
     }
 
-    /// Compute the selectedMeal based on the current hour
-    private func computeCurrentSelectedMeal() {
-        let currentHour = Calendar.current.component(.hour, from: Date())
-        switch currentHour {
-        case 0...9: selectedMeal = .breakfast
-        case 10...15: selectedMeal = .lunch
-        case 15...23: selectedMeal = .dinner
-        default: selectedMeal = .breakfast
-        }
-    }
-
 }
 
 extension LookAheadViewController: UITableViewDataSource {
@@ -250,16 +270,57 @@ extension LookAheadViewController: UITableViewDataSource {
 
         let events = eatery.eventsOnDate(selectedDate)
         if let event = findEvent(from: events, matching: selectedMeal) {
-            let interval = DateInterval(start: event.startDate, end: event.endDate)
-            cell.eateryStatusLabel.text = "Open"
-            cell.eateryStatusLabel.textColor = interval.contains(Date()) ? .eateryGreen : .eateryBlue
-            cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
-            cell.eateryHoursLabel.textColor = .secondary
-            cell.moreInfoIndicatorImageView.isHidden = false
+            if selectedDay == .today {
+                // There is an event, and it's today
 
+                switch event.currentStatus() {
+                case .notStarted:
+                    cell.eateryStatusLabel.text = "Will Open"
+                    cell.eateryStatusLabel.textColor = .secondary
+                    cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
+                    cell.eateryHoursLabel.textColor = .secondary
+
+                case let .startingSoon(timeUntilOpen):
+                    cell.eateryStatusLabel.text = "Opening"
+                    cell.eateryStatusLabel.textColor = .orange
+                    cell.eateryHoursLabel.text = "in \(Int(timeUntilOpen / 60) + 1)m"
+                    cell.eateryHoursLabel.textColor = .secondary
+
+                case .started:
+                    cell.eateryStatusLabel.text = "Open"
+                    cell.eateryStatusLabel.textColor = .eateryGreen
+                    cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
+                    cell.eateryHoursLabel.textColor = .secondary
+
+
+                case let .endingSoon(timeUntilClose):
+                    cell.eateryStatusLabel.text = "Closing"
+                    cell.eateryStatusLabel.textColor = .orange
+                    cell.eateryHoursLabel.text = "in \(Int(timeUntilClose / 60) + 1)m"
+                    cell.eateryHoursLabel.textColor = .secondary
+
+                case .ended:
+                    cell.eateryStatusLabel.text = "Was Open"
+                    cell.eateryStatusLabel.textColor = .secondary
+                    cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
+                    cell.eateryHoursLabel.textColor = .secondary
+                }
+            } else {
+                // There is an event, and it's in the future
+
+                cell.eateryStatusLabel.text = "Open"
+                // TODO: replace this with a new color
+                cell.eateryStatusLabel.textColor = .eateryBlue
+                cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
+                cell.eateryHoursLabel.textColor = .secondary
+            }
+
+            cell.moreInfoIndicatorImageView.isHidden = false
             cell.menuView.menu = event.getMenuIterable()
             cell.isExpanded = expandedCellPaths.contains(indexPath)
         } else {
+            // There's no event
+
             cell.eateryStatusLabel.text = "Closed"
             cell.eateryStatusLabel.textColor = .secondary
             cell.eateryHoursLabel.text = nil

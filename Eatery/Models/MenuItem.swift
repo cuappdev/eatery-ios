@@ -12,11 +12,12 @@ import SwiftyJSON
 /**
  *  Basic representation of an individual menu entry
  */
-public struct MenuItem {
+struct MenuItem {
+    
     /// English description of the menu item
-    public let name: String
+    let name: String
 
     /// Flag indicating if the item is deemed healthy or not by Cornell
-    public let healthy: Bool
-}
+    let healthy: Bool
 
+}
