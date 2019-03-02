@@ -77,7 +77,7 @@ class LookAheadTableViewCell: UITableViewCell {
         eateryInfoContainer.addSubview(eateryHoursLabel)
         eateryHoursLabel.snp.makeConstraints { make in
             make.top.equalTo(eateryNameLabel.snp.bottom)
-            make.leading.equalTo(eateryStatusLabel.snp.trailing).offset(10)
+            make.leading.equalTo(eateryStatusLabel.snp.trailing).offset(5)
             make.trailing.equalToSuperview().inset(10)
         }
 

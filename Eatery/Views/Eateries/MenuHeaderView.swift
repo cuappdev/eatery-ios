@@ -95,7 +95,7 @@ class MenuHeaderView: UIView {
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         favoriteButton.tintColor = .favoriteYellow
 
-        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        let eateryStatus = eatery.currentStatus()
         switch eateryStatus {
         case .open, .closing:
             titleLabel.textColor = .white

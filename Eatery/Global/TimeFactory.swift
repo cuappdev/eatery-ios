@@ -7,7 +7,7 @@ struct TimeFactory {
     }
 
     static func displayTextForEvent(_ event: Event) -> String {
-        return dateConverter(date1: event.startDate, date2: event.endDate)
+        return dateConverter(date1: event.start, date2: event.end)
     }
 
     static func dateConverter(date1: Date, date2: Date) -> String {

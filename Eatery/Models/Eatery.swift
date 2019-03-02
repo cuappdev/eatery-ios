@@ -22,12 +22,14 @@ import CoreLocation
  - Other:     Unknown
  */
 enum Meal: String {
-    case Breakfast = "Breakfast"
-    case Brunch    = "Brunch"
-    case LiteLunch = "Lite Lunch"
-    case Lunch     = "Lunch"
-    case Dinner    = "Dinner"
+
+    case breakfast = "Breakfast"
+    case brunch    = "Brunch"
+    case liteLunch = "Lite Lunch"
+    case lunch     = "Lunch"
+    case dinner    = "Dinner"
     case Other     = ""
+
 }
 
 /**
@@ -42,13 +44,15 @@ enum Meal: String {
  - Other:       Unknown
  */
 enum PaymentType: String {
-    case BRB         = "Meal Plan - Debit"
-    case Swipes      = "Meal Plan - Swipe"
-    case Cash        = "Cash"
-    case CornellCard = "Cornell Card"
-    case CreditCard  = "Major Credit Cards"
-    case NFC         = "Mobile Payments"
-    case Other       = ""
+
+    case brb         = "Meal Plan - Debit"
+    case swipes      = "Meal Plan - Swipe"
+    case cash        = "Cash"
+    case cornellCard = "Cornell Card"
+    case creditCard  = "Major Credit Cards"
+    case nfc         = "Mobile Payments"
+    case other       = ""
+
 }
 
 /**
@@ -63,14 +67,16 @@ enum PaymentType: String {
  - CoffeeShop:       Coffee Shops + Some Food
  */
 enum EateryType: String {
-    case Unknown          = "unknown"
-    case Dining           = "all you care to eat dining room"
-    case Cafe             = "cafe"
-    case Cart             = "cart"
-    case FoodCourt        = "food court"
-    case ConvenienceStore = "convenience store"
-    case CoffeeShop       = "coffee shop"
-    case Bakery           = "bakery"
+
+    case unknown = "unknown"
+    case dining = "all you care to eat dining room"
+    case cafe = "cafe"
+    case cart = "cart"
+    case foodCourt = "food court"
+    case convenienceStore = "convenience store"
+    case coffeeShop = "coffee shop"
+    case bakery = "bakery"
+
 }
 
 /**
@@ -82,38 +88,31 @@ enum EateryType: String {
  - Central: Central Campus
  */
 enum Area: String {
-    case Unknown = ""
-    case West    = "West"
-    case North   = "North"
-    case Central = "Central"
+
+    case unknown = ""
+    case west = "West"
+    case north = "North"
+    case central = "Central"
+
 }
 
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
-struct Eatery: Hashable {
+struct Eatery {
 
-    typealias MenuCategory = String
-
-    typealias Menu = [MenuCategory: [MenuItem]]
-
-    /// A string of the form YYYY-MM-dd
-    typealias DateString = String
-
-    typealias EventName = String
-
-    static func == (lhs: Eatery, rhs: Eatery) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-dd"
+    /// Converts the date to its day for use with eatery events
+    static let dayFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+        formatter.timeZone = TimeZone(identifier: "America/New_York")
         return formatter
     }()
 
-    var hashValue: Int {
-        return id
-    }
+    /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)
+    /// Read more: https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates
+    typealias DayString = String
+
+    typealias EventName = String
 
     /// Unique Identifier
     let id: Int
@@ -147,7 +146,7 @@ struct Eatery: Hashable {
 
     /// A menu of constant dining items. Exists if this eatery's menu
     /// never changes. This should be used if it exists.
-    var diningItems: Menu?
+    var diningMenu: Menu?
 
     /// A constant hardcoded menu if this Eatery has one.
     /// This should be used if it exists yet diningItems does not.
@@ -156,37 +155,34 @@ struct Eatery: Hashable {
     /// GPS Location
     let location: CLLocation
 
-    // Maps 2015-03-01 to [Event]
-    // Thought about using just an array, but
-    // for many events, this is much faster for lookups
-    /// List of all events for this eatery
-    /// Maps the date the event occurs to a list of the event name
-    /// to the event itself e.g.:
-    /// [ "2015-03-01": ["Lunch": Event]]
-    let events: [DateString: [EventName: Event]]
+    /// List of all events for this eatery by day and name
+    let events: [DayString: [EventName: Event]]
 
-    /// ="This is an external eatery, i.e. a completely hardcoded eatery"
+    /// This is an external eatery, i.e. a completely hardcoded eatery
     let external: Bool
 
-    // Gives a string full of all the menus for this eatery today
-    // this is used for searching.
-    private var _todaysEventsString: String? = nil
-    var description: String {
-        mutating get {
-            if let _todaysEventsString = _todaysEventsString {
-                return _todaysEventsString
-            }
-            let ar = Array(eventsOnDate(Date()).values)
-            let strings = ar.map { (ev: Event) -> String in
-                ev.menu.description
-            }
+    // Gives a string full of all the menus for this eatery today.
+    // This is used for searching.
+    private(set) lazy var description: String = {
+        return eventsByName(on: Date()).values.map { $0.menu.data.description }.joined(separator: "\n")
+    }()
 
-            _todaysEventsString = strings.joined(separator: "\n")
-            return _todaysEventsString!
-        }
-    }
+    init(id: Int,
+        name: String,
+        nameShort: String,
+        slug: String,
+        eateryType: EateryType,
+        about: String,
+        phone: String,
+        area: Area,
+        address: String,
+        paymentMethods: [PaymentType],
+        diningMenu: [String : [Menu.Item]]?,
+        events: [String: [String: Event]],
+        hardcodedMenu: [String : [Menu.Item]]?,
+        location: CLLocation,
+        external: Bool) {
 
-    init(id: Int, name: String, nameShort: String, slug: String, eateryType: EateryType, about: String, phone: String, area: Area, address: String, paymentMethods: [PaymentType], diningItems: [String : [MenuItem]]?, events: [String: [String: Event]], hardcodedMenu: [String : [MenuItem]]?, location: CLLocation, external: Bool) {
         self.id = id
         self.name = name
         self.nameShort = nameShort
@@ -197,11 +193,21 @@ struct Eatery: Hashable {
         self.area = area
         self.address = address
         self.paymentMethods = paymentMethods
-        self.diningItems = diningItems
         self.events = events
-        self.hardcodedMenu = hardcodedMenu
         self.location = location
         self.external = external
+
+        if let diningMenu = diningMenu {
+            self.diningMenu = Menu(data: diningMenu)
+        } else {
+            self.diningMenu = nil
+        }
+
+        if let hardcodedMenu = hardcodedMenu {
+            self.hardcodedMenu = Menu(data: hardcodedMenu)
+        } else {
+            self.hardcodedMenu = nil
+        }
     }
 
     /**
@@ -211,13 +217,13 @@ struct Eatery: Hashable {
 
      - returns: true if this eatery has an event active at the given date and time
 
-     - see: `isOpenForDate`
+     - see: `isOpen(for:)`
      */
-    func isOpenOnDate(_ date: Date) -> Bool {
+    func isOpen(on date: Date) -> Bool {
         guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else { return false }
 
         for now in [date, yesterday] {
-            let events = eventsOnDate(now)
+            let events = eventsByName(on: now)
             for (_, event) in events {
                 if event.occurs(at: date) {
                     return true
@@ -229,17 +235,16 @@ struct Eatery: Hashable {
     }
 
     /**
-     Tells if eatery is open within the calendar date given. This is distinct from `isOpenOnDate` in that it does not check a specific time, just the day, month, and year.
+     Tells if eatery is open within the calendar date given. This is distinct from `isOpen(on:)` in that it does not check a specific time, just the day, month, and year.
 
      - parameter date: The date to check
 
      - returns: true of there is an event active at some point within the given calendar day
 
-     - see: `isOpenOnDate`
+     - see: `isOpen(on:)`
      */
-    func isOpenForDate(_ date: Date) -> Bool {
-        let events = eventsOnDate(date)
-        return events.count != 0
+    func isOpen(for date: Date) -> Bool {
+        return !eventsByName(on: date).isEmpty
     }
 
     /**
@@ -248,7 +253,7 @@ struct Eatery: Hashable {
      - returns: true if the eatery is open at the present date and time
      */
     func isOpenNow() -> Bool {
-        return isOpenOnDate(Date())
+        return isOpen(on: Date())
     }
 
     /**
@@ -257,7 +262,7 @@ struct Eatery: Hashable {
      - returns: true if the eatery will be open at some point today or was already open
      */
     func isOpenToday() -> Bool {
-        return isOpenForDate(Date())
+        return isOpen(for: Date())
     }
 
     /**
@@ -267,9 +272,9 @@ struct Eatery: Hashable {
 
      - returns: A mapping from Event Name to Event for the given day.
      */
-    func eventsOnDate(_ date: Date) -> [String: Event] {
-        let dateString = Eatery.dateFormatter.string(from: date)
-        return events[dateString] ?? [:]
+    func eventsByName(on date: Date) -> [EventName: Event] {
+        let dayString = Eatery.dayFormatter.string(from: date)
+        return events[dayString] ?? [:]
     }
 
     /**
@@ -281,7 +286,7 @@ struct Eatery: Hashable {
      For our purposes, "active" means currently running or will run soon. As in, if there
      was no event running at exactly the date given but there will be one 15 minutes afterwards, that event would be returned. If the next event was over a day away, nil would be returned.
      */
-    func activeEventForDate(_ date: Date) -> Event? {
+    func activeEvent(for date: Date) -> Event? {
         guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else { return nil }
         guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date()) else { return nil }
 
@@ -289,7 +294,7 @@ struct Eatery: Hashable {
         var next: Event? = nil
 
         for now in [yesterday, date, tomorrow] {
-            let events = eventsOnDate(now)
+            let events = eventsByName(on: now)
 
             for (_, event) in events {
                 let diff = event.start.timeIntervalSince1970 - date.timeIntervalSince1970
@@ -305,31 +310,41 @@ struct Eatery: Hashable {
         return next
     }
 
-    /**
-     Returns an iterable form of an entire menu
+    // MARK: Deprecated
 
-     - returns: a list of tuples in the form (category,[item list]).
-     For each category we create a tuple containing the food category name as a string
-     and the food items available for the category as a string list. Used to easily iterate
-     over all items in the hardcoded menu. Ex: [("Entrees",["Chicken", "Steak", "Fish"]), ("Fruit", ["Apples"])]
-     */
-    private func getMenuIterable(_ menu: Menu?) -> [(MenuCategory, [String])] {
-        guard let menu = menu else { return [] }
-        return menu.map { (category, items) -> (MenuCategory, [String]) in
-            (category, items.map({ ($0.name) }))
-        }
+    @available(*, deprecated, renamed: "isOpen(on:)")
+    func isOpenOnDate(_ date: Date) -> Bool {
+        return isOpen(on: date)
     }
 
-    func getHardcodeMenuIterable() -> [(MenuCategory, [String])] {
-        return getMenuIterable(hardcodedMenu)
+    @available(*, deprecated, renamed: "isOpen(for:)")
+    func isOpenForDate(_ date: Date) -> Bool {
+        return isOpen(for: date)
     }
 
-    func getDiningItemMenuIterable() -> [(MenuCategory, [String])] {
-        return getMenuIterable(diningItems)
+    @available(*, deprecated, renamed: "activeEvent(for:)")
+    func activeEventForDate(_ date: Date) -> Event? {
+        return activeEvent(for: date)
     }
 
-    func getAlternateMenuIterable() -> [(MenuCategory, [String])] {
-        if diningItems != nil {
+    @available(*, deprecated, renamed: "eventsByName(on:)")
+    func eventsOnDate(_ date: Date) -> [String: Event] {
+        return eventsByName(on: date)
+    }
+
+    @available(*, deprecated)
+    func getHardcodeMenuIterable() -> [(String, [String])] {
+        return hardcodedMenu?.stringRepresentation ?? []
+    }
+
+    @available(*, deprecated)
+    func getDiningItemMenuIterable() -> [(String, [String])] {
+        return diningMenu?.stringRepresentation ?? []
+    }
+
+    @available(*, deprecated)
+    func getAlternateMenuIterable() -> [(String, [String])] {
+        if diningMenu != nil {
             return getDiningItemMenuIterable()
         } else if hardcodedMenu != nil {
             return getHardcodeMenuIterable()
@@ -337,4 +352,17 @@ struct Eatery: Hashable {
             return []
         }
     }
+
+}
+
+extension Eatery: Hashable {
+
+    static func == (lhs: Eatery, rhs: Eatery) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    var hashValue: Int {
+        return id
+    }
+
 }

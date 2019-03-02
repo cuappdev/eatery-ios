@@ -218,16 +218,16 @@ class LookAheadViewController: UIViewController {
 
                 guard let eateries = eateries else { return }
                 var eateriesByArea: [Area: [Eatery]] = [:]
-                let displayedAreas: [Area] = [.West, .North, .Central]
+                let displayedAreas: [Area] = [.west, .north, .central]
 
-                for eatery in eateries where eatery.eateryType == .Dining && displayedAreas.contains(eatery.area) {
+                for eatery in eateries where eatery.eateryType == .dining && displayedAreas.contains(eatery.area) {
                     eateriesByArea[eatery.area, default: []].append(eatery)
                 }
 
                 self.eateriesByArea = [
-                    (area: .West, eateries: eateriesByArea[.West] ?? []),
-                    (area: .North, eateries: eateriesByArea[.North] ?? []),
-                    (area: .Central, eateries: eateriesByArea[.Central] ?? [])
+                    (area: .west, eateries: eateriesByArea[.west] ?? []),
+                    (area: .north, eateries: eateriesByArea[.north] ?? []),
+                    (area: .central, eateries: eateriesByArea[.central] ?? [])
                 ]
 
                 self.tableView.reloadData()
@@ -268,7 +268,7 @@ extension LookAheadViewController: UITableViewDataSource {
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
         cell.eateryNameLabel.text = eatery.nameShort
 
-        let events = eatery.eventsOnDate(selectedDate)
+        let events = eatery.eventsByName(on: selectedDate)
         if let event = findEvent(from: events, matching: selectedMeal) {
             if selectedDay == .today {
                 // There is an event, and it's today
@@ -282,7 +282,7 @@ extension LookAheadViewController: UITableViewDataSource {
 
                 case let .startingSoon(timeUntilOpen):
                     cell.eateryStatusLabel.text = "Opening"
-                    cell.eateryStatusLabel.textColor = .orange
+                    cell.eateryStatusLabel.textColor = .eateryOrange
                     cell.eateryHoursLabel.text = "in \(Int(timeUntilOpen / 60) + 1)m"
                     cell.eateryHoursLabel.textColor = .secondary
 
@@ -295,7 +295,7 @@ extension LookAheadViewController: UITableViewDataSource {
 
                 case let .endingSoon(timeUntilClose):
                     cell.eateryStatusLabel.text = "Closing"
-                    cell.eateryStatusLabel.textColor = .orange
+                    cell.eateryStatusLabel.textColor = .eateryOrange
                     cell.eateryHoursLabel.text = "in \(Int(timeUntilClose / 60) + 1)m"
                     cell.eateryHoursLabel.textColor = .secondary
 
@@ -309,14 +309,13 @@ extension LookAheadViewController: UITableViewDataSource {
                 // There is an event, and it's in the future
 
                 cell.eateryStatusLabel.text = "Open"
-                // TODO: replace this with a new color
-                cell.eateryStatusLabel.textColor = .eateryBlue
+                cell.eateryStatusLabel.textColor = .eateryGreen
                 cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
                 cell.eateryHoursLabel.textColor = .secondary
             }
 
             cell.moreInfoIndicatorImageView.isHidden = false
-            cell.menuView.menu = event.getMenuIterable()
+            cell.menuView.menu = event.menu
             cell.isExpanded = expandedCellPaths.contains(indexPath)
         } else {
             // There's no event
@@ -346,7 +345,7 @@ extension LookAheadViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
-        guard let _ = findEvent(from: eatery.eventsOnDate(selectedDate), matching: selectedMeal) else {
+        guard let _ = findEvent(from: eatery.eventsByName(on: selectedDate), matching: selectedMeal) else {
             return
         }
 

@@ -20,15 +20,18 @@ class PaymentMethodsView: UIView {
         didSet {
             var images: [UIImage] = []
 
-            if paymentMethods.contains(.Cash) || paymentMethods.contains(.CreditCard), let icon = UIImage(named: "cashIcon") {
+            if paymentMethods.contains(.cash) || paymentMethods.contains(.creditCard),
+                let icon = UIImage(named: "cashIcon") {
                 images.append(icon)
             }
 
-            if paymentMethods.contains(.BRB), let icon = UIImage(named: "brbIcon") {
+            if paymentMethods.contains(.brb),
+                let icon = UIImage(named: "brbIcon") {
                 images.append(icon)
             }
 
-            if paymentMethods.contains(.Swipes), let icon = UIImage(named: "swipeIcon") {
+            if paymentMethods.contains(.swipes),
+                let icon = UIImage(named: "swipeIcon") {
                 images.append(icon)
             }
 

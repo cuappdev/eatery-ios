@@ -16,15 +16,12 @@ class MealTableViewController: UITableViewController {
     }
 
     private func recomputeMenu() {
-        if let eventMenu = event?.menu, !eventMenu.isEmpty {
+        if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
             menu = eventMenu
-        } else if let diningItems = eatery.diningItems {
-            if eatery.eateryType != .Dining {
-                let currentDate = dateFormatter.string(from: Date())
-                menu = [currentDate: diningItems[currentDate] ?? []]
-            } else {
-                menu = nil
-            }
+        } else if let diningMenu = eatery.diningMenu, eatery.eateryType != .dining {
+            // the eatery has a constant menu, and it's not a dining hall
+            let currentDate = Eatery.dayFormatter.string(from: Date())
+            menu = Menu(data: [currentDate: diningMenu.data[currentDate] ?? []])
         } else if let hardcodedItems = eatery.hardcodedMenu {
             menu = hardcodedItems
         } else {
@@ -33,15 +30,9 @@ class MealTableViewController: UITableViewController {
         }
     }
 
-    fileprivate let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        return dateFormatter
-    }()
-
-    private var menu: [String: [MenuItem]]? {
+    private var menu: Menu? {
         didSet {
-            if let menu = menu, menu.count == 1, eatery.eateryType != .Dining {
+            if let menu = menu, menu.data.count == 1, eatery.eateryType != .dining {
                 topSeparator.isHidden = false
                 tableView.separatorStyle = .singleLine
             } else {
@@ -104,12 +95,12 @@ class MealTableViewController: UITableViewController {
             return 1
         }
 
-        if menu.count == 1, eatery.eateryType != .Dining, let item = menu.first {
+        if menu.data.count == 1, eatery.eateryType != .dining, let item = menu.data.first {
             // display menu items (of the only "dining station") as a table
             return item.value.count
         } else {
             // display the menu items
-            return menu.count
+            return menu.data.count
         }
     }
 
@@ -118,7 +109,7 @@ class MealTableViewController: UITableViewController {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        if menu.count == 1, eatery.eateryType != .Dining {
+        if menu.data.count == 1, eatery.eateryType != .dining {
             return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
             return diningStationsCell(in: tableView, forRowAt: indexPath)
@@ -137,7 +128,7 @@ class MealTableViewController: UITableViewController {
 
     /// Create a table view cell when there is a single dining station in the menu
     private func menuItemCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let menu = menu, let station = menu.first else {
+        guard let menu = menu, let station = menu.data.first else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
@@ -156,7 +147,7 @@ class MealTableViewController: UITableViewController {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        let sortedMenu = Sort.sortMenu(menu.map { ($0, $1) })
+        let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
         let stationTitles = sortedMenu.map { $0.0 }
 
         // set title

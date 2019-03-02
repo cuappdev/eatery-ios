@@ -14,7 +14,7 @@ enum EateryStatus {
         case .open:
             return .eateryGreen
         case .opening, .closing:
-            return .orange
+            return .eateryOrange
         case .closed:
             return .eateryRed
         }
@@ -56,6 +56,7 @@ extension Eatery {
 
     /// Option to sort by campus or by open time
     enum Sorting: String {
+        
         case alphabetically = "Alphabetically"
         case campus = "Campus"
         case location = "Location"
@@ -127,7 +128,7 @@ extension Eatery {
 
     func status(at date: Date) -> EateryStatus {
         if isOpenToday() {
-            guard let event = activeEventForDate(date) else {
+            guard let event = activeEvent(for: date) else {
                 return .closed("")
             }
 
@@ -154,46 +155,6 @@ extension Eatery {
         } else {
             return .closed("today")
         }
-    }
-
-    // Retrieves a string list of the hours of operation for a day/time
-    func activeEventsForDate(date: Date) -> String {
-        var resultString = "Closed"
-
-        let events = eventsOnDate(date)
-        if events.count > 0 {
-            let eventsArray = events.map { $0.1 }
-            let sortedEventsArray = eventsArray.sorted {
-                $0.startDate.compare($1.startDate) == .orderedAscending
-            }
-
-            var mergedTimes = [(Date, Date)]()
-            var currentTime: (Date, Date)?
-            for time in sortedEventsArray {
-                if currentTime == nil {
-                    currentTime = (time.startDate, time.endDate)
-                    continue
-                }
-                if currentTime!.1.compare(time.startDate) == .orderedSame {
-                    currentTime = (currentTime!.0, time.endDate)
-                } else {
-                    mergedTimes.append(currentTime!)
-                    currentTime = (time.startDate, time.endDate)
-                }
-            }
-
-            if let time = currentTime {
-                mergedTimes.append(time)
-            }
-
-            resultString = ""
-            for (start, end) in mergedTimes {
-                if resultString != "" { resultString += ", " }
-                resultString += TimeFactory.dateConverter(date1: start, date2: end)
-            }
-        }
-
-        return resultString
     }
 
     var nickname: String {

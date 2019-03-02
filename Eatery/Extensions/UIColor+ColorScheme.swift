@@ -22,7 +22,7 @@ extension UIColor {
     static let eateryRed = colorFromCode(0xF2655D)
 
     /// 0x2C7EDF
-    static let navigationBarBlue = colorFromCode(0x2c7edf)
+    static let navigationBarBlue = colorFromCode(0x2C7EDF)
 
     /// 0x4A90E2
     static let eateryBlue = colorFromCode(0x4A90E2)
@@ -30,13 +30,15 @@ extension UIColor {
     /// 0x63C774
     static let eateryGreen = colorFromCode(0x63C774)
 
+    static let eateryOrange = colorFromCode(0xFF990E)
+
     static let transparentEateryBlue = UIColor.eateryBlue.withAlphaComponent(0.8)
 
     /// 0x222222
     static let primary = colorFromCode(0x222222)
 
     /// 0x7d8288
-    static let secondary = colorFromCode(0x7d8288)
+    static let secondary = colorFromCode(0x7D8288)
 
     /// 0xE1E1E1
     static let inactive = colorFromCode(0xE1E1E1)

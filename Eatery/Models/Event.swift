@@ -25,8 +25,6 @@ struct Event {
         case endingSoon(TimeInterval)
         case ended
 
-        
-
     }
 
     /// Date and time that this event begins
@@ -45,13 +43,11 @@ struct Event {
     /// Summary of the event
     let summary: String
 
-    /// A mapping from "Category"->[Menu Items] where category could be something like
-    /// "Ice Cream Flavors" or "Traditional Hot Food"
-    let menu: [String: [MenuItem]]
+    let menu: Menu
 
     private let interval: DateInterval
 
-    init(start: Date, end: Date, desc: String, summary: String, menu: Eatery.Menu) {
+    init(start: Date, end: Date, desc: String, summary: String, menu: Menu) {
         if start < end {
             self.interval = DateInterval(start: start, end: end)
         } else {
@@ -60,7 +56,6 @@ struct Event {
 
         self.desc = desc
         self.summary = summary
-
         self.menu = menu
     }
 
@@ -99,21 +94,12 @@ struct Event {
         }
     }
 
-    /**
-     Returns an iterable form of the entire menu for the event
-
-     - returns: a list of tuples in the form (category,[item list]).
-     For each category we create a tuple containing the food category name as a string
-     and the food items available for the category as a string list. Used to easily iterate
-     over all items in the event menu. Ex: [("Entrees",["Chicken", "Steak", "Fish"]), ("Fruit", ["Apples"])]
-     */
-    func getMenuIterable() -> [(String,[String])] {
-        return menu.compactMap { (category, items) -> (String, [String])? in
-            items.isEmpty ? nil : (category, items.map { $0.name })
-        }
-    }
-
     // MARK: Deprecated
+    
+    @available(*, deprecated, renamed: "menu.stringRepresentation")
+    func getMenuIterable() -> [(String, [String])] {
+        return menu.stringRepresentation
+    }
 
     @available(*, deprecated, renamed: "start")
     var startDate: Date {
@@ -126,7 +112,7 @@ struct Event {
     }
 
     @available(*, deprecated, renamed: "occurs(at:)")
-    public func occurringOnDate(_ date: Date) -> Bool {
+    func occurringOnDate(_ date: Date) -> Bool {
         return occurs(at: date)
     }
 

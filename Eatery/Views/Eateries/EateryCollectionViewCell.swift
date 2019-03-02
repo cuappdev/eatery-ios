@@ -213,7 +213,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         // text color of all info labels
         // overlay visibility
 
-        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        let eateryStatus = eatery.currentStatus()
         switch eateryStatus {
         case .open, .closing:
             titleLabel.textColor = .black

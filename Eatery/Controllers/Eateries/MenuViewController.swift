@@ -130,7 +130,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             make.leading.equalTo(statusLabel.snp.trailing).offset(2.0)
         }
 
-        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        let eateryStatus = eatery.currentStatus()
         hoursLabel.text = eateryStatus.message
         statusLabel.text = eateryStatus.statusText
         statusLabel.textColor = eateryStatus.statusColor
@@ -227,10 +227,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         // TabbedPageViewController
 
-        let eventsDict = eatery.eventsOnDate(displayedDate)
-        let sortedEventsDict = eventsDict.sorted { (a: (String, Event), b: (String, Event)) -> Bool in
-            a.1.startDate.compare(b.1.startDate) == .orderedAscending
-        }
+        let eventsDict = eatery.eventsByName(on: displayedDate)
+        let sortedEventsDict = eventsDict.sorted { $0.1.start < $1.1.start }
         
         var meals = sortedEventsDict.map { $0.key }
 
@@ -238,7 +236,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             meals.remove(at: index)
         }
 
-        if eatery.eateryType != .Dining {
+        if eatery.eateryType != .dining {
             meals = []
         }
         
@@ -392,7 +390,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     // MARK: Scroll To Proper Time
     
     func scrollToCurrentTimeOpening(_ date: Date) {
-        guard let currentEvent = eatery.activeEventForDate(date) else { return }
+        guard let currentEvent = eatery.activeEvent(for: date) else { return }
         guard let mealViewControllers = pageViewController.viewControllers as? [MealTableViewController],
             mealViewControllers.count > 1 else { return }
         

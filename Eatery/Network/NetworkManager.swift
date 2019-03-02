@@ -15,11 +15,11 @@ struct NetworkError: Error {
 }
 
 struct NetworkManager {
+
     internal let apollo = ApolloClient(url: URL(string: "https://eatery-backend.cornellappdev.com")!)
     static let shared = NetworkManager()
 
     func getEateries(completion: @escaping ([Eatery]?, NetworkError?) -> Void) {
-
         apollo.fetch(query: AllEateriesQuery()) { (result, error) in
             guard error == nil else { completion(nil, NetworkError(message: error?.localizedDescription ?? "")); return }
 
@@ -32,31 +32,31 @@ struct NetworkManager {
             let eateries = eateriesArray.compactMap { $0 }
 
             let finalEateries: [Eatery] = eateries.map { eatery in
-                let eateryType: EateryType = EateryType(rawValue: eatery.eateryType.lowercased()) ?? .Unknown
-                let area: Area = Area(rawValue: eatery.campusArea.descriptionShort) ?? .Unknown
+                let eateryType: EateryType = EateryType(rawValue: eatery.eateryType.lowercased()) ?? .unknown
+                let area: Area = Area(rawValue: eatery.campusArea.descriptionShort) ?? .unknown
                 let location = CLLocation(latitude: eatery.coordinates.latitude, longitude: eatery.coordinates.longitude)
                 var paymentTypes: [PaymentType] = []
                 let paymentMethods = eatery.paymentMethods
                 if paymentMethods.brbs {
-                    paymentTypes.append(.BRB)
+                    paymentTypes.append(.brb)
                 }
                 if paymentMethods.cash {
-                    paymentTypes.append(.Cash)
+                    paymentTypes.append(.cash)
                 }
                 if paymentMethods.cornellCard {
-                    paymentTypes.append(.CornellCard)
+                    paymentTypes.append(.cornellCard)
                 }
                 if paymentMethods.credit {
-                    paymentTypes.append(.CreditCard)
+                    paymentTypes.append(.creditCard)
                 }
                 if paymentMethods.mobile {
-                    paymentTypes.append(.NFC)
+                    paymentTypes.append(.nfc)
                 }
                 if paymentMethods.swipes {
-                    paymentTypes.append(.Swipes)
+                    paymentTypes.append(.swipes)
                 }
 
-                var diningItems: [String: [MenuItem]] = [:]
+                var diningItems: [String: [Menu.Item]] = [:]
                 var eventItems: [String : [String : Event]] = [:]
 
                 let dateFormatter = DateFormatter()
@@ -69,18 +69,19 @@ struct NetworkManager {
                     let dateString = operatingHour.date
 
                     let events = operatingHour.events.compactMap { $0 }
-                    var allMenuItems: [MenuItem] = []
+                    var allMenuItems: [Menu.Item] = []
                     var eventsDictionary: [String: Event] = [:]
+
                     events.forEach { event in
                         let menu = event.menu.compactMap { $0 }
-                        var categoryToMenu: [String: [MenuItem]] = [:]
+                        var categoryToMenu: [String: [Menu.Item]] = [:]
                         menu.forEach { item in
                             let items = item.items.compactMap { $0 }
                             items.forEach { menuItem in
-                                allMenuItems.append(MenuItem(name: menuItem.item, healthy: menuItem.healthy))
+                                allMenuItems.append(Menu.Item(name: menuItem.item, healthy: menuItem.healthy))
                             }
                             categoryToMenu[item.category] = items.map { itemForEvent in
-                                return MenuItem(name: itemForEvent.item, healthy: itemForEvent.healthy)
+                                return Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy)
                             }
                         }
                         let startDate = timeDateFormatter.date(from: event.startTime) ?? Date()
@@ -91,7 +92,7 @@ struct NetworkManager {
                                                end: endDate,
                                                desc: event.description,
                                                summary: event.calSummary,
-                                               menu: categoryToMenu)
+                                               menu: Menu(data: categoryToMenu))
                         eventsDictionary[event.description] = eventFinal
                     }
 
@@ -99,9 +100,23 @@ struct NetworkManager {
                     eventItems[dateString] = eventsDictionary
                 }
 
-                return Eatery(id: eatery.id, name: eatery.name, nameShort: eatery.nameShort, slug: eatery.slug, eateryType: eateryType, about: eatery.about, phone: eatery.phone, area: area, address: eatery.location, paymentMethods: paymentTypes, diningItems: diningItems, events: eventItems, hardcodedMenu: nil, location: location, external: false)
-
+                return Eatery(id: eatery.id,
+                              name: eatery.name,
+                              nameShort: eatery.nameShort,
+                              slug: eatery.slug,
+                              eateryType: eateryType,
+                              about: eatery.about,
+                              phone: eatery.phone,
+                              area: area,
+                              address: eatery.location,
+                              paymentMethods: paymentTypes,
+                              diningMenu: diningItems,
+                              events: eventItems,
+                              hardcodedMenu: nil,
+                              location: location,
+                              external: false)
             }
+
             completion(finalEateries, nil)
         }
     }

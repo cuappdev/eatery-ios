@@ -12,12 +12,12 @@ class LookAheadMenuView: UIView {
 
     private let textView = UITextView()
 
-    var menu: [(Eatery.MenuCategory, [String])] = [] {
+    var menu: Menu? = nil {
         didSet {
-            if menu.isEmpty {
-                computeNoMenuText()
-            } else {
+            if let menu = menu, !menu.data.isEmpty {
                 computeMenuText()
+            } else {
+                computeNoMenuText()
             }
         }
     }
@@ -55,10 +55,15 @@ class LookAheadMenuView: UIView {
     }
 
     private func computeMenuText() {
+        guard let menu = menu else {
+            computeNoMenuText()
+            return
+        }
+
         let text = NSMutableAttributedString()
         let newline = NSAttributedString(string: "\n")
 
-        for (i, (category, items)) in menu.enumerated() {
+        for (offset: i, element: (key: category, value: items)) in menu.data.enumerated() {
             let categoryText = NSAttributedString(string: "\(category)", attributes: [
                 .font: UIFont.systemFont(ofSize: 18, weight: .bold)
                 ])
@@ -66,7 +71,7 @@ class LookAheadMenuView: UIView {
             text.append(newline)
 
             for item in items {
-                let itemText = NSAttributedString(string: "\(item)", attributes: [
+                let itemText = NSAttributedString(string: "\(item.name)", attributes: [
                     .font: UIFont.systemFont(ofSize: 14),
                     .foregroundColor: UIColor.secondary
                     ])
@@ -74,7 +79,7 @@ class LookAheadMenuView: UIView {
                 text.append(newline)
             }
 
-            if i < menu.count - 1 {
+            if i < menu.data.count - 1 {
                 text.append(newline)
             }
         }

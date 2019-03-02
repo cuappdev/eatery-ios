@@ -34,11 +34,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     }()
     
     fileprivate var userLocation: CLLocation?
-    fileprivate let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        return dateFormatter
-    }()
     
     fileprivate var updateTimer: Timer?
     
@@ -113,12 +108,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             }
 
             self.appDevLogo = logo
-
-
-//            if ARViewController.isSupported() {
-//                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-//                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
-//            }
         } else {
             navigationItem.rightBarButtonItems = [mapButton]
         }
@@ -158,15 +147,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
             collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
-    }
-
-    @available(iOS 11.0, *)
-    @objc func arButtonPressed() {
-        Answers.logAROpen()
-        
-        let arViewController = ARViewController()
-        arViewController.eateries = eateries
-        self.present(arViewController, animated: true, completion: nil)
     }
 
     func setupLoadingView() {
@@ -367,13 +347,13 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                     }
                 }
 
-                let todayMenu = eatery.diningItems?[dateFormatter.string(from: Date())] ?? []
+                let todayMenu = eatery.diningMenu?.data[Eatery.dayFormatter.string(from: Date())] ?? []
                 for item in todayMenu.map({ $0.name }) {
                     appendSearchItem(item)
                 }
                 
-                if let activeEvent = eatery.activeEventForDate(Date()) {
-                    for item in activeEvent.getMenuIterable().flatMap({ $0.1 }) {
+                if let activeEvent = eatery.activeEvent(for: Date()) {
+                    for item in activeEvent.menu.stringRepresentation.flatMap({ $0.1 }) {
                         appendSearchItem(item)
                     }
                 }
@@ -390,16 +370,16 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         desiredEateries = desiredEateries.filter {
-            if filters.contains(.swipes) { return $0.paymentMethods.contains(.Swipes) }
-            if filters.contains(.brb) { return $0.paymentMethods.contains(.BRB) }
+            if filters.contains(.swipes) { return $0.paymentMethods.contains(.swipes) }
+            if filters.contains(.brb) { return $0.paymentMethods.contains(.brb) }
             return true
         }
         
         if filters.contains(.north) || filters.contains(.west) || filters.contains(.central) {
             desiredEateries = desiredEateries.filter {
-                return (filters.contains(.north) ? $0.area == .North : false)
-                || (filters.contains(.west) ? $0.area == .West : false)
-                || (filters.contains(.central) ? $0.area == .Central : false)
+                return (filters.contains(.north) ? $0.area == .north : false)
+                || (filters.contains(.west) ? $0.area == .west : false)
+                || (filters.contains(.central) ? $0.area == .central : false)
             }
         }
         
