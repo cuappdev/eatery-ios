@@ -108,20 +108,6 @@ extension Eatery {
         }
     }
 
-    // ** COPY OF IMPLEMENTATION IN LiteEatery.swift
-    // TODO: refactor to avoid repeated code
-    //
-    // Generates description of eatery for its current state
-    // returns "Opening in x min)" if x <= 60 and is closed"
-    // "Closing in x min) if x <= 60 and is open,
-    // "Closed" if closed and not opening soon,
-    // "Open now" if open and not closing soon
-    // Bool value is either stable or about to change
-    @available(*, deprecated, renamed: "currentStatus()")
-    func generateDescriptionOfCurrentState() -> EateryStatus {
-        return currentStatus()
-    }
-
     func currentStatus() -> EateryStatus {
         return status(at: Date())
     }
@@ -177,6 +163,22 @@ extension Eatery {
                 return 250.0
         }
         return altitude
+    }
+
+    // MARK: Deprecated
+
+    // ** COPY OF IMPLEMENTATION IN LiteEatery.swift
+    // TODO: refactor to avoid repeated code
+    //
+    // Generates description of eatery for its current state
+    // returns "Opening in x min)" if x <= 60 and is closed"
+    // "Closing in x min) if x <= 60 and is open,
+    // "Closed" if closed and not opening soon,
+    // "Open now" if open and not closing soon
+    // Bool value is either stable or about to change
+    @available(*, deprecated, renamed: "currentStatus()")
+    func generateDescriptionOfCurrentState() -> EateryStatus {
+        return currentStatus()
     }
 
 }
