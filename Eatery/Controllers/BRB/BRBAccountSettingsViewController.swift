@@ -1,23 +1,27 @@
 import UIKit
 
 struct BRBAccountSettings {
+
     static let SAVE_LOGIN_INFO = "save_login_info"
 
-    static func shouldSaveLoginInfo() -> Bool
-    {
+    static func shouldSaveLoginInfo() -> Bool {
         if let shouldSave = UserDefaults.standard.object(forKey: BRBAccountSettings.SAVE_LOGIN_INFO) as? Bool {
             return shouldSave
         }
+
         return true
     }
+
 }
 
 protocol BRBAccountSettingsDelegate {
+
     func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController)
+
 }
 
-class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
-{
+class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     var tableView: UITableView!
     var cells = [UITableViewCell]()
     var delegate: BRBAccountSettingsDelegate?
@@ -36,10 +40,13 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
         tableView.tableFooterView = UIView()
         tableView.separatorColor = .inactive
         view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         let cell1 = BRBTableViewCell()
         cell1.selectionStyle = .none
-        cell1.leftLabel.text = "  Save my login info"
+        cell1.leftLabel.text = "Save my login info"
         cell1.leftLabel.font = UIFont.systemFont(ofSize: 14)
 
         let cell4 = BRBTableViewCell()
@@ -103,4 +110,5 @@ class BRBAccountSettingsViewController: UIViewController, UITableViewDelegate, U
             logout()
         }
     }
+
 }
