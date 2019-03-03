@@ -3,7 +3,9 @@ import Crashlytics
 import NVActivityIndicatorView
 
 protocol BRBLoginViewDelegate {
+
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String)
+
 }
 
 class BRBLoginView: UIView, UITextFieldDelegate {
@@ -130,14 +132,14 @@ class BRBLoginView: UIView, UITextFieldDelegate {
 
         // iphone 5s.height = 568
         perpetualLoginButton.setTitle("☐   Save my login info", for: .normal)
-        /// NOTE: this checkbox solution is rather hacky, should be replaced with images in the future
         perpetualLoginButton.setTitle("☑ Save my login info", for: .selected)
         perpetualLoginButton.setTitleColor(.darkGray, for: .normal)
         perpetualLoginButton.setTitleColor(.black, for: .highlighted)
         perpetualLoginButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         perpetualLoginButton.titleLabel?.textAlignment = .left
-        perpetualLoginButton.addTarget(self, action: #selector(BRBLoginView.keepMeSignedIn), for: .touchUpInside)
+        perpetualLoginButton.addTarget(self, action: #selector(keepMeSignedIn), for: .touchUpInside)
         perpetualLoginButton.sendActions(for: .touchUpInside)
+        perpetualLoginButton.isSelected = BRBAccountSettings.saveLoginInfo
         addSubview(perpetualLoginButton)
         perpetualLoginButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
@@ -199,17 +201,15 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         perpetualLoginButton.isSelected = !perpetualLoginButton.isSelected
         
         if !perpetualLoginButton.isSelected {
-            UserDefaults.standard.removeObject(forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
+            BRBAccountSettings.removeKeychainLoginInfo()
         }
     }
     
     @objc func login() {
-        
         let netid = (netidTextField.text ?? "").lowercased()
         let password = passwordTextField.text ?? ""
         
         if netid.count > 0 && password.count > 0 {
-
             headerLabel.text = "Logging in... this may take a minute."
             headerLabel.textColor = .gray
             activityIndicator.startAnimating()
@@ -218,8 +218,8 @@ class BRBLoginView: UIView, UITextFieldDelegate {
             delegate?.brbLoginViewClickedLogin(brbLoginView: self, netid: netid, password: password)
             isUserInteractionEnabled = false
             alpha = 0.5
-            
-            UserDefaults.standard.set(perpetualLoginButton.isSelected, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
+
+            BRBAccountSettings.saveLoginInfo = perpetualLoginButton.isSelected
         } else {
             if netid.count == 0 {
                 netidTextField.becomeFirstResponder()
@@ -236,12 +236,12 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == passwordTextField {
-            
             netidTextField.resignFirstResponder()
             passwordTextField.resignFirstResponder()
             
             login()
         }
+        
         return true
     }
     

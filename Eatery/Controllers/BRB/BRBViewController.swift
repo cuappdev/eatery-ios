@@ -4,18 +4,16 @@ import SafariServices
 import Crashlytics
 import NVActivityIndicatorView
 
-class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDelegate, BRBAccountSettingsDelegate, UITableViewDelegate, UITableViewDataSource {
+class BRBViewController: UIViewController {
     
-    var connectionHandler: BRBConnectionHandler = BRBConnectionHandler()
-    var loginView: BRBLoginView?
-    var loggedIn = false
-    var timer: Timer!
+    private var connectionHandler = BRBConnectionHandler()
+    private var loginView: BRBLoginView?
     
-    var tableView: UITableView!
-    var activityIndicatorView: NVActivityIndicatorView!
-    let timeout = 30.0 // seconds
-    var time = 0.0 // time of request
-    lazy var historyHeader: EateriesCollectionViewHeaderView = {
+    private var tableView: UITableView!
+    private var activityIndicatorView: NVActivityIndicatorView!
+    private let timeout: TimeInterval = 30.0
+    private var requestStart: Date?
+    private lazy var historyHeader: EateriesCollectionViewHeaderView = {
         let header = EateriesCollectionViewHeaderView()
         header.titleLabel.text = "History"
         return header
@@ -30,8 +28,11 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
 
         view.backgroundColor = .white
         
-        let profileIcon = UIBarButtonItem(image: UIImage(named: "brbSettings"), style: .plain, target: self, action: #selector(BRBViewController.userClickedProfileButton))
-        navigationItem.rightBarButtonItem = profileIcon
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "brbSettings"),
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(userClickedProfileButton))
+        navigationItem.rightBarButtonItem = settingsButton
 
         navigationController?.view.backgroundColor = .white
         if #available(iOS 11.0, *) {
@@ -39,8 +40,6 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         }
 
         connectionHandler.delegate = self
-        
-        navigationItem.rightBarButtonItem?.isEnabled = false
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(tapGesture)
@@ -67,11 +66,7 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         let loginView = BRBLoginView(frame: view.bounds)
         loginView.delegate = self
 
-        let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        let netid = keychainItemWrapper["netid"] as? String
-        let password = keychainItemWrapper["password"] as? String
-
-        if netid?.count ?? 0 > 0 && password?.count ?? 0 > 0 {
+        if let (netid, password) = BRBAccountSettings.loadFromKeychain(), netid.isEmpty, password.isEmpty {
             loginView.netidTextField.text = netid
             loginView.passwordTextField.text = password
         }
@@ -90,37 +85,18 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
     }
     
     @objc func userClickedProfileButton() {
-        let brbVc = BRBAccountSettingsViewController()
-        brbVc.delegate = self
-        navigationController?.pushViewController(brbVc, animated: true)
-    }
-
-    @objc func timer(timer: Timer) {
-        
-        time = time + 0.1
-        
-        if time >= timeout {
-            timer.invalidate()
-            
-            let handler = BRBConnectionHandler()
-            handler.delegate = self
-            connectionHandler = handler
-
-            addLoginView()
-            loginView?.loginFailedWithError(error: "Please try again later")
+        let settingsVC = SettingsTableViewController()
+        settingsVC.delegate = self
+        if case .finished = connectionHandler.stage {
+            settingsVC.logoutEnabled = true
+        } else {
+            settingsVC.logoutEnabled = false
         }
-        
-        if connectionHandler.accountBalance != nil && connectionHandler.accountBalance.brbs != "" {
-            timer.invalidate()
 
-            finishedLogin()
-        }
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     func setupAccountPage() {
-        
-        navigationItem.rightBarButtonItem?.isEnabled = true
-        
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .wash
         tableView.register(BRBTableViewCell.self, forCellReuseIdentifier: "BalanceCell")
@@ -137,32 +113,57 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
 
         activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 16.0, y: 8.0, width: 36.0, height: 36.0), type: .circleStrokeSpin, color: .gray)
         activityIndicatorView.startAnimating()
-
-        // leaving commented for now incase we ever decide to load more history
-        // tableView.tableFooterView = activityIndicatorView
     }
     
-    /// MARK: Table view delegate/data source
+    func finishedLogin() {
+        if let requestStart = requestStart {
+            Answers.login(succeeded: true, timeLapsed: Date().timeIntervalSince(requestStart))
+        }
+        
+        // update keychain from login view
+        if let loginView = loginView,
+            let netid = loginView.netidTextField.text, !netid.isEmpty,
+            let password = loginView.passwordTextField.text {
+            if loginView.perpetualLoginButton.isSelected {
+                let loginInfo = (netid: netid, password: password)
+                BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
+            } else {
+                BRBAccountSettings.removeKeychainLoginInfo()
+            }
+        }
+        
+        if let loginView = loginView {
+            loginView.superview?.removeFromSuperview()
+            loginView.removeFromSuperview()
+            self.loginView = nil
+            setupAccountPage()
+        }
+    }
+
+}
+
+extension BRBViewController: UITableViewDataSource {
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return brbAccount.swipes != "" ? 4 : 3
         }
         return brbAccount.history.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell : BRBTableViewCell // cell that we return
-        
+        var cell : BRBTableViewCell
+
         if indexPath.section == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "BalanceCell") as! BRBTableViewCell
             cell.selectionStyle = .none
             cell.leftLabel.font = UIFont.boldSystemFont(ofSize: 15)
             cell.rightLabel.font = UIFont.systemFont(ofSize: 15)
-            
+
             switch indexPath.row {
             case 0:
                 cell.leftLabel.text = " City Bucks"
@@ -193,22 +194,14 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
                 attributedDesc.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(white: 0.40, alpha: 1), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.count - newLineLoc - 1))
                 attributedDesc.addAttribute(NSAttributedStringKey.font, value: UIFont.boldSystemFont(ofSize: 16), range: NSRange(location: 0, length: newLineLoc))
             }
-            
+
             cell.leftLabel.attributedText = attributedDesc
             cell.rightLabel.text = brbAccount.history[indexPath.row].timestamp
         }
 
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < brbAccount.history.count ? 64 : tableView.rowHeight
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 0 : 56.0
-    }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             return UIView()
@@ -217,89 +210,33 @@ class BRBViewController: UIViewController, BRBConnectionDelegate, BRBLoginViewDe
         return historyHeader
     }
 
-    /// -- end tableView
-    
-    /// BRBConnectionDelegate
-    
-    func loginFailed(with error: String) {
-        Answers.login(succeeded: false, timeLapsed: time)
+}
 
-        
-        addLoginView()
+extension BRBViewController: UITableViewDelegate {
 
-        loginView?.loginFailedWithError(error: error)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return indexPath.section == 0 ? 48 : indexPath.section == 1 && indexPath.row < brbAccount.history.count ? 64 : tableView.rowHeight
     }
 
-    func showSafariVC() {
-        
-        if let url = URL(string: "https://get.cbord.com/cornell/full/login.php") {
-            let safariVC = SFSafariViewController(url: url)
-            safariVC.modalPresentationStyle = .overCurrentContext
-
-            // not very elegant, but prevents user from switching tabs and messing up the vc structure
-            // TODO: make more elegant
-            parent?.parent?.present(safariVC, animated: true, completion: nil)
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0 : 56.0
     }
-    
-    func finishedLogin() {
-        Answers.login(succeeded: true, timeLapsed: time)
-        loggedIn = true
-        
-        // add netid + password to keychain
-        
-        // update keychain from login view
-        if let loginView = loginView, loginView.netidTextField.text != "" {
-            let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-            
-            if loginView.perpetualLoginButton.isSelected {
-                keychainItemWrapper["netid"] = loginView.netidTextField.text as AnyObject
-                keychainItemWrapper["password"] = loginView.passwordTextField.text as AnyObject
-            } else {
-                keychainItemWrapper["netid"] = nil
-                keychainItemWrapper["password"] = nil
-                UserDefaults.standard.set(false, forKey: BRBAccountSettings.SAVE_LOGIN_INFO)
-            }
-        }
-        
-        if loginView != nil {
-            loginView?.superview?.removeFromSuperview()
-            loginView?.removeFromSuperview()
-            loginView = nil
-            self.setupAccountPage()
-        }
-    }
-    
-    func brbAccountSettingsDidLogoutUser(brbAccountSettings: BRBAccountSettingsViewController) {
-        tableView.removeFromSuperview()
-        tableView = nil
-        
-        navigationItem.rightBarButtonItem?.isEnabled = false
 
-        let handler = BRBConnectionHandler()
-        connectionHandler = handler
-        connectionHandler.delegate = self
+}
 
-        addLoginView()
+extension BRBViewController: BRBLoginViewDelegate {
 
-        //Need to add to subview so it works on an actual device
-        view.addSubview(connectionHandler)
-    }
-    
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String) {
-        time = 0.0 // start counting request time
-        
+        requestStart = Date()
+
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
     }
-    
-    deinit {
-        timer?.invalidate()
-    }
- }
 
-extension BRBViewController {
+}
+
+extension BRBViewController: BRBConnectionDelegate {
 
     func retrievedSessionId(id: String) {
         NetworkManager.shared.getBRBAccountInfo(sessionId: id) { (brbAccount, error) in
@@ -312,4 +249,35 @@ extension BRBViewController {
             }
         }
     }
+
+    func loginFailed(with error: String) {
+        if let requestStart = requestStart {
+            Answers.login(succeeded: false, timeLapsed: Date().timeIntervalSince(requestStart))
+        }
+
+        addLoginView()
+
+        loginView?.loginFailedWithError(error: error)
+    }
+
+}
+
+extension BRBViewController: SettingsTableViewControllerDelegate {
+
+    func settingsTableViewControllerDidLogoutUser(_ stvc: SettingsTableViewController) {
+        tableView.removeFromSuperview()
+        tableView = nil
+
+        let handler = BRBConnectionHandler()
+        connectionHandler = handler
+        connectionHandler.delegate = self
+
+        addLoginView()
+
+        //Need to add to subview so it works on an actual device
+        view.addSubview(connectionHandler)
+
+        navigationController?.popToViewController(self, animated: true)
+    }
+
 }

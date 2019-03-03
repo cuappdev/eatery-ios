@@ -1,6 +1,7 @@
 import UIKit
 
 class BRBTableViewCell: UITableViewCell {
+
     let leftLabel = UILabel()
     let rightLabel = UILabel()
     let centerLabel = UILabel()
@@ -43,7 +44,7 @@ class BRBTableViewCell: UITableViewCell {
         contentView.addSubview(centerLabel)
 
         leftLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(14.0)
+            make.leading.equalToSuperview().inset(20.0)
             make.centerY.equalToSuperview()
         }
 
@@ -52,7 +53,7 @@ class BRBTableViewCell: UITableViewCell {
         }
 
         rightLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(14.0)
+            make.trailing.equalToSuperview().inset(20.0)
             make.centerY.equalToSuperview()
         }
     }
