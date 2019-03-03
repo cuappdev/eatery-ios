@@ -214,7 +214,6 @@
 		E9CFC0A81C0E4A3000ED884A /* appendix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = appendix.json; path = "Extra Eatery Data/appendix.json"; sourceTree = "<group>"; };
 		E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
 		E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
-		F06C7C101DDD032A000445E5 /* BRBAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBTableViewCell.swift; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -386,7 +385,6 @@
 		9584FE531CDD6C40001A3AB5 /* BRB */ = {
 			isa = PBXGroup;
 			children = (
-				F06C7C101DDD032A000445E5 /* BRBAccountSettingsViewController.swift */,
 				5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */,
 				9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */,
 				9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */,

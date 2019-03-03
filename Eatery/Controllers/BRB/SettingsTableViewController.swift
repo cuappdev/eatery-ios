@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import SafariServices
 
 struct BRBAccountSettings {
 
@@ -167,6 +168,22 @@ class SettingsTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
 
         switch (indexPath.section, indexPath.row) {
+        case (0, 1):
+            guard let url = URL(string: "https://www.cornellappdev.com/") else {
+                return
+            }
+
+            let svc = SFSafariViewController(url: url)
+            svc.view.tintColor = .eateryBlue
+            present(svc, animated: true)
+
+        case (1, 1):
+            guard let url = URL(string: "mailto:team@cornellappdev.com") else {
+                return
+            }
+
+            UIApplication.shared.open(url)
+
         case (2, 0):
             if logoutEnabled {
                 delegate?.settingsTableViewControllerDidLogoutUser(self)

@@ -3,32 +3,40 @@ import WebKit
 import Crashlytics
 
 struct HistoryEntry {
+
     var description: String = ""
     var timestamp: String = ""
+
 }
 
 struct AccountBalance {
+
     var brbs: String = ""
     var cityBucks: String = ""
     var laundry: String = ""
     var swipes: String = "0"
+
 }
 
 enum Stages {
+
     case loginScreen
     case transition
     case loginFailed
     case finished(sessionId: String)
+
 }
 
 protocol BRBConnectionDelegate {
+
     func retrievedSessionId(id: String)
     func loginFailed(with error: String)
+
 }
 
-let loginURLString = "https://get.cbord.com/cornell/full/login.php?mobileapp=1"
-let maxTrials = 3
-let trialDelay = 500
+private let loginURLString = "https://get.cbord.com/cornell/full/login.php?mobileapp=1"
+private let maxTrials = 3
+private let trialDelay = 500
 
 class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
@@ -45,7 +53,6 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         navigationDelegate = self
         URLCache.shared.diskCapacity = 0
         URLCache.shared.memoryCapacity = 0
-
     }
     
     required init?(coder: NSCoder) {
@@ -56,9 +63,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     //MARK: Connection Handling
     
     /**
-     
      - Gets the HTML for the current web page and runs block after loading HTML into a string
-     
      */
     func getHTML(block: @escaping (NSString) -> ()){
         evaluateJavaScript("document.documentElement.outerHTML.toString()",
@@ -70,9 +75,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
     
     /**
-     
      - Loads login web page
-     
      */
     func handleLogin() {
         loginCount = 0
@@ -122,13 +125,11 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
     
     /**
-     
      - Gets the stage enum for the currently displayed web page and runs a block after fetching
      the HTML for the page.
      
      - Does not guarantee Javascript will finish running before the block
      is executed.
-     
      */
     func getStageAndRunBlock(block: @escaping () -> ()) {
         getHTML(block: { (html: NSString) -> () in

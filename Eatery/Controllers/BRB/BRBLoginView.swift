@@ -3,7 +3,9 @@ import Crashlytics
 import NVActivityIndicatorView
 
 protocol BRBLoginViewDelegate {
+
     func brbLoginViewClickedLogin(brbLoginView: BRBLoginView, netid: String, password: String)
+
 }
 
 class BRBLoginView: UIView, UITextFieldDelegate {
@@ -204,7 +206,6 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     }
     
     @objc func login() {
-        
         let netid = (netidTextField.text ?? "").lowercased()
         let password = passwordTextField.text ?? ""
         
