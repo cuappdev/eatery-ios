@@ -7,7 +7,6 @@ import NVActivityIndicatorView
 class BRBViewController: UIViewController {
     
     private var connectionHandler = BRBConnectionHandler()
-
     private var loginView: BRBLoginView?
     
     private var tableView: UITableView!
@@ -67,9 +66,7 @@ class BRBViewController: UIViewController {
         let loginView = BRBLoginView(frame: view.bounds)
         loginView.delegate = self
 
-        let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        if let netid = keychainItemWrapper["netid"] as? String, !netid.isEmpty,
-            let password = keychainItemWrapper["password"] as? String, !password.isEmpty {
+        if let (netid, password) = BRBAccountSettings.loadFromKeychain(), netid.isEmpty, password.isEmpty {
             loginView.netidTextField.text = netid
             loginView.passwordTextField.text = password
         }
@@ -123,15 +120,13 @@ class BRBViewController: UIViewController {
             Answers.login(succeeded: true, timeLapsed: Date().timeIntervalSince(requestStart))
         }
         
-        // add netid + password to keychain
-        
         // update keychain from login view
         if let loginView = loginView,
             let netid = loginView.netidTextField.text, !netid.isEmpty,
             let password = loginView.passwordTextField.text {
             if loginView.perpetualLoginButton.isSelected {
-                BRBAccountSettings.putKeychainLoginInfo(netid: netid,
-                                                        password: password)
+                let loginInfo = (netid: netid, password: password)
+                BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
             } else {
                 BRBAccountSettings.removeKeychainLoginInfo()
             }
@@ -161,7 +156,7 @@ extension BRBViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell : BRBTableViewCell // cell that we return
+        var cell : BRBTableViewCell
 
         if indexPath.section == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "BalanceCell") as! BRBTableViewCell

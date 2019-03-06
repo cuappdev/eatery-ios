@@ -210,7 +210,6 @@ class BRBLoginView: UIView, UITextFieldDelegate {
         let password = passwordTextField.text ?? ""
         
         if netid.count > 0 && password.count > 0 {
-
             headerLabel.text = "Logging in... this may take a minute."
             headerLabel.textColor = .gray
             activityIndicator.startAnimating()
@@ -237,12 +236,12 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == passwordTextField {
-            
             netidTextField.resignFirstResponder()
             passwordTextField.resignFirstResponder()
             
             login()
         }
+        
         return true
     }
     

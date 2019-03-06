@@ -12,28 +12,40 @@ import SafariServices
 
 struct BRBAccountSettings {
 
+    typealias LoginInfo = (netid: String, password: String)
+
     private static let saveLoginInfoKey = "save_login_info"
 
     static var saveLoginInfo: Bool {
         get {
-            return UserDefaults.standard.object(forKey: BRBAccountSettings.saveLoginInfoKey) as? Bool ?? true
+            return UserDefaults.standard.bool(forKey: BRBAccountSettings.saveLoginInfoKey)
         }
         set {
             UserDefaults.standard.set(newValue, forKey: BRBAccountSettings.saveLoginInfoKey)
         }
     }
 
-    static func putKeychainLoginInfo(netid: String, password: String) {
-        let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        keychainItemWrapper["netid"] = netid as AnyObject
-        keychainItemWrapper["password"] = password as AnyObject
+    static func saveToKeychain(loginInfo: LoginInfo) {
+        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+        keychain["netid"] = loginInfo.netid as AnyObject
+        keychain["password"] = loginInfo.password as AnyObject
     }
 
     static func removeKeychainLoginInfo() {
-        let keychainItemWrapper = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        keychainItemWrapper["netid"] = nil
-        keychainItemWrapper["password"] = nil
+        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+        keychain["netid"] = nil
+        keychain["password"] = nil
+
         BRBAccountSettings.saveLoginInfo = false
+    }
+
+    static func loadFromKeychain() -> LoginInfo? {
+        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
+        if let netid = keychain["netid"] as? String, let password = keychain["password"] as? String else {
+            return (netid: netid, password: password)
+        } else{
+            return nil
+        }
     }
 
 }
@@ -50,7 +62,6 @@ class SettingsTableViewController: UITableViewController {
 
         case description
         case link
-
         case saveLoginInfo
         case logout
 
@@ -94,8 +105,7 @@ class SettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 2
-        case 1: return 2
+        case 0, 1: return 2
         case 2: return 1
         default: return 0
         }
@@ -157,7 +167,6 @@ class SettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return nil
         case 1: return "Feedback"
         case 2: return "Account Settings"
         default: return nil
