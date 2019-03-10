@@ -13,7 +13,7 @@ enum EateryStatus {
         case .open:
             return .eateryGreen
         case .opening, .closing:
-            return .orange
+            return .eateryOrange
         case .closed:
             return .eateryRed
         }

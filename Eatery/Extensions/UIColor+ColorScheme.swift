@@ -29,6 +29,9 @@ extension UIColor {
 
     /// 0x63C774
     static let eateryGreen = colorFromCode(0x63C774)
+    
+    /// 0xFF9E59
+    static let eateryOrange = colorFromCode(0xFF9E59)
 
     static let transparentEateryBlue = UIColor.eateryBlue.withAlphaComponent(0.8)
 
