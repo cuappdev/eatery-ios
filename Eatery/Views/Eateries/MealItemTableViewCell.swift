@@ -18,6 +18,7 @@ class MealItemTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
+        isUserInteractionEnabled = true
 
         nameLabel.font = UIFont.systemFont(ofSize: 14)
         nameLabel.textColor = UIColor.darkGray
