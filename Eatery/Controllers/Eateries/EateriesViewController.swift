@@ -86,7 +86,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         setupLoadingView()
         setupBars()
         setupCollectionView()
-
+        presentGivingDayPopup()
+        
         collectionView.isHidden = true
         searchBar.alpha = 0.0
         filterBar.alpha = 0.0
@@ -208,6 +209,31 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.contentInset.bottom += 56.0
 
         view.addGestureRecognizer(collectionView.panGestureRecognizer)
+    }
+    
+    func presentGivingDayPopup(){
+        let todayDate = Date()
+        let givingDayStart : Date = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM/dd/yy HH:mm"
+            if let date = formatter.date(from: "03/14/19 00:00"){
+                return date
+            }
+            return Date()
+        }()
+        let givingDayEnd : Date = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM/dd/yy HH:mm"
+            if let date = formatter.date(from: "03/14/19 23:59"){
+                return date
+            }
+            return Date()
+        }()
+        
+        if !UserDefaults.standard.bool(forKey: "didDonatePopup") && todayDate > givingDayStart && todayDate < givingDayEnd{
+            UserDefaults.standard.set(true, forKey: "didDonatePopup")
+            present(GivingDayViewController(), animated: true, completion: nil)
+        }
     }
     
     func loadData(force: Bool, completion:(() -> Void)?) {
