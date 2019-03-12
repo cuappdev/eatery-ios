@@ -34,6 +34,8 @@
 		6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6502AF861DCFB9ED00390EAA /* FilterBar.swift */; };
 		654E37411DEEA738000E4FAB /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E37401DEEA738000E4FAB /* Sort.swift */; };
 		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
+		87DFEA832236CC9200CF5502 /* GivingDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DFEA822236CC9200CF5502 /* GivingDayView.swift */; };
+		87DFEA852236CDD900CF5502 /* GivingDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DFEA842236CDD900CF5502 /* GivingDayViewController.swift */; };
 		892A06E061931FC9506733A0 /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
 		9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */; };
@@ -170,6 +172,8 @@
 		65E93178206C186B00547D14 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87DFEA822236CC9200CF5502 /* GivingDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GivingDayView.swift; sourceTree = "<group>"; };
+		87DFEA842236CDD900CF5502 /* GivingDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GivingDayViewController.swift; sourceTree = "<group>"; };
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImages.swift; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
@@ -289,6 +293,7 @@
 				5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */,
 				5D218C1A21FBE39700327516 /* NavigationTitleView.swift */,
 				E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */,
+				87DFEA822236CC9200CF5502 /* GivingDayView.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */,
+				87DFEA842236CDD900CF5502 /* GivingDayViewController.swift */,
 				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
@@ -838,6 +844,7 @@
 				E93CD4171BE67AC400089CE5 /* MenuViewController.swift in Sources */,
 				E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */,
 				5D218C3E21FBE39700327516 /* LookAheadHeaderView.swift in Sources */,
+				87DFEA832236CC9200CF5502 /* GivingDayView.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,
 				5D218C3D21FBE39700327516 /* FilterDateView.swift in Sources */,
 				5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */,
@@ -861,6 +868,7 @@
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
+				87DFEA852236CDD900CF5502 /* GivingDayViewController.swift in Sources */,
 				9584FE511CDD6C3B001A3AB5 /* BRBLoginView.swift in Sources */,
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				1D07D27B1C86F9D400FABB7B /* UIScreen+Device.swift in Sources */,
