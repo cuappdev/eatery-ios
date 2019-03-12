@@ -13,7 +13,7 @@ import NVActivityIndicatorView
 
 class LookAheadViewController: UIViewController {
 
-    typealias EateryArea = (area: Area, eateries: [Eatery])
+    typealias EateryArea = (area: Area, eateries: [CampusEatery])
 
     private enum CellIdentifier: String {
 
@@ -141,7 +141,7 @@ class LookAheadViewController: UIViewController {
     private var cellHeights: [IndexPath: CGFloat] = [:]
 
     /// Try and find the event that most closely matches the specified meal
-    private func findEvent(from events: [Eatery.EventName: Event], matching meal: MealChoice) -> Event? {
+    private func findEvent(from events: [CampusEatery.EventName: Event], matching meal: MealChoice) -> Event? {
         switch meal {
         case .breakfast: return events["Breakfast"] ?? events["Brunch"]
         case .lunch: return events["Lunch"] ?? events["Brunch"] ?? events["Lite Lunch"]
@@ -212,12 +212,12 @@ class LookAheadViewController: UIViewController {
     }
 
     private func queryEateries() {
-        NetworkManager.shared.getEateries { (eateries, error) in
+        NetworkManager.shared.getCampusEateries { (eateries, error) in
             DispatchQueue.main.async(execute: { [weak self] in
                 guard let `self` = self else { return }
 
                 guard let eateries = eateries else { return }
-                var eateriesByArea: [Area: [Eatery]] = [:]
+                var eateriesByArea: [Area: [CampusEatery]] = [:]
                 let displayedAreas: [Area] = [.west, .north, .central]
 
                 for eatery in eateries where eatery.eateryType == .dining && displayedAreas.contains(eatery.area) {

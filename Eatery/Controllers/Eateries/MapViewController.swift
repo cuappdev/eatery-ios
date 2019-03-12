@@ -8,7 +8,7 @@ let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    var eateries: [Eatery]
+    var eateries: [CampusEatery]
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
@@ -20,7 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         return locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
     }
     
-    init(eateries allEateries: [Eatery]) {
+    init(eateries allEateries: [CampusEatery]) {
         self.eateries = allEateries
         self.mapView = MKMapView()
         super.init(nibName: nil, bundle: nil)
@@ -74,7 +74,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
     }
     
-    func mapEateries(_ eateries: [Eatery]) {
+    func mapEateries(_ eateries: [CampusEatery]) {
         self.eateries = eateries
         
         for eatery in eateries {

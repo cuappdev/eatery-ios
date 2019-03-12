@@ -14,14 +14,14 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     var collectionView: UICollectionView!
     var activityIndicator: NVActivityIndicatorView!
     
-    var eateries: [Eatery] = []
+    var eateries: [CampusEatery] = []
     var filters: Set<Filter> = []
     var initialLoad = true
-    fileprivate var eateryData: [EateryUserStatus: [Eatery]] = [:]
+    fileprivate var eateryData: [EateryUserStatus: [CampusEatery]] = [:]
     
     fileprivate var searchBar: UISearchBar!
     fileprivate var filterBar: FilterBar!
-    fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
+    fileprivate var searchedMenuItemNames: [CampusEatery: [String]] = [:]
     var preselectedSlug: String?
     fileprivate let defaults = UserDefaults.standard
     
@@ -36,6 +36,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     fileprivate var userLocation: CLLocation?
     
     fileprivate var updateTimer: Timer?
+
+    var didAnimateEateriesIntoView = false  
     
     enum EateryUserStatus {
         case favorites
@@ -66,9 +68,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         case distanceLabel = "distanceLabel"
         case infoContainer = "infoContainer"
 
-        func id(eatery: Eatery) -> String {
+        func id(eatery: CampusEatery) -> String {
             return eatery.slug + "_" + rawValue
         }
+        
     }
     
     override func viewDidLoad() {
@@ -219,7 +222,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
             pushPreselectedEatery()
             return
         }
-        NetworkManager.shared.getEateries { (eateries, error) in
+        NetworkManager.shared.getCampusEateries { (eateries, error) in
             if let error = error {
                 let alertController = UIAlertController(title: "Unable to fetch Eateries", message: error.localizedDescription, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -237,10 +240,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
     }
 
-    var animated = false
     func animateInView() {
-        if !animated {
-            animated = true
+        if !didAnimateEateriesIntoView {
+            didAnimateEateriesIntoView = true
+
             collectionView.performBatchUpdates(nil) { complete in
 
                 let cells: [UIView] = self.collectionView.visibleCells
@@ -302,7 +305,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
   
     func pushPreselectedEatery() {
         guard let slug = preselectedSlug else { return }
-        var preselectedEatery: Eatery?
+        var preselectedEatery: CampusEatery?
         // Find eatery
         for (_, eateries) in eateryData {
             for eatery in eateries {
@@ -327,7 +330,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     
     func processEateries() {
         searchedMenuItemNames.removeAll()
-        var desiredEateries: [Eatery] = []
+        var desiredEateries: [CampusEatery]
         let searchQuery = (searchBar.text ?? "").translateEmojiText()
         if searchQuery != "" {
             desiredEateries = eateries.filter { eatery in
@@ -347,7 +350,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
                     }
                 }
 
-                let todayMenu = eatery.diningMenu?.data[Eatery.dayFormatter.string(from: Date())] ?? []
+                let todayMenu = eatery.diningMenu?.data[CampusEatery.dayFormatter.string(from: Date())] ?? []
                 for item in todayMenu.map({ $0.name }) {
                     appendSearchItem(item)
                 }
@@ -370,8 +373,12 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
         
         desiredEateries = desiredEateries.filter {
-            if filters.contains(.swipes) { return $0.paymentMethods.contains(.swipes) }
-            if filters.contains(.brb) { return $0.paymentMethods.contains(.brb) }
+            if filters.contains(.swipes) {
+                return $0.paymentMethods.contains(.swipes)
+            }
+            if filters.contains(.brb) {
+                return $0.paymentMethods.contains(.brb)
+            }
             return true
         }
         
@@ -401,7 +408,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         collectionView.reloadData()
     }
 
-    func data(for section: Int) -> (EateryUserStatus, [Eatery]) {
+    func data(for section: Int) -> (EateryUserStatus, [CampusEatery]) {
         var section = section
 
         if let favorites = eateryData[.favorites], !favorites.isEmpty {
@@ -427,7 +434,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         return (.unknown, [])
     }
     
-    func eatery(for indexPath: IndexPath) -> Eatery {
+    func eatery(for indexPath: IndexPath) -> CampusEatery {
         let (_, eateries) = data(for: indexPath.section)
         return eateries[indexPath.row]
     }
@@ -680,4 +687,35 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
         show(viewControllerToCommit, sender: self)
     }
     
+}
+
+private extension String {
+
+    // Replace any emoji in the string with its corresponding text name
+    func translateEmojiText() -> String {
+        let emojiDictionary: [String: String] = [
+            "💩": "nasties", "🐮": "beef", "🐷": "pork", "🐔": "chicken", "🐠": "fish",
+            "🐐": "goat", "🐑": "lamb", "🦃": "turkey", "🐲": "dragon","🎃": "pumpkin",
+            "🍏": "apple", "🍐": "pear", "🍊": "tangerine", "🍋": "lemon", "🍌": "banana",
+            "🍉": "watermelon", "🍇": "grape", "🍓": "strawberry", "🍈": "melon", "🍒": "cherry",
+            "🍑": "peach", "🍍": "pineapple", "🍅": "tomato", "🍆": "aubergine", "🌶": "chile",
+            "🌽": "corn", "🍠": "potato", "🍯": "honey", "🍞": "bread", "🧀": "cheese",
+            "🍤": "shrimp", "🍳": "egg", "🍔": "burger", "🍟": "fries", "🌭": "hotdog",
+            "🍕": "pizza", "🍝":  "spaghetti", "🌮": "taco", "🌯": "burrito", "🍜": "soup",
+            "🍣": "sushi", "🍛": "curry", "🍚": "rice", "🍧": "ice cream", "🎂": "cake",
+            "🍮": "custard", "🍬": "candy", "🍫": "chocolate", "🍿": "popcorn", "🍩": "donut",
+            "🍪": "cookie", "🍺": "beer", "🍵": "tea", "☕️": "coffee", "🏠": "house",
+            "🏛": "temple", "🕍": "104West"
+        ]
+
+        var translatedEmojiText = self
+        for (emoji, searchText) in emojiDictionary {
+            if self.contains(emoji){
+                translatedEmojiText = translatedEmojiText.replacingOccurrences(of: emoji, with: searchText)
+            }
+        }
+
+        return translatedEmojiText
+    }
+
 }

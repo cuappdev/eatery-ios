@@ -19,19 +19,19 @@ struct NetworkManager {
     internal let apollo = ApolloClient(url: URL(string: "https://eatery-backend.cornellappdev.com")!)
     static let shared = NetworkManager()
 
-    func getEateries(completion: @escaping ([Eatery]?, NetworkError?) -> Void) {
-        apollo.fetch(query: AllEateriesQuery()) { (result, error) in
+    func getCampusEateries(completion: @escaping ([CampusEatery]?, NetworkError?) -> Void) {
+        apollo.fetch(query: CampusEateriesQuery()) { (result, error) in
             guard error == nil else { completion(nil, NetworkError(message: error?.localizedDescription ?? "")); return }
 
             guard let result = result,
                 let data = result.data,
-                let eateriesArray = data.eateries else {
+                let eateriesArray = data.campusEateries else {
                     completion(nil, NetworkError(message: "Could not parse response"))
                     return
             }
             let eateries = eateriesArray.compactMap { $0 }
 
-            let finalEateries: [Eatery] = eateries.map { eatery in
+            let finalEateries: [CampusEatery] = eateries.map { eatery in
                 let eateryType: EateryType = EateryType(rawValue: eatery.eateryType.lowercased()) ?? .unknown
                 let area: Area = Area(rawValue: eatery.campusArea.descriptionShort) ?? .unknown
                 let location = CLLocation(latitude: eatery.coordinates.latitude, longitude: eatery.coordinates.longitude)
@@ -100,7 +100,7 @@ struct NetworkManager {
                     eventItems[dateString] = eventsDictionary
                 }
 
-                return Eatery(id: eatery.id,
+                return CampusEatery(id: eatery.id,
                               name: eatery.name,
                               nameShort: eatery.nameShort,
                               slug: eatery.slug,
@@ -143,6 +143,26 @@ struct NetworkManager {
             let brbAccount = BRBAccount(cityBucks: accountInfo.cityBucks, laundry: accountInfo.laundry, brbs: accountInfo.brbs, swipes: accountInfo.swipes, history: brbHistory)
             
             completion(brbAccount, nil)
+        }
+    }
+
+    func getCollegeTownEateries(completion: @escaping ([CollegeTownEatery]?, NetworkError?) -> Void) {
+        apollo.fetch(query: CollegeTownEateriesQuery()) { (result, error) in
+            guard error == nil else {
+                completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
+                return
+            }
+
+            guard let result = result,
+                let data = result.data,
+                let eateries = data.collegetownEateries?.compactMap({ $0 }) else {
+                    completion(nil, NetworkError(message: "Could not parse response"))
+                    return
+            }
+
+            for eatery in eateries {
+                
+            }
         }
     }
     

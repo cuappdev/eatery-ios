@@ -12,7 +12,7 @@ private let TitleDateFormatter: DateFormatter = {
 
 class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
 
-    var eatery: Eatery
+    var eatery: CampusEatery
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
     var menuHeaderView: MenuHeaderView!
@@ -26,7 +26,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
         return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)
     }
     
-    init(eatery: Eatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil, userLocation: CLLocation? = nil) {
+    init(eatery: CampusEatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil, userLocation: CLLocation? = nil) {
         self.eatery = eatery
         self.delegate = delegate
         self.displayedDate = date

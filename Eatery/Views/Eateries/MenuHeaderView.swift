@@ -19,7 +19,7 @@ protocol MenuButtonsDelegate: AnyObject {
 
 class MenuHeaderView: UIView {
     
-    var eatery: Eatery?
+    var eatery: CampusEatery?
     var displayedDate: Date?
 
     weak var delegate: MenuButtonsDelegate?
@@ -77,7 +77,7 @@ class MenuHeaderView: UIView {
         fatalError("init(coder:) will not be implemented")
     }
     
-    func set(eatery: Eatery, date: Date) {
+    func set(eatery: CampusEatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
         

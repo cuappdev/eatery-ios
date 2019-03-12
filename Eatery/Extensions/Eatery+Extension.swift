@@ -52,7 +52,7 @@ private let kEateryAppendix = JSON(try! Data(contentsOf: Bundle.main.url(forReso
 
 let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
-extension Eatery {
+extension CampusEatery {
 
     /// Option to sort by campus or by open time
     enum Sorting: String {

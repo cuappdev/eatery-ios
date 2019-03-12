@@ -10,36 +10,11 @@ import Foundation
 import UIKit
 
 extension String {
+
     func trim() -> String {
         return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
     
-    // Replace any emoji in the string with its corresponding text name
-    func translateEmojiText() -> String {
-        let emojiDictionary: [String: String] = [
-            "💩": "nasties", "🐮": "beef", "🐷": "pork", "🐔": "chicken", "🐠": "fish",
-            "🐐": "goat", "🐑": "lamb", "🦃": "turkey", "🐲": "dragon","🎃": "pumpkin",
-            "🍏": "apple", "🍐": "pear", "🍊": "tangerine", "🍋": "lemon", "🍌": "banana",
-            "🍉": "watermelon", "🍇": "grape", "🍓": "strawberry", "🍈": "melon", "🍒": "cherry",
-            "🍑": "peach", "🍍": "pineapple", "🍅": "tomato", "🍆": "aubergine", "🌶": "chile",
-            "🌽": "corn", "🍠": "potato", "🍯": "honey", "🍞": "bread", "🧀": "cheese",
-            "🍤": "shrimp", "🍳": "egg", "🍔": "burger", "🍟": "fries", "🌭": "hotdog",
-            "🍕": "pizza", "🍝":  "spaghetti", "🌮": "taco", "🌯": "burrito", "🍜": "soup",
-            "🍣": "sushi", "🍛": "curry", "🍚": "rice", "🍧": "ice cream", "🎂": "cake",
-            "🍮": "custard", "🍬": "candy", "🍫": "chocolate", "🍿": "popcorn", "🍩": "donut",
-            "🍪": "cookie", "🍺": "beer", "🍵": "tea", "☕️": "coffee", "🏠": "house",
-            "🏛": "temple", "🕍": "104West"
-        ]
-        
-        var translatedEmojiText = self
-        for (emoji, searchText) in emojiDictionary {
-            if self.contains(emoji){
-                translatedEmojiText = translatedEmojiText.replacingOccurrences(of: emoji, with: searchText)
-            }
-        }
-        
-        return translatedEmojiText
-    }
 }
 
 extension NSMutableAttributedString {

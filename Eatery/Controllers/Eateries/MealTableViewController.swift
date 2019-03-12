@@ -4,7 +4,7 @@ class MealTableViewController: UITableViewController {
 
     var meal: String!
 
-    var eatery: Eatery! {
+    var eatery: CampusEatery! {
         didSet {
             recomputeMenu()
         }
@@ -20,7 +20,7 @@ class MealTableViewController: UITableViewController {
             menu = eventMenu
         } else if let diningMenu = eatery.diningMenu, eatery.eateryType != .dining {
             // the eatery has a constant menu, and it's not a dining hall
-            let currentDate = Eatery.dayFormatter.string(from: Date())
+            let currentDate = CampusEatery.dayFormatter.string(from: Date())
             menu = Menu(data: [currentDate: diningMenu.data[currentDate] ?? []])
         } else if let hardcodedItems = eatery.hardcodedMenu {
             menu = hardcodedItems

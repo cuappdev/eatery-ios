@@ -26,9 +26,9 @@ struct Sort {
         }
     }
     
-    static func sortEateriesByOpenOrAlph(_ eatery: [Eatery], date: Date = Date(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .time) -> [Eatery] {
+    static func sortEateriesByOpenOrAlph(_ eatery: [CampusEatery], date: Date = Date(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .time) -> [CampusEatery] {
         
-        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+        let sortByHoursClosure = { (a: CampusEatery, b: CampusEatery) -> Bool in
             switch sortingType {
             case .lookAhead:
                 let eventsA = a.eventsByName(on: date)
@@ -107,7 +107,7 @@ struct Sort {
     
     
     //HelperFunction to get meal
-    static func getSelectedMeal(eatery: Eatery, date: Date, meal: String) -> String {
+    static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
         let events = eatery.eventsByName(on: date)
         
         let meals: [String] = Array(events.keys)

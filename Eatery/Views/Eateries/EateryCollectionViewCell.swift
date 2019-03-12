@@ -34,7 +34,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var eatery: Eatery? {
+    var eatery: CampusEatery? {
         didSet {
             updateInfoViews()
         }
