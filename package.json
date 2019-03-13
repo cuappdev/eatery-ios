@@ -1,0 +1,24 @@
+{
+  "name": "eatery",
+  "version": "1.0.0",
+  "description": "[//]: # (https://github.com/cuappdev/assets/tree/master/eatery)",
+  "main": "index.js",
+  "dependencies": {
+    "apollo": "^1.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuappdev/eatery.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cuappdev/eatery/issues"
+  },
+  "homepage": "https://github.com/cuappdev/eatery#readme"
+}
