@@ -2,45 +2,45 @@ import Foundation
 import SwiftyJSON
 import UIKit
 
-enum EateryStatus {
-
-    case open(String)
-    case opening(String)
-    case closing(String)
-    case closed(String)
-    
-    var statusColor: UIColor {
-        switch self {
-        case .open:
-            return .eateryGreen
-        case .opening, .closing:
-            return .eateryOrange
-        case .closed:
-            return .eateryRed
-        }
-    }
-    
-    var statusText: String {
-        switch self {
-        case .open:
-            return "Open"
-        case .opening:
-            return "Opening"
-        case .closing:
-            return "Closing"
-        case .closed:
-            return "Closed"
-        }
-    }
-    
-    var message: String {
-        switch self {
-        case .open(let message), .opening(let message), .closing(let message), .closed(let message):
-            return message
-        }
-    }
-
-}
+//enum EateryStatus {
+//
+//    case open(String)
+//    case opening(String)
+//    case closing(String)
+//    case closed(String)
+//    
+//    var statusColor: UIColor {
+//        switch self {
+//        case .open:
+//            return .eateryGreen
+//        case .opening, .closing:
+//            return .eateryOrange
+//        case .closed:
+//            return .eateryRed
+//        }
+//    }
+//    
+//    var statusText: String {
+//        switch self {
+//        case .open:
+//            return "Open"
+//        case .opening:
+//            return "Opening"
+//        case .closing:
+//            return "Closing"
+//        case .closed:
+//            return "Closed"
+//        }
+//    }
+//    
+//    var message: String {
+//        switch self {
+//        case .open(let message), .opening(let message), .closing(let message), .closed(let message):
+//            return message
+//        }
+//    }
+//
+//}
 
 private let ShortDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -108,62 +108,62 @@ extension CampusEatery {
         }
     }
 
-    func currentStatus() -> EateryStatus {
-        return status(at: Date())
-    }
-
-    func status(at date: Date) -> EateryStatus {
-        if isOpenToday() {
-            guard let event = activeEvent(for: date) else {
-                return .closed("")
-            }
-
-            switch event.status(at: date) {
-            case .notStarted:
-                return .closed("")
-
-            case let .startingSoon(intervalUntilOpen):
-                let minutesTillOpen = Int(intervalUntilOpen / 60)
-                return .opening("in \(minutesTillOpen + 1)m")
-
-            case .started:
-                let timeString = ShortDateFormatter.string(from: event.end)
-                return .open("until \(timeString)")
-
-            case let .endingSoon(intervalUntilClose):
-                let minutesTillClose = Int(intervalUntilClose / 60)
-                return .closing("in \(minutesTillClose + 1)m")
-
-            case .ended:
-                let timeString = ShortDateFormatter.string(from: event.start)
-                return .closed("until \(timeString)")
-            }
-        } else {
-            return .closed("today")
-        }
-    }
-
-    var nickname: String {
-        guard let appendixJSON = kEateryAppendix[slug] else {
-            return name
-        }
-        return appendixJSON["nickname"].arrayValue.first?.stringValue ?? ""
-    }
-
-    func allNicknames() -> [String] {
-        guard let appendixJSON = kEateryAppendix[slug] else {
-            return [name]
-        }
-        return appendixJSON["nickname"].arrayValue.map { $0.string! }
-    }
-
-    var altitude: Double {
-        guard let appendixJSON = kEateryAppendix[slug],
-            let altitude = appendixJSON["altitude"].double else {
-                return 250.0
-        }
-        return altitude
-    }
+//    func currentStatus() -> EateryStatus {
+//        return status(at: Date())
+//    }
+//
+//    func status(at date: Date) -> EateryStatus {
+//        if isOpenToday() {
+//            guard let event = activeEvent(for: date) else {
+//                return .closed("")
+//            }
+//
+//            switch event.status(at: date) {
+//            case .notStarted:
+//                return .closed("")
+//
+//            case let .startingSoon(intervalUntilOpen):
+//                let minutesTillOpen = Int(intervalUntilOpen / 60)
+//                return .opening("in \(minutesTillOpen + 1)m")
+//
+//            case .started:
+//                let timeString = ShortDateFormatter.string(from: event.end)
+//                return .open("until \(timeString)")
+//
+//            case let .endingSoon(intervalUntilClose):
+//                let minutesTillClose = Int(intervalUntilClose / 60)
+//                return .closing("in \(minutesTillClose + 1)m")
+//
+//            case .ended:
+//                let timeString = ShortDateFormatter.string(from: event.start)
+//                return .closed("until \(timeString)")
+//            }
+//        } else {
+//            return .closed("today")
+//        }
+//    }
+//
+//    var nickname: String {
+//        guard let appendixJSON = kEateryAppendix[slug] else {
+//            return name
+//        }
+//        return appendixJSON["nickname"].arrayValue.first?.stringValue ?? ""
+//    }
+//
+//    func allNicknames() -> [String] {
+//        guard let appendixJSON = kEateryAppendix[slug] else {
+//            return [name]
+//        }
+//        return appendixJSON["nickname"].arrayValue.map { $0.string! }
+//    }
+//
+//    var altitude: Double {
+//        guard let appendixJSON = kEateryAppendix[slug],
+//            let altitude = appendixJSON["altitude"].double else {
+//                return 250.0
+//        }
+//        return altitude
+//    }
 
     // MARK: Deprecated
 

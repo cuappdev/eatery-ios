@@ -34,7 +34,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var eatery: CampusEatery? {
+    var eatery: Eatery? {
         didSet {
             updateInfoViews()
         }
@@ -192,11 +192,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         // start loading background image view as soon as possible
 
-        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+        if let url = eatery.imageUrl {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
             backgroundImageView.kf.setImage(with: url, placeholder: placeholder, options: [.transition(.fade(0.35))])
         }
-
+        
         // title
 
         titleLabel.text = eatery.nickname
@@ -207,7 +207,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         // payment
 
-        paymentView.paymentMethods = eatery.paymentMethods
+        paymentView.paymentMethods = eatery.paymentTypes
 
         // text of status label, time label
         // text color of all info labels

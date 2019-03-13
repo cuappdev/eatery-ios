@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct CollegeTownEatery: Eatery {
-
-     
-
-}
+//struct CollegeTownEatery: Eatery {
+//
+//     
+//
+//}

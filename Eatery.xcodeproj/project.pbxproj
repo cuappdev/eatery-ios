@@ -21,6 +21,7 @@
 		5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2921FBE39700327516 /* EateryCollectionViewCell.swift */; };
 		5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */; };
 		5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C4721FC136E00327516 /* CLLocation+Distance.swift */; };
+		5D5405962237FECC003A00B5 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5405952237FECC003A00B5 /* EateriesViewController.swift */; };
 		5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */; };
 		5D856458222A2D4E003A712B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D856457222A2D4E003A712B /* Menu.swift */; };
 		5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC06B7921FE36020043701A /* PaymentMethodsView.swift */; };
@@ -79,7 +80,6 @@
 		E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */; };
 		E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
 		E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */; };
-		E9EC978F1BFD1B4B00D06823 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */; };
 		F0EFD2461DDBBF9D007D63B1 /* BRBTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +148,7 @@
 		5D218C2921FBE39700327516 /* EateryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryCollectionViewCell.swift; sourceTree = "<group>"; };
 		5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		5D218C4721FC136E00327516 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
+		5D5405952237FECC003A00B5 /* EateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
 		5D856457222A2D4E003A712B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		5DC06B7921FE36020043701A /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
@@ -217,7 +218,7 @@
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9CFC0A81C0E4A3000ED884A /* appendix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = appendix.json; path = "Extra Eatery Data/appendix.json"; sourceTree = "<group>"; };
 		E9CFC0B31C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
-		E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
+		E9EC978E1BFD1B4B00D06823 /* OldEateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldEateriesViewController.swift; sourceTree = "<group>"; };
 		F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBTableViewCell.swift; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -339,7 +340,8 @@
 		6560D4411F51F373009E7CEF /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
-				E9EC978E1BFD1B4B00D06823 /* EateriesViewController.swift */,
+				E9EC978E1BFD1B4B00D06823 /* OldEateriesViewController.swift */,
+				5D5405952237FECC003A00B5 /* EateriesViewController.swift */,
 				E93CD4161BE67AC400089CE5 /* MenuViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* MealTableViewController.swift */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
@@ -874,6 +876,7 @@
 				654E37411DEEA738000E4FAB /* Sort.swift in Sources */,
 				5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */,
 				5D218C3021FBE39700327516 /* MenuHeaderView.swift in Sources */,
+				5D5405962237FECC003A00B5 /* EateriesViewController.swift in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
 				60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */,
 				D956DCC12187B94E001BB9B0 /* Event.swift in Sources */,
@@ -890,7 +893,6 @@
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
-				E9EC978F1BFD1B4B00D06823 /* EateriesViewController.swift in Sources */,
 				9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */,
 				5DEF1AA7222B570100855902 /* BRBViewController.swift in Sources */,
 				D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */,

@@ -55,13 +55,24 @@ enum Area: String {
 
 }
 
-protocol Eatery: Hashable {
+enum EateryStatus {
+
+    case openingSoon(TimeInterval)
+    case open
+    case closingSoon(TimeInterval)
+    case closed
+
+}
+
+protocol Eatery {
 
     typealias EventName = String
 
     var id: Int { get }
 
     var name: String { get }
+
+    var imageUrl: URL? { get }
 
     var eateryType: EateryType? { get }
 
@@ -73,22 +84,22 @@ protocol Eatery: Hashable {
 
     var location: CLLocation { get }
 
-    /// Whether this Eatery is open any time during the specified day.
-    func isOpen(onDayOf date: Date) -> Bool
-
-    /// Whether this Eatery is open at an exact date and times
-    func isOpen(atExactly date: Date) -> Bool
-
     /// The event at an exact date and time, or nil if such an event does not
     /// exist.
     func event(atExactly date: Date) -> Event?
 
-    /// The events that happen within the specified time interval,
+    /// The events that happen within the specified time interval, regardless of
+    /// the day the event occurs on
     /// i.e. events that are active for any amount of time during the interval.
     func events(in dateInterval: DateInterval) -> [Event]
 
-    /// The events by name that occur any time during the day
+    /// The events by name that occur on the specified day
+    // Since events may extend past midnight, this function is required to pick
+    // a specific day for an event.
     func eventsByName(onDayOf date: Date) -> [EventName: Event]
+
+    /// The eatery's status at the exact moment
+    func status(atExactly date: Date) -> EateryStatus
 
 }
 
@@ -98,8 +109,77 @@ extension Eatery {
         return !eventsByName(onDayOf: date).isEmpty
     }
 
+    func isOpenToday() -> Bool {
+        return isOpen(onDayOf: Date())
+    }
+
     func isOpen(atExactly date: Date) -> Bool {
         return event(atExactly: date) != nil
     }
+
+    func activeEvent(onDayOf date: Date) -> Event? {
+        let calendar = Calendar.current
+        guard let yesterday = calendar.date(byAdding: .day, value: -1, to: Date()),
+            let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) else {
+                return nil
+        }
+
+        return events(in: DateInterval(start: yesterday, end: tomorrow))
+            .filter {
+                // disregard events that are not currently happening or that have happened in the past
+                $0.occurs(at: date) || date < $0.start
+            }.min { (lhs, rhs) -> Bool in
+                if lhs.occurs(at: date) {
+                    return true
+                } else if rhs.occurs(at: date) {
+                    return false
+                }
+
+                let timeUntilLeftStart = lhs.start.timeIntervalSince(date)
+                let timeUntilRightStart = rhs.start.timeIntervalSince(date)
+                return timeUntilLeftStart < timeUntilRightStart
+        }
+    }
+
+    func currentActiveEvent() -> Event? {
+        return activeEvent(onDayOf: Date())
+    }
+
+    func status(atExactly date: Date) -> EateryStatus {
+        if isOpenToday() {
+            guard let event = activeEvent(onDayOf: date) else {
+                return .closed
+            }
+
+            switch event.status(at: date) {
+            case .notStarted:
+                return .closed
+
+            case let .startingSoon(intervalUntilOpen):
+                return .openingSoon(intervalUntilOpen)
+
+            case .started:
+                return .open
+
+            case let .endingSoon(intervalUntilClose):
+                return .closingSoon(intervalUntilClose)
+
+            case .ended:
+                return .closed
+            }
+        } else {
+            return .closed
+        }
+    }
+
+    func currentStatus() -> EateryStatus {
+        return status(atExactly: Date())
+    }
+
+}
+
+extension Eatery {
+
+    
 
 }

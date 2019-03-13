@@ -29,12 +29,12 @@ struct Event {
 
     /// Date and time that this event begins
     var start: Date {
-        return interval.start
+        return dateInterval.start
     }
 
     /// Date and time that this event ends
     var end: Date {
-        return interval.end
+        return dateInterval.end
     }
 
     /// Short description of the Event
@@ -45,13 +45,13 @@ struct Event {
 
     let menu: Menu
 
-    private let interval: DateInterval
+    let dateInterval: DateInterval
 
     init(start: Date, end: Date, desc: String, summary: String, menu: Menu) {
         if start < end {
-            self.interval = DateInterval(start: start, end: end)
+            self.dateInterval = DateInterval(start: start, end: end)
         } else {
-            self.interval = DateInterval(start: end, end: start)
+            self.dateInterval = DateInterval(start: end, end: start)
         }
 
         self.desc = desc
@@ -67,7 +67,7 @@ struct Event {
      - returns: true if `date` is between the `startDate` and `endDate` of the event
      */
     func occurs(at date: Date) -> Bool {
-        return interval.contains(date)
+        return dateInterval.contains(date)
     }
 
     func currentStatus() -> Status {
@@ -92,28 +92,6 @@ struct Event {
         } else /* if end < date */ {
             return .ended
         }
-    }
-
-    // MARK: Deprecated
-    
-    @available(*, deprecated, renamed: "menu.stringRepresentation")
-    func getMenuIterable() -> [(String, [String])] {
-        return menu.stringRepresentation
-    }
-
-    @available(*, deprecated, renamed: "start")
-    var startDate: Date {
-        return interval.start
-    }
-
-    @available(*, deprecated, renamed: "end")
-    var endDate: Date {
-        return interval.end
-    }
-
-    @available(*, deprecated, renamed: "occurs(at:)")
-    func occurringOnDate(_ date: Date) -> Bool {
-        return occurs(at: date)
     }
 
 }
