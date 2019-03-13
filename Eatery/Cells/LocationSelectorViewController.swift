@@ -14,9 +14,15 @@ enum Location: String {
     case collegetown = "Collegetown"
 }
 
+protocol LocationSelectorDelegate: AnyObject {
+    func didUpdateLocation(newLocation: Location)
+}
+
 class LocationSelectorViewController: UIViewController {
     
     var selectedLocation = Location.campus
+    
+    weak var delegate: LocationSelectorDelegate?
     
     var campusStackView: UIStackView!
     var separatorView: UIView!
@@ -110,6 +116,9 @@ class LocationSelectorViewController: UIViewController {
         let collegetownLabel = collegetownStackView.subviews[1] as! UILabel
         collegetownLabel.textColor = selectedLocation == .campus ?
             UIColor.secondary : UIColor.eateryBlue
+        
+        print(selectedLocation)
+        delegate?.didUpdateLocation(newLocation: selectedLocation)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

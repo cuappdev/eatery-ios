@@ -8,7 +8,7 @@ import NVActivityIndicatorView
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
-class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
+class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSelectorDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
 
     var appDevLogo: UIView?
     var collectionView: UICollectionView!
@@ -131,6 +131,15 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         startUserActivity()
         pushPreselectedEatery()
     }
+    
+    func didUpdateLocation(newLocation: Location) {
+        switch newLocation {
+        case .campus:
+            filterBar.setDisplayedFilters(filters: Filter.getCampusFilters())
+        case .collegetown:
+            filterBar.setDisplayedFilters(filters: Filter.getCollegetownFilters())
+        }
+    }
 
     @objc func appDevButtonPressed() {
 
@@ -216,6 +225,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
     
     func setupLocationSelectorView() {
         locationSelectorViewController = LocationSelectorViewController()
+        locationSelectorViewController.delegate = self
+        
         addChildViewController(locationSelectorViewController)
         view.addSubview(locationSelectorViewController.view)
         locationSelectorViewController.view.snp.makeConstraints { (make) in
