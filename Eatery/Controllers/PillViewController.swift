@@ -1,5 +1,5 @@
 //
-//  LocationSelectorView.swift
+//  PillViewController.swift
 //  Eatery
 //
 //  Created by Ethan Fine on 12/1/18.
@@ -14,15 +14,15 @@ enum Location: String {
     case collegetown = "Collegetown"
 }
 
-protocol LocationSelectorDelegate: AnyObject {
+protocol PillDelegate: AnyObject {
     func didUpdateLocation(newLocation: Location)
 }
 
-class LocationSelectorViewController: UIViewController {
+class PillViewController: UIViewController {
     
     var selectedLocation = Location.campus
     
-    weak var delegate: LocationSelectorDelegate?
+    weak var delegate: PillDelegate?
     
     var campusStackView: UIStackView!
     var separatorView: UIView!
@@ -117,7 +117,6 @@ class LocationSelectorViewController: UIViewController {
         collegetownLabel.textColor = selectedLocation == .campus ?
             UIColor.secondary : UIColor.eateryBlue
         
-        print(selectedLocation)
         delegate?.didUpdateLocation(newLocation: selectedLocation)
     }
     

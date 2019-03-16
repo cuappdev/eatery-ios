@@ -8,24 +8,21 @@ import NVActivityIndicatorView
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
-class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSelectorDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
+class EateriesViewController: UIViewController, MenuButtonsDelegate, EateriesViewControllerProtocol, CLLocationManagerDelegate, UITabBarControllerDelegate {
 
-    var appDevLogo: UIView?
     var collectionView: UICollectionView!
     var activityIndicator: NVActivityIndicatorView!
-    var locationSelectorViewController: LocationSelectorViewController!
-    
-    var lastContentOffset: CGFloat = 0
-    var lastScrollWasUserInitiated = false
-    var locationSelectorAnimating = false
+    weak var eateriesSharedViewController: EateriesSharedViewController!
     
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
     var initialLoad = true
     fileprivate var eateryData: [String: [Eatery]] = [:]
     
-    fileprivate var searchBar: UISearchBar!
-    fileprivate var filterBar: FilterBar!
+    var navController: UINavigationController?
+    
+    internal var searchBar: UISearchBar!
+    internal var filterBar: FilterBar!
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
     fileprivate let defaults = UserDefaults.standard
@@ -62,15 +59,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Eateries"
         
         view.backgroundColor = .white
 
         loadData(force: true, completion: nil)
-        
-        navigationController?.view.backgroundColor = .white
-        navigationController?.hero.isEnabled = true
-        navigationController?.hero.navigationAnimationType = .fade
 
         setupLoadingView()
         setupBars()
@@ -79,33 +71,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
         collectionView.isHidden = true
         searchBar.alpha = 0.0
         filterBar.alpha = 0.0
-
-        let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(mapButtonPressed))
-        mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
-        navigationItem.rightBarButtonItems = [mapButton]
-
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-
-            let logo = UIImageView(image: UIImage(named: "appDevLogo"))
-            logo.tintColor = .white
-            logo.contentMode = .scaleAspectFit
-            navigationController?.navigationBar.addSubview(logo)
-            logo.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(28.0)
-            }
-
-            self.appDevLogo = logo
-
-
-//            if ARViewController.isSupported() {
-//                let arButton = UIBarButtonItem(title: "AR", style: .done, target: self, action: #selector(arButtonPressed))
-//                navigationItem.rightBarButtonItems?.append(contentsOf: [UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil), arButton])
-//            }
-        } else {
-            navigationItem.rightBarButtonItems = [mapButton]
-        }
 
         if CLLocationManager.locationServicesEnabled() {
             switch (CLLocationManager.authorizationStatus()) {
@@ -131,24 +96,20 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
         startUserActivity()
         pushPreselectedEatery()
     }
-    
-    func didUpdateLocation(newLocation: Location) {
-        switch newLocation {
-        case .campus:
-            filterBar.setDisplayedFilters(filters: Filter.getCampusFilters())
-        case .collegetown:
-            filterBar.setDisplayedFilters(filters: Filter.getCollegetownFilters())
-        }
-    }
 
     @objc func appDevButtonPressed() {
 
     }
     
+    func eateriesToPresent(searchText: String, filters: Set<Filter>) -> [Eatery] {
+        // TODO
+        return []
+    }
+    
     // Scrolls users to the top of the menu when the eatery tab bar item is pressed
     func scrollToTop() {
         if collectionView != nil && collectionView.contentOffset.y > 0 {
-            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
+            let contentOffset = -(filterBarHeight + (navController?.navigationBar.frame.height ?? 0))
             collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
@@ -185,8 +146,8 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
 
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom).offset(collectionViewMargin / 2)
-            make.leading.trailing.equalToSuperview().inset(collectionViewMargin / 2)
+            make.top.equalTo(topLayoutGuide.snp.bottom).offset(1000)
+            make.leading.trailing.equalToSuperview().inset(1000)
         }
         
         filterBar = FilterBar()
@@ -223,19 +184,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
         view.addGestureRecognizer(collectionView.panGestureRecognizer)
     }
     
-    func setupLocationSelectorView() {
-        locationSelectorViewController = LocationSelectorViewController()
-        locationSelectorViewController.delegate = self
-        
-        addChildViewController(locationSelectorViewController)
-        view.addSubview(locationSelectorViewController.view)
-        locationSelectorViewController.view.snp.makeConstraints { (make) in
-            make.leading.trailing.equalToSuperview().inset(55)
-            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(8)
-            make.height.equalTo(40)
-        }
-    }
-    
     func loadData(force: Bool, completion:(() -> Void)?) {
         guard force || !initialLoad else { return }
         if !force {
@@ -257,7 +205,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
                 self.collectionView.reloadData()
                 self.animateInView()
                 self.pushPreselectedEatery()
-                self.setupLocationSelectorView()
             }
 
             completion?()
@@ -306,14 +253,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
         }
     }
 
-    @objc func mapButtonPressed() {
-        Answers.logMapOpened()
-        
-        let mapViewController = MapViewController(eateries: eateries)
-        mapViewController.mapEateries(eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
-    }
-
     @objc func createUpdateTimer() {
         updateTimer?.invalidate()
 
@@ -344,11 +283,11 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
         let menuVC = MenuViewController(eatery: eatery, delegate: self, userLocation: userLocation)
         
         // Unwind back to this VC if it is not showing
-        if !(navigationController?.visibleViewController is EateriesViewController) {
-            _ = navigationController?.popToRootViewController(animated: false)
+        if !(navController?.visibleViewController is EateriesViewController) {
+            _ = navController?.popToRootViewController(animated: false)
         }
         
-        navigationController?.pushViewController(menuVC, animated: false)
+        navController?.pushViewController(menuVC, animated: false)
         preselectedSlug = nil
     }
     
@@ -421,12 +360,13 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
         }
     }
     
+    /* Removed Ethan
     func hideLocationSelectorView() {
         guard let tabBarMinY = tabBarController?.tabBar.frame.minY else { return }
-        if locationSelectorViewController.view.frame.minY < tabBarMinY && !locationSelectorAnimating {
+        if pillViewController.view.frame.minY < tabBarMinY && !locationSelectorAnimating {
             locationSelectorAnimating.toggle()
             
-            locationSelectorViewController.view.snp.updateConstraints() { (make) in
+            pillViewController.view.snp.updateConstraints() { (make) in
                 make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).offset(40)
             }
             view.setNeedsUpdateConstraints()
@@ -441,10 +381,10 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
     
     func showLocationSelectorView() {
         guard let tabBarMinY = tabBarController?.tabBar.frame.minY else { return }
-        if locationSelectorViewController.view.frame.minY >= tabBarMinY && !locationSelectorAnimating {
+        if pillViewController.view.frame.minY >= tabBarMinY && !locationSelectorAnimating {
             locationSelectorAnimating.toggle()
             
-            self.locationSelectorViewController.view.snp.updateConstraints() { (make) in
+            self.pillViewController.view.snp.updateConstraints() { (make) in
                 make.bottom.equalTo(self.view.layoutMarginsGuide.snp.bottom).inset(8)
             }
             view.setNeedsUpdateConstraints()
@@ -455,7 +395,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, LocationSel
                 self.locationSelectorAnimating = false
             }
         }
-    }
+    }*/
     
     // MARK: MenuButtonsDelegate
     
@@ -601,7 +541,7 @@ extension EateriesViewController: UICollectionViewDelegate {
         }
 
         let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation)
-        navigationController?.pushViewController(menuViewController, animated: true)
+        navController?.pushViewController(menuViewController, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
@@ -619,58 +559,11 @@ extension EateriesViewController: UICollectionViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        lastContentOffset = scrollView.contentOffset.y
-        lastScrollWasUserInitiated = true
+        eateriesSharedViewController.scrollViewWillBeginDragging(scrollView)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var offset = scrollView.contentOffset.y
-        
-        if lastScrollWasUserInitiated && lastContentOffset > offset {
-            showLocationSelectorView()
-        } else if lastScrollWasUserInitiated && lastContentOffset < offset {
-            hideLocationSelectorView()
-        }
-        
-        lastContentOffset = offset
-        lastScrollWasUserInitiated = false
-        
-        if #available(iOS 11.0, *) {
-            offset += scrollView.adjustedContentInset.top
-        } else {
-            offset += scrollView.contentInset.top
-        }
-        
-        let maxHeaderOffset = searchBar.frame.height + filterBar.frame.height
-        let headerOffset = min(maxHeaderOffset, offset)
-
-        let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
-        searchBar.transform = transform
-        filterBar.transform = transform
-
-        appDevLogo?.alpha = min(0.9, (-15.0 - offset) / 100.0)
-
-        func handleLargeBarLogo() {
-            let margin: CGFloat = 4.0
-            let width: CGFloat = appDevLogo?.frame.width ?? 0.0
-            let navBarWidth: CGFloat = (navigationController?.navigationBar.frame.width ?? 0.0) / 2
-            let navBarHeight: CGFloat = (navigationController?.navigationBar.frame.height ?? 0.0) / 2
-
-            appDevLogo?.transform = CGAffineTransform(translationX: navBarWidth - margin - width, y: navBarHeight - margin - width)
-            appDevLogo?.tintColor = .white
-        }
-
-        let largeTitle: Bool
-        if #available(iOS 11.0, *) { largeTitle = true } else { largeTitle = false }
-
-        if largeTitle && traitCollection.verticalSizeClass != .compact {
-            handleLargeBarLogo()
-        } else {
-            appDevLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset - 20.0)
-            appDevLogo?.tintColor = .eateryBlue
-        }
-        
-        view.endEditing(true)
+        eateriesSharedViewController.scrollViewDidScroll(scrollView)
     }
 }
 

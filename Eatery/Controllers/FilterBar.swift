@@ -105,7 +105,7 @@ class FilterBar: UIView {
             button.frame.size.width += 16.0
             button.frame.size.height = frame.height
             button.center.y = frame.height / 2
-            button.isHidden = true//selectedFilters.contains(filter)
+            button.isHidden = true
 
             button.tag = index
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
