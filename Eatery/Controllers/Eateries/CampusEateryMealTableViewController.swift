@@ -1,6 +1,6 @@
 import UIKit
 
-class MealTableViewController: UITableViewController {
+class CampusEateryMealTableViewController: UITableViewController {
 
     var meal: String!
 
@@ -22,8 +22,6 @@ class MealTableViewController: UITableViewController {
             // the eatery has a constant menu, and it's not a dining hall
             let currentDate = CampusEatery.dayFormatter.string(from: Date())
             menu = Menu(data: [currentDate: diningMenu.data[currentDate] ?? []])
-        } else if let hardcodedItems = eatery.hardcodedMenu {
-            menu = hardcodedItems
         } else {
             // don't know the menu
             menu = nil
@@ -46,8 +44,6 @@ class MealTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        startUserActivity()
         
         // Appearance
         view.backgroundColor = .green
@@ -73,18 +69,6 @@ class MealTableViewController: UITableViewController {
         super.viewDidAppear(animated);
 
         tableView.layoutIfNeeded()
-    }
-
-    // MARK: - Handoff Functions
-
-    func startUserActivity() {
-        if !eatery.external {
-            let activity = NSUserActivity(activityType: "org.cuappdev.eatery.view")
-            activity.title = "View Eateries"
-            activity.webpageURL = URL(string: "https://now.dining.cornell.edu/eatery/" + eatery.slug)
-            userActivity = activity
-            userActivity?.becomeCurrent()
-        }
     }
 
     // MARK: - Table view data source

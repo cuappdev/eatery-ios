@@ -10,7 +10,7 @@ private let TitleDateFormatter: DateFormatter = {
     return formatter
 }()
 
-class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
+class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
 
     var eatery: CampusEatery
     var outerScrollView: UIScrollView!
@@ -130,10 +130,28 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             make.leading.equalTo(statusLabel.snp.trailing).offset(2.0)
         }
 
-        let eateryStatus = eatery.currentStatus()
-        hoursLabel.text = eateryStatus.message
-        statusLabel.text = eateryStatus.statusText
-        statusLabel.textColor = eateryStatus.statusColor
+        switch eatery.currentStatus() {
+        case let .openingSoon(timeUntilOpen):
+            let minutesUntilOpen = Int(timeUntilOpen / 60)
+
+            statusLabel.text = "Opening"
+            statusLabel.textColor = .eateryOrange
+            hoursLabel.text = "in \(minutesUntilOpen)m"
+        case .open:
+            statusLabel.text = "Open"
+            statusLabel.textColor = .eateryGreen
+            hoursLabel.text = ""
+        case let .closingSoon(timeUntilClose):
+            let minutesUntilClose = Int(timeUntilClose / 60)
+
+            statusLabel.text = "Closing"
+            statusLabel.textColor = .eateryOrange
+            hoursLabel.text = "in \(minutesUntilClose)m"
+        case .closed:
+            statusLabel.text = "Closed"
+            statusLabel.textColor = .eateryRed
+            hoursLabel.text = ""
+        }
 
         let locationLabel = UILabel()
         locationLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
@@ -245,8 +263,8 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
             meals.append("General")
         }
         
-        let mealViewControllers: [MealTableViewController] = meals.map {
-            let mealVC = MealTableViewController()
+        let mealViewControllers: [CampusEateryMealTableViewController] = meals.map {
+            let mealVC = CampusEateryMealTableViewController()
             mealVC.eatery = eatery
             mealVC.meal = $0
             mealVC.event = eventsDict[$0]
@@ -280,11 +298,11 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
 
         // Hero Animations
         hero.isEnabled = true
-        menuHeaderView.backgroundImageView.hero.id = EateriesViewController.Animation.backgroundImageView.id(eatery: eatery)
-        menuHeaderView.titleLabel.hero.id = EateriesViewController.Animation.title.id(eatery: eatery)
-        distanceLabel.hero.id = EateriesViewController.Animation.distanceLabel.id(eatery: eatery)
-        menuHeaderView.paymentView.hero.id = EateriesViewController.Animation.paymentView.id(eatery: eatery)
-        contentContainer.hero.id = EateriesViewController.Animation.infoContainer.id(eatery: eatery)
+        menuHeaderView.backgroundImageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.titleLabel.hero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
+        distanceLabel.hero.id = EateriesViewController.AnimationKey.distanceLabel.id(eatery: eatery)
+        menuHeaderView.paymentView.hero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
+        contentContainer.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
 
         let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
         let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]
@@ -391,10 +409,10 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     
     func scrollToCurrentTimeOpening(_ date: Date) {
         guard let currentEvent = eatery.activeEvent(for: date) else { return }
-        guard let mealViewControllers = pageViewController.viewControllers as? [MealTableViewController],
+        guard let mealViewControllers = pageViewController.viewControllers as? [CampusEateryMealTableViewController],
             mealViewControllers.count > 1 else { return }
         
-        let desiredMealVC: (MealTableViewController) -> Bool = {
+        let desiredMealVC: (CampusEateryMealTableViewController) -> Bool = {
             if currentEvent.desc == "Lite Lunch" {
                 return $0.meal == "Lunch"
             } else {
@@ -409,7 +427,7 @@ class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDel
     }
 }
 
-extension MenuViewController: MFMailComposeViewControllerDelegate {
+extension CampusEateryMenuViewController: MFMailComposeViewControllerDelegate {
     
     func presentMailComposer(subject: String, message: String) {
         if MFMailComposeViewController.canSendMail() {

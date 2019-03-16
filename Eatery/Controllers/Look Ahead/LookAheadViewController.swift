@@ -220,8 +220,12 @@ class LookAheadViewController: UIViewController {
                 var eateriesByArea: [Area: [CampusEatery]] = [:]
                 let displayedAreas: [Area] = [.west, .north, .central]
 
-                for eatery in eateries where eatery.eateryType == .dining && displayedAreas.contains(eatery.area) {
-                    eateriesByArea[eatery.area, default: []].append(eatery)
+                for eatery in eateries {
+                    if let area = eatery.area,
+                        eatery.eateryType == .dining,
+                        displayedAreas.contains(area) {
+                        eateriesByArea[area, default: []].append(eatery)
+                    }
                 }
 
                 self.eateriesByArea = [
@@ -241,8 +245,7 @@ class LookAheadViewController: UIViewController {
 
     func scrollToTop() {
         if tableView.contentOffset.y > 0 {
-            let contentOffset = -(filterBarHeight + (navigationController?.navigationBar.frame.height ?? 0))
-            tableView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
+            let contentOffset = navigationController?.navigationBar.frame.height ?? 0
         }
     }
 
@@ -266,7 +269,7 @@ extension LookAheadViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.eatery.rawValue) as! LookAheadTableViewCell
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
-        cell.eateryNameLabel.text = eatery.nameShort
+        cell.eateryNameLabel.text = eatery.displayName
 
         let events = eatery.eventsByName(on: selectedDate)
         if let event = findEvent(from: events, matching: selectedMeal) {

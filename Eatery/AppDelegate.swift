@@ -87,7 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eateryTabBarController.eateriesViewController.preselectedSlug = shortcutItem.type
+        // TODO: Push preselected slug
+        // eateryTabBarController.eateriesViewController.preselectedSlug = shortcutItem.type
         return true
     }
     

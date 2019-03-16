@@ -26,7 +26,11 @@ struct Sort {
         }
     }
     
-    static func sortEateriesByOpenOrAlph(_ eatery: [CampusEatery], date: Date = Date(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .time) -> [CampusEatery] {
+    static func sortEateriesByOpenOrAlph(_ eatery: [CampusEatery],
+                                         date: Date = Date(),
+                                         location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291),
+                                         selectedMeal: String = "None",
+                                         sortingType: SortType = .time) -> [CampusEatery] {
         
         let sortByHoursClosure = { (a: CampusEatery, b: CampusEatery) -> Bool in
             switch sortingType {
@@ -76,19 +80,19 @@ struct Sort {
                         return true
                     }
 
-                case .closing:
+                case .closingSoon:
                     switch bState {
                     case .open:
                         return false
-                    case .closing:
+                    case .closingSoon:
                         return a.nickname < b.nickname
-                    case .closed, .opening:
+                    case .closed, .openingSoon:
                         return true
                     }
 
-                case .closed, .opening:
+                case .closed, .openingSoon:
                     switch bState {
-                    case .closed, .opening:
+                    case .closed, .openingSoon:
                         return a.nickname < b.nickname
                     default:
                         return false

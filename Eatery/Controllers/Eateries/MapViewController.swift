@@ -82,7 +82,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let eateryAnnotation = MKPointAnnotation()
             eateryAnnotation.coordinate = eatery.location.coordinate
             eateryAnnotation.title = annotationTitle
-            eateryAnnotation.subtitle = eatery.isOpenNow() ? "open" : "closed"
+            eateryAnnotation.subtitle = eatery.isOpen(atExactly: Date()) ? "open" : "closed"
             mapView.addAnnotation(eateryAnnotation)
             eateryAnnotations.append(eateryAnnotation)
         }
@@ -160,7 +160,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
-        let menuVC = MenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
+        let menuVC = CampusEateryMenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
         self.navigationController?.pushViewController(menuVC, animated: true)
         
         Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)

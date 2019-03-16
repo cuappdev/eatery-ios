@@ -160,6 +160,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         menuTextView.isScrollEnabled = false
         menuTextView.bounces = false
         menuTextView.contentInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        menuTextView.isUserInteractionEnabled = false
         contentView.addSubview(menuTextView)
         menuTextView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -199,7 +200,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         
         // title
 
-        titleLabel.text = eatery.nickname
+        titleLabel.text = eatery.displayName
 
         // distance
 
@@ -207,7 +208,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         // payment
 
-        paymentView.paymentMethods = eatery.paymentTypes
+        paymentView.paymentMethods = eatery.paymentMethods
 
         // text of status label, time label
         // text color of all info labels
@@ -215,16 +216,37 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         let eateryStatus = eatery.currentStatus()
         switch eateryStatus {
-        case .open, .closing:
+        case .open, .closingSoon:
             titleLabel.textColor = .black
             closedOverlay.isHidden = true
-        case .closed, .opening:
+        case .closed, .openingSoon:
             titleLabel.textColor = .darkGray
             closedOverlay.isHidden = false
         }
-        statusLabel.text = eateryStatus.statusText
-        statusLabel.textColor = eateryStatus.statusColor
-        timeLabel.text = eateryStatus.message
+
+        switch eateryStatus {
+        case let .openingSoon(timeUntilOpen):
+            let minutesUntilOpen = Int(timeUntilOpen / 60)
+
+            statusLabel.text = "Opening"
+            statusLabel.textColor = .eateryOrange
+            timeLabel.text = "in \(minutesUntilOpen)m"
+        case .open:
+            statusLabel.text = "Open"
+            statusLabel.textColor = .eateryGreen
+            timeLabel.text = ""
+        case let .closingSoon(timeUntilClose):
+            let minutesUntilClose = Int(timeUntilClose / 60)
+
+            statusLabel.text = "Closing"
+            statusLabel.textColor = .eateryOrange
+            timeLabel.text = "in \(minutesUntilClose)m"
+        case .closed:
+            statusLabel.text = "Closed"
+            statusLabel.textColor = .eateryRed
+            timeLabel.text = ""
+        }
+
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
     }

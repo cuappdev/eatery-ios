@@ -21,7 +21,7 @@ enum Meal: String {
 }
 
 /// Assorted types of payment accepted by an Eatery
-enum PaymentType: String {
+enum PaymentMethod: String {
 
     case brb = "Meal Plan - Debit"
     case swipes = "Meal Plan - Swipe"
@@ -43,6 +43,7 @@ enum EateryType: String {
     case convenienceStore = "convenience store"
     case coffeeShop = "coffee shop"
     case bakery = "bakery"
+    case unknown = ""
 
 }
 
@@ -72,17 +73,21 @@ protocol Eatery {
 
     var name: String { get }
 
+    var displayName: String { get }
+
     var imageUrl: URL? { get }
 
-    var eateryType: EateryType? { get }
+    var eateryType: EateryType { get }
 
     var area: Area? { get }
 
     var address: String { get }
 
-    var paymentTypes: [PaymentType] { get }
+    var paymentMethods: [PaymentMethod] { get }
 
     var location: CLLocation { get }
+
+    var phone: String { get }
 
     /// The event at an exact date and time, or nil if such an event does not
     /// exist.
@@ -98,10 +103,9 @@ protocol Eatery {
     // a specific day for an event.
     func eventsByName(onDayOf date: Date) -> [EventName: Event]
 
-    /// The eatery's status at the exact moment
-    func status(atExactly date: Date) -> EateryStatus
-
 }
+
+// MARK: -
 
 extension Eatery {
 
@@ -178,8 +182,24 @@ extension Eatery {
 
 }
 
+// MARK: - Deprecated
+
 extension Eatery {
 
-    
+    func isOpen(on date: Date) -> Bool {
+        return isOpen(atExactly: date)
+    }
+
+    func isOpen(for date: Date) -> Bool {
+        return isOpen(onDayOf: date)
+    }
+
+    func activeEvent(for date: Date) -> Event? {
+        return activeEvent(onDayOf: date)
+    }
+
+    func eventsByName(on date: Date) -> [EventName: Event] {
+        return eventsByName(onDayOf: date)
+    }
 
 }

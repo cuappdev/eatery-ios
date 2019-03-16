@@ -97,10 +97,10 @@ class MenuHeaderView: UIView {
 
         let eateryStatus = eatery.currentStatus()
         switch eateryStatus {
-        case .open, .closing:
+        case .open, .closingSoon:
             titleLabel.textColor = .white
 
-        case .closed, .opening:
+        case .closed, .openingSoon:
             titleLabel.textColor = UIColor.darkGray
 
             let closedView = UIView()

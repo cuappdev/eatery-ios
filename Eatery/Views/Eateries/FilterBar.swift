@@ -2,45 +2,44 @@ import UIKit
 import SnapKit
 import Crashlytics
 
-enum Filter: String {
-    case nearest = "Nearest First"
-    case north = "North"
-    case west = "West"
-    case central = "Central"
-    case swipes = "Swipes"
-    case brb = "BRB"
-}
-
-fileprivate let filters: [Filter] = [
-    .nearest,
-    .north,
-    .west,
-    .central,
-    .swipes,
-    .brb
-]
-
 protocol FilterBarDelegate: AnyObject {
-    var filters: Set<Filter> { get set }
-    func updateFilters(filters: Set<Filter>)
+
+    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [FilterBar.Filter])
+
 }
 
 class FilterBar: UIView {
+
+    enum Filter: String, CaseIterable {
+
+        case nearest = "Nearest First"
+        case north = "North"
+        case west = "West"
+        case central = "Central"
+        case swipes = "Swipes"
+        case brb = "BRB"
+
+    }
     
     private var buttons: [UIButton] = []
-    weak var delegate: FilterBarDelegate?
-    var scrollView: UIScrollView!
+    private let scrollView = UIScrollView()
 
-    let padding: CGFloat = collectionViewMargin
-    
-    private var selectedFilters: Set<Filter> = []
+    private let padding: CGFloat = EateriesViewController.collectionViewMargin
+
+    private(set) var selectedFilters: Set<Filter> = []
+    var filters = Filter.allCases {
+        didSet {
+            layoutButtons()
+        }
+    }
+
+    weak var delegate: FilterBarDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = .clear
 
-        scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInset.left = padding
         scrollView.contentInset.right = padding
@@ -49,11 +48,19 @@ class FilterBar: UIView {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        snp.makeConstraints { make in
+            make.height.equalTo(44)
+        }
         
         layoutButtons()
     }
     
     func layoutButtons() {
+        for button in buttons {
+            button.removeFromSuperview()
+        }
+        buttons.removeAll(keepingCapacity: true)
 
         var totalWidth: CGFloat = 0.0
 
@@ -90,7 +97,6 @@ class FilterBar: UIView {
                 } else {
                     make.leading.equalToSuperview()
                 }
-                
             }
             buttons.append(button)
 
@@ -101,38 +107,23 @@ class FilterBar: UIView {
         scrollView.setContentOffset(CGPoint(x: -padding, y: 0), animated: false)
     }
     
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
-            for string in prevFilters {
-                if let filter = Filter(rawValue: string),
-                    let index = filters.index(of: filter), index < buttons.count {
-                    buttons[index].isSelected = true
-                    selectedFilters.insert(filter)
-                }
-            }
-            
-            delegate?.filters = selectedFilters
-        }
-    }
-    
     @objc func buttonPressed(sender: UIButton) {
         sender.isSelected.toggle()
+
         if sender.isSelected {
             let filter = filters[sender.tag]
             selectedFilters.insert(filter)
-            Answers.logEateryFilterApplied(filterType: filter.rawValue)
+            // TODO: 
+            // Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
             selectedFilters.remove(filters[sender.tag])
         }
-        
-        let defaults = UserDefaults.standard
-        defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
 
-        delegate?.updateFilters(filters: selectedFilters)
+        delegate?.filterBar(self, selectedFiltersDidChange: selectedFilters.map { $0 })
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }

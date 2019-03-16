@@ -16,7 +16,7 @@ class PaymentMethodsView: UIView {
         UIImageView()
     ]
 
-    var paymentMethods: [PaymentType] = [] {
+    var paymentMethods: [PaymentMethod] = [] {
         didSet {
             var images: [UIImage] = []
 
