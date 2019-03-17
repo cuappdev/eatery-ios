@@ -64,7 +64,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, EateriesVie
 
         loadData(force: true, completion: nil)
 
-        setupLoadingView()
+        //setupLoadingView()
         setupBars()
         setupCollectionView()
 
@@ -246,9 +246,7 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, EateriesVie
                     }, completion: nil)
                 }
 
-                UIView.animate(withDuration: 0.35) {
-                    self.activityIndicator.alpha = 0.0
-                }
+                self.eateriesSharedViewController.endLoadingIndicator()
             }
         }
     }

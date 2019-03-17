@@ -10,7 +10,25 @@ import UIKit
 import Crashlytics
 import NVActivityIndicatorView
 
-protocol EateriesViewControllerProtocol { // TODO ETHAN RENAME AFTER CHANGING EATERIESVC {
+class TemporaryCollegetownDemoViewController: UIViewController, EateriesViewControllerDelegate {
+    var eateries: [Eatery] = []
+    
+    func processEateries() {
+        
+    }
+    
+    func eateriesToPresent(searchText: String, filters: Set<Filter>) -> [Eatery] {
+        return []
+    }
+    
+    
+    override func viewDidLoad() {
+        view.backgroundColor = .eateryBlue
+    }
+    
+}
+
+protocol EateriesViewControllerDelegate { // TODO ETHAN RENAME AFTER CHANGING EATERIESVC {
     
     var eateries: [Eatery] { get }
     
@@ -19,10 +37,10 @@ protocol EateriesViewControllerProtocol { // TODO ETHAN RENAME AFTER CHANGING EA
     
 }
 
-class EateriesSharedViewController: UIViewController, UISearchBarDelegate, PillDelegate {
+class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     
     var appDevLogo: UIView?
-    var searchBar: UISearchBar!
+    var searchBar: UISearchBar! // MOVE BACK TO CHILD
     var filterBar: FilterBar!
     var collectionView: UICollectionView!
     var activityIndicator: NVActivityIndicatorView!
@@ -33,40 +51,28 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate, PillD
     var lastScrollWasUserInitiated = false
     var pillAnimating = false
     
-    var visibleViewController: EateriesViewControllerProtocol!
-    var campusViewController: EateriesViewControllerProtocol!
-    var collegeTownViewController: EateriesViewControllerProtocol!
+    var visibleViewController: EateriesViewControllerDelegate!
+    var campusViewController: EateriesViewControllerDelegate!
+    var collegeTownViewController: EateriesViewControllerDelegate!
     
     var pillViewController: PillViewController!
     
     override func viewDidLoad() {
-        setupLoadingView()
         setupEateriesViewControllers()
         setupNavigation()
         setupBars()
         setupPillViewController()
+        setupLoadingView()
     }
     
     // MARK: Setup
-    
-    func setupLoadingView() {
-        let size: CGFloat = 44.0
-        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size), type: .circleStrokeSpin, color: .transparentEateryBlue)
-        view.addSubview(indicator)
-        indicator.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-        
-        indicator.startAnimating()
-        activityIndicator = indicator
-    }
     
     func setupEateriesViewControllers() {
         let eateriesVC = EateriesViewController()
         eateriesVC.eateriesSharedViewController = self
         visibleViewController = eateriesVC;
         campusViewController = eateriesVC;
-        collegeTownViewController = eateriesVC;
+        collegeTownViewController = TemporaryCollegetownDemoViewController();
         let ctVC = collegeTownViewController as! UIViewController
         
         addChildViewController(eateriesVC)
@@ -148,9 +154,21 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate, PillD
         }
     }
     
+    func setupLoadingView() {
+        let size: CGFloat = 44.0
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size), type: .circleStrokeSpin, color: .transparentEateryBlue)
+        view.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        indicator.startAnimating()
+        activityIndicator = indicator
+    }
+    
     // MARK: User interaction utilities
     
-    func setVisibleViewController(_ viewController: EateriesViewControllerProtocol) {
+    func setVisibleViewController(_ viewController: EateriesViewControllerDelegate) {
         if let newVisibleVC = viewController as? UIViewController {
             view.sendSubview(toBack: newVisibleVC.view)
         }
@@ -206,18 +224,16 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate, PillD
         }
     }
     
-    // MARK: Listeners
-    
-    func didUpdateLocation(newLocation: Location) {
-        switch newLocation {
-        case .campus:
-            filterBar.setDisplayedFilters(filters: Filter.getCampusFilters())
-            setVisibleViewController(campusViewController)
-        case .collegetown:
-            filterBar.setDisplayedFilters(filters: Filter.getCollegetownFilters())
-            setVisibleViewController(collegeTownViewController)
+    // MARK: View Procedures
+    func endLoadingIndicator() {
+        UIView.animate(withDuration: 0.35, animations: {
+            self.activityIndicator.alpha = 0.0
+        }) { (completed) in
+            self.activityIndicator.stopAnimating()
         }
     }
+    
+    // MARK: Listeners
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset.y
@@ -282,7 +298,22 @@ extension EateriesSharedViewController: FilterBarDelegate {
     func updateFilters(filters: Set<Filter>) {
         self.filters = filters
         visibleViewController.processEateries()
-        collectionView.reloadData()
+        (visibleViewController as! EateriesViewController).collectionView.reloadData()
+    }
+    
+}
+
+extension EateriesSharedViewController: PillDelegate {
+    
+    func didUpdateLocation(newLocation: Location) {
+        switch newLocation {
+        case .campus:
+            filterBar.setDisplayedFilters(filters: Filter.getCampusFilters())
+            setVisibleViewController(campusViewController)
+        case .collegetown:
+            filterBar.setDisplayedFilters(filters: Filter.getCollegetownFilters())
+            setVisibleViewController(collegeTownViewController)
+        }
     }
     
 }
