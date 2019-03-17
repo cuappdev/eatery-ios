@@ -177,7 +177,11 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
             }
         }
 
-        return string
+        if string.length != 0 {
+            return string
+        } else {
+            return nil
+        }
     }
 
     private func matchRange(of searchText: String, in text: String) -> Range<String.Index>? {
