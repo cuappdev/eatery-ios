@@ -37,7 +37,8 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
-		CE850C5C21B35A8100BF8316 /* LocationSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE850C5B21B35A8100BF8316 /* LocationSelectorViewController.swift */; };
+		CE18A5BA223C5E1B004EAB1D /* EateriesSharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE18A5B9223C5E1B004EAB1D /* EateriesSharedViewController.swift */; };
+		CE850C5C21B35A8100BF8316 /* PillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE850C5B21B35A8100BF8316 /* PillViewController.swift */; };
 		D10246291C7A31C4000D5CD8 /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */; };
 		D102462C1C7A31F9000D5CD8 /* FilterDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */; };
 		D102462D1C7A31F9000D5CD8 /* FilterDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */; };
@@ -188,7 +189,8 @@
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
-		CE850C5B21B35A8100BF8316 /* LocationSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectorViewController.swift; sourceTree = "<group>"; };
+		CE18A5B9223C5E1B004EAB1D /* EateriesSharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesSharedViewController.swift; sourceTree = "<group>"; };
+		CE850C5B21B35A8100BF8316 /* PillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillViewController.swift; sourceTree = "<group>"; };
 		D10246281C7A31C3000D5CD8 /* LookAheadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
 		D102462A1C7A31F9000D5CD8 /* FilterDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDateView.swift; sourceTree = "<group>"; };
 		D102462B1C7A31F9000D5CD8 /* FilterDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterDateView.xib; sourceTree = "<group>"; };
@@ -309,6 +311,8 @@
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
 				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
 				65C36A712037D058005D8831 /* ARViewController.swift */,
+				CE850C5B21B35A8100BF8316 /* PillViewController.swift */,
+				CE18A5B9223C5E1B004EAB1D /* EateriesSharedViewController.swift */,
 			);
 			name = Eateries;
 			sourceTree = "<group>";
@@ -453,7 +457,6 @@
 				6502AF861DCFB9ED00390EAA /* FilterBar.swift */,
 				654A7A6520389C350086053B /* EateryARCard.swift */,
 				654A7A672038FF050086053B /* EateryARDetailCard.swift */,
-				CE850C5B21B35A8100BF8316 /* LocationSelectorViewController.swift */,
 			);
 			name = Views;
 			path = Cells;
@@ -901,7 +904,7 @@
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				D956DCC32187B979001BB9B0 /* MenuItem.swift in Sources */,
 				654A7A6620389C350086053B /* EateryARCard.swift in Sources */,
-				CE850C5C21B35A8100BF8316 /* LocationSelectorViewController.swift in Sources */,
+				CE850C5C21B35A8100BF8316 /* PillViewController.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
 				D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
@@ -922,6 +925,7 @@
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				F06C7C111DDD032A000445E5 /* BRBAccountSettingsViewController.swift in Sources */,
 				44E4E8F41CD54E3500422867 /* NavigationTitleView.swift in Sources */,
+				CE18A5BA223C5E1B004EAB1D /* EateriesSharedViewController.swift in Sources */,
 				E93CD41B1BE67DB000089CE5 /* MealTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
