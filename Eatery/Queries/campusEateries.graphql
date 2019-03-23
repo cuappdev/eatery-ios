@@ -1,5 +1,5 @@
-query AllEateries {
-    eateries {
+query CampusEateries {
+    campusEateries {
         id
         name
         nameShort
