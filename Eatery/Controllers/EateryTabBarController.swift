@@ -11,9 +11,9 @@ import UIKit
 class EateryTabBarController: UITabBarController {
 
     // MARK: - View controllers
+    let brbViewController = BRBViewController()
     let eateriesViewController = EateriesViewController()
     let lookAheadViewController = LookAheadViewController()
-    let brbViewController = BRBViewController()
 
     override func viewDidLoad() {
         delegate = self

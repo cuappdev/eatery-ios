@@ -1,29 +1,29 @@
-import UIKit
-import SnapKit
-import Crashlytics
 import CoreLocation
+import Crashlytics
 import Hero
 import NVActivityIndicatorView
+import SnapKit
+import UIKit
 
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
 class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
 
+    var activityIndicator: NVActivityIndicatorView!
     var appDevLogo: UIView?
     var collectionView: UICollectionView!
-    var activityIndicator: NVActivityIndicatorView!
     
+    fileprivate var eateryData: [EateryUserStatus: [Eatery]] = [:]
     var eateries: [Eatery] = []
     var filters: Set<Filter> = []
     var initialLoad = true
-    fileprivate var eateryData: [EateryUserStatus: [Eatery]] = [:]
     
-    fileprivate var searchBar: UISearchBar!
+    fileprivate let defaults = UserDefaults.standard
     fileprivate var filterBar: FilterBar!
+    fileprivate var searchBar: UISearchBar!
     fileprivate var searchedMenuItemNames: [Eatery: [String]] = [:]
     var preselectedSlug: String?
-    fileprivate let defaults = UserDefaults.standard
     
     fileprivate lazy var locationManager: CLLocationManager = {
         let l = CLLocationManager()

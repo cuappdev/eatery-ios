@@ -7,9 +7,9 @@
 //
 
 import Crashlytics
-import UIKit
-import SwiftyJSON
 import NVActivityIndicatorView
+import SwiftyJSON
+import UIKit
 
 class LookAheadViewController: UIViewController {
 

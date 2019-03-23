@@ -20,10 +20,10 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
     private let dateAndMealSeparator = UIView()
 
-    private let filterMealsContainer = UIView()
     private let filterBreakfastButton = UIButton()
-    private let filterLunchButton = UIButton()
     private let filterDinnerButton = UIButton()
+    private let filterLunchButton = UIButton()
+    private let filterMealsContainer = UIView()
 
     let mealButtons: [UIButton]
 

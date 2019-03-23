@@ -6,16 +6,16 @@
 //  Copyright © 2016 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 struct Sort {
     
     enum SortType {
-        case time
-        case lookAhead
         case alphabetically
         case location
+        case lookAhead
+        case time
     }
     static func sortMenu(_ menu: [(String, [Menu.Item])] ) -> [(String, [Menu.Item])] {
         return menu.sorted {

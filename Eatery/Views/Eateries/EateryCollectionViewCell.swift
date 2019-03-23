@@ -1,7 +1,7 @@
-import UIKit
 import CoreLocation
 import Kingfisher
 import SnapKit
+import UIKit
 
 class EateryCollectionViewCell: UICollectionViewCell {
 
@@ -12,11 +12,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
     let backgroundImageView = UIImageView()
     let closedOverlay = UIView()
 
+    let distanceLabel = UILabel()
     let infoContainer = UIView()
-    let titleLabel = UILabel()
     let statusLabel = UILabel()
     let timeLabel = UILabel()
-    let distanceLabel = UILabel()
+    let titleLabel = UILabel()
 
     let separator = UIView()
 

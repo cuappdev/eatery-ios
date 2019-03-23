@@ -10,8 +10,8 @@ import UIKit
 
 class GivingDayViewController: UIViewController {
 
-    var givingDayPopupView: GivingDayView!
     var blurEffectView: UIVisualEffectView!
+    var givingDayPopupView: GivingDayView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

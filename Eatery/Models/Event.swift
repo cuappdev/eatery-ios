@@ -6,8 +6,8 @@
 //  Copyright © 2015 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import SwiftyJSON
+import UIKit
 
 /**
  *  An Event of an Eatery such as Breakfast, Lunch, or Dinner
@@ -16,14 +16,14 @@ struct Event {
 
     enum Status {
 
-        fileprivate static let startingSoonDuration: TimeInterval = 60 * 60 // 60 minutes
         fileprivate static let endingSoonDuration: TimeInterval = 30 * 60 // 30 minutes
+        fileprivate static let startingSoonDuration: TimeInterval = 60 * 60 // 60 minutes
 
-        case notStarted
-        case startingSoon(TimeInterval)
-        case started
-        case endingSoon(TimeInterval)
         case ended
+        case endingSoon(TimeInterval)
+        case notStarted
+        case started
+        case startingSoon(TimeInterval)
 
     }
 

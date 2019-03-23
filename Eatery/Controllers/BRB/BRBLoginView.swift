@@ -1,6 +1,6 @@
-import UIKit
 import Crashlytics
 import NVActivityIndicatorView
+import UIKit
 
 protocol BRBLoginViewDelegate {
 
@@ -13,12 +13,12 @@ class BRBLoginView: UIView, UITextFieldDelegate {
     var delegate: BRBLoginViewDelegate?
 
     let headerLabel = UILabel()
+    let loginButton = UIButton()
     let netidPrompt = UILabel()
     let netidTextField = UITextField()
     let passwordPrompt = UILabel()
     let passwordTextField = UITextField()
     let perpetualLoginButton = UIButton()
-    let loginButton = UIButton()
     let privacyStatementButton = UIButton()
     let privacyStatementTextView = UITextView()
     

@@ -1,8 +1,8 @@
-import UIKit
-import MapKit
 import Crashlytics
-import MessageUI
 import Hero
+import MapKit
+import MessageUI
+import UIKit
 
 private let TitleDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -12,15 +12,15 @@ private let TitleDateFormatter: DateFormatter = {
 
 class MenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
 
+    let displayedDate: Date
+    var delegate: MenuButtonsDelegate?
     var eatery: Eatery
+    var menuHeaderView: MenuHeaderView!
+    var navigationTitleView: NavigationTitleView!
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
-    var menuHeaderView: MenuHeaderView!
-    var delegate: MenuButtonsDelegate?
-    let displayedDate: Date
     var selectedMeal: String?
     var userLocation: CLLocation?
-    var navigationTitleView: NavigationTitleView!
 
     var pageViewControllerHeight: CGFloat {
         return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)

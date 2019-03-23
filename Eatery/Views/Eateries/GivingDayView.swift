@@ -10,14 +10,14 @@ import UIKit
 
 class GivingDayView: UIView {
     
-    var topPortionView: UIView!
     var closePopupButton: UIButton!
     var givingDayAppsImageView: UIImageView!
     var supportUsLabel: UILabel!
+    var topPortionView: UIView!
     
     var bottomPortionView: UIView!
-    var supportDescriptionTextView: UITextView!
     var donateButton: UIButton!
+    var supportDescriptionTextView: UITextView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

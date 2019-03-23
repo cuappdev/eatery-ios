@@ -1,18 +1,18 @@
-import UIKit
-import WebKit
-import SafariServices
 import Crashlytics
 import NVActivityIndicatorView
+import SafariServices
+import UIKit
+import WebKit
 
 class BRBViewController: UIViewController {
     
+    
+    private let timeout: TimeInterval = 30.0
+    private var activityIndicatorView: NVActivityIndicatorView!
     private var connectionHandler = BRBConnectionHandler()
     private var loginView: BRBLoginView?
-    
-    private var tableView: UITableView!
-    private var activityIndicatorView: NVActivityIndicatorView!
-    private let timeout: TimeInterval = 30.0
     private var requestStart: Date?
+    private var tableView: UITableView!
     private lazy var historyHeader: EateriesCollectionViewHeaderView = {
         let header = EateriesCollectionViewHeaderView()
         header.titleLabel.text = "History"

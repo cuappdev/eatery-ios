@@ -6,9 +6,9 @@
 //  Copyright © 2015 CUAppDev. All rights reserved.
 //
 
-import UIKit
-import SwiftyJSON
 import CoreLocation
+import SwiftyJSON
+import UIKit
 
 
 /**
@@ -16,19 +16,19 @@ import CoreLocation
 
  - Breakfast: Breakfast
  - Brunch:    Brunch
+ - Dinner:    Dinner
  - LiteLunch: Lite Lunch
  - Lunch:     Lunch
- - Dinner:    Dinner
  - Other:     Unknown
  */
 enum Meal: String {
 
+    case Other     = ""
     case breakfast = "Breakfast"
     case brunch    = "Brunch"
+    case dinner    = "Dinner"
     case liteLunch = "Lite Lunch"
     case lunch     = "Lunch"
-    case dinner    = "Dinner"
-    case Other     = ""
 
 }
 
@@ -36,63 +36,63 @@ enum Meal: String {
  Assorted types of payment accepted by an Eatery
 
  - BRB:         Big Red Bucks
- - Swipes:      Meal Swipes
  - Cash:        USD
  - CornellCard: CornellCard
  - CreditCard:  Major Credit Cards
  - NFC:         Mobile Payments
  - Other:       Unknown
+ - Swipes:      Meal Swipes
  */
 enum PaymentType: String {
 
     case brb         = "Meal Plan - Debit"
-    case swipes      = "Meal Plan - Swipe"
     case cash        = "Cash"
     case cornellCard = "Cornell Card"
     case creditCard  = "Major Credit Cards"
     case nfc         = "Mobile Payments"
     case other       = ""
+    case swipes      = "Meal Plan - Swipe"
 
 }
 
 /**
  Different types of eateries on campus
 
- - Unknown:          Unknown
- - Dining:           All You Care to Eat Dining Halls
  - Cafe:             Cafes
  - Cart:             Carts + Food Trucks
- - FoodCourt:        Food Courts (Variety of Food Selections)
- - ConvenienceStore: Convenience Stores
  - CoffeeShop:       Coffee Shops + Some Food
+ - ConvenienceStore: Convenience Stores
+ - Dining:           All You Care to Eat Dining Halls
+ - FoodCourt:        Food Courts (Variety of Food Selections)
+ - Unknown:          Unknown
  */
 enum EateryType: String {
 
-    case unknown = "unknown"
-    case dining = "all you care to eat dining room"
+    case bakery = "bakery"
     case cafe = "cafe"
     case cart = "cart"
-    case foodCourt = "food court"
-    case convenienceStore = "convenience store"
     case coffeeShop = "coffee shop"
-    case bakery = "bakery"
+    case convenienceStore = "convenience store"
+    case dining = "all you care to eat dining room"
+    case foodCourt = "food court"
+    case unknown = "unknown"
 
 }
 
 /**
  Represents a location on Cornell Campus
 
+ - Central: Central Campus
+ - North:   North Campus
  - Unknown: Unknown
  - West:    West Campus
- - North:   North Campus
- - Central: Central Campus
  */
 enum Area: String {
 
+    case central = "Central"
+    case north = "North"
     case unknown = ""
     case west = "West"
-    case north = "North"
-    case central = "Central"
 
 }
 

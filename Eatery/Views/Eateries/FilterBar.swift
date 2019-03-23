@@ -1,14 +1,14 @@
-import UIKit
-import SnapKit
 import Crashlytics
+import SnapKit
+import UIKit
 
 enum Filter: String {
+    case brb = "BRB"
+    case central = "Central"
     case nearest = "Nearest First"
     case north = "North"
-    case west = "West"
-    case central = "Central"
     case swipes = "Swipes"
-    case brb = "BRB"
+    case west = "West"
 }
 
 fileprivate let filters: [Filter] = [
@@ -28,8 +28,8 @@ protocol FilterBarDelegate: AnyObject {
 class FilterBar: UIView {
     
     private var buttons: [UIButton] = []
-    weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
+    weak var delegate: FilterBarDelegate?
 
     let padding: CGFloat = collectionViewMargin
     

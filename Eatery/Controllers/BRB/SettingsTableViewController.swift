@@ -7,8 +7,8 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import SafariServices
+import UIKit
 
 struct BRBAccountSettings {
 

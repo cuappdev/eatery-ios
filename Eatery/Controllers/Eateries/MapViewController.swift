@@ -1,16 +1,16 @@
-import UIKit
+import CoreLocation
+import Crashlytics
 import MapKit
 import SnapKit
-import Crashlytics
-import CoreLocation
+import UIKit
 
 let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    let mapView: MKMapView
     var eateries: [Eatery]
     var eateryAnnotations : [MKPointAnnotation] = []
-    let mapView: MKMapView
     var locationManager: CLLocationManager!
     var userLocation: CLLocation?
     

@@ -11,12 +11,12 @@ import UIKit
 
 class LookAheadTableViewCell: UITableViewCell {
 
-    private static let upArrow = UIImage(named: "upArrow.png")
     private static let downArrow = UIImage(named: "downArrow.png")
+    private static let upArrow = UIImage(named: "upArrow.png")
 
+    let eateryHoursLabel = UILabel()
     let eateryNameLabel = UILabel()
     let eateryStatusLabel = UILabel()
-    let eateryHoursLabel = UILabel()
 
     let moreInfoIndicatorImageView = UIImageView()
 

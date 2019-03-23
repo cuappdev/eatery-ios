@@ -2,9 +2,9 @@ import UIKit
 
 class BRBTableViewCell: UITableViewCell {
 
+    let centerLabel = UILabel()
     let leftLabel = UILabel()
     let rightLabel = UILabel()
-    let centerLabel = UILabel()
     
     var leftC = UIColor(), rightC = UIColor(), centerC = UIColor()
     

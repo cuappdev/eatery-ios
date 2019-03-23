@@ -4,10 +4,10 @@ import UIKit
 
 enum EateryStatus {
 
+    case closed(String)
+    case closing(String)
     case open(String)
     case opening(String)
-    case closing(String)
-    case closed(String)
     
     var statusColor: UIColor {
         switch self {

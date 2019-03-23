@@ -6,9 +6,9 @@
 //  Copyright © 2018 CUAppDev. All rights reserved.
 //
 
-import Foundation
 import Apollo
 import CoreLocation
+import Foundation
 
 struct NetworkError: Error {
     var message: String

@@ -10,11 +10,11 @@ import Foundation
 
 struct BRBAccount: Codable {
 
-    var cityBucks: String
-    var laundry: String
     var brbs: String
-    var swipes: String
+    var cityBucks: String
     var history: [BRBHistory]
+    var laundry: String
+    var swipes: String
 
 }
 

@@ -6,10 +6,10 @@
 //  Copyright © 2015 CUAppDev. All rights reserved.
 //
 
-import UIKit
-import SnapKit
 import Crashlytics
 import Kingfisher
+import SnapKit
+import UIKit
 
 protocol MenuButtonsDelegate: AnyObject {
 
@@ -19,17 +19,17 @@ protocol MenuButtonsDelegate: AnyObject {
 
 class MenuHeaderView: UIView {
     
-    var eatery: Eatery?
     var displayedDate: Date?
+    var eatery: Eatery?
 
     weak var delegate: MenuButtonsDelegate?
 
     let container = UIView()
 
     let backgroundImageView = UIImageView()
-    let titleLabel = UILabel()
     let favoriteButton = UIButton()
     let paymentView = PaymentMethodsView()
+    let titleLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

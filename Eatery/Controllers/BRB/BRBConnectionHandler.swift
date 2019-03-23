@@ -1,6 +1,6 @@
+import Crashlytics
 import UIKit
 import WebKit
-import Crashlytics
 
 struct HistoryEntry {
 
@@ -40,13 +40,13 @@ private let trialDelay = 500
 
 class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
-    var stage: Stages = .loginScreen
     var accountBalance: AccountBalance!
+    var delegate: BRBConnectionDelegate?
     var diningHistory: [HistoryEntry] = []
     var loginCount = 0
     var netid: String = ""
     var password: String = ""
-    var delegate: BRBConnectionDelegate?
+    var stage: Stages = .loginScreen
     
     init() {
         super.init(frame: .zero, configuration: WKWebViewConfiguration())
@@ -159,7 +159,7 @@ class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.stage = .transition
             }
             
-            //run block for stage
+            // run block for stage
             block()
         })
     }

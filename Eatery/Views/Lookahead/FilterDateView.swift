@@ -8,8 +8,8 @@ protocol FilterDateViewDelegate: AnyObject {
 
 class FilterDateView: UIView {
 
-    let dayLabel = UILabel()
     let dateLabel = UILabel()
+    let dayLabel = UILabel()
     private let dateButton = UIButton()
 
     weak var delegate: FilterDateViewDelegate?
