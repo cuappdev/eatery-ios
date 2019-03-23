@@ -563,7 +563,7 @@ extension EateriesViewController: UICollectionViewDelegate {
             Answers.logMenuOpenedFromHome(eateryId: eaterySlug)
         }
 
-        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation)
+        let menuViewController = CTownMenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation) //test
         navigationController?.pushViewController(menuViewController, animated: true)
     }
 
@@ -689,7 +689,7 @@ extension EateriesViewController: UIViewControllerPreviewingDelegate {
                 return nil
         }
         
-        let menuViewController = MenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation)
+        let menuViewController = CTownMenuViewController(eatery: eatery(for: indexPath), delegate: self, userLocation: userLocation) //previewing delegate test
         menuViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
         cell.transform = .identity
         previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)

@@ -31,6 +31,8 @@
 		654E37411DEEA738000E4FAB /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E37401DEEA738000E4FAB /* Sort.swift */; };
 		65C36A722037D058005D8831 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C36A712037D058005D8831 /* ARViewController.swift */; };
 		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
+		871FEBC92245FB6C004CAD90 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871FEBC82245FB6C004CAD90 /* RatingView.swift */; };
+		877CE49A223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877CE499223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift */; };
 		8793B60C222BA24E00D5E9D3 /* CTownMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8793B60B222BA24E00D5E9D3 /* CTownMenuHeaderView.swift */; };
 		8793B60E222BA28B00D5E9D3 /* CTownMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8793B60D222BA28B00D5E9D3 /* CTownMenuViewController.swift */; };
 		892A06E061931FC9506733A0 /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */; };
@@ -171,6 +173,8 @@
 		65E93178206C186B00547D14 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		871FEBC82245FB6C004CAD90 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		877CE499223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTownInformativeTableViewCell.swift; sourceTree = "<group>"; };
 		8793B60B222BA24E00D5E9D3 /* CTownMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTownMenuHeaderView.swift; sourceTree = "<group>"; };
 		8793B60D222BA28B00D5E9D3 /* CTownMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTownMenuViewController.swift; sourceTree = "<group>"; };
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
@@ -291,11 +295,13 @@
 				5DC06B7921FE36020043701A /* PaymentMethodsView.swift */,
 				5D218C1821FBE39700327516 /* MenuHeaderView.swift */,
 				8793B60B222BA24E00D5E9D3 /* CTownMenuHeaderView.swift */,
+				871FEBC82245FB6C004CAD90 /* RatingView.swift */,
 				5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */,
 				5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */,
 				5D218C1A21FBE39700327516 /* NavigationTitleView.swift */,
 				5D218C1C21FBE39700327516 /* EateryARDetailCard.swift */,
 				5D218C2B21FBE39700327516 /* EateryARCard.swift */,
+				877CE499223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -838,6 +844,7 @@
 			files = (
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
+				877CE49A223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				65C36A722037D058005D8831 /* ARViewController.swift in Sources */,
 				65E93179206C186B00547D14 /* Keys.swift in Sources */,
@@ -863,6 +870,7 @@
 				D956DCC32187B979001BB9B0 /* MenuItem.swift in Sources */,
 				D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */,
 				95495D2E1C0AA0790015B85E /* MenuImages.swift in Sources */,
+				871FEBC92245FB6C004CAD90 /* RatingView.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				8793B60E222BA28B00D5E9D3 /* CTownMenuViewController.swift in Sources */,
