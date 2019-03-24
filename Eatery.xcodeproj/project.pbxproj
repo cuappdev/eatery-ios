@@ -32,8 +32,6 @@
 		65C36A722037D058005D8831 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C36A712037D058005D8831 /* ARViewController.swift */; };
 		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
 		871FEBC92245FB6C004CAD90 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871FEBC82245FB6C004CAD90 /* RatingView.swift */; };
-		871FEBD02246F7B4004CAD90 /* campusEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 871FEBCD2246F7B3004CAD90 /* campusEateries.graphql */; };
-		871FEBD12246F7B4004CAD90 /* collegeTownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 871FEBCE2246F7B4004CAD90 /* collegeTownEateries.graphql */; };
 		877CE49A223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877CE499223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift */; };
 		8793B60C222BA24E00D5E9D3 /* CTownMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8793B60B222BA24E00D5E9D3 /* CTownMenuHeaderView.swift */; };
 		8793B60E222BA28B00D5E9D3 /* CTownMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8793B60D222BA28B00D5E9D3 /* CTownMenuViewController.swift */; };
@@ -55,6 +53,7 @@
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
 		D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = D930FBD7218BC00200B0B1CE /* BRBAccount.swift */; };
 		D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D956DCAC2187B074001BB9B0 /* Keys.plist */; };
+		D956DCB12187B2BF001BB9B0 /* eateryQuery.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D956DCB02187B2BF001BB9B0 /* eateryQuery.graphql */; };
 		D956DCB42187B4B1001BB9B0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956DCB32187B4B1001BB9B0 /* NetworkManager.swift */; };
 		D956DCB92187B885001BB9B0 /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956DCB82187B885001BB9B0 /* Eatery.swift */; };
 		D956DCC12187B94E001BB9B0 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956DCC02187B94E001BB9B0 /* Event.swift */; };
@@ -175,8 +174,6 @@
 		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		871FEBC82245FB6C004CAD90 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
-		871FEBCD2246F7B3004CAD90 /* campusEateries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = campusEateries.graphql; sourceTree = "<group>"; };
-		871FEBCE2246F7B4004CAD90 /* collegeTownEateries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = collegeTownEateries.graphql; sourceTree = "<group>"; };
 		877CE499223DE50B0067B7D5 /* CTownInformativeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTownInformativeTableViewCell.swift; sourceTree = "<group>"; };
 		8793B60B222BA24E00D5E9D3 /* CTownMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTownMenuHeaderView.swift; sourceTree = "<group>"; };
 		8793B60D222BA28B00D5E9D3 /* CTownMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTownMenuViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +199,7 @@
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
 		D956DCAC2187B074001BB9B0 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		D956DCB02187B2BF001BB9B0 /* eateryQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = eateryQuery.graphql; sourceTree = "<group>"; };
 		D956DCB32187B4B1001BB9B0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D956DCB82187B885001BB9B0 /* Eatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eatery.swift; sourceTree = "<group>"; };
 		D956DCC02187B94E001BB9B0 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -509,9 +507,8 @@
 		D956DCAF2187B2A2001BB9B0 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
+				D956DCB02187B2BF001BB9B0 /* eateryQuery.graphql */,
 				D97142DF2197542A00E2EE05 /* brbQuery.graphql */,
-				871FEBCD2246F7B3004CAD90 /* campusEateries.graphql */,
-				871FEBCE2246F7B4004CAD90 /* collegeTownEateries.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -686,12 +683,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D956DCB12187B2BF001BB9B0 /* eateryQuery.graphql in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */,
-				871FEBD12246F7B4004CAD90 /* collegeTownEateries.graphql in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
-				871FEBD02246F7B4004CAD90 /* campusEateries.graphql in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,
 				D97142E02197542A00E2EE05 /* brbQuery.graphql in Resources */,
 			);
