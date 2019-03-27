@@ -8,7 +8,7 @@ import NVActivityIndicatorView
 let collectionViewMargin: CGFloat = 16
 let filterBarHeight: CGFloat = 44.0
 
-class EateriesViewController: UIViewController, MenuButtonsDelegate, EateriesViewControllerProtocol, CLLocationManagerDelegate, UITabBarControllerDelegate {
+class EateriesViewController: UIViewController, MenuButtonsDelegate, EateriesViewControllerDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate {
 
     var collectionView: UICollectionView!
     var activityIndicator: NVActivityIndicatorView!
