@@ -2,27 +2,61 @@ import Foundation
 import SwiftyJSON
 import UIKit
 
-enum EateryStatus {
-    case open(String, String)
-    case closing(String, String)
-    case closed(String, String)
-}
+//enum EateryStatus {
+//
+//    case open(String)
+//    case opening(String)
+//    case closing(String)
+//    case closed(String)
+//    
+//    var statusColor: UIColor {
+//        switch self {
+//        case .open:
+//            return .eateryGreen
+//        case .opening, .closing:
+//            return .eateryOrange
+//        case .closed:
+//            return .eateryRed
+//        }
+//    }
+//    
+//    var statusText: String {
+//        switch self {
+//        case .open:
+//            return "Open"
+//        case .opening:
+//            return "Opening"
+//        case .closing:
+//            return "Closing"
+//        case .closed:
+//            return "Closed"
+//        }
+//    }
+//    
+//    var message: String {
+//        switch self {
+//        case .open(let message), .opening(let message), .closing(let message), .closed(let message):
+//            return message
+//        }
+//    }
+//
+//}
 
 private let ShortDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "h:mma"
     return formatter
 }()
+
 private let kEateryAppendix = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "appendix", withExtension: "json")!)).dictionaryValue
 
 let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
-
-
-extension Eatery {
+extension CampusEatery {
 
     /// Option to sort by campus or by open time
     enum Sorting: String {
+        
         case alphabetically = "Alphabetically"
         case campus = "Campus"
         case location = "Location"
@@ -74,6 +108,65 @@ extension Eatery {
         }
     }
 
+//    func currentStatus() -> EateryStatus {
+//        return status(at: Date())
+//    }
+//
+//    func status(at date: Date) -> EateryStatus {
+//        if isOpenToday() {
+//            guard let event = activeEvent(for: date) else {
+//                return .closed("")
+//            }
+//
+//            switch event.status(at: date) {
+//            case .notStarted:
+//                return .closed("")
+//
+//            case let .startingSoon(intervalUntilOpen):
+//                let minutesTillOpen = Int(intervalUntilOpen / 60)
+//                return .opening("in \(minutesTillOpen + 1)m")
+//
+//            case .started:
+//                let timeString = ShortDateFormatter.string(from: event.end)
+//                return .open("until \(timeString)")
+//
+//            case let .endingSoon(intervalUntilClose):
+//                let minutesTillClose = Int(intervalUntilClose / 60)
+//                return .closing("in \(minutesTillClose + 1)m")
+//
+//            case .ended:
+//                let timeString = ShortDateFormatter.string(from: event.start)
+//                return .closed("until \(timeString)")
+//            }
+//        } else {
+//            return .closed("today")
+//        }
+//    }
+//
+//    var nickname: String {
+//        guard let appendixJSON = kEateryAppendix[slug] else {
+//            return name
+//        }
+//        return appendixJSON["nickname"].arrayValue.first?.stringValue ?? ""
+//    }
+//
+//    func allNicknames() -> [String] {
+//        guard let appendixJSON = kEateryAppendix[slug] else {
+//            return [name]
+//        }
+//        return appendixJSON["nickname"].arrayValue.map { $0.string! }
+//    }
+//
+//    var altitude: Double {
+//        guard let appendixJSON = kEateryAppendix[slug],
+//            let altitude = appendixJSON["altitude"].double else {
+//                return 250.0
+//        }
+//        return altitude
+//    }
+
+    // MARK: Deprecated
+
     // ** COPY OF IMPLEMENTATION IN LiteEatery.swift
     // TODO: refactor to avoid repeated code
     //
@@ -83,94 +176,9 @@ extension Eatery {
     // "Closed" if closed and not opening soon,
     // "Open now" if open and not closing soon
     // Bool value is either stable or about to change
+    @available(*, deprecated, renamed: "currentStatus()")
     func generateDescriptionOfCurrentState() -> EateryStatus {
-        if isOpenToday() {
-            guard let activeEvent = activeEventForDate(Date()) else {
-                return .closed("Closed", "")
-            }
-
-            if activeEvent.occurringOnDate(Date()) {
-                let minutesTillClose = (Int)(activeEvent.endDate.timeIntervalSinceNow/Double(60))
-                if minutesTillClose < 30 {
-                    return .closing("Closing", "in \(minutesTillClose+1)m")
-                } else {
-                    let timeString = ShortDateFormatter.string(from: activeEvent.endDate)
-                    return .open("Open", "until \(timeString)")
-                }
-            } else {
-                let minutesTillOpen = (Int)(activeEvent.startDate.timeIntervalSinceNow/Double(60))
-                if minutesTillOpen < 60 {
-                    return .closed("Opening", "in \(minutesTillOpen+1)m")
-                } else {
-                    let timeString = ShortDateFormatter.string(from: activeEvent.startDate)
-                    return .closed("Closed", "until \(timeString)")
-                }
-            }
-        } else {
-            return .closed("Closed", "today")
-        }
-    }
-
-    // Retrieves a string list of the hours of operation for a day/time
-    func activeEventsForDate(date: Date) -> String {
-        var resultString = "Closed"
-
-        let events = eventsOnDate(date)
-        if events.count > 0 {
-            let eventsArray = events.map { $0.1 }
-            let sortedEventsArray = eventsArray.sorted {
-                $0.startDate.compare($1.startDate) == .orderedAscending
-            }
-
-            var mergedTimes = [(Date, Date)]()
-            var currentTime: (Date, Date)?
-            for time in sortedEventsArray {
-                if currentTime == nil {
-                    currentTime = (time.startDate, time.endDate)
-                    continue
-                }
-                if currentTime!.1.compare(time.startDate) == .orderedSame {
-                    currentTime = (currentTime!.0, time.endDate)
-                } else {
-                    mergedTimes.append(currentTime!)
-                    currentTime = (time.startDate, time.endDate)
-                }
-            }
-
-            if let time = currentTime {
-                mergedTimes.append(time)
-            }
-
-            resultString = ""
-            for (start, end) in mergedTimes {
-                if resultString != "" { resultString += ", " }
-                resultString += dateConverter(date1: start, date2: end)
-            }
-        }
-
-        return resultString
-    }
-
-    var nickname: String {
-        guard let appendixJSON = kEateryAppendix[slug] else {
-            return name
-        }
-        return appendixJSON["nickname"].arrayValue.first?.stringValue ?? ""
-    }
-
-    func allNicknames() -> [String] {
-        guard let appendixJSON = kEateryAppendix[slug] else {
-            return [name]
-        }
-        return appendixJSON["nickname"].arrayValue.map { $0.string! }
-    }
-
-    var altitude: Double {
-        guard let appendixJSON = kEateryAppendix[slug],
-            let altitude = appendixJSON["altitude"].double else {
-                return 250.0
-        }
-        return altitude
+        return currentStatus()
     }
 
 }

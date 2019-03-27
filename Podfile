@@ -1,4 +1,5 @@
 use_frameworks!
+inhibit_all_warnings!
 
 def shared_pods
     pod 'DiningStack', :git => 'https://github.com/cuappdev/DiningStack.git'

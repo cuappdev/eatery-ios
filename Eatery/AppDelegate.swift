@@ -15,10 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         Foundation.URLCache.shared = URLCache
-        
+
         window = UIWindow()
         window?.backgroundColor = .white
-        
+
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = UIColor.navigationBarBlue
         UINavigationBar.appearance().tintColor = .white
@@ -27,9 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
         UITabBar.appearance().shadowImage = UIImage()
-        
+
         Hero.shared.containerColor = .white
-        
+
         // Set up tab bar controllers
         eateryTabBarController = EateryTabBarController()
         window?.rootViewController = eateryTabBarController
@@ -53,13 +53,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-  
+
     func applicationWillResignActive(_ application: UIApplication) {
       if #available(iOS 9.1, *) {
           //Retrieve favorites and their nicknames
           let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
           let appendix = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "appendix", withExtension: "json")!)).dictionaryValue
-        
+
           let favoriteNames = slugStrings.reversed().map { slug -> (String, String) in
               if let appendixJSON = appendix[slug] {
                   return (slug, appendixJSON["nickname"].arrayValue.first?.stringValue ?? "")
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                   return (slug, slug)
               }
           }
-        
+
           // Clear shortcuts then recreate them
           var shortcuts: [UIApplicationShortcutItem] = []
           for (slug, name) in favoriteNames {
@@ -78,25 +78,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           UIApplication.shared.shortcutItems = shortcuts
       }
     }
-  
+
     // MARK: - Force Touch Shortcut
-    
+
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let handledShortcutItem = handleShortcutItem(shortcutItem)
         completionHandler(handledShortcutItem)
     }
-  
+
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        // TODO ETHAN eateryTabBarController.pillViewController.preselectedSlug = shortcutItem.type
+        // TODO: Push preselected slug
+        // eateryTabBarController.eateriesViewController.preselectedSlug = shortcutItem.type
         return true
     }
-    
+
     // MARK: - StoreKit
-    
+
     func requestReview() {
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         }
     }
 }
-

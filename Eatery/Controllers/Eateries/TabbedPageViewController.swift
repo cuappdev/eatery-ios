@@ -30,7 +30,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
         
         // Tab Bar
         meals = viewControllers.map { (vc: UIViewController) -> String in
-            let mealVC = vc as! MealTableViewController
+            let mealVC = vc as! CampusEateryMealTableViewController
             return mealVC.meal
         }
         
@@ -107,7 +107,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
+        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
         let index = viewControllers.index(of: currentViewController)!
         tabDelegate?.selectedTabDidChange(index)
         scrollDelegate?.scrollViewDidChange()
@@ -115,7 +115,7 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     
     // Tab Bar Delegate
     func selectedTabDidChange(_ newIndex: Int) {
-        let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
+        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
         let currentIndex = viewControllers.index(of: currentViewController)!
 
         guard newIndex != currentIndex else { return }
@@ -133,12 +133,12 @@ class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource
     }
 
     private func pluckCurrentTableView() -> UITableView {
-        let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
+        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
         return currentViewController.tableView
     }
     
     func scrollGestureDidScroll(_ offset: CGPoint) {
-        let currentViewController = pageViewController.viewControllers!.first! as! MealTableViewController
+        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
         currentViewController.tableView.setContentOffset(offset, animated: false)
     }
 

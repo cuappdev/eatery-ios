@@ -154,12 +154,7 @@ class MenuImages: NSObject {
         let openIndicatorView = UIView(frame: CGRect(x: 15,y: 20,width: 15,height: 15))
         // Status View
         let eateryStatus = eatery.generateDescriptionOfCurrentState()
-        switch eateryStatus {
-            case .open(_):
-                openIndicatorView.backgroundColor = .eateryGreen
-            case .closing, .closed:
-                openIndicatorView.backgroundColor = .eateryRed
-        }
+        openIndicatorView.backgroundColor = eateryStatus.statusColor
         openIndicatorView.layer.cornerRadius = openIndicatorView.frame.width / 2.0
         openIndicatorView.clipsToBounds = true
         menuHeader.addSubview(openIndicatorView)
