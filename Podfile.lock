@@ -20,7 +20,7 @@ PODS:
   - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
-  - Apollo
+  - Apollo (from `https://github.com/apollographql/apollo-ios.git`)
   - ARCL
   - Crashlytics
   - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
@@ -35,7 +35,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - Apollo
     - ARCL
     - Crashlytics
     - Fabric
@@ -47,10 +46,15 @@ SPEC REPOS:
     - SwiftyJSON
 
 EXTERNAL SOURCES:
+  Apollo:
+    :git: https://github.com/apollographql/apollo-ios.git
   DiningStack:
     :git: https://github.com/cuappdev/DiningStack.git
 
 CHECKOUT OPTIONS:
+  Apollo:
+    :commit: 43dd373b9a64cd877f6331be6c56b24c125ca778
+    :git: https://github.com/apollographql/apollo-ios.git
   DiningStack:
     :commit: a730c7acc1dbee567a41606b101fb569c8ade01d
     :git: https://github.com/cuappdev/DiningStack.git
@@ -69,6 +73,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: dbcc8e56070825a35942a79728af915efb71fafd
+PODFILE CHECKSUM: 9f1a4bf51d61f770a3113f21c50c2edf7f784431
 
 COCOAPODS: 1.5.3

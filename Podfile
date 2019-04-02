@@ -17,7 +17,7 @@ target 'Eatery' do
     pod 'ARCL'
     pod 'Kingfisher'
     pod 'NVActivityIndicatorView'
-    pod 'Apollo'
+    pod 'Apollo', :git => 'https://github.com/apollographql/apollo-ios.git'
 end
 
 target 'Eatery Watch App' do

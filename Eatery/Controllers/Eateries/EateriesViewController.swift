@@ -37,7 +37,7 @@ protocol EateriesViewControllerDataSource: AnyObject {
 
 protocol EateriesViewControllerDelegate: AnyObject {
 
-    func eateriesViewControllerDidPressMapButton(_ evc: EateriesViewController)
+    //func eateriesViewControllerDidPressMapButton(_ evc: EateriesViewController)
 
     func eateriesViewController(_ evc: EateriesViewController, didSelectEatery eatery: Eatery)
 
