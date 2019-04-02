@@ -10,7 +10,7 @@ import UIKit
 import Crashlytics
 import NVActivityIndicatorView
 
-protocol EateriesViewControllerDelegate { // TODO ETHAN RENAME AFTER CHANGING EATERIESVC {
+protocol EateriesViewControllerDelegateShared { // TODO ETHAN RENAME AFTER CHANGING EATERIESVC {
     
     var eateries: [Eatery] { get }
     

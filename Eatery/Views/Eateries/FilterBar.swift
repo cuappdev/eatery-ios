@@ -33,8 +33,7 @@ enum Filter: String, CaseIterable {
 }
 
 protocol FilterBarDelegate: AnyObject {
-    var filters: Set<Filter> { get set }
-    func updateFilters(filters: Set<Filter>)
+    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [FilterBar.Filter])
 }
 
 class FilterBar: UIView {
