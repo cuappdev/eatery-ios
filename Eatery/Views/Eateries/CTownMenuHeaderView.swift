@@ -92,7 +92,7 @@ class CTownMenuHeaderView: UIView {
         
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(15)
+            make.bottom.equalTo(backgroundImageView).inset(15)
         }
         
         paymentView.snp.makeConstraints { make in
@@ -147,7 +147,7 @@ class CTownMenuHeaderView: UIView {
         }
         
         distanceLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(13)
+            make.centerY.equalTo(locationLabel)
             make.trailing.equalToSuperview().inset(12.5)
             make.height.equalTo(17)
             make.width.lessThanOrEqualToSuperview()

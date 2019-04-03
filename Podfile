@@ -14,10 +14,10 @@ target 'Eatery' do
     pod 'Crashlytics'
     pod 'FLEX', '~> 2.0', :configurations => ['Debug']
     pod 'Hero'
-    pod 'ARCL'
+    pod 'ARCL', '~> 1.0.4'
     pod 'Kingfisher'
     pod 'NVActivityIndicatorView'
-    pod 'Apollo'
+    pod 'Apollo', :git => 'https://github.com/apollographql/apollo-ios.git', :commit => 'b28c3dc'
 end
 
 target 'Eatery Watch App' do

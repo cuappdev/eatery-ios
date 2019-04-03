@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.1)
+  - Alamofire (4.8.2)
   - Apollo (0.9.5):
     - Apollo/Core (= 0.9.5)
   - Apollo/Core (0.9.5)
@@ -20,8 +20,8 @@ PODS:
   - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
-  - Apollo
-  - ARCL
+  - Apollo (from `https://github.com/apollographql/apollo-ios.git`, commit `b28c3dc`)
+  - ARCL (~> 1.0.4)
   - Crashlytics
   - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
   - Fabric
@@ -35,7 +35,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - Apollo
     - ARCL
     - Crashlytics
     - Fabric
@@ -47,16 +46,22 @@ SPEC REPOS:
     - SwiftyJSON
 
 EXTERNAL SOURCES:
+  Apollo:
+    :commit: b28c3dc
+    :git: https://github.com/apollographql/apollo-ios.git
   DiningStack:
     :git: https://github.com/cuappdev/DiningStack.git
 
 CHECKOUT OPTIONS:
+  Apollo:
+    :commit: b28c3dc
+    :git: https://github.com/apollographql/apollo-ios.git
   DiningStack:
-    :commit: a730c7acc1dbee567a41606b101fb569c8ade01d
+    :commit: 2e53e6bec9442ad3d80e7898edc20eb42a8cff03
     :git: https://github.com/cuappdev/DiningStack.git
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   Apollo: 19caf3246d292bbb69ecad1bd098661f78222aba
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
@@ -69,6 +74,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: dbcc8e56070825a35942a79728af915efb71fafd
+PODFILE CHECKSUM: a0c03989d57fbe74acec56ec1ad890c18cebd9c1
 
 COCOAPODS: 1.5.3

@@ -10,16 +10,26 @@ import UIKit
 
 class RatingView: UIView {
 
-    var ratingImageView = [UIImageView]()
-    var starOffset = 1
+    var containerView: UIView!
+    var containerImageView: [UIImageView]!
+    var ratingImageView: [UIImageView]!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        containerView = UIView()
+        addSubview(containerView)
+        
+        containerImageView = [UIImageView]()
         ratingImageView = [UIImageView]()
+        
         for i in 0...5{
+            let container = UIImageView()
             let star = UIImageView()
+            containerImageView.append(container)
             ratingImageView.append(star)
+            addSubview(containerImageView[i])
             addSubview(ratingImageView[i])
         }
         
@@ -28,34 +38,62 @@ class RatingView: UIView {
     
     func setupConstraints(){
         
-        ratingImageView[0].snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.trailing.equalToSuperview().inset(86)
-            make.width.equalTo(20)
-        }
+        let containerOffset = 0.5
+        let starInset = 1.75
         
-        ratingImageView[1].snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalTo(ratingImageView[0].snp.trailing).offset(starOffset)
-            make.width.equalTo(20)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(20)
+            make.width.equalTo(104)
         }
-        
-        ratingImageView[2].snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalTo(ratingImageView[1].snp.trailing).offset(starOffset)
-            make.width.equalTo(20)
-        }
-        
-        ratingImageView[3].snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalTo(ratingImageView[2].snp.trailing).offset(starOffset)
+        containerImageView[4].snp.makeConstraints { make in
+            make.top.bottom.equalTo(containerView)
+            make.trailing.equalTo(containerView)
             make.width.equalTo(20)
         }
         
         ratingImageView[4].snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalTo(ratingImageView[3].snp.trailing).offset(starOffset)
+            make.edges.equalTo(containerImageView[4]).inset(starInset)
+        }
+        
+        containerImageView[3].snp.makeConstraints { make in
+            make.top.bottom.equalTo(containerView)
+            make.trailing.equalTo(containerImageView[4].snp.leading).offset(containerOffset)
             make.width.equalTo(20)
+        }
+        
+        ratingImageView[3].snp.makeConstraints { make in
+            make.edges.equalTo(containerImageView[3]).inset(starInset)
+        }
+        
+        containerImageView[2].snp.makeConstraints { make in
+            make.top.bottom.equalTo(containerView)
+            make.trailing.equalTo(containerImageView[3].snp.leading).offset(containerOffset)
+            make.width.equalTo(20)
+        }
+        
+        ratingImageView[2].snp.makeConstraints { make in
+            make.edges.equalTo(containerImageView[2]).inset(starInset)
+        }
+        
+        containerImageView[1].snp.makeConstraints { make in
+            make.top.bottom.equalTo(containerView)
+            make.trailing.equalTo(containerImageView[2].snp.leading).offset(containerOffset)
+            make.width.equalTo(20)
+        }
+        
+        ratingImageView[1].snp.makeConstraints { make in
+            make.edges.equalTo(containerImageView[1]).inset(starInset)
+        }
+        
+        containerImageView[0].snp.makeConstraints { make in
+            make.top.bottom.equalTo(containerView)
+            make.trailing.equalTo(containerImageView[1].snp.leading).offset(containerOffset)
+            make.width.equalTo(20)
+        }
+        
+        ratingImageView[0].snp.makeConstraints { make in
+            make.edges.equalTo(containerImageView[0]).inset(starInset)
         }
     }
     
