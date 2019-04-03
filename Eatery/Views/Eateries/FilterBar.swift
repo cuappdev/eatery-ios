@@ -52,6 +52,7 @@ class FilterBar: UIView {
 
         backgroundColor = .clear
 
+        scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInset.left = padding
         scrollView.contentInset.right = padding

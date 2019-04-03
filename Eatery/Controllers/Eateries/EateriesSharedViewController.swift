@@ -21,7 +21,6 @@ protocol EateriesViewControllerDelegateShared { // TODO ETHAN RENAME AFTER CHANG
 
 class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     
-    var appDevLogo: UIView?
     var searchBar: UISearchBar! // MOVE BACK TO CHILD
     var filterBar: FilterBar!
     var collectionView: UICollectionView!
@@ -33,7 +32,8 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     var lastScrollWasUserInitiated = false
     var pillAnimating = false
     
-    var eateriesViewController: EateriesViewController!
+    var activeEateriesViewController: EateriesViewController!
+    var campusEateriesViewController: EateriesViewController!
     /*var visibleViewController: EateriesViewControllerDelegate!
     var campusViewController: EateriesViewControllerDelegate!
     var collegeTownViewController: EateriesViewControllerDelegate!*/ //MERGE REDONE
@@ -45,21 +45,24 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         setupNavigation()
         setupBars()
         setupPillViewController()
-        setupLoadingView()
+        /*setupLoadingView()
+        endLoadingIndicator() // TODO ethan: end when appropriate*/
     }
     
     // MARK: Setup
     
     func setupEateriesViewControllers() {
-        eateriesViewController = EateriesViewController()
-        eateriesViewController.delegate = CampusEateriesViewController()
+        activeEateriesViewController = CampusEateriesViewController()
+        campusEateriesViewController = activeEateriesViewController
+        //eateriesViewController.delegate = CampusEateriesViewController()
         
-        addChildViewController(eateriesViewController)
-        view.addSubview(eateriesViewController.view)
+        addChildViewController(activeEateriesViewController)
+        view.addSubview(activeEateriesViewController.view)
         
-        eateriesViewController.view.snp.makeConstraints { (make) in
+        activeEateriesViewController.view.snp.makeConstraints { (make) in
             make.leading.trailing.top.bottom.equalToSuperview()
         }
+        //eateriesViewController.updateState(.presenting, animated: true)
         /*visibleViewController = eateriesVC;
         campusViewController = eateriesVC;
         collegeTownViewController = TemporaryCollegetownDemoViewController();
@@ -87,21 +90,6 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(openMap))
         mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
         navigationItem.rightBarButtonItems = [mapButton]
-        
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            
-            let logo = UIImageView(image: UIImage(named: "appDevLogo"))
-            logo.tintColor = .white
-            logo.contentMode = .scaleAspectFit
-            navigationController?.navigationBar.addSubview(logo)
-            logo.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(28.0)
-            }
-            
-            self.appDevLogo = logo
-        }
     }
     
     func setupBars() {
@@ -215,7 +203,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     }
     
     // MARK: View Procedures
-    func endLoadingIndicator() {
+    func endLoadingIndicator() { // TODO ethan: end at appropriate time
         UIView.animate(withDuration: 0.35, animations: {
             self.activityIndicator.alpha = 0.0
         }) { (completed) in
@@ -225,6 +213,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Listeners
     
+    // TODO ethan: make into methods and call from eateriesVCs since these are no longer called
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset.y
         lastScrollWasUserInitiated = true
@@ -254,28 +243,6 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         let transform = CGAffineTransform(translationX: 0.0, y: -headerOffset)
         searchBar.transform = transform
         filterBar.transform = transform
-        
-        appDevLogo?.alpha = min(0.9, (-15.0 - offset) / 100.0)
-        
-        func handleLargeBarLogo() {
-            let margin: CGFloat = 4.0
-            let width: CGFloat = appDevLogo?.frame.width ?? 0.0
-            let navBarWidth: CGFloat = (navigationController?.navigationBar.frame.width ?? 0.0) / 2
-            let navBarHeight: CGFloat = (navigationController?.navigationBar.frame.height ?? 0.0) / 2
-            
-            appDevLogo?.transform = CGAffineTransform(translationX: navBarWidth - margin - width, y: navBarHeight - margin - width)
-            appDevLogo?.tintColor = .white
-        }
-        
-        let largeTitle: Bool
-        if #available(iOS 11.0, *) { largeTitle = true } else { largeTitle = false }
-        
-        if largeTitle && traitCollection.verticalSizeClass != .compact {
-            handleLargeBarLogo()
-        } else {
-            appDevLogo?.transform = CGAffineTransform(translationX: 0.0, y: -offset - 20.0)
-            appDevLogo?.tintColor = .eateryBlue
-        }
         
         view.endEditing(true)
     }

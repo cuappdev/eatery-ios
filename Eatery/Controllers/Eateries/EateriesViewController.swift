@@ -226,7 +226,6 @@ class EateriesViewController: UIViewController {
         }
 
         // filter bar
-
         filterBar.delegate = self
 
         view.addSubview(filterBar)
@@ -244,7 +243,6 @@ class EateriesViewController: UIViewController {
         collectionView.contentInset.top = height
 
         // activity indicator
-
         view.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -252,7 +250,6 @@ class EateriesViewController: UIViewController {
         }
 
         // failed to load
-
         failedToLoadView.delegate = self
         view.addSubview(failedToLoadView)
         failedToLoadView.snp.makeConstraints { make in
