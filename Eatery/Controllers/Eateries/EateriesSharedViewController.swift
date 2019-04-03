@@ -33,9 +33,10 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     var lastScrollWasUserInitiated = false
     var pillAnimating = false
     
-    var visibleViewController: EateriesViewControllerDelegate!
+    var eateriesViewController: EateriesViewController!
+    /*var visibleViewController: EateriesViewControllerDelegate!
     var campusViewController: EateriesViewControllerDelegate!
-    var collegeTownViewController: EateriesViewControllerDelegate!
+    var collegeTownViewController: EateriesViewControllerDelegate!*/ //MERGE REDONE
     
     var pillViewController: PillViewController!
     
@@ -50,13 +51,20 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     // MARK: Setup
     
     func setupEateriesViewControllers() {
-        let eateriesVC = EateriesViewController()
-        eateriesVC.eateriesSharedViewController = self
-        visibleViewController = eateriesVC;
+        eateriesViewController = EateriesViewController()
+        eateriesViewController.delegate = CampusEateriesViewController()
+        
+        addChildViewController(eateriesViewController)
+        view.addSubview(eateriesViewController.view)
+        
+        eateriesViewController.view.snp.makeConstraints { (make) in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
+        /*visibleViewController = eateriesVC;
         campusViewController = eateriesVC;
         collegeTownViewController = TemporaryCollegetownDemoViewController();
-        let ctVC = collegeTownViewController as! UIViewController
-        
+        let ctVC = collegeTownViewController as! UIViewController*/
+        /*addChildViewController(eateriesVC.delegate)
         addChildViewController(eateriesVC)
         addChildViewController(ctVC)
         view.addSubview(ctVC.view)
@@ -67,7 +75,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         }
         ctVC.view.snp.makeConstraints { (make) in
             make.leading.trailing.top.bottom.equalToSuperview()
-        }
+        }*/ //MERGE REDONE
     }
     
     func setupNavigation() {
@@ -97,7 +105,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     }
     
     func setupBars() {
-        searchBar = UISearchBar()
+        /*searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .white
         searchBar.delegate = self
@@ -107,8 +115,8 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom).offset(collectionViewMargin / 2)
-            make.leading.trailing.equalToSuperview().inset(collectionViewMargin / 2)
+            make.top.equalTo(topLayoutGuide.snp.bottom).offset(EateriesViewController.collectionViewMargin / 2)
+            make.leading.trailing.equalToSuperview().inset(EateriesViewController.collectionViewMargin / 2)
         }
         
         filterBar = FilterBar()
@@ -120,7 +128,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(filterBarHeight)
-        }
+        }*/ // MERGE REMOVED
     }
     
     func setupPillViewController() {
@@ -154,11 +162,11 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         if let newVisibleVC = viewController as? UIViewController {
             view.sendSubview(toBack: newVisibleVC.view)
         }
-        if let oldVisibleVC = visibleViewController as? UIViewController {
+        /*if let oldVisibleVC = visibleViewController as? UIViewController {
             view.sendSubview(toBack: oldVisibleVC.view)
         }
         
-        visibleViewController = viewController;
+         visibleViewController = viewController;*/ // TODO: ETHAN MERGE CONFLICT
     }
     
     func showLocationSelectorView() {
@@ -182,10 +190,10 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     @objc func openMap() {
         Answers.logMapOpened()
         
-        let eateries = visibleViewController.eateries
-        let mapViewController = MapViewController(eateries: eateries)
+        //let eateries = visibleViewController.eateries
+        /*let mapViewController = MapViewController(eateries: eateriesViewController.eateries)
         mapViewController.mapEateries(eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
+        navigationController?.pushViewController(mapViewController, animated: true)*/ // MERGE REMOVED
     }
     
     func hideLocationSelectorView() {
@@ -275,7 +283,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     
 }
 
-extension EateriesSharedViewController: FilterBarDelegate {
+/*extension EateriesSharedViewController: FilterBarDelegate {
     
     func updateFilters(filters: Set<Filter>) {
         self.filters = filters
@@ -283,7 +291,7 @@ extension EateriesSharedViewController: FilterBarDelegate {
         (visibleViewController as! EateriesViewController).collectionView.reloadData()
     }
     
-}
+}*/ // TODO REMOVE ETHAN
 
 extension EateriesSharedViewController: PillDelegate {
     
@@ -291,10 +299,10 @@ extension EateriesSharedViewController: PillDelegate {
         switch newLocation {
         case .campus:
             filterBar.setDisplayedFilters(filters: Filter.getCampusFilters())
-            setVisibleViewController(campusViewController)
+        //setVisibleViewController(campusViewController) TODO: ETHAN merge
         case .collegetown:
             filterBar.setDisplayedFilters(filters: Filter.getCollegetownFilters())
-            setVisibleViewController(collegeTownViewController)
+            //setVisibleViewController(collegeTownViewController) TODO: ETHAN merge
         }
     }
     

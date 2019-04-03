@@ -24,12 +24,12 @@ protocol EateriesViewControllerDataSource: AnyObject {
 
     func eateriesViewController(_ evc: EateriesViewController,
                                 eateriesToPresentWithSearchText searchText: String,
-                                filters: Set<FilterBar.Filter>) -> EateriesViewController.EateriesByGroup
+                                filters: Set<Filter>) -> EateriesViewController.EateriesByGroup
 
     func eateriesViewController(_ evc: EateriesViewController,
                                 highlightedSearchDescriptionForEatery eatery: Eatery,
                                 searchText: String,
-                                filters: Set<FilterBar.Filter>) -> NSAttributedString?
+                                filters: Set<Filter>) -> NSAttributedString?
 
 }
 
@@ -37,7 +37,7 @@ protocol EateriesViewControllerDataSource: AnyObject {
 
 protocol EateriesViewControllerDelegate: AnyObject {
 
-    //func eateriesViewControllerDidPressMapButton(_ evc: EateriesViewController)
+    func eateriesViewControllerDidPressMapButton(_ evc: EateriesViewController)
 
     func eateriesViewController(_ evc: EateriesViewController, didSelectEatery eatery: Eatery)
 
@@ -78,6 +78,10 @@ class EateriesViewController: UIViewController {
 
     enum State: Equatable {
 
+        case presenting
+        case loading
+        case failedToLoad(Error)
+        
         static func == (lhs: EateriesViewController.State, rhs: EateriesViewController.State) -> Bool {
             switch (lhs, rhs) {
             case (.presenting, .presenting): return true
@@ -86,10 +90,6 @@ class EateriesViewController: UIViewController {
             default: return false
             }
         }
-
-        case presenting
-        case loading
-        case failedToLoad(Error)
 
     }
 
@@ -121,7 +121,7 @@ class EateriesViewController: UIViewController {
 
     // presentation views
 
-    weak var delegate: EateriesViewControllerDelegate?
+    var delegate: EateriesViewControllerDelegate? // ETHAN: removed weak; the lifecycle of this VC > delegate
 
     private var appDevLogo: UIView!
 
@@ -131,9 +131,9 @@ class EateriesViewController: UIViewController {
     private let searchBar = UISearchBar()
 
     private let filterBar = FilterBar()
-    var availableFilters: [FilterBar.Filter] {
-        get { return filterBar.filters }
-        set { filterBar.filters = newValue }
+    var availableFilters: [Filter] {
+        get { return filterBar.displayedFilters }
+        set { filterBar.displayedFilters = newValue }
     }
 
     // overlay views
@@ -559,7 +559,7 @@ extension EateriesViewController: UISearchBarDelegate {
 
 extension EateriesViewController: FilterBarDelegate {
 
-    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [FilterBar.Filter]) {
+    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter]) {
         reloadEateries()
     }
 

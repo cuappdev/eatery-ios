@@ -73,7 +73,7 @@ class CampusEateriesViewController: EateriesViewController {
 
 extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
-    func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<FilterBar.Filter>) -> EateriesViewController.EateriesByGroup {
+    func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> EateriesViewController.EateriesByGroup {
         guard let eateries = allEateries else {
             return [:]
         }
@@ -113,7 +113,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
         }
     }
 
-    private func filter(eateries: [CampusEatery], withFilters filters: Set<FilterBar.Filter>) -> [CampusEatery] {
+    private func filter(eateries: [CampusEatery], withFilters filters: Set<Filter>) -> [CampusEatery] {
         var filteredEateries = eateries
 
         filteredEateries = filteredEateries.filter {
@@ -156,7 +156,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
     func eateriesViewController(_ evc: EateriesViewController,
                                 highlightedSearchDescriptionForEatery eatery: Eatery,
                                 searchText: String,
-                                filters: Set<FilterBar.Filter>) -> NSAttributedString? {
+                                filters: Set<Filter>) -> NSAttributedString? {
         guard !searchText.isEmpty, let eatery = eatery as? CampusEatery else {
             return nil
         }

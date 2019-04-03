@@ -33,30 +33,19 @@ enum Filter: String, CaseIterable {
 }
 
 protocol FilterBarDelegate: AnyObject {
-    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [FilterBar.Filter])
+    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter])
 }
 
 class FilterBar: UIView {
-
-    enum Filter: String, CaseIterable {
-
-        case nearest = "Nearest First"
-        case north = "North"
-        case west = "West"
-        case central = "Central"
-        case swipes = "Swipes"
-        case brb = "BRB"
-
-    }
 
     private var buttons: [Filter : UIButton] = [:]
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 
-    let padding: CGFloat = collectionViewMargin
+    let padding: CGFloat = EateriesViewController.collectionViewMargin
 
-    private var displayedFilters: [Filter] = []
-    private var selectedFilters: Set<Filter> = []
+    var displayedFilters: [Filter] = []
+    var selectedFilters: Set<Filter> = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,6 +68,7 @@ class FilterBar: UIView {
         layoutButtons(filters: Filter.getCampusFilters())
         layoutButtons(filters: Filter.getCollegetownFilters())
         setDisplayedFilters(filters: Filter.getCampusFilters())
+        
     }
 
     func setDisplayedFilters(filters: [Filter]) {
@@ -154,7 +144,9 @@ class FilterBar: UIView {
                 }
             }
             
-            delegate?.filters = selectedFilters
+            
+            delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters)) // TODO: revise ethan
+            //delegate?.filters = selectedFilters
         }
     }
 
