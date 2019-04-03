@@ -65,22 +65,21 @@ class FilterBar: UIView {
         snp.makeConstraints { make in
             make.height.equalTo(44)
         }
-
-        layoutButtons(filters: Filter.getCampusFilters())
-        layoutButtons(filters: Filter.getCollegetownFilters())
-        setDisplayedFilters(filters: Filter.getCampusFilters())
+    }
+    
+    func configure(with filters: [Filter]) {
+        displayedFilters = filters;
+        layoutButtons(filters: filters)
         
-    }
-
-    func setDisplayedFilters(filters: [Filter]) {
-        displayedFilters = filters
-        updateDisplayedFilters()
-    }
-
-    private func updateDisplayedFilters() {
-        for filter in buttons.keys {
-            buttons[filter]?.isHidden = !displayedFilters.contains(filter)
-            buttons[filter]?.isSelected = selectedFilters.contains(filter)
+        if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
+            for string in prevFilters {
+                if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
+                    selectedFilters.insert(filter)
+                    buttons[filter]!.isSelected = true
+                }
+            }
+            
+            delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
         }
     }
 
@@ -109,7 +108,6 @@ class FilterBar: UIView {
             button.frame.size.width += 16.0
             button.frame.size.height = frame.height
             button.center.y = frame.height / 2
-            button.isHidden = true
 
             button.tag = index
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
@@ -128,27 +126,11 @@ class FilterBar: UIView {
             buttons[filter] = button
             previousLayout = button
 
-            totalWidth += button.frame.width + (index == Filter.allCases.count - 1 ? 0.0 : padding / 2)
+            totalWidth += button.frame.width + (index == filters.count - 1 ? 0.0 : padding / 2)
         }
 
         scrollView.contentSize = CGSize(width: totalWidth, height: frame.height)
         scrollView.setContentOffset(CGPoint(x: -padding, y: 0), animated: false)
-    }
-
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
-            for string in prevFilters {
-                if let filter = Filter(rawValue: string) {
-                    selectedFilters.insert(filter)
-                    buttons[filter]!.isSelected = true
-                }
-            }
-            
-            
-            delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters)) // TODO: revise ethan
-            //delegate?.filters = selectedFilters
-        }
     }
 
     @objc func buttonPressed(sender: UIButton) {
@@ -157,11 +139,13 @@ class FilterBar: UIView {
         if sender.isSelected {
             let filter = displayedFilters[sender.tag]
             selectedFilters.insert(filter)
-            // TODO:
-            // Answers.logEateryFilterApplied(filterType: filter.rawValue)
+            Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
             selectedFilters.remove(displayedFilters[sender.tag])
         }
+        
+        let defaults = UserDefaults.standard
+        defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
 
         delegate?.filterBar(self, selectedFiltersDidChange: selectedFilters.map { $0 })
     }

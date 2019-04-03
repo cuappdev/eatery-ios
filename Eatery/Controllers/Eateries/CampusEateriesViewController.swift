@@ -22,6 +22,7 @@ class CampusEateriesViewController: EateriesViewController {
         dataSource = self
         delegate = self
 
+        filterBar.configure(with: Filter.getCampusFilters())
         queryCampusEateries()
     }
 

@@ -130,7 +130,7 @@ class EateriesViewController: UIViewController {
 
     private let searchBar = UISearchBar()
 
-    private let filterBar = FilterBar()
+    let filterBar = FilterBar()
     var availableFilters: [Filter] {
         get { return filterBar.displayedFilters }
         set { filterBar.displayedFilters = newValue }
