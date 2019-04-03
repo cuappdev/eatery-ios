@@ -37,7 +37,7 @@ protocol EateriesViewControllerDataSource: AnyObject {
 
 protocol EateriesViewControllerDelegate: AnyObject {
 
-    func eateriesViewControllerDidPressMapButton(_ evc: EateriesViewController)
+    func didPressMapButton()
 
     func eateriesViewController(_ evc: EateriesViewController, didSelectEatery eatery: Eatery)
 
@@ -107,6 +107,7 @@ class EateriesViewController: UIViewController {
 
     // model
 
+    weak var eateriesSharedViewController: EateriesSharedViewController!
     weak var dataSource: EateriesViewControllerDataSource?
 
     private var state: State = .loading
@@ -121,7 +122,7 @@ class EateriesViewController: UIViewController {
 
     // presentation views
 
-    var delegate: EateriesViewControllerDelegate? // ETHAN: removed weak; the lifecycle of this VC > delegate
+    var delegate: EateriesViewControllerDelegate?
 
     private var appDevLogo: UIView!
 
@@ -157,17 +158,6 @@ class EateriesViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-
-        // navigation controller
-
-        navigationController?.hero.isEnabled = true
-        navigationController?.hero.navigationAnimationType = .fade
-
-        navigationItem.title = "Eateries"
-
-        let mapButton = UIBarButtonItem(image: UIImage(named: "mapIcon"), style: .done, target: self, action: #selector(mapButtonPressed))
-        mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
-        navigationItem.rightBarButtonItems = [mapButton]
 
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -379,12 +369,6 @@ class EateriesViewController: UIViewController {
         })
     }
 
-    // MARK: Events
-
-    @objc private func mapButtonPressed(_ sender: UIBarButtonItem) {
-        delegate?.eateriesViewControllerDidPressMapButton(self)
-    }
-
     // MARK: Data Source Callers
 
     private func reloadEateries() {
@@ -575,11 +559,16 @@ extension EateriesViewController: EateriesFailedToLoadViewDelegate {
 // MARK: - Scroll View Delegate
 
 extension EateriesViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        eateriesSharedViewController.scrollViewWillBeginDragging(scrollView)
+    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
 
         transformAppDevLogo()
+        eateriesSharedViewController.scrollViewDidScroll(scrollView)
     }
 
     /// Change the appearance of the AppDev logo based on the current scroll

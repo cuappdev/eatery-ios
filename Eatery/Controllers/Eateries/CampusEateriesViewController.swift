@@ -213,7 +213,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
 extension CampusEateriesViewController: EateriesViewControllerDelegate {
 
-    func eateriesViewControllerDidPressMapButton(_ evc: EateriesViewController) {
+    func didPressMapButton() {
         guard let eateries = allEateries else {
             return
         }

@@ -18,12 +18,9 @@ class EateryTabBarController: UITabBarController {
     override func viewDidLoad() {
         delegate = self
 
-        /*let eateryNavigationController = UINavigationController(rootViewController: eateriesViewController)
-        eateryNavigationController.navigationBar.barStyle = .black
-        eateryNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "eateryTabIcon"), tag: 0)*/
         let eateriesNavigationController = UINavigationController(rootViewController: eateriesSharedViewController)
         eateriesNavigationController.navigationBar.barStyle = .black
-        eateriesNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0) // TODO: ETHAN FIX
+        eateriesNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0)
 
         let lookAheadNavigationController = UINavigationController(rootViewController: lookAheadViewController)
         lookAheadNavigationController.navigationBar.barStyle = .black

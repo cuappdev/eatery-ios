@@ -10,7 +10,7 @@ import UIKit
 import Crashlytics
 import NVActivityIndicatorView
 
-class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
+class EateriesSharedViewController: UIViewController {
     
     var lastContentOffset: CGFloat = 0
     var lastScrollWasUserInitiated = false
@@ -18,6 +18,7 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     
     var activeEateriesViewController: EateriesViewController!
     var campusEateriesViewController: EateriesViewController!
+    var collegetownEateriesViewController: EateriesViewController!
     
     var pillViewController: PillViewController!
     
@@ -30,8 +31,12 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     // MARK: Setup
     
     func setupEateriesViewControllers() {
-        activeEateriesViewController = CampusEateriesViewController()
-        campusEateriesViewController = activeEateriesViewController
+        campusEateriesViewController = CampusEateriesViewController()
+        campusEateriesViewController.eateriesSharedViewController = self
+        // collegetownEateriesViewController = CollegetownEateriesViewController()
+        // collegetownEateriesViewController.eateriesSharedViewController = self
+        // TODO ethan: integrate collegetownEateriesViewController
+        activeEateriesViewController = campusEateriesViewController
         
         addChildViewController(activeEateriesViewController)
         view.addSubview(activeEateriesViewController.view)
@@ -95,10 +100,11 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
     @objc func openMap() {
         Answers.logMapOpened()
         
-        //let eateries = visibleViewController.eateries
-        /*let mapViewController = MapViewController(eateries: eateriesViewController.eateries)
+        activeEateriesViewController.delegate?.didPressMapButton()
+        /*let eateries = activeEateriesViewController.delegate.allEateries
+        let mapViewController = MapViewController(eateries: eateries)
         mapViewController.mapEateries(eateries)
-         navigationController?.pushViewController(mapViewController, animated: true)*/ // TODO: ethan update to work with merge
+        navigationController?.pushViewController(mapViewController, animated: true)*/ // TODO: ethan update to work with merge
     }
     
     func hideLocationSelectorView() {
@@ -119,9 +125,9 @@ class EateriesSharedViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-    // MARK: Listeners
+    // MARK: Listens to changes in EateriesViewController scroll view
+    // These methods should be called from EateriesViewController
     
-    // TODO ethan: make into procedural methods (rather than delegate implementations) and call from eateriesVCs since these are no longer called
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset.y
         lastScrollWasUserInitiated = true
@@ -146,11 +152,9 @@ extension EateriesSharedViewController: PillDelegate {
     func didUpdateLocation(newLocation: Location) {
         switch newLocation {
         case .campus:
-            print("TODO")
-            //setVisibleViewController(campusViewController) TODO: ETHAN merge
+            setVisibleViewController(campusEateriesViewController)
         case .collegetown:
-            print("TODO")
-            //setVisibleViewController(collegeTownViewController) TODO: ETHAN merge
+            setVisibleViewController(collegetownEateriesViewController)
         }
     }
     
