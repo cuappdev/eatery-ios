@@ -22,11 +22,6 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
     var informativeViews: [UIView]!
     var informativeLabelText = ["Get Directions", "Call (607) 319-4176", "Visit www.chattycathycafe.com"]
     
-    // Tableview
-//    var ctownMenuTableView: UITableView!
-    
-//    var cTownInformativeReuseIdentifier = "CTownInformative"
-    
     //placeholders
     var cellLabels = ["Get Directions", "Call (607) 319-4176", "Visit www.chattycathycafe.com"]
     let rating = 4.43
@@ -60,16 +55,11 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
         outerScrollView.showsHorizontalScrollIndicator = false
         outerScrollView.alwaysBounceVertical = true
         outerScrollView.delaysContentTouches = false
+        outerScrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height*2)
         view.addSubview(outerScrollView)
         
-        scrollContentView = UIView()
-        scrollContentView.backgroundColor = .white
-        outerScrollView.addSubview(scrollContentView)
-        
-//        ctownMenuHeaderView = CTownMenuHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 258))
-        
         ctownMenuHeaderView = CTownMenuHeaderView()
-        scrollContentView.addSubview(ctownMenuHeaderView)
+        outerScrollView.addSubview(ctownMenuHeaderView)
         
         ctownMenuHeaderView.titleLabel.text = eatery.nickname
         if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
@@ -82,10 +72,6 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
         ctownMenuHeaderView.statusLabel.text = eateryStatus.statusText
         ctownMenuHeaderView.statusLabel.textColor = eateryStatus.statusColor
         ctownMenuHeaderView.hourLabel.text = eateryStatus.message
-
-//        let attributedString = NSMutableAttributedString(string: "Coffee & Tea, Juice Bars & Smoothies, Acai Bowls")
-//        attributedString.addAttribute(NSAttributedStringKey.kern, value: 0.01, range: NSMakeRange(0, attributedString.length))
-//        ctownMenuHeaderView.cuisineLabel.attributedText = attributedString
         
         ctownMenuHeaderView.cuisineLabel.text = "Coffee & Tea, Juice Bars & Smoothies, Acai Bowls"
         
@@ -206,39 +192,29 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
         } else {
             ctownMenuHeaderView.distanceLabel.text = "-- mi"
         }
-        //ctownMenuHeaderView.clipsToBounds = true
-        
-//        ctownMenuTableView = UITableView()
-//        ctownMenuTableView.backgroundColor = .wash
-//        //ctownMenuTableView.tableHeaderView = ctownMenuHeaderView
-//        ctownMenuTableView.allowsSelection = true
-//        ctownMenuTableView.delegate = self
-//        ctownMenuTableView.dataSource = self
-//        ctownMenuTableView.register(CTownInformativeTableViewCell.self, forCellReuseIdentifier: cTownInformativeReuseIdentifier)
-//        view.addSubview(ctownMenuTableView)
         
         informativeViews = [UIView]()
         
         for i in 0...2{
             let informativeView = UIView()
             informativeView.backgroundColor = .white
-
+            informativeView.isUserInteractionEnabled = true
             informativeViews.append(informativeView)
             
-//            var gesture : UITapGestureRecognizer!
-//            switch i{
-//            case 0:
-//                gesture = UITapGestureRecognizer(target: self, action: #selector(getDirections))
-//            case 1:
-//                gesture = UITapGestureRecognizer(target: self, action: #selector(callNumber))
-//            case 2:
-//                gesture = UITapGestureRecognizer(target: self, action: #selector(visitWebsite))
-//            default:
-//                print("Bad case")
-//            }
-//
-//            informativeView.addGestureRecognizer(gesture)
-            scrollContentView.addSubview(informativeView)
+            var gesture : UITapGestureRecognizer!
+            switch i{
+            case 0:
+                gesture = UITapGestureRecognizer(target: self, action: #selector(getDirections))
+            case 1:
+                gesture = UITapGestureRecognizer(target: self, action: #selector(callNumber))
+            case 2:
+                gesture = UITapGestureRecognizer(target: self, action: #selector(visitWebsite))
+            default:
+                print("Bad case")
+            }
+
+            informativeView.addGestureRecognizer(gesture)
+            outerScrollView.addSubview(informativeView)
             
             let informativeLabel = UILabel()
             informativeLabel.text = informativeLabelText[i]
@@ -246,28 +222,11 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
             informativeLabel.textColor = .eateryBlue
             informativeView.addSubview(informativeLabel)
             
-            let informativeButton = UIButton()
-            switch i{
-            case 0:
-                informativeButton.addTarget(self, action: #selector(getDirections), for: .touchUpInside)
-            case 1:
-                informativeButton.addTarget(self, action: #selector(callNumber), for: .touchUpInside)
-            case 2:
-                informativeButton.addTarget(self, action: #selector(visitWebsite), for: .touchUpInside)
-            default:
-                print("Bad case")
-            }
-            informativeView.addSubview(informativeButton)
-            
             informativeLabel.snp.makeConstraints { make in
                 make.leading.equalTo(16)
                 make.height.equalTo(20)
                 make.centerY.equalToSuperview()
                 make.trailing.lessThanOrEqualToSuperview()
-            }
-            
-            informativeButton.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
             }
         }
         
@@ -276,42 +235,33 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
     
     func setupConstraints(){
         
-//        ctownMenuTableView.snp.makeConstraints { make in
-//            make.leading.trailing.bottom.equalToSuperview()
-//            make.top.equalToSuperview().offset(-UIApplication.shared.statusBarFrame.height)
-//        }
-        
         outerScrollView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(-UIApplication.shared.statusBarFrame.height)
             make.bottom.equalTo(bottomLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
         }
         
-        scrollContentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalTo(view)
-        }
-        
         ctownMenuHeaderView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(scrollContentView)
-            make.height.equalTo(258)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalTo(view)
+            make.height.equalTo(363)
         }
         
         informativeViews[0].snp.makeConstraints { make in
             make.top.equalTo(ctownMenuHeaderView.informationView.snp.bottom).offset(13)
-            make.leading.trailing.equalTo(scrollContentView)
+            make.leading.trailing.equalTo(ctownMenuHeaderView)
             make.height.equalTo(40)
         }
         
         informativeViews[1].snp.makeConstraints { make in
             make.top.equalTo(informativeViews[0].snp.bottom).offset(1)
-            make.leading.trailing.equalTo(scrollContentView)
+            make.leading.trailing.equalTo(ctownMenuHeaderView)
             make.height.equalTo(39)
         }
         
         informativeViews[2].snp.makeConstraints { make in
             make.top.equalTo(informativeViews[1].snp.bottom).offset(1)
-            make.leading.trailing.equalTo(scrollContentView)
+            make.leading.trailing.equalTo(ctownMenuHeaderView)
             make.height.equalTo(39)
         }
         
@@ -324,45 +274,19 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
             ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
             ctownMenuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollView.contentOffset.y)
-                make.height.equalTo(258).offset(-scrollView.contentOffset.y)
+                make.height.equalTo(363).offset(-scrollView.contentOffset.y)
+            }
+            ctownMenuHeaderView.backgroundImageView.snp.updateConstraints { make in
+                make.top.equalToSuperview()
+                make.height.equalTo(258).offset(-scrollView.contentOffset.y+258)
             }
         default:
-            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 3)
+            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 4)
             ctownMenuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
-                make.height.equalTo(258)
+                make.height.equalTo(363)
             }
         }
-        
-//        let titleLabelFrame = view.convert(ctownMenuHeaderView.titleLabel.frame, from: ctownMenuHeaderView)
-//            .offsetBy(dx: 0.0, dy: -(navigationController?.navigationBar.frame.height ?? 0.0))
-//        let titleLabelMaxHeight: CGFloat = 20.0
-//        let dateLabelMinWidth: CGFloat = 80.0
-//
-//        switch -titleLabelFrame.origin.y {
-//        case ..<0:
-//            navigationTitleView.nameLabelHeight = 0
-//            navigationTitleView.dateLabelWidth = nil
-//            navigationTitleView.eateryNameLabel.alpha = 0.0
-//        case 0..<titleLabelFrame.height:
-//            let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height
-//
-//            navigationTitleView.eateryNameLabel.alpha = percentage
-//            navigationTitleView.nameLabelHeight = titleLabelMaxHeight * percentage
-//            navigationTitleView.dateLabelWidth = navigationTitleView.frame.width + (dateLabelMinWidth - navigationTitleView.frame.width) * percentage
-//        case titleLabelFrame.height...:
-//            navigationTitleView.eateryNameLabel.alpha = 1.0
-//            navigationTitleView.nameLabelHeight = titleLabelMaxHeight
-//            navigationTitleView.dateLabelWidth = dateLabelMinWidth
-//        default:
-//            break
-//        }
-    }
-    
-    func scrollViewDidChange() {
-//        pageViewController.view.snp.updateConstraints { make in
-//            make.height.equalTo(pageViewControllerHeight)
-//        }
     }
     
     @objc func getDirections(){
@@ -409,92 +333,6 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
             }
         }
     }
-    
-    // Tableview Methods
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return ctownMenuHeaderView
-//    }
-//
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return UIView()
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 363//187 //the magic constant
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 306
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 39
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 3
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: cTownInformativeReuseIdentifier, for: indexPath) as! CTownInformativeTableViewCell
-//        cell.informativeTextLabel.text = cellLabels[indexPath.row]
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        switch indexPath {
-//        case IndexPath(row: 0, section: 0):
-//            Answers.logDirectionsAsked(eateryId: eatery.slug)
-//
-//            let coordinate = eatery.location.coordinate
-//
-//            if (UIApplication.shared.canOpenURL(URL(string: "comgooglemaps://")!)) {
-//                let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//                alertController.addAction(UIAlertAction(title: "Open in Apple Maps", style: .default) { Void in
-//                    self.openAppleMapsDirections()
-//                })
-//                alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .default) { Void in
-//                    UIApplication.shared.open(URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking")!, options: [:], completionHandler: nil)
-//                })
-//                if let presenter = alertController.popoverPresentationController {
-//                    presenter.sourceView = ctownMenuTableView.cellForRow(at: IndexPath(row: 0, section: 0))
-//                    presenter.sourceRect = ctownMenuTableView.rectForRow(at: IndexPath(row: 0, section: 0))
-//                } else {
-//                    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//                }
-//                present(alertController, animated: true, completion: nil)
-//            } else {
-//                openAppleMapsDirections()
-//            }
-//            break
-//        case IndexPath(row: 1, section: 0):
-//            if let url = URL(string: "tel://3059755855"), UIApplication.shared.canOpenURL(url) {
-//                if #available(iOS 10, *) {
-//                    UIApplication.shared.open(url)
-//                } else {
-//                    UIApplication.shared.openURL(url)
-//                }
-//            }
-//            break //call number
-////        case IndexPath(row: 2, section: 0):
-//            if let url = URL(string: "https://chattycathycafe.com/"), UIApplication.shared.canOpenURL(url) {
-//                if #available(iOS 10, *) {
-//                    UIApplication.shared.open(url)
-//                } else {
-//                    UIApplication.shared.openURL(url)
-//                }
-//            }
-//            break
-//        default:
-//            print("nope")
-//            break
-//    }
-//}
     
     func openAppleMapsDirections() {
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
