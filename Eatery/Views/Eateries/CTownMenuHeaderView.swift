@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
 class CTownMenuHeaderView: UIView {
-
+    
+    var backButton: UIButton!
+    
     var backgroundImageView: UIImageView!
     var titleLabel: UILabel!
     var paymentView: PaymentMethodsView!
@@ -24,7 +27,6 @@ class CTownMenuHeaderView: UIView {
     var priceLabel: UILabel!
     var distanceLabel: UILabel!
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -85,19 +87,21 @@ class CTownMenuHeaderView: UIView {
     }
     
     func setupConstraints(){
+        
         backgroundImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(258)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.bottom.equalTo(backgroundImageView).inset(15)
-        }
-        
         paymentView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.centerY.equalTo(titleLabel.snp.centerY)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.lessThanOrEqualTo(paymentView.snp.leading)
+            make.bottom.equalTo(backgroundImageView).inset(15)
         }
         
         informationView.snp.makeConstraints { make in
@@ -153,6 +157,157 @@ class CTownMenuHeaderView: UIView {
             make.width.lessThanOrEqualToSuperview()
         }
         
+    }
+    
+    func set(eatery: Eatery, userLocation: CLLocation?, rating: Double, cost: String){
+        
+        titleLabel.text = eatery.nickname
+        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+            let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
+            backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
+        }
+        
+        let eateryStatus = eatery.generateDescriptionOfCurrentState()
+        switch eateryStatus {
+        case .open, .closing:
+            titleLabel.textColor = .white
+            
+        case .closed, .opening:
+            titleLabel.textColor = UIColor.darkGray
+            
+            let closedView = UIView()
+            closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
+            backgroundImageView.addSubview(closedView)
+            closedView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
+        
+        paymentView.paymentMethods = eatery.paymentMethods
+        
+        statusLabel.text = eateryStatus.statusText
+        statusLabel.textColor = eateryStatus.statusColor
+        hourLabel.text = eateryStatus.message
+        
+        cuisineLabel.text = "Coffee & Tea, Juice Bars & Smoothies, Acai Bowls"
+        
+        locationLabel.text = eatery.address
+        
+        let star1 = ratingView.ratingImageView[0]
+        let star2 = ratingView.ratingImageView[1]
+        let star3 = ratingView.ratingImageView[2]
+        let star4 = ratingView.ratingImageView[3]
+        let star5 = ratingView.ratingImageView[4]
+        switch rating{
+        case 4.75...5.0:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "selected")
+            star4.image = UIImage(named: "selected")
+            star5.image = UIImage(named: "selected")
+            break
+        case 4.25..<4.75:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "selected")
+            star4.image = UIImage(named: "selected")
+            star5.image = UIImage(named: "halfSelected")
+            break
+        case 3.75..<4.25:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "selected")
+            star4.image = UIImage(named: "selected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 3.25..<3.75:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "selected")
+            star4.image = UIImage(named: "halfSelected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 2.75..<3.25:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "selected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 2.25..<2.75:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "halfSelected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 1.75..<2.25:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "selected")
+            star3.image = UIImage(named: "unselected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 1.25..<1.75:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "halfSelected")
+            star3.image = UIImage(named: "unselected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 0.75..<1.25:
+            star1.image = UIImage(named: "selected")
+            star2.image = UIImage(named: "unselected")
+            star3.image = UIImage(named: "unselected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 0.25..<0.75:
+            star1.image = UIImage(named: "halfSelected")
+            star2.image = UIImage(named: "unselected")
+            star3.image = UIImage(named: "unselected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        case 0.0..<0.25:
+            star1.image = UIImage(named: "unselected")
+            star2.image = UIImage(named: "unselected")
+            star3.image = UIImage(named: "unselected")
+            star4.image = UIImage(named: "unselected")
+            star5.image = UIImage(named: "unselected")
+            break
+        default:
+            star1.image = UIImage(named: "halfSelected")
+            star2.image = UIImage(named: "halfSelected")
+            star3.image = UIImage(named: "halfSelected")
+            star4.image = UIImage(named: "halfSelected")
+            star5.image = UIImage(named: "halfSelected")
+            break
+        }
+        
+        let attributedString = NSMutableAttributedString(string:"$$$")
+        switch cost{
+        case "$":
+            attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black , range: NSRange(location: 0, length: 1))
+            priceLabel.attributedText = attributedString
+            break
+        case "$$":
+            attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black , range: NSRange(location: 0, length: 2))
+            priceLabel.attributedText = attributedString
+            break
+        case "$$$":
+            priceLabel.textColor = .black
+            break
+        default:
+            break
+        }
+        
+        if let userLocation = userLocation {
+            let distance = userLocation.distance(from: eatery.location, in: .miles)
+            distanceLabel.text = "\(Double(round(10 * distance) / 10)) mi"
+        } else {
+            distanceLabel.text = "-- mi"
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

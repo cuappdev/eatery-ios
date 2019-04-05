@@ -10,28 +10,107 @@ import Crashlytics
 import MapKit
 import UIKit
 
-class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
-
+class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
+    
     var eatery: Eatery!
     var delegate: MenuButtonsDelegate?
     var userLocation: CLLocation?
     
     var outerScrollView: UIScrollView!
-    var scrollContentView: UIView!
+    var backButton: UIButton!
     var ctownMenuHeaderView: CTownMenuHeaderView!
     var informativeViews: [UIView]!
     var informativeLabelText = ["Get Directions", "Call (607) 319-4176", "Visit www.chattycathycafe.com"]
     
+    var mapView: MKMapView
+    let eateryAnnotation = MKPointAnnotation()
+    var locationManager: CLLocationManager!
+    
+    var defaultCoordinate: CLLocationCoordinate2D {
+        return eatery.location.coordinate
+    }
+    
+    var midpointCoordinate: CLLocationCoordinate2D {
+        let currentCoordinates = locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
+        let eateryCoordinates = eatery.location.coordinate
+
+        let cLon = currentCoordinates.longitude * .pi / 180
+        let cLat = currentCoordinates.latitude * .pi / 180
+        let eLon = eateryCoordinates.longitude * .pi / 180
+        let eLat = eateryCoordinates.latitude * .pi / 180
+        
+        let dLon = eLon - cLon
+        
+        let x = cos(eLat) * cos(dLon)
+        let y = cos(eLat) * sin(dLon)
+        let centerLatitude = atan2(sin(cLat) + sin(eLat), sqrt((cos(cLat) + x) * (cos(cLat) + x) + y * y))
+        let centerLongitude = cLon + atan2(y, cos(cLat) + x)
+        
+        var midpointCoordinates = CLLocationCoordinate2D()
+        midpointCoordinates.latitude = centerLatitude * 180 / .pi
+        midpointCoordinates.longitude = centerLongitude * 180 / .pi
+        
+        return midpointCoordinates
+    }
+    
+    var deltaLatLon: [Double] {
+        let currentCoordinates = locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
+        let eateryCoordinates = eatery.location.coordinate
+        
+        var deltaLatLon = [Double]()
+        deltaLatLon.append(abs(eateryCoordinates.latitude - currentCoordinates.latitude))
+        deltaLatLon.append(abs(eateryCoordinates.longitude - currentCoordinates.longitude))
+        
+        return deltaLatLon
+    }
+    
+    var maxDeltaLatLon: [Double] {
+        var maxDeltaLatLon = [Double]()
+        
+//        //Retrieved from Ithaca Transit App
+//        //Max Latitude Value
+//        let northBorder: Double = 42.61321283145329 + (1 / 69.172)
+//        //Max Longitude Value
+//        let eastBorder: Double = -76.28125469914926 + (1 / 51.2738554594)
+//        //Min Latitude Value
+//        let southBorder: Double = 42.32796328578829 - (1 / 69.172)
+//        //Min Longitude Value
+//        let westBorder: Double = -76.28125469914926 - (1 / 51.2738554594)
+        
+        maxDeltaLatLon.append(2/69.172)
+        maxDeltaLatLon.append(2/51.2738554594)
+        
+        return maxDeltaLatLon
+    }
+    
     //placeholders
     var cellLabels = ["Get Directions", "Call (607) 319-4176", "Visit www.chattycathycafe.com"]
-    let rating = 4.43
-    let cost = "$$"
     
     init(eatery: Eatery, delegate: MenuButtonsDelegate?, userLocation: CLLocation? = nil){
         self.eatery = eatery
         self.delegate = delegate //to add favorite functionality later
         self.userLocation = userLocation
+        self.mapView = MKMapView()
         super.init(nibName: nil, bundle: nil)
+        
+        mapView.delegate = self
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch (CLLocationManager.authorizationStatus()) {
+            case .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+                mapView.showsUserLocation = true
+            case .notDetermined:
+                if locationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)) {
+                    locationManager.requestWhenInUseAuthorization()
+                }
+            default: break
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,143 +134,17 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
         outerScrollView.showsHorizontalScrollIndicator = false
         outerScrollView.alwaysBounceVertical = true
         outerScrollView.delaysContentTouches = false
-        outerScrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height*2)
         view.addSubview(outerScrollView)
         
         ctownMenuHeaderView = CTownMenuHeaderView()
+        ctownMenuHeaderView.set(eatery: eatery, userLocation: userLocation, rating: 4.43, cost: "$$")
         outerScrollView.addSubview(ctownMenuHeaderView)
         
-        ctownMenuHeaderView.titleLabel.text = eatery.nickname
-        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
-            let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
-            ctownMenuHeaderView.backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
-        }
-        ctownMenuHeaderView.paymentView.paymentMethods = eatery.paymentMethods
-        
-        let eateryStatus = eatery.generateDescriptionOfCurrentState()
-        ctownMenuHeaderView.statusLabel.text = eateryStatus.statusText
-        ctownMenuHeaderView.statusLabel.textColor = eateryStatus.statusColor
-        ctownMenuHeaderView.hourLabel.text = eateryStatus.message
-        
-        ctownMenuHeaderView.cuisineLabel.text = "Coffee & Tea, Juice Bars & Smoothies, Acai Bowls"
-        
-        ctownMenuHeaderView.locationLabel.text = eatery.address
-        
-        let star1 = ctownMenuHeaderView.ratingView.ratingImageView[0]
-        let star2 = ctownMenuHeaderView.ratingView.ratingImageView[1]
-        let star3 = ctownMenuHeaderView.ratingView.ratingImageView[2]
-        let star4 = ctownMenuHeaderView.ratingView.ratingImageView[3]
-        let star5 = ctownMenuHeaderView.ratingView.ratingImageView[4]
-        switch rating{
-        case 4.75...5.0:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "selected")
-            star4.image = UIImage(named: "selected")
-            star5.image = UIImage(named: "selected")
-            break
-        case 4.25..<4.75:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "selected")
-            star4.image = UIImage(named: "selected")
-            star5.image = UIImage(named: "halfSelected")
-            break
-        case 3.75..<4.25:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "selected")
-            star4.image = UIImage(named: "selected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 3.25..<3.75:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "selected")
-            star4.image = UIImage(named: "halfSelected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 2.75..<3.25:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "selected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 2.25..<2.75:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "halfSelected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 1.75..<2.25:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "selected")
-            star3.image = UIImage(named: "unselected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 1.25..<1.75:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "halfSelected")
-            star3.image = UIImage(named: "unselected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 0.75..<1.25:
-            star1.image = UIImage(named: "selected")
-            star2.image = UIImage(named: "unselected")
-            star3.image = UIImage(named: "unselected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 0.25..<0.75:
-            star1.image = UIImage(named: "halfSelected")
-            star2.image = UIImage(named: "unselected")
-            star3.image = UIImage(named: "unselected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        case 0.0..<0.25:
-            star1.image = UIImage(named: "unselected")
-            star2.image = UIImage(named: "unselected")
-            star3.image = UIImage(named: "unselected")
-            star4.image = UIImage(named: "unselected")
-            star5.image = UIImage(named: "unselected")
-            break
-        default:
-            star1.image = UIImage(named: "halfSelected")
-            star2.image = UIImage(named: "halfSelected")
-            star3.image = UIImage(named: "halfSelected")
-            star4.image = UIImage(named: "halfSelected")
-            star5.image = UIImage(named: "halfSelected")
-            break
-        }
-        
-        let attributedString = NSMutableAttributedString(string:"$$$")
-        switch cost{
-        case "$":
-            attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black , range: NSRange(location: 0, length: 1))
-            ctownMenuHeaderView.priceLabel.attributedText = attributedString
-            break
-        case "$$":
-            attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black , range: NSRange(location: 0, length: 2))
-            ctownMenuHeaderView.priceLabel.attributedText = attributedString
-            break
-        case "$$$":
-            ctownMenuHeaderView.priceLabel.textColor = .black
-            break
-        default:
-            break
-        }
-        
-        if let userLocation = userLocation {
-            let distance = userLocation.distance(from: eatery.location, in: .miles)
-            ctownMenuHeaderView.distanceLabel.text = "\(Double(round(10 * distance) / 10)) mi"
-        } else {
-            ctownMenuHeaderView.distanceLabel.text = "-- mi"
-        }
+        backButton = UIButton()
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+        backButton.isUserInteractionEnabled = true
+        backButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        outerScrollView.addSubview(backButton)
         
         informativeViews = [UIView]()
         
@@ -230,39 +183,74 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
+        mapView.showsBuildings = true
+        mapView.showsUserLocation = true
+        if(deltaLatLon[0]<maxDeltaLatLon[0] && deltaLatLon[1]<maxDeltaLatLon[1]){
+            mapView.setCenter(midpointCoordinate, animated: true)
+            mapView.setRegion(MKCoordinateRegionMake(midpointCoordinate, MKCoordinateSpanMake(deltaLatLon[0]*1.5, deltaLatLon[1]*1.5)), animated: false)
+        } else {
+            mapView.setCenter(defaultCoordinate, animated: true)
+            mapView.setRegion(MKCoordinateRegionMake(defaultCoordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
+        }
+        outerScrollView.addSubview(mapView)
+        
+        eateryAnnotation.coordinate = eatery.location.coordinate
+        eateryAnnotation.title = eatery.nickname
+        eateryAnnotation.subtitle = eatery.isOpenNow() ? "open" : "closed"
+        mapView.addAnnotation(eateryAnnotation)
+        
         setupConstraints()
     }
     
     func setupConstraints(){
+        
+        let screenSize = view.bounds.width
+        let ctownMenuHeaderViewHeight = 363
+        let informativeViewHeight = 39
+        let mapViewHeight = 306
         
         outerScrollView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(-UIApplication.shared.statusBarFrame.height)
             make.bottom.equalTo(bottomLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
         }
+        outerScrollView.contentSize = CGSize(width: screenSize, height: CGFloat(ctownMenuHeaderViewHeight + informativeViewHeight*3 + mapViewHeight + 47))
         
         ctownMenuHeaderView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(363)
+            make.height.equalTo(ctownMenuHeaderViewHeight)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(55)
+            make.leading.equalToSuperview().offset(11)
+            make.height.equalTo(20)
+            make.width.equalTo(75)
         }
         
         informativeViews[0].snp.makeConstraints { make in
             make.top.equalTo(ctownMenuHeaderView.informationView.snp.bottom).offset(13)
             make.leading.trailing.equalTo(ctownMenuHeaderView)
-            make.height.equalTo(40)
+            make.height.equalTo(informativeViewHeight+1)
         }
         
         informativeViews[1].snp.makeConstraints { make in
             make.top.equalTo(informativeViews[0].snp.bottom).offset(1)
             make.leading.trailing.equalTo(ctownMenuHeaderView)
-            make.height.equalTo(39)
+            make.height.equalTo(informativeViewHeight)
         }
         
         informativeViews[2].snp.makeConstraints { make in
             make.top.equalTo(informativeViews[1].snp.bottom).offset(1)
             make.leading.trailing.equalTo(ctownMenuHeaderView)
-            make.height.equalTo(39)
+            make.height.equalTo(informativeViewHeight)
+        }
+        
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(informativeViews[2].snp.bottom).offset(11)
+            make.leading.trailing.equalTo(ctownMenuHeaderView)
+            make.height.equalTo(mapViewHeight)
         }
         
     }
@@ -280,6 +268,9 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
                 make.top.equalToSuperview()
                 make.height.equalTo(258).offset(-scrollView.contentOffset.y+258)
             }
+            backButton.snp.updateConstraints { make in
+                make.top.equalToSuperview().offset(55+scrollView.contentOffset.y)
+            }
         default:
             ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 4)
             ctownMenuHeaderView.snp.updateConstraints { make in
@@ -287,6 +278,32 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate {
                 make.height.equalTo(363)
             }
         }
+    }
+    
+    // MKMapViewDelegate Methods
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if !(annotation is MKPointAnnotation) {
+            return nil
+        }
+        
+        let annotationView: MKAnnotationView
+        
+        if let dequeued = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin") {
+            annotationView = dequeued
+            annotationView.annotation = annotation
+        } else {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "eateryPin")
+            annotationView.canShowCallout = true
+        }
+        
+        annotationView.image = annotation.subtitle == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
+        
+        return annotationView
+    }
+    
+    @objc func goBack(){
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func getDirections(){

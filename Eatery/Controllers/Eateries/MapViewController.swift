@@ -167,15 +167,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if (view.annotation is MKPointAnnotation) {
         let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
         Answers.logMapAnnotationOpened(eateryId: eatery.slug)
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MKPointAnnotation) {
             return nil
         }
-        
+
         let annotationView: MKAnnotationView
 
         if let dequeued = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin") {
@@ -186,9 +188,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotationView.canShowCallout = true
             annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
-        
+
         annotationView.image = annotation.subtitle == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
-        
+
         return annotationView
     }
     
