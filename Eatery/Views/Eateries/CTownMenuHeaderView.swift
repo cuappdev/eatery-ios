@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class CTownMenuHeaderView: UIView {
+class CTownMenuHeaderView: UIView/*, UITableViewDelegate, UITableViewDataSource*/ {
     
     var backButton: UIButton!
     
@@ -21,12 +21,16 @@ class CTownMenuHeaderView: UIView {
     //Information View
     var statusLabel: UILabel!
     var hourLabel: UILabel!
+//    var hourDropdownButton: UIButton!
+//    var hourTableView: UITableView!
     var cuisineLabel: UILabel!
     var locationLabel: UILabel!
     var ratingView: RatingView!
     var priceLabel: UILabel!
     var distanceLabel: UILabel!
-
+    
+    let hourReuseIdentifier = "hourReuseIdentifier"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -57,6 +61,24 @@ class CTownMenuHeaderView: UIView {
         hourLabel = UILabel()
         hourLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         addSubview(hourLabel)
+        
+//        hourDropdownButton = UIButton(type: .custom)
+//        hourDropdownButton.setImage(UIImage(named: "downArrow"), for: .normal)
+//        hourDropdownButton.addTarget(self, action: #selector(dropHours), for: .touchUpInside)
+//        addSubview(hourDropdownButton)
+//
+//        hourTableView = UITableView()
+//        hourTableView.bounces = false
+//        hourTableView.showsVerticalScrollIndicator = false
+//        hourTableView.separatorStyle = .none
+//        hourTableView.backgroundColor = .clear
+//        hourTableView.isScrollEnabled = false
+//        hourTableView.allowsSelection = false
+//        hourTableView.register(
+//            HoursTableViewCell.self, forCellReuseIdentifier: hourReuseIdentifier)
+//        hourTableView.delegate = self
+//        hourTableView.dataSource = self
+//        addSubview(hourTableView)
         
         cuisineLabel = UILabel()
         cuisineLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -124,6 +146,19 @@ class CTownMenuHeaderView: UIView {
             make.height.equalTo(17)
         }
         
+//        hourDropdownButton.snp.makeConstraints { make in
+//            make.centerY.equalTo(hourLabel)
+//            make.leading.equalTo(hourLabel.snp.trailing).offset(4)
+//            make.height.width.equalTo(15)
+//        }
+//        
+//        hourTableView.snp.makeConstraints { make in
+//            make.top.equalTo(statusLabel.snp.bottom).offset(7)
+//            make.leading.equalToSuperview()
+//            make.height.equalTo(140)
+//            make.width.lessThanOrEqualToSuperview()
+//        }
+        
         cuisineLabel.snp.makeConstraints { make in
             make.top.equalTo(statusLabel.snp.bottom).offset(2)
             make.leading.equalTo(statusLabel)
@@ -158,6 +193,14 @@ class CTownMenuHeaderView: UIView {
         }
         
     }
+    
+//    @objc func dropHours(){
+//        if (hourTableView.alpha == 0){
+//            hourTableView.alpha = 1
+//        } else {
+//            hourTableView.alpha = 0
+//        }
+//    }
     
     func set(eatery: Eatery, userLocation: CLLocation?, rating: Double, cost: String){
         
@@ -309,6 +352,20 @@ class CTownMenuHeaderView: UIView {
             distanceLabel.text = "-- mi"
         }
     }
+    
+//    // Tableview Methods
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 7
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: hourReuseIdentifier, for: indexPath) as! HoursTableViewCell
+//        return cell
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 20
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

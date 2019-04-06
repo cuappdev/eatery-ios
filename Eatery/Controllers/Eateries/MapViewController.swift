@@ -135,7 +135,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let request = MKDirectionsRequest()
             request.source = MKMapItem.forCurrentLocation()
             request.destination = MKMapItem(placemark: MKPlacemark(coordinate: eateryAnnotations.first!.coordinate, addressDictionary: nil))
-            request.transportType = .walking;
+            request.transportType = .walking
             let directions = MKDirections(request: request)
             directions.calculate { (response, error) in
                 if let response = response, error == nil {

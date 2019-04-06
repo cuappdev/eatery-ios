@@ -117,6 +117,9 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.isTranslucent = true
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -124,10 +127,20 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        outerScrollView = UIScrollView()
+        class CustomScrollView: UIScrollView{
+            override func touchesShouldCancel(in view: UIView) -> Bool {
+                if(view is UIButton){
+                    return false
+                }
+                return true
+            }
+        }
+        
+        outerScrollView = CustomScrollView()
         outerScrollView.backgroundColor = .wash
         outerScrollView.delegate = self
         outerScrollView.showsVerticalScrollIndicator = false
@@ -138,6 +151,7 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
         
         ctownMenuHeaderView = CTownMenuHeaderView()
         ctownMenuHeaderView.set(eatery: eatery, userLocation: userLocation, rating: 4.43, cost: "$$")
+        ctownMenuHeaderView.isUserInteractionEnabled = true
         outerScrollView.addSubview(ctownMenuHeaderView)
         
         backButton = UIButton()
@@ -185,6 +199,9 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
         
         mapView.showsBuildings = true
         mapView.showsUserLocation = true
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        //mapView.isUserInteractionEnabled = false
         if(deltaLatLon[0]<maxDeltaLatLon[0] && deltaLatLon[1]<maxDeltaLatLon[1]){
             mapView.setCenter(midpointCoordinate, animated: true)
             mapView.setRegion(MKCoordinateRegionMake(midpointCoordinate, MKCoordinateSpanMake(deltaLatLon[0]*1.5, deltaLatLon[1]*1.5)), animated: false)
@@ -192,6 +209,7 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
             mapView.setCenter(defaultCoordinate, animated: true)
             mapView.setRegion(MKCoordinateRegionMake(defaultCoordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
         }
+        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openMapViewController)))
         outerScrollView.addSubview(mapView)
         
         eateryAnnotation.coordinate = eatery.location.coordinate
@@ -257,28 +275,38 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
     
     // Scrollview Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        switch scrollView.contentOffset.y {
-        case -CGFloat.greatestFiniteMagnitude..<0.0:
-            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform.identity
+        let statusBarOffset = UIApplication.shared.statusBarFrame.height
+        let scrollOffset = scrollView.contentOffset.y
+        switch scrollOffset {
+        case -CGFloat.greatestFiniteMagnitude ..< -statusBarOffset:
+            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: statusBarOffset/2)
             ctownMenuHeaderView.snp.updateConstraints { make in
-                make.top.equalToSuperview().offset(scrollView.contentOffset.y)
-                make.height.equalTo(363).offset(-scrollView.contentOffset.y)
+                make.top.equalToSuperview().offset(scrollOffset)
+                make.height.equalTo(363).offset(363-scrollOffset)
             }
             ctownMenuHeaderView.backgroundImageView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
-                make.height.equalTo(258).offset(-scrollView.contentOffset.y+258)
+                make.height.equalTo(258).offset(258-scrollOffset)
             }
             backButton.snp.updateConstraints { make in
-                make.top.equalToSuperview().offset(55+scrollView.contentOffset.y)
+                make.top.equalToSuperview().offset(55+scrollOffset+statusBarOffset)
             }
         default:
-            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollView.contentOffset.y / 4)
+            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: (scrollOffset + statusBarOffset) / 4)
             ctownMenuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
                 make.height.equalTo(363)
             }
+            ctownMenuHeaderView.backgroundImageView.snp.updateConstraints { make in
+                make.height.equalTo(258)
+            }
+            backButton.snp.updateConstraints { make in
+                make.top.equalToSuperview().offset(55)
+            }
         }
     }
+    
+    
     
     // MKMapViewDelegate Methods
     
@@ -351,6 +379,15 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
         }
     }
     
+    @objc func openMapViewController(){
+        var eateries = [Eatery]()
+        eateries.append(eatery)
+        
+        let mapViewController = MapViewController(eateries: eateries)
+        mapViewController.mapEateries(eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
+    }
+    
     func openAppleMapsDirections() {
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
         mapItem.name = eatery.name
@@ -360,4 +397,6 @@ class CTownMenuViewController: UIViewController, UIScrollViewDelegate, MKMapView
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
+

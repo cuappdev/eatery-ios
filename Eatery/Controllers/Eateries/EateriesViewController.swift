@@ -76,13 +76,6 @@ class EateriesViewController: UIViewController, MenuButtonsDelegate, CLLocationM
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController!.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        navigationController?.navigationBar.shadowImage = nil
-        navigationController?.navigationBar.isTranslucent = false
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Eateries"
