@@ -5,6 +5,13 @@ import SnapKit
 
 class EateryCollectionViewCell: UICollectionViewCell {
 
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter 
+    }()
+
     private static let shadowRadius: CGFloat = 12
 
     let paymentView = PaymentMethodsView()
@@ -225,26 +232,37 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
 
         switch eateryStatus {
-        case let .openingSoon(timeUntilOpen):
-            let minutesUntilOpen = Int(timeUntilOpen / 60)
-
+        case let .openingSoon(minutesUntilOpen):
             statusLabel.text = "Opening"
             statusLabel.textColor = .eateryOrange
             timeLabel.text = "in \(minutesUntilOpen)m"
+
         case .open:
             statusLabel.text = "Open"
             statusLabel.textColor = .eateryGreen
-            timeLabel.text = ""
-        case let .closingSoon(timeUntilClose):
-            let minutesUntilClose = Int(timeUntilClose / 60)
 
+            if let currentEvent = eatery.currentActiveEvent() {
+                let endTimeText = EateryCollectionViewCell.timeFormatter.string(from: currentEvent.end)
+                timeLabel.text = "until \(endTimeText)"
+            } else {
+                timeLabel.text = ""
+            }
+
+        case let .closingSoon(minutesUntilClose):
             statusLabel.text = "Closing"
             statusLabel.textColor = .eateryOrange
             timeLabel.text = "in \(minutesUntilClose)m"
+
         case .closed:
             statusLabel.text = "Closed"
             statusLabel.textColor = .eateryRed
-            timeLabel.text = ""
+
+            if eatery.isOpenToday(), let nextEvent = eatery.currentActiveEvent() {
+                let startTimeText = EateryCollectionViewCell.timeFormatter.string(from: nextEvent.start)
+                timeLabel.text = "until \(startTimeText)"
+            } else {
+                timeLabel.text = "today"
+            }
         }
 
         timeLabel.textColor = .lightGray

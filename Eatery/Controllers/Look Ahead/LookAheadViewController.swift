@@ -283,10 +283,10 @@ extension LookAheadViewController: UITableViewDataSource {
                     cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
                     cell.eateryHoursLabel.textColor = .secondary
 
-                case let .startingSoon(timeUntilOpen):
+                case .startingSoon:
                     cell.eateryStatusLabel.text = "Opening"
                     cell.eateryStatusLabel.textColor = .eateryOrange
-                    cell.eateryHoursLabel.text = "in \(Int(timeUntilOpen / 60) + 1)m"
+                    cell.eateryHoursLabel.text = "in \(Int(event.start.timeIntervalSinceNow / 60) + 1)m"
                     cell.eateryHoursLabel.textColor = .secondary
 
                 case .started:
@@ -295,11 +295,10 @@ extension LookAheadViewController: UITableViewDataSource {
                     cell.eateryHoursLabel.text = TimeFactory.displayTextForEvent(event)
                     cell.eateryHoursLabel.textColor = .secondary
 
-
-                case let .endingSoon(timeUntilClose):
+                case .endingSoon:
                     cell.eateryStatusLabel.text = "Closing"
                     cell.eateryStatusLabel.textColor = .eateryOrange
-                    cell.eateryHoursLabel.text = "in \(Int(timeUntilClose / 60) + 1)m"
+                    cell.eateryHoursLabel.text = "in \(Int(event.end.timeIntervalSinceNow / 60) + 1)m"
                     cell.eateryHoursLabel.textColor = .secondary
 
                 case .ended:
