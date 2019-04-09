@@ -10,14 +10,6 @@ import CoreLocation
 import NVActivityIndicatorView
 import UIKit
 
-// MARK: - Location Manager
-
-protocol EateriesViewControllerLocationManager: AnyObject {
-
-    var userLocation: CLLocation? { get }
-
-}
-
 // MARK: - Data Source
 
 protocol EateriesViewControllerDataSource: AnyObject {
@@ -37,11 +29,31 @@ protocol EateriesViewControllerDataSource: AnyObject {
 
 protocol EateriesViewControllerDelegate: AnyObject {
 
-    func didPressMapButton()
-
     func eateriesViewController(_ evc: EateriesViewController, didSelectEatery eatery: Eatery)
 
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController)
+
+    func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController)
+
+}
+
+// MARK: - Location Manager
+
+protocol EateriesViewControllerLocationManager: AnyObject {
+
+    var userLocation: CLLocation? { get }
+
+}
+
+// MARK: - Scroll Delegate
+
+protocol EateriesViewControllerScrollDelegate: AnyObject {
+
+    func eateriesViewController(_ evc: EateriesViewController,
+                                scrollViewWillBeginDragging scrollView: UIScrollView)
+
+    func eateriesViewController(_ evc: EateriesViewController,
+                               scrollViewDidScroll scrollView: UIScrollView)
 
 }
 
@@ -105,9 +117,8 @@ class EateriesViewController: UIViewController {
 
     }
 
-    // model
+    // Model
 
-    weak var eateriesSharedViewController: EateriesSharedViewController!
     weak var dataSource: EateriesViewControllerDataSource?
 
     private var state: State = .loading
@@ -120,31 +131,34 @@ class EateriesViewController: UIViewController {
         return [.favorites, .open, .closed].enumerated().filter({ !eateriesByGroup[$0.element, default: []].isEmpty }).map { $0.element }
     }
 
-    // presentation views
+    // Presentation Views
 
-    var delegate: EateriesViewControllerDelegate?
+    weak var delegate: EateriesViewControllerDelegate?
 
     private var appDevLogo: UIView!
 
-    private let collectionView = UICollectionView(frame: .zero,
-                                                  collectionViewLayout: EateriesCollectionViewGridLayout())
+    weak var scrollDelegate: EateriesViewControllerScrollDelegate?
 
     private let searchBar = UISearchBar()
 
-    let filterBar = FilterBar()
+    private let filterBar = FilterBar()
     var availableFilters: [Filter] {
         get { return filterBar.displayedFilters }
         set { filterBar.displayedFilters = newValue }
     }
 
-    // overlay views
+    private let collectionView = UICollectionView(frame: .zero,
+                                                  collectionViewLayout: EateriesCollectionViewGridLayout())
+
+    // Overlay Views
 
     private let failedToLoadView = EateriesFailedToLoadView(frame: .zero)
 
     private let activityIndicator = NVActivityIndicatorView(frame: .zero,
                                                             type: .circleStrokeSpin,
                                                             color: .transparentEateryBlue)
-    // location
+
+    // Location
 
     weak var locationManager: EateriesViewControllerLocationManager?
 
@@ -392,6 +406,10 @@ class EateriesViewController: UIViewController {
                                                   filters: filterBar.selectedFilters)
     }
 
+    func pushMapViewController() {
+        delegate?.eateriesViewControllerDidPushMapViewController(self)
+    }
+
 }
 
 // MARK: - Collection View Helper Methods
@@ -561,14 +579,15 @@ extension EateriesViewController: EateriesFailedToLoadViewDelegate {
 extension EateriesViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        eateriesSharedViewController.scrollViewWillBeginDragging(scrollView)
+        scrollDelegate?.eateriesViewController(self, scrollViewWillBeginDragging: scrollView)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
 
         transformAppDevLogo()
-        eateriesSharedViewController.scrollViewDidScroll(scrollView)
+
+        scrollDelegate?.eateriesViewController(self, scrollViewDidScroll: scrollView)
     }
 
     /// Change the appearance of the AppDev logo based on the current scroll

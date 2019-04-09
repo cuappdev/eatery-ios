@@ -10,6 +10,7 @@ import UIKit
 
 class CampusEateriesViewController: EateriesViewController {
 
+    // TODO: Persist
     private var favoritesIds: [Int] = []
 
     private var allEateries: [CampusEatery]?
@@ -22,7 +23,15 @@ class CampusEateriesViewController: EateriesViewController {
         dataSource = self
         delegate = self
 
-        filterBar.configure(with: Filter.getCampusFilters())
+        availableFilters = [
+            .nearest,
+            .north,
+            .west,
+            .central,
+            .swipes,
+            .brb
+        ]
+
         queryCampusEateries()
     }
 
@@ -213,16 +222,6 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
 extension CampusEateriesViewController: EateriesViewControllerDelegate {
 
-    func didPressMapButton() {
-        guard let eateries = allEateries else {
-            return
-        }
-
-        let mapViewController = MapViewController(eateries: eateries)
-        mapViewController.mapEateries(eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
-    }
-
     func eateriesViewController(_ evc: EateriesViewController, didSelectEatery eatery: Eatery) {
         guard let campusEatery = eatery as? CampusEatery else {
             return
@@ -240,6 +239,16 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         }
     }
 
+    func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController) {
+        guard let eateries = allEateries else {
+            return
+        }
+
+        let mapViewController = MapViewController(eateries: eateries)
+        mapViewController.delegate = self
+        navigationController?.pushViewController(mapViewController, animated: true)
+    }
+
 }
 
 // MARK: - Menu Buttons Delegate
@@ -247,6 +256,22 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
 extension CampusEateriesViewController: MenuButtonsDelegate {
 
     func favoriteButtonPressed(on menuHeaderView: MenuHeaderView) {
+        // TODO: Implement this
+        fatalError()
+    }
+
+}
+
+// MARK: - Map View Controller Delegate
+
+extension CampusEateriesViewController: MapViewControllerDelegate {
+
+    func mapViewController(_ mvc: MapViewController, didSelectEatery eatery: Eatery) {
+        guard let campusEatery = eatery as? CampusEatery else {
+            return
+        }
+
+        showMenu(of: campusEatery)
     }
 
 }

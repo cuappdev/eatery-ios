@@ -243,12 +243,6 @@ class LookAheadViewController: UIViewController {
         }
     }
 
-    func scrollToTop() {
-        if tableView.contentOffset.y > 0 {
-            let contentOffset = navigationController?.navigationBar.frame.height ?? 0
-        }
-    }
-
     private func computeFilterViewPosition() {
         filterView.frame.origin.y = max(0, -(tableView.contentOffset.y + filterView.frame.height))
     }

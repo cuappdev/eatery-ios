@@ -9,20 +9,26 @@
 import UIKit
 import SnapKit
 
+// TODO: move this inside pill vc, then to Eateries shared vc once PillVC becomes generic
 enum Location: String {
+
     case campus = "Campus"
     case collegetown = "Collegetown"
+
 }
 
-protocol PillDelegate: AnyObject {
-    func didUpdateLocation(newLocation: Location)
+protocol PillViewControllerDelegate: AnyObject {
+
+    func pillViewController(_ pvc: PillViewController, didUpdateLocation newLocation: Location)
+
 }
 
+// TODO: make this a (generic) parent view controller. 
 class PillViewController: UIViewController {
     
     var selectedLocation = Location.campus
     
-    weak var delegate: PillDelegate?
+    weak var delegate: PillViewControllerDelegate?
     
     var campusStackView: UIStackView!
     var separatorView: UIView!
@@ -117,7 +123,7 @@ class PillViewController: UIViewController {
         collegetownLabel.textColor = selectedLocation == .campus ?
             UIColor.secondary : UIColor.eateryBlue
         
-        delegate?.didUpdateLocation(newLocation: selectedLocation)
+        delegate?.pillViewController(self, didUpdateLocation: selectedLocation)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

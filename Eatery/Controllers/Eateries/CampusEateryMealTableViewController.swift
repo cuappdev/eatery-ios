@@ -18,10 +18,9 @@ class CampusEateryMealTableViewController: UITableViewController {
     private func recomputeMenu() {
         if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
             menu = eventMenu
-        } else if let diningMenu = eatery.diningMenu, eatery.eateryType != .dining {
-            // the eatery has a constant menu, and it's not a dining hall
-            let currentDate = CampusEatery.dayFormatter.string(from: Date())
-            menu = Menu(data: [currentDate: diningMenu.data[currentDate] ?? []])
+        } else if eatery.diningMenu != nil, eatery.eateryType != .dining {
+            // the eatery has a constant menu, and it's not a dining hall (think Bear Necessities)
+            menu = Menu(data: ["": eatery.diningItems(onDayOf: Date())])
         } else {
             // don't know the menu
             menu = nil
