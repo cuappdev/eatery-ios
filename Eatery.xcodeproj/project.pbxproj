@@ -23,9 +23,11 @@
 		5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C4721FC136E00327516 /* CLLocation+Distance.swift */; };
 		5D5405962237FECC003A00B5 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5405952237FECC003A00B5 /* EateriesViewController.swift */; };
 		5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */; };
+		5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */; };
 		5D856458222A2D4E003A712B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D856457222A2D4E003A712B /* Menu.swift */; };
+		5DACA8F7225B78B0009B0A2F /* CollegetownEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */; };
 		5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC06B7921FE36020043701A /* PaymentMethodsView.swift */; };
-		5DC2D01922349CE800D2B0F5 /* collegeTownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5DC2D01822349CE800D2B0F5 /* collegeTownEateries.graphql */; };
+		5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */; };
 		5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */; };
 		5DDD93A4C245320F6F3ECDE6 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		5DEF1AA0222B2EBB00855902 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */; };
@@ -53,7 +55,7 @@
 		CE18A5BA223C5E1B004EAB1D /* EateriesSharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE18A5B9223C5E1B004EAB1D /* EateriesSharedViewController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE850C5C21B35A8100BF8316 /* PillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE850C5B21B35A8100BF8316 /* PillViewController.swift */; };
-		D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102462E1C7A320C000D5CD8 /* TitleSectionTableViewCell.swift */; };
+		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
 		D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = D930FBD7218BC00200B0B1CE /* BRBAccount.swift */; };
 		D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D956DCAC2187B074001BB9B0 /* Keys.plist */; };
@@ -153,9 +155,11 @@
 		5D218C4721FC136E00327516 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		5D5405952237FECC003A00B5 /* EateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
+		5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEateriesViewController.swift; sourceTree = "<group>"; };
 		5D856457222A2D4E003A712B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEatery.swift; sourceTree = "<group>"; };
 		5DC06B7921FE36020043701A /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
-		5DC2D01822349CE800D2B0F5 /* collegeTownEateries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = collegeTownEateries.graphql; sourceTree = "<group>"; };
+		5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = collegetownEateries.graphql; sourceTree = "<group>"; };
 		5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
@@ -286,21 +290,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5D1E72052234A3450028D7C7 /* CollegeTown */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CollegeTown;
-			sourceTree = "<group>";
-		};
-		5D1E720A2234B0350028D7C7 /* CampusEatery */ = {
-			isa = PBXGroup;
-			children = (
-				D956DCB82187B885001BB9B0 /* CampusEatery.swift */,
-			);
-			path = CampusEatery;
-			sourceTree = "<group>";
-		};
 		5D218C4421FBE42600327516 /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,14 +333,15 @@
 		6560D4411F51F373009E7CEF /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
+				CE18A5B9223C5E1B004EAB1D /* EateriesSharedViewController.swift */,
+				CE850C5B21B35A8100BF8316 /* PillViewController.swift */,
 				5D5405952237FECC003A00B5 /* EateriesViewController.swift */,
 				5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */,
 				E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */,
+				5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */,
 				E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */,
 				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
-				CE850C5B21B35A8100BF8316 /* PillViewController.swift */,
-				CE18A5B9223C5E1B004EAB1D /* EateriesSharedViewController.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -521,7 +511,6 @@
 		CE1B2E45224BFE8E005014AE /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				D102462E1C7A320C000D5CD8 /* TitleSectionTableViewCell.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -530,7 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				D97142DF2197542A00E2EE05 /* brbQuery.graphql */,
-				5DC2D01822349CE800D2B0F5 /* collegeTownEateries.graphql */,
+				5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */,
 				D956DCB02187B2BF001BB9B0 /* campusEateries.graphql */,
 			);
 			path = Queries;
@@ -549,8 +538,8 @@
 			children = (
 				5D1E720B2234B0680028D7C7 /* Eatery.swift */,
 				D956DCC02187B94E001BB9B0 /* Event.swift */,
-				5D1E720A2234B0350028D7C7 /* CampusEatery */,
-				5D1E72052234A3450028D7C7 /* CollegeTown */,
+				D956DCB82187B885001BB9B0 /* CampusEatery.swift */,
+				5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */,
 				5D856457222A2D4E003A712B /* Menu.swift */,
 				D930FBD7218BC00200B0B1CE /* BRBAccount.swift */,
 			);
@@ -714,7 +703,7 @@
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
-				5DC2D01922349CE800D2B0F5 /* collegeTownEateries.graphql in Resources */,
+				5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,
 				D97142E02197542A00E2EE05 /* brbQuery.graphql in Resources */,
 			);
@@ -877,6 +866,7 @@
 				65E93179206C186B00547D14 /* Keys.swift in Sources */,
 				D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */,
 				E93CD4171BE67AC400089CE5 /* CampusEateryMenuViewController.swift in Sources */,
+				5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */,
 				E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */,
 				5D218C3E21FBE39700327516 /* LookAheadHeaderView.swift in Sources */,
 				E9CFC0B41C0F63DD00ED884A /* EateriesCollectionViewGridLayout.swift in Sources */,
@@ -896,7 +886,7 @@
 				D956DCC12187B94E001BB9B0 /* Event.swift in Sources */,
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				CE850C5C21B35A8100BF8316 /* PillViewController.swift in Sources */,
-				D10246301C7A320C000D5CD8 /* TitleSectionTableViewCell.swift in Sources */,
+				D10246301C7A320C000D5CD8 /* (null) in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
@@ -913,6 +903,7 @@
 				9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */,
 				5DEF1AA7222B570100855902 /* BRBViewController.swift in Sources */,
 				D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */,
+				5DACA8F7225B78B0009B0A2F /* CollegetownEatery.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
 				CE18A5BA223C5E1B004EAB1D /* EateriesSharedViewController.swift in Sources */,
 				CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */,

@@ -10,6 +10,15 @@ import UIKit
 import SwiftyJSON
 import CoreLocation
 
+/// Represents a location on Cornell Campus
+enum Area: String {
+
+    case west = "West"
+    case north = "North"
+    case central = "Central"
+
+}
+
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
 struct CampusEatery: Eatery {
@@ -17,15 +26,13 @@ struct CampusEatery: Eatery {
     private static let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
     /// Converts the date to its day for use with eatery events
-    static let dayFormatter: ISO8601DateFormatter = {
+    private static let dayFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
         formatter.timeZone = TimeZone(identifier: "America/New_York")
         return formatter
     }()
 
-    /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)
-    /// Read more: https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates
     typealias DayString = String
 
     typealias EventName = String
@@ -46,8 +53,6 @@ struct CampusEatery: Eatery {
 
     var imageUrl: URL?
 
-    let area: Area?
-
     let address: String
 
     let paymentMethods: [PaymentMethod]
@@ -56,20 +61,22 @@ struct CampusEatery: Eatery {
 
     let phone: String
 
+    let events: [DayString: [EventName: Event]]
+
+    let allEvents: [Event]
+
     // MARK: Campus Eatery
 
     let slug: String
 
-    /// List of all events for this eatery by day and name
-    let events: [DayString: [EventName: Event]]
+    let area: Area?
 
     /// A menu of constant dining items. Exists if this eatery's menu
     /// never changes. This should be used if it exists.
     var diningMenu: Menu?
 
-    let allEvents: [Event]
-
-    init(id: Int,
+    init(
+        id: Int,
         name: String,
         eateryType: EateryType,
         about: String,
@@ -103,19 +110,6 @@ struct CampusEatery: Eatery {
         }
 
         self.allEvents = events.flatMap { $0.value.map { $0.value } }
-    }
-
-    func event(atExactly date: Date) -> Event? {
-        return allEvents.first { $0.dateInterval.contains(date) }
-    }
-
-    func events(in dateInterval: DateInterval) -> [Event] {
-        return allEvents.filter { dateInterval.intersects($0.dateInterval) }
-    }
-
-    func eventsByName(onDayOf date: Date) -> [EventName: Event] {
-        let dayString = CampusEatery.dayFormatter.string(from: date)
-        return events[dayString] ?? [:]
     }
 
     func diningItems(onDayOf date: Date) -> [Menu.Item] {

@@ -47,25 +47,20 @@ enum EateryType: String {
 
 }
 
-/// Represents a location on Cornell Campus
-enum Area: String {
-
-    case west = "West"
-    case north = "North"
-    case central = "Central"
-
-}
-
 enum EateryStatus {
 
-    case openingSoon(TimeInterval)
+    case openingSoon(minutesUntilOpen: Int)
     case open
-    case closingSoon(TimeInterval)
+    case closingSoon(minutesUntilClose: Int)
     case closed
 
 }
 
 protocol Eatery {
+
+    /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)
+    /// Read more: https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates
+    typealias DayString = String
 
     typealias EventName = String
 
@@ -79,8 +74,6 @@ protocol Eatery {
 
     var eateryType: EateryType { get }
 
-    var area: Area? { get }
-
     var address: String { get }
 
     var paymentMethods: [PaymentMethod] { get }
@@ -89,25 +82,44 @@ protocol Eatery {
 
     var phone: String { get }
 
-    /// The event at an exact date and time, or nil if such an event does not
-    /// exist.
-    func event(atExactly date: Date) -> Event?
+    var events: [DayString: [EventName: Event]] { get }
 
-    /// The events that happen within the specified time interval, regardless of
-    /// the day the event occurs on
-    /// i.e. events that are active for any amount of time during the interval.
-    func events(in dateInterval: DateInterval) -> [Event]
-
-    /// The events by name that occur on the specified day
-    // Since events may extend past midnight, this function is required to pick
-    // a specific day for an event.
-    func eventsByName(onDayOf date: Date) -> [EventName: Event]
+    var allEvents: [Event] { get }
 
 }
+
+/// Converts the date to its day for use with eatery events
+private let dayFormatter: ISO8601DateFormatter = {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+    formatter.timeZone = TimeZone(identifier: "America/New_York")
+    return formatter
+}()
 
 // MARK: -
 
 extension Eatery {
+
+    /// The event at an exact date and time, or nil if such an event does not
+    /// exist.
+    func event(atExactly date: Date) -> Event? {
+        return allEvents.first { $0.dateInterval.contains(date) }
+    }
+
+    /// The events that happen within the specified time interval, regardless of
+    /// the day the event occurs on
+    /// i.e. events that are active for any amount of time during the interval.
+    func events(in dateInterval: DateInterval) -> [Event] {
+        return allEvents.filter { dateInterval.intersects($0.dateInterval) }
+    }
+
+    /// The events by name that occur on the specified day
+    // Since events may extend past midnight, this function is required to pick
+    // a specific day for an event.
+    func eventsByName(onDayOf date: Date) -> [EventName: Event] {
+        let dayString = dayFormatter.string(from: date)
+        return events[dayString] ?? [:]
+    }
 
     func isOpen(onDayOf date: Date) -> Bool {
         return !eventsByName(onDayOf: date).isEmpty
@@ -121,7 +133,7 @@ extension Eatery {
         return event(atExactly: date) != nil
     }
 
-    func activeEvent(onDayOf date: Date) -> Event? {
+    func activeEvent(atExactly date: Date) -> Event? {
         let calendar = Calendar.current
         guard let yesterday = calendar.date(byAdding: .day, value: -1, to: Date()),
             let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) else {
@@ -131,11 +143,11 @@ extension Eatery {
         return events(in: DateInterval(start: yesterday, end: tomorrow))
             .filter {
                 // disregard events that are not currently happening or that have happened in the past
-                $0.occurs(at: date) || date < $0.start
+                $0.occurs(atExactly: date) || date < $0.start
             }.min { (lhs, rhs) -> Bool in
-                if lhs.occurs(at: date) {
+                if lhs.occurs(atExactly: date) {
                     return true
-                } else if rhs.occurs(at: date) {
+                } else if rhs.occurs(atExactly: date) {
                     return false
                 }
 
@@ -146,38 +158,40 @@ extension Eatery {
     }
 
     func currentActiveEvent() -> Event? {
-        return activeEvent(onDayOf: Date())
+        return activeEvent(atExactly: Date())
     }
 
-    func status(atExactly date: Date) -> EateryStatus {
-        if isOpenToday() {
-            guard let event = activeEvent(onDayOf: date) else {
-                return .closed
-            }
+    func status(onDayOf date: Date) -> EateryStatus {
+        guard isOpen(onDayOf: date) else {
+            return .closed
+        }
 
-            switch event.status(at: date) {
-            case .notStarted:
-                return .closed
+        guard let event = activeEvent(atExactly: date) else {
+            return .closed
+        }
 
-            case let .startingSoon(intervalUntilOpen):
-                return .openingSoon(intervalUntilOpen)
+        switch event.status(atExactly: date) {
+        case .notStarted:
+            return .closed
 
-            case .started:
-                return .open
+        case .startingSoon:
+            let minutesUntilOpen = Int(event.start.timeIntervalSinceNow / 60) + 1
+            return .openingSoon(minutesUntilOpen: minutesUntilOpen)
 
-            case let .endingSoon(intervalUntilClose):
-                return .closingSoon(intervalUntilClose)
+        case .started:
+            return .open
 
-            case .ended:
-                return .closed
-            }
-        } else {
+        case .endingSoon:
+            let minutesUntilClose = Int(event.end.timeIntervalSinceNow / 60) + 1
+            return .closingSoon(minutesUntilClose: minutesUntilClose)
+
+        case .ended:
             return .closed
         }
     }
 
     func currentStatus() -> EateryStatus {
-        return status(atExactly: Date())
+        return status(onDayOf: Date())
     }
 
 }
@@ -195,7 +209,7 @@ extension Eatery {
     }
 
     func activeEvent(for date: Date) -> Event? {
-        return activeEvent(onDayOf: date)
+        return activeEvent(atExactly: date)
     }
 
     func eventsByName(on date: Date) -> [EventName: Event] {

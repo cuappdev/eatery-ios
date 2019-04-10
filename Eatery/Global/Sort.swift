@@ -48,7 +48,7 @@ struct Sort {
             case .time:
                 if a.isOpenToday() {
                     if let activeEvent = a.activeEvent(for: date) {
-                        if activeEvent.occurs(at: date) {
+                        if activeEvent.occurs(atExactly: date) {
                             if let bTimeInterval = b.activeEvent(for: date) {
                                 return activeEvent.end.timeIntervalSinceNow <= bTimeInterval.end.timeIntervalSinceNow
                             } else {

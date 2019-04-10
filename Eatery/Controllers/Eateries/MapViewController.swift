@@ -4,11 +4,21 @@ import SnapKit
 import Crashlytics
 import CoreLocation
 
-let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
+// MARK: - Map View Controller Delegate
+
+protocol MapViewControllerDelegate: AnyObject {
+
+    func mapViewController(_ mvc: MapViewController, didSelectEatery eatery: Eatery)
+
+}
+
+// MARK: - Map View Controller
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+
+    private static let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
     
-    var eateries: [CampusEatery]
+    var eateries: [Eatery]
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
@@ -17,12 +27,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let recenterButton = UIButton()
     
     var defaultCoordinate: CLLocationCoordinate2D {
-        return locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
+        return locationManager.location?.coordinate ?? MapViewController.olinLibraryLocation.coordinate
     }
+
+    weak var delegate: MapViewControllerDelegate?
     
-    init(eateries allEateries: [CampusEatery]) {
+    init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
         self.mapView = MKMapView()
+        
         super.init(nibName: nil, bundle: nil)
         
         mapView.delegate = self
@@ -43,6 +56,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: break
             }
         }
+
+        mapEateries(allEateries)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,11 +89,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
     }
     
-    func mapEateries(_ eateries: [CampusEatery]) {
+    func mapEateries(_ eateries: [Eatery]) {
         self.eateries = eateries
         
         for eatery in eateries {
-            let annotationTitle = eatery.nickname
+            let annotationTitle = eatery.displayName
             let eateryAnnotation = MKPointAnnotation()
             eateryAnnotation.coordinate = eatery.location.coordinate
             eateryAnnotation.title = annotationTitle
@@ -159,16 +174,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
-        let menuVC = CampusEateryMenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
-        self.navigationController?.pushViewController(menuVC, animated: true)
-        
-        Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
+        guard let eateryAnnotation = view.annotation as? MKPointAnnotation,
+            let index = eateryAnnotations.index(of: eateryAnnotation)else {
+                return
+        }
+
+        let eatery = eateries[index]
+        delegate?.mapViewController(self, didSelectEatery: eatery)
+
+        // TODO: Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
-        Answers.logMapAnnotationOpened(eateryId: eatery.slug)
+        // TODO: Answers.logMapAnnotationOpened(eateryId: eatery.slug)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

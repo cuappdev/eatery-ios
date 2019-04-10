@@ -18,8 +18,22 @@ struct NetworkError: Error {
 
 struct NetworkManager {
 
-    internal let apollo = ApolloClient(url: URL(string: "https://eatery-backend.cornellappdev.com")!)
     static let shared = NetworkManager()
+
+    private let apollo = ApolloClient(url: URL(string: "https://eatery-backend.cornellappdev.com")!)
+
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-dd"
+        return formatter
+    }()
+
+    private let timeDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-dd:h:mma"
+        formatter.locale = Locale(identifier: "en_US_POSIX") // force the date formatter to use 12-hour time
+        return formatter
+    }()
 
     func getCampusEateries(completion: @escaping ([CampusEatery]?, NetworkError?) -> Void) {
         apollo.fetch(query: CampusEateriesQuery()) { (result, error) in
@@ -35,8 +49,11 @@ struct NetworkManager {
 
             let finalEateries: [CampusEatery] = eateries.map { eatery in
                 let eateryType = EateryType(rawValue: eatery.eateryType.lowercased()) ?? .unknown
+
                 let area = Area(rawValue: eatery.campusArea.descriptionShort)
+
                 let location = CLLocation(latitude: eatery.coordinates.latitude, longitude: eatery.coordinates.longitude)
+
                 var paymentTypes: [PaymentMethod] = []
                 let paymentMethods = eatery.paymentMethods
                 if paymentMethods.brbs {
@@ -61,12 +78,6 @@ struct NetworkManager {
                 var diningItems: [String: [Menu.Item]] = [:]
                 var eventItems: [String : [String : Event]] = [:]
 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "YYYY-MM-dd"
-
-                let timeDateFormatter = DateFormatter()
-                timeDateFormatter.dateFormat = "YYYY-MM-dd:h:mma"
-                timeDateFormatter.locale = Locale(identifier: "en_US_POSIX") // force the date formatter to use 12-hour time
                 eatery.operatingHours.compactMap { $0 }.forEach { operatingHour in
                     let dateString = operatingHour.date
 
@@ -86,9 +97,8 @@ struct NetworkManager {
                                 return Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy)
                             }
                         }
-                        let startDate = timeDateFormatter.date(from: event.startTime) ?? Date()
-                        //handle late end
-                        let endDate = timeDateFormatter.date(from: event.endTime) ?? Date()
+                        let startDate = self.timeDateFormatter.date(from: event.startTime) ?? Date()
+                        let endDate = self.timeDateFormatter.date(from: event.endTime) ?? Date()
 
                         let eventFinal = Event(start: startDate,
                                                end: endDate,
@@ -104,7 +114,6 @@ struct NetworkManager {
 
                 return CampusEatery(id: eatery.id,
                               name: eatery.name,
-                              // nameShort: eatery.nameShort,
                               eateryType: eateryType,
                               about: eatery.about,
                               area: area,
@@ -145,24 +154,95 @@ struct NetworkManager {
         }
     }
 
-//    func getCollegeTownEateries(completion: @escaping ([CollegeTownEatery]?, NetworkError?) -> Void) {
-//        apollo.fetch(query: CollegeTownEateriesQuery()) { (result, error) in
-//            guard error == nil else {
-//                completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
-//                return
-//            }
-//
-//            guard let result = result,
-//                let data = result.data,
-//                let eateries = data.collegetownEateries?.compactMap({ $0 }) else {
-//                    completion(nil, NetworkError(message: "Could not parse response"))
-//                    return
-//            }
-//
-//            for eatery in eateries {
-//
-//            }
-//        }
-//    }
+    func getCollegetownEateries(completion: @escaping ([CollegetownEatery]?, NetworkError?) -> Void) {
+        apollo.fetch(query: CollegetownEateriesQuery()) { (result, error) in
+            guard error == nil else {
+                completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
+                return
+            }
+
+            guard let result = result,
+                let data = result.data,
+                let graphQlEateries = data.collegetownEateries?.compactMap({ $0 }) else {
+                    completion(nil, NetworkError(message: "Could not parse response"))
+                    return
+            }
+
+            var eateries: [CollegetownEatery] = []
+
+            for graphQlEatery in graphQlEateries {
+                let eateryType = EateryType(rawValue: graphQlEatery.eateryType.lowercased()) ?? .unknown
+
+                let location = CLLocation(latitude: graphQlEatery.coordinates.latitude,
+                                          longitude: graphQlEatery.coordinates.longitude)
+
+                var paymentTypes: [PaymentMethod] = []
+                let paymentMethods = graphQlEatery.paymentMethods
+                if paymentMethods.brbs {
+                    paymentTypes.append(.brb)
+                }
+                if paymentMethods.cash {
+                    paymentTypes.append(.cash)
+                }
+                if paymentMethods.cornellCard {
+                    paymentTypes.append(.cornellCard)
+                }
+                if paymentMethods.credit {
+                    paymentTypes.append(.creditCard)
+                }
+                if paymentMethods.mobile {
+                    paymentTypes.append(.nfc)
+                }
+                if paymentMethods.swipes {
+                    paymentTypes.append(.swipes)
+                }
+
+                var events: [String : [String : Event]] = [:]
+
+                for graphQlOperatingHours in graphQlEatery.operatingHours.compactMap({ $0 }) {
+                    var eventsByName: [String: Event] = [:]
+
+                    for graphQlEvent in graphQlOperatingHours.events.compactMap({ $0 }) {
+                        let startDate = self.timeDateFormatter.date(from: graphQlEvent.startTime) ?? Date()
+                        let endDate = self.timeDateFormatter.date(from: graphQlEvent.endTime) ?? Date()
+
+                        let event = Event(start: startDate,
+                                               end: endDate,
+                                               desc: graphQlEvent.description,
+                                               summary: graphQlEvent.description,
+                                               menu: Menu(data: [:]))
+                        eventsByName[graphQlEvent.description] = event
+                    }
+
+                    events[graphQlOperatingHours.date] = eventsByName
+                }
+
+                let rating: Rating?
+                if let rawValue = Double(graphQlEatery.rating) {
+                    rating = Rating(rawValue: rawValue)
+                } else {
+                    rating = nil
+                }
+
+                let eatery = CollegetownEatery(
+                    id: graphQlEatery.id,
+                    name: graphQlEatery.name,
+                    imageUrl: URL(string: graphQlEatery.imageUrl),
+                    eateryType: eateryType,
+                    address: graphQlEatery.address,
+                    paymentMethods: paymentTypes,
+                    location: location,
+                    phone: graphQlEatery.phone,
+                    events: events,
+                    price: graphQlEatery.price,
+                    rating: rating,
+                    url: URL(string: graphQlEatery.url))
+
+                eateries.append(eatery)
+            }
+
+            completion(eateries, nil)
+        }
+    }
 
 }

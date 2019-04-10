@@ -10,8 +10,10 @@ import UIKit
 import Crashlytics
 import NVActivityIndicatorView
 
+// MARK: - Eateries Shared View Controller
+
 class EateriesSharedViewController: UIViewController {
-    
+
     var lastContentOffset: CGFloat = 0
     var lastScrollWasUserInitiated = false
     var pillAnimating = false
@@ -32,18 +34,28 @@ class EateriesSharedViewController: UIViewController {
     
     func setupEateriesViewControllers() {
         campusEateriesViewController = CampusEateriesViewController()
-        campusEateriesViewController.eateriesSharedViewController = self
-        // collegetownEateriesViewController = CollegetownEateriesViewController()
-        // collegetownEateriesViewController.eateriesSharedViewController = self
-        // TODO ethan: integrate collegetownEateriesViewController
-        activeEateriesViewController = campusEateriesViewController
-        
-        addChildViewController(activeEateriesViewController)
-        view.addSubview(activeEateriesViewController.view)
-        
-        activeEateriesViewController.view.snp.makeConstraints { (make) in
-            make.leading.trailing.top.bottom.equalToSuperview()
+        campusEateriesViewController.scrollDelegate = self
+
+        addChildViewController(campusEateriesViewController)
+        view.addSubview(campusEateriesViewController.view)
+        campusEateriesViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        campusEateriesViewController.didMove(toParentViewController: self)
+
+        collegetownEateriesViewController = CollegetownEateriesViewController()
+        collegetownEateriesViewController.scrollDelegate = self
+
+        addChildViewController(collegetownEateriesViewController)
+        view.addSubview(collegetownEateriesViewController.view)
+        collegetownEateriesViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        collegetownEateriesViewController.didMove(toParentViewController: self)
+
+        activeEateriesViewController = collegetownEateriesViewController
+
+        setVisibleViewController(campusEateriesViewController)
     }
     
     func setupNavigation() {
@@ -73,8 +85,13 @@ class EateriesSharedViewController: UIViewController {
     // MARK: User interaction utilities
     
     func setVisibleViewController(_ viewController: EateriesViewController) {
-        view.sendSubview(toBack: viewController.view)
-        view.sendSubview(toBack: activeEateriesViewController.view)
+        if viewController === campusEateriesViewController {
+            campusEateriesViewController.view.alpha = 1
+            collegetownEateriesViewController.view.alpha = 0
+        } else if viewController === collegetownEateriesViewController {
+            campusEateriesViewController.view.alpha = 0
+            collegetownEateriesViewController.view.alpha = 1
+        }
 
         activeEateriesViewController = viewController
     }
@@ -99,12 +116,8 @@ class EateriesSharedViewController: UIViewController {
     
     @objc func openMap() {
         Answers.logMapOpened()
-        
-        activeEateriesViewController.delegate?.didPressMapButton()
-        /*let eateries = activeEateriesViewController.delegate.allEateries
-        let mapViewController = MapViewController(eateries: eateries)
-        mapViewController.mapEateries(eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)*/ // TODO: ethan update to work with merge
+
+        activeEateriesViewController.pushMapViewController()
     }
     
     func hideLocationSelectorView() {
@@ -124,32 +137,14 @@ class EateriesSharedViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: Listens to changes in EateriesViewController scroll view
-    // These methods should be called from EateriesViewController
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        lastContentOffset = scrollView.contentOffset.y
-        lastScrollWasUserInitiated = true
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y
-        if lastScrollWasUserInitiated && lastContentOffset > offset {
-            showLocationSelectorView()
-        } else if lastScrollWasUserInitiated && lastContentOffset < offset {
-            hideLocationSelectorView()
-        }
-        
-        lastContentOffset = offset
-        lastScrollWasUserInitiated = false
-    }
-    
+
 }
 
-extension EateriesSharedViewController: PillDelegate {
+// MARK: - Pill View Controller Delegate
+
+extension EateriesSharedViewController: PillViewControllerDelegate {
     
-    func didUpdateLocation(newLocation: Location) {
+    func pillViewController(_ pvc: PillViewController, didUpdateLocation newLocation: Location) {
         switch newLocation {
         case .campus:
             setVisibleViewController(campusEateriesViewController)
@@ -158,4 +153,27 @@ extension EateriesSharedViewController: PillDelegate {
         }
     }
     
+}
+
+// MARK: - Eateries View Controller Scroll Delegate
+
+extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
+
+    func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
+        lastContentOffset = scrollView.contentOffset.y
+        lastScrollWasUserInitiated = true
+    }
+
+    func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y
+        if lastScrollWasUserInitiated && lastContentOffset > offset {
+            showLocationSelectorView()
+        } else if lastScrollWasUserInitiated && lastContentOffset < offset {
+            hideLocationSelectorView()
+        }
+
+        lastContentOffset = offset
+        lastScrollWasUserInitiated = false
+    }
+
 }

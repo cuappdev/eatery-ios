@@ -131,22 +131,21 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         }
 
         switch eatery.currentStatus() {
-        case let .openingSoon(timeUntilOpen):
-            let minutesUntilOpen = Int(timeUntilOpen / 60)
-
+        case let .openingSoon(minutesUntilOpen):
             statusLabel.text = "Opening"
             statusLabel.textColor = .eateryOrange
             hoursLabel.text = "in \(minutesUntilOpen)m"
+
         case .open:
             statusLabel.text = "Open"
             statusLabel.textColor = .eateryGreen
             hoursLabel.text = ""
-        case let .closingSoon(timeUntilClose):
-            let minutesUntilClose = Int(timeUntilClose / 60)
 
+        case let .closingSoon(minutesUntilClose):
             statusLabel.text = "Closing"
             statusLabel.textColor = .eateryOrange
             hoursLabel.text = "in \(minutesUntilClose)m"
+
         case .closed:
             statusLabel.text = "Closed"
             statusLabel.textColor = .eateryRed

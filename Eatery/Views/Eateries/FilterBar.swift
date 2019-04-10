@@ -2,7 +2,8 @@ import UIKit
 import SnapKit
 import Crashlytics
 
-enum Filter: String, CaseIterable {
+enum Filter: String {
+
     case nearest = "Nearest First"
 
     case north = "North"
@@ -21,19 +22,12 @@ enum Filter: String, CaseIterable {
     case mexican = "Mexican"
     case boba = "Boba"
 
-    static func getCampusFilters() -> [Filter] {
-        return Array(Filter.allCases.prefix(upTo: 6))
-    }
-
-    static func getCollegetownFilters() -> [Filter] {
-        var ctownFilters = Array(Filter.allCases.suffix(from: 6))
-        ctownFilters.insert(Filter.nearest, at: 0)
-        return ctownFilters
-    }
 }
 
 protocol FilterBarDelegate: AnyObject {
+
     func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter])
+
 }
 
 class FilterBar: UIView {
@@ -44,7 +38,22 @@ class FilterBar: UIView {
 
     let padding: CGFloat = EateriesViewController.collectionViewMargin
 
-    var displayedFilters: [Filter] = []
+    var displayedFilters: [Filter] = [] {
+        didSet {
+            layoutButtons(filters: displayedFilters)
+
+            if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
+                for string in prevFilters {
+                    if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
+                        selectedFilters.insert(filter)
+                        buttons[filter]!.isSelected = true
+                    }
+                }
+
+                delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
+            }
+        }
+    }
     var selectedFilters: Set<Filter> = []
 
     override init(frame: CGRect) {
@@ -66,25 +75,8 @@ class FilterBar: UIView {
             make.height.equalTo(44)
         }
     }
-    
-    func configure(with filters: [Filter]) {
-        displayedFilters = filters;
-        layoutButtons(filters: filters)
-        
-        if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
-            for string in prevFilters {
-                if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
-                    selectedFilters.insert(filter)
-                    buttons[filter]!.isSelected = true
-                }
-            }
-            
-            delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
-        }
-    }
 
     func layoutButtons(filters: [Filter]) {
-
         var totalWidth: CGFloat = 0.0
 
         var previousLayout: UIButton?
