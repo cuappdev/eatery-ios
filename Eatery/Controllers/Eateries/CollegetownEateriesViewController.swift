@@ -11,7 +11,7 @@ import UIKit
 
 class CollegetownEateriesViewController: EateriesViewController {
 
-    private static let foodTypeFilters: [Filter] = [
+    private let categoryFilters: [Filter] = [
         .pizza,
         .chinese,
         .wings,
@@ -33,7 +33,7 @@ class CollegetownEateriesViewController: EateriesViewController {
         dataSource = self
         delegate = self
 
-        availableFilters = [.nearest] + CollegetownEateriesViewController.foodTypeFilters
+        availableFilters = [.nearest] + categoryFilters
 
         queryCollegetownEateries()
 
@@ -120,14 +120,11 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
             return true
         }
 
-        if !filters.intersection(CollegetownEateriesViewController.foodTypeFilters).isEmpty {
+        let selectedCategoryFilters = filters.intersection(categoryFilters)
+        if !selectedCategoryFilters.isEmpty {
             filteredEateries = filteredEateries.filter { eatery -> Bool in
-                filters.map { $0.rawValue }.allSatisfy { eatery.categories.contains($0) }
+                selectedCategoryFilters.map { $0.rawValue }.allSatisfy { eatery.categories.contains($0) }
             }
-        }
-
-        if let location = userLocation, filters.contains(.nearest) {
-            filteredEateries.sort { $0.location.distance(from: location) < $1.location.distance(from: location) }
         }
 
         return filteredEateries
