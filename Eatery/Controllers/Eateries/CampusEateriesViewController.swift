@@ -6,12 +6,10 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import CoreLocation
 import UIKit
 
 class CampusEateriesViewController: EateriesViewController {
-
-    // TODO: Persist
-    private var favoritesIds: [Int] = []
 
     private var allEateries: [CampusEatery]?
 
@@ -83,6 +81,13 @@ class CampusEateriesViewController: EateriesViewController {
 
 extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
+    private enum SortMethod {
+
+        case nearestFirst(userLocation: CLLocation)
+        case alphabetical
+
+    }
+
     func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> EateriesViewController.EateriesByGroup {
         guard let eateries = allEateries else {
             return [:]
@@ -96,7 +101,11 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
         filteredEateries = filter(eateries: filteredEateries, withFilters: filters)
 
-        return eateriesByGroup(from: filteredEateries)
+        if let userLocation = userLocation, filters.contains(.nearest) {
+            return eateriesByGroup(from: filteredEateries, sortedUsing: .nearestFirst(userLocation: userLocation))
+        } else {
+            return eateriesByGroup(from: filteredEateries, sortedUsing: .alphabetical)
+        }
     }
 
     private func filter(eateries: [CampusEatery], withSearchText searchText: String) -> [CampusEatery] {
@@ -149,17 +158,19 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
         return filteredEateries
     }
 
-    private func eateriesByGroup(from eateries: [Eatery]) -> EateriesByGroup {
-        let favorites = eateries
-            .filter { favoritesIds.contains($0.id) }
-            .sorted { $0.displayName < $1.displayName }
-        let open = eateries
-            .filter { !favoritesIds.contains($0.id) && $0.isOpen(atExactly: Date()) }
-            .sorted { $0.displayName < $1.displayName }
-        let closed = eateries
-            .filter { !favoritesIds.contains($0.id) && !$0.isOpen(atExactly: Date()) }
-            .sorted { $0.displayName < $1.displayName }
+    private func eateriesByGroup(from eateries: [Eatery], sortedUsing sortMethod: SortMethod) -> EateriesByGroup {
+        let sortedEateries: [Eatery]
 
+        switch sortMethod {
+        case .alphabetical:
+            sortedEateries = eateries.sorted { $0.displayName < $1.displayName }
+        case let .nearestFirst(location):
+            sortedEateries = eateries.sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
+        }
+
+        let favorites = sortedEateries.filter { $0.isFavorite }
+        let open = sortedEateries.filter { !$0.isFavorite && $0.isOpen(atExactly: Date()) }
+        let closed = sortedEateries.filter { !$0.isFavorite && !$0.isOpen(atExactly: Date()) }
         return [.favorites: favorites, .open: open, .closed: closed]
     }
 
@@ -241,33 +252,7 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         }
 
         let mapViewController = MapViewController(eateries: eateries)
-        mapViewController.delegate = self
         navigationController?.pushViewController(mapViewController, animated: true)
-    }
-
-}
-
-// MARK: - Menu Buttons Delegate
-
-extension CampusEateriesViewController: MenuButtonsDelegate {
-
-    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView) {
-        // TODO: Implement this
-        fatalError()
-    }
-
-}
-
-// MARK: - Map View Controller Delegate
-
-extension CampusEateriesViewController: MapViewControllerDelegate {
-
-    func mapViewController(_ mvc: MapViewController, didSelectEatery eatery: Eatery) {
-        guard let campusEatery = eatery as? CampusEatery else {
-            return
-        }
-
-        showMenu(of: campusEatery)
     }
 
 }

@@ -11,6 +11,8 @@ import Foundation
 
 extension CLLocation {
 
+    static let olinLibrary = CLLocation(latitude: 42.448078,longitude: -76.484291)
+
     func distance(from other: CLLocation, in unit: UnitLength) -> CLLocationDistance {
         return Measurement(value: distance(from: other), unit: UnitLength.meters).converted(to: unit).value
     }

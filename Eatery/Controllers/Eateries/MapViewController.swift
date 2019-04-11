@@ -4,20 +4,10 @@ import SnapKit
 import Crashlytics
 import CoreLocation
 
-// MARK: - Map View Controller Delegate
-
-protocol MapViewControllerDelegate: AnyObject {
-
-    func mapViewController(_ mvc: MapViewController, didSelectEatery eatery: Eatery)
-
-}
-
 // MARK: - Map View Controller
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
-    private static let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
-    
     var eateries: [Eatery]
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
@@ -27,10 +17,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let recenterButton = UIButton()
     
     var defaultCoordinate: CLLocationCoordinate2D {
-        return locationManager.location?.coordinate ?? MapViewController.olinLibraryLocation.coordinate
+        return locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
     }
-
-    weak var delegate: MapViewControllerDelegate?
     
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
@@ -175,12 +163,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let eateryAnnotation = view.annotation as? MKPointAnnotation,
-            let index = eateryAnnotations.index(of: eateryAnnotation)else {
+            let index = eateryAnnotations.index(of: eateryAnnotation),
+            index < eateries.count else {
                 return
         }
 
         let eatery = eateries[index]
-        delegate?.mapViewController(self, didSelectEatery: eatery)
+
+        if let campusEatery = eatery as? CampusEatery {
+            let menuViewController = CampusEateryMenuViewController(eatery: campusEatery, delegate: nil, userLocation: userLocation)
+            navigationController?.pushViewController(menuViewController, animated: true)
+        } else if let collegetownEatery = eatery as? CollegetownEatery {
+            let menuViewController = CollegetownEateriesMenuViewController(eatery: collegetownEatery, delegate: nil, userLocation: userLocation)
+            navigationController?.pushViewController(menuViewController, animated: true)
+        }
 
         // TODO: Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
     }

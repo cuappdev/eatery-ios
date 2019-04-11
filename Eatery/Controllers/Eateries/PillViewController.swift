@@ -2,140 +2,135 @@
 //  PillViewController.swift
 //  Eatery
 //
-//  Created by Ethan Fine on 12/1/18.
-//  Copyright © 2018 CUAppDev. All rights reserved.
+//  Created by William Ma on 4/10/19.
+//  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
-// TODO: move this inside pill vc, then to Eateries shared vc once PillVC becomes generic
-enum Location: String {
-
-    case campus = "Campus"
-    case collegetown = "Collegetown"
-
-}
-
-protocol PillViewControllerDelegate: AnyObject {
-
-    func pillViewController(_ pvc: PillViewController, didUpdateLocation newLocation: Location)
-
-}
-
-// TODO: make this a (generic) parent view controller. 
 class PillViewController: UIViewController {
-    
-    var selectedLocation = Location.campus
-    
-    weak var delegate: PillViewControllerDelegate?
-    
-    var campusStackView: UIStackView!
-    var separatorView: UIView!
-    var collegetownStackView: UIStackView!
-    
+
+    let pillView = PillView()
+
+    private var showPillConstraints: [Constraint] = []
+    private var hidePillConstraints: [Constraint] = []
+
+    private let containerView = UIView()
+    let leftViewController: UIViewController
+    let rightViewController: UIViewController
+
+    init(leftViewController: UIViewController, rightViewController: UIViewController) {
+        self.leftViewController = leftViewController
+        self.rightViewController = rightViewController
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) will not be implemented")
+    }
+
     override func viewDidLoad() {
-        view.backgroundColor = .white
-        
-        view.layer.cornerRadius = 20
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.5
-        view.layer.shadowOffset = CGSize.zero
-        view.layer.shadowRadius = 1
-        
-        let fontSize = getSelectionSizeAttributes().fontSize
-        
-        let campusIconImage = UIImage(named: "campusIcon")?.withRenderingMode(.alwaysTemplate)
-        let campusImageView = UIImageView(image: campusIconImage)
-        campusImageView.tintColor = UIColor.eateryBlue
-        
-        let campusLabel = UILabel(frame: CGRect.zero)
-        campusLabel.text = Location.campus.rawValue
-        campusLabel.textColor = UIColor.eateryBlue
-        campusLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
-        
-        campusStackView = UIStackView(arrangedSubviews: [campusImageView, campusLabel])
-        setupLocationStackView(stackView: campusStackView)
-        
-        separatorView = UIView(frame: CGRect.zero)
-        separatorView.backgroundColor = UIColor.inactive
-        view.addSubview(separatorView)
-        
-        let collegetownIconImage = UIImage(named: "collegetownIcon")?.withRenderingMode(.alwaysTemplate)
-        let collegetownImageView = UIImageView(image: collegetownIconImage)
-        collegetownImageView.tintColor = UIColor.inactive
-        
-        let collegetownLabel = UILabel(frame: CGRect.zero)
-        collegetownLabel.text = Location.collegetown.rawValue
-        collegetownLabel.textColor = UIColor.secondary
-        collegetownLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
-        
-        collegetownStackView = UIStackView(arrangedSubviews: [collegetownImageView, collegetownLabel])
-        setupLocationStackView(stackView: collegetownStackView)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        let iconSideLength = getSelectionSizeAttributes().iconSideLength
-        campusStackView.subviews[0].snp.makeConstraints { (make) in
-            make.width.equalTo(iconSideLength)
-            make.height.equalTo(iconSideLength)
+        super.viewDidLoad()
+
+        containerView.backgroundColor = .clear
+        view.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        campusStackView.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.centerX.equalToSuperview().dividedBy(2)
+
+        addChildViewController(leftViewController)
+        containerView.addSubview(leftViewController.view)
+        leftViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        separatorView.snp.makeConstraints { (make) in
-            make.width.equalTo(2)
-            make.height.equalToSuperview()
-            make.centerX.centerY.equalToSuperview()
+        leftViewController.didMove(toParentViewController: self)
+
+        addChildViewController(rightViewController)
+        containerView.addSubview(rightViewController.view)
+        rightViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        collegetownStackView.subviews[0].snp.makeConstraints { (make) in
-            make.width.equalTo(iconSideLength)
-            make.height.equalTo(iconSideLength)
+        rightViewController.didMove(toParentViewController: self)
+
+        pillView.addTarget(self, action: #selector(pillSelectionDidChange), for: .valueChanged)
+        view.addSubview(pillView)
+        pillView.snp.makeConstraints { make in
+            make.height.equalTo(40)
+            make.width.equalTo(264)
+            make.centerX.equalToSuperview()
         }
-        collegetownStackView.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.centerX.equalToSuperview().multipliedBy(1.5)
+        showPillConstraints = pillView.snp.prepareConstraints { make in
+            make.bottom.equalTo(view.snp.bottomMargin).inset(8)
         }
+        hidePillConstraints = pillView.snp.prepareConstraints { make in
+            make.top.equalTo(view.snp.bottom).offset(8)
+        }
+
+        leftViewController.view.preservesSuperviewLayoutMargins = true
+        rightViewController.view.preservesSuperviewLayoutMargins = true
+        containerView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
+
+        showPill(animated: false)
+        showLeftViewController()
     }
-    
-    func getSelectionSizeAttributes() -> (iconSideLength: Int, fontSize: CGFloat) {
-        return UIScreen.main.nativeBounds.height <= 1136 ? (14, 12) : (16, 14)
-    }
-    
-    func setupLocationStackView(stackView: UIStackView) {
-        stackView.axis = .horizontal
-        stackView.spacing = 6
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
-    }
-    
-    func swapSelectedLocation() {
-        selectedLocation = selectedLocation == .collegetown ? .campus : .collegetown
-        campusStackView.subviews[0].tintColor = selectedLocation == .collegetown ?
-            UIColor.inactive : UIColor.eateryBlue
-        let campusLabel = campusStackView.subviews[1] as! UILabel
-        campusLabel.textColor = selectedLocation == .collegetown ?
-            UIColor.secondary : UIColor.eateryBlue
-        collegetownStackView.subviews[0].tintColor = selectedLocation == .campus ?
-            UIColor.inactive : UIColor.eateryBlue
-        let collegetownLabel = collegetownStackView.subviews[1] as! UILabel
-        collegetownLabel.textColor = selectedLocation == .campus ?
-            UIColor.secondary : UIColor.eateryBlue
-        
-        delegate?.pillViewController(self, didUpdateLocation: selectedLocation)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            let location = touch.location(in: view)
-            if location.x > (view.frame.width / 2) && selectedLocation == .campus {
-                swapSelectedLocation()
+
+    func showPill(animated: Bool) {
+        let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
+            for constraint in self.hidePillConstraints {
+                constraint.deactivate()
             }
-            if location.x < (view.frame.width / 2) && selectedLocation == .collegetown {
-                swapSelectedLocation()
+
+            for constraint in self.showPillConstraints {
+                constraint.activate()
             }
+
+            self.view.layoutIfNeeded()
+        }
+
+        animation.startAnimation()
+        if !animated {
+            animation.stopAnimation(false)
+            animation.finishAnimation(at: .end)
         }
     }
-    
+
+    func hidePill(animated: Bool) {
+        let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeIn) {
+            for constraint in self.showPillConstraints {
+                constraint.deactivate()
+            }
+            for constraint in self.hidePillConstraints {
+                constraint.activate()
+            }
+
+            self.view.layoutIfNeeded()
+        }
+
+        animation.startAnimation()
+        if !animated {
+            animation.stopAnimation(false)
+            animation.finishAnimation(at: .end)
+        }
+    }
+
+    @objc private func pillSelectionDidChange() {
+        if pillView.leftSegmentSelected {
+            showLeftViewController()
+        } else {
+            showRightViewController()
+        }
+    }
+
+    private func showLeftViewController() {
+        leftViewController.view.alpha = 1
+        rightViewController.view.alpha = 0
+    }
+
+    private func showRightViewController() {
+        leftViewController.view.alpha = 0
+        rightViewController.view.alpha = 1
+    }
+
 }
