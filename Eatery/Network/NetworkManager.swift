@@ -21,7 +21,6 @@ struct NetworkManager {
     static let shared = NetworkManager()
 
     private let apollo = ApolloClient(url: URL(string: "https://eatery-backend.cornellappdev.com")!)
-//    private let apollo = ApolloClient(url: URL(string: "http://localhost:5000")!)
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
