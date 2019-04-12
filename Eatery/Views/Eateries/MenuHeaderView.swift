@@ -87,7 +87,7 @@ class MenuHeaderView: UIView {
         
         titleLabel.text = eatery.nickname
 
-        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+        if let url = eatery.imageUrl {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
             backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
         }
@@ -117,7 +117,7 @@ class MenuHeaderView: UIView {
             return
         }
 
-        favoriteButton.setImage(eatery.favorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
+        favoriteButton.setImage(eatery.isFavorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
     }
     
     @objc private func favoriteButtonPressed(_ sender: AnyObject) {
@@ -125,12 +125,12 @@ class MenuHeaderView: UIView {
             return
         }
 
-        eatery.favorite.toggle()
+        eatery.isFavorite.toggle()
         
         updateFavoriteButtonImage()
         
         delegate?.favoriteButtonPressed(on: self)
-        if eatery.favorite {
+        if eatery.isFavorite {
             Answers.logEateryFavorited(eateryId: eatery.slug)
         } else {
             Answers.logEateryUnfavorited(eateryId: eatery.slug)

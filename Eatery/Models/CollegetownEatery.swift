@@ -11,6 +11,7 @@ import Foundation
 
 enum Rating: Double {
 
+    case zeroPointFive = 0.5
     case one = 1
     case onePointFive = 1.5
     case two = 2
@@ -71,6 +72,8 @@ struct CollegetownEatery: Eatery {
 
     let url: URL?
 
+    let categories: [String]
+
     init(
         id: Int,
         name: String,
@@ -83,7 +86,8 @@ struct CollegetownEatery: Eatery {
         events: [String: [String: Event]],
         price: String,
         rating: Rating?,
-        url: URL?) {
+        url: URL?,
+        categories: [String]) {
         self.id = id
         self.name = name
         self.imageUrl = imageUrl
@@ -96,6 +100,7 @@ struct CollegetownEatery: Eatery {
         self.price = price
         self.rating = rating
         self.url = url
+        self.categories = categories
 
         self.allEvents = events.flatMap { $0.value.map { $0.value } }
     }

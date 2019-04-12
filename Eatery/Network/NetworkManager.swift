@@ -236,7 +236,8 @@ struct NetworkManager {
                     events: events,
                     price: graphQlEatery.price,
                     rating: rating,
-                    url: URL(string: graphQlEatery.url))
+                    url: URL(string: graphQlEatery.url),
+                    categories: graphQlEatery.categories.compactMap { $0 })
 
                 eateries.append(eatery)
             }

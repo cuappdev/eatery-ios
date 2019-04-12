@@ -2,157 +2,112 @@
 //  EateriesSharedViewController.swift
 //  Eatery
 //
-//  Created by Ethan Fine on 3/15/19.
+//  Created by William Ma on 4/10/19.
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import Crashlytics
-import NVActivityIndicatorView
-
-// MARK: - Eateries Shared View Controller
+import CoreLocation
+import UIKit
 
 class EateriesSharedViewController: UIViewController {
 
+    // Scroll
+
     var lastContentOffset: CGFloat = 0
     var lastScrollWasUserInitiated = false
-    var pillAnimating = false
-    
-    var activeEateriesViewController: EateriesViewController!
-    var campusEateriesViewController: EateriesViewController!
-    var collegetownEateriesViewController: EateriesViewController!
-    
-    var pillViewController: PillViewController!
-    
+
+    // View Controllers
+
+    private var campusEateriesViewController: CampusEateriesViewController!
+    private var collegetownEateriesViewController: CollegetownEateriesViewController!
+    private var pillViewController: PillViewController!
+
+    private var activeViewController: EateriesViewController! {
+        if pillViewController.pillView.leftSegmentSelected {
+            return campusEateriesViewController
+        } else {
+            return collegetownEateriesViewController
+        }
+    }
+
+    // Location
+
+    private lazy var locationManager: CLLocationManager = {
+        let l = CLLocationManager()
+        l.delegate = self
+        l.desiredAccuracy = kCLLocationAccuracyBest
+        l.startUpdatingLocation()
+        return l
+    }()
+
+    // MARK: View Controller
+
     override func viewDidLoad() {
-        setupEateriesViewControllers()
-        setupNavigation()
-        setupPillViewController()
+        super.viewDidLoad()
+
+        setUpNavigationItem()
+        setUpChildViewControllers()
+        setUpPillView()
+        setUpLocationManager()
     }
-    
-    // MARK: Setup
-    
-    func setupEateriesViewControllers() {
-        campusEateriesViewController = CampusEateriesViewController()
-        campusEateriesViewController.scrollDelegate = self
 
-        addChildViewController(campusEateriesViewController)
-        view.addSubview(campusEateriesViewController.view)
-        campusEateriesViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        campusEateriesViewController.didMove(toParentViewController: self)
-
-        collegetownEateriesViewController = CollegetownEateriesViewController()
-        collegetownEateriesViewController.scrollDelegate = self
-
-        addChildViewController(collegetownEateriesViewController)
-        view.addSubview(collegetownEateriesViewController.view)
-        collegetownEateriesViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        collegetownEateriesViewController.didMove(toParentViewController: self)
-
-        activeEateriesViewController = collegetownEateriesViewController
-
-        setVisibleViewController(campusEateriesViewController)
-    }
-    
-    func setupNavigation() {
+    private func setUpNavigationItem() {
         navigationItem.title = "Eateries"
         navigationController?.view.backgroundColor = .white
         navigationController?.hero.isEnabled = true
         navigationController?.hero.navigationAnimationType = .fade
-        
+
         let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(openMap))
         mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
         navigationItem.rightBarButtonItems = [mapButton]
     }
-    
-    func setupPillViewController() {
-        pillViewController = PillViewController()
-        pillViewController.delegate = self
-        
+
+    private func setUpChildViewControllers() {
+        campusEateriesViewController = CampusEateriesViewController()
+        campusEateriesViewController.scrollDelegate = self
+
+        collegetownEateriesViewController = CollegetownEateriesViewController()
+        collegetownEateriesViewController.scrollDelegate = self
+
+        pillViewController = PillViewController(leftViewController: campusEateriesViewController,
+                                                rightViewController: collegetownEateriesViewController)
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)
-        pillViewController.view.snp.makeConstraints { (make) in
-            make.leading.trailing.equalToSuperview().inset(55)
-            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(8)
-            make.height.equalTo(40)
+        pillViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        pillViewController.didMove(toParentViewController: self)
     }
-    
-    // MARK: User interaction utilities
-    
-    func setVisibleViewController(_ viewController: EateriesViewController) {
-        if viewController === campusEateriesViewController {
-            campusEateriesViewController.view.alpha = 1
-            collegetownEateriesViewController.view.alpha = 0
-        } else if viewController === collegetownEateriesViewController {
-            campusEateriesViewController.view.alpha = 0
-            collegetownEateriesViewController.view.alpha = 1
-        }
 
-        activeEateriesViewController = viewController
+    private func setUpPillView() {
+        let pillView = pillViewController.pillView
+
+        pillView.leftImageView.image = UIImage(named: "campusIcon")
+        pillView.leftLabel.text = "Campus"
+
+        pillView.rightImageView.image = UIImage(named: "collegetownIcon")
+        pillView.rightLabel.text = "Collegetown"
     }
-    
-    func showLocationSelectorView() {
-        guard let tabBarMinY = tabBarController?.tabBar.frame.minY else { return }
-        if pillViewController.view.frame.minY >= tabBarMinY && !pillAnimating {
-            pillAnimating.toggle()
-            
-            self.pillViewController.view.snp.updateConstraints() { (make) in
-                make.bottom.equalTo(self.view.layoutMarginsGuide.snp.bottom).inset(8)
-            }
-            view.setNeedsUpdateConstraints()
-            
-            UIView.animate(withDuration: 0.5, animations: {
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-                self.pillAnimating = false
+
+    private func setUpLocationManager() {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            default: break
             }
         }
     }
-    
-    @objc func openMap() {
+
+    @objc private func openMap() {
         Answers.logMapOpened()
 
-        activeEateriesViewController.pushMapViewController()
-    }
-    
-    func hideLocationSelectorView() {
-        guard let tabBarMinY = tabBarController?.tabBar.frame.minY else { return }
-        if pillViewController.view.frame.minY < tabBarMinY && !pillAnimating {
-            pillAnimating.toggle()
-            
-            pillViewController.view.snp.updateConstraints() { (make) in
-                make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).offset(40)
-            }
-            view.setNeedsUpdateConstraints()
-            
-            UIView.animate(withDuration: 0.5, animations: {
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-                self.pillAnimating = false
-            }
-        }
+        activeViewController.pushMapViewController()
     }
 
-}
-
-// MARK: - Pill View Controller Delegate
-
-extension EateriesSharedViewController: PillViewControllerDelegate {
-    
-    func pillViewController(_ pvc: PillViewController, didUpdateLocation newLocation: Location) {
-        switch newLocation {
-        case .campus:
-            setVisibleViewController(campusEateriesViewController)
-        case .collegetown:
-            setVisibleViewController(collegetownEateriesViewController)
-        }
-    }
-    
 }
 
 // MARK: - Eateries View Controller Scroll Delegate
@@ -166,14 +121,28 @@ extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
 
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
-        if lastScrollWasUserInitiated && lastContentOffset > offset {
-            showLocationSelectorView()
-        } else if lastScrollWasUserInitiated && lastContentOffset < offset {
-            hideLocationSelectorView()
+
+        if lastScrollWasUserInitiated, lastContentOffset > offset {
+            pillViewController.showPill(animated: true)
+        } else if lastScrollWasUserInitiated, lastContentOffset < offset {
+            pillViewController.hidePill(animated: true)
         }
 
         lastContentOffset = offset
         lastScrollWasUserInitiated = false
+    }
+
+}
+
+// MARK: - Location Manager Delegate
+
+extension EateriesSharedViewController: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation = locations.last
+
+        campusEateriesViewController.userLocation = userLocation
+        collegetownEateriesViewController.userLocation = userLocation
     }
 
 }

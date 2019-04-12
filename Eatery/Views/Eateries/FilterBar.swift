@@ -139,7 +139,7 @@ class FilterBar: UIView {
         let defaults = UserDefaults.standard
         defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
 
-        delegate?.filterBar(self, selectedFiltersDidChange: selectedFilters.map { $0 })
+        delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
     }
 
     required init?(coder aDecoder: NSCoder) {

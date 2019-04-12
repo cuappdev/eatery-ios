@@ -37,14 +37,6 @@ protocol EateriesViewControllerDelegate: AnyObject {
 
 }
 
-// MARK: - Location Manager
-
-protocol EateriesViewControllerLocationManager: AnyObject {
-
-    var userLocation: CLLocation? { get }
-
-}
-
 // MARK: - Scroll Delegate
 
 protocol EateriesViewControllerScrollDelegate: AnyObject {
@@ -131,6 +123,8 @@ class EateriesViewController: UIViewController {
         return [.favorites, .open, .closed].enumerated().filter({ !eateriesByGroup[$0.element, default: []].isEmpty }).map { $0.element }
     }
 
+    private var updateTimer: Timer?
+
     // Presentation Views
 
     weak var delegate: EateriesViewControllerDelegate?
@@ -160,10 +154,12 @@ class EateriesViewController: UIViewController {
 
     // Location
 
-    weak var locationManager: EateriesViewControllerLocationManager?
-
     var userLocation: CLLocation? {
-        return locationManager?.userLocation
+        didSet {
+            for cell in collectionView.visibleCells.compactMap({ $0 as? EateryCollectionViewCell }) {
+                cell.userLocation = userLocation
+            }
+        }
     }
 
     // MARK: View Controller
@@ -230,6 +226,7 @@ class EateriesViewController: UIViewController {
         }
 
         // filter bar
+
         filterBar.delegate = self
 
         view.addSubview(filterBar)
@@ -247,6 +244,7 @@ class EateriesViewController: UIViewController {
         collectionView.contentInset.top = height
 
         // activity indicator
+
         view.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -254,6 +252,7 @@ class EateriesViewController: UIViewController {
         }
 
         // failed to load
+
         failedToLoadView.delegate = self
         view.addSubview(failedToLoadView)
         failedToLoadView.snp.makeConstraints { make in
@@ -275,6 +274,12 @@ class EateriesViewController: UIViewController {
         activityIndicator.startAnimating()
 
         failedToLoadView.alpha = 0
+
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+            guard let `self` = self else { return }
+            print("Updating \(type(of: self))", Date())
+            self.collectionView.reloadData()
+        }
     }
 
     func updateState(_ newState: State, animated: Bool) {
@@ -342,6 +347,7 @@ class EateriesViewController: UIViewController {
         animation.addCompletion { _ in
             completion?()
         }
+
         animation.startAnimation()
         if !animated {
             animation.stopAnimation(false)
@@ -616,3 +622,14 @@ extension EateriesViewController: UIScrollViewDelegate {
     }
 
 }
+
+// MARK: - Menu Buttons Delegate
+
+extension EateriesViewController: MenuButtonsDelegate {
+
+    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView) {
+        reloadEateries()
+    }
+
+}
+
