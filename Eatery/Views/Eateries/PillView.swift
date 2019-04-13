@@ -27,7 +27,7 @@ class PillView: UIControl {
         return !leftSegmentSelected
     }
 
-    init() {
+    init(leftSelected: Bool) {
         leftStackView = UIStackView(arrangedSubviews: [leftImageView, leftLabel])
         rightStackView = UIStackView(arrangedSubviews: [rightImageView, rightLabel])
 
@@ -78,7 +78,11 @@ class PillView: UIControl {
             make.centerX.equalToSuperview().multipliedBy(1.5)
         }
 
-        selectLeftSegment()
+        if leftSelected {
+            selectLeftSegment()
+        } else {
+            selectRightSegment()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

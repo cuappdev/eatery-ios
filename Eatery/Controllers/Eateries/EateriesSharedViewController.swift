@@ -2,7 +2,7 @@
 //  EateriesSharedViewController.swift
 //  Eatery
 //
-//  Created by William Ma on 4/10/19.
+//  Created by Ethan Fine on 4/10/19.
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import CoreLocation
 import UIKit
 
 class EateriesSharedViewController: UIViewController {
-
+    
     // Scroll
 
     var lastContentOffset: CGFloat = 0
@@ -21,7 +21,7 @@ class EateriesSharedViewController: UIViewController {
 
     private var campusEateriesViewController: CampusEateriesViewController!
     private var collegetownEateriesViewController: CollegetownEateriesViewController!
-    private var pillViewController: PillViewController!
+    var pillViewController: PillViewController!
 
     private var activeViewController: EateriesViewController! {
         if pillViewController.pillView.leftSegmentSelected {
@@ -71,7 +71,8 @@ class EateriesSharedViewController: UIViewController {
         collegetownEateriesViewController.scrollDelegate = self
 
         pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                rightViewController: collegetownEateriesViewController)
+                                                rightViewController: collegetownEateriesViewController,
+                                                leftSelected: !AppDelegate.onboardingCollegetown)
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)
         pillViewController.view.snp.makeConstraints { make in

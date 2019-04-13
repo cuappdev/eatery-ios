@@ -36,8 +36,6 @@ class CollegetownEateriesViewController: EateriesViewController {
         availableFilters = [.nearest] + categoryFilters
 
         queryCollegetownEateries()
-
-
     }
 
     private func queryCollegetownEateries() {

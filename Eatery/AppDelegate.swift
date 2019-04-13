@@ -10,6 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var eateryTabBarController: EateryTabBarController!
+    
+    static var onboardingCollegetown = !UserDefaults.standard.bool(forKey: "didOnboardToCollegetown")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -30,10 +32,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Hero.shared.containerColor = .white
 
-        // Set up tab bar controllers
+        // Set up view controllers
+        
         eateryTabBarController = EateryTabBarController()
-        window?.rootViewController = eateryTabBarController
+        UserDefaults.standard.setValue(false, forKey: "didOnboardToCollegetown")
+        if AppDelegate.onboardingCollegetown {
+            let collegetownOnboardViewController = CollegetownOnboardViewController()
+            collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
+            window?.rootViewController = collegetownOnboardViewController
+            UserDefaults.standard.setValue(false, forKey: "didOnboardToCollegetown")
+        } else {
+            window?.rootViewController = eateryTabBarController
+        }
         window?.makeKeyAndVisible()
+         UserDefaults.standard.setValue(false, forKey: "didOnboardToCollegetown")
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
         UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")

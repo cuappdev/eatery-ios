@@ -11,18 +11,20 @@ import UIKit
 
 class PillViewController: UIViewController {
 
-    let pillView = PillView()
+    let pillView = PillView(leftSelected: !AppDelegate.onboardingCollegetown)
 
     private var showPillConstraints: [Constraint] = []
     private var hidePillConstraints: [Constraint] = []
 
+    private var leftSelected: Bool!
     private let containerView = UIView()
     let leftViewController: UIViewController
     let rightViewController: UIViewController
 
-    init(leftViewController: UIViewController, rightViewController: UIViewController) {
+    init(leftViewController: UIViewController, rightViewController: UIViewController, leftSelected: Bool) {
         self.leftViewController = leftViewController
         self.rightViewController = rightViewController
+        self.leftSelected = leftSelected
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -73,9 +75,13 @@ class PillViewController: UIViewController {
         containerView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
 
         showPill(animated: false)
-        showLeftViewController()
+        if leftSelected {
+            showLeftViewController()
+        } else {
+            showRightViewController()
+        }
     }
-
+    
     func showPill(animated: Bool) {
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
             for constraint in self.hidePillConstraints {
