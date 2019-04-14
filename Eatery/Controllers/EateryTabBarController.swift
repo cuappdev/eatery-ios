@@ -35,6 +35,14 @@ class EateryTabBarController: UITabBarController {
 
         setViewControllers(navigationControllers, animated: false)
     }
+    
+    func tabBarControllerSupportedInterfaceOrientations(_ tabBarController: UITabBarController) -> UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    func tabBarControllerPreferredInterfaceOrientationForPresentation(_ tabBarController: UITabBarController) -> UIInterfaceOrientation {
+        return .portrait
+    }
 
 }
 

@@ -121,7 +121,7 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
         let selectedCategoryFilters = filters.intersection(categoryFilters)
         if !selectedCategoryFilters.isEmpty {
             filteredEateries = filteredEateries.filter { eatery -> Bool in
-                selectedCategoryFilters.map { $0.rawValue }.allSatisfy { eatery.categories.contains($0) }
+                selectedCategoryFilters.map { $0.rawValue }.contains { eatery.categories.contains($0) }
             }
         }
 
