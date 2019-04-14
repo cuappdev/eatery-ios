@@ -35,17 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up view controllers
         
         eateryTabBarController = EateryTabBarController()
-        UserDefaults.standard.setValue(false, forKey: "didOnboardToCollegetown")
         if AppDelegate.onboardingCollegetown {
             let collegetownOnboardViewController = CollegetownOnboardViewController()
             collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
             window?.rootViewController = collegetownOnboardViewController
-            UserDefaults.standard.setValue(false, forKey: "didOnboardToCollegetown")
+            UserDefaults.standard.setValue(true, forKey: "didOnboardToCollegetown")
         } else {
             window?.rootViewController = eateryTabBarController
         }
         window?.makeKeyAndVisible()
-         UserDefaults.standard.setValue(false, forKey: "didOnboardToCollegetown")
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
         UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")

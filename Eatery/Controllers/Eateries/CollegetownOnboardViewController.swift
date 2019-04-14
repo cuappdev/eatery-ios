@@ -14,7 +14,7 @@ class CollegetownOnboardViewController: UIViewController {
     
     var appDevLogo: UIImageView!
     var getStartedButton: UIButton!
-    //var dismissButton: UIButton!
+    var dismissButton: UIButton!
     
     var player: AVPlayer!
     let videoAspectRatio = 1.1
@@ -28,9 +28,9 @@ class CollegetownOnboardViewController: UIViewController {
         modalPresentationStyle = .custom
         modalTransitionStyle = .crossDissolve
         
-        setupAppDevLogo()
-        //setupDismissButton()
         setupAnimationVideo()
+        setupAppDevLogo()
+        setupDismissButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,7 +50,7 @@ class CollegetownOnboardViewController: UIViewController {
         }
     }
     
-    /*private func setupDismissButton() {
+    private func setupDismissButton() {
         let image = UIImage(named: "closeIcon")?.withRenderingMode(.alwaysTemplate)
         dismissButton = UIButton(type: .custom)
         dismissButton.setImage(image, for: .normal)
@@ -60,10 +60,10 @@ class CollegetownOnboardViewController: UIViewController {
         dismissButton.snp.makeConstraints { make in
             make.width.equalTo(33)
             make.height.equalTo(33)
-            make.top.equalTo(view.snp.topMargin).offset(72)
+            make.centerY.equalTo(appDevLogo)
             make.trailing.equalToSuperview().inset(20)
         }
-    }*/
+    }
     
     private func setupAnimationVideo() {
         let moviePath = Bundle.main.path(forResource: "collegetownonboard", ofType: "mp4")
@@ -75,15 +75,14 @@ class CollegetownOnboardViewController: UIViewController {
             avpController.player = player
             avpController.showsPlaybackControls = false
             avpController.view.backgroundColor = .white
-            avpController.videoGravity = AVLayerVideoGravity.resize.rawValue
             addChildViewController(avpController)
             view.addSubview(avpController.view)
             
             avpController.view.snp.makeConstraints { (make) in
-                make.leading.equalToSuperview().offset(20)
-                make.trailing.equalToSuperview().inset(20)
-                make.height.equalTo(avpController.view!.snp.width).multipliedBy(videoAspectRatio)
-                make.bottom.equalTo(view.snp.bottomMargin).inset(100 + eateryTabBarController.tabBar.frame.height)
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+                make.height.equalTo(avpController.view!.snp.width)
+                make.centerY.equalToSuperview()
             }
             
             NotificationCenter.default.addObserver(self, selector: #selector(setupGetStartedButton), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
@@ -95,6 +94,7 @@ class CollegetownOnboardViewController: UIViewController {
         getStartedButton.setTitle("Get Started", for: .normal)
         getStartedButton.backgroundColor = .eateryBlue
         getStartedButton.layer.cornerRadius = 20
+        getStartedButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 16)
         getStartedButton.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
         view.addSubview(getStartedButton)
         getStartedButton.snp.makeConstraints { make in
@@ -105,7 +105,7 @@ class CollegetownOnboardViewController: UIViewController {
         }
         
         getStartedButton.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
-        let animation = UIViewPropertyAnimator(duration: 1, dampingRatio: 1.1, animations: {
+        let animation = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.1, animations: {
             self.getStartedButton.transform = .identity
         })
          
