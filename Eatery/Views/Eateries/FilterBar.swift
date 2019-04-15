@@ -20,7 +20,7 @@ enum Filter: String {
     case thai = "Thai"
     case burgers = "Burgers"
     case mexican = "Mexican"
-    case boba = "Boba"
+    case bubbleTea = "Bubble Tea"
 
 }
 

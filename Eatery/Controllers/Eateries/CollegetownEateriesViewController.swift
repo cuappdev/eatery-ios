@@ -20,7 +20,7 @@ class CollegetownEateriesViewController: EateriesViewController {
         .thai,
         .burgers,
         .mexican,
-        .boba
+        .bubbleTea
     ]
 
     private var favoritesNames: [String] = []
