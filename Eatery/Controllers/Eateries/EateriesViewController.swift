@@ -175,6 +175,7 @@ class EateriesViewController: UIViewController {
             let logo = UIImageView(image: UIImage(named: "appDevLogo"))
             logo.tintColor = .white
             logo.contentMode = .scaleAspectFit
+            //navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logo)
             navigationController?.navigationBar.addSubview(logo)
             logo.snp.makeConstraints { make in
                 make.center.equalToSuperview()
