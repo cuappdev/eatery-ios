@@ -123,7 +123,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
                 return true
             }
 
-            if let activeEvent = eatery.activeEvent(for: Date()),
+            if let activeEvent = eatery.activeEvent(atExactly: Date()),
                 activeEvent.menu.stringRepresentation.flatMap({ $0.1 }).contains(where: { search(searchText, matches: $0) }) {
                 return true
             }
@@ -190,7 +190,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
             }
         }
 
-        if let activeEvent = eatery.activeEvent(for: Date()) {
+        if let activeEvent = eatery.activeEvent(atExactly: Date()) {
             for itemText in activeEvent.menu.stringRepresentation.flatMap({ $0.1 }) {
                 if let range = matchRange(of: searchText, in: itemText) {
                     string.append(highlighted(text: itemText + "\n", range: range))

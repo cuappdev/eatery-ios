@@ -195,25 +195,3 @@ extension Eatery {
     }
 
 }
-
-// MARK: - Deprecated
-
-extension Eatery {
-
-    func isOpen(on date: Date) -> Bool {
-        return isOpen(atExactly: date)
-    }
-
-    func isOpen(for date: Date) -> Bool {
-        return isOpen(onDayOf: date)
-    }
-
-    func activeEvent(for date: Date) -> Event? {
-        return activeEvent(atExactly: date)
-    }
-
-    func eventsByName(on date: Date) -> [EventName: Event] {
-        return eventsByName(onDayOf: date)
-    }
-
-}

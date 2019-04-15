@@ -265,7 +265,7 @@ extension LookAheadViewController: UITableViewDataSource {
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
         cell.eateryNameLabel.text = eatery.displayName
 
-        let events = eatery.eventsByName(on: selectedDate)
+        let events = eatery.eventsByName(onDayOf: selectedDate)
         if let event = findEvent(from: events, matching: selectedMeal) {
             if selectedDay == .today {
                 // There is an event, and it's today
@@ -341,7 +341,7 @@ extension LookAheadViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
-        guard let _ = findEvent(from: eatery.eventsByName(on: selectedDate), matching: selectedMeal) else {
+        guard let _ = findEvent(from: eatery.eventsByName(onDayOf: selectedDate), matching: selectedMeal) else {
             return
         }
 
