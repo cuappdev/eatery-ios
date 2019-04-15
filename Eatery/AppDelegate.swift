@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AppDelegate.onboardingCollegetown {
             let collegetownOnboardViewController = CollegetownOnboardViewController()
             collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
+
+            eateryTabBarController.eateriesSharedViewController.loadViewIfNeeded()
+            eateryTabBarController.eateriesSharedViewController.pillViewController.pillView.selectRightSegment()
+
             window?.rootViewController = collegetownOnboardViewController
             UserDefaults.standard.setValue(true, forKey: "didOnboardToCollegetown")
         } else {

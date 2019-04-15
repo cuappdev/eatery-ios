@@ -244,7 +244,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
 
         // TabbedPageViewController
 
-        let eventsDict = eatery.eventsByName(on: displayedDate)
+        let eventsDict = eatery.eventsByName(onDayOf: displayedDate)
         let sortedEventsDict = eventsDict.sorted { $0.1.start < $1.1.start }
         
         var meals = sortedEventsDict.map { $0.key }
@@ -407,7 +407,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
     // MARK: Scroll To Proper Time
     
     func scrollToCurrentTimeOpening(_ date: Date) {
-        guard let currentEvent = eatery.activeEvent(for: date) else { return }
+        guard let currentEvent = eatery.activeEvent(atExactly: date) else { return }
         guard let mealViewControllers = pageViewController.viewControllers as? [CampusEateryMealTableViewController],
             mealViewControllers.count > 1 else { return }
         

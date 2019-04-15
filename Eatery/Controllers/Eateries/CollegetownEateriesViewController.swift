@@ -100,7 +100,7 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
                 return true
             }
 
-            if let activeEvent = eatery.activeEvent(for: Date()),
+            if let activeEvent = eatery.activeEvent(atExactly: Date()),
                 activeEvent.menu.stringRepresentation.flatMap({ $0.1 }).contains(where: { search(searchText, matches: $0) }) {
                 return true
             }

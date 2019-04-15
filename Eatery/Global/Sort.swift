@@ -35,8 +35,8 @@ struct Sort {
         let sortByHoursClosure = { (a: CampusEatery, b: CampusEatery) -> Bool in
             switch sortingType {
             case .lookAhead:
-                let eventsA = a.eventsByName(on: date)
-                let eventsB = b.eventsByName(on: date)
+                let eventsA = a.eventsByName(onDayOf: date)
+                let eventsB = b.eventsByName(onDayOf: date)
                 if eventsA[self.getSelectedMeal(eatery: a, date: date, meal: selectedMeal)] != nil {
                     if eventsB[self.getSelectedMeal(eatery: b, date: date, meal: selectedMeal)] != nil {
                         return  a.nickname.lowercased() < b.nickname.lowercased()
@@ -47,16 +47,16 @@ struct Sort {
                 
             case .time:
                 if a.isOpenToday() {
-                    if let activeEvent = a.activeEvent(for: date) {
+                    if let activeEvent = a.activeEvent(atExactly: date) {
                         if activeEvent.occurs(atExactly: date) {
-                            if let bTimeInterval = b.activeEvent(for: date) {
+                            if let bTimeInterval = b.activeEvent(atExactly: date) {
                                 return activeEvent.end.timeIntervalSinceNow <= bTimeInterval.end.timeIntervalSinceNow
                             } else {
                                 return true
                             }
                         } else {
                             let atimeTillOpen = Int(activeEvent.start.timeIntervalSinceNow / 60)
-                            if let bActiveEvent = b.activeEvent(for: date){
+                            if let bActiveEvent = b.activeEvent(atExactly: date){
                                 let bTimeTillOpen = Int(bActiveEvent.start.timeIntervalSinceNow / 60)
                                 return atimeTillOpen < bTimeTillOpen
                             } else {
@@ -112,7 +112,7 @@ struct Sort {
     
     //HelperFunction to get meal
     static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
-        let events = eatery.eventsByName(on: date)
+        let events = eatery.eventsByName(onDayOf: date)
         
         let meals: [String] = Array(events.keys)
         var selectedMeal = meal

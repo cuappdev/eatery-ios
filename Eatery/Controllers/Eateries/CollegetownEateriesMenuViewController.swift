@@ -102,7 +102,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.isTranslucent = true
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
@@ -111,7 +110,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.isTranslucent = false
     }
     
     override func viewDidLoad() {

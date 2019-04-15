@@ -11,20 +11,18 @@ import UIKit
 
 class PillViewController: UIViewController {
 
-    let pillView = PillView(leftSelected: !AppDelegate.onboardingCollegetown)
+    let pillView = PillView()
 
     private var showPillConstraints: [Constraint] = []
     private var hidePillConstraints: [Constraint] = []
 
-    private var leftSelected: Bool!
     private let containerView = UIView()
     let leftViewController: UIViewController
     let rightViewController: UIViewController
 
-    init(leftViewController: UIViewController, rightViewController: UIViewController, leftSelected: Bool) {
+    init(leftViewController: UIViewController, rightViewController: UIViewController) {
         self.leftViewController = leftViewController
         self.rightViewController = rightViewController
-        self.leftSelected = leftSelected
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,41 +72,31 @@ class PillViewController: UIViewController {
         rightViewController.view.preservesSuperviewLayoutMargins = true
         containerView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
 
-        showPill(animated: false)
-        if leftSelected {
+        setShowPill(true, animated: false)
+        if pillView.leftSegmentSelected {
             showLeftViewController()
         } else {
             showRightViewController()
         }
     }
-    
-    func showPill(animated: Bool) {
+
+    func setShowPill(_ showPill: Bool, animated: Bool) {
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
-            for constraint in self.hidePillConstraints {
-                constraint.deactivate()
-            }
+            if showPill {
+                for constraint in self.hidePillConstraints {
+                    constraint.deactivate()
+                }
 
-            for constraint in self.showPillConstraints {
-                constraint.activate()
-            }
-
-            self.view.layoutIfNeeded()
-        }
-
-        animation.startAnimation()
-        if !animated {
-            animation.stopAnimation(false)
-            animation.finishAnimation(at: .end)
-        }
-    }
-
-    func hidePill(animated: Bool) {
-        let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeIn) {
-            for constraint in self.showPillConstraints {
-                constraint.deactivate()
-            }
-            for constraint in self.hidePillConstraints {
-                constraint.activate()
+                for constraint in self.showPillConstraints {
+                    constraint.activate()
+                }
+            } else {
+                for constraint in self.showPillConstraints {
+                    constraint.deactivate()
+                }
+                for constraint in self.hidePillConstraints {
+                    constraint.activate()
+                }
             }
 
             self.view.layoutIfNeeded()
@@ -130,13 +118,21 @@ class PillViewController: UIViewController {
     }
 
     private func showLeftViewController() {
-        leftViewController.view.alpha = 1
-        rightViewController.view.alpha = 0
+        rightViewController.view.removeFromSuperview()
+        
+        containerView.addSubview(leftViewController.view)
+        leftViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 
     private func showRightViewController() {
-        leftViewController.view.alpha = 0
-        rightViewController.view.alpha = 1
+        leftViewController.view.removeFromSuperview()
+
+        containerView.addSubview(rightViewController.view)
+        rightViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 
 }

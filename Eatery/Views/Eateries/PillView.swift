@@ -27,7 +27,7 @@ class PillView: UIControl {
         return !leftSegmentSelected
     }
 
-    init(leftSelected: Bool) {
+    init() {
         leftStackView = UIStackView(arrangedSubviews: [leftImageView, leftLabel])
         rightStackView = UIStackView(arrangedSubviews: [rightImageView, rightLabel])
 
@@ -78,18 +78,14 @@ class PillView: UIControl {
             make.centerX.equalToSuperview().multipliedBy(1.5)
         }
 
-        if leftSelected {
-            selectLeftSegment()
-        } else {
-            selectRightSegment()
-        }
+        selectLeftSegment()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) will not be implemented")
     }
 
-    private func selectLeftSegment() {
+    func selectLeftSegment() {
         leftSegmentSelected = true
 
         leftImageView.tintColor = activeColor
@@ -101,7 +97,7 @@ class PillView: UIControl {
         sendActions(for: .valueChanged)
     }
 
-    private func selectRightSegment() {
+    func selectRightSegment() {
         leftSegmentSelected = false
 
         leftImageView.tintColor = inactiveColor

@@ -49,12 +49,16 @@ class EateriesSharedViewController: UIViewController {
         setUpNavigationItem()
         setUpChildViewControllers()
         setUpPillView()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         setUpLocationManager()
     }
 
     private func setUpNavigationItem() {
         navigationItem.title = "Eateries"
-        navigationController?.view.backgroundColor = .white
         navigationController?.hero.isEnabled = true
         navigationController?.hero.navigationAnimationType = .fade
 
@@ -71,8 +75,7 @@ class EateriesSharedViewController: UIViewController {
         collegetownEateriesViewController.scrollDelegate = self
 
         pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                rightViewController: collegetownEateriesViewController,
-                                                leftSelected: !AppDelegate.onboardingCollegetown)
+                                                rightViewController: collegetownEateriesViewController)
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)
         pillViewController.view.snp.makeConstraints { make in
@@ -124,9 +127,9 @@ extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
         let offset = scrollView.contentOffset.y
 
         if lastScrollWasUserInitiated, lastContentOffset > offset {
-            pillViewController.showPill(animated: true)
+            pillViewController.setShowPill(true, animated: true)
         } else if lastScrollWasUserInitiated, lastContentOffset < offset {
-            pillViewController.hidePill(animated: true)
+            pillViewController.setShowPill(false, animated: true)
         }
 
         lastContentOffset = offset
