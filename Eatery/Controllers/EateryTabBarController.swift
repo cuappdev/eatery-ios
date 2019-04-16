@@ -10,7 +10,8 @@ import UIKit
 
 class EateryTabBarController: UITabBarController {
 
-    // MARK: - View controllers
+    // MARK: View controllers
+
     let eateriesSharedViewController = EateriesSharedViewController()
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
@@ -48,13 +49,14 @@ class EateryTabBarController: UITabBarController {
 
 extension EateryTabBarController: UITabBarControllerDelegate {
 
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let navigationController = viewController as? UINavigationController {
-            if let eateriesSharedVC = navigationController.viewControllers.first as? EateriesSharedViewController,
-                let displayedEateriesVC = eateriesSharedVC.pillViewController.displayedViewController as? EateriesViewController {
-                displayedEateriesVC.scrollToTop()
-            }
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if selectedViewController === viewController,
+            let navigationController = viewController as? UINavigationController,
+            let eateriesSharedVC = navigationController.viewControllers.first as? EateriesSharedViewController {
+            eateriesSharedVC.activeViewController.scrollToTop()
         }
+
+        return true
     }
 
 }

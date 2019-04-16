@@ -162,7 +162,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print(eateryAnnotations.index(of: view.annotation as! MKPointAnnotation))
         guard let eateryAnnotation = view.annotation as? MKPointAnnotation,
             let index = eateryAnnotations.index(of: eateryAnnotation),
             index < eateries.count else {

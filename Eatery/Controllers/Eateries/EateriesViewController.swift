@@ -332,13 +332,6 @@ class EateriesViewController: UIViewController {
             break
         }
     }
-    
-    func scrollToTop() {
-        if collectionView.contentOffset.y > 0 {
-            let contentOffset = -(filterBar.frame.height + (navigationController?.navigationBar.frame.height ?? 0))
-            collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
-        }
-    }
 
     private func fadeIn(views: [UIView], animated: Bool, completion: (() -> Void)? = nil) {
         perform(animations: {
@@ -440,6 +433,15 @@ class EateriesViewController: UIViewController {
 
     func pushMapViewController() {
         delegate?.eateriesViewControllerDidPushMapViewController(self)
+    }
+
+    // MARK: Scroll View
+    
+    func scrollToTop() {
+        if collectionView.contentOffset.y > 0 {
+            let contentOffset = -(filterBar.frame.height + (navigationController?.navigationBar.frame.height ?? 0))
+            collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
+        }
     }
 
 }

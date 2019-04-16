@@ -21,9 +21,10 @@ class EateriesSharedViewController: UIViewController {
 
     private var campusEateriesViewController: CampusEateriesViewController!
     private var collegetownEateriesViewController: CollegetownEateriesViewController!
+
     var pillViewController: PillViewController!
 
-    private var activeViewController: EateriesViewController! {
+    var activeViewController: EateriesViewController! {
         if pillViewController.pillView.leftSegmentSelected {
             return campusEateriesViewController
         } else {

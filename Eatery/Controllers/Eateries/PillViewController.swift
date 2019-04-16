@@ -19,12 +19,10 @@ class PillViewController: UIViewController {
     private let containerView = UIView()
     let leftViewController: UIViewController
     let rightViewController: UIViewController
-    var displayedViewController: UIViewController
 
     init(leftViewController: UIViewController, rightViewController: UIViewController) {
         self.leftViewController = leftViewController
         self.rightViewController = rightViewController
-        self.displayedViewController = leftViewController
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -126,8 +124,6 @@ class PillViewController: UIViewController {
         leftViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        displayedViewController = leftViewController
     }
 
     private func showRightViewController() {
@@ -137,8 +133,6 @@ class PillViewController: UIViewController {
         rightViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        displayedViewController = rightViewController
     }
 
 }
