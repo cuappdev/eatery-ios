@@ -191,4 +191,12 @@ extension CollegetownEateriesViewController: EateriesViewControllerDelegate {
         navigationController?.pushViewController(mapViewController, animated: true)
     }
 
+    func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController) {
+        updateState(.loading, animated: true)
+
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.queryCollegetownEateries()
+        }
+    }
+
 }

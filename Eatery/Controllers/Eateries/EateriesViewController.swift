@@ -35,6 +35,8 @@ protocol EateriesViewControllerDelegate: AnyObject {
 
     func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController)
 
+    func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController)
+
 }
 
 // MARK: - Scroll Delegate
@@ -131,6 +133,8 @@ class EateriesViewController: UIViewController {
 
     private var appDevLogo: UIView!
 
+    private let refreshControl = UIRefreshControl()
+
     weak var scrollDelegate: EateriesViewControllerScrollDelegate?
 
     private let searchBar = UISearchBar()
@@ -187,6 +191,10 @@ class EateriesViewController: UIViewController {
 
         // collection view
 
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(refreshEateries), for: .valueChanged)
+
+        collectionView.refreshControl = refreshControl
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
@@ -390,6 +398,14 @@ class EateriesViewController: UIViewController {
         })
     }
 
+    // MARK: Refresh
+
+    @objc private func refreshEateries(_ sender: Any) {
+        delegate?.eateriesViewControllerDidRefreshEateries(self)
+        
+        refreshControl.endRefreshing()
+    }
+
     // MARK: Data Source Callers
 
     private func reloadEateries() {
@@ -412,6 +428,8 @@ class EateriesViewController: UIViewController {
                                                   searchText: searchText,
                                                   filters: filterBar.selectedFilters)
     }
+
+    // MARK: Map View
 
     func pushMapViewController() {
         delegate?.eateriesViewControllerDidPushMapViewController(self)
