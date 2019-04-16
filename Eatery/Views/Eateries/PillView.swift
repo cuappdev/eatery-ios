@@ -40,11 +40,12 @@ class PillView: UIControl {
         layer.shadowOffset = .zero
         layer.shadowRadius = 1
 
+        let attributeSizes = getAttributeSizes()
         leftImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(14)
+            make.width.height.equalTo(attributeSizes.iconSideLength)
         }
 
-        leftLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        leftLabel.font = .systemFont(ofSize: attributeSizes.fontSize, weight: .medium)
 
         leftStackView.isUserInteractionEnabled = false
         leftStackView.axis = .horizontal
@@ -64,10 +65,10 @@ class PillView: UIControl {
         }
 
         rightImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(14)
+            make.width.height.equalTo(attributeSizes.iconSideLength)
         }
 
-        rightLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        rightLabel.font = .systemFont(ofSize: attributeSizes.fontSize, weight: .medium)
 
         rightStackView.isUserInteractionEnabled = false
         rightStackView.axis = .horizontal
@@ -107,6 +108,10 @@ class PillView: UIControl {
         rightLabel.textColor = activeColor
 
         sendActions(for: .valueChanged)
+    }
+    
+    private func getAttributeSizes() -> (iconSideLength: Int, fontSize: CGFloat) {
+        return UIScreen.main.nativeBounds.height <= 1136 ? (14, 12) : (16, 14)
     }
 
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {

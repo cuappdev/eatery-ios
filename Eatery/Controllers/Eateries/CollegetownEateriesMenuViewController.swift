@@ -372,7 +372,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         eateries.append(eatery)
         
         let mapViewController = MapViewController(eateries: eateries)
-        mapViewController.mapEateries(eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
     }
     

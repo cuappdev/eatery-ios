@@ -117,21 +117,21 @@ class EateriesSharedViewController: UIViewController {
 // MARK: - Eateries View Controller Scroll Delegate
 
 extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
-
+    
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset.y
         lastScrollWasUserInitiated = true
     }
-
+    
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
-
+        
         if lastScrollWasUserInitiated, lastContentOffset > offset {
             pillViewController.setShowPill(true, animated: true)
         } else if lastScrollWasUserInitiated, lastContentOffset < offset {
             pillViewController.setShowPill(false, animated: true)
         }
-
+        
         lastContentOffset = offset
         lastScrollWasUserInitiated = false
     }

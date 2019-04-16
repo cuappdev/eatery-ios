@@ -40,12 +40,12 @@ protocol EateriesViewControllerDelegate: AnyObject {
 // MARK: - Scroll Delegate
 
 protocol EateriesViewControllerScrollDelegate: AnyObject {
-
+    
     func eateriesViewController(_ evc: EateriesViewController,
                                 scrollViewWillBeginDragging scrollView: UIScrollView)
-
+    
     func eateriesViewController(_ evc: EateriesViewController,
-                               scrollViewDidScroll scrollView: UIScrollView)
+                                scrollViewDidScroll scrollView: UIScrollView)
 
 }
 
@@ -588,12 +588,12 @@ extension EateriesViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollDelegate?.eateriesViewController(self, scrollViewWillBeginDragging: scrollView)
     }
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
-
+        
         transformAppDevLogo()
-
+        
         scrollDelegate?.eateriesViewController(self, scrollViewDidScroll: scrollView)
     }
 
