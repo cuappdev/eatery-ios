@@ -48,14 +48,13 @@ class EateryTabBarController: UITabBarController {
 
 extension EateryTabBarController: UITabBarControllerDelegate {
 
-//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//        tabBarController.selected
-//
-//        if let navVC = viewController as? UINavigationController, let eateriesVC = navVC.viewControllers.first as? EateriesViewController {
-//            eateriesVC.scrollToTop()
-//        } else if let navVC = viewController as? UINavigationController, let lookAheadVC = navVC.viewControllers.first as? LookAheadViewController {
-//            lookAheadVC.scrollToTop()
-//        }
-//    }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if let navigationController = viewController as? UINavigationController {
+            if let eateriesSharedVC = navigationController.viewControllers.first as? EateriesSharedViewController,
+                let displayedEateriesVC = eateriesSharedVC.pillViewController.displayedViewController as? EateriesViewController {
+                displayedEateriesVC.scrollToTop()
+            }
+        }
+    }
 
 }
