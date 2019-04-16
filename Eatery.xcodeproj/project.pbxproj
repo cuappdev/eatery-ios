@@ -348,9 +348,9 @@
 		6560D4411F51F373009E7CEF /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
-				CE9C1FE0226431630062C398 /* EateriesViewController.swift */,
 				5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */,
 				5DE1D430225ECB62008054F4 /* PillViewController.swift */,
+				CE9C1FE0226431630062C398 /* EateriesViewController.swift */,
 				5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */,
 				E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */,
