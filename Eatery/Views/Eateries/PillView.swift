@@ -61,7 +61,7 @@ class PillView: UIControl {
         separatorView.snp.makeConstraints { (make) in
             make.width.equalTo(2)
             make.height.equalToSuperview()
-            make.centerX.equalToSuperview()
+            make.centerX.centerY.equalToSuperview()
         }
 
         rightImageView.snp.makeConstraints { make in
