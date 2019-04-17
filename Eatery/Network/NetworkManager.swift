@@ -211,7 +211,7 @@ struct NetworkManager {
                                                desc: graphQlEvent.description,
                                                summary: graphQlEvent.description,
                                                menu: Menu(data: [:]))
-                        eventsByName[graphQlEvent.description] = event
+                        eventsByName[graphQlEvent.startTime] = event
                     }
 
                     events[graphQlOperatingHours.date] = eventsByName
