@@ -92,8 +92,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     private func setUpPaymentView() {
         contentView.addSubview(paymentView)
+        paymentView.layer.zPosition = 1
         paymentView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(20)
             make.trailing.equalToSuperview().inset(10)
         }
     }
