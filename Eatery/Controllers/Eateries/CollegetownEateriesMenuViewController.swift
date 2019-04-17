@@ -171,7 +171,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
             switch i {
             case 0: informativeLabel.text = "Get Directions"
             case 1: informativeLabel.text = "Call \(eatery.phone)"
-            case 2: informativeLabel.text = "Visit \(eatery.displayName)"
+            case 2: informativeLabel.text = "Open \(eatery.displayName) on Yelp"
             default: break
             }
             informativeLabel.font = .systemFont(ofSize: 14, weight: .medium)
