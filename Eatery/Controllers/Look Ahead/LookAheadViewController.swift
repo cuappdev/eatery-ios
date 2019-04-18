@@ -41,7 +41,7 @@ class LookAheadViewController: UIViewController {
             for choice in MealChoice.allCases {
                 if choice.hours.contains(hour) {
                     self = choice
-                    break
+                    return
                 }
             }
 

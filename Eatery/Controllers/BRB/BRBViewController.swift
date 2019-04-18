@@ -66,7 +66,7 @@ class BRBViewController: UIViewController {
         let loginView = BRBLoginView(frame: view.bounds)
         loginView.delegate = self
 
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain(), netid.isEmpty, password.isEmpty {
+        if let (netid, password) = BRBAccountSettings.loadFromKeychain(), !netid.isEmpty, !password.isEmpty {
             loginView.netidTextField.text = netid
             loginView.passwordTextField.text = password
         }
