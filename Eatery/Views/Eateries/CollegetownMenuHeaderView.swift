@@ -10,7 +10,14 @@ import UIKit
 import MapKit
 
 class CollegetownMenuHeaderView: UIView {
-    
+
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
     var backButton: UIButton!
     
     var backgroundImageView: UIImageView!
@@ -194,7 +201,13 @@ class CollegetownMenuHeaderView: UIView {
         case .open:
             statusLabel.text = "Open"
             statusLabel.textColor = .eateryGreen
-            hourLabel.text = ""
+
+            if let currentEvent = eatery.currentActiveEvent() {
+                let endTimeText = CollegetownMenuHeaderView.timeFormatter.string(from: currentEvent.end)
+                hourLabel.text = "until \(endTimeText)"
+            } else {
+                hourLabel.text = ""
+            }
 
         case let .closingSoon(minutesUntilClose):
             statusLabel.text = "Closing"
@@ -204,7 +217,13 @@ class CollegetownMenuHeaderView: UIView {
         case .closed:
             statusLabel.text = "Closed"
             statusLabel.textColor = .eateryRed
-            hourLabel.text = ""
+
+            if eatery.isOpenToday(), let nextEvent = eatery.currentActiveEvent() {
+                let startTimeText = CollegetownMenuHeaderView.timeFormatter.string(from: nextEvent.start)
+                hourLabel.text = "until \(startTimeText)"
+            } else {
+                hourLabel.text = "today"
+            }
         }
         
         cuisineLabel.text = eatery.categories.joined(separator: ", ")
