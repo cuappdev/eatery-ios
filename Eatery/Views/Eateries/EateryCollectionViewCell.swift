@@ -232,39 +232,10 @@ class EateryCollectionViewCell: UICollectionViewCell {
             closedOverlay.isHidden = false
         }
 
-        switch eateryStatus {
-        case let .openingSoon(minutesUntilOpen):
-            statusLabel.text = "Opening"
-            statusLabel.textColor = .eateryOrange
-            timeLabel.text = "in \(minutesUntilOpen)m"
-
-        case .open:
-            statusLabel.text = "Open"
-            statusLabel.textColor = .eateryGreen
-
-            if let currentEvent = eatery.currentActiveEvent() {
-                let endTimeText = EateryCollectionViewCell.timeFormatter.string(from: currentEvent.end)
-                timeLabel.text = "until \(endTimeText)"
-            } else {
-                timeLabel.text = ""
-            }
-
-        case let .closingSoon(minutesUntilClose):
-            statusLabel.text = "Closing"
-            statusLabel.textColor = .eateryOrange
-            timeLabel.text = "in \(minutesUntilClose)m"
-
-        case .closed:
-            statusLabel.text = "Closed"
-            statusLabel.textColor = .eateryRed
-
-            if eatery.isOpenToday(), let nextEvent = eatery.currentActiveEvent() {
-                let startTimeText = EateryCollectionViewCell.timeFormatter.string(from: nextEvent.start)
-                timeLabel.text = "until \(startTimeText)"
-            } else {
-                timeLabel.text = "today"
-            }
-        }
+        let presentation = eatery.currentPresentation()
+        statusLabel.text = presentation.statusText
+        statusLabel.textColor = presentation.statusColor
+        timeLabel.text = presentation.nextEventText
 
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray

@@ -130,27 +130,10 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
             make.leading.equalTo(statusLabel.snp.trailing).offset(2.0)
         }
 
-        switch eatery.currentStatus() {
-        case let .openingSoon(minutesUntilOpen):
-            statusLabel.text = "Opening"
-            statusLabel.textColor = .eateryOrange
-            hoursLabel.text = "in \(minutesUntilOpen)m"
-
-        case .open:
-            statusLabel.text = "Open"
-            statusLabel.textColor = .eateryGreen
-            hoursLabel.text = ""
-
-        case let .closingSoon(minutesUntilClose):
-            statusLabel.text = "Closing"
-            statusLabel.textColor = .eateryOrange
-            hoursLabel.text = "in \(minutesUntilClose)m"
-
-        case .closed:
-            statusLabel.text = "Closed"
-            statusLabel.textColor = .eateryRed
-            hoursLabel.text = ""
-        }
+        let presentation = eatery.currentPresentation()
+        statusLabel.text = presentation.statusText
+        statusLabel.textColor = presentation.statusColor
+        hoursLabel.text = presentation.nextEventText
 
         let locationLabel = UILabel()
         locationLabel.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)

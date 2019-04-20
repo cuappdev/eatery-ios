@@ -197,39 +197,10 @@ class CollegetownMenuHeaderView: UIView {
         
         paymentView.paymentMethods = eatery.paymentMethods
 
-        switch eateryStatus {
-        case let .openingSoon(minutesUntilOpen):
-            statusLabel.text = "Opening"
-            statusLabel.textColor = .eateryOrange
-            hourLabel.text = "in \(minutesUntilOpen)m"
-
-        case .open:
-            statusLabel.text = "Open"
-            statusLabel.textColor = .eateryGreen
-
-            if let currentEvent = eatery.currentActiveEvent() {
-                let endTimeText = CollegetownMenuHeaderView.timeFormatter.string(from: currentEvent.end)
-                hourLabel.text = "until \(endTimeText)"
-            } else {
-                hourLabel.text = ""
-            }
-
-        case let .closingSoon(minutesUntilClose):
-            statusLabel.text = "Closing"
-            statusLabel.textColor = .eateryOrange
-            hourLabel.text = "in \(minutesUntilClose)m"
-
-        case .closed:
-            statusLabel.text = "Closed"
-            statusLabel.textColor = .eateryRed
-
-            if eatery.isOpenToday(), let nextEvent = eatery.currentActiveEvent() {
-                let startTimeText = CollegetownMenuHeaderView.timeFormatter.string(from: nextEvent.start)
-                hourLabel.text = "until \(startTimeText)"
-            } else {
-                hourLabel.text = "today"
-            }
-        }
+        let presentation = eatery.currentPresentation()
+        statusLabel.text = presentation.statusText
+        statusLabel.textColor = presentation.statusColor
+        hourLabel.text = presentation.nextEventText
         
         cuisineLabel.text = eatery.categories.joined(separator: ", ")
         

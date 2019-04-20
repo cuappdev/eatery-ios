@@ -7,7 +7,7 @@
 //
 
 import CoreLocation
-import Foundation
+import UIKit
 
 /// Different meals served by eateries
 enum Meal: String {
@@ -218,3 +218,67 @@ extension Eatery {
 
 }
 
+// MARK: - Eatery Presentation
+
+struct EateryPresentation {
+
+    let statusText: String
+    let statusColor: UIColor
+    let nextEventText: String
+
+}
+
+private let timeFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .none
+    formatter.timeStyle = .short
+    return formatter
+}()
+
+extension Eatery {
+
+    func currentPresentation() -> EateryPresentation {
+        let statusText: String
+        let statusColor: UIColor
+        let nextEventText: String
+
+        switch currentStatus() {
+        case let .openingSoon(minutesUntilOpen):
+            statusText = "Opening"
+            statusColor = .eateryOrange
+            nextEventText = "in \(minutesUntilOpen)m"
+
+        case .open:
+            statusText = "Open"
+            statusColor = .eateryGreen
+
+            if let currentEvent = currentActiveEvent() {
+                let endTimeText = timeFormatter.string(from: currentEvent.end)
+                nextEventText = "until \(endTimeText)"
+            } else {
+                nextEventText = ""
+            }
+
+        case let .closingSoon(minutesUntilClose):
+            statusText = "Closing"
+            statusColor = .eateryOrange
+            nextEventText = "in \(minutesUntilClose)m"
+
+        case .closed:
+            statusText = "Closed"
+            statusColor = .eateryRed
+
+            if isOpenToday(), let nextEvent = currentActiveEvent() {
+                let startTimeText = timeFormatter.string(from: nextEvent.start)
+                nextEventText = "until \(startTimeText)"
+            } else {
+                nextEventText = "today"
+            }
+        }
+
+        return EateryPresentation(statusText: statusText,
+                                  statusColor: statusColor,
+                                  nextEventText: nextEventText)
+    }
+
+}

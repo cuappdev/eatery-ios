@@ -1,5 +1,5 @@
 //
-//  Eatery.swift
+//  CampusEatery.swift
 //  Eatery
 //
 //  Created by Alexander Zielenski on 10/4/15.

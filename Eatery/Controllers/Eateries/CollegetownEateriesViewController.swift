@@ -111,9 +111,11 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
         let selectedCategoryFilters = filters.intersection(categoryFilters).map { $0.rawValue }
         if !selectedCategoryFilters.isEmpty {
             filteredEateries = filteredEateries.filter { eatery -> Bool in
-                eatery.categories.contains { category -> Bool in
-                    selectedCategoryFilters.contains { categoryFilter -> Bool in
-                        search(category, matches: categoryFilter) || search(categoryFilter, matches: category)
+                // check if an eatery has a category that is also in the
+                // selected category filters
+                eatery.categories.contains { eateryCategory -> Bool in
+                    selectedCategoryFilters.contains { filterCategory -> Bool in
+                        search(eateryCategory, matches: filterCategory) || search(filterCategory, matches: eateryCategory)
                     }
                 }
             }
