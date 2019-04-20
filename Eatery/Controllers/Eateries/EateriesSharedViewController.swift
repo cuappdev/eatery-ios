@@ -118,6 +118,10 @@ extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset.y
     }
+
+    func eateriesViewController(_ evc: EateriesViewController, scrollViewDidStopScrolling scrollView: UIScrollView) {
+        pillViewController.setShowPill(true, animated: true)
+    }
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y

@@ -49,7 +49,10 @@ protocol EateriesViewControllerScrollDelegate: AnyObject {
     
     func eateriesViewController(_ evc: EateriesViewController,
                                 scrollViewWillBeginDragging scrollView: UIScrollView)
-    
+
+    func eateriesViewController(_ evc: EateriesViewController,
+                                scrollViewDidStopScrolling scrollView: UIScrollView)
+
     func eateriesViewController(_ evc: EateriesViewController,
                                 scrollViewDidScroll scrollView: UIScrollView)
 
@@ -647,6 +650,16 @@ extension EateriesViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollDelegate?.eateriesViewController(self, scrollViewWillBeginDragging: scrollView)
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            scrollDelegate?.eateriesViewController(self, scrollViewDidStopScrolling: scrollView)
+        }
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollDelegate?.eateriesViewController(self, scrollViewDidStopScrolling: scrollView)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
