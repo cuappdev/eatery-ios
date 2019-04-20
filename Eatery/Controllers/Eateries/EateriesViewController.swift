@@ -16,7 +16,11 @@ protocol EateriesViewControllerDataSource: AnyObject {
 
     func eateriesViewController(_ evc: EateriesViewController,
                                 eateriesToPresentWithSearchText searchText: String,
-                                filters: Set<Filter>) -> EateriesViewController.EateriesByGroup
+                                filters: Set<Filter>) -> [Eatery]
+
+    func eateriesViewController(_ evc: EateriesViewController,
+                                sortMethodWithSearchText searchText: String,
+                                filters: Set<Filter>) -> EateriesViewController.SortMethod
 
     func eateriesViewController(_ evc: EateriesViewController,
                                 highlightedSearchDescriptionForEatery eatery: Eatery,
@@ -72,7 +76,7 @@ class EateriesViewController: UIViewController {
 
     }
 
-    enum Group {
+    enum Group: CaseIterable {
 
         case favorites
         case open
@@ -111,6 +115,13 @@ class EateriesViewController: UIViewController {
 
     }
 
+    enum SortMethod {
+
+        case nearest(CLLocation)
+        case alphabetical
+
+    }
+
     // Model
 
     weak var dataSource: EateriesViewControllerDataSource?
@@ -122,7 +133,10 @@ class EateriesViewController: UIViewController {
             return []
         }
 
-        return [.favorites, .open, .closed].enumerated().filter({ !eateriesByGroup[$0.element, default: []].isEmpty }).map { $0.element }
+        return Group.allCases
+            .enumerated()
+            .filter({ !eateriesByGroup[$0.element, default: []].isEmpty })
+            .map { $0.element }
     }
 
     private var updateTimer: Timer?
@@ -179,7 +193,6 @@ class EateriesViewController: UIViewController {
             let logo = UIImageView(image: UIImage(named: "appDevLogo"))
             logo.tintColor = .white
             logo.contentMode = .scaleAspectFit
-            //navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logo)
             navigationController?.navigationBar.addSubview(logo)
             logo.snp.makeConstraints { make in
                 make.center.equalToSuperview()
@@ -324,9 +337,7 @@ class EateriesViewController: UIViewController {
                 animateCollectionViewCells()
             }
 
-        case let .failedToLoad(error):
-            failedToLoadView.errorMessage = error.localizedDescription
-
+        case .failedToLoad:
             fadeIn(views: [failedToLoadView], animated: animated)
 
             break
@@ -408,12 +419,34 @@ class EateriesViewController: UIViewController {
 
     // MARK: Data Source Callers
 
+    private func eateriesByGroup(from eateries: [Eatery], sortedUsing sortMethod: SortMethod) -> EateriesByGroup {
+        let sortedEateries: [Eatery]
+
+        switch sortMethod {
+        case .alphabetical:
+            sortedEateries = eateries.sorted { $0.displayName < $1.displayName }
+        case let .nearest(location):
+            sortedEateries = eateries.sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
+        }
+
+        let favorites = sortedEateries.filter { $0.isFavorite }
+        let open = sortedEateries.filter { !$0.isFavorite && $0.isOpen(atExactly: Date()) }
+        let closed = sortedEateries.filter { !$0.isFavorite && !$0.isOpen(atExactly: Date()) }
+        return [.favorites: favorites, .open: open, .closed: closed]
+    }
+
     private func reloadEateries() {
         if let dataSource = dataSource {
             let searchText = searchBar.text ?? ""
-            eateriesByGroup = dataSource.eateriesViewController(self,
-                                                                eateriesToPresentWithSearchText: searchText,
-                                                                filters: filterBar.selectedFilters)
+            let eateries = dataSource.eateriesViewController(self,
+                                                             eateriesToPresentWithSearchText: searchText,
+                                                             filters: filterBar.selectedFilters)
+
+            let sortMethod = dataSource.eateriesViewController(self,
+                                                               sortMethodWithSearchText: searchText,
+                                                               filters: filterBar.selectedFilters)
+
+            eateriesByGroup = eateriesByGroup(from: eateries, sortedUsing: sortMethod)
         } else {
             eateriesByGroup = [:]
         }

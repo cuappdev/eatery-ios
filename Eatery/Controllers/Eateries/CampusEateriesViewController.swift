@@ -13,7 +13,7 @@ class CampusEateriesViewController: EateriesViewController {
 
     private var allEateries: [CampusEatery]?
 
-    private var preselectedEaterySlug: String?
+    private var preselectedEateryName: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,40 +39,43 @@ class CampusEateriesViewController: EateriesViewController {
                 return
             }
 
-            if let error = error {
-                self.updateState(.failedToLoad(error), animated: true)
+            guard let eateries = eateries else {
+                if let error = error {
+                    self.updateState(.failedToLoad(error), animated: true)
+                }
+
                 return
             }
 
-            if let eateries = eateries {
-                self.allEateries = eateries
-                self.updateState(.presenting, animated: true)
-            }
+            self.allEateries = eateries
+            self.updateState(.presenting, animated: true)
 
-            self.pushPreselectedEatery()
+            self.pushPreselectedEateryIfPossible()
         }
     }
 
-    func preselectEatery(withSlug slug: String) {
-        preselectedEaterySlug = slug
+    func preselectEatery(withName name: String) {
+        preselectedEateryName = name
+        pushPreselectedEateryIfPossible()
     }
 
-    private func pushPreselectedEatery() {
-        guard let slug = preselectedEaterySlug else {
+    private func pushPreselectedEateryIfPossible() {
+        guard let name = preselectedEateryName else {
             return
         }
 
-        guard let eatery = allEateries?.first(where: { $0.slug == slug }) else {
+        guard let eatery = allEateries?.first(where: { $0.name == name }) else {
             return
         }
 
-        showMenu(of: eatery)
-        preselectedEaterySlug = nil
+        showMenu(of: eatery, animated: false)
+        preselectedEateryName = nil
     }
 
-    private func showMenu(of eatery: CampusEatery) {
+    private func showMenu(of eatery: CampusEatery, animated: Bool) {
         let menuViewController = CampusEateryMenuViewController(eatery: eatery, delegate: self, userLocation: userLocation)
-        navigationController?.pushViewController(menuViewController, animated: true)
+        navigationController?.popToRootViewController(animated: animated)
+        navigationController?.pushViewController(menuViewController, animated: animated)
     }
 
 }
@@ -81,16 +84,11 @@ class CampusEateriesViewController: EateriesViewController {
 
 extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
-    private enum SortMethod {
-
-        case nearestFirst(userLocation: CLLocation)
-        case alphabetical
-
-    }
-
-    func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> EateriesViewController.EateriesByGroup {
+    func eateriesViewController(_ evc: EateriesViewController,
+                                eateriesToPresentWithSearchText searchText: String,
+                                filters: Set<Filter>) -> [Eatery] {
         guard let eateries = allEateries else {
-            return [:]
+            return []
         }
 
         var filteredEateries = eateries
@@ -101,11 +99,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
         filteredEateries = filter(eateries: filteredEateries, withFilters: filters)
 
-        if let userLocation = userLocation, filters.contains(.nearest) {
-            return eateriesByGroup(from: filteredEateries, sortedUsing: .nearestFirst(userLocation: userLocation))
-        } else {
-            return eateriesByGroup(from: filteredEateries, sortedUsing: .alphabetical)
-        }
+        return filteredEateries
     }
 
     private func filter(eateries: [CampusEatery], withSearchText searchText: String) -> [CampusEatery] {
@@ -158,20 +152,14 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
         return filteredEateries
     }
 
-    private func eateriesByGroup(from eateries: [Eatery], sortedUsing sortMethod: SortMethod) -> EateriesByGroup {
-        let sortedEateries: [Eatery]
-
-        switch sortMethod {
-        case .alphabetical:
-            sortedEateries = eateries.sorted { $0.displayName < $1.displayName }
-        case let .nearestFirst(location):
-            sortedEateries = eateries.sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
+    func eateriesViewController(_ evc: EateriesViewController,
+                                sortMethodWithSearchText searchText: String,
+                                filters: Set<Filter>) -> EateriesViewController.SortMethod {
+        if filters.contains(.nearest), let userLocation = userLocation {
+            return .nearest(userLocation)
+        } else {
+            return .alphabetical
         }
-
-        let favorites = sortedEateries.filter { $0.isFavorite }
-        let open = sortedEateries.filter { !$0.isFavorite && $0.isOpen(atExactly: Date()) }
-        let closed = sortedEateries.filter { !$0.isFavorite && !$0.isOpen(atExactly: Date()) }
-        return [.favorites: favorites, .open: open, .closed: closed]
     }
 
     func eateriesViewController(_ evc: EateriesViewController,
@@ -234,7 +222,7 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
             return
         }
 
-        showMenu(of: campusEatery)
+        showMenu(of: campusEatery, animated: true)
     }
 
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController) {

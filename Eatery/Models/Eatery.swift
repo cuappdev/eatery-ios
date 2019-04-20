@@ -195,3 +195,26 @@ extension Eatery {
     }
 
 }
+
+// MARK: - User Defaults / Favoriting
+
+extension Eatery {
+
+    var isFavorite: Bool {
+        get {
+            let ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+            return ar.contains { $0 == name }
+        }
+        set {
+            var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+            if newValue {
+                ar.append(name)
+            } else {
+                ar.removeAll(where: { $0 == name })
+            }
+            UserDefaults.standard.set(ar, forKey: "favorites")
+        }
+    }
+
+}
+

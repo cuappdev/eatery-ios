@@ -44,15 +44,16 @@ class CollegetownEateriesViewController: EateriesViewController {
                 return
             }
 
-            if let error = error {
-                self.updateState(.failedToLoad(error), animated: true)
+            guard let eateries = eateries else {
+                if let error = error {
+                    self.updateState(.failedToLoad(error), animated: true)
+                }
+
                 return
             }
 
-            if let eateries = eateries {
-                self.allEateries = eateries
-                self.updateState(.presenting, animated: true)
-            }
+            self.allEateries = eateries
+            self.updateState(.presenting, animated: true)
         }
     }
 
@@ -67,16 +68,9 @@ class CollegetownEateriesViewController: EateriesViewController {
 
 extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
 
-    private enum SortMethod {
-
-        case nearestFirst(userLocation: CLLocation)
-        case alphabetical
-
-    }
-
-    func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> EateriesViewController.EateriesByGroup {
+    func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> [Eatery] {
         guard let eateries = allEateries else {
-            return [:]
+            return []
         }
 
         var filteredEateries = eateries
@@ -87,11 +81,7 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
 
         filteredEateries = filter(eateries: filteredEateries, withFilters: filters)
 
-        if let userLocation = userLocation, filters.contains(.nearest) {
-            return eateriesByGroup(from: filteredEateries, sortedUsing: .nearestFirst(userLocation: userLocation))
-        } else {
-            return eateriesByGroup(from: filteredEateries, sortedUsing: .alphabetical)
-        }
+        return filteredEateries
     }
 
     private func filter(eateries: [CollegetownEatery], withSearchText searchText: String) -> [CollegetownEatery] {
@@ -118,30 +108,28 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
             return true
         }
 
-        let selectedCategoryFilters = filters.intersection(categoryFilters)
+        let selectedCategoryFilters = filters.intersection(categoryFilters).map { $0.rawValue }
         if !selectedCategoryFilters.isEmpty {
             filteredEateries = filteredEateries.filter { eatery -> Bool in
-                selectedCategoryFilters.map { $0.rawValue }.contains { eatery.categories.contains($0) }
+                eatery.categories.contains { category -> Bool in
+                    selectedCategoryFilters.contains { categoryFilter -> Bool in
+                        search(category, matches: categoryFilter) || search(categoryFilter, matches: category)
+                    }
+                }
             }
         }
 
         return filteredEateries
     }
 
-    private func eateriesByGroup(from eateries: [Eatery], sortedUsing sortMethod: SortMethod) -> EateriesByGroup {
-        let sortedEateries: [Eatery]
-
-        switch sortMethod {
-        case .alphabetical:
-            sortedEateries = eateries.sorted { $0.displayName < $1.displayName }
-        case let .nearestFirst(location):
-            sortedEateries = eateries.sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
+    func eateriesViewController(_ evc: EateriesViewController,
+                                sortMethodWithSearchText searchText: String,
+                                filters: Set<Filter>) -> EateriesViewController.SortMethod {
+        if filters.contains(.nearest), let userLocation = userLocation {
+            return .nearest(userLocation)
+        } else {
+            return .alphabetical
         }
-
-        let favorites = sortedEateries.filter { $0.isFavorite }
-        let open = sortedEateries.filter { !$0.isFavorite && $0.isOpen(atExactly: Date()) }
-        let closed = sortedEateries.filter { !$0.isFavorite && !$0.isOpen(atExactly: Date()) }
-        return [.favorites: favorites, .open: open, .closed: closed]
     }
 
     func eateriesViewController(_ evc: EateriesViewController,

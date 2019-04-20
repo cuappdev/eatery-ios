@@ -20,13 +20,6 @@ class EateriesFailedToLoadView: UIView {
 
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
-    var errorMessage: String? {
-        get { return subtitleLabel.text }
-        set {
-            // subtitleLabel.text = newValue
-        }
-    }
-
     private let retryButton = UIButton(type: .system)
 
     weak var delegate: EateriesFailedToLoadViewDelegate?

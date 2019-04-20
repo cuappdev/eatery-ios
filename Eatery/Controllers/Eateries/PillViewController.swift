@@ -12,9 +12,28 @@ import UIKit
 class PillViewController: UIViewController {
 
     let pillView = PillView()
-
     private var showPillConstraints: [Constraint] = []
     private var hidePillConstraints: [Constraint] = []
+    private(set) var isShowingPill: Bool {
+        didSet {
+            if isShowingPill {
+                for constraint in self.hidePillConstraints {
+                    constraint.deactivate()
+                }
+
+                for constraint in self.showPillConstraints {
+                    constraint.activate()
+                }
+            } else {
+                for constraint in self.showPillConstraints {
+                    constraint.deactivate()
+                }
+                for constraint in self.hidePillConstraints {
+                    constraint.activate()
+                }
+            }
+        }
+    }
 
     private let containerView = UIView()
     let leftViewController: UIViewController
@@ -23,6 +42,7 @@ class PillViewController: UIViewController {
     init(leftViewController: UIViewController, rightViewController: UIViewController) {
         self.leftViewController = leftViewController
         self.rightViewController = rightViewController
+        self.isShowingPill = false
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,23 +102,7 @@ class PillViewController: UIViewController {
 
     func setShowPill(_ showPill: Bool, animated: Bool) {
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
-            if showPill {
-                for constraint in self.hidePillConstraints {
-                    constraint.deactivate()
-                }
-
-                for constraint in self.showPillConstraints {
-                    constraint.activate()
-                }
-            } else {
-                for constraint in self.showPillConstraints {
-                    constraint.deactivate()
-                }
-                for constraint in self.hidePillConstraints {
-                    constraint.activate()
-                }
-            }
-
+            self.isShowingPill = showPill
             self.view.layoutIfNeeded()
         }
 

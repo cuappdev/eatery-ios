@@ -15,16 +15,16 @@ class EateriesSharedViewController: UIViewController {
     // Scroll
 
     var lastContentOffset: CGFloat = 0
-    var lastScrollWasUserInitiated = false
 
     // View Controllers
 
-    private var campusEateriesViewController: CampusEateriesViewController!
-    private var collegetownEateriesViewController: CollegetownEateriesViewController!
+    private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
+    private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
 
-    var pillViewController: PillViewController!
-
-    var activeViewController: EateriesViewController! {
+    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController,
+                                                                  rightViewController: collegetownEateriesViewController)
+    
+    var activeViewController: EateriesViewController {
         if pillViewController.pillView.leftSegmentSelected {
             return campusEateriesViewController
         } else {
@@ -69,14 +69,10 @@ class EateriesSharedViewController: UIViewController {
     }
 
     private func setUpChildViewControllers() {
-        campusEateriesViewController = CampusEateriesViewController()
         campusEateriesViewController.scrollDelegate = self
 
-        collegetownEateriesViewController = CollegetownEateriesViewController()
         collegetownEateriesViewController.scrollDelegate = self
 
-        pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                rightViewController: collegetownEateriesViewController)
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)
         pillViewController.view.snp.makeConstraints { make in
@@ -121,20 +117,18 @@ extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
         lastContentOffset = scrollView.contentOffset.y
-        lastScrollWasUserInitiated = true
     }
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
         
-        if lastScrollWasUserInitiated, lastContentOffset > offset {
+        if lastContentOffset > offset, !pillViewController.isShowingPill {
             pillViewController.setShowPill(true, animated: true)
-        } else if lastScrollWasUserInitiated, lastContentOffset < offset {
+        } else if lastContentOffset < offset, pillViewController.isShowingPill {
             pillViewController.setShowPill(false, animated: true)
         }
-        
+
         lastContentOffset = offset
-        lastScrollWasUserInitiated = false
     }
 
 }

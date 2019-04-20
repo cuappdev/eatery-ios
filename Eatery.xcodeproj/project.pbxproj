@@ -83,7 +83,6 @@
 		D9714319219A7E8F00E2EE05 /* Eatery+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */; };
 		D971431A219A7EDB00E2EE05 /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		D971431D219A7F3D00E2EE05 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D971431C219A7F3D00E2EE05 /* TimeFactory.swift */; };
-		D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D971431E219A7FE100E2EE05 /* Eatery+Extension.swift */; };
 		D9714321219B953800E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B216F1C70796600F3B138 /* Assets.xcassets */; };
 		D9714322219B953D00E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B21831C70796600F3B138 /* Assets.xcassets */; };
 		E93CD4171BE67AC400089CE5 /* CampusEateryMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */; };
@@ -229,7 +228,6 @@
 		D9714311219A790D00E2EE05 /* Eatery Watch App Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Eatery Watch App Extension.entitlements"; sourceTree = "<group>"; };
 		D9714312219A791300E2EE05 /* Eatery Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Eatery Watch App.entitlements"; sourceTree = "<group>"; };
 		D971431C219A7F3D00E2EE05 /* TimeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
-		D971431E219A7FE100E2EE05 /* Eatery+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Eatery+Extension.swift"; sourceTree = "<group>"; };
 		DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		E418A28B1A4C3F8781B50F84 /* Pods-Eatery Watch App Extension.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.app store.xcconfig"; sourceTree = "<group>"; };
 		E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusEateryMenuViewController.swift; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 			children = (
 				D1EE77791C702469001823D8 /* String+Manipulation.swift */,
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
-				D971431E219A7FE100E2EE05 /* Eatery+Extension.swift */,
 				5D218C4721FC136E00327516 /* CLLocation+Distance.swift */,
 			);
 			path = Extensions;
@@ -909,7 +906,6 @@
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* (null) in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
-				D971431F219A7FE100E2EE05 /* Eatery+Extension.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
