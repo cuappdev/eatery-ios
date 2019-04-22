@@ -190,7 +190,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
     }
 
     private func matchRange(of searchText: String, in text: String) -> Range<String.Index>? {
-        return text.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
+        return text.range(of: searchText, options: [.caseInsensitive])
     }
 
     private func search(_ searchText: String, matches text: String) -> Bool {

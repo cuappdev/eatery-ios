@@ -109,6 +109,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         navigationController?.navigationBar.isHidden = false
     }
     
