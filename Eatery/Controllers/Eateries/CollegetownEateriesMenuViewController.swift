@@ -14,7 +14,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     
     var eatery: CollegetownEatery
     var delegate: MenuButtonsDelegate?
-    var userLocation: CLLocation?
     
     var outerScrollView: UIScrollView!
     var backButton: UIButton!
@@ -24,19 +23,18 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     var mapView: MKMapView
     let eateryAnnotation = MKPointAnnotation()
     var locationManager: CLLocationManager!
-    
-//    var defaultCoordinate: CLLocationCoordinate2D {
-//        return eatery.location.coordinate
-//    }
+    var userLocation: CLLocation {
+        return locationManager?.location ?? .olinLibrary
+    }
+
     var defaultCoordinate: CLLocationCoordinate2D!
     var midpointCoordinate: CLLocationCoordinate2D!
-    var deltaLatLon: [Double]!
-    var maxDeltaLatLon: [Double]!
+    var delta: (lat: Double, lon: Double)!
+    var maxDelta = (lat: 2/69.172, lon: 2/51.2738554594)
 
-    init(eatery: CollegetownEatery, delegate: MenuButtonsDelegate?, userLocation: CLLocation? = nil){
+    init(eatery: CollegetownEatery, delegate: MenuButtonsDelegate?){
         self.eatery = eatery
         self.delegate = delegate
-        self.userLocation = userLocation
         self.mapView = MKMapView()
         super.init(nibName: nil, bundle: nil)
         
@@ -45,19 +43,15 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
-        defaultCoordinate = CLLocationCoordinate2D()
-        defaultCoordinate = defaultCoordinate.generateDefaultCoordinate(eatery: eatery)
-        
-        midpointCoordinate = CLLocationCoordinate2D()
-        midpointCoordinate = midpointCoordinate.generateMidpointCoordinate(locationManager: locationManager, eatery: eatery)
-        
-        deltaLatLon = [Double]()
-        deltaLatLon = deltaLatLon.generateDeltaLatLon(locationManager: locationManager, eatery: eatery)
-        
-        maxDeltaLatLon = [Double]()
-        maxDeltaLatLon = maxDeltaLatLon.generateMaxDeltaLatLon(locationManager: locationManager, eatery: eatery)
-        
+
+        defaultCoordinate = eatery.location.coordinate
+
+        midpointCoordinate = CLLocationCoordinate2D.midpoint(between: userLocation.coordinate,
+                                                             and: eatery.location.coordinate)
+
+        delta = CLLocationCoordinate2D.deltaLatLon(between: userLocation.coordinate,
+                                                   and: eatery.location.coordinate)
+
         if CLLocationManager.locationServicesEnabled() {
             switch (CLLocationManager.authorizationStatus()) {
             case .authorizedWhenInUse:
@@ -161,9 +155,9 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         mapView.showsUserLocation = true
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
-        if(deltaLatLon[0]<maxDeltaLatLon[0] && deltaLatLon[1]<maxDeltaLatLon[1]){
+        if(delta.lat<maxDelta.lat && delta.lon<maxDelta.lon){
             mapView.setCenter(midpointCoordinate, animated: true)
-            mapView.setRegion(MKCoordinateRegionMake(midpointCoordinate, MKCoordinateSpanMake(deltaLatLon[0]*1.5, deltaLatLon[1]*1.5)), animated: false)
+            mapView.setRegion(MKCoordinateRegionMake(midpointCoordinate, MKCoordinateSpanMake(delta.lat*1.5, delta.lon*1.5)), animated: false)
         } else {
             mapView.setCenter(defaultCoordinate, animated: true)
             mapView.setRegion(MKCoordinateRegionMake(defaultCoordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
@@ -359,57 +353,3 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     }
     
 }
-
-extension CLLocationCoordinate2D{
-    
-    func generateDefaultCoordinate(eatery: Eatery) -> CLLocationCoordinate2D{
-            return eatery.location.coordinate
-    }
-    
-    func generateMidpointCoordinate(locationManager: CLLocationManager, eatery: Eatery) -> CLLocationCoordinate2D{
-        let currentCoordinates = locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
-        let eateryCoordinates = eatery.location.coordinate
-        
-        let cLon = currentCoordinates.longitude * .pi / 180
-        let cLat = currentCoordinates.latitude * .pi / 180
-        let eLon = eateryCoordinates.longitude * .pi / 180
-        let eLat = eateryCoordinates.latitude * .pi / 180
-        
-        let dLon = eLon - cLon
-        
-        let x = cos(eLat) * cos(dLon)
-        let y = cos(eLat) * sin(dLon)
-        let centerLatitude = atan2(sin(cLat) + sin(eLat), sqrt((cos(cLat) + x) * (cos(cLat) + x) + y * y))
-        let centerLongitude = cLon + atan2(y, cos(cLat) + x)
-        
-        var midpointCoordinates = CLLocationCoordinate2D()
-        midpointCoordinates.latitude = centerLatitude * 180 / .pi
-        midpointCoordinates.longitude = centerLongitude * 180 / .pi
-        
-        return midpointCoordinates
-    }
-}
-
-extension Array where Iterator.Element == Double{
-    
-    func generateDeltaLatLon(locationManager: CLLocationManager, eatery: Eatery) -> [Double]{
-        let currentCoordinates = locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
-        let eateryCoordinates = eatery.location.coordinate
-        
-        var deltaLatLon = [Double]()
-        deltaLatLon.append(abs(eateryCoordinates.latitude - currentCoordinates.latitude))
-        deltaLatLon.append(abs(eateryCoordinates.longitude - currentCoordinates.longitude))
-        
-        return deltaLatLon
-    }
-    
-    func generateMaxDeltaLatLon(locationManager: CLLocationManager, eatery: Eatery) -> [Double]{
-        var maxDeltaLatLon = [Double]()
-        
-        maxDeltaLatLon.append(2/69.172)
-        maxDeltaLatLon.append(2/51.2738554594)
-        
-        return maxDeltaLatLon
-    }
-}
-
