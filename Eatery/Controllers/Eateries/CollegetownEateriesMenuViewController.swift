@@ -25,52 +25,13 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     let eateryAnnotation = MKPointAnnotation()
     var locationManager: CLLocationManager!
     
-    var defaultCoordinate: CLLocationCoordinate2D {
-        return eatery.location.coordinate
-    }
-    
-    var midpointCoordinate: CLLocationCoordinate2D {
-        let currentCoordinates = locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
-        let eateryCoordinates = eatery.location.coordinate
-
-        let cLon = currentCoordinates.longitude * .pi / 180
-        let cLat = currentCoordinates.latitude * .pi / 180
-        let eLon = eateryCoordinates.longitude * .pi / 180
-        let eLat = eateryCoordinates.latitude * .pi / 180
-        
-        let dLon = eLon - cLon
-        
-        let x = cos(eLat) * cos(dLon)
-        let y = cos(eLat) * sin(dLon)
-        let centerLatitude = atan2(sin(cLat) + sin(eLat), sqrt((cos(cLat) + x) * (cos(cLat) + x) + y * y))
-        let centerLongitude = cLon + atan2(y, cos(cLat) + x)
-        
-        var midpointCoordinates = CLLocationCoordinate2D()
-        midpointCoordinates.latitude = centerLatitude * 180 / .pi
-        midpointCoordinates.longitude = centerLongitude * 180 / .pi
-        
-        return midpointCoordinates
-    }
-    
-    var deltaLatLon: [Double] {
-        let currentCoordinates = locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
-        let eateryCoordinates = eatery.location.coordinate
-        
-        var deltaLatLon = [Double]()
-        deltaLatLon.append(abs(eateryCoordinates.latitude - currentCoordinates.latitude))
-        deltaLatLon.append(abs(eateryCoordinates.longitude - currentCoordinates.longitude))
-        
-        return deltaLatLon
-    }
-    
-    var maxDeltaLatLon: [Double] {
-        var maxDeltaLatLon = [Double]()
-        
-        maxDeltaLatLon.append(2/69.172)
-        maxDeltaLatLon.append(2/51.2738554594)
-        
-        return maxDeltaLatLon
-    }
+//    var defaultCoordinate: CLLocationCoordinate2D {
+//        return eatery.location.coordinate
+//    }
+    var defaultCoordinate: CLLocationCoordinate2D!
+    var midpointCoordinate: CLLocationCoordinate2D!
+    var deltaLatLon: [Double]!
+    var maxDeltaLatLon: [Double]!
 
     init(eatery: CollegetownEatery, delegate: MenuButtonsDelegate?, userLocation: CLLocation? = nil){
         self.eatery = eatery
@@ -84,6 +45,18 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        defaultCoordinate = CLLocationCoordinate2D()
+        defaultCoordinate = defaultCoordinate.generateDefaultCoordinate(eatery: eatery)
+        
+        midpointCoordinate = CLLocationCoordinate2D()
+        midpointCoordinate = midpointCoordinate.generateMidpointCoordinate(locationManager: locationManager, eatery: eatery)
+        
+        deltaLatLon = [Double]()
+        deltaLatLon = deltaLatLon.generateDeltaLatLon(locationManager: locationManager, eatery: eatery)
+        
+        maxDeltaLatLon = [Double]()
+        maxDeltaLatLon = maxDeltaLatLon.generateMaxDeltaLatLon(locationManager: locationManager, eatery: eatery)
         
         if CLLocationManager.locationServicesEnabled() {
             switch (CLLocationManager.authorizationStatus()) {
@@ -118,10 +91,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         
         class CustomScrollView: UIScrollView{
             override func touchesShouldCancel(in view: UIView) -> Bool {
-                if(view is UIButton){
-                    return false
-                }
-                return true
+                return !(view is UIButton)
             }
         }
         
@@ -209,7 +179,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         setupConstraints()
     }
     
-    func setupConstraints(){
+    private func setupConstraints() {
         
         let screenSize = view.bounds.width
         let ctownMenuHeaderViewHeight = 363
@@ -265,17 +235,19 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     // Scrollview Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let statusBarOffset = UIApplication.shared.statusBarFrame.height
+        let statusBarInset = -statusBarOffset
         let scrollOffset = scrollView.contentOffset.y
+        let scrollInset = -scrollOffset
         switch scrollOffset {
-        case -CGFloat.greatestFiniteMagnitude ..< -statusBarOffset:
+        case -CGFloat.greatestFiniteMagnitude ..< statusBarInset:
             ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: statusBarOffset/2)
             ctownMenuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollOffset)
-                make.height.equalTo(363).offset(363-scrollOffset)
+                make.height.equalTo(363).offset(363+scrollInset)
             }
             ctownMenuHeaderView.backgroundImageView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
-                make.height.equalTo(258).offset(258-scrollOffset)
+                make.height.equalTo(258).offset(258+scrollInset)
             }
             backButton.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(55+scrollOffset+statusBarOffset)
@@ -319,11 +291,11 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         return annotationView
     }
     
-    @objc func goBack(){
+    @objc private func goBack() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func getDirections(){
+    @objc private func getDirections() {
         // TODO: Answers.logDirectionsAsked(eateryId: eatery.slug)
         
         let coordinate = eatery.location.coordinate
@@ -348,7 +320,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         }
     }
     
-    @objc func callNumber(){
+    @objc private func callNumber() {
         if let url = URL(string: "tel://\(eatery.phone)"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)
@@ -358,7 +330,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         }
     }
     
-    @objc func visitWebsite(){
+    @objc private func visitWebsite() {
         if let url = eatery.url, UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)
@@ -368,15 +340,15 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         }
     }
     
-    @objc func openMapViewController(){
-        var eateries = [Eatery]()
-        eateries.append(eatery)
+    @objc private func openMapViewController() {
+        let eateries = [eatery]
+        //eateries.append(eatery)
         
         let mapViewController = MapViewController(eateries: eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
     }
     
-    func openAppleMapsDirections() {
+    private func openAppleMapsDirections() {
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
         mapItem.name = eatery.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
@@ -386,5 +358,58 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension CLLocationCoordinate2D{
+    
+    func generateDefaultCoordinate(eatery: Eatery) -> CLLocationCoordinate2D{
+            return eatery.location.coordinate
+    }
+    
+    func generateMidpointCoordinate(locationManager: CLLocationManager, eatery: Eatery) -> CLLocationCoordinate2D{
+        let currentCoordinates = locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
+        let eateryCoordinates = eatery.location.coordinate
+        
+        let cLon = currentCoordinates.longitude * .pi / 180
+        let cLat = currentCoordinates.latitude * .pi / 180
+        let eLon = eateryCoordinates.longitude * .pi / 180
+        let eLat = eateryCoordinates.latitude * .pi / 180
+        
+        let dLon = eLon - cLon
+        
+        let x = cos(eLat) * cos(dLon)
+        let y = cos(eLat) * sin(dLon)
+        let centerLatitude = atan2(sin(cLat) + sin(eLat), sqrt((cos(cLat) + x) * (cos(cLat) + x) + y * y))
+        let centerLongitude = cLon + atan2(y, cos(cLat) + x)
+        
+        var midpointCoordinates = CLLocationCoordinate2D()
+        midpointCoordinates.latitude = centerLatitude * 180 / .pi
+        midpointCoordinates.longitude = centerLongitude * 180 / .pi
+        
+        return midpointCoordinates
+    }
+}
+
+extension Array where Iterator.Element == Double{
+    
+    func generateDeltaLatLon(locationManager: CLLocationManager, eatery: Eatery) -> [Double]{
+        let currentCoordinates = locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
+        let eateryCoordinates = eatery.location.coordinate
+        
+        var deltaLatLon = [Double]()
+        deltaLatLon.append(abs(eateryCoordinates.latitude - currentCoordinates.latitude))
+        deltaLatLon.append(abs(eateryCoordinates.longitude - currentCoordinates.longitude))
+        
+        return deltaLatLon
+    }
+    
+    func generateMaxDeltaLatLon(locationManager: CLLocationManager, eatery: Eatery) -> [Double]{
+        var maxDeltaLatLon = [Double]()
+        
+        maxDeltaLatLon.append(2/69.172)
+        maxDeltaLatLon.append(2/51.2738554594)
+        
+        return maxDeltaLatLon
+    }
 }
 
