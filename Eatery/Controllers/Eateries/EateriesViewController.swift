@@ -80,11 +80,9 @@ class EateriesViewController: UIViewController {
     }
 
     enum Group: CaseIterable {
-
         case favorites
         case open
         case closed
-
     }
 
     typealias EateriesByGroup = [Group: [Eatery]]
@@ -107,22 +105,16 @@ class EateriesViewController: UIViewController {
     }
 
     private enum CellIdentifier: String {
-
         case eatery
-
     }
 
     private enum SupplementaryViewIdentifier: String {
-
         case header
-
     }
 
     enum SortMethod {
-
         case nearest(CLLocation)
         case alphabetical
-
     }
 
     // Model

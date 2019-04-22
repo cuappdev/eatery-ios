@@ -15,8 +15,6 @@ class CampusEateriesViewController: EateriesViewController {
 
     private var preselectedEateryName: String?
 
-    private let areaFilters: Set<Filter> = [.central, .north, .west]
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -137,7 +135,7 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
             return true
         }
 
-        if !filters.intersection(areaFilters).isEmpty {
+        if !filters.intersection(Filter.areaFilters).isEmpty {
             filteredEateries = filteredEateries.filter {
                 guard let area = $0.area else {
                     return false

@@ -217,13 +217,6 @@ struct NetworkManager {
                     events[graphQlOperatingHours.date] = eventsByName
                 }
 
-                let rating: Rating?
-                if let rawValue = Double(graphQlEatery.rating) {
-                    rating = Rating(rawValue: rawValue)
-                } else {
-                    rating = nil
-                }
-
                 let eatery = CollegetownEatery(
                     id: graphQlEatery.id,
                     name: graphQlEatery.name,
@@ -235,7 +228,7 @@ struct NetworkManager {
                     phone: graphQlEatery.phone,
                     events: events,
                     price: graphQlEatery.price,
-                    rating: rating,
+                    rating: Double(graphQlEatery.rating),
                     url: URL(string: graphQlEatery.url),
                     categories: graphQlEatery.categories.compactMap { $0 })
 

@@ -4,6 +4,24 @@ import Crashlytics
 
 enum Filter: String {
 
+    static let areaFilters: Set<Filter> = [
+        .north,
+        .west,
+        .central
+    ]
+
+    static let categoryFilters: Set<Filter> = [
+        .pizza,
+        .chinese,
+        .wings,
+        .korean,
+        .japanese,
+        .thai,
+        .burgers,
+        .mexican,
+        .bubbleTea
+    ]
+
     case nearest = "Nearest First"
 
     case north = "North"

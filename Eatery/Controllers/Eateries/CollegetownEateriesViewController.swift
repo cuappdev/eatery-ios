@@ -11,18 +11,6 @@ import UIKit
 
 class CollegetownEateriesViewController: EateriesViewController {
 
-    private let categoryFilters: [Filter] = [
-        .pizza,
-        .chinese,
-        .wings,
-        .korean,
-        .japanese,
-        .thai,
-        .burgers,
-        .mexican,
-        .bubbleTea
-    ]
-
     private var favoritesNames: [String] = []
 
     private var allEateries: [CollegetownEatery]?
@@ -33,7 +21,7 @@ class CollegetownEateriesViewController: EateriesViewController {
         dataSource = self
         delegate = self
 
-        availableFilters = [.nearest] + categoryFilters
+        availableFilters = [.nearest] + Filter.categoryFilters
 
         queryCollegetownEateries()
     }
@@ -108,7 +96,7 @@ extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
             return true
         }
 
-        let selectedCategoryFilters = filters.intersection(categoryFilters).map { $0.rawValue }
+        let selectedCategoryFilters = filters.intersection(Filter.categoryFilters).map { $0.rawValue }
         if !selectedCategoryFilters.isEmpty {
             filteredEateries = filteredEateries.filter { eatery -> Bool in
                 // check if an eatery has a category that is also in the

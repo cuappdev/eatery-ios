@@ -70,7 +70,6 @@ class EateriesSharedViewController: UIViewController {
 
     private func setUpChildViewControllers() {
         campusEateriesViewController.scrollDelegate = self
-
         collegetownEateriesViewController.scrollDelegate = self
 
         addChildViewController(pillViewController)
