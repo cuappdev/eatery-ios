@@ -9,12 +9,12 @@
 import UIKit
 
 extension UIColor {
-    
+
     class func colorFromCode(_ code: Int) -> UIColor {
         let red = CGFloat((code & 0xFF0000) >> 16) / 255
         let green = CGFloat((code & 0xFF00) >> 8) / 255
         let blue = CGFloat(code & 0xFF) / 255
-        
+
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }
 
@@ -57,20 +57,20 @@ extension UIColor {
 extension UIImage {
 
     class func image(withColor color: UIColor) -> UIImage {
-        
+
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
-        
+
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-        
+
         let context = UIGraphicsGetCurrentContext()
-        
+
         color.setFill()
-        
+
         context?.fill(rect)
-        
+
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         return image!
     }
 

@@ -7,6 +7,7 @@ class EateriesCollectionViewGridLayout: UICollectionViewFlowLayout {
 
         guard let collectionView = collectionView else { return }
 
+        let collectionViewMargin = EateriesViewController.collectionViewMargin
         let width = collectionView.bounds.width
         let cellWidth: CGFloat
 

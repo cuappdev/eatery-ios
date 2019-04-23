@@ -3,41 +3,80 @@ import SnapKit
 import Crashlytics
 
 enum Filter: String {
+
+    static let areaFilters: Set<Filter> = [
+        .north,
+        .west,
+        .central
+    ]
+
+    static let categoryFilters: Set<Filter> = [
+        .pizza,
+        .chinese,
+        .wings,
+        .korean,
+        .japanese,
+        .thai,
+        .burgers,
+        .mexican,
+        .bubbleTea
+    ]
+
     case nearest = "Nearest First"
+
     case north = "North"
     case west = "West"
     case central = "Central"
     case swipes = "Swipes"
     case brb = "BRB"
+
+    case pizza = "Pizza"
+    case chinese = "Chinese"
+    case wings = "Wings"
+    case korean = "Korean"
+    case japanese = "Japanese"
+    case thai = "Thai"
+    case burgers = "Burgers"
+    case mexican = "Mexican"
+    case bubbleTea = "Bubble Tea"
+
 }
 
-fileprivate let filters: [Filter] = [
-    .nearest,
-    .north,
-    .west,
-    .central,
-    .swipes,
-    .brb
-]
-
 protocol FilterBarDelegate: AnyObject {
-    var filters: Set<Filter> { get set }
-    func updateFilters(filters: Set<Filter>)
+
+    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter])
+
 }
 
 class FilterBar: UIView {
-    
-    private var buttons: [UIButton] = []
+
+    private var buttons: [Filter : UIButton] = [:]
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 
-    let padding: CGFloat = collectionViewMargin
-    
-    private var selectedFilters: Set<Filter> = []
-    
+    let padding: CGFloat = EateriesViewController.collectionViewMargin
+
+    var displayedFilters: [Filter] = [] {
+        didSet {
+            layoutButtons(filters: displayedFilters)
+
+            if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
+                for string in prevFilters {
+                    if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
+                        selectedFilters.insert(filter)
+                        buttons[filter]!.isSelected = true
+                    }
+                }
+
+                delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
+            }
+        }
+    }
+    var selectedFilters: Set<Filter> = []
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         backgroundColor = .clear
 
         scrollView = UIScrollView()
@@ -49,14 +88,16 @@ class FilterBar: UIView {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        layoutButtons()
-    }
-    
-    func layoutButtons() {
 
+        snp.makeConstraints { make in
+            make.height.equalTo(44)
+        }
+    }
+
+    func layoutButtons(filters: [Filter]) {
         var totalWidth: CGFloat = 0.0
 
+        var previousLayout: UIButton?
         for (index, filter) in filters.enumerated() {
             let button = UIButton()
             button.setTitle(filter.rawValue, for: .normal)
@@ -72,6 +113,7 @@ class FilterBar: UIView {
             button.layer.cornerRadius = 8.0
             button.clipsToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
+            button.isSelected = selectedFilters.contains(filter)
             button.sizeToFit()
             button.frame.size.width += 16.0
             button.frame.size.height = frame.height
@@ -79,20 +121,20 @@ class FilterBar: UIView {
 
             button.tag = index
             button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-            
+
             scrollView.addSubview(button)
             button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
                 make.height.equalToSuperview().offset(-padding)
-                if index > 0 {
-                    make.leading.equalTo(buttons[index-1].snp.trailing).offset(padding / 2)
-                } else {
+                if previousLayout == nil {
                     make.leading.equalToSuperview()
+                } else {
+                    make.leading.equalTo(previousLayout!.snp.trailing).offset(padding / 2)
                 }
-                
             }
-            buttons.append(button)
+            buttons[filter] = button
+            previousLayout = button
 
             totalWidth += button.frame.width + (index == filters.count - 1 ? 0.0 : padding / 2)
         }
@@ -100,39 +142,26 @@ class FilterBar: UIView {
         scrollView.contentSize = CGSize(width: totalWidth, height: frame.height)
         scrollView.setContentOffset(CGPoint(x: -padding, y: 0), animated: false)
     }
-    
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
-            for string in prevFilters {
-                if let filter = Filter(rawValue: string),
-                    let index = filters.index(of: filter), index < buttons.count {
-                    buttons[index].isSelected = true
-                    selectedFilters.insert(filter)
-                }
-            }
-            
-            delegate?.filters = selectedFilters
-        }
-    }
-    
+
     @objc func buttonPressed(sender: UIButton) {
         sender.isSelected.toggle()
+
         if sender.isSelected {
-            let filter = filters[sender.tag]
+            let filter = displayedFilters[sender.tag]
             selectedFilters.insert(filter)
             Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
-            selectedFilters.remove(filters[sender.tag])
+            selectedFilters.remove(displayedFilters[sender.tag])
         }
         
         let defaults = UserDefaults.standard
         defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
 
-        delegate?.updateFilters(filters: selectedFilters)
+        delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }

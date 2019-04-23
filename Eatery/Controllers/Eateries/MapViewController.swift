@@ -4,10 +4,10 @@ import SnapKit
 import Crashlytics
 import CoreLocation
 
-let olinLibraryLocation = CLLocation(latitude: 42.448078,longitude: -76.484291)
+// MARK: - Map View Controller
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    
+
     var eateries: [Eatery]
     var eateryAnnotations : [MKPointAnnotation] = []
     let mapView: MKMapView
@@ -17,12 +17,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let recenterButton = UIButton()
     
     var defaultCoordinate: CLLocationCoordinate2D {
-        return locationManager.location?.coordinate ?? olinLibraryLocation.coordinate
+        return locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
     }
     
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
         self.mapView = MKMapView()
+        
         super.init(nibName: nil, bundle: nil)
         
         mapView.delegate = self
@@ -43,6 +44,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: break
             }
         }
+
+        mapEateries(allEateries)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,11 +81,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.eateries = eateries
         
         for eatery in eateries {
-            let annotationTitle = eatery.nickname
+            let annotationTitle = eatery.displayName
             let eateryAnnotation = MKPointAnnotation()
             eateryAnnotation.coordinate = eatery.location.coordinate
             eateryAnnotation.title = annotationTitle
-            eateryAnnotation.subtitle = eatery.isOpenNow() ? "open" : "closed"
+            eateryAnnotation.subtitle = eatery.isOpen(atExactly: Date()) ? "open" : "closed"
             mapView.addAnnotation(eateryAnnotation)
             eateryAnnotations.append(eateryAnnotation)
         }
@@ -159,16 +162,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
-        let menuVC = MenuViewController(eatery: eatery, delegate: nil, userLocation: userLocation)
-        self.navigationController?.pushViewController(menuVC, animated: true)
-        
-        Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
+        guard let eateryAnnotation = view.annotation as? MKPointAnnotation,
+            let index = eateryAnnotations.index(of: eateryAnnotation),
+            index < eateries.count else {
+                return
+        }
+
+        let eatery = eateries[index]
+
+        if let campusEatery = eatery as? CampusEatery {
+            let menuViewController = CampusEateryMenuViewController(eatery: campusEatery, delegate: nil, userLocation: userLocation)
+            navigationController?.pushViewController(menuViewController, animated: true)
+        } else if let collegetownEatery = eatery as? CollegetownEatery {
+            let menuViewController = CollegetownEateriesMenuViewController(eatery: collegetownEatery, delegate: nil)
+            navigationController?.pushViewController(menuViewController, animated: true)
+        }
+
+        // TODO: Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let eatery = eateries[eateryAnnotations.index(of: view.annotation as! MKPointAnnotation) ?? 0]
-        Answers.logMapAnnotationOpened(eateryId: eatery.slug)
+        // TODO: Answers.logMapAnnotationOpened(eateryId: eatery.slug)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

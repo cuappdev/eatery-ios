@@ -19,7 +19,7 @@ protocol MenuButtonsDelegate: AnyObject {
 
 class MenuHeaderView: UIView {
     
-    var eatery: Eatery?
+    var eatery: CampusEatery?
     var displayedDate: Date?
 
     weak var delegate: MenuButtonsDelegate?
@@ -77,7 +77,7 @@ class MenuHeaderView: UIView {
         fatalError("init(coder:) will not be implemented")
     }
     
-    func set(eatery: Eatery, date: Date) {
+    func set(eatery: CampusEatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
         
@@ -87,7 +87,7 @@ class MenuHeaderView: UIView {
         
         titleLabel.text = eatery.nickname
 
-        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+        if let url = eatery.imageUrl {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
             backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
         }
@@ -97,10 +97,10 @@ class MenuHeaderView: UIView {
 
         let eateryStatus = eatery.currentStatus()
         switch eateryStatus {
-        case .open, .closing:
+        case .open, .closingSoon:
             titleLabel.textColor = .white
 
-        case .closed, .opening:
+        case .closed, .openingSoon:
             titleLabel.textColor = UIColor.darkGray
 
             let closedView = UIView()
@@ -117,7 +117,7 @@ class MenuHeaderView: UIView {
             return
         }
 
-        favoriteButton.setImage(eatery.favorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
+        favoriteButton.setImage(eatery.isFavorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
     }
     
     @objc private func favoriteButtonPressed(_ sender: AnyObject) {
@@ -125,12 +125,12 @@ class MenuHeaderView: UIView {
             return
         }
 
-        eatery.favorite.toggle()
+        eatery.isFavorite.toggle()
         
         updateFavoriteButtonImage()
         
         delegate?.favoriteButtonPressed(on: self)
-        if eatery.favorite {
+        if eatery.isFavorite {
             Answers.logEateryFavorited(eateryId: eatery.slug)
         } else {
             Answers.logEateryUnfavorited(eateryId: eatery.slug)

@@ -15,10 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         Foundation.URLCache.shared = URLCache
-        
+
         window = UIWindow()
         window?.backgroundColor = .white
-        
+
         // Set up navigation bar appearance
         UINavigationBar.appearance().barTintColor = UIColor.navigationBarBlue
         UINavigationBar.appearance().tintColor = .white
@@ -27,12 +27,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().tintColor = .eateryBlue
         UITabBar.appearance().shadowImage = UIImage()
-        
+
         Hero.shared.containerColor = .white
+
+        // Set up view controllers
         
-        // Set up tab bar controllers
         eateryTabBarController = EateryTabBarController()
-        window?.rootViewController = eateryTabBarController
+        let onboardCollegetown = !UserDefaults.standard.bool(forKey: "didOnboardToCollegetown")
+        if onboardCollegetown {
+            let collegetownOnboardViewController = CollegetownOnboardViewController()
+            collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
+
+            eateryTabBarController.eateriesSharedViewController.pillViewController.pillView.selectRightSegment()
+
+            window?.rootViewController = collegetownOnboardViewController
+
+            UserDefaults.standard.setValue(true, forKey: "didOnboardToCollegetown")
+        } else {
+            window?.rootViewController = eateryTabBarController
+        }
+        
         window?.makeKeyAndVisible()
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
@@ -53,50 +67,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-  
     func applicationWillResignActive(_ application: UIApplication) {
-      if #available(iOS 9.1, *) {
-          //Retrieve favorites and their nicknames
-          let slugStrings = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-          let appendix = JSON(try! Data(contentsOf: Bundle.main.url(forResource: "appendix", withExtension: "json")!)).dictionaryValue
-        
-          let favoriteNames = slugStrings.reversed().map { slug -> (String, String) in
-              if let appendixJSON = appendix[slug] {
-                  return (slug, appendixJSON["nickname"].arrayValue.first?.stringValue ?? "")
-              } else {
-                  return (slug, slug)
-              }
-          }
-        
-          // Clear shortcuts then recreate them
-          var shortcuts: [UIApplicationShortcutItem] = []
-          for (slug, name) in favoriteNames {
-              let shortcutItem = UIApplicationShortcutItem(type: slug, localizedTitle: name, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .favorite), userInfo: nil)
-              UIApplication.shared.shortcutItems?.append(shortcutItem)
-              shortcuts.append(shortcutItem)
-          }
-          UIApplication.shared.shortcutItems = shortcuts
-      }
+        if #available(iOS 9.1, *) {
+            let favorites = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+            UIApplication.shared.shortcutItems = favorites.map {
+                UIApplicationShortcutItem(type: $0,
+                                          localizedTitle: $0,
+                                          localizedSubtitle: nil,
+                                          icon: UIApplicationShortcutIcon(type: .favorite),
+                                          userInfo: nil)
+            }
+        }
     }
-  
+
     // MARK: - Force Touch Shortcut
-    
+
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let handledShortcutItem = handleShortcutItem(shortcutItem)
         completionHandler(handledShortcutItem)
     }
-  
+
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eateryTabBarController.eateriesViewController.preselectedSlug = shortcutItem.type
+        eateryTabBarController.eateriesSharedViewController.campusEateriesViewController.preselectEatery(withName: shortcutItem.type)
+        
         return true
     }
-    
+
     // MARK: - StoreKit
-    
+
     func requestReview() {
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         }
     }
 }
-

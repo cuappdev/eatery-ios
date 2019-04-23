@@ -26,13 +26,17 @@ struct Sort {
         }
     }
     
-    static func sortEateriesByOpenOrAlph(_ eatery: [Eatery], date: Date = Date(), location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291), selectedMeal: String = "None", sortingType: SortType = .time) -> [Eatery] {
+    static func sortEateriesByOpenOrAlph(_ eatery: [CampusEatery],
+                                         date: Date = Date(),
+                                         location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291),
+                                         selectedMeal: String = "None",
+                                         sortingType: SortType = .time) -> [CampusEatery] {
         
-        let sortByHoursClosure = { (a: Eatery, b: Eatery) -> Bool in
+        let sortByHoursClosure = { (a: CampusEatery, b: CampusEatery) -> Bool in
             switch sortingType {
             case .lookAhead:
-                let eventsA = a.eventsByName(on: date)
-                let eventsB = b.eventsByName(on: date)
+                let eventsA = a.eventsByName(onDayOf: date)
+                let eventsB = b.eventsByName(onDayOf: date)
                 if eventsA[self.getSelectedMeal(eatery: a, date: date, meal: selectedMeal)] != nil {
                     if eventsB[self.getSelectedMeal(eatery: b, date: date, meal: selectedMeal)] != nil {
                         return  a.nickname.lowercased() < b.nickname.lowercased()
@@ -43,16 +47,16 @@ struct Sort {
                 
             case .time:
                 if a.isOpenToday() {
-                    if let activeEvent = a.activeEvent(for: date) {
-                        if activeEvent.occurs(at: date) {
-                            if let bTimeInterval = b.activeEvent(for: date) {
+                    if let activeEvent = a.activeEvent(atExactly: date) {
+                        if activeEvent.occurs(atExactly: date) {
+                            if let bTimeInterval = b.activeEvent(atExactly: date) {
                                 return activeEvent.end.timeIntervalSinceNow <= bTimeInterval.end.timeIntervalSinceNow
                             } else {
                                 return true
                             }
                         } else {
                             let atimeTillOpen = Int(activeEvent.start.timeIntervalSinceNow / 60)
-                            if let bActiveEvent = b.activeEvent(for: date){
+                            if let bActiveEvent = b.activeEvent(atExactly: date){
                                 let bTimeTillOpen = Int(bActiveEvent.start.timeIntervalSinceNow / 60)
                                 return atimeTillOpen < bTimeTillOpen
                             } else {
@@ -76,19 +80,19 @@ struct Sort {
                         return true
                     }
 
-                case .closing:
+                case .closingSoon:
                     switch bState {
                     case .open:
                         return false
-                    case .closing:
+                    case .closingSoon:
                         return a.nickname < b.nickname
-                    case .closed, .opening:
+                    case .closed, .openingSoon:
                         return true
                     }
 
-                case .closed, .opening:
+                case .closed, .openingSoon:
                     switch bState {
-                    case .closed, .opening:
+                    case .closed, .openingSoon:
                         return a.nickname < b.nickname
                     default:
                         return false
@@ -107,8 +111,8 @@ struct Sort {
     
     
     //HelperFunction to get meal
-    static func getSelectedMeal(eatery: Eatery, date: Date, meal: String) -> String {
-        let events = eatery.eventsByName(on: date)
+    static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
+        let events = eatery.eventsByName(onDayOf: date)
         
         let meals: [String] = Array(events.keys)
         var selectedMeal = meal

@@ -5,6 +5,13 @@ import SnapKit
 
 class EateryCollectionViewCell: UICollectionViewCell {
 
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter 
+    }()
+
     private static let shadowRadius: CGFloat = 12
 
     let paymentView = PaymentMethodsView()
@@ -85,8 +92,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     private func setUpPaymentView() {
         contentView.addSubview(paymentView)
+        paymentView.layer.zPosition = 1
         paymentView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(20)
             make.trailing.equalToSuperview().inset(10)
         }
     }
@@ -160,6 +168,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         menuTextView.isScrollEnabled = false
         menuTextView.bounces = false
         menuTextView.contentInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        menuTextView.isUserInteractionEnabled = false
         contentView.addSubview(menuTextView)
         menuTextView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -192,14 +201,14 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         // start loading background image view as soon as possible
 
-        if let url = URL(string: eateryImagesBaseURL + eatery.slug + ".jpg") {
+        if let url = eatery.imageUrl {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
             backgroundImageView.kf.setImage(with: url, placeholder: placeholder, options: [.transition(.fade(0.35))])
         }
-
+        
         // title
 
-        titleLabel.text = eatery.nickname
+        titleLabel.text = eatery.displayName
 
         // distance
 
@@ -215,16 +224,19 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         let eateryStatus = eatery.currentStatus()
         switch eateryStatus {
-        case .open, .closing:
+        case .open, .closingSoon:
             titleLabel.textColor = .black
             closedOverlay.isHidden = true
-        case .closed, .opening:
+        case .closed, .openingSoon:
             titleLabel.textColor = .darkGray
             closedOverlay.isHidden = false
         }
-        statusLabel.text = eateryStatus.statusText
-        statusLabel.textColor = eateryStatus.statusColor
-        timeLabel.text = eateryStatus.message
+
+        let presentation = eatery.currentPresentation()
+        statusLabel.text = presentation.statusText
+        statusLabel.textColor = presentation.statusColor
+        timeLabel.text = presentation.nextEventText
+
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
     }

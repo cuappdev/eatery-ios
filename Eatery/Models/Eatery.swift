@@ -2,73 +2,40 @@
 //  Eatery.swift
 //  Eatery
 //
-//  Created by Alexander Zielenski on 10/4/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
+//  Created by William Ma on 3/9/19.
+//  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import UIKit
-import SwiftyJSON
 import CoreLocation
+import UIKit
 
-
-/**
- Different meals served by eateries
-
- - Breakfast: Breakfast
- - Brunch:    Brunch
- - LiteLunch: Lite Lunch
- - Lunch:     Lunch
- - Dinner:    Dinner
- - Other:     Unknown
- */
+/// Different meals served by eateries
 enum Meal: String {
 
     case breakfast = "Breakfast"
-    case brunch    = "Brunch"
+    case brunch = "Brunch"
     case liteLunch = "Lite Lunch"
-    case lunch     = "Lunch"
-    case dinner    = "Dinner"
-    case Other     = ""
+    case lunch = "Lunch"
+    case dinner = "Dinner"
 
 }
 
-/**
- Assorted types of payment accepted by an Eatery
+/// Assorted types of payment accepted by an Eatery
+enum PaymentMethod: String {
 
- - BRB:         Big Red Bucks
- - Swipes:      Meal Swipes
- - Cash:        USD
- - CornellCard: CornellCard
- - CreditCard:  Major Credit Cards
- - NFC:         Mobile Payments
- - Other:       Unknown
- */
-enum PaymentType: String {
-
-    case brb         = "Meal Plan - Debit"
-    case swipes      = "Meal Plan - Swipe"
-    case cash        = "Cash"
+    case brb = "Meal Plan - Debit"
+    case swipes = "Meal Plan - Swipe"
+    case cash = "Cash"
     case cornellCard = "Cornell Card"
-    case creditCard  = "Major Credit Cards"
-    case nfc         = "Mobile Payments"
-    case other       = ""
+    case creditCard = "Major Credit Cards"
+    case nfc = "Mobile Payments"
+    case other = "Other"
 
 }
 
-/**
- Different types of eateries on campus
-
- - Unknown:          Unknown
- - Dining:           All You Care to Eat Dining Halls
- - Cafe:             Cafes
- - Cart:             Carts + Food Trucks
- - FoodCourt:        Food Courts (Variety of Food Selections)
- - ConvenienceStore: Convenience Stores
- - CoffeeShop:       Coffee Shops + Some Food
- */
+/// Different types of eateries on campus
 enum EateryType: String {
 
-    case unknown = "unknown"
     case dining = "all you care to eat dining room"
     case cafe = "cafe"
     case cart = "cart"
@@ -76,37 +43,20 @@ enum EateryType: String {
     case convenienceStore = "convenience store"
     case coffeeShop = "coffee shop"
     case bakery = "bakery"
-
-}
-
-/**
- Represents a location on Cornell Campus
-
- - Unknown: Unknown
- - West:    West Campus
- - North:   North Campus
- - Central: Central Campus
- */
-enum Area: String {
-
     case unknown = ""
-    case west = "West"
-    case north = "North"
-    case central = "Central"
 
 }
 
-/// Represents a Cornell Dining Facility and information about it
-/// such as open times, menus, location, etc.
-struct Eatery {
+enum EateryStatus {
 
-    /// Converts the date to its day for use with eatery events
-    static let dayFormatter: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
-        formatter.timeZone = TimeZone(identifier: "America/New_York")
-        return formatter
-    }()
+    case openingSoon(minutesUntilOpen: Int)
+    case open
+    case closingSoon(minutesUntilClose: Int)
+    case closed
+
+}
+
+protocol Eatery {
 
     /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)
     /// Read more: https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates
@@ -114,255 +64,221 @@ struct Eatery {
 
     typealias EventName = String
 
-    /// Unique Identifier
-    let id: Int
+    var id: Int { get }
 
-    /// Human Readable name
-    let name: String
+    var name: String { get }
 
-    /// Human Readable short name
-    let nameShort: String
+    var displayName: String { get }
 
-    /// Unique internal name
-    let slug: String
+    var imageUrl: URL? { get }
 
-    /// Eatery Type
-    let eateryType: EateryType
+    var eateryType: EateryType { get }
 
-    /// Short description
-    let about: String // actually "aboutshort"
+    var address: String { get }
 
-    /// String representation of the phone number
-    let phone: String
+    var paymentMethods: [PaymentMethod] { get }
 
-    /// General location on Campus
-    let area: Area
+    var location: CLLocation { get }
 
-    /// Exact Address
-    let address: String
+    var phone: String { get }
 
-    /// Acceptable types of payment
-    let paymentMethods: [PaymentType]
+    var events: [DayString: [EventName: Event]] { get }
 
-    /// A menu of constant dining items. Exists if this eatery's menu
-    /// never changes. This should be used if it exists.
-    var diningMenu: Menu?
+    var allEvents: [Event] { get }
 
-    /// A constant hardcoded menu if this Eatery has one.
-    /// This should be used if it exists yet diningItems does not.
-    let hardcodedMenu: Menu?
+}
 
-    /// GPS Location
-    let location: CLLocation
+/// Converts the date to its day for use with eatery events
+private let dayFormatter: ISO8601DateFormatter = {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+    formatter.timeZone = TimeZone(identifier: "America/New_York")
+    return formatter
+}()
 
-    /// List of all events for this eatery by day and name
-    let events: [DayString: [EventName: Event]]
+// MARK: -
 
-    /// This is an external eatery, i.e. a completely hardcoded eatery
-    let external: Bool
+extension Eatery {
 
-    // Gives a string full of all the menus for this eatery today.
-    // This is used for searching.
-    private(set) lazy var description: String = {
-        return eventsByName(on: Date()).values.map { $0.menu.data.description }.joined(separator: "\n")
-    }()
-
-    init(id: Int,
-        name: String,
-        nameShort: String,
-        slug: String,
-        eateryType: EateryType,
-        about: String,
-        phone: String,
-        area: Area,
-        address: String,
-        paymentMethods: [PaymentType],
-        diningMenu: [String : [Menu.Item]]?,
-        events: [String: [String: Event]],
-        hardcodedMenu: [String : [Menu.Item]]?,
-        location: CLLocation,
-        external: Bool) {
-
-        self.id = id
-        self.name = name
-        self.nameShort = nameShort
-        self.slug = slug
-        self.eateryType = eateryType
-        self.about = about
-        self.phone = phone
-        self.area = area
-        self.address = address
-        self.paymentMethods = paymentMethods
-        self.events = events
-        self.location = location
-        self.external = external
-
-        if let diningMenu = diningMenu {
-            self.diningMenu = Menu(data: diningMenu)
-        } else {
-            self.diningMenu = nil
-        }
-
-        if let hardcodedMenu = hardcodedMenu {
-            self.hardcodedMenu = Menu(data: hardcodedMenu)
-        } else {
-            self.hardcodedMenu = nil
-        }
+    /// The event at an exact date and time, or nil if such an event does not
+    /// exist.
+    func event(atExactly date: Date) -> Event? {
+        return allEvents.first { $0.dateInterval.contains(date) }
     }
 
-    /**
-     Tells if this Eatery is open at a specific time
-
-     - parameter date: Specifically the time to check for
-
-     - returns: true if this eatery has an event active at the given date and time
-
-     - see: `isOpen(for:)`
-     */
-    func isOpen(on date: Date) -> Bool {
-        guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else { return false }
-
-        for now in [date, yesterday] {
-            let events = eventsByName(on: now)
-            for (_, event) in events {
-                if event.occurs(at: date) {
-                    return true
-                }
-            }
-        }
-
-        return false
+    /// The events that happen within the specified time interval, regardless of
+    /// the day the event occurs on
+    /// i.e. events that are active for any amount of time during the interval.
+    func events(in dateInterval: DateInterval) -> [Event] {
+        return allEvents.filter { dateInterval.intersects($0.dateInterval) }
     }
 
-    /**
-     Tells if eatery is open within the calendar date given. This is distinct from `isOpen(on:)` in that it does not check a specific time, just the day, month, and year.
-
-     - parameter date: The date to check
-
-     - returns: true of there is an event active at some point within the given calendar day
-
-     - see: `isOpen(on:)`
-     */
-    func isOpen(for date: Date) -> Bool {
-        return !eventsByName(on: date).isEmpty
-    }
-
-    /**
-     Is the eatery open now?
-
-     - returns: true if the eatery is open at the present date and time
-     */
-    func isOpenNow() -> Bool {
-        return isOpen(on: Date())
-    }
-
-    /**
-     Tells if eatery is open at some point today
-
-     - returns: true if the eatery will be open at some point today or was already open
-     */
-    func isOpenToday() -> Bool {
-        return isOpen(for: Date())
-    }
-
-    /**
-     Retrieve event instances for a specific day
-
-     - parameter date: The date for which you would like a list of events for
-
-     - returns: A mapping from Event Name to Event for the given day.
-     */
-    func eventsByName(on date: Date) -> [EventName: Event] {
-        let dayString = Eatery.dayFormatter.string(from: date)
+    /// The events by name that occur on the specified day
+    // Since events may extend past midnight, this function is required to pick
+    // a specific day for an event.
+    func eventsByName(onDayOf date: Date) -> [EventName: Event] {
+        let dayString = dayFormatter.string(from: date)
         return events[dayString] ?? [:]
     }
 
-    /**
-     Retrieve the currently active event or the next event for a day/time
+    func isOpen(onDayOf date: Date) -> Bool {
+        return !eventsByName(onDayOf: date).isEmpty
+    }
 
-     - parameter date: The date you would like the active event for
+    func isOpenToday() -> Bool {
+        return isOpen(onDayOf: Date())
+    }
 
-     - returns: The active event on a certain day/time, or nil if there was none.
-     For our purposes, "active" means currently running or will run soon. As in, if there
-     was no event running at exactly the date given but there will be one 15 minutes afterwards, that event would be returned. If the next event was over a day away, nil would be returned.
-     */
-    func activeEvent(for date: Date) -> Event? {
-        guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else { return nil }
-        guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date()) else { return nil }
+    func isOpen(atExactly date: Date) -> Bool {
+        return event(atExactly: date) != nil
+    }
 
-        var timeDifference = Double.greatestFiniteMagnitude
-        var next: Event? = nil
-
-        for now in [yesterday, date, tomorrow] {
-            let events = eventsByName(on: now)
-
-            for (_, event) in events {
-                let diff = event.start.timeIntervalSince1970 - date.timeIntervalSince1970
-                if event.occurs(at: date) {
-                    return event
-                } else if diff < timeDifference && diff > 0 {
-                    timeDifference = diff
-                    next = event
-                }
-            }
+    func activeEvent(atExactly date: Date) -> Event? {
+        let calendar = Calendar.current
+        guard let yesterday = calendar.date(byAdding: .day, value: -1, to: Date()),
+            let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) else {
+                return nil
         }
 
-        return next
+        return events(in: DateInterval(start: yesterday, end: tomorrow))
+            .filter {
+                // disregard events that are not currently happening or that have happened in the past
+                $0.occurs(atExactly: date) || date < $0.start
+            }.min { (lhs, rhs) -> Bool in
+                if lhs.occurs(atExactly: date) {
+                    return true
+                } else if rhs.occurs(atExactly: date) {
+                    return false
+                }
+
+                let timeUntilLeftStart = lhs.start.timeIntervalSince(date)
+                let timeUntilRightStart = rhs.start.timeIntervalSince(date)
+                return timeUntilLeftStart < timeUntilRightStart
+        }
     }
 
-    // MARK: Deprecated
-
-    @available(*, deprecated, renamed: "isOpen(on:)")
-    func isOpenOnDate(_ date: Date) -> Bool {
-        return isOpen(on: date)
+    func currentActiveEvent() -> Event? {
+        return activeEvent(atExactly: Date())
     }
 
-    @available(*, deprecated, renamed: "isOpen(for:)")
-    func isOpenForDate(_ date: Date) -> Bool {
-        return isOpen(for: date)
+    func status(onDayOf date: Date) -> EateryStatus {
+        guard isOpen(onDayOf: date) else {
+            return .closed
+        }
+
+        guard let event = activeEvent(atExactly: date) else {
+            return .closed
+        }
+
+        switch event.status(atExactly: date) {
+        case .notStarted:
+            return .closed
+
+        case .startingSoon:
+            let minutesUntilOpen = Int(event.start.timeIntervalSinceNow / 60) + 1
+            return .openingSoon(minutesUntilOpen: minutesUntilOpen)
+
+        case .started:
+            return .open
+
+        case .endingSoon:
+            let minutesUntilClose = Int(event.end.timeIntervalSinceNow / 60) + 1
+            return .closingSoon(minutesUntilClose: minutesUntilClose)
+
+        case .ended:
+            return .closed
+        }
     }
 
-    @available(*, deprecated, renamed: "activeEvent(for:)")
-    func activeEventForDate(_ date: Date) -> Event? {
-        return activeEvent(for: date)
+    func currentStatus() -> EateryStatus {
+        return status(onDayOf: Date())
     }
 
-    @available(*, deprecated, renamed: "eventsByName(on:)")
-    func eventsOnDate(_ date: Date) -> [String: Event] {
-        return eventsByName(on: date)
-    }
+}
 
-    @available(*, deprecated)
-    func getHardcodeMenuIterable() -> [(String, [String])] {
-        return hardcodedMenu?.stringRepresentation ?? []
-    }
+// MARK: - User Defaults / Favoriting
 
-    @available(*, deprecated)
-    func getDiningItemMenuIterable() -> [(String, [String])] {
-        return diningMenu?.stringRepresentation ?? []
-    }
+extension Eatery {
 
-    @available(*, deprecated)
-    func getAlternateMenuIterable() -> [(String, [String])] {
-        if diningMenu != nil {
-            return getDiningItemMenuIterable()
-        } else if hardcodedMenu != nil {
-            return getHardcodeMenuIterable()
-        } else {
-            return []
+    var isFavorite: Bool {
+        get {
+            let ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+            return ar.contains { $0 == name }
+        }
+        set {
+            var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+            if newValue {
+                ar.append(name)
+            } else {
+                ar.removeAll(where: { $0 == name })
+            }
+            UserDefaults.standard.set(ar, forKey: "favorites")
         }
     }
 
 }
 
-extension Eatery: Hashable {
+// MARK: - Eatery Presentation
 
-    static func == (lhs: Eatery, rhs: Eatery) -> Bool {
-        return lhs.id == rhs.id
-    }
+struct EateryPresentation {
 
-    var hashValue: Int {
-        return id
+    let statusText: String
+    let statusColor: UIColor
+    let nextEventText: String
+
+}
+
+private let timeFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .none
+    formatter.timeStyle = .short
+    return formatter
+}()
+
+extension Eatery {
+
+    func currentPresentation() -> EateryPresentation {
+        let statusText: String
+        let statusColor: UIColor
+        let nextEventText: String
+
+        switch currentStatus() {
+        case let .openingSoon(minutesUntilOpen):
+            statusText = "Opening"
+            statusColor = .eateryOrange
+            nextEventText = "in \(minutesUntilOpen)m"
+
+        case .open:
+            statusText = "Open"
+            statusColor = .eateryGreen
+
+            if let currentEvent = currentActiveEvent() {
+                let endTimeText = timeFormatter.string(from: currentEvent.end)
+                nextEventText = "until \(endTimeText)"
+            } else {
+                nextEventText = ""
+            }
+
+        case let .closingSoon(minutesUntilClose):
+            statusText = "Closing"
+            statusColor = .eateryOrange
+            nextEventText = "in \(minutesUntilClose)m"
+
+        case .closed:
+            statusText = "Closed"
+            statusColor = .eateryRed
+
+            if isOpenToday(), let nextEvent = currentActiveEvent() {
+                let startTimeText = timeFormatter.string(from: nextEvent.start)
+                nextEventText = "until \(startTimeText)"
+            } else {
+                nextEventText = "today"
+            }
+        }
+
+        return EateryPresentation(statusText: statusText,
+                                  statusColor: statusColor,
+                                  nextEventText: nextEventText)
     }
 
 }
