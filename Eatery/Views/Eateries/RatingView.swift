@@ -27,6 +27,11 @@ class RatingView: UIView {
         for i in 0...5{
             let container = UIImageView()
             let star = UIImageView()
+            if i == 0{
+                star.image = UIImage(named:"halfselected")
+            } else {
+                star.image = UIImage(named: "unselected")
+            }
             containerImageView.append(container)
             ratingImageView.append(star)
             addSubview(containerImageView[i])

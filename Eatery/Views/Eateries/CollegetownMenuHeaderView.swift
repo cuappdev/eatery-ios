@@ -206,97 +206,21 @@ class CollegetownMenuHeaderView: UIView {
         
         locationLabel.text = eatery.address
         
-        let star1 = ratingView.ratingImageView[0]
-        let star2 = ratingView.ratingImageView[1]
-        let star3 = ratingView.ratingImageView[2]
-        let star4 = ratingView.ratingImageView[3]
-        let star5 = ratingView.ratingImageView[4]
-
         if let rating = eatery.rating {
-            switch rating {
-            case 4.75...:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "selected")
-                star4.image = UIImage(named: "selected")
-                star5.image = UIImage(named: "selected")
-                break
-            case 4.25..<4.75:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "selected")
-                star4.image = UIImage(named: "selected")
-                star5.image = UIImage(named: "halfSelected")
-                break
-            case 3.75..<4.25:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "selected")
-                star4.image = UIImage(named: "selected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case 3.25..<3.75:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "selected")
-                star4.image = UIImage(named: "halfSelected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case 2.75..<3.25:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "selected")
-                star4.image = UIImage(named: "unselected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case 2.25..<2.75:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "halfSelected")
-                star4.image = UIImage(named: "unselected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case 1.75..<2.25:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "selected")
-                star3.image = UIImage(named: "unselected")
-                star4.image = UIImage(named: "unselected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case 1.25..<1.75:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "halfSelected")
-                star3.image = UIImage(named: "unselected")
-                star4.image = UIImage(named: "unselected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case 0.75..<1.25:
-                star1.image = UIImage(named: "selected")
-                star2.image = UIImage(named: "unselected")
-                star3.image = UIImage(named: "unselected")
-                star4.image = UIImage(named: "unselected")
-                star5.image = UIImage(named: "unselected")
-                break
-            case ..<0.75:
-                star1.image = UIImage(named: "halfSelected")
-                star2.image = UIImage(named: "unselected")
-                star3.image = UIImage(named: "unselected")
-                star4.image = UIImage(named: "unselected")
-                star5.image = UIImage(named: "unselected")
-                break
-            default:
-                star1.image = UIImage(named: "halfSelected")
-                star2.image = UIImage(named: "halfSelected")
-                star3.image = UIImage(named: "halfSelected")
-                star4.image = UIImage(named: "halfSelected")
-                star5.image = UIImage(named: "halfSelected")
+            let truncatedRating = Int(rating)
+            let deltaRating = rating - Double(truncatedRating)
+        for i in 0..<truncatedRating {
+            ratingView.ratingImageView[i].image = UIImage(named:"selected")
+        }
+            if (deltaRating < 0.25) {
+                ratingView.ratingImageView[truncatedRating].image = UIImage(named :"unselected")
+            } else if (deltaRating >= 0.25 && deltaRating < 0.75) {
+                ratingView.ratingImageView[truncatedRating].image = UIImage(named :"halfSelected")
             }
         } else {
-            star1.image = UIImage(named: "halfSelected")
-            star2.image = UIImage(named: "halfSelected")
-            star3.image = UIImage(named: "halfSelected")
-            star4.image = UIImage(named: "halfSelected")
-            star5.image = UIImage(named: "halfSelected")
+            for i in 0..<5 {
+                ratingView.ratingImageView[i].image = UIImage(named:"halfSelected")
+            }
         }
 
         let attributedString = NSMutableAttributedString(string:"$$$")

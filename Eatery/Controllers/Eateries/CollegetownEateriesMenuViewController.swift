@@ -229,7 +229,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     // Scrollview Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let statusBarOffset = UIApplication.shared.statusBarFrame.height
-        let statusBarInset = -statusBarOffset
         let scrollOffset = scrollView.contentOffset.y
         let scrollInset = -scrollOffset
         switch scrollOffset {
