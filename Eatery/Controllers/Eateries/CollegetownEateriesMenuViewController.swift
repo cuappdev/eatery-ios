@@ -233,7 +233,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         let scrollOffset = scrollView.contentOffset.y
         let scrollInset = -scrollOffset
         switch scrollOffset {
-        case -CGFloat.greatestFiniteMagnitude ..< statusBarInset:
+        case -CGFloat.greatestFiniteMagnitude ..< 0.0:
             ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: statusBarOffset/2)
             ctownMenuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollOffset)
