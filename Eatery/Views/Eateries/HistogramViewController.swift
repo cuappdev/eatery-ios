@@ -27,6 +27,8 @@ class HistogramViewController: UIViewController {
     var barViews = [UIView]()
     var barStackView: UIStackView!
     
+    var expandedWaitTimeView: (barView: UIView, waitTimeView: UIView)?
+    
     // MARK: Initializers
     
     init(frame: CGRect, data: [(Int, Int)]) {
@@ -48,7 +50,7 @@ class HistogramViewController: UIViewController {
         setUpAxis()
     }
     
-    // MARK: View set up
+    // MARK: Initial view set up
     
     private func setUpAxisLineView() {
         let axisViewFrame = CGRect(x: 0, y: 35, width: Int(view.frame.width), height: 2)
@@ -129,7 +131,13 @@ class HistogramViewController: UIViewController {
             let x = (barIndex == 0) ? barWidth : Double(barViews[barIndex - 1] .frame.maxX)
             let barFrame = CGRect(x: x!, y: 0, width: barWidth, height: barHeight)
             let barView = UIView(frame: barFrame)
+            
             roundBarViewCorners(barView: barView)
+            barView.isUserInteractionEnabled = true
+            barView.tag = barIndex
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(expandWaitTime(gestureRecognizer:)))
+            barView.addGestureRecognizer(tapGestureRecognizer)
+            
             barViews.append(barView)
             barContainerView.addSubview(barView)
             
@@ -182,9 +190,75 @@ class HistogramViewController: UIViewController {
         return formattedHour
     }
     
-    private func expandWaitTime(barIndex: Int, barView: UIView) {
-        /*let frame = CGRect(x: barView.frame.minX - 30, y: barView.frame.maxY + )
-        let waitTimeView = UIView(frame: <#T##CGRect#>)*/
+    // MARK: Event listening and corresponding utility functions
+    
+    @objc private func expandWaitTime(gestureRecognizer: UIGestureRecognizer) {
+        if let expandedWaitTimeView = expandedWaitTimeView {
+            expandedWaitTimeView.waitTimeView.removeFromSuperview()
+            
+            let restoreColorAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
+                expandedWaitTimeView.barView.backgroundColor = .histogramBarBlue
+            }
+            restoreColorAnimation.startAnimation()
+        }
+        
+        let barView = gestureRecognizer.view!
+        let selectColorAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .easeIn) {
+            barView.backgroundColor = .eateryBlue
+        }
+        selectColorAnimation.startAnimation()
+        expandedWaitTimeView = (barView: barView, waitTimeView: createExpandedWaitTimeView(barView: barView))
+    }
+    
+    private func createExpandedWaitTimeView(barView: UIView) -> UIView {
+        let waitTimeViewFrame = CGRect(x: barView.frame.midX - 50, y: 5, width: 100, height: 30)
+        let waitTimeView = UIView(frame: waitTimeViewFrame)
+        waitTimeView.layer.cornerRadius = 5
+        waitTimeView.clipsToBounds = true
+        waitTimeView.layer.borderColor = UIColor.lightGray.cgColor
+        waitTimeView.layer.borderWidth = 2
+        view.addSubview(waitTimeView)
+        
+        waitTimeView.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.height.equalTo(30)
+            make.top.equalTo(view).offset(5)
+            make.centerX.equalTo(barView)
+        }
+        
+        let labelFrame = CGRect(x: 0, y: 0, width: 45, height: 25)
+        let label = UILabel(frame: labelFrame)
+        let hourData = data[barView.tag]
+        waitTimeView.addSubview(label)
+        
+        let redLabelText = "\(hourData.minWait)-\(hourData.maxWait)m"
+        let labelText = "Now: \(redLabelText) wait"
+        let labelAttributedText = NSMutableAttributedString(string: labelText, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11)])
+        labelAttributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.eateryBlue, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11)], range: NSRange(location: 5, length: redLabelText.count))
+        label.attributedText = labelAttributedText
+        label.textAlignment = .center
+        
+        label.snp.makeConstraints { make in
+            make.width.equalTo(90)
+            make.height.equalTo(25)
+            make.center.equalToSuperview()
+        }
+        
+        let referenceViewHeight = waitTimeView.frame.maxY - barView.frame.minY
+
+        let referenceViewFrame = CGRect(x: barView.frame.midX - 1, y: 5, width: 2, height: 30)
+        let referenceView = UIView(frame: referenceViewFrame)
+        referenceView.backgroundColor = .lightGray
+        view.addSubview(referenceView)
+        
+        referenceView.snp.makeConstraints { make in
+            make.width.equalTo(2)
+            make.centerX.equalTo(barView)
+            make.top.equalTo(waitTimeView.snp.bottom)
+            make.bottom.equalTo(barView.snp.top)
+        }
+    
+        return waitTimeView
     }
     
 }

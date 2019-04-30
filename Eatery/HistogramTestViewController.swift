@@ -22,7 +22,7 @@ class HistogramTestViewController: UIViewController {
         view.backgroundColor = .white
         
         let frame = CGRect(x: 10, y: 30, width: 350, height: 150)
-        let waitTimeHistogram = HistogramViewController(frame: frame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9)])
+        let waitTimeHistogram = HistogramViewController(frame: frame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7)])
         addChildViewController(waitTimeHistogram)
         view.addSubview(waitTimeHistogram.view)
         waitTimeHistogram.didMove(toParentViewController: self)
@@ -30,7 +30,8 @@ class HistogramTestViewController: UIViewController {
         waitTimeHistogram.view.snp.makeConstraints { make in
             make.width.equalTo(350)
             make.height.equalTo(150)
-            make.top.leading.equalTo(view).offset(10)
+            make.top.equalTo(view).offset(100)
+            make.leading.equalTo(view).offset(10)
         }
     }
     
