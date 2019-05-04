@@ -215,8 +215,8 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
             make.trailing.equalToSuperview().inset(16)
         }
         
-        let frame = CGRect(x: 30, y: 30, width: 350, height: 150)
-        popularTimesHistogram = HistogramViewController(frame: frame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7)])
+        let histogramFrame = CGRect(x: 30, y: 30, width: 350, height: 150)
+        popularTimesHistogram = HistogramViewController(frame: histogramFrame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7)])
         addChildViewController(popularTimesHistogram)
         popularTimesContainer.addSubview(popularTimesHistogram.view)
         popularTimesHistogram.didMove(toParentViewController: self)
@@ -348,6 +348,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         locationLabel.hero.modifiers = fadeModifiers
         infoSeparatorView1.hero.modifiers = fadeModifiers
         infoSeparatorView2.hero.modifiers = fadeModifiers
+        popularTimesContainer.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
         menuLabel.hero.modifiers = translateModifiers
         pageViewController.view.hero.modifiers = translateModifiers
