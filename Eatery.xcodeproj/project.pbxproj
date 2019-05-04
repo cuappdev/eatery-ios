@@ -61,7 +61,6 @@
 		CE6EA61622601ADD00437ECE /* CollegetownOnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6EA61522601ADD00437ECE /* CollegetownOnboardViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		CEC6A9AE2262C854004C59E6 /* collegetownonboard.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CEC6A9AD2262C854004C59E6 /* collegetownonboard.mp4 */; };
-		CECEA97E227382BE00E97228 /* HistogramTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEA97D227382BE00E97228 /* HistogramTestViewController.swift */; };
 		CECEA9802273B6C200E97228 /* HistogramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEA97F2273B6C200E97228 /* HistogramViewController.swift */; };
 		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
@@ -216,7 +215,6 @@
 		CE6EA61522601ADD00437ECE /* CollegetownOnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownOnboardViewController.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		CEC6A9AD2262C854004C59E6 /* collegetownonboard.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = collegetownonboard.mp4; sourceTree = "<group>"; };
-		CECEA97D227382BE00E97228 /* HistogramTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramTestViewController.swift; sourceTree = "<group>"; };
 		CECEA97F2273B6C200E97228 /* HistogramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
@@ -476,7 +474,6 @@
 				C0497AEE1B64AA1800AC1C6C /* Extensions */,
 				C0497AF21B64AA1800AC1C6C /* Global */,
 				1D10A4161C67FF3400772D31 /* Layouts */,
-				CECEA97D227382BE00E97228 /* HistogramTestViewController.swift */,
 			);
 			path = Eatery;
 			sourceTree = "<group>";
@@ -907,7 +904,6 @@
 				5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */,
 				5D218C3021FBE39700327516 /* MenuHeaderView.swift in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
-				CECEA97E227382BE00E97228 /* HistogramTestViewController.swift in Sources */,
 				60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */,
 				D956DCC12187B94E001BB9B0 /* Event.swift in Sources */,
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
