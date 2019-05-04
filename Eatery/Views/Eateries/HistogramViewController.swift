@@ -12,8 +12,8 @@ class HistogramViewController: UIViewController {
     
     // MARK: Data
     var data: [(minWait: Int, maxWait: Int)]!
-    // hours in military time units
-    let hourRange = (startTime: 6, endTime: 3)
+    // hours in overflowable military time units
+    let hourRange = (startTime: 6, endTime: 24)
     var overflowingEndTime: Int!
     
     // MARK: Views and view properties
@@ -25,8 +25,7 @@ class HistogramViewController: UIViewController {
     var barWidth: Double!
     var barContainerView: UIView!
     var barViews = [UIView]()
-    var barStackView: UIStackView!
-    
+   
     var expandedWaitTimeView: (barView: UIView, waitTimeView: UIView)?
     
     // MARK: Initializers
@@ -55,14 +54,14 @@ class HistogramViewController: UIViewController {
     private func setUpAxisLineView() {
         let axisViewFrame = CGRect(x: 0, y: 35, width: Int(view.frame.width), height: 2)
         let axisView = UIView(frame: axisViewFrame)
-        axisView.backgroundColor = .lightGray
+        axisView.backgroundColor = .inactive
         view.addSubview(axisView)
         
         axisView.snp.makeConstraints { make in
             make.height.equalTo(2)
-            make.width.equalTo(view)
-            make.bottom.equalTo(view).inset(45)
-            make.leading.trailing.equalTo(view)
+            make.bottom.equalToSuperview().inset(45)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview().inset(10);
         }
     }
     
@@ -71,6 +70,7 @@ class HistogramViewController: UIViewController {
         
         let overflowingEndTime = (hourRange.endTime < hourRange.startTime) ? hourRange.endTime + 24 : hourRange.endTime
         let tickCount: Int = ((overflowingEndTime - hourRange.startTime) / 3) + 1
+        
         var x: Double = 0
         for tick in 0..<tickCount {
             let tickFrame = CGRect(x: x, y: 35, width: 2, height: 10)
@@ -78,7 +78,7 @@ class HistogramViewController: UIViewController {
             axisTickViews.append(tickView)
             view.addSubview(tickView)
             
-            tickView.backgroundColor = .lightGray
+            tickView.backgroundColor = .inactive
             tickView.snp.makeConstraints { make in
                 make.bottom.equalTo(view).inset(35)
                 make.leading.equalTo(view).offset(x)
@@ -88,9 +88,9 @@ class HistogramViewController: UIViewController {
             
             let tickLabelFrame = CGRect(x: x, y: 10, width: 30, height: 20)
             let tickLabel = UILabel(frame: tickLabelFrame)
-            let tickHour = hourRange.startTime + (tick * 3)
-            tickLabel.text = formattedHourForTime(overflowedMilitaryHour: tickHour)
-            tickLabel.textColor = .darkGray
+            let tickHour = containOverflowedMilitaryHour(hour: hourRange.startTime + (tick * 3))
+            tickLabel.text = formattedHourForTime(militaryHour: tickHour)
+            tickLabel.textColor = .secondary
             view.addSubview(tickLabel)
             
             tickLabel.snp.makeConstraints { make in
@@ -100,8 +100,8 @@ class HistogramViewController: UIViewController {
                 make.height.equalTo(15)
             }
             
-            let additionalSpacing = !(tick == 0 || tick == (tickCount - 2))
-            let xSpacingAdd: Double = (((additionalSpacing ? 2 : 0) + 1) * 2)
+            let additionalSpacing = !(tick == 0 || tick >= (tickCount - 2))
+            let xSpacingAdd: Double = (((additionalSpacing ? 2 : 0) + 1) * 2) - ((tick >= (tickCount - 2)) ? 5 : 0)
             x += (3 * barWidth) + xSpacingAdd
         }
     }
@@ -125,9 +125,11 @@ class HistogramViewController: UIViewController {
         let barCount = (overflowingEndTime - hourRange.startTime) - 2
         let frameWidth = Double(view.frame.width)
         let spacingLoss = Double(2 * (barCount - 1))
+        let maxBarHeight = Double(view.frame.height - 102) // 102 is the net space needed for other histogram components
         barWidth = (frameWidth - spacingLoss) / Double((barCount + 2))
+        
         for barIndex in 0..<barCount {
-            let barHeight = Double.random(in: 0...1) * 50
+            let barHeight = (barIndex == 0) ? maxBarHeight : Double.random(in: 0...1) * maxBarHeight
             let x = (barIndex == 0) ? barWidth : Double(barViews[barIndex - 1] .frame.maxX)
             let barFrame = CGRect(x: x!, y: 0, width: barWidth, height: barHeight)
             let barView = UIView(frame: barFrame)
@@ -174,16 +176,18 @@ class HistogramViewController: UIViewController {
     }
     
     // Overflowed military hour is a time between 0...47
-    private func formattedHourForTime(overflowedMilitaryHour: Int) -> String {
+    private func containOverflowedMilitaryHour(hour: Int) -> Int {
+        return (hour >= 24) ? hour - 24 : hour
+    }
+    
+    private func formattedHourForTime(militaryHour: Int) -> String {
         var formattedHour: String!
-        if overflowedMilitaryHour >= 24 {
-            return formattedHourForTime(overflowedMilitaryHour: overflowedMilitaryHour - 24)
-        } else if overflowedMilitaryHour > 12 {
-            formattedHour = "\(overflowedMilitaryHour - 12)p"
-        } else if overflowedMilitaryHour == 12 {
+        if militaryHour > 12 {
+            formattedHour = "\(militaryHour - 12)p"
+        } else if militaryHour == 12 {
             formattedHour = "12p"
-        } else if overflowedMilitaryHour > 0 {
-            formattedHour = "\(overflowedMilitaryHour)a"
+        } else if militaryHour > 0 {
+            formattedHour = "\(militaryHour)a"
         } else {
             formattedHour = "12a"
         }
@@ -196,14 +200,14 @@ class HistogramViewController: UIViewController {
         if let expandedWaitTimeView = expandedWaitTimeView {
             expandedWaitTimeView.waitTimeView.removeFromSuperview()
             
-            let restoreColorAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
+            let restoreColorAnimation = UIViewPropertyAnimator(duration: 0.1, curve: .easeOut) {
                 expandedWaitTimeView.barView.backgroundColor = .histogramBarBlue
             }
             restoreColorAnimation.startAnimation()
         }
         
         let barView = gestureRecognizer.view!
-        let selectColorAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .easeIn) {
+        let selectColorAnimation = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn) {
             barView.backgroundColor = .eateryBlue
         }
         selectColorAnimation.startAnimation()
@@ -215,7 +219,7 @@ class HistogramViewController: UIViewController {
         let waitTimeView = UIView(frame: waitTimeViewFrame)
         waitTimeView.layer.cornerRadius = 5
         waitTimeView.clipsToBounds = true
-        waitTimeView.layer.borderColor = UIColor.lightGray.cgColor
+        waitTimeView.layer.borderColor = UIColor.inactive.cgColor
         waitTimeView.layer.borderWidth = 2
         view.addSubview(waitTimeView)
         
@@ -231,10 +235,22 @@ class HistogramViewController: UIViewController {
         let hourData = data[barView.tag]
         waitTimeView.addSubview(label)
         
-        let redLabelText = "\(hourData.minWait)-\(hourData.maxWait)m"
-        let labelText = "Now: \(redLabelText) wait"
-        let labelAttributedText = NSMutableAttributedString(string: labelText, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11)])
-        labelAttributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.eateryBlue, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11)], range: NSRange(location: 5, length: redLabelText.count))
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        let militaryHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barView.tag + 1)
+        
+        let hourText = (currentHour == militaryHour) ? "Now" : formattedHourForTime(militaryHour: militaryHour)
+        let blueLabelText = "\(hourData.minWait)-\(hourData.maxWait)m"
+        let labelText = "\(hourText): \(blueLabelText) wait"
+        let labelAttributedText = NSMutableAttributedString(
+            string: labelText,
+            attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11, weight: .medium)]
+        )
+        labelAttributedText.addAttributes(
+            [NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
+             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12)
+            ],
+            range: NSRange(location: hourText.count + 2, length: blueLabelText.count)
+        )
         label.attributedText = labelAttributedText
         label.textAlignment = .center
         
@@ -244,11 +260,9 @@ class HistogramViewController: UIViewController {
             make.center.equalToSuperview()
         }
         
-        let referenceViewHeight = waitTimeView.frame.maxY - barView.frame.minY
-
         let referenceViewFrame = CGRect(x: barView.frame.midX - 1, y: 5, width: 2, height: 30)
         let referenceView = UIView(frame: referenceViewFrame)
-        referenceView.backgroundColor = .lightGray
+        referenceView.backgroundColor = .inactive
         view.addSubview(referenceView)
         
         referenceView.snp.makeConstraints { make in

@@ -21,7 +21,7 @@ class HistogramTestViewController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .white
         
-        let frame = CGRect(x: 10, y: 30, width: 350, height: 150)
+        let frame = CGRect(x: 30, y: 30, width: 350, height: 150)
         let waitTimeHistogram = HistogramViewController(frame: frame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7)])
         addChildViewController(waitTimeHistogram)
         view.addSubview(waitTimeHistogram.view)
@@ -31,7 +31,7 @@ class HistogramTestViewController: UIViewController {
             make.width.equalTo(350)
             make.height.equalTo(150)
             make.top.equalTo(view).offset(100)
-            make.leading.equalTo(view).offset(10)
+            make.leading.equalTo(view).offset(30)
         }
     }
     

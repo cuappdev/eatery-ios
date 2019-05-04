@@ -32,24 +32,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Set up view controllers
         
-//        eateryTabBarController = EateryTabBarController()
-//        let onboardCollegetown = !UserDefaults.standard.bool(forKey: "didOnboardToCollegetown")
-//        if onboardCollegetown {
-//            let collegetownOnboardViewController = CollegetownOnboardViewController()
-//            collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
-//
-//            eateryTabBarController.eateriesSharedViewController.pillViewController.pillView.selectRightSegment()
-//
-//            window?.rootViewController = collegetownOnboardViewController
-//
-//            UserDefaults.standard.setValue(true, forKey: "didOnboardToCollegetown")
-//        } else {
-//            window?.rootViewController = eateryTabBarController
-//        }
-//
-//        window?.makeKeyAndVisible()
-        window?.rootViewController = HistogramTestViewController()
-        window?.makeKeyAndVisible() 
+        eateryTabBarController = EateryTabBarController()
+        let onboardCollegetown = !UserDefaults.standard.bool(forKey: "didOnboardToCollegetown")
+        if onboardCollegetown {
+            let collegetownOnboardViewController = CollegetownOnboardViewController()
+            collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
+
+            eateryTabBarController.eateriesSharedViewController.pillViewController.pillView.selectRightSegment()
+
+            window?.rootViewController = collegetownOnboardViewController
+
+            UserDefaults.standard.setValue(true, forKey: "didOnboardToCollegetown")
+        } else {
+            window?.rootViewController = eateryTabBarController
+        }
+
+        window?.makeKeyAndVisible()
+        /*window?.rootViewController = HistogramTestViewController()
+        window?.makeKeyAndVisible() */
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
         UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")
