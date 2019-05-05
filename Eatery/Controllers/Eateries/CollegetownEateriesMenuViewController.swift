@@ -15,7 +15,8 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     
     var eatery: CollegetownEatery
     weak var delegate: CampusMenuButtonsDelegate?
-    
+
+    var navigationTitleLabel: UILabel!
     var outerScrollView: UIScrollView!
     var menuHeaderView: CollegetownMenuHeaderView!
     var informativeViews: [UIView]!
@@ -68,6 +69,15 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         // this is needed to enable the swipe back gesture while using HERO
         // see: https://github.com/HeroTransitions/Hero/issues/243
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+
+        navigationTitleLabel = UILabel()
+        navigationTitleLabel.isHidden = true
+        navigationTitleLabel.text = eatery.displayName
+        navigationTitleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        navigationTitleLabel.textColor = .white
+        navigationTitleLabel.minimumScaleFactor = 0.5
+        navigationTitleLabel.adjustsFontSizeToFitWidth = true
+        navigationItem.titleView = navigationTitleLabel
 
         outerScrollView = CustomScrollView()
         outerScrollView.backgroundColor = .wash
@@ -155,7 +165,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         let mapViewHeight = 306
         
         outerScrollView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-UIApplication.shared.statusBarFrame.height)
+            make.top.equalTo(view.snp.topMargin)
             make.bottom.equalTo(bottomLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
         }
@@ -190,28 +200,45 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
             make.leading.trailing.equalTo(menuHeaderView)
             make.height.equalTo(mapViewHeight)
         }
-        
+
+        // Hero Animations
+
+        hero.isEnabled = true
+        menuHeaderView.backgroundImageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
+        menuHeaderView.titleLabel.hero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
+        menuHeaderView.paymentView.hero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
+        menuHeaderView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
+
+        let fadeModifiers: [HeroModifier] = [.fade, .whenPresenting(.delay(0.35)), .useGlobalCoordinateSpace]
+        let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]
+
+        menuHeaderView.hourLabel.hero.modifiers = fadeModifiers
+        menuHeaderView.statusLabel.hero.modifiers = fadeModifiers
+        menuHeaderView.locationLabel.hero.modifiers = fadeModifiers
+        menuHeaderView.cuisineLabel.hero.modifiers = fadeModifiers
+        menuHeaderView.ratingView.hero.modifiers = fadeModifiers
+        menuHeaderView.priceLabel.hero.modifiers = fadeModifiers
+        menuHeaderView.distanceLabel.hero.modifiers = fadeModifiers
+        menuHeaderView.gradientView.hero.modifiers = fadeModifiers + [.duration(0.35)]
+        informativeViews.forEach { $0.hero.modifiers = translateModifiers }
+        mapView.hero.modifiers = translateModifiers
     }
     
     // Scrollview Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let statusBarOffset = UIApplication.shared.statusBarFrame.height
-        let statusBarInset = -statusBarOffset
         let scrollOffset = scrollView.contentOffset.y
-        let scrollInset = -scrollOffset
-        switch scrollOffset {
-        case -CGFloat.greatestFiniteMagnitude ..< statusBarInset:
-            menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: statusBarOffset/2)
+        if scrollOffset < 0 {
+            menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 0)
             menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollOffset)
-                make.height.equalTo(363).offset(363+scrollInset)
+                make.height.equalTo(363).offset(363 - scrollOffset)
             }
             menuHeaderView.backgroundImageView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
-                make.height.equalTo(258).offset(258+scrollInset)
+                make.height.equalTo(258).offset(258 - scrollOffset)
             }
-        default:
-            menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: (scrollOffset + statusBarOffset) / 4)
+        } else {
+            menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: scrollOffset / 4)
             menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
                 make.height.equalTo(363)
@@ -220,9 +247,25 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
                 make.height.equalTo(258)
             }
         }
+
+        let titleLabelFrame = view.convert(menuHeaderView.titleLabel.frame, from: menuHeaderView)
+            .offsetBy(dx: 0.0, dy: -(navigationController?.navigationBar.frame.height ?? 0.0))
+        switch -titleLabelFrame.origin.y {
+        case ..<0:
+            // the navigation title label doesn't seem to obey its initial alpha when the view first loads,
+            // so we use isHidden to hide the view until its ready to be shown. 
+            navigationTitleLabel.isHidden = true
+        case 0..<titleLabelFrame.height:
+            navigationTitleLabel.isHidden = false
+            let percentage = -titleLabelFrame.origin.y / titleLabelFrame.height
+            navigationTitleLabel.alpha = percentage
+        case titleLabelFrame.height...:
+            navigationTitleLabel.isHidden = false
+            navigationTitleLabel.alpha = 1.0
+        default:
+            break
+        }
     }
-    
-    
     
     // MKMapViewDelegate Methods
     

@@ -85,7 +85,7 @@ class CampusMenuHeaderView: UIView {
 
         paymentView.paymentMethods = eatery.paymentMethods
         
-        titleLabel.text = eatery.nickname
+        titleLabel.text = eatery.displayName
 
         if let url = eatery.imageUrl {
             let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))

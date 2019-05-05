@@ -20,7 +20,7 @@ class CollegetownMenuHeaderView: UIView {
     
     var backgroundImageView: UIImageView!
     var titleLabel: UILabel!
-    var gradientLayer: CAGradientLayer!
+    var gradientView: GradientView!
     var paymentView: PaymentMethodsView!
     var informationView: UIView!
     
@@ -36,15 +36,17 @@ class CollegetownMenuHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
+        isOpaque = false
+        backgroundColor = .white
+
         backgroundImageView = UIImageView()
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
         addSubview(backgroundImageView)
 
-        gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.6).cgColor]
-        layer.addSublayer(gradientLayer)
+        gradientView = GradientView()
+        addSubview(gradientView)
 
         titleLabel = UILabel()
         titleLabel.isOpaque = false
@@ -53,7 +55,7 @@ class CollegetownMenuHeaderView: UIView {
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.25
         addSubview(titleLabel)
-
+        
         paymentView = PaymentMethodsView()
         addSubview(paymentView)
         
@@ -106,6 +108,11 @@ class CollegetownMenuHeaderView: UIView {
         paymentView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.centerY.equalTo(titleLabel.snp.centerY)
+        }
+
+        gradientView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(backgroundImageView)
+            make.height.equalTo(backgroundImageView).multipliedBy(0.5)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -324,18 +331,6 @@ class CollegetownMenuHeaderView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradientLayer.frame = CGRect(x: 0,
-                                     y: backgroundImageView.frame.midY,
-                                     width: bounds.width,
-                                     height: backgroundImageView.frame.height / 2)
-        CATransaction.commit()
     }
     
 }

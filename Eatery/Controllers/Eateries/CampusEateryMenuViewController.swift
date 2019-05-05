@@ -61,7 +61,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Ca
         }
         
         navigationTitleView = NavigationTitleView()
-        navigationTitleView.eateryNameLabel.text = eatery.nickname
+        navigationTitleView.eateryNameLabel.text = eatery.displayName
         navigationTitleView.dateLabel.text = dateTitle
         navigationItem.titleView = navigationTitleView
         
