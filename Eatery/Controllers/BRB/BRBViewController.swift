@@ -150,7 +150,7 @@ extension BRBViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return brbAccount.swipes != "" ? 4 : 3
+            return 4
         }
         return brbAccount.history.count
     }
@@ -166,17 +166,18 @@ extension BRBViewController: UITableViewDataSource {
 
             switch indexPath.row {
             case 0:
-                cell.leftLabel.text = " City Bucks"
-                cell.rightLabel.text = "$" + brbAccount.cityBucks
+                cell.leftLabel.text = " Meal Swipes"
+                let swipesLeft = brbAccount.swipes == "" ? "Unlimited" : brbAccount.swipes
+                cell.rightLabel.text = swipesLeft
             case 1:
-                cell.leftLabel.text = " Laundry"
-                cell.rightLabel.text = "$" + brbAccount.laundry
-            case 2:
                 cell.leftLabel.text = " BRBs"
                 cell.rightLabel.text = "$" + brbAccount.brbs
-            case 3 where brbAccount.swipes != "":
-                cell.leftLabel.text = " Meal Swipes"
-                cell.rightLabel.text = brbAccount.swipes
+            case 2:
+                cell.leftLabel.text = " Laundry"
+                cell.rightLabel.text = "$" + brbAccount.laundry
+            case 3:
+                cell.leftLabel.text = " City Bucks"
+                cell.rightLabel.text = "$" + brbAccount.cityBucks
             default: break
             }
         } else {
@@ -187,7 +188,7 @@ extension BRBViewController: UITableViewDataSource {
             cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
             cell.rightLabel.font = UIFont.systemFont(ofSize: 14)
 
-            let attributedDesc = NSMutableAttributedString(string: " "+brbAccount.history[indexPath.row].name, attributes:nil)
+            let attributedDesc = NSMutableAttributedString(string: " "+brbAccount.history[indexPath.row].name + "\n " + brbAccount.history[indexPath.row].timestamp, attributes:nil)
             let newLineLoc = (attributedDesc.string as NSString).range(of: "\n").location
             if newLineLoc != NSNotFound {
                 attributedDesc.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 12), range: NSRange(location: newLineLoc + 1, length: attributedDesc.string.count - newLineLoc - 1))
@@ -196,7 +197,8 @@ extension BRBViewController: UITableViewDataSource {
             }
 
             cell.leftLabel.attributedText = attributedDesc
-            cell.rightLabel.text = brbAccount.history[indexPath.row].timestamp
+            cell.rightLabel.text = "-$" + brbAccount.history[indexPath.row].amount
+            cell.rightLabel.textColor = .eateryRed
         }
 
         return cell

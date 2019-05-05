@@ -5,6 +5,7 @@ query BrbInfo($accountId: String) {
         brbs
         swipes
         history {
+            amount
             name
             timestamp
         }

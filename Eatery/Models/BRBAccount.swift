@@ -22,5 +22,6 @@ struct BRBHistory: Codable {
 
     var name: String
     var timestamp: String
+    var amount: String
 
 }
