@@ -1,5 +1,5 @@
 //
-//  MenuHeaderView.swift
+//  CampusMenuHeaderView.swift
 //  Eatery
 //
 //  Created by Eric Appel on 11/18/15.
@@ -11,18 +11,18 @@ import SnapKit
 import Crashlytics
 import Kingfisher
 
-protocol MenuButtonsDelegate: AnyObject {
+protocol CampusMenuButtonsDelegate: AnyObject {
 
-    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView)
+    func favoriteButtonPressed(on menuHeaderView: CampusMenuHeaderView)
 
 }
 
-class MenuHeaderView: UIView {
+class CampusMenuHeaderView: UIView {
     
     var eatery: CampusEatery?
     var displayedDate: Date?
 
-    weak var delegate: MenuButtonsDelegate?
+    weak var delegate: CampusMenuButtonsDelegate?
 
     let container = UIView()
 

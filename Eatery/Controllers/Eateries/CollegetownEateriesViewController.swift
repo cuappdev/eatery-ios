@@ -42,11 +42,13 @@ class CollegetownEateriesViewController: EateriesViewController {
 
             self.allEateries = eateries
             self.updateState(.presenting, animated: true)
+
+            print("Successfully loaded \(eateries.count) collegetown eateries")
         }
     }
 
     private func showMenu(of eatery: CollegetownEatery) {
-        let menuViewController = CollegetownEateriesMenuViewController(eatery: eatery, delegate: self)
+        let menuViewController = CollegetownEateriesMenuViewController(eatery: eatery, delegate: self, userLocation: userLocation)
         navigationController?.pushViewController(menuViewController, animated: true)
     }
 

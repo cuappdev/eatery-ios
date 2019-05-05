@@ -14,16 +14,26 @@ class EateriesSharedViewController: UIViewController {
     
     // Scroll
 
-    var lastContentOffset: CGFloat = 0
+    private var lastContentOffset: CGFloat = 0
 
     // View Controllers
 
-    private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
-    private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
+    let campusEateriesViewController = CampusEateriesViewController()
+    let collegetownEateriesViewController = CollegetownEateriesViewController()
 
-    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                                  rightViewController: collegetownEateriesViewController)
-    
+    let pillViewController: PillViewController
+
+    init() {
+        self.pillViewController = PillViewController(leftViewController: campusEateriesViewController,
+                                                     rightViewController: collegetownEateriesViewController)
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) will not be implemented")
+    }
+
     var activeViewController: EateriesViewController {
         if pillViewController.pillView.leftSegmentSelected {
             return campusEateriesViewController

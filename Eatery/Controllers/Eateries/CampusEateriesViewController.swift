@@ -51,6 +51,8 @@ class CampusEateriesViewController: EateriesViewController {
             self.updateState(.presenting, animated: true)
 
             self.pushPreselectedEateryIfPossible()
+
+            print("Successfully loaded \(eateries.count) campus eateries")
         }
     }
 

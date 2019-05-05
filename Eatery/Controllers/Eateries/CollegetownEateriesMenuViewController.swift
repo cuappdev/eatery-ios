@@ -6,6 +6,7 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import Hero
 import Crashlytics
 import MapKit
 import UIKit
@@ -13,71 +14,46 @@ import UIKit
 class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var eatery: CollegetownEatery
-    var delegate: MenuButtonsDelegate?
+    weak var delegate: CampusMenuButtonsDelegate?
     
     var outerScrollView: UIScrollView!
-    var backButton: UIButton!
-    var ctownMenuHeaderView: CollegetownMenuHeaderView!
+    var menuHeaderView: CollegetownMenuHeaderView!
     var informativeViews: [UIView]!
 
     var mapView: MKMapView
     let eateryAnnotation = MKPointAnnotation()
-    var locationManager: CLLocationManager!
-    var userLocation: CLLocation {
-        return locationManager?.location ?? .olinLibrary
-    }
+    let userLocation: CLLocation
 
     var defaultCoordinate: CLLocationCoordinate2D!
     var midpointCoordinate: CLLocationCoordinate2D!
     var delta: (lat: Double, lon: Double)!
     var maxDelta = (lat: 2/69.172, lon: 2/51.2738554594)
 
-    init(eatery: CollegetownEatery, delegate: MenuButtonsDelegate?){
+    init(eatery: CollegetownEatery, delegate: CampusMenuButtonsDelegate?, userLocation userLoc: CLLocation? = nil) {
         self.eatery = eatery
         self.delegate = delegate
         self.mapView = MKMapView()
+        self.userLocation = userLoc ?? .olinLibrary
+
         super.init(nibName: nil, bundle: nil)
         
         mapView.delegate = self
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
 
         defaultCoordinate = eatery.location.coordinate
 
-        midpointCoordinate = CLLocationCoordinate2D.midpoint(between: userLocation.coordinate,
-                                                             and: eatery.location.coordinate)
+        midpointCoordinate = .midpoint(between: userLocation.coordinate,
+                                       and: eatery.location.coordinate)
 
         delta = CLLocationCoordinate2D.deltaLatLon(between: userLocation.coordinate,
                                                    and: eatery.location.coordinate)
-
-        if CLLocationManager.locationServicesEnabled() {
-            switch (CLLocationManager.authorizationStatus()) {
-            case .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-                mapView.showsUserLocation = true
-            case .notDetermined:
-                if locationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)) {
-                    locationManager.requestWhenInUseAuthorization()
-                }
-            default: break
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
+
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.navigationBar.isHidden = false
     }
     
     override func viewDidLoad() {
@@ -88,7 +64,11 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
                 return !(view is UIButton)
             }
         }
-        
+
+        // this is needed to enable the swipe back gesture while using HERO
+        // see: https://github.com/HeroTransitions/Hero/issues/243
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+
         outerScrollView = CustomScrollView()
         outerScrollView.backgroundColor = .wash
         outerScrollView.delegate = self
@@ -97,18 +77,12 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         outerScrollView.alwaysBounceVertical = true
         outerScrollView.delaysContentTouches = false
         view.addSubview(outerScrollView)
-        
-        ctownMenuHeaderView = CollegetownMenuHeaderView()
-        ctownMenuHeaderView.set(eatery: eatery, userLocation: userLocation)
-        ctownMenuHeaderView.isUserInteractionEnabled = true
-        outerScrollView.addSubview(ctownMenuHeaderView)
-        
-        backButton = UIButton()
-        backButton.setImage(UIImage(named: "back"), for: .normal)
-        backButton.isUserInteractionEnabled = true
-        backButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-        outerScrollView.addSubview(backButton)
-        
+
+        menuHeaderView = CollegetownMenuHeaderView()
+        menuHeaderView.set(eatery: eatery, userLocation: userLocation)
+        menuHeaderView.isUserInteractionEnabled = true
+        outerScrollView.addSubview(menuHeaderView)
+
         informativeViews = [UIView]()
         
         for i in 0...2 {
@@ -118,7 +92,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
             informativeViews.append(informativeView)
             
             var gesture : UITapGestureRecognizer!
-            switch i{
+            switch i {
             case 0:
                 gesture = UITapGestureRecognizer(target: self, action: #selector(getDirections))
             case 1:
@@ -187,40 +161,33 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         }
         outerScrollView.contentSize = CGSize(width: screenSize, height: CGFloat(ctownMenuHeaderViewHeight + informativeViewHeight*3 + mapViewHeight + 47))
         
-        ctownMenuHeaderView.snp.makeConstraints { make in
+        menuHeaderView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view)
             make.height.equalTo(ctownMenuHeaderViewHeight)
         }
         
-        backButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(55)
-            make.leading.equalToSuperview().offset(11)
-            make.height.equalTo(20)
-            make.width.equalTo(75)
-        }
-        
         informativeViews[0].snp.makeConstraints { make in
-            make.top.equalTo(ctownMenuHeaderView.informationView.snp.bottom).offset(13)
-            make.leading.trailing.equalTo(ctownMenuHeaderView)
+            make.top.equalTo(menuHeaderView.informationView.snp.bottom).offset(13)
+            make.leading.trailing.equalTo(menuHeaderView)
             make.height.equalTo(informativeViewHeight+1)
         }
         
         informativeViews[1].snp.makeConstraints { make in
             make.top.equalTo(informativeViews[0].snp.bottom).offset(1)
-            make.leading.trailing.equalTo(ctownMenuHeaderView)
+            make.leading.trailing.equalTo(menuHeaderView)
             make.height.equalTo(informativeViewHeight)
         }
         
         informativeViews[2].snp.makeConstraints { make in
             make.top.equalTo(informativeViews[1].snp.bottom).offset(1)
-            make.leading.trailing.equalTo(ctownMenuHeaderView)
+            make.leading.trailing.equalTo(menuHeaderView)
             make.height.equalTo(informativeViewHeight)
         }
         
         mapView.snp.makeConstraints { make in
             make.top.equalTo(informativeViews[2].snp.bottom).offset(11)
-            make.leading.trailing.equalTo(ctownMenuHeaderView)
+            make.leading.trailing.equalTo(menuHeaderView)
             make.height.equalTo(mapViewHeight)
         }
         
@@ -234,29 +201,23 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         let scrollInset = -scrollOffset
         switch scrollOffset {
         case -CGFloat.greatestFiniteMagnitude ..< statusBarInset:
-            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: statusBarOffset/2)
-            ctownMenuHeaderView.snp.updateConstraints { make in
+            menuHeaderView.backgroundImageView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: statusBarOffset/2)
+            menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview().offset(scrollOffset)
                 make.height.equalTo(363).offset(363+scrollInset)
             }
-            ctownMenuHeaderView.backgroundImageView.snp.updateConstraints { make in
+            menuHeaderView.backgroundImageView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
                 make.height.equalTo(258).offset(258+scrollInset)
             }
-            backButton.snp.updateConstraints { make in
-                make.top.equalToSuperview().offset(55+scrollOffset+statusBarOffset)
-            }
         default:
-            ctownMenuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: (scrollOffset + statusBarOffset) / 4)
-            ctownMenuHeaderView.snp.updateConstraints { make in
+            menuHeaderView.backgroundImageView.transform = CGAffineTransform(translationX: 0.0, y: (scrollOffset + statusBarOffset) / 4)
+            menuHeaderView.snp.updateConstraints { make in
                 make.top.equalToSuperview()
                 make.height.equalTo(363)
             }
-            ctownMenuHeaderView.backgroundImageView.snp.updateConstraints { make in
+            menuHeaderView.backgroundImageView.snp.updateConstraints { make in
                 make.height.equalTo(258)
-            }
-            backButton.snp.updateConstraints { make in
-                make.top.equalToSuperview().offset(55)
             }
         }
     }
@@ -283,10 +244,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         annotationView.image = annotation.subtitle == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
         
         return annotationView
-    }
-    
-    @objc private func goBack() {
-        navigationController?.popViewController(animated: true)
     }
     
     @objc private func getDirections() {
@@ -336,7 +293,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     
     @objc private func openMapViewController() {
         let eateries = [eatery]
-        //eateries.append(eatery)
         
         let mapViewController = MapViewController(eateries: eateries)
         navigationController?.pushViewController(mapViewController, animated: true)

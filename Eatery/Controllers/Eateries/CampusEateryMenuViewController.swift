@@ -10,13 +10,13 @@ private let TitleDateFormatter: DateFormatter = {
     return formatter
 }()
 
-class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
+class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, CampusMenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
 
     var eatery: CampusEatery
     var outerScrollView: UIScrollView!
     var pageViewController: TabbedPageViewController!
-    var menuHeaderView: MenuHeaderView!
-    var delegate: MenuButtonsDelegate?
+    var menuHeaderView: CampusMenuHeaderView!
+    var delegate: CampusMenuButtonsDelegate?
     let displayedDate: Date
     var selectedMeal: String?
     var userLocation: CLLocation?
@@ -26,7 +26,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)
     }
     
-    init(eatery: CampusEatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil, userLocation: CLLocation? = nil) {
+    init(eatery: CampusEatery, delegate: CampusMenuButtonsDelegate?, date: Date = Date(), meal: String? = nil, userLocation: CLLocation? = nil) {
         self.eatery = eatery
         self.delegate = delegate
         self.displayedDate = date
@@ -44,6 +44,8 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
 
         view.backgroundColor = .clear
 
+        // this is needed to enable the swipe back gesture while using HERO
+        // see: https://github.com/HeroTransitions/Hero/issues/243
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         let dateString = TitleDateFormatter.string(from: displayedDate)
@@ -96,7 +98,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         }
         
         // Header Views
-        menuHeaderView = MenuHeaderView()
+        menuHeaderView = CampusMenuHeaderView()
         menuHeaderView.set(eatery: eatery, date: displayedDate)
         menuHeaderView.delegate = self
         contentView.addSubview(menuHeaderView)
@@ -279,10 +281,10 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         scrollToCurrentTimeOpening(displayedDate)
 
         // Hero Animations
+
         hero.isEnabled = true
         menuHeaderView.backgroundImageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
         menuHeaderView.titleLabel.hero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
-        distanceLabel.hero.id = EateriesViewController.AnimationKey.distanceLabel.id(eatery: eatery)
         menuHeaderView.paymentView.hero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
         contentContainer.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
 
@@ -290,13 +292,12 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         let translateModifiers = fadeModifiers + [.translate(y: 32), .timingFunction(.deceleration)]
 
         menuHeaderView.favoriteButton.hero.modifiers = fadeModifiers
-        // timeImageView.hero.modifiers = fadeModifiers
         hoursLabel.hero.modifiers = fadeModifiers
         statusLabel.hero.modifiers = fadeModifiers
-        // locationImageView.hero.modifiers = fadeModifiers
         locationLabel.hero.modifiers = fadeModifiers
         infoSeparatorView.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
+        distanceLabel.hero.modifiers = fadeModifiers
         menuLabel.hero.modifiers = translateModifiers
         pageViewController.view.hero.modifiers = translateModifiers
     }
@@ -351,7 +352,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
     // MARK: -
     // MARK: MenuButtonsDelegate
     
-    func favoriteButtonPressed(on view: MenuHeaderView) {
+    func favoriteButtonPressed(on view: CampusMenuHeaderView) {
         delegate?.favoriteButtonPressed(on: view)
     }
 

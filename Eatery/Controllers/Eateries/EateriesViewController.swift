@@ -70,7 +70,6 @@ class EateriesViewController: UIViewController {
         case title = "title"
         case starIcon = "starIcon"
         case paymentView = "paymentView"
-        case distanceLabel = "distanceLabel"
         case infoContainer = "infoContainer"
 
         func id(eatery: Eatery) -> String {
@@ -506,9 +505,9 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
         cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
         cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
-        cell.distanceLabel.hero.id = AnimationKey.distanceLabel.id(eatery: eatery)
         cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
         cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
+        cell.distanceLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
 
         if .presenting == state,
             let searchText = searchBar.text, !searchText.isEmpty,
@@ -691,9 +690,9 @@ extension EateriesViewController: UIScrollViewDelegate {
 
 // MARK: - Menu Buttons Delegate
 
-extension EateriesViewController: MenuButtonsDelegate {
+extension EateriesViewController: CampusMenuButtonsDelegate {
 
-    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView) {
+    func favoriteButtonPressed(on menuHeaderView: CampusMenuHeaderView) {
         reloadEateries()
     }
 

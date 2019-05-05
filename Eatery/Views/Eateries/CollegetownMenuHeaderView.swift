@@ -17,8 +17,6 @@ class CollegetownMenuHeaderView: UIView {
         formatter.timeStyle = .short
         return formatter
     }()
-
-    var backButton: UIButton!
     
     var backgroundImageView: UIImageView!
     var titleLabel: UILabel!
