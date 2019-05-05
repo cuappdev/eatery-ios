@@ -8,13 +8,13 @@
 
 import UIKit
 
+// TODO: Create a protocol that encapsulates all Swipe Data and make HistogramViewController independent of Eatery variables
 class HistogramViewController: UIViewController {
     
     // MARK: Data
-    var swipeData: [SwipeData]!
-    var swipeDataByHours = [Int: [SwipeData]]()
+    var swipeData: EaterySwipeData!
     // hours in overflowable military time units
-    let hourRange = (startTime: 6, endTime: 24)
+    let hourRange = (startTime: 6, endTime: 3)
     var overflowingEndTime: Int!
     
     // MARK: Views and view properties
@@ -31,7 +31,7 @@ class HistogramViewController: UIViewController {
     
     // MARK: Initializers
     
-    init(frame: CGRect, swipeData: [SwipeData]) {
+    init(frame: CGRect, swipeData: EaterySwipeData) {
         super.init(nibName: nil, bundle: nil)
         
         self.viewFrame = frame
@@ -46,7 +46,6 @@ class HistogramViewController: UIViewController {
     override func viewDidLoad() {
         view.frame = viewFrame
         
-        mapSwipeDataToHours()
         setUpBarViews()
         setUpAxis()
     }
@@ -127,8 +126,8 @@ class HistogramViewController: UIViewController {
         barWidth = (frameWidth - spacingLoss) / Double((barCount + 2))
         
         for barIndex in 0..<barCount {
-            let barHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barIndex)
-            let barHeight = averageSwipeDensityForHour(militaryHour: barHour) * maxBarHeight
+            let barHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barIndex + 1)
+            let barHeight = swipeData.averageSwipeDensityForHour(militaryHour: barHour) * maxBarHeight
             let barView = UIView()
             
             roundBarViewCorners(barView: barView)
@@ -191,29 +190,6 @@ class HistogramViewController: UIViewController {
         return formattedHour
     }
     
-    private func mapSwipeDataToHours() {
-        for swipeDataPoint in swipeData {
-            var pointsInSameHour = swipeDataByHours[swipeDataPoint.militaryHour]
-            if pointsInSameHour != nil {
-                pointsInSameHour!.append(swipeDataPoint)
-            } else {
-                swipeDataByHours[swipeDataPoint.militaryHour] = [swipeDataPoint]
-            }
-        }
-    }
-    
-    private func averageSwipeDensityForHour(militaryHour: Int) -> Double {
-        let swipeDataForHour = swipeDataByHours[militaryHour]
-        guard swipeDataForHour != nil else { return 0 }
-        
-        var averageSwipeDensity: Double = 0
-        for swipeDataPointInHour in swipeDataForHour! {
-            averageSwipeDensity += swipeDataPointInHour.swipeDensity
-        }
-        
-        return averageSwipeDensity / Double(swipeDataForHour!.count)
-    }
-    
     // MARK: Event listening and corresponding utility functions
     
     @objc private func expandWaitTime(gestureRecognizer: UIGestureRecognizer) {
@@ -238,7 +214,7 @@ class HistogramViewController: UIViewController {
     
     private func createExpandedWaitTimeView(barView: UIView) -> UIView? {
         let barHour = barView.tag
-        guard swipeDataByHours[barHour] != nil else { return nil }
+        guard swipeData.swipeDataForHour(hour: barHour) != nil else { return nil }
         
         let waitTimeView = UIView()
         waitTimeView.layer.cornerRadius = 5
@@ -248,21 +224,30 @@ class HistogramViewController: UIViewController {
         view.addSubview(waitTimeView)
         
         waitTimeView.snp.makeConstraints { make in
-            make.width.equalTo(100)
+            make.width.equalTo(110)
             make.height.equalTo(30)
             make.top.equalTo(view).offset(5)
             make.centerX.equalTo(barView)
         }
         
         let label = UILabel()
-        let hourSwipeData = swipeDataByHours[barHour]!
         waitTimeView.addSubview(label)
         
-        let currentHour = Calendar.current.component(.hour, from: Date())
-        //let militaryHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barView.tag + 1)
+        let date = Date()
+        let currentHour = Calendar.current.component(.hour, from: date)
+        var waitTimes: (waitTimeLow: Int, waitTimeHigh: Int)!
+        if currentHour == barHour {
+            let currentMinute = Calendar.current.component(.minute, from: date)
+            waitTimes = swipeData.waitTimeFor(hour: currentHour, minute: currentMinute)
+        } else {
+            waitTimes = swipeData.waitTimeFor(hour: barHour, minute: 0)
+        }
+        if waitTimes == nil {
+            waitTimes = (waitTimeLow: 0, waitTimeHigh: 0)
+        }
         
         let hourText = (currentHour == barHour) ? "Now" : formattedHourForTime(militaryHour: barHour)
-        let blueLabelText = "\(hourSwipeData[0].waitTimeLow)-\(hourSwipeData[0].waitTimeHigh)m"
+        let blueLabelText = "\(waitTimes.waitTimeLow)-\(waitTimes.waitTimeHigh)m"
         let labelText = "\(hourText): \(blueLabelText) wait"
         let labelAttributedText = NSMutableAttributedString(
             string: labelText,

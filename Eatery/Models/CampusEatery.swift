@@ -63,7 +63,7 @@ struct CampusEatery: Eatery {
 
     let events: [DayString: [EventName: Event]]
     
-    let swipeData: [SwipeData]
+    let swipeData: EaterySwipeData
 
     let allEvents: [Event]
 
@@ -90,7 +90,7 @@ struct CampusEatery: Eatery {
         slug: String,
         events: [String: [String: Event]],
         diningMenu: [String : [Menu.Item]]?,
-        swipeData: [SwipeData]) {
+        swipeData: EaterySwipeData) {
 
         self.id = id
         self.name = name

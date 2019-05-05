@@ -112,7 +112,7 @@ struct NetworkManager {
                     eventItems[dateString] = eventsDictionary
                 }
                 
-                var swipeData: [SwipeData] = []
+                var swipeDataPoints = [SwipeDataPoint]()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "h:mm a"
                 for swipeDatum in eatery.swipeData {
@@ -126,13 +126,15 @@ struct NetworkManager {
                     var swipeDatumEndMinute = Calendar.current.component(.minute, from: swipeDatumEndDate!)
                     swipeDatumEndMinute = (swipeDatumEndMinute == 0) ? 60 : swipeDatumEndMinute
                     
-                    let swipeDataPoint = SwipeData(militaryHour: swipeDatumStartHour,
-                                                   minuteRange: swipeDatumStartMinute...swipeDatumEndMinute,
-                                                   swipeDensity: swipeDatum.swipeDensity,
-                                                   waitTimeLow: swipeDatum.waitTimeLow,
-                                                   waitTimeHigh: swipeDatum.waitTimeHigh)
-                    swipeData.append(swipeDataPoint)
+                    let swipeDataPoint = SwipeDataPoint(eateryId: eatery.id,
+                                                        militaryHour: swipeDatumStartHour,
+                                                        minuteRange: swipeDatumStartMinute...swipeDatumEndMinute,
+                                                        swipeDensity: swipeDatum.swipeDensity,
+                                                        waitTimeLow: swipeDatum.waitTimeLow,
+                                                        waitTimeHigh: swipeDatum.waitTimeHigh)
+                    swipeDataPoints.append(swipeDataPoint)
                 }
+                let eaterySwipeData = EaterySwipeData(swipeDataPoints: swipeDataPoints)
 
                 return CampusEatery(id: eatery.id,
                               name: eatery.name,
@@ -146,7 +148,7 @@ struct NetworkManager {
                               slug: eatery.slug,
                               events: eventItems,
                               diningMenu: diningItems,
-                              swipeData: swipeData)
+                              swipeData: eaterySwipeData)
             }
 
             completion(finalEateries, nil)

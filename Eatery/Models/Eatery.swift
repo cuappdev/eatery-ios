@@ -56,8 +56,9 @@ enum EateryStatus {
 
 }
 
-struct SwipeData {
+struct SwipeDataPoint {
     
+    let eateryId: Int
     let militaryHour: Int
     let minuteRange: ClosedRange<Int>
     let swipeDensity: Double
