@@ -56,6 +56,16 @@ enum EateryStatus {
 
 }
 
+struct SwipeData {
+    
+    let militaryHour: Int
+    let minuteRange: ClosedRange<Int>
+    let swipeDensity: Double
+    let waitTimeLow: Int
+    let waitTimeHigh: Int
+    
+}
+
 protocol Eatery {
 
     /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)

@@ -62,6 +62,8 @@ struct CampusEatery: Eatery {
     let phone: String
 
     let events: [DayString: [EventName: Event]]
+    
+    let swipeData: [SwipeData]
 
     let allEvents: [Event]
 
@@ -87,7 +89,8 @@ struct CampusEatery: Eatery {
         phone: String,
         slug: String,
         events: [String: [String: Event]],
-        diningMenu: [String : [Menu.Item]]?) {
+        diningMenu: [String : [Menu.Item]]?,
+        swipeData: [SwipeData]) {
 
         self.id = id
         self.name = name
@@ -110,6 +113,7 @@ struct CampusEatery: Eatery {
         }
 
         self.allEvents = events.flatMap { $0.value.map { $0.value } }
+        self.swipeData = swipeData
     }
 
     func diningItems(onDayOf date: Date) -> [Menu.Item] {

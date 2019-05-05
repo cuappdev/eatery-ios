@@ -11,7 +11,8 @@ import UIKit
 class HistogramViewController: UIViewController {
     
     // MARK: Data
-    var data: [(minWait: Int, maxWait: Int)]!
+    var swipeData: [SwipeData]!
+    var swipeDataByHours = [Int: [SwipeData]]()
     // hours in overflowable military time units
     let hourRange = (startTime: 6, endTime: 24)
     var overflowingEndTime: Int!
@@ -30,11 +31,11 @@ class HistogramViewController: UIViewController {
     
     // MARK: Initializers
     
-    init(frame: CGRect, data: [(Int, Int)]) {
+    init(frame: CGRect, swipeData: [SwipeData]) {
         super.init(nibName: nil, bundle: nil)
         
         self.viewFrame = frame
-        self.data = data
+        self.swipeData = swipeData
         overflowingEndTime = (hourRange.endTime < hourRange.startTime) ? hourRange.endTime + 24 : hourRange.endTime
     }
     
@@ -45,6 +46,7 @@ class HistogramViewController: UIViewController {
     override func viewDidLoad() {
         view.frame = viewFrame
         
+        mapSwipeDataToHours()
         setUpBarViews()
         setUpAxis()
     }
@@ -125,12 +127,13 @@ class HistogramViewController: UIViewController {
         barWidth = (frameWidth - spacingLoss) / Double((barCount + 2))
         
         for barIndex in 0..<barCount {
-            let barHeight = (barIndex == 0) ? maxBarHeight : Double.random(in: 0...1) * maxBarHeight
+            let barHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barIndex)
+            let barHeight = averageSwipeDensityForHour(militaryHour: barHour) * maxBarHeight
             let barView = UIView()
             
             roundBarViewCorners(barView: barView)
             barView.isUserInteractionEnabled = true
-            barView.tag = barIndex
+            barView.tag = barHour
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(expandWaitTime(gestureRecognizer:)))
             barView.addGestureRecognizer(tapGestureRecognizer)
             
@@ -188,6 +191,29 @@ class HistogramViewController: UIViewController {
         return formattedHour
     }
     
+    private func mapSwipeDataToHours() {
+        for swipeDataPoint in swipeData {
+            var pointsInSameHour = swipeDataByHours[swipeDataPoint.militaryHour]
+            if pointsInSameHour != nil {
+                pointsInSameHour!.append(swipeDataPoint)
+            } else {
+                swipeDataByHours[swipeDataPoint.militaryHour] = [swipeDataPoint]
+            }
+        }
+    }
+    
+    private func averageSwipeDensityForHour(militaryHour: Int) -> Double {
+        let swipeDataForHour = swipeDataByHours[militaryHour]
+        guard swipeDataForHour != nil else { return 0 }
+        
+        var averageSwipeDensity: Double = 0
+        for swipeDataPointInHour in swipeDataForHour! {
+            averageSwipeDensity += swipeDataPointInHour.swipeDensity
+        }
+        
+        return averageSwipeDensity / Double(swipeDataForHour!.count)
+    }
+    
     // MARK: Event listening and corresponding utility functions
     
     @objc private func expandWaitTime(gestureRecognizer: UIGestureRecognizer) {
@@ -201,14 +227,19 @@ class HistogramViewController: UIViewController {
         }
         
         let barView = gestureRecognizer.view!
+        guard let expandedWaitTimeView = createExpandedWaitTimeView(barView: barView) else { return }
+        
         let selectColorAnimation = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn) {
             barView.backgroundColor = .eateryBlue
         }
         selectColorAnimation.startAnimation()
-        expandedWaitTimeView = (barView: barView, waitTimeView: createExpandedWaitTimeView(barView: barView))
+        self.expandedWaitTimeView = (barView: barView, waitTimeView: expandedWaitTimeView)
     }
     
-    private func createExpandedWaitTimeView(barView: UIView) -> UIView {
+    private func createExpandedWaitTimeView(barView: UIView) -> UIView? {
+        let barHour = barView.tag
+        guard swipeDataByHours[barHour] != nil else { return nil }
+        
         let waitTimeView = UIView()
         waitTimeView.layer.cornerRadius = 5
         waitTimeView.clipsToBounds = true
@@ -224,14 +255,14 @@ class HistogramViewController: UIViewController {
         }
         
         let label = UILabel()
-        let hourData = data[barView.tag]
+        let hourSwipeData = swipeDataByHours[barHour]!
         waitTimeView.addSubview(label)
         
         let currentHour = Calendar.current.component(.hour, from: Date())
-        let militaryHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barView.tag + 1)
+        //let militaryHour = containOverflowedMilitaryHour(hour: hourRange.startTime + barView.tag + 1)
         
-        let hourText = (currentHour == militaryHour) ? "Now" : formattedHourForTime(militaryHour: militaryHour)
-        let blueLabelText = "\(hourData.minWait)-\(hourData.maxWait)m"
+        let hourText = (currentHour == barHour) ? "Now" : formattedHourForTime(militaryHour: barHour)
+        let blueLabelText = "\(hourSwipeData[0].waitTimeLow)-\(hourSwipeData[0].waitTimeHigh)m"
         let labelText = "\(hourText): \(blueLabelText) wait"
         let labelAttributedText = NSMutableAttributedString(
             string: labelText,
