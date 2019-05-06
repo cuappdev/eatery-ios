@@ -23,6 +23,8 @@ class EateriesSharedViewController: UIViewController {
 
     let pillViewController: PillViewController
 
+    private var showPillOnScrollStopTimer: Timer?
+
     init() {
         self.pillViewController = PillViewController(leftViewController: campusEateriesViewController,
                                                      rightViewController: collegetownEateriesViewController)
@@ -125,11 +127,15 @@ class EateriesSharedViewController: UIViewController {
 extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
+        showPillOnScrollStopTimer?.invalidate()
+
         lastContentOffset = scrollView.contentOffset.y
     }
 
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidStopScrolling scrollView: UIScrollView) {
-        pillViewController.setShowPill(true, animated: true)
+        showPillOnScrollStopTimer = Timer.scheduledTimer(withTimeInterval: 0.35, repeats: false) { [weak self] _ in
+            self?.pillViewController.setShowPill(true, animated: true)
+        }
     }
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {

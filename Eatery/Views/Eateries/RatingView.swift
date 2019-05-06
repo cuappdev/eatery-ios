@@ -13,8 +13,7 @@ class RatingView: UIView {
     var containerView: UIView!
     var containerImageView: [UIImageView]!
     var ratingImageView: [UIImageView]!
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -24,9 +23,14 @@ class RatingView: UIView {
         containerImageView = [UIImageView]()
         ratingImageView = [UIImageView]()
         
-        for i in 0...5{
+        for i in 0...5 {
             let container = UIImageView()
             let star = UIImageView()
+            if i == 0 {
+                star.image = UIImage(named:"halfselected")
+            } else {
+                star.image = UIImage(named: "unselected")
+            }
             containerImageView.append(container)
             ratingImageView.append(star)
             addSubview(containerImageView[i])
@@ -35,8 +39,12 @@ class RatingView: UIView {
         
         setupConstraints()
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    func setupConstraints(){
+    func setupConstraints() {
         
         let containerOffset = 0.5
         let starInset = 1.75
@@ -96,10 +104,5 @@ class RatingView: UIView {
             make.edges.equalTo(containerImageView[0]).inset(starInset)
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 
 }

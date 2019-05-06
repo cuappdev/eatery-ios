@@ -101,7 +101,7 @@ class PillViewController: UIViewController {
     }
 
     func setShowPill(_ showPill: Bool, animated: Bool) {
-        let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
+        let animation = UIViewPropertyAnimator(duration: 0.35, curve: .easeOut) {
             self.isShowingPill = showPill
             self.view.layoutIfNeeded()
         }

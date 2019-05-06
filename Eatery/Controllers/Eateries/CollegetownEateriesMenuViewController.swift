@@ -48,7 +48,11 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         delta = CLLocationCoordinate2D.deltaLatLon(between: userLocation.coordinate,
                                                    and: eatery.location.coordinate)
     }
-    
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) will not be implemented")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -345,10 +349,6 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
         mapItem.name = eatery.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }
