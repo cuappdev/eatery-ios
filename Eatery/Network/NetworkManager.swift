@@ -114,7 +114,7 @@ struct NetworkManager {
                 
                 var swipeDataPoints = [SwipeDataPoint]()
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
+                dateFormatter.dateFormat = "HH:mm"
                 for swipeDatum in eatery.swipeData {
                     guard let swipeDatum = swipeDatum else { continue }
                     
