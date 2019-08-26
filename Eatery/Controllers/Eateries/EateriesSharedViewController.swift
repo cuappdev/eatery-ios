@@ -15,6 +15,8 @@ class EateriesSharedViewController: UIViewController {
     // Scroll
 
     var lastContentOffset: CGFloat = 0
+    
+    private var showPillOnScrollStopTimer: Timer?
 
     // View Controllers
 
@@ -115,23 +117,40 @@ class EateriesSharedViewController: UIViewController {
 extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
+        showPillOnScrollStopTimer?.invalidate()
+        showPillOnScrollStopTimer = nil
+        
         lastContentOffset = scrollView.contentOffset.y
     }
 
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidStopScrolling scrollView: UIScrollView) {
-        pillViewController.setShowPill(true, animated: true)
+        showPillOnScrollStopTimer = Timer.scheduledTimer(withTimeInterval: 0.35, repeats: false) { [weak self] _ in
+            self?.pillViewController.setShowPill(true, animated: true)
+        }
     }
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y
-        
-        if lastContentOffset > offset, !pillViewController.isShowingPill {
-            pillViewController.setShowPill(true, animated: true)
-        } else if lastContentOffset < offset, pillViewController.isShowingPill {
-            pillViewController.setShowPill(false, animated: true)
+        let adjustedOffset: CGFloat // the y offset adjusted for bars and any internal contentInset
+        if #available(iOS 11.0, *) {
+            adjustedOffset = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
+        } else {
+            adjustedOffset = scrollView.contentOffset.y + scrollView.contentInset.top
         }
-
-        lastContentOffset = offset
+        
+        if adjustedOffset < 0 {
+            // disregard when the scrollView is "bounced"
+            lastContentOffset = 0
+        } else {
+            let isScrollingDownward = adjustedOffset > lastContentOffset
+            
+            if isScrollingDownward, pillViewController.isShowingPill {
+                pillViewController.setShowPill(false, animated: true)
+            } else if !isScrollingDownward, !pillViewController.isShowingPill {
+                pillViewController.setShowPill(true, animated: true)
+            }
+            
+            lastContentOffset = adjustedOffset
+        }
     }
 
 }
