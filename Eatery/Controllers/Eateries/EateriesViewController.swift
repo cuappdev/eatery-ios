@@ -79,13 +79,7 @@ class EateriesViewController: UIViewController {
 
     }
 
-    enum Group: CaseIterable {
-        case favorites
-        case open
-        case closed
-    }
-
-    typealias EateriesByGroup = [Group: [Eatery]]
+    typealias EateriesByGroup = (favorites: [Eatery], open: [Eatery], closed: [Eatery])
 
     enum State: Equatable {
 
@@ -125,16 +119,6 @@ class EateriesViewController: UIViewController {
 
     private var state: State = .loading
     private var eateriesByGroup: EateriesByGroup?
-    private var presentedGroups: [Group] {
-        guard let eateriesByGroup = eateriesByGroup else {
-            return []
-        }
-
-        return Group.allCases
-            .enumerated()
-            .filter({ !eateriesByGroup[$0.element, default: []].isEmpty })
-            .map { $0.element }
-    }
 
     private var updateTimer: Timer?
 
@@ -400,7 +384,7 @@ class EateriesViewController: UIViewController {
         let favorites = sortedEateries.filter { $0.isFavorite }
         let open = sortedEateries.filter { !$0.isFavorite && $0.isOpen(atExactly: Date()) }
         let closed = sortedEateries.filter { !$0.isFavorite && !$0.isOpen(atExactly: Date()) }
-        return [.favorites: favorites, .open: open, .closed: closed]
+        return (favorites: favorites, open: open, closed: closed)
     }
 
     private func reloadEateries() {
@@ -416,10 +400,12 @@ class EateriesViewController: UIViewController {
 
             eateriesByGroup = eateriesByGroup(from: eateries, sortedUsing: sortMethod)
         } else {
-            eateriesByGroup = [:]
+            eateriesByGroup = (favorites: [], open: [], closed: [])
         }
 
-        collectionView.reloadData()
+        UIView.performWithoutAnimation {
+            collectionView.reloadSections(IndexSet(1...3))
+        }
     }
 
     private func highlightedText(for eatery: Eatery) -> NSAttributedString? {
@@ -458,7 +444,12 @@ class EateriesViewController: UIViewController {
 extension EateriesViewController {
 
     private func eateries(in section: Int) -> [Eatery] {
-        return eateriesByGroup?[presentedGroups[section - 1]] ?? []
+        switch section {
+        case 1: return eateriesByGroup?.favorites ?? []
+        case 2: return eateriesByGroup?.open ?? []
+        case 3: return eateriesByGroup?.closed ?? []
+        default: return []
+        }
     }
 
 }
@@ -468,15 +459,15 @@ extension EateriesViewController {
 extension EateriesViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1 + presentedGroups.count
+        return 4
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 1
-        } else {
-            return eateries(in: section).count
         }
+        
+        return eateries(in: section).count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -489,57 +480,55 @@ extension EateriesViewController: UICollectionViewDataSource {
             }
             
             return cell
-            
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.eatery.rawValue, for: indexPath) as! EateryCollectionViewCell
-            let eatery = eateries(in: indexPath.section)[indexPath.row]
-            cell.eatery = eatery
-            cell.userLocation = userLocation
-            
-            cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
-            cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
-            cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
-            cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
-            cell.distanceLabel.hero.id = AnimationKey.distanceLabel.id(eatery: eatery)
-            cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
-            cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
-            
-            if .presenting == state,
-                let searchText = searchBar.text, !searchText.isEmpty,
-                let text = highlightedText(for: eatery) {
-                cell.menuTextView.attributedText = text
-                cell.isMenuTextViewVisible = true
-            } else {
-                cell.isMenuTextViewVisible = false
-            }
-            
-            return cell
         }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.eatery.rawValue, for: indexPath) as! EateryCollectionViewCell
+        let eatery = eateries(in: indexPath.section)[indexPath.row]
+        cell.eatery = eatery
+        cell.userLocation = userLocation
+        
+        cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
+        cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
+        cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
+        cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
+        cell.distanceLabel.hero.id = AnimationKey.distanceLabel.id(eatery: eatery)
+        cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
+        cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
+        
+        if .presenting == state,
+            let searchText = searchBar.text, !searchText.isEmpty,
+            let text = highlightedText(for: eatery) {
+            cell.menuTextView.attributedText = text
+            cell.isMenuTextViewVisible = true
+        } else {
+            cell.isMenuTextViewVisible = false
+        }
+        
+        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if indexPath.section == 0 {
-            // This header should never be called since collectionView(layout:referenceSizeForHeaderInSection) should
-            // return CGSize.zero for section 0, but to be safe an empty header view is provided
+        if indexPath.section == 0 || eateries(in: indexPath.section).isEmpty {
             return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue, for: indexPath)
-        } else {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue, for: indexPath) as! EateriesCollectionViewHeaderView
-            
-            let group = presentedGroups[indexPath.section - 1]
-            switch group {
-            case .favorites:
-                header.titleLabel.text = "Favorites"
-                header.titleLabel.textColor = .eateryBlue
-            case .open:
-                header.titleLabel.text = "Open"
-                header.titleLabel.textColor = .eateryBlue
-            case .closed:
-                header.titleLabel.text = "Closed"
-                header.titleLabel.textColor = .gray
-            }
-            
-            return header
         }
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue, for: indexPath) as! EateriesCollectionViewHeaderView
+        
+        switch indexPath.section {
+        case 1:
+            header.titleLabel.text = "Favorites"
+            header.titleLabel.textColor = .eateryBlue
+        case 2:
+            header.titleLabel.text = "Open"
+            header.titleLabel.textColor = .eateryBlue
+        case 3:
+            header.titleLabel.text = "Closed"
+            header.titleLabel.textColor = .gray
+        default:
+            break
+        }
+        
+        return header
     }
 
 }
@@ -599,29 +588,31 @@ extension EateriesViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.section == 0 {
             let height = searchFilterContainer.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             return CGSize(width: collectionView.bounds.width, height: height)
-        } else {
-            return gridLayout.itemSize
         }
+        
+        return gridLayout.itemSize
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
+        if section == 0 || eateries(in: section).isEmpty {
             return .zero
-        } else {
-            return gridLayout.sectionInset
         }
+        
+        return gridLayout.sectionInset
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
-            // Returning CGSize.zero here causes the collectionView to not
-            // query for a header at all
+        if section == 0 || eateries(in: section).isEmpty {
+            // Returning CGSize.zero here causes the collectionView to not query for a header at
+            // all, but collectionView(_:viewForSupplementaryElementOfKind:at:) returns a blank
+            // header to be safe
             return .zero
-        } else {
-            return gridLayout.headerReferenceSize
         }
+        
+        return gridLayout.headerReferenceSize
     }
     
 }
@@ -636,7 +627,6 @@ extension EateriesViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         reloadEateries()
-        searchBar.becomeFirstResponder()
     }
 
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
