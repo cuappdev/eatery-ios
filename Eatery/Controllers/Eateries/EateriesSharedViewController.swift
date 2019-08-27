@@ -50,6 +50,7 @@ class EateriesSharedViewController: UIViewController {
         super.viewDidLoad()
 
         setUpNavigationItem()
+        setUpNavigationBar()
         setUpChildViewControllers()
         setUpPillView()
     }
@@ -68,6 +69,24 @@ class EateriesSharedViewController: UIViewController {
         let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(openMap))
         mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
         navigationItem.rightBarButtonItems = [mapButton]
+    }
+    
+    private func setUpNavigationBar() {
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            
+            let logo = UIImageView(image: UIImage(named: "appDevLogo"))
+            logo.tintColor = .white
+            logo.contentMode = .scaleAspectFit
+            navigationController?.navigationBar.addSubview(logo)
+            logo.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.size.equalTo(28.0)
+            }
+            
+            campusEateriesViewController.appDevLogo = logo
+            collegetownEateriesViewController.appDevLogo = logo
+        }
     }
 
     private func setUpChildViewControllers() {

@@ -105,10 +105,12 @@ class EateriesViewController: UIViewController {
     }
 
     private enum CellIdentifier: String {
+        case container
         case eatery
     }
 
     private enum SupplementaryViewIdentifier: String {
+        case empty
         case header
     }
 
@@ -136,34 +138,27 @@ class EateriesViewController: UIViewController {
 
     private var updateTimer: Timer?
 
-    // Presentation Views
+    // Views
 
     weak var delegate: EateriesViewControllerDelegate?
-
-    private var appDevLogo: UIView!
-
-    private let refreshControl = UIRefreshControl()
-
     weak var scrollDelegate: EateriesViewControllerScrollDelegate?
+    
+    var appDevLogo: UIView?
+    
+    private var gridLayout: EateriesCollectionViewGridLayout!
+    private var collectionView: UICollectionView!
+    private var refreshControl: UIRefreshControl!
 
-    private let searchBar = UISearchBar()
-
-    private let filterBar = FilterBar()
+    private var searchFilterContainer: UIView!
+    private var searchBar: UISearchBar!
+    private var filterBar: FilterBar!
     var availableFilters: [Filter] {
         get { return filterBar.displayedFilters }
         set { filterBar.displayedFilters = newValue }
     }
 
-    private let collectionView = UICollectionView(frame: .zero,
-                                                  collectionViewLayout: EateriesCollectionViewGridLayout())
-
-    // Overlay Views
-
-    private let failedToLoadView = EateriesFailedToLoadView(frame: .zero)
-
-    private let activityIndicator = NVActivityIndicatorView(frame: .zero,
-                                                            type: .circleStrokeSpin,
-                                                            color: .transparentEateryBlue)
+    private var failedToLoadView: EateriesFailedToLoadView!
+    private var activityIndicator: NVActivityIndicatorView!
 
     // Location
 
@@ -180,106 +175,10 @@ class EateriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
-
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-
-            let logo = UIImageView(image: UIImage(named: "appDevLogo"))
-            logo.tintColor = .white
-            logo.contentMode = .scaleAspectFit
-            navigationController?.navigationBar.addSubview(logo)
-            logo.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(28.0)
-            }
-
-            appDevLogo = logo
-        }
-
-        // collection view
-
-        refreshControl.tintColor = .white
-        refreshControl.addTarget(self, action: #selector(refreshEateries), for: .valueChanged)
-
-        collectionView.refreshControl = refreshControl
-        collectionView.backgroundColor = .white
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.delaysContentTouches = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(EateryCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CellIdentifier.eatery.rawValue)
-        collectionView.register(EateriesCollectionViewHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue)
-
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        // bars
-
-        let barsContainerView = UIView()
-        barsContainerView.backgroundColor = nil
-        collectionView.addSubview(barsContainerView)
-        barsContainerView.snp.makeConstraints { make in
-            make.centerX.width.equalToSuperview()
-        }
-
-        searchBar.searchBarStyle = .minimal
-        searchBar.backgroundColor = .white
-        searchBar.delegate = self
-        searchBar.placeholder = "Search eateries and menus"
-        searchBar.autocapitalizationType = .none
-        searchBar.enablesReturnKeyAutomatically = false
-
-        view.addSubview(searchBar)
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(barsContainerView)
-            make.leading.trailing.equalToSuperview().inset(8)
-        }
-
-        // filter bar
-
-        filterBar.delegate = self
-
-        view.addSubview(filterBar)
-        filterBar.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(barsContainerView)
-        }
-
-        barsContainerView.layoutIfNeeded()
-        let height = barsContainerView.frame.height
-        barsContainerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-height)
-        }
-        collectionView.contentInset.top = height
-
-        // activity indicator
-
-        view.addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(44)
-        }
-
-        // failed to load
-
-        failedToLoadView.delegate = self
-        view.addSubview(failedToLoadView)
-        failedToLoadView.snp.makeConstraints { make in
-            make.center.equalTo(view.layoutMarginsGuide.snp.center)
-            make.top.greaterThanOrEqualTo(view.snp.topMargin).inset(16)
-            make.leading.greaterThanOrEqualToSuperview()
-            make.trailing.lessThanOrEqualToSuperview()
-            make.bottom.lessThanOrEqualTo(view.snp.bottomMargin).inset(16)
-            make.edges.equalTo(view.snp.margins).priority(.high)
-        }
+        setUpCollectionView()
+        setUpSearchAndFilterBars()
+        setUpActivityIndicator()
+        setUpFailedToLoadView()
 
         // set up loading state
 
@@ -289,13 +188,94 @@ class EateriesViewController: UIViewController {
         filterBar.alpha = 0
 
         activityIndicator.startAnimating()
-
         failedToLoadView.alpha = 0
 
         updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             guard let `self` = self else { return }
             print("Updating \(type(of: self))", Date())
             self.collectionView.reloadData()
+        }
+    }
+    
+    private func setUpCollectionView() {
+        gridLayout = EateriesCollectionViewGridLayout()
+        
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout)
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.delaysContentTouches = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(UICollectionViewCell.self,
+                                forCellWithReuseIdentifier: CellIdentifier.container.rawValue)
+        collectionView.register(EateryCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CellIdentifier.eatery.rawValue)
+        collectionView.register(UICollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue)
+        collectionView.register(EateriesCollectionViewHeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue)
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        refreshControl = UIRefreshControl(frame: .zero)
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(refreshEateries), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+    }
+    
+    private func setUpSearchAndFilterBars() {
+        searchFilterContainer = UIView()
+        
+        searchBar = UISearchBar(frame: .zero)
+        searchBar.searchBarStyle = .minimal
+        searchBar.backgroundColor = .white
+        searchBar.delegate = self
+        searchBar.placeholder = "Search eateries and menus"
+        searchBar.autocapitalizationType = .none
+        searchBar.enablesReturnKeyAutomatically = false
+        searchFilterContainer.addSubview(searchBar)
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(searchFilterContainer)
+            make.leading.trailing.equalToSuperview().inset(8)
+        }
+        
+        filterBar = FilterBar(frame: .zero)
+        filterBar.delegate = self
+        searchFilterContainer.addSubview(filterBar)
+        filterBar.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(searchFilterContainer)
+        }
+    }
+    
+    private func setUpActivityIndicator() {
+        activityIndicator = NVActivityIndicatorView(frame: .zero,
+                                                    type: .circleStrokeSpin,
+                                                    color: .transparentEateryBlue)
+        view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(44)
+        }
+    }
+    
+    private func setUpFailedToLoadView() {
+        failedToLoadView = EateriesFailedToLoadView(frame: .zero)
+        failedToLoadView.delegate = self
+        view.addSubview(failedToLoadView)
+        failedToLoadView.snp.makeConstraints { make in
+            make.center.equalTo(view.layoutMarginsGuide.snp.center)
+            make.top.greaterThanOrEqualTo(view.snp.topMargin).inset(16)
+            make.leading.greaterThanOrEqualToSuperview()
+            make.trailing.lessThanOrEqualToSuperview()
+            make.bottom.lessThanOrEqualTo(view.snp.bottomMargin).inset(16)
+            make.edges.equalTo(view.snp.margins).priority(.high)
         }
     }
 
@@ -372,36 +352,29 @@ class EateriesViewController: UIViewController {
 
     /// Fade in and animate the cells of the collection view
     private func animateCollectionViewCells() {
-        collectionView.performBatchUpdates(nil, completion: { _ in
-            let cells: [UIView] = self.collectionView.visibleCells
-            let headers: [UIView] = self.collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader)
-
-            func trueY(view: UIView) -> CGFloat {
-                if view.superview != self.view {
-                    return self.view.convert(view.frame, from: self.collectionView).origin.y
-                } else {
-                    return view.frame.origin.y
-                }
-            }
-
-            let views = (cells + headers).sorted { trueY(view: $0) < trueY(view: $1) }
-
-            for view in views {
-                view.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
-                view.alpha = 0.0
-            }
-
-            self.collectionView.isHidden = false
-
-            var delay: TimeInterval = 0.15
-            for view in views {
-                delay += 0.08
-                UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
-                    view.transform = .identity
-                    view.alpha = 1.0
-                }, completion: nil)
-            }
-        })
+        // `layoutIfNeeded` forces the collectionView to add cells and headers
+        collectionView.layoutIfNeeded()
+        collectionView.isHidden = false
+        
+        let cells = collectionView.visibleCells as [UIView]
+        let headers = collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader) as [UIView]
+        let views = (cells + headers).sorted {
+            $0.convert($0.bounds, to: nil).minY < $1.convert($1.bounds, to: nil).minY
+        }
+        
+        for view in views {
+            view.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
+            view.alpha = 0.0
+        }
+        
+        var delay: TimeInterval = 0.15
+        for view in views {
+            delay += 0.08
+            UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
+                view.transform = .identity
+                view.alpha = 1.0
+            }, completion: nil)
+        }
     }
 
     // MARK: Refresh
@@ -471,6 +444,12 @@ class EateriesViewController: UIViewController {
             collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        gridLayout.invalidateLayout()
+    }
 
 }
 
@@ -479,7 +458,7 @@ class EateriesViewController: UIViewController {
 extension EateriesViewController {
 
     private func eateries(in section: Int) -> [Eatery] {
-        return eateriesByGroup?[presentedGroups[section]] ?? []
+        return eateriesByGroup?[presentedGroups[section - 1]] ?? []
     }
 
 }
@@ -489,56 +468,78 @@ extension EateriesViewController {
 extension EateriesViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return presentedGroups.count
+        return 1 + presentedGroups.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return eateries(in: section).count
+        if section == 0 {
+            return 1
+        } else {
+            return eateries(in: section).count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.eatery.rawValue, for: indexPath) as! EateryCollectionViewCell
-        let eatery = eateries(in: indexPath.section)[indexPath.row]
-        cell.eatery = eatery
-        cell.userLocation = userLocation
-
-        cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
-        cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
-        cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
-        cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
-        cell.distanceLabel.hero.id = AnimationKey.distanceLabel.id(eatery: eatery)
-        cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
-        cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
-
-        if .presenting == state,
-            let searchText = searchBar.text, !searchText.isEmpty,
-            let text = highlightedText(for: eatery) {
-            cell.menuTextView.attributedText = text
-            cell.isMenuTextViewVisible = true
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.container.rawValue, for: indexPath)
+            
+            cell.contentView.addSubview(searchFilterContainer)
+            searchFilterContainer.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            return cell
+            
         } else {
-            cell.isMenuTextViewVisible = false
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.eatery.rawValue, for: indexPath) as! EateryCollectionViewCell
+            let eatery = eateries(in: indexPath.section)[indexPath.row]
+            cell.eatery = eatery
+            cell.userLocation = userLocation
+            
+            cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
+            cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
+            cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
+            cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
+            cell.distanceLabel.hero.id = AnimationKey.distanceLabel.id(eatery: eatery)
+            cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
+            cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
+            
+            if .presenting == state,
+                let searchText = searchBar.text, !searchText.isEmpty,
+                let text = highlightedText(for: eatery) {
+                cell.menuTextView.attributedText = text
+                cell.isMenuTextViewVisible = true
+            } else {
+                cell.isMenuTextViewVisible = false
+            }
+            
+            return cell
         }
-
-        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue, for: indexPath) as! EateriesCollectionViewHeaderView
-
-        let group = presentedGroups[indexPath.section]
-        switch group {
-        case .favorites:
-            header.titleLabel.text = "Favorites"
-            header.titleLabel.textColor = .eateryBlue
-        case .open:
-            header.titleLabel.text = "Open"
-            header.titleLabel.textColor = .eateryBlue
-        case .closed:
-            header.titleLabel.text = "Closed"
-            header.titleLabel.textColor = .gray
+        if indexPath.section == 0 {
+            // This header should never be called since collectionView(layout:referenceSizeForHeaderInSection) should
+            // return CGSize.zero for section 0, but to be safe an empty header view is provided
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue, for: indexPath)
+        } else {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue, for: indexPath) as! EateriesCollectionViewHeaderView
+            
+            let group = presentedGroups[indexPath.section - 1]
+            switch group {
+            case .favorites:
+                header.titleLabel.text = "Favorites"
+                header.titleLabel.textColor = .eateryBlue
+            case .open:
+                header.titleLabel.text = "Open"
+                header.titleLabel.textColor = .eateryBlue
+            case .closed:
+                header.titleLabel.text = "Closed"
+                header.titleLabel.textColor = .gray
+            }
+            
+            return header
         }
-
-        return header
     }
 
 }
@@ -555,8 +556,9 @@ extension EateriesViewController: UICollectionViewDelegate {
     // Cell "Bounce" when selected
 
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
-            return
+        guard let cell = collectionView.cellForItem(at: indexPath),
+            cell.reuseIdentifier == CellIdentifier.eatery.rawValue else {
+                return
         }
 
         UIView.animate(withDuration: 0.35,
@@ -570,8 +572,9 @@ extension EateriesViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
-            return
+        guard let cell = collectionView.cellForItem(at: indexPath),
+            cell.reuseIdentifier == CellIdentifier.eatery.rawValue else {
+                return
         }
 
         UIView.animate(withDuration: 0.35,
@@ -586,16 +589,41 @@ extension EateriesViewController: UICollectionViewDelegate {
 
 }
 
-// MARK: - Collection View Flow Layout Delegate
+// MARK: - Collection View Delegate Flow Layout
 
 extension EateriesViewController: UICollectionViewDelegateFlowLayout {
-
+ 
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            let height = searchFilterContainer.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            return CGSize(width: collectionView.bounds.width, height: height)
+        } else {
+            return gridLayout.itemSize
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 {
+            return .zero
+        } else {
+            return gridLayout.sectionInset
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 56.0)
+        if section == 0 {
+            // Returning CGSize.zero here causes the collectionView to not
+            // query for a header at all
+            return .zero
+        } else {
+            return gridLayout.headerReferenceSize
+        }
     }
-
+    
 }
 
 // MARK: - Search Bar Delegate
@@ -608,6 +636,7 @@ extension EateriesViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         reloadEateries()
+        searchBar.becomeFirstResponder()
     }
 
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
