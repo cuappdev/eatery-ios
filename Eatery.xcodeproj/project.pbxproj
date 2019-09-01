@@ -21,6 +21,9 @@
 		5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2921FBE39700327516 /* EateryCollectionViewCell.swift */; };
 		5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */; };
 		5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C4721FC136E00327516 /* CLLocation+Distance.swift */; };
+		5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D44519B231D45AE0035164F /* BRBBalanceTableViewCell.swift */; };
+		5D44519E231D45C30035164F /* BRBHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D44519D231D45C30035164F /* BRBHistoryTableViewCell.swift */; };
+		5D4451A0231D51FE0035164F /* BRBLoginErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D44519F231D51FE0035164F /* BRBLoginErrorView.swift */; };
 		5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */; };
 		5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */; };
 		5D856458222A2D4E003A712B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D856457222A2D4E003A712B /* Menu.swift */; };
@@ -40,15 +43,17 @@
 		5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */; };
 		5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */; };
 		5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */; };
-		5DEF1AA7222B570100855902 /* BRBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */; };
+		5DF1772D231C46DA00194D14 /* BRBConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */; };
+		5DF1772F231C470100194D14 /* BRBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1772E231C470100194D14 /* BRBLoginViewController.swift */; };
+		5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF17730231C471C00194D14 /* BRBAccountViewController.swift */; };
+		5DF17733231C4BA200194D14 /* BRBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF17732231C4BA200194D14 /* BRBViewController.swift */; };
+		5DF17737231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF17736231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift */; };
 		60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */; };
 		6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6502AF861DCFB9ED00390EAA /* FilterBar.swift */; };
 		654E37411DEEA738000E4FAB /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E37401DEEA738000E4FAB /* Sort.swift */; };
 		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
 		892A06E061931FC9506733A0 /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
-		9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */; };
-		9584FE511CDD6C3B001A3AB5 /* BRBLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */; };
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
 		A7EBF8F274D563F7CE96F82D /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */; };
@@ -89,7 +94,6 @@
 		E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4181BE67C2300089CE5 /* TabbedPageViewController.swift */; };
 		E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */; };
 		E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
-		F0EFD2461DDBBF9D007D63B1 /* BRBTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +161,9 @@
 		5D218C2921FBE39700327516 /* EateryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryCollectionViewCell.swift; sourceTree = "<group>"; };
 		5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		5D218C4721FC136E00327516 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
+		5D44519B231D45AE0035164F /* BRBBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBBalanceTableViewCell.swift; sourceTree = "<group>"; };
+		5D44519D231D45C30035164F /* BRBHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		5D44519F231D51FE0035164F /* BRBLoginErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBLoginErrorView.swift; sourceTree = "<group>"; };
 		5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
 		5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEateriesViewController.swift; sourceTree = "<group>"; };
 		5D856457222A2D4E003A712B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -175,6 +182,10 @@
 		5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
+		5DF1772E231C470100194D14 /* BRBLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBLoginViewController.swift; sourceTree = "<group>"; };
+		5DF17730231C471C00194D14 /* BRBAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountViewController.swift; sourceTree = "<group>"; };
+		5DF17732231C4BA200194D14 /* BRBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBViewController.swift; sourceTree = "<group>"; };
+		5DF17736231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBPrivacyStatementViewController.swift; sourceTree = "<group>"; };
 		60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6502AF861DCFB9ED00390EAA /* FilterBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBar.swift; sourceTree = "<group>"; };
 		652AE53A1C707EBC00B7245A /* EateriesInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesInterfaceController.swift; sourceTree = "<group>"; };
@@ -195,9 +206,7 @@
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImages.swift; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
-		9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBViewController.swift; sourceTree = "<group>"; };
 		9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBConnectionHandler.swift; sourceTree = "<group>"; };
-		9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBLoginView.swift; sourceTree = "<group>"; };
 		9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
 		9584FE541CDD7A26001A3AB5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -235,7 +244,6 @@
 		E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineTabBarView.swift; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9CFC0A81C0E4A3000ED884A /* appendix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = appendix.json; path = "Extra Eatery Data/appendix.json"; sourceTree = "<group>"; };
-		F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBTableViewCell.swift; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -325,7 +333,9 @@
 		5D218C4621FBE43200327516 /* BRB */ = {
 			isa = PBXGroup;
 			children = (
-				F0EFD2451DDBBF9D007D63B1 /* BRBTableViewCell.swift */,
+				5D44519B231D45AE0035164F /* BRBBalanceTableViewCell.swift */,
+				5D44519D231D45C30035164F /* BRBHistoryTableViewCell.swift */,
+				5D44519F231D51FE0035164F /* BRBLoginErrorView.swift */,
 				5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */,
 				5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */,
 				5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */,
@@ -408,10 +418,12 @@
 		9584FE531CDD6C40001A3AB5 /* BRB */ = {
 			isa = PBXGroup;
 			children = (
-				5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */,
 				9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */,
-				9584FE4C1CDD6C3B001A3AB5 /* BRBLoginView.swift */,
-				9584FE491CDD6C3B001A3AB5 /* BRBViewController.swift */,
+				5DF17732231C4BA200194D14 /* BRBViewController.swift */,
+				5DF1772E231C470100194D14 /* BRBLoginViewController.swift */,
+				5DF17736231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift */,
+				5DF17730231C471C00194D14 /* BRBAccountViewController.swift */,
+				5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */,
 			);
 			path = BRB;
 			sourceTree = "<group>";
@@ -869,25 +881,33 @@
 			files = (
 				5DE1D42B225E95EB008054F4 /* CollegetownMenuHeaderView.swift in Sources */,
 				5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */,
+				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
+				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
 				5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,
 				65E93179206C186B00547D14 /* Keys.swift in Sources */,
 				D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */,
 				E93CD4171BE67AC400089CE5 /* CampusEateryMenuViewController.swift in Sources */,
+				5D4451A0231D51FE0035164F /* BRBLoginErrorView.swift in Sources */,
 				5DD8A8962315843900ED25FD /* EateriesCollectionViewGridLayout.swift in Sources */,
 				5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */,
 				E93CD4191BE67C2300089CE5 /* TabbedPageViewController.swift in Sources */,
 				5D218C3E21FBE39700327516 /* LookAheadHeaderView.swift in Sources */,
 				5D218C3D21FBE39700327516 /* FilterDateView.swift in Sources */,
+				5DF17733231C4BA200194D14 /* BRBViewController.swift in Sources */,
 				5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */,
 				D956DCB42187B4B1001BB9B0 /* NetworkManager.swift in Sources */,
+				5DF1772D231C46DA00194D14 /* BRBConnectionHandler.swift in Sources */,
 				5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */,
+				5DF17737231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift in Sources */,
 				9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */,
 				5DE1D427225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift in Sources */,
+				5DF1772F231C470100194D14 /* BRBLoginViewController.swift in Sources */,
 				5D856458222A2D4E003A712B /* Menu.swift in Sources */,
+				5D44519E231D45C30035164F /* BRBHistoryTableViewCell.swift in Sources */,
 				5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */,
 				654E37411DEEA738000E4FAB /* Sort.swift in Sources */,
 				5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */,
@@ -902,18 +922,14 @@
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
-				F0EFD2461DDBBF9D007D63B1 /* BRBTableViewCell.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
-				9584FE511CDD6C3B001A3AB5 /* BRBLoginView.swift in Sources */,
 				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
 				5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */,
 				CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */,
 				C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */,
-				9584FE501CDD6C3B001A3AB5 /* BRBConnectionHandler.swift in Sources */,
-				5DEF1AA7222B570100855902 /* BRBViewController.swift in Sources */,
 				D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */,
 				5DACA8F7225B78B0009B0A2F /* CollegetownEatery.swift in Sources */,
 				C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */,
