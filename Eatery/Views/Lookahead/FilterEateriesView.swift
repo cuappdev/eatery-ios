@@ -20,6 +20,8 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
     private let dateAndMealSeparator = UIView()
 
+    private(set) var separatorY: CGFloat = 0
+
     private let filterMealsContainer = UIView()
     private let filterBreakfastButton = UIButton()
     private let filterLunchButton = UIButton()
@@ -184,6 +186,12 @@ class FilterEateriesView: UIView, UIGestureRecognizerDelegate {
 
     @objc private func didFilterMeal(_ sender: UIButton) {
         delegate?.filterEateriesView(self, didFilterMeal: sender)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        separatorY = dateAndMealSeparator.convert(dateAndMealSeparator.bounds, to: self).maxY
     }
 
 }
