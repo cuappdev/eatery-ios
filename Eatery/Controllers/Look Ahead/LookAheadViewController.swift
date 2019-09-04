@@ -244,7 +244,9 @@ class LookAheadViewController: UIViewController {
     }
 
     private func computeFilterViewPosition() {
-        filterView.frame.origin.y = max(0, -(tableView.contentOffset.y + filterView.frame.height))
+        filterView.frame.origin.y = max(
+            view.layoutMargins.top - filterView.separatorY,
+            -(tableView.contentOffset.y + filterView.frame.height))
     }
 
 }
