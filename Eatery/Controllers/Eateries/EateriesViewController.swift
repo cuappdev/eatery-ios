@@ -66,6 +66,7 @@ protocol EateriesViewControllerScrollDelegate: AnyObject {
 
  This view controller was intended to abstract shared functionality from the
  `CampusEateriesViewController` and `CollegetownEateriesViewController`. As such it is (somewhat)
+ losely coupled with both of them.
 
  The `EateriesViewController` has three states:
 
