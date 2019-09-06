@@ -6,6 +6,7 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import os.log
 import CoreLocation
 import UIKit
 
@@ -39,6 +40,8 @@ class CollegetownEateriesViewController: EateriesViewController {
 
                 return
             }
+
+            os_log("Successfully loaded %d collegetown eateries", eateries.count)
 
             self.allEateries = eateries
             self.updateState(.presenting, animated: true)

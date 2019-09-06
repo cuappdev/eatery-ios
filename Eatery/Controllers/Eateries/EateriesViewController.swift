@@ -60,6 +60,25 @@ protocol EateriesViewControllerScrollDelegate: AnyObject {
 
 // MARK: - Eateries View Controller
 
+/**
+ The `EateriesViewController` manages the presentation of Eateries. It works closely with its data
+ source to control the content it displays.
+
+ This view controller was intended to abstract shared functionality from the
+ `CampusEateriesViewController` and `CollegetownEateriesViewController`. As such it is (somewhat)
+ losely coupled with both of them.
+
+ The `EateriesViewController` has three states:
+
+ 1. presenting - eateries are actively presented and the Eateries View Controller can query its data
+ source for updated Eateries whenever
+ 2. loading - a loading indicator is displayed and no eateries are presented. The Eateries View
+ Controller will not query its data source for Eateries in this state.
+ 3. failedToLoad - an error view is displayed and no eateries are presented. The Eateries View
+ Controller will not query its data source for Eateries in this state.
+
+ States are able to be transitioned between freely.
+ */
 class EateriesViewController: UIViewController {
 
     static let collectionViewMargin: CGFloat = 16
@@ -164,21 +183,13 @@ class EateriesViewController: UIViewController {
         setUpActivityIndicator()
         setUpFailedToLoadView()
 
-        // set up loading state
-
         collectionView.alpha = 0
-
         searchBar.alpha = 0
         filterBar.alpha = 0
-
         activityIndicator.startAnimating()
         failedToLoadView.alpha = 0
 
-        updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-            guard let `self` = self else { return }
-            print("Updating \(type(of: self))", Date())
-            self.collectionView.reloadData()
-        }
+        scheduleUpdateTimer()
     }
     
     private func setUpCollectionView() {
@@ -288,7 +299,7 @@ class EateriesViewController: UIViewController {
             fadeIn(views: [activityIndicator], animated: true)
 
         case .presenting:
-            reloadEateries()
+            reloadEateries(animated: false)
 
             fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
 
@@ -387,7 +398,8 @@ class EateriesViewController: UIViewController {
         return (favorites: favorites, open: open, closed: closed)
     }
 
-    private func reloadEateries() {
+    private func reloadEateries(animated: Bool) {
+        let newEateriesByGroup: EateriesByGroup
         if let dataSource = dataSource {
             let searchText = searchBar.text ?? ""
             let eateries = dataSource.eateriesViewController(self,
@@ -398,13 +410,33 @@ class EateriesViewController: UIViewController {
                                                                sortMethodWithSearchText: searchText,
                                                                filters: filterBar.selectedFilters)
 
-            eateriesByGroup = eateriesByGroup(from: eateries, sortedUsing: sortMethod)
+            newEateriesByGroup = eateriesByGroup(from: eateries, sortedUsing: sortMethod)
         } else {
-            eateriesByGroup = (favorites: [], open: [], closed: [])
+            newEateriesByGroup = (favorites: [], open: [], closed: [])
         }
 
-        UIView.performWithoutAnimation {
-            collectionView.reloadSections(IndexSet(1...3))
+        if let oldEateriesByGroup = eateriesByGroup {
+            let oldEateriesById = (oldEateriesByGroup.favorites.map { $0.id },
+                                   oldEateriesByGroup.open.map { $0.id },
+                                   oldEateriesByGroup.closed.map { $0.id })
+            let newEateriesById = (newEateriesByGroup.favorites.map { $0.id },
+                                   newEateriesByGroup.open.map { $0.id },
+                                   newEateriesByGroup.closed.map { $0.id })
+
+            if oldEateriesById == newEateriesById {
+                return
+            }
+        }
+
+        self.eateriesByGroup = newEateriesByGroup
+
+        let actions: () -> Void = {
+            self.collectionView.reloadSections(IndexSet(1...3))
+        }
+        if animated {
+            actions()
+        } else {
+            UIView.performWithoutAnimation(actions)
         }
     }
 
@@ -435,6 +467,21 @@ class EateriesViewController: UIViewController {
         super.viewWillLayoutSubviews()
         
         gridLayout.invalidateLayout()
+    }
+
+    // MARK: Update Timer
+
+    private func scheduleUpdateTimer() {
+        // update the timer on the minute
+        let seconds = 60 - (Calendar.current.dateComponents([.second], from: Date()).second ?? 0)
+
+        updateTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
+            guard let self = self else { return }
+            print("Updating \(type(of: self))", Date())
+            self.reloadEateries(animated: true)
+
+            self.scheduleUpdateTimer()
+        }
     }
 
 }
@@ -626,7 +673,7 @@ extension EateriesViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        reloadEateries()
+        reloadEateries(animated: false)
     }
 
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
@@ -640,7 +687,7 @@ extension EateriesViewController: UISearchBarDelegate {
 extension EateriesViewController: FilterBarDelegate {
 
     func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter]) {
-        reloadEateries()
+        reloadEateries(animated: false)
     }
 
 }
@@ -713,8 +760,7 @@ extension EateriesViewController: UIScrollViewDelegate {
 extension EateriesViewController: MenuButtonsDelegate {
 
     func favoriteButtonPressed(on menuHeaderView: MenuHeaderView) {
-        reloadEateries()
+        reloadEateries(animated: false)
     }
 
 }
-
