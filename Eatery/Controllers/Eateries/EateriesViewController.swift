@@ -430,12 +430,13 @@ class EateriesViewController: UIViewController {
 
         self.eateriesByGroup = newEateriesByGroup
 
+        let actions: () -> Void = {
+            self.collectionView.reloadSections(IndexSet(1...3))
+        }
         if animated {
-            collectionView.reloadSections(IndexSet(1...3))
+            actions()
         } else {
-            UIView.performWithoutAnimation {
-                collectionView.reloadSections(IndexSet(1...3))
-            }
+            UIView.performWithoutAnimation(actions)
         }
     }
 
