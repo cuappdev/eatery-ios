@@ -59,4 +59,22 @@ extension EateryTabBarController: UITabBarControllerDelegate {
         return true
     }
 
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        let payload : Payload!
+        switch tabBar.selectedItem?.tag {
+        case 0:
+            payload = EateryPressPayload()
+            AppDevAnalytics.shared.log(payload)
+        case 1:
+            payload = LookAheadPressPayload()
+            AppDevAnalytics.shared.log(payload)
+        case 2:
+            payload = BRBPressPayload()
+            AppDevAnalytics.shared.log(payload)
+        default:
+            break
+        }
+
+    }
+
 }

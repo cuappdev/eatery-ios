@@ -50,6 +50,8 @@ class CollegetownEateriesViewController: EateriesViewController {
 
     private func showMenu(of eatery: CollegetownEatery) {
         let menuViewController = CollegetownEateriesMenuViewController(eatery: eatery, delegate: self)
+        let payload = CollegetownCellPressPayload()
+        AppDevAnalytics.shared.log(payload)
         navigationController?.pushViewController(menuViewController, animated: true)
     }
 

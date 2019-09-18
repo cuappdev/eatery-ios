@@ -23,8 +23,7 @@ class EateriesSharedViewController: UIViewController {
     private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
     private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
 
-    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                                  rightViewController: collegetownEateriesViewController)
+    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController, rightViewController: collegetownEateriesViewController)
     
     var activeViewController: EateriesViewController {
         if pillViewController.pillView.leftSegmentSelected {
@@ -125,7 +124,9 @@ class EateriesSharedViewController: UIViewController {
 
     @objc private func openMap() {
         Answers.logMapOpened()
-
+        let payload = MapPressPayload()
+        AppDevAnalytics.shared.log(payload)
+        
         activeViewController.pushMapViewController()
     }
 

@@ -14,8 +14,8 @@ public protocol Payload: Codable {
 }
 
 public extension Payload {
-    func toEvent() -> Event<Self> {
-        return Event(payload: self)
+    func toEvent() -> AnalyticsEvent<Self> {
+        return AnalyticsEvent(payload: self)
     }
 }
 
@@ -65,7 +65,7 @@ struct DeviceInfo: Codable {
 /**Use JSONData for serialized JSON*/
 public typealias JSONData = Data
 
-public class Event<TPayload: Payload>: Codable {
+public class AnalyticsEvent<TPayload: Payload>: Codable {
     public let payload: TPayload
     public var eventName: String {return TPayload.eventName}
 
@@ -104,15 +104,15 @@ let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-public class TimestampedEvent<TPayload: Payload>: Event<TPayload> {
+public class TimestampedEvent<TPayload: Payload>: AnalyticsEvent<TPayload> {
     public let timestamp: Date
 
-    init(event: Event<TPayload>) {
+    init(event: AnalyticsEvent<TPayload>) {
         self.timestamp = Date()
         super.init(payload: event.payload)
     }
 
-    init(event: Event<TPayload>, timestamp: Date) {
+    init(event: AnalyticsEvent<TPayload>, timestamp: Date) {
         self.timestamp = timestamp
         super.init(payload: event.payload)
     }
@@ -126,7 +126,7 @@ public class TimestampedEvent<TPayload: Payload>: Event<TPayload> {
         timestamp = decodedTimestamp
         try super.init(from: decoder)
     }
-
+    
     public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var values = encoder.container(keyedBy: CodingKeys.self)

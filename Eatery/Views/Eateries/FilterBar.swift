@@ -145,10 +145,41 @@ class FilterBar: UIView {
 
     @objc func buttonPressed(sender: UIButton) {
         sender.isSelected.toggle()
-
+        
         if sender.isSelected {
             let filter = displayedFilters[sender.tag]
             selectedFilters.insert(filter)
+
+            // check if filters match that of campus or ctown (taking into account
+            // that nearest first is shared by both)
+            let isCTown = displayedFilters.allSatisfy({ displayedFilter -> Bool in
+                Filter.categoryFilters.contains(displayedFilter) || displayedFilter == Filter.nearest
+            })
+            let payload : Payload!
+            switch filter{
+            case .nearest:
+                payload = isCTown ? CollegetownFilterPressPayload() : NearestFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            case .north:
+                payload = NorthFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            case .west:
+                payload = WestFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            case .central:
+                payload = CentralFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            case .swipes:
+                payload = SwipesFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            case .brb:
+                payload = BRBFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            default:
+                payload = CollegetownFilterPressPayload()
+                AppDevAnalytics.shared.log(payload)
+            }
+
             Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
             selectedFilters.remove(displayedFilters[sender.tag])

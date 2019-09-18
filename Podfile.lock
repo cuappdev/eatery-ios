@@ -3,9 +3,6 @@ PODS:
   - Apollo (0.9.5):
     - Apollo/Core (= 0.9.5)
   - Apollo/Core (0.9.5)
-  - AppDevAnalytics (0.1.5):
-    - Crashlytics (~> 3.12)
-    - SwiftyJSON
   - ARCL (1.0.4)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
@@ -76,7 +73,6 @@ PODS:
 
 DEPENDENCIES:
   - Apollo (from `https://github.com/apollographql/apollo-ios.git`)
-  - AppDevAnalytics (from `https://github.com/cuappdev/ios-analytics.git`)
   - ARCL
   - Crashlytics
   - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
@@ -112,8 +108,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Apollo:
     :git: https://github.com/apollographql/apollo-ios.git
-  AppDevAnalytics:
-    :git: https://github.com/cuappdev/ios-analytics.git
   DiningStack:
     :git: https://github.com/cuappdev/DiningStack.git
 
@@ -121,17 +115,13 @@ CHECKOUT OPTIONS:
   Apollo:
     :commit: 43dd373b9a64cd877f6331be6c56b24c125ca778
     :git: https://github.com/apollographql/apollo-ios.git
-  AppDevAnalytics:
-    :commit: 5bfb9a7147a5dee8118f0842c6e24820677ee444
-    :git: https://github.com/cuappdev/ios-analytics.git
   DiningStack:
     :commit: a730c7acc1dbee567a41606b101fb569c8ade01d
     :git: https://github.com/cuappdev/DiningStack.git
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  Apollo: 19caf3246d292bbb69ecad1bd098661f78222aba
-  AppDevAnalytics: 76c0a2c851cbdb74b9ff21c58ac7ab5b9d660366
+  Apollo: 09002d68c46e4098766fe376151d9ff8bd6aad36
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
@@ -150,6 +140,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 7f84491dde56708ef678f0ad04e18dbe84c5bf0d
+PODFILE CHECKSUM: 600a783105d64151227154547a956750768aa2e4
 
 COCOAPODS: 1.7.5
