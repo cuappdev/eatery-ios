@@ -19,22 +19,23 @@ class EateryTabBarController: UITabBarController {
     override func viewDidLoad() {
         delegate = self
 
-        let eateriesNavigationController = UINavigationController(rootViewController: eateriesSharedViewController)
-        eateriesNavigationController.navigationBar.barStyle = .black
+        let eateriesNavigationController = EateryNavigationController(rootViewController: eateriesSharedViewController)
         eateriesNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0)
 
-        let lookAheadNavigationController = UINavigationController(rootViewController: lookAheadViewController)
-        lookAheadNavigationController.navigationBar.barStyle = .black
+        let lookAheadNavigationController = EateryNavigationController(rootViewController: lookAheadViewController)
         lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "menu icon"), tag: 1)
 
-        let brbNavigationController = UINavigationController(rootViewController: brbViewController)
-        brbNavigationController.navigationBar.barStyle = .black
+        let brbNavigationController = EateryNavigationController(rootViewController: brbViewController)
         brbNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "infoIcon.png"), tag: 2)
 
         let navigationControllers = [eateriesNavigationController, lookAheadNavigationController, brbNavigationController]
         navigationControllers.forEach { $0.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0) }
 
         setViewControllers(navigationControllers, animated: false)
+
+        tabBar.barTintColor = .white
+        tabBar.tintColor = .eateryBlue
+        tabBar.shadowImage = UIImage()
     }
     
     func tabBarControllerSupportedInterfaceOrientations(_ tabBarController: UITabBarController) -> UIInterfaceOrientationMask {

@@ -22,15 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.backgroundColor = .white
 
-        // Set up navigation bar appearance
-        UINavigationBar.appearance().barTintColor = UIColor.navigationBarBlue
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
-        UITabBar.appearance().barTintColor = .white
-        UITabBar.appearance().tintColor = .eateryBlue
-        UITabBar.appearance().shadowImage = UIImage()
-
         Hero.shared.containerColor = .white
 
         // Set up view controllers
