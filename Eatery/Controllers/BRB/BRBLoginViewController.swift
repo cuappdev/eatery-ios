@@ -277,6 +277,7 @@ class BRBLoginViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed(_ sender: UIButton) {
+        AppDevAnalytics.shared.logFirebase(BRBLoginPressPayload())
         requestLoginIfPossible()
     }
     

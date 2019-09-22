@@ -23,8 +23,7 @@ class EateriesSharedViewController: UIViewController {
     private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
     private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
 
-    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                                  rightViewController: collegetownEateriesViewController)
+    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController, rightViewController: collegetownEateriesViewController)
     
     var activeViewController: EateriesViewController {
         if pillViewController.pillView.leftSegmentSelected {
@@ -101,6 +100,7 @@ class EateriesSharedViewController: UIViewController {
 
     private func setUpPillView() {
         let pillView = pillViewController.pillView
+        pillView.addTarget(self, action: #selector(pillSelectionDidChange(_:)), for: .valueChanged)
 
         pillView.leftImageView.image = UIImage(named: "campusIcon")
         pillView.leftLabel.text = "Campus"
@@ -123,8 +123,17 @@ class EateriesSharedViewController: UIViewController {
 
     @objc private func openMap() {
         Answers.logMapOpened()
-
+        AppDevAnalytics.shared.logFirebase(MapPressPayload())
+        
         activeViewController.pushMapViewController()
+    }
+
+    @objc private func pillSelectionDidChange(_ sender: PillView) {
+        if pillViewController.pillView.leftSegmentSelected {
+            AppDevAnalytics.shared.logFirebase(CampusPressPayload())
+        } else {
+            AppDevAnalytics.shared.logFirebase(CollegetownPressPayload())
+        }
     }
 
 }

@@ -51,6 +51,11 @@ class CollegetownEateriesViewController: EateriesViewController {
     private func showMenu(of eatery: CollegetownEatery) {
         let menuViewController = CollegetownEateriesMenuViewController(eatery: eatery, delegate: self)
         navigationController?.pushViewController(menuViewController, animated: true)
+        AppDevAnalytics.shared.logFirebase(CollegetownCellPressPayload())
+    }
+
+    override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
+        AppDevAnalytics.shared.logFirebase(CollegetownFilterPressPayload())
     }
 
 }

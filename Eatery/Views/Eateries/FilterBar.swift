@@ -46,6 +46,8 @@ protocol FilterBarDelegate: AnyObject {
 
     func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter])
 
+    func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter)
+
 }
 
 class FilterBar: UIView {
@@ -149,6 +151,8 @@ class FilterBar: UIView {
         if sender.isSelected {
             let filter = displayedFilters[sender.tag]
             selectedFilters.insert(filter)
+
+            delegate?.filterBar(self, filterWasSelected: filter)
             Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
             selectedFilters.remove(displayedFilters[sender.tag])

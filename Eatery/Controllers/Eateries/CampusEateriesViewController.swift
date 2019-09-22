@@ -79,6 +79,22 @@ class CampusEateriesViewController: EateriesViewController {
         let menuViewController = CampusEateryMenuViewController(eatery: eatery, delegate: self, userLocation: userLocation)
         navigationController?.popToRootViewController(animated: animated)
         navigationController?.pushViewController(menuViewController, animated: animated)
+
+        let payload: Payload = eatery.eateryType == .dining ? CampusDiningCellPressPayload() : CampusCafeCellPressPayload()
+        AppDevAnalytics.shared.logFirebase(payload)
+    }
+
+    override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
+        switch filter {
+        case .nearest: AppDevAnalytics.shared.logFirebase(NearestFilterPressPayload())
+        case .north: AppDevAnalytics.shared.logFirebase(NorthFilterPressPayload())
+        case .west: AppDevAnalytics.shared.logFirebase(WestFilterPressPayload())
+        case .central: AppDevAnalytics.shared.logFirebase(CentralFilterPressPayload())
+        case .swipes: AppDevAnalytics.shared.logFirebase(SwipesFilterPressPayload())
+        case .brb: AppDevAnalytics.shared.logFirebase(BRBFilterPressPayload())
+        default:
+            break
+        }
     }
 
 }
