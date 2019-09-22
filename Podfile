@@ -6,7 +6,7 @@ def shared_pods
 end
 
 target 'Eatery' do
-    platform :ios, '9.0'
+    platform :ios, '11.0'
 
     pod 'ARCL'
     pod 'Apollo', :git => 'https://github.com/apollographql/apollo-ios.git'
@@ -23,11 +23,11 @@ target 'Eatery' do
 end
 
 target 'Eatery Watch App' do
-    platform :watchos, '2.0'
+    platform :watchos, '4.0'
     shared_pods
 end
 
 target 'Eatery Watch App Extension' do
-    platform :watchos, '2.0'
+    platform :watchos, '4.0'
     shared_pods
 end

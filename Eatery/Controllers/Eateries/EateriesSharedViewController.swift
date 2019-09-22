@@ -72,21 +72,19 @@ class EateriesSharedViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            
-            let logo = UIImageView(image: UIImage(named: "appDevLogo"))
-            logo.tintColor = .white
-            logo.contentMode = .scaleAspectFit
-            navigationController?.navigationBar.addSubview(logo)
-            logo.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(28.0)
-            }
-            
-            campusEateriesViewController.appDevLogo = logo
-            collegetownEateriesViewController.appDevLogo = logo
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        let logo = UIImageView(image: UIImage(named: "appDevLogo"))
+        logo.tintColor = .eateryBlue
+        logo.contentMode = .scaleAspectFit
+        navigationController?.navigationBar.addSubview(logo)
+        logo.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(28.0)
         }
+
+        campusEateriesViewController.appDevLogo = logo
+        collegetownEateriesViewController.appDevLogo = logo
     }
 
     private func setUpChildViewControllers() {

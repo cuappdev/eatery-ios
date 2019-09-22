@@ -182,7 +182,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
         
         outerScrollView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(-UIApplication.shared.statusBarFrame.height)
-            make.bottom.equalTo(bottomLayoutGuide.snp.top)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         outerScrollView.contentSize = CGSize(width: screenSize, height: CGFloat(ctownMenuHeaderViewHeight + informativeViewHeight*3 + mapViewHeight + 47))
