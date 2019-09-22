@@ -7,19 +7,27 @@
 //
 
 import Crashlytics
-
+import FirebaseAnalytics
 class AppDevAnalytics {
 
     static let shared = AppDevAnalytics()
 
     private init() {}
 
-    func log(_ payload: Payload) {
+    func logFabric(_ payload: Payload) {
         #if !DEBUG
         let fabricEvent = payload.convertToFabric()
         Answers.logCustomEvent(withName: fabricEvent.name, customAttributes: fabricEvent.attributes)
         #endif
     }
+
+    func logFirebase(_ payload: Payload) {
+        #if !DEBUG
+        let firebaseEvent = payload.convertToFirebase()
+        Analytics.logEvent(firebaseEvent, parameters: nil)
+        #endif
+    }
+
 }
 
 // MARK: Event Payloads

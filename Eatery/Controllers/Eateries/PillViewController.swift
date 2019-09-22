@@ -116,15 +116,11 @@ class PillViewController: UIViewController {
     }
 
     @objc private func pillSelectionDidChange() {
-        let payload : Payload!
         if pillView.leftSegmentSelected {
-            payload = CampusPressPayload()
             showLeftViewController()
         } else {
-            payload = CollegetownPressPayload()
             showRightViewController()
         }
-        AppDevAnalytics.shared.log(payload)
     }
 
     private func showLeftViewController() {

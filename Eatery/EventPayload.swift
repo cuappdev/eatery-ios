@@ -49,6 +49,16 @@ extension Payload {
 
     }
 
+    func convertToFirebase() -> String {
+
+        let event = self.toEvent()
+
+
+
+        return event.eventName
+        
+    }
+
 }
 
 /// Log device information
@@ -126,7 +136,7 @@ public class TimestampedEvent<TPayload: Payload>: AnalyticsEvent<TPayload> {
         timestamp = decodedTimestamp
         try super.init(from: decoder)
     }
-    
+
     public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var values = encoder.container(keyedBy: CodingKeys.self)

@@ -102,6 +102,7 @@ class EateriesSharedViewController: UIViewController {
 
     private func setUpPillView() {
         let pillView = pillViewController.pillView
+        pillView.addTarget(self, action: #selector(pillSelectionDidChange(_:)), for: .valueChanged)
 
         pillView.leftImageView.image = UIImage(named: "campusIcon")
         pillView.leftLabel.text = "Campus"
@@ -124,10 +125,17 @@ class EateriesSharedViewController: UIViewController {
 
     @objc private func openMap() {
         Answers.logMapOpened()
-        let payload = MapPressPayload()
-        AppDevAnalytics.shared.log(payload)
+        AppDevAnalytics.shared.logFirebase(MapPressPayload())
         
         activeViewController.pushMapViewController()
+    }
+
+    @objc private func pillSelectionDidChange(_ sender: PillView) {
+        if pillViewController.pillView.leftSegmentSelected {
+            AppDevAnalytics.shared.logFirebase(CampusPressPayload())
+        } else {
+            AppDevAnalytics.shared.logFirebase(CollegetownPressPayload())
+        }
     }
 
 }

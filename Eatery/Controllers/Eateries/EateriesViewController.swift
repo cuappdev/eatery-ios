@@ -484,6 +484,15 @@ class EateriesViewController: UIViewController {
         }
     }
 
+    // MARK: Filter Bar
+
+    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter]) {
+        reloadEateries(animated: false)
+    }
+
+    func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
+    }
+
 }
 
 // MARK: - Collection View Helper Methods
@@ -685,10 +694,6 @@ extension EateriesViewController: UISearchBarDelegate {
 // MARK: - Filter Bar
 
 extension EateriesViewController: FilterBarDelegate {
-
-    func filterBar(_ filterBar: FilterBar, selectedFiltersDidChange newValue: [Filter]) {
-        reloadEateries(animated: false)
-    }
 
 }
 
