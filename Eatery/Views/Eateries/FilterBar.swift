@@ -147,7 +147,7 @@ class FilterBar: UIView {
 
     @objc func buttonPressed(sender: UIButton) {
         sender.isSelected.toggle()
-        
+
         if sender.isSelected {
             let filter = displayedFilters[sender.tag]
             selectedFilters.insert(filter)

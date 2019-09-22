@@ -46,17 +46,10 @@ extension Payload {
             print("Error: Couldn't process data")
             return ("", nil)
         }
-
     }
 
     func convertToFirebase() -> String {
-
-        let event = self.toEvent()
-
-
-
-        return event.eventName
-        
+        return toEvent().eventName
     }
 
 }
