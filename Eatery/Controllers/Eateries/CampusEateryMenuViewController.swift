@@ -240,10 +240,9 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         }
         
         let mealViewControllers: [CampusEateryMealTableViewController] = meals.map {
-            let mealVC = CampusEateryMealTableViewController()
-            mealVC.eatery = eatery
-            mealVC.meal = $0
-            mealVC.event = eventsDict[$0]
+            let mealVC = CampusEateryMealTableViewController(eatery: eatery,
+                                                             meal: $0,
+                                                             date: displayedDate)
             mealVC.tableView.layoutIfNeeded()
             return mealVC
         }
