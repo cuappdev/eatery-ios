@@ -14,7 +14,7 @@ protocol TabBarDelegate: AnyObject {
 
 private let kCornerRadius: CGFloat = 12.0
 
-class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
+class UnderlineTabBarView: UIView {
     
     weak var delegate: TabBarDelegate?
 
@@ -86,10 +86,6 @@ class UnderlineTabBarView: UIView, TabbedPageViewControllerDelegate {
         let index = tabButtons.index(of: sender)!
         updateSelectedTabAppearance(index)
         delegate?.selectedTabDidChange(index)
-    }
-    
-    func selectedTabDidChange(_ newIndex: Int) {
-        updateSelectedTabAppearance(newIndex)
     }
     
     required init?(coder aDecoder: NSCoder) {

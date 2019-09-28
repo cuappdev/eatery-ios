@@ -1,145 +1,180 @@
+//
+//  TabbedPageViewController.swift
+//  Eatery
+//
+//  Created by William Ma on 9/25/19.
+//  Copyright © 2019 CUAppDev. All rights reserved.
+//
+
 import UIKit
 
+// MARK: -
+
 protocol TabbedPageViewControllerDelegate: AnyObject {
-    func selectedTabDidChange(_ newIndex: Int)
+
+    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
+                                  titleForViewController viewController: UIViewController) -> String?
+
+    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
+                                  heightOfContentForViewController viewController: UIViewController) -> CGFloat
+
 }
 
-protocol TabbedPageViewControllerScrollDelegate: AnyObject {
-    func scrollViewDidChange()
-}
+// MARK: -
 
-private let kTabBarHeight: CGFloat = 32.0
+class TabbedPageViewController: UIViewController {
 
-class TabbedPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, TabBarDelegate {
-    
-    var viewControllers: [UIViewController]!
-    fileprivate var meals: [String] = []
-    
-    weak var tabDelegate: TabbedPageViewControllerDelegate?
-    weak var scrollDelegate: TabbedPageViewControllerScrollDelegate?
-    var tabBar: UnderlineTabBarView?
-    
-    var pageViewController: UIPageViewController!
+    let viewControllers: [UIViewController]
+
+    private var pageViewController: UIPageViewController!
+    private var tabBar: UnderlineTabBarView?
+
+    weak var delegate: TabbedPageViewControllerDelegate?
+
+    private var currentViewController: UIViewController? {
+        return pageViewController.viewControllers?.first
+    }
+
+    var currentViewControllerIndex: Int? {
+        get {
+            if let viewController = currentViewController {
+                return viewControllers.index(of: viewController)
+            } else {
+                return nil
+            }
+        }
+        set {
+            if let index = newValue {
+                setPage(forViewControllerAt: index, animated: false)
+            }
+        }
+    }
+
+    init(viewControllers: [UIViewController]) {
+        self.viewControllers = viewControllers
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .white
-        
-        // TODO: sort meals
-        
-        // Tab Bar
-        meals = viewControllers.map { (vc: UIViewController) -> String in
-            let mealVC = vc as! CampusEateryMealTableViewController
-            return mealVC.meal
-        }
-        
-        if meals.count > 1 {
+
+        if viewControllers.count > 1 {
             let tabBar = UnderlineTabBarView()
-            tabBar.setUp(meals)
+
+            let titles = viewControllers.map { delegate?.tabbedPageViewController(self, titleForViewController: $0) ?? "" }
+            tabBar.setUp(titles)
             tabBar.delegate = self
-            tabDelegate = tabBar
+
             view.addSubview(tabBar)
             tabBar.snp.makeConstraints { make in
                 make.top.equalToSuperview()
-                make.leading.equalToSuperview().inset(10.0)
-                make.trailing.equalToSuperview().inset(10.0)
-                make.height.equalTo(kTabBarHeight)
+                make.leading.trailing.equalToSuperview().inset(16)
+                make.height.equalTo(32)
             }
 
             self.tabBar = tabBar
         }
-        
-        // Page view controller
-        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        pageViewController.view.backgroundColor = .white
+
+        pageViewController = UIPageViewController(transitionStyle: .scroll,
+                                                  navigationOrientation: .horizontal,
+                                                  options: nil)
         pageViewController.dataSource = self
         pageViewController.delegate = self
-        pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false, completion: nil)
-        
+        pageViewController.view.isUserInteractionEnabled = viewControllers.count != 1
+
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParentViewController: self)
-
         pageViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(tabBar?.snp.bottom ?? view)
+            if let tabBar = tabBar {
+                make.top.equalTo(tabBar.snp.bottom)
+            } else {
+                make.top.equalTo(view)
+            }
+
             make.leading.trailing.bottom.equalToSuperview()
         }
+        pageViewController.didMove(toParentViewController: self)
 
-        if meals.count == 1 {
-            pageViewController.view.isUserInteractionEnabled = viewControllers.count != 1
+        if !viewControllers.isEmpty {
+            pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false, completion: nil)
+            pageViewController.view.snp.makeConstraints { make in
+                let height = delegate?.tabbedPageViewController(self, heightOfContentForViewController: viewControllers[0]) ?? 0
+                make.height.equalTo(height)
+            }
+        }
+    }
+    
+    private func setPage(forViewControllerAt index: Int, animated: Bool) {
+        guard let currentIndex = currentViewControllerIndex, index != currentIndex else {
+            return
         }
 
-        if let tabBar = tabBar {
-            view.bringSubview(toFront: tabBar)
+        let direction: UIPageViewControllerNavigationDirection = index > currentIndex ? .forward : .reverse
+        pageViewController.setViewControllers([viewControllers[index]], direction: direction, animated: animated, completion: nil)
+
+        pageViewControllerDidChangeViewController()
+    }
+
+    private func pageViewControllerDidChangeViewController() {
+        tabBar?.updateSelectedTabAppearance(currentViewControllerIndex ?? 0)
+        adjustPageViewControllerHeight()
+    }
+
+    private func adjustPageViewControllerHeight() {
+        pageViewController.view.snp.updateConstraints { make in
+            if let viewController = currentViewController {
+                let height = delegate?.tabbedPageViewController(self, heightOfContentForViewController: viewController) ?? 0
+                make.height.equalTo(height)
+            }
         }
     }
-    
-    func setTabBarShadow(_ radius: CGFloat, opacity: Float) {
-        tabBar?.layer.shadowOpacity = opacity
-        tabBar?.layer.shadowRadius = radius
-        tabBar?.layer.shadowOffset = CGSize(width: 0, height: radius)
+
+}
+
+extension TabbedPageViewController: UIPageViewControllerDataSource {
+
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        if let index = viewControllers.index(of: viewController), index > 0 {
+            return viewControllers[index - 1]
+        }
+        return nil
     }
-    
-    func scrollToViewController(_ vc: UIViewController) {
-        pageViewController.setViewControllers([vc], direction: .forward, animated: false, completion: nil)
-        let index = viewControllers.index(of: vc)!
-        tabDelegate?.selectedTabDidChange(index)
-        scrollDelegate?.scrollViewDidChange()
+
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        if let index = viewControllers.index(of: viewController), index < viewControllers.count - 1 {
+            return viewControllers[index + 1]
+        }
+        return nil
     }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        
-        let index = viewControllers.index(of: viewController)!
-        
-        guard index != 0 else { return nil }
-        
-        return viewControllers[index - 1]
+
+}
+
+extension TabbedPageViewController: UIPageViewControllerDelegate {
+
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+        if completed {
+            pageViewControllerDidChangeViewController()
+        }
     }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        
-        let index = viewControllers.index(of: viewController)!
-        
-        guard index != viewControllers.count - 1 else { return nil }
-        
-        return viewControllers[index + 1]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
-        let index = viewControllers.index(of: currentViewController)!
-        tabDelegate?.selectedTabDidChange(index)
-        scrollDelegate?.scrollViewDidChange()
-    }
-    
-    // Tab Bar Delegate
+
+}
+
+extension TabbedPageViewController: TabBarDelegate {
+
     func selectedTabDidChange(_ newIndex: Int) {
-        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
-        let currentIndex = viewControllers.index(of: currentViewController)!
-
-        guard newIndex != currentIndex else { return }
-        
-        var direction: UIPageViewControllerNavigationDirection = .forward
-        if newIndex < currentIndex {
-            direction = .reverse
-        }
-        pageViewController.setViewControllers([viewControllers[newIndex]], direction: direction, animated: false, completion: nil)
-        scrollDelegate?.scrollViewDidChange()
-    }
-    
-    func pluckCurrentScrollView() -> UIScrollView {
-        return pluckCurrentTableView()
-    }
-
-    private func pluckCurrentTableView() -> UITableView {
-        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
-        return currentViewController.tableView
-    }
-    
-    func scrollGestureDidScroll(_ offset: CGPoint) {
-        let currentViewController = pageViewController.viewControllers!.first! as! CampusEateryMealTableViewController
-        currentViewController.tableView.setContentOffset(offset, animated: false)
+        setPage(forViewControllerAt: newIndex, animated: false)
     }
 
 }
