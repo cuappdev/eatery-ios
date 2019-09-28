@@ -122,6 +122,9 @@ class TabbedPageViewController: UIViewController {
         pageViewControllerDidChangeViewController()
     }
 
+    /// Call this method when the page VC's children are modified.
+    /// This method updates the underline bar and adjusts the page view
+    /// controller's height. 
     private func pageViewControllerDidChangeViewController() {
         tabBar?.updateSelectedTabAppearance(currentViewControllerIndex ?? 0)
         adjustPageViewControllerHeight()
