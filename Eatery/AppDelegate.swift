@@ -1,9 +1,10 @@
-import UIKit
-import SwiftyJSON
-import Fabric
 import Crashlytics
+import Fabric
+import Firebase
 import Hero
 import StoreKit
+import SwiftyJSON
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,43 +14,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+        FirebaseApp.configure()
+
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         Foundation.URLCache.shared = URLCache
 
         window = UIWindow()
         window?.backgroundColor = .white
 
-        // Set up navigation bar appearance
-        UINavigationBar.appearance().barTintColor = UIColor.navigationBarBlue
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for: UIControlState())
-        UITabBar.appearance().barTintColor = .white
-        UITabBar.appearance().tintColor = .eateryBlue
-        UITabBar.appearance().shadowImage = UIImage()
-
         Hero.shared.containerColor = .white
 
         // Set up view controllers
         
         eateryTabBarController = EateryTabBarController()
-        let onboardCollegetown = !UserDefaults.standard.bool(forKey: "didOnboardToCollegetown")
-        if onboardCollegetown {
-            let collegetownOnboardViewController = CollegetownOnboardViewController()
-            collegetownOnboardViewController.eateryTabBarController = eateryTabBarController
-
-            eateryTabBarController.eateriesSharedViewController.pillViewController.pillView.selectRightSegment()
-
-            window?.rootViewController = collegetownOnboardViewController
-
-            UserDefaults.standard.setValue(true, forKey: "didOnboardToCollegetown")
-        } else {
-            window?.rootViewController = eateryTabBarController
-        }
-
+        window?.rootViewController = eateryTabBarController
         window?.makeKeyAndVisible()
-        /*window?.rootViewController = HistogramTestViewController()
-        window?.makeKeyAndVisible() */
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
         UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")

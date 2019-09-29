@@ -6,6 +6,7 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import os.log
 import CoreLocation
 import UIKit
 
@@ -40,6 +41,8 @@ class CollegetownEateriesViewController: EateriesViewController {
                 return
             }
 
+            os_log("Successfully loaded %d collegetown eateries", eateries.count)
+
             self.allEateries = eateries
             self.updateState(.presenting, animated: true)
         }
@@ -48,6 +51,11 @@ class CollegetownEateriesViewController: EateriesViewController {
     private func showMenu(of eatery: CollegetownEatery) {
         let menuViewController = CollegetownEateriesMenuViewController(eatery: eatery, delegate: self)
         navigationController?.pushViewController(menuViewController, animated: true)
+        AppDevAnalytics.shared.logFirebase(CollegetownCellPressPayload())
+    }
+
+    override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
+        AppDevAnalytics.shared.logFirebase(CollegetownFilterPressPayload())
     }
 
 }

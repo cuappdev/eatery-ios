@@ -110,7 +110,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.addSubview(recenterButton)
         recenterButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             make.height.equalTo(40)
             make.width.equalTo(120)
         }

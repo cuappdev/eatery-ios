@@ -101,6 +101,8 @@ class PillViewController: UIViewController {
     }
 
     func setShowPill(_ showPill: Bool, animated: Bool) {
+        // Prevents newly created cells from sharing the pill animation
+        view.layoutIfNeeded()
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
             self.isShowingPill = showPill
             self.view.layoutIfNeeded()

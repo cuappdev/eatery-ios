@@ -15,14 +15,15 @@ class EateriesSharedViewController: UIViewController {
     // Scroll
 
     var lastContentOffset: CGFloat = 0
+    
+    private var showPillOnScrollStopTimer: Timer?
 
     // View Controllers
 
     private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
     private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
 
-    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController,
-                                                                  rightViewController: collegetownEateriesViewController)
+    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController, rightViewController: collegetownEateriesViewController)
     
     var activeViewController: EateriesViewController {
         if pillViewController.pillView.leftSegmentSelected {
@@ -48,6 +49,7 @@ class EateriesSharedViewController: UIViewController {
         super.viewDidLoad()
 
         setUpNavigationItem()
+        setUpNavigationBar()
         setUpChildViewControllers()
         setUpPillView()
     }
@@ -67,6 +69,22 @@ class EateriesSharedViewController: UIViewController {
         mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
         navigationItem.rightBarButtonItems = [mapButton]
     }
+    
+    private func setUpNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        let logo = UIImageView(image: UIImage(named: "appDevLogo"))
+        logo.tintColor = .eateryBlue
+        logo.contentMode = .scaleAspectFit
+        navigationController?.navigationBar.addSubview(logo)
+        logo.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(28.0)
+        }
+
+        campusEateriesViewController.appDevLogo = logo
+        collegetownEateriesViewController.appDevLogo = logo
+    }
 
     private func setUpChildViewControllers() {
         campusEateriesViewController.scrollDelegate = self
@@ -82,6 +100,7 @@ class EateriesSharedViewController: UIViewController {
 
     private func setUpPillView() {
         let pillView = pillViewController.pillView
+        pillView.addTarget(self, action: #selector(pillSelectionDidChange(_:)), for: .valueChanged)
 
         pillView.leftImageView.image = UIImage(named: "campusIcon")
         pillView.leftLabel.text = "Campus"
@@ -104,8 +123,17 @@ class EateriesSharedViewController: UIViewController {
 
     @objc private func openMap() {
         Answers.logMapOpened()
-
+        AppDevAnalytics.shared.logFirebase(MapPressPayload())
+        
         activeViewController.pushMapViewController()
+    }
+
+    @objc private func pillSelectionDidChange(_ sender: PillView) {
+        if pillViewController.pillView.leftSegmentSelected {
+            AppDevAnalytics.shared.logFirebase(CampusPressPayload())
+        } else {
+            AppDevAnalytics.shared.logFirebase(CollegetownPressPayload())
+        }
     }
 
 }
@@ -115,23 +143,40 @@ class EateriesSharedViewController: UIViewController {
 extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
+        showPillOnScrollStopTimer?.invalidate()
+        showPillOnScrollStopTimer = nil
+        
         lastContentOffset = scrollView.contentOffset.y
     }
 
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidStopScrolling scrollView: UIScrollView) {
-        pillViewController.setShowPill(true, animated: true)
+        showPillOnScrollStopTimer = Timer.scheduledTimer(withTimeInterval: 0.35, repeats: false) { [weak self] _ in
+            self?.pillViewController.setShowPill(true, animated: true)
+        }
     }
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y
-        
-        if lastContentOffset > offset, !pillViewController.isShowingPill {
-            pillViewController.setShowPill(true, animated: true)
-        } else if lastContentOffset < offset, pillViewController.isShowingPill {
-            pillViewController.setShowPill(false, animated: true)
+        let adjustedOffset: CGFloat // the y offset adjusted for bars and any internal contentInset
+        if #available(iOS 11.0, *) {
+            adjustedOffset = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
+        } else {
+            adjustedOffset = scrollView.contentOffset.y + scrollView.contentInset.top
         }
-
-        lastContentOffset = offset
+        
+        if adjustedOffset < 0 {
+            // disregard when the scrollView is "bounced"
+            lastContentOffset = 0
+        } else {
+            let isScrollingDownward = adjustedOffset > lastContentOffset
+            
+            if isScrollingDownward, pillViewController.isShowingPill {
+                pillViewController.setShowPill(false, animated: true)
+            } else if !isScrollingDownward, !pillViewController.isShowingPill {
+                pillViewController.setShowPill(true, animated: true)
+            }
+            
+            lastContentOffset = adjustedOffset
+        }
     }
 
 }

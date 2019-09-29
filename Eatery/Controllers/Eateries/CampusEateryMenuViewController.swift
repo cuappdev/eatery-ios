@@ -86,8 +86,8 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         outerScrollView.delaysContentTouches = false
         view.addSubview(outerScrollView)
         outerScrollView.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom)
-            make.bottom.equalTo(bottomLayoutGuide.snp.top)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
 
