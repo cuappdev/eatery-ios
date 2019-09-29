@@ -2,20 +2,21 @@ import UIKit
 
 class CampusEateryMealTableViewController: UITableViewController {
 
-    var meal: String!
+    let meal: String
+    let eatery: CampusEatery
+    let date: Date
 
-    var eatery: CampusEatery! {
-        didSet {
-            recomputeMenu()
-        }
-    }
-    var event: Event? {
-        didSet {
-            recomputeMenu()
-        }
-    }
+    let event: Event?
 
-    private func recomputeMenu() {
+    private let menu: Menu?
+
+    init(eatery: CampusEatery, meal: String, date: Date) {
+        self.eatery = eatery
+        self.meal = meal
+        self.date = date
+
+        self.event = eatery.eventsByName(onDayOf: date)[meal]
+
         if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
             menu = eventMenu
         } else if eatery.diningMenu != nil, eatery.eateryType != .dining {
@@ -25,21 +26,13 @@ class CampusEateryMealTableViewController: UITableViewController {
             // don't know the menu
             menu = nil
         }
+
+        super.init(nibName: nil, bundle: nil)
     }
 
-    private var menu: Menu? {
-        didSet {
-            if let menu = menu, menu.data.count == 1, eatery.eateryType != .dining {
-                topSeparator.isHidden = false
-                tableView.separatorStyle = .singleLine
-            } else {
-                topSeparator.isHidden = true
-                tableView.separatorStyle = .none
-            }
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
-    private let topSeparator = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,11 +50,20 @@ class CampusEateryMealTableViewController: UITableViewController {
 
         tableView.isScrollEnabled = false
 
+        let topSeparator = UIView()
         topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
         topSeparator.backgroundColor = .inactive
         tableView.tableHeaderView = topSeparator
 
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
+
+        if let menu = menu, menu.data.count == 1, eatery.eateryType != .dining {
+            topSeparator.isHidden = false
+            tableView.separatorStyle = .singleLine
+        } else {
+            topSeparator.isHidden = true
+            tableView.separatorStyle = .none
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
