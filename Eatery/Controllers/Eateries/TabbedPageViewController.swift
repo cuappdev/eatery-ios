@@ -8,8 +8,6 @@
 
 import UIKit
 
-// MARK: -
-
 protocol TabbedPageViewControllerDelegate: AnyObject {
 
     func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
@@ -19,8 +17,6 @@ protocol TabbedPageViewControllerDelegate: AnyObject {
                                   heightOfContentForViewController viewController: UIViewController) -> CGFloat
 
 }
-
-// MARK: -
 
 class TabbedPageViewController: UIViewController {
 
