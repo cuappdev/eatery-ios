@@ -10,7 +10,7 @@ private let TitleDateFormatter: DateFormatter = {
     return formatter
 }()
 
-class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate, TabbedPageViewControllerScrollDelegate {
+class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, MenuButtonsDelegate {
 
     var eatery: CampusEatery
     var outerScrollView: UIScrollView!
@@ -21,10 +21,6 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
     var selectedMeal: String?
     var userLocation: CLLocation?
     var navigationTitleView: NavigationTitleView!
-
-    var pageViewControllerHeight: CGFloat {
-        return pageViewController.pluckCurrentScrollView().contentSize.height + (pageViewController.tabBar?.frame.height ?? 0.0)
-    }
     
     init(eatery: CampusEatery, delegate: MenuButtonsDelegate?, date: Date = Date(), meal: String? = nil, userLocation: CLLocation? = nil) {
         self.eatery = eatery
@@ -63,9 +59,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         navigationTitleView.dateLabel.text = dateTitle
         navigationItem.titleView = navigationTitleView
         
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
+        navigationItem.largeTitleDisplayMode = .never
 
         setupScrollView()
     }
@@ -246,19 +240,16 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         }
         
         let mealViewControllers: [CampusEateryMealTableViewController] = meals.map {
-            let mealVC = CampusEateryMealTableViewController()
-            mealVC.eatery = eatery
-            mealVC.meal = $0
-            mealVC.event = eventsDict[$0]
+            let mealVC = CampusEateryMealTableViewController(eatery: eatery,
+                                                             meal: $0,
+                                                             date: displayedDate)
             mealVC.tableView.layoutIfNeeded()
             return mealVC
         }
         
         // PageViewController
-        pageViewController = TabbedPageViewController()
-        pageViewController.viewControllers = mealViewControllers
-        pageViewController.scrollDelegate = self
-
+        pageViewController = TabbedPageViewController(viewControllers: mealViewControllers)
+        pageViewController.delegate = self
         addChildViewController(pageViewController)
         contentContainer.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
@@ -266,7 +257,6 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         pageViewController.view.snp.makeConstraints { make in
             make.top.equalTo(menuLabel.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(pageViewControllerHeight)
         }
 
         contentView.addSubview(contentContainer)
@@ -342,12 +332,6 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         }
     }
     
-    func scrollViewDidChange() {
-        pageViewController.view.snp.updateConstraints { make in
-            make.height.equalTo(pageViewControllerHeight)
-        }
-    }
-    
     // MARK: -
     // MARK: MenuButtonsDelegate
     
@@ -390,21 +374,21 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
     // MARK: Scroll To Proper Time
     
     func scrollToCurrentTimeOpening(_ date: Date) {
-        guard let currentEvent = eatery.activeEvent(atExactly: date) else { return }
-        guard let mealViewControllers = pageViewController.viewControllers as? [CampusEateryMealTableViewController],
-            mealViewControllers.count > 1 else { return }
-        
-        let desiredMealVC: (CampusEateryMealTableViewController) -> Bool = {
-            if currentEvent.desc == "Lite Lunch" {
-                return $0.meal == "Lunch"
-            } else {
-                let mealName = self.selectedMeal ?? currentEvent.desc
-                return $0.event?.desc == mealName
-            }
+        guard let currentEvent = eatery.activeEvent(atExactly: date) else {
+            return
         }
-        
-        if let currentVC = mealViewControllers.filter(desiredMealVC).first {
-            pageViewController.scrollToViewController(currentVC)
+
+        guard let mealViewControllers = pageViewController.viewControllers as? [CampusEateryMealTableViewController],
+            mealViewControllers.count > 1 else {
+                return
+        }
+
+        for (index, viewController) in mealViewControllers.enumerated() {
+            if currentEvent.desc == "Lite Lunch", viewController.meal == "Lunch" {
+                pageViewController.currentViewControllerIndex = index
+            } else if viewController.event?.desc == selectedMeal ?? currentEvent.desc {
+                pageViewController.currentViewControllerIndex = index
+            }
         }
     }
 }
@@ -429,5 +413,27 @@ extension CampusEateryMenuViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
+}
+
+extension CampusEateryMenuViewController: TabbedPageViewControllerDelegate {
+
+    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController, titleForViewController viewController: UIViewController) -> String? {
+        guard let mealViewController = viewController as? CampusEateryMealTableViewController else {
+            return nil
+        }
+
+        return mealViewController.meal
+    }
+
+    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
+                                  heightOfContentForViewController viewController: UIViewController) -> CGFloat {
+        guard let mealViewController = viewController as? CampusEateryMealTableViewController else {
+            return 0
+        }
+
+        mealViewController.view.layoutIfNeeded()
+        return mealViewController.tableView.contentSize.height
+    }
+
 }
 
