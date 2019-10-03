@@ -23,7 +23,7 @@ class TabbedPageViewController: UIViewController {
     let viewControllers: [UIViewController]
 
     private var pageViewController: UIPageViewController!
-    private var tabBar: UnderlineTabBarView?
+    private var tabBar: UnderlineTabBarControl?
 
     weak var delegate: TabbedPageViewControllerDelegate?
 
@@ -62,11 +62,9 @@ class TabbedPageViewController: UIViewController {
         view.backgroundColor = .white
 
         if viewControllers.count > 1 {
-            let tabBar = UnderlineTabBarView()
-
             let titles = viewControllers.map { delegate?.tabbedPageViewController(self, titleForViewController: $0) ?? "" }
-            tabBar.setUp(titles)
-            tabBar.delegate = self
+            let tabBar = UnderlineTabBarControl(sections: titles)
+            tabBar.addTarget(self, action: #selector(tabBarControlSelectedSegmentIndexDidChange(_:)), for: .valueChanged)
 
             view.addSubview(tabBar)
             tabBar.snp.makeConstraints { make in
@@ -122,8 +120,11 @@ class TabbedPageViewController: UIViewController {
     /// This method updates the underline bar and adjusts the page view
     /// controller's height. 
     private func pageViewControllerDidChangeViewController() {
-        tabBar?.updateSelectedTabAppearance(currentViewControllerIndex ?? 0)
         adjustPageViewControllerHeight()
+
+        if let index = currentViewControllerIndex, let tabBar = tabBar {
+            tabBar.underline(at: index)
+        }
     }
 
     private func adjustPageViewControllerHeight() {
@@ -133,6 +134,10 @@ class TabbedPageViewController: UIViewController {
                 make.height.equalTo(height)
             }
         }
+    }
+
+    @objc private func tabBarControlSelectedSegmentIndexDidChange(_ tabBar: UnderlineTabBarControl) {
+        setPage(forViewControllerAt: tabBar.selectedSegmentIndex, animated: true)
     }
 
 }
@@ -166,14 +171,6 @@ extension TabbedPageViewController: UIPageViewControllerDelegate {
         if completed {
             pageViewControllerDidChangeViewController()
         }
-    }
-
-}
-
-extension TabbedPageViewController: TabBarDelegate {
-
-    func selectedTabDidChange(_ newIndex: Int) {
-        setPage(forViewControllerAt: newIndex, animated: false)
     }
 
 }

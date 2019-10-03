@@ -29,6 +29,7 @@
 		5D77412E2332E08400E9E699 /* ImageParallaxScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */; };
 		5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */; };
 		5D856458222A2D4E003A712B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D856457222A2D4E003A712B /* Menu.swift */; };
+		5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */; };
 		5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A119123368F0B00F430A1 /* EateryNavigationController.swift */; };
 		5DAC0014233C0B37009FCCB0 /* CampusEateryMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */; };
 		5DAC0016233C1331009FCCB0 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAC0015233C1331009FCCB0 /* TabbedPageViewController.swift */; };
@@ -97,7 +98,6 @@
 		D971431D219A7F3D00E2EE05 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D971431C219A7F3D00E2EE05 /* TimeFactory.swift */; };
 		D9714321219B953800E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B216F1C70796600F3B138 /* Assets.xcassets */; };
 		D9714322219B953D00E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B21831C70796600F3B138 /* Assets.xcassets */; };
-		E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */; };
 		E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
 /* End PBXBuildFile section */
 
@@ -174,6 +174,7 @@
 		5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageParallaxScrollViewController.swift; sourceTree = "<group>"; };
 		5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEateriesViewController.swift; sourceTree = "<group>"; };
 		5D856457222A2D4E003A712B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTabBarControl.swift; sourceTree = "<group>"; };
 		5D9A119123368F0B00F430A1 /* EateryNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateryNavigationController.swift; sourceTree = "<group>"; };
 		5DAC0015233C1331009FCCB0 /* TabbedPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedPageViewController.swift; sourceTree = "<group>"; };
 		5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEatery.swift; sourceTree = "<group>"; };
@@ -251,7 +252,6 @@
 		E418A28B1A4C3F8781B50F84 /* Pods-Eatery Watch App Extension.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.app store.xcconfig"; sourceTree = "<group>"; };
 		E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusEateryMenuViewController.swift; sourceTree = "<group>"; };
 		E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusEateryMealTableViewController.swift; sourceTree = "<group>"; };
-		E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineTabBarView.swift; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9CFC0A81C0E4A3000ED884A /* appendix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = appendix.json; path = "Extra Eatery Data/appendix.json"; sourceTree = "<group>"; };
 		FAA912BD1BE6A035003475A8 /* Eatery+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eatery+Extensions.swift"; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 				5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */,
 				5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */,
 				5D218C1A21FBE39700327516 /* NavigationTitleView.swift */,
-				E978DF841BEA8108000CD44F /* UnderlineTabBarView.swift */,
+				5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */,
 				5D0D8E0E223B286D001ADB85 /* EateriesFailedToLoadView.swift */,
 				5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */,
 				5DE1D429225E95EB008054F4 /* RatingView.swift */,
@@ -944,7 +944,6 @@
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
-				E978DF851BEA8108000CD44F /* UnderlineTabBarView.swift in Sources */,
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
 				5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */,
 				CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */,
@@ -958,6 +957,7 @@
 				5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */,
 				5DE1D42F225EC710008054F4 /* PillView.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
+				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
 				5DEF1AA0222B2EBB00855902 /* SettingsTableViewController.swift in Sources */,
 				5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */,
 			);
