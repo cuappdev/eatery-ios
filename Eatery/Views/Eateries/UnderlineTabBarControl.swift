@@ -16,8 +16,9 @@ class UnderlineTabBarControl: UIControl {
     private var tabButtons: [UIButton] = []
     private var underlineView: UIView!
 
-    var selectedSegmentIndex = 0
+    private(set) var selectedSegmentIndex = 0
 
+    /// `sections` must contain at least one element. 
     init(sections: [String]) {
         super.init(frame: .zero)
 
