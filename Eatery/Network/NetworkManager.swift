@@ -113,13 +113,12 @@ struct NetworkManager {
                 }
                 
                 var swipeDataPoints = [SwipeDataPoint]()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
                 for swipeDatum in eatery.swipeData {
                     guard let swipeDatum = swipeDatum else { continue }
                     
-                    let swipeDatumStartDate = dateFormatter.date(from: swipeDatum.startTime)
-                    let swipeDatumEndDate = dateFormatter.date(from: swipeDatum.endTime)
+                    let swipeDatumStartDate = self.timeDateFormatter.date(from: String(swipeDatum.startTime))
+
+                    let swipeDatumEndDate = self.timeDateFormatter.date(from: swipeDatum.endTime)
                     guard swipeDatumStartDate != nil && swipeDatumEndDate != nil else { continue }
                     let swipeDatumStartHour = Calendar.current.component(.hour, from: swipeDatumStartDate!)
                     let swipeDatumStartMinute = Calendar.current.component(.minute, from: swipeDatumStartDate!)
