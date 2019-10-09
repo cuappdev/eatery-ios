@@ -31,15 +31,6 @@ class EaterySwipeData {
     }
     
     func waitTimeFor(hour: Int, minute: Int) -> (waitTimeLow: Int, waitTimeHigh: Int)? {
-        let swipeDataPointsForHour = swipeDataForHour(hour: hour)
-        guard swipeDataPointsForHour != nil else { return nil }
-        
-        for swipeDataPoint in swipeDataPointsForHour! {
-            if swipeDataPoint.minuteRange.contains(minute) {
-                return (waitTimeLow: swipeDataPoint.waitTimeLow, swipeDataPoint.waitTimeHigh)
-            }
-        }
-        
         return nil
     }
     

@@ -89,11 +89,12 @@ class HistogramViewController: UIViewController {
             let tickHour = containOverflowedMilitaryHour(hour: hourRange.startTime + (tick * 3))
             tickLabel.text = formattedHourForTime(militaryHour: tickHour)
             tickLabel.textColor = .secondary
+            tickLabel.textAlignment = .center
             view.addSubview(tickLabel)
             
             tickLabel.snp.makeConstraints { make in
                 make.bottom.equalTo(view).inset(10)
-                make.leading.equalTo(view).offset(x)
+                make.centerX.equalTo(view.snp.leading).offset(x)
                 make.width.equalTo(30)
                 make.height.equalTo(15)
             }
@@ -224,7 +225,7 @@ class HistogramViewController: UIViewController {
         view.addSubview(waitTimeView)
         
         waitTimeView.snp.makeConstraints { make in
-            make.width.equalTo(110)
+            make.width.equalTo(90)
             make.height.equalTo(30)
             make.top.equalTo(view).offset(5)
             make.centerX.equalTo(barView)
@@ -250,14 +251,8 @@ class HistogramViewController: UIViewController {
         let blueLabelText = "\(waitTimes.waitTimeLow)-\(waitTimes.waitTimeHigh)m"
         let labelText = "\(hourText): \(blueLabelText) wait"
         let labelAttributedText = NSMutableAttributedString(
-            string: labelText,
+            string: hourText,
             attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11, weight: .medium)]
-        )
-        labelAttributedText.addAttributes(
-            [NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
-             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12)
-            ],
-            range: NSRange(location: hourText.count + 2, length: blueLabelText.count)
         )
         label.attributedText = labelAttributedText
         label.textAlignment = .center
