@@ -220,7 +220,7 @@
 		872E5289232DBA07006D12D4 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		874D836F2336751D00E26728 /* EventPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPayload.swift; sourceTree = "<group>"; };
 		87E712EB23416C1900085DB5 /* GivingDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivingDayView.swift; sourceTree = "<group>"; };
-		87E712ED23416C3300085DB5 /* GivingDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GivingDayViewController.swift; path = Eatery/Controllers/Eateries/GivingDayViewController.swift; sourceTree = SOURCE_ROOT; };
+		87E712ED23416C3300085DB5 /* GivingDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GivingDayViewController.swift; path = "Eatery/Controllers/Giving Day/GivingDayViewController.swift"; sourceTree = SOURCE_ROOT; };
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImages.swift; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
@@ -300,6 +300,7 @@
 				6560D4411F51F373009E7CEF /* Eateries */,
 				6560D4421F51F37A009E7CEF /* Lookahead */,
 				9584FE531CDD6C40001A3AB5 /* BRB */,
+				5DB46779234E916B005CE574 /* Giving Day */,
 				C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */,
 				5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */,
 				5D9A119123368F0B00F430A1 /* EateryNavigationController.swift */,
@@ -335,8 +336,6 @@
 				5DE1D429225E95EB008054F4 /* RatingView.swift */,
 				5DE1D42E225EC710008054F4 /* PillView.swift */,
 				CECEA97F2273B6C200E97228 /* HistogramViewController.swift */,
-				87E712ED23416C3300085DB5 /* GivingDayViewController.swift */,
-				87E712EB23416C1900085DB5 /* GivingDayView.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -364,6 +363,22 @@
 				5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */,
 			);
 			path = BRB;
+			sourceTree = "<group>";
+		};
+		5DB46779234E916B005CE574 /* Giving Day */ = {
+			isa = PBXGroup;
+			children = (
+				87E712ED23416C3300085DB5 /* GivingDayViewController.swift */,
+			);
+			path = "Giving Day";
+			sourceTree = "<group>";
+		};
+		5DB4677A234E917F005CE574 /* Giving Day */ = {
+			isa = PBXGroup;
+			children = (
+				87E712EB23416C1900085DB5 /* GivingDayView.swift */,
+			);
+			path = "Giving Day";
 			sourceTree = "<group>";
 		};
 		6560D4411F51F373009E7CEF /* Eateries */ = {
@@ -516,6 +531,7 @@
 				5D218C4421FBE42600327516 /* Eateries */,
 				5D218C4521FBE42C00327516 /* Lookahead */,
 				5D218C4621FBE43200327516 /* BRB */,
+				5DB4677A234E917F005CE574 /* Giving Day */,
 			);
 			path = Views;
 			sourceTree = "<group>";
