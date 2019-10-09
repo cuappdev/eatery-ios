@@ -181,7 +181,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
             
             return separatorView
         }
-        let infoSeparatorView1 = makeSeparatorView(topItem: infoContainer, leftInset: 10.0, rightInset: 10.0, topInset: 10.0)
+        let infoPopularTimesSeparator = makeSeparatorView(topItem: infoContainer, leftInset: 10.0, rightInset: 10.0, topInset: 10.0)
         
         // Popular times
         popularTimesContainer = UIView()
@@ -224,12 +224,12 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         
         contentContainer.addSubview(popularTimesContainer)
         popularTimesContainer.snp.makeConstraints { make in
-            make.top.equalTo(infoSeparatorView1)
+            make.top.equalTo(infoPopularTimesSeparator)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(180)
         }
         
-        let infoSeparatorView2 = makeSeparatorView(topItem: popularTimesContainer, leftInset: 10.0, rightInset: 10.0, topInset: 0)
+        let popularTimesDirectionsSeparator = makeSeparatorView(topItem: popularTimesContainer, leftInset: 10.0, rightInset: 10.0, topInset: 0)
 
         // Directions Button
         let directionsButton = UIButton(type: .system)
@@ -240,7 +240,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         contentContainer.addSubview(directionsButton)
 
         directionsButton.snp.makeConstraints { make in
-            make.top.equalTo(infoSeparatorView2.snp.bottom).offset(2.0)
+            make.top.equalTo(popularTimesDirectionsSeparator.snp.bottom).offset(2.0)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(34.0)
         }
@@ -337,8 +337,8 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         statusLabel.hero.modifiers = fadeModifiers
         // locationImageView.hero.modifiers = fadeModifiers
         locationLabel.hero.modifiers = fadeModifiers
-        infoSeparatorView1.hero.modifiers = fadeModifiers
-        infoSeparatorView2.hero.modifiers = fadeModifiers
+        infoPopularTimesSeparator.hero.modifiers = fadeModifiers
+        popularTimesDirectionsSeparator.hero.modifiers = fadeModifiers
         popularTimesContainer.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
         menuLabel.hero.modifiers = translateModifiers
