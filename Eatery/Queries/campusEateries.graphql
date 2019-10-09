@@ -19,6 +19,13 @@ query CampusEateries {
             cornellCard
             mobile
         }
+        swipeData {
+            startTime
+            endTime
+            swipeDensity
+            waitTimeLow
+            waitTimeHigh
+        }
         coordinates {
             latitude
             longitude

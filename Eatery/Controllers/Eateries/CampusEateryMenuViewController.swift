@@ -14,6 +14,10 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
 
     var eatery: CampusEatery
     var outerScrollView: UIScrollView!
+    var popularTimesExpanded = true
+    var popularTimesToggleButton: UIButton!
+    var popularTimesContainer: UIView!
+    var popularTimesHistogram: HistogramViewController!
     var pageViewController: TabbedPageViewController!
     var menuHeaderView: MenuHeaderView!
     var delegate: MenuButtonsDelegate?
@@ -177,7 +181,55 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
             
             return separatorView
         }
-        let infoSeparatorView = makeSeparatorView(topItem: infoContainer, leftInset: 10.0, rightInset: 10.0, topInset: 10.0)
+        let infoPopularTimesSeparator = makeSeparatorView(topItem: infoContainer, leftInset: 10.0, rightInset: 10.0, topInset: 10.0)
+        
+        // Popular times
+        popularTimesContainer = UIView()
+        popularTimesContainer.clipsToBounds = true
+        
+        let popularTimesLabel = UILabel()
+        popularTimesLabel.text = "Popular Times"
+        popularTimesLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        popularTimesContainer.addSubview(popularTimesLabel)
+        popularTimesLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(15)
+            make.leading.equalToSuperview().inset(16)
+        }
+        
+        popularTimesToggleButton = UIButton(type: .custom)
+        popularTimesToggleButton.setTitle("Hide", for: .normal)
+        popularTimesToggleButton.setTitleColor(.secondary, for: .normal)
+        popularTimesToggleButton.titleLabel!.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        popularTimesToggleButton.addTarget(self, action: #selector(popularTimesToggleButtonPressed(sender:)), for: .touchUpInside)
+        
+        popularTimesContainer.addSubview(popularTimesToggleButton)
+        popularTimesToggleButton.snp.makeConstraints { make in
+            make.centerY.equalTo(popularTimesLabel)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
+        let histogramFrame = CGRect(x: 30, y: 30, width: 350, height: 150)
+        //popularTimesHistogram = HistogramViewController(frame: histogramFrame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7)])
+        popularTimesHistogram = HistogramViewController(frame: histogramFrame, swipeData: eatery.swipeData)
+        addChildViewController(popularTimesHistogram)
+        popularTimesContainer.addSubview(popularTimesHistogram.view)
+        popularTimesHistogram.didMove(toParentViewController: self)
+        
+        popularTimesHistogram.view.snp.makeConstraints { make in
+            make.height.equalTo(150)
+            make.top.equalTo(popularTimesLabel).offset(20)
+            make.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        contentContainer.addSubview(popularTimesContainer)
+        popularTimesContainer.snp.makeConstraints { make in
+            make.top.equalTo(infoPopularTimesSeparator)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(180)
+        }
+        
+        let popularTimesDirectionsSeparator = makeSeparatorView(topItem: popularTimesContainer, leftInset: 10.0, rightInset: 10.0, topInset: 0)
 
         // Directions Button
         let directionsButton = UIButton(type: .system)
@@ -188,7 +240,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         contentContainer.addSubview(directionsButton)
 
         directionsButton.snp.makeConstraints { make in
-            make.top.equalTo(infoSeparatorView.snp.bottom).offset(2.0)
+            make.top.equalTo(popularTimesDirectionsSeparator.snp.bottom).offset(2.0)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(34.0)
         }
@@ -285,7 +337,9 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         statusLabel.hero.modifiers = fadeModifiers
         // locationImageView.hero.modifiers = fadeModifiers
         locationLabel.hero.modifiers = fadeModifiers
-        infoSeparatorView.hero.modifiers = fadeModifiers
+        infoPopularTimesSeparator.hero.modifiers = fadeModifiers
+        popularTimesDirectionsSeparator.hero.modifiers = fadeModifiers
+        popularTimesContainer.hero.modifiers = fadeModifiers
         directionsButton.hero.modifiers = fadeModifiers
         menuLabel.hero.modifiers = translateModifiers
         pageViewController.view.hero.modifiers = translateModifiers
@@ -343,6 +397,28 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
         mapItem.name = eatery.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
+    
+    @objc func popularTimesToggleButtonPressed(sender: UIButton) {
+        let newHeight: Int!
+        if popularTimesExpanded {
+            newHeight = 34
+            popularTimesHistogram.view.isHidden.toggle();
+            popularTimesToggleButton.setTitle("Show", for: .normal)
+        } else {
+            newHeight = 180
+            popularTimesHistogram.view.isHidden.toggle()
+            popularTimesToggleButton.setTitle("Hide", for: .normal)
+        }
+        
+        let animation = UIViewPropertyAnimator(duration: 1, curve: .easeInOut) {
+            self.popularTimesContainer.snp.updateConstraints { make in
+                make.height.equalTo(newHeight)
+            }
+        }
+        animation.startAnimation()
+        
+        popularTimesExpanded.toggle()
     }
     
     @objc func directionsButtonPressed(sender: UIButton) {

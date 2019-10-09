@@ -58,8 +58,12 @@
 		6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6502AF861DCFB9ED00390EAA /* FilterBar.swift */; };
 		654E37411DEEA738000E4FAB /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E37401DEEA738000E4FAB /* Sort.swift */; };
 		65E93179206C186B00547D14 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E93178206C186B00547D14 /* Keys.swift */; };
+		8724A074234962D800D92EE3 /* HistogramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEA97F2273B6C200E97228 /* HistogramViewController.swift */; };
+		8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8724A0772349637E00D92EE3 /* GoogleService-Info.plist */; };
 		872E528B232DBA09006D12D4 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E5289232DBA07006D12D4 /* Analytics.swift */; };
 		874D83702336751D00E26728 /* EventPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874D836F2336751D00E26728 /* EventPayload.swift */; };
+		87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E712EB23416C1900085DB5 /* GivingDayView.swift */; };
+		87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E712ED23416C3300085DB5 /* GivingDayViewController.swift */; };
 		892A06E061931FC9506733A0 /* Pods_Eatery_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
@@ -71,8 +75,8 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
-		C2A5E36B231CB6B10061E737 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2A5E36A231CB6B10061E737 /* GoogleService-Info.plist */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
+		CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
@@ -213,8 +217,11 @@
 		65E93178206C186B00547D14 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8724A0772349637E00D92EE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		872E5289232DBA07006D12D4 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		874D836F2336751D00E26728 /* EventPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPayload.swift; sourceTree = "<group>"; };
+		87E712EB23416C1900085DB5 /* GivingDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivingDayView.swift; sourceTree = "<group>"; };
+		87E712ED23416C3300085DB5 /* GivingDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GivingDayViewController.swift; path = "Eatery/Controllers/Giving Day/GivingDayViewController.swift"; sourceTree = SOURCE_ROOT; };
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
 		95495D2D1C0AA0790015B85E /* MenuImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImages.swift; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
@@ -232,8 +239,9 @@
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
-		C2A5E36A231CB6B10061E737 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaterySwipeData.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
+		CECEA97F2273B6C200E97228 /* HistogramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
 		D956DCAC2187B074001BB9B0 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
@@ -292,6 +300,7 @@
 				6560D4411F51F373009E7CEF /* Eateries */,
 				6560D4421F51F37A009E7CEF /* Lookahead */,
 				9584FE531CDD6C40001A3AB5 /* BRB */,
+				5DB46779234E916B005CE574 /* Giving Day */,
 				C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */,
 				5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */,
 				5D9A119123368F0B00F430A1 /* EateryNavigationController.swift */,
@@ -326,6 +335,7 @@
 				5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */,
 				5DE1D429225E95EB008054F4 /* RatingView.swift */,
 				5DE1D42E225EC710008054F4 /* PillView.swift */,
+				CECEA97F2273B6C200E97228 /* HistogramViewController.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -353,6 +363,22 @@
 				5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */,
 			);
 			path = BRB;
+			sourceTree = "<group>";
+		};
+		5DB46779234E916B005CE574 /* Giving Day */ = {
+			isa = PBXGroup;
+			children = (
+				87E712ED23416C3300085DB5 /* GivingDayViewController.swift */,
+			);
+			path = "Giving Day";
+			sourceTree = "<group>";
+		};
+		5DB4677A234E917F005CE574 /* Giving Day */ = {
+			isa = PBXGroup;
+			children = (
+				87E712EB23416C1900085DB5 /* GivingDayView.swift */,
+			);
+			path = "Giving Day";
 			sourceTree = "<group>";
 		};
 		6560D4411F51F373009E7CEF /* Eateries */ = {
@@ -467,7 +493,7 @@
 		C0497ACA1B64AA1800AC1C6C /* Eatery */ = {
 			isa = PBXGroup;
 			children = (
-				C2A5E36A231CB6B10061E737 /* GoogleService-Info.plist */,
+				8724A0772349637E00D92EE3 /* GoogleService-Info.plist */,
 				D97142E6219A6B6F00E2EE05 /* API.swift */,
 				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
 				872E5289232DBA07006D12D4 /* Analytics.swift */,
@@ -505,6 +531,7 @@
 				5D218C4421FBE42600327516 /* Eateries */,
 				5D218C4521FBE42C00327516 /* Lookahead */,
 				5D218C4621FBE43200327516 /* BRB */,
+				5DB4677A234E917F005CE574 /* Giving Day */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -573,6 +600,7 @@
 				5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */,
 				5D856457222A2D4E003A712B /* Menu.swift */,
 				D930FBD7218BC00200B0B1CE /* BRBAccount.swift */,
+				CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -731,7 +759,7 @@
 			files = (
 				D956DCB12187B2BF001BB9B0 /* campusEateries.graphql in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
-				C2A5E36B231CB6B10061E737 /* GoogleService-Info.plist in Resources */,
+				8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
@@ -897,6 +925,7 @@
 				5DE1D42B225E95EB008054F4 /* CollegetownMenuHeaderView.swift in Sources */,
 				5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */,
 				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
+				87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
@@ -938,11 +967,13 @@
 				5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
+				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
+				8724A074234962D800D92EE3 /* HistogramViewController.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
 				5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */,
@@ -956,6 +987,7 @@
 				5D218C2F21FBE39700327516 /* MealStationTableViewCell.swift in Sources */,
 				5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */,
 				5DE1D42F225EC710008054F4 /* PillView.swift in Sources */,
+				CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
 				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
 				5DEF1AA0222B2EBB00855902 /* SettingsTableViewController.swift in Sources */,

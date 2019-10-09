@@ -111,6 +111,29 @@ struct NetworkManager {
                     diningItems[dateString] = allMenuItems
                     eventItems[dateString] = eventsDictionary
                 }
+                
+                var swipeDataPoints = [SwipeDataPoint]()
+                for swipeDatum in eatery.swipeData {
+                    guard let swipeDatum = swipeDatum else { continue }
+                    
+                    let swipeDatumStartDate = self.timeDateFormatter.date(from: String(swipeDatum.startTime))
+
+                    let swipeDatumEndDate = self.timeDateFormatter.date(from: swipeDatum.endTime)
+                    guard swipeDatumStartDate != nil && swipeDatumEndDate != nil else { continue }
+                    let swipeDatumStartHour = Calendar.current.component(.hour, from: swipeDatumStartDate!)
+                    let swipeDatumStartMinute = Calendar.current.component(.minute, from: swipeDatumStartDate!)
+                    var swipeDatumEndMinute = Calendar.current.component(.minute, from: swipeDatumEndDate!)
+                    swipeDatumEndMinute = (swipeDatumEndMinute == 0) ? 60 : swipeDatumEndMinute
+                    
+                    let swipeDataPoint = SwipeDataPoint(eateryId: eatery.id,
+                                                        militaryHour: swipeDatumStartHour,
+                                                        minuteRange: swipeDatumStartMinute...swipeDatumEndMinute,
+                                                        swipeDensity: swipeDatum.swipeDensity,
+                                                        waitTimeLow: swipeDatum.waitTimeLow,
+                                                        waitTimeHigh: swipeDatum.waitTimeHigh)
+                    swipeDataPoints.append(swipeDataPoint)
+                }
+                let eaterySwipeData = EaterySwipeData(swipeDataPoints: swipeDataPoints)
 
                 return CampusEatery(id: eatery.id,
                               name: eatery.name,
@@ -123,7 +146,8 @@ struct NetworkManager {
                               phone: eatery.phone,
                               slug: eatery.slug,
                               events: eventItems,
-                              diningMenu: diningItems)
+                              diningMenu: diningItems,
+                              swipeData: eaterySwipeData)
             }
 
             completion(finalEateries, nil)
