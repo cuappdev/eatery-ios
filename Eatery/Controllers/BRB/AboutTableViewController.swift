@@ -1,6 +1,6 @@
 
 //
-//  InfoTableViewController.swift
+//  AboutTableViewController.swift
 //  Eatery
 //
 //  Created by William Ma on 3/2/19.
@@ -12,11 +12,11 @@ import SafariServices
 
 protocol InfoTableViewControllerDelegate: AnyObject {
 
-    func infoTableViewControllerDidLogoutUser(_ stvc: InfoTableViewController)
+    func infoTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
 
 }
 
-class InfoTableViewController: UITableViewController {
+class AboutTableViewController: UITableViewController {
 
     private enum CellIdentifier: String {
 
