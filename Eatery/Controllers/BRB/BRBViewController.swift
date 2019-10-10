@@ -28,10 +28,10 @@ class BRBViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Meal Plan"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "brbSettings"),
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "infoIcon"),
                                                             style: .plain,
                                                             target: self,
-                                                            action: #selector(settingsButtonPressed(_:)))
+                                                            action: #selector(infoButtonPressed(_:)))
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
@@ -48,17 +48,17 @@ class BRBViewController: UIViewController {
         loginViewController.didMove(toParentViewController: self)
     }
     
-    @objc private func settingsButtonPressed(_ sender: UIBarButtonItem) {
-        let settingsVC = SettingsTableViewController()
-        settingsVC.delegate = self
+    @objc private func infoButtonPressed(_ sender: UIBarButtonItem) {
+        let infoVC = InfoTableViewController()
+        infoVC.delegate = self
         
         if case .finished = connectionHandler.stage {
-            settingsVC.logoutEnabled = true
+            infoVC.logoutEnabled = true
         } else {
-            settingsVC.logoutEnabled = false
+            infoVC.logoutEnabled = false
         }
         
-        navigationController?.pushViewController(settingsVC, animated: true)
+        navigationController?.pushViewController(infoVC, animated: true)
     }
     
     private func setState(_ newState: State) {
@@ -145,9 +145,9 @@ extension BRBViewController: BRBConnectionDelegate {
     
 }
 
-extension BRBViewController: SettingsTableViewControllerDelegate {
+extension BRBViewController: InfoTableViewControllerDelegate {
     
-    func settingsTableViewControllerDidLogoutUser(_ stvc: SettingsTableViewController) {
+    func infoTableViewControllerDidLogoutUser(_ stvc: InfoTableViewController) {
         setState(.login)
         
         connectionHandler = BRBConnectionHandler()

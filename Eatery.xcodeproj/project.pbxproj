@@ -38,14 +38,13 @@
 		5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */; };
 		5DD8A8962315843900ED25FD /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */; };
 		5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */; };
-		5DDD93A4C245320F6F3ECDE6 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		5DE1D427225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D426225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift */; };
 		5DE1D42B225E95EB008054F4 /* CollegetownMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */; };
 		5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D429225E95EB008054F4 /* RatingView.swift */; };
 		5DE1D42F225EC710008054F4 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D42E225EC710008054F4 /* PillView.swift */; };
 		5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D430225ECB62008054F4 /* PillViewController.swift */; };
 		5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */; };
-		5DEF1AA0222B2EBB00855902 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */; };
+		5DEF1AA0222B2EBB00855902 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1A9F222B2EBB00855902 /* InfoTableViewController.swift */; };
 		5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */; };
 		5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */; };
 		5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */; };
@@ -75,6 +74,8 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
+		C8AAAB54234F7A6F00A6FE20 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */; };
+		C8AAAB55234F7A6F00A6FE20 /* Pods_Eatery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
@@ -123,6 +124,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		C8AAAB56234F7A6F00A6FE20 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C8AAAB55234F7A6F00A6FE20 /* Pods_Eatery.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D971430A219A74E400E2EE05 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,7 +204,7 @@
 		5DE1D42E225EC710008054F4 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		5DE1D430225ECB62008054F4 /* PillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillViewController.swift; sourceTree = "<group>"; };
 		5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesSharedViewController.swift; sourceTree = "<group>"; };
-		5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		5DEF1A9F222B2EBB00855902 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
@@ -239,6 +251,7 @@
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
+		C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Eatery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaterySwipeData.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		CECEA97F2273B6C200E97228 /* HistogramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewController.swift; sourceTree = "<group>"; };
@@ -278,8 +291,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8AAAB54234F7A6F00A6FE20 /* Pods_Eatery.framework in Frameworks */,
 				D97142E1219A4B6000E2EE05 /* Security.framework in Frameworks */,
-				5DDD93A4C245320F6F3ECDE6 /* Pods_Eatery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +324,7 @@
 		340372A2A23D5433FB653F66 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */,
 				9584FE541CDD7A26001A3AB5 /* Security.framework */,
 				19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */,
 				0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */,
@@ -461,7 +475,7 @@
 				5DF1772E231C470100194D14 /* BRBLoginViewController.swift */,
 				5DF17736231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift */,
 				5DF17730231C471C00194D14 /* BRBAccountViewController.swift */,
-				5DEF1A9F222B2EBB00855902 /* SettingsTableViewController.swift */,
+				5DEF1A9F222B2EBB00855902 /* InfoTableViewController.swift */,
 			);
 			path = BRB;
 			sourceTree = "<group>";
@@ -638,6 +652,7 @@
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
 				13A4C9728ACE643362E0E498 /* [CP] Embed Pods Frameworks */,
 				D9714310219A74E400E2EE05 /* Embed Watch Content */,
+				C8AAAB56234F7A6F00A6FE20 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -990,7 +1005,7 @@
 				CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
 				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
-				5DEF1AA0222B2EBB00855902 /* SettingsTableViewController.swift in Sources */,
+				5DEF1AA0222B2EBB00855902 /* InfoTableViewController.swift in Sources */,
 				5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
