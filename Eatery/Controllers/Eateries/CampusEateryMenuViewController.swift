@@ -211,7 +211,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         
         let histogramFrame = CGRect(x: 30, y: 30, width: 350, height: 150)
         //popularTimesHistogram = HistogramViewController(frame: histogramFrame, data: [(2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7), (5, 7), (1, 3), (7, 9), (2, 4), (4, 6), (3, 7)])
-        popularTimesHistogram = HistogramViewController(frame: histogramFrame, swipeData: eatery.swipeData)
+        popularTimesHistogram = HistogramViewController(frame: histogramFrame, swipeDataByHour: eatery.swipeDataByHour)
         addChildViewController(popularTimesHistogram)
         popularTimesContainer.addSubview(popularTimesHistogram.view)
         popularTimesHistogram.didMove(toParentViewController: self)

@@ -19,6 +19,17 @@ enum Area: String {
 
 }
 
+struct SwipeDataPoint: Hashable {
+
+    let eateryId: Int
+    let militaryHour: Int
+    let minuteRange: ClosedRange<Int>
+    let swipeDensity: Double
+    let waitTimeLow: Int
+    let waitTimeHigh: Int
+
+}
+
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
 struct CampusEatery: Eatery {
@@ -63,7 +74,7 @@ struct CampusEatery: Eatery {
 
     let events: [DayString: [EventName: Event]]
     
-    let swipeData: EaterySwipeData
+    let swipeDataByHour: [Int: Set<SwipeDataPoint>]
 
     let allEvents: [Event]
 
@@ -90,7 +101,7 @@ struct CampusEatery: Eatery {
         slug: String,
         events: [String: [String: Event]],
         diningMenu: [String : [Menu.Item]]?,
-        swipeData: EaterySwipeData) {
+        swipeDataPoints: [SwipeDataPoint]) {
 
         self.id = id
         self.name = name
@@ -113,7 +124,9 @@ struct CampusEatery: Eatery {
         }
 
         self.allEvents = events.flatMap { $0.value.map { $0.value } }
-        self.swipeData = swipeData
+        self.swipeDataByHour = swipeDataPoints.reduce(into: [:], { (swipeDataByHour, point) in
+            swipeDataByHour[point.militaryHour, default: []].insert(point)
+        })
     }
 
     func diningItems(onDayOf date: Date) -> [Menu.Item] {
@@ -121,6 +134,20 @@ struct CampusEatery: Eatery {
         return diningMenu?.data[dayString] ?? []
     }
 
+}
+
+// MARK: - Swipe Data
+
+extension CampusEatery {
+
+    func averageSwipeDensity(for militaryHour: Int) -> Double {
+        guard let points = swipeDataByHour[militaryHour], points.count > 1 else {
+            return 0
+        }
+
+        return points.map { $0.swipeDensity }.reduce(0, +) / Double(points.count)
+    }
+    
 }
 
 // MARK: - Eatery Appendix

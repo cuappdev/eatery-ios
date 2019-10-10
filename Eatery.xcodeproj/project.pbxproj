@@ -76,7 +76,6 @@
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
-		CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
@@ -239,7 +238,6 @@
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
-		CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaterySwipeData.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		CECEA97F2273B6C200E97228 /* HistogramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
@@ -600,7 +598,6 @@
 				5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */,
 				5D856457222A2D4E003A712B /* Menu.swift */,
 				D930FBD7218BC00200B0B1CE /* BRBAccount.swift */,
-				CE5379FE227E9865001CA6A6 /* EaterySwipeData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -987,7 +984,6 @@
 				5D218C2F21FBE39700327516 /* MealStationTableViewCell.swift in Sources */,
 				5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */,
 				5DE1D42F225EC710008054F4 /* PillView.swift in Sources */,
-				CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
 				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
 				5DEF1AA0222B2EBB00855902 /* SettingsTableViewController.swift in Sources */,

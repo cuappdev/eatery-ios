@@ -114,26 +114,29 @@ struct NetworkManager {
                 
                 var swipeDataPoints = [SwipeDataPoint]()
                 for swipeDatum in eatery.swipeData {
-                    guard let swipeDatum = swipeDatum else { continue }
-                    
-                    let swipeDatumStartDate = self.timeDateFormatter.date(from: String(swipeDatum.startTime))
+                    guard let swipeDatum = swipeDatum,
+                        let startDate = self.timeDateFormatter.date(from: swipeDatum.startTime),
+                        let endDate = self.timeDateFormatter.date(from: swipeDatum.endTime) else {
+                            continue
+                    }
 
-                    let swipeDatumEndDate = self.timeDateFormatter.date(from: swipeDatum.endTime)
-                    guard swipeDatumStartDate != nil && swipeDatumEndDate != nil else { continue }
-                    let swipeDatumStartHour = Calendar.current.component(.hour, from: swipeDatumStartDate!)
-                    let swipeDatumStartMinute = Calendar.current.component(.minute, from: swipeDatumStartDate!)
-                    var swipeDatumEndMinute = Calendar.current.component(.minute, from: swipeDatumEndDate!)
-                    swipeDatumEndMinute = (swipeDatumEndMinute == 0) ? 60 : swipeDatumEndMinute
+                    let startHour = Calendar.current.component(.hour, from: startDate)
+                    let startMinute = Calendar.current.component(.minute, from: startDate)
+                    let unadjustedEndMinute = Calendar.current.component(.minute, from: endDate)
+                    let endMinute = unadjustedEndMinute <= 0 ? 60 : unadjustedEndMinute
+
+                    guard startMinute <= endMinute else {
+                        continue
+                    }
                     
                     let swipeDataPoint = SwipeDataPoint(eateryId: eatery.id,
-                                                        militaryHour: swipeDatumStartHour,
-                                                        minuteRange: swipeDatumStartMinute...swipeDatumEndMinute,
+                                                        militaryHour: startHour,
+                                                        minuteRange: startMinute...endMinute,
                                                         swipeDensity: swipeDatum.swipeDensity,
                                                         waitTimeLow: swipeDatum.waitTimeLow,
                                                         waitTimeHigh: swipeDatum.waitTimeHigh)
                     swipeDataPoints.append(swipeDataPoint)
                 }
-                let eaterySwipeData = EaterySwipeData(swipeDataPoints: swipeDataPoints)
 
                 return CampusEatery(id: eatery.id,
                               name: eatery.name,
@@ -147,7 +150,7 @@ struct NetworkManager {
                               slug: eatery.slug,
                               events: eventItems,
                               diningMenu: diningItems,
-                              swipeData: eaterySwipeData)
+                              swipeDataPoints: swipeDataPoints)
             }
 
             completion(finalEateries, nil)
