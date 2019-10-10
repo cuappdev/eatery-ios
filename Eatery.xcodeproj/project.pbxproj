@@ -44,7 +44,7 @@
 		5DE1D42F225EC710008054F4 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D42E225EC710008054F4 /* PillView.swift */; };
 		5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D430225ECB62008054F4 /* PillViewController.swift */; };
 		5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */; };
-		5DEF1AA0222B2EBB00855902 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1A9F222B2EBB00855902 /* InfoTableViewController.swift */; };
+		5DEF1AA0222B2EBB00855902 /* AboutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1A9F222B2EBB00855902 /* AboutTableViewController.swift */; };
 		5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */; };
 		5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */; };
 		5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */; };
@@ -204,7 +204,7 @@
 		5DE1D42E225EC710008054F4 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		5DE1D430225ECB62008054F4 /* PillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillViewController.swift; sourceTree = "<group>"; };
 		5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesSharedViewController.swift; sourceTree = "<group>"; };
-		5DEF1A9F222B2EBB00855902 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
+		5DEF1A9F222B2EBB00855902 /* AboutTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
 		5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
@@ -475,7 +475,7 @@
 				5DF1772E231C470100194D14 /* BRBLoginViewController.swift */,
 				5DF17736231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift */,
 				5DF17730231C471C00194D14 /* BRBAccountViewController.swift */,
-				5DEF1A9F222B2EBB00855902 /* InfoTableViewController.swift */,
+				5DEF1A9F222B2EBB00855902 /* AboutTableViewController.swift */,
 			);
 			path = BRB;
 			sourceTree = "<group>";
@@ -1005,7 +1005,7 @@
 				CE5379FF227E9865001CA6A6 /* EaterySwipeData.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
 				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
-				5DEF1AA0222B2EBB00855902 /* InfoTableViewController.swift in Sources */,
+				5DEF1AA0222B2EBB00855902 /* AboutTableViewController.swift in Sources */,
 				5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

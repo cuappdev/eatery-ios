@@ -31,7 +31,7 @@ class BRBViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "infoIcon"),
                                                             style: .plain,
                                                             target: self,
-                                                            action: #selector(infoButtonPressed(_:)))
+                                                            action: #selector(aboutButtonPressed(_:)))
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
@@ -48,17 +48,17 @@ class BRBViewController: UIViewController {
         loginViewController.didMove(toParentViewController: self)
     }
     
-    @objc private func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let infoVC = InfoTableViewController()
-        infoVC.delegate = self
+    @objc private func aboutButtonPressed(_ sender: UIBarButtonItem) {
+        let aboutVC = AboutTableViewController()
+        aboutVC.delegate = self
         
         if case .finished = connectionHandler.stage {
-            infoVC.logoutEnabled = true
+            aboutVC.logoutEnabled = true
         } else {
-            infoVC.logoutEnabled = false
+            aboutVC.logoutEnabled = false
         }
         
-        navigationController?.pushViewController(infoVC, animated: true)
+        navigationController?.pushViewController(aboutVC, animated: true)
     }
     
     private func setState(_ newState: State) {
@@ -145,9 +145,9 @@ extension BRBViewController: BRBConnectionDelegate {
     
 }
 
-extension BRBViewController: InfoTableViewControllerDelegate {
+extension BRBViewController: AboutTableViewControllerDelegate {
     
-    func infoTableViewControllerDidLogoutUser(_ stvc: InfoTableViewController) {
+    func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController) {
         setState(.login)
         
         connectionHandler = BRBConnectionHandler()

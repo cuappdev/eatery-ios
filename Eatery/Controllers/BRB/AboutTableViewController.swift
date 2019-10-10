@@ -10,9 +10,9 @@
 import UIKit
 import SafariServices
 
-protocol InfoTableViewControllerDelegate: AnyObject {
+protocol AboutTableViewControllerDelegate: AnyObject {
 
-    func infoTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
+    func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
 
 }
 
@@ -35,7 +35,7 @@ class AboutTableViewController: UITableViewController {
         fatalError("init(coder:) will not be implemented")
     }
 
-    weak var delegate: InfoTableViewControllerDelegate?
+    weak var delegate: AboutTableViewControllerDelegate?
 
     var logoutEnabled: Bool = false {
         didSet {
@@ -155,7 +155,7 @@ class AboutTableViewController: UITableViewController {
 
         case (2, 0):
             if logoutEnabled {
-                delegate?.infoTableViewControllerDidLogoutUser(self)
+                delegate?.aboutTableViewControllerDidLogoutUser(self)
             }
 
         default:
