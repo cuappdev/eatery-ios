@@ -103,7 +103,7 @@ class HistogramView: UIView {
 
     private func setUpGestureRecognizer() {
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidChangeState(_:)))
-        gestureRecognizer.minimumPressDuration = 0.0
+        gestureRecognizer.minimumPressDuration = 0
         addGestureRecognizer(gestureRecognizer)
     }
 

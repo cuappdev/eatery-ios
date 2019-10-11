@@ -463,4 +463,3 @@ extension CampusEateryMenuViewController: PopularTimesViewLayoutDelegate {
     }
 
 }
-

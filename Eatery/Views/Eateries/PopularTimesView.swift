@@ -16,7 +16,7 @@ import UIKit
  of the scroll view. The popular times view is able to manage its own
  constraints to change its own height. However, without direct access to the
  outer scroll view (in CampusEateryMenuViewController), it is unable to
- cleanly animate the change.
+ animate the change.
 
  This delegate is the cleanest (albeit still not super clean) way to access the
  outer scroll view.
@@ -107,11 +107,7 @@ class PopularTimesView: UIView {
 
     func setExpanded(_ newValue: Bool, animated: Bool) {
         isExpanded = newValue
-        if isExpanded {
-            showHideButton.setTitle("Hide", for: .normal)
-        } else {
-            showHideButton.setTitle("Show", for: .normal)
-        }
+        showHideButton.setTitle(isExpanded ? "Hide" : "Show", for: .normal)
 
         let actions: (() -> Void) = {
             self.histogramView.alpha = self.isExpanded ? 1.0 : 0.0
