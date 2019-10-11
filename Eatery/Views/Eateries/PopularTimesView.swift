@@ -9,7 +9,27 @@
 import SnapKit
 import UIKit
 
+/**
+ Why is this layout delegate needed?
+
+ To animate the expansion of the popular times view, we must change the frame
+ of the scroll view. The popular times view is able to manage its own
+ constraints to change its own height. However, without direct access to the
+ outer scroll view (in CampusEateryMenuViewController), it is unable to
+ cleanly animate the change.
+
+ This delegate is the cleanest (albeit still not super clean) way to access the
+ outer scroll view.
+ */
+protocol PopularTimesViewLayoutDelegate: AnyObject {
+
+    func popularTimesContentSizeDidChange(_ popularTimesView: PopularTimesView)
+
+}
+
 class PopularTimesView: UIView {
+
+    weak var layoutDelegate: PopularTimesViewLayoutDelegate?
 
     private let eatery: CampusEatery
 
@@ -61,7 +81,7 @@ class PopularTimesView: UIView {
             make.bottom.equalToSuperview().inset(4)
         }
         histogramContainerView.snp.prepareConstraints { make in
-            histogramExpandConstraint = make.height.equalTo(146).priorityMedium().constraint
+            histogramExpandConstraint = make.height.equalTo(166).priorityMedium().constraint
             histogramCollapseConstraint = make.height.equalTo(0).priorityMedium().constraint
         }
 
@@ -70,7 +90,7 @@ class PopularTimesView: UIView {
         histogramView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(32)
-            make.height.equalTo(146)
+            make.height.equalTo(166)
         }
 
         setExpanded(isExpanded, animated: false)
@@ -104,9 +124,7 @@ class PopularTimesView: UIView {
                 self.histogramCollapseConstraint?.activate()
             }
 
-            self.layoutIfNeeded()
-            self.superview?.layoutIfNeeded()
-            self.superview?.superview?.superview?.layoutIfNeeded()
+            self.layoutDelegate?.popularTimesContentSizeDidChange(self)
         }
 
         if animated {
@@ -144,18 +162,35 @@ extension PopularTimesView: HistogramViewDataSource {
     }
 
     func histogramView(_ histogramView: HistogramView, relativeValueOfDataPointAt index: Int) -> Double {
-        return eatery.averageSwipeDensity(for: containOverflowedMilitaryHour(hour: startHour + index + 1))
+        return eatery.swipeDensity(for: containOverflowedMilitaryHour(hour: startHour + index))
     }
 
     func histogramView(_ histogramView: HistogramView, descriptionForDataPointAt index: Int) -> NSAttributedString? {
         let currentHour = Calendar.current.component(.hour, from: Date())
         let barHour = containOverflowedMilitaryHour(hour: startHour + index)
 
-        let hourText = (currentHour == barHour) ? "Now" : formattedHourForTime(militaryHour: barHour)
-        return NSMutableAttributedString(
-            string: hourText,
-            attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11, weight: .medium)]
+        let hourText = currentHour == barHour ? "Now: " : formattedHourForTime(militaryHour: barHour).appending(": ")
+
+        let waitTimesText: String
+        if let (low: lowEstimate, high: highEstimate) = eatery.waitTimes(atHour: barHour, minute: 0) {
+            waitTimesText = "\(lowEstimate)-\(highEstimate)m"
+        } else {
+            waitTimesText = "?"
+        }
+
+        let labelText = "\(hourText)\(waitTimesText) wait"
+
+        let string = NSMutableAttributedString(
+            string: labelText,
+            attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium)]
         )
+        string.addAttributes(
+            [NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
+             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)
+            ],
+            range: NSRange(location: hourText.count, length: waitTimesText.count)
+        )
+        return string
     }
 
     func numberOfDataPointsPerTickMark(for histogramView: HistogramView) -> Int? {
@@ -166,6 +201,5 @@ extension PopularTimesView: HistogramViewDataSource {
         let tickHour = containOverflowedMilitaryHour(hour: startHour + index)
         return formattedHourForTime(militaryHour: tickHour)
     }
-
 
 }

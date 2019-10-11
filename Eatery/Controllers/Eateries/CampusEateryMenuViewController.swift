@@ -186,6 +186,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         
         // Popular times
         popularTimesView = PopularTimesView(eatery: eatery)
+        popularTimesView.layoutDelegate = self
         
         contentContainer.addSubview(popularTimesView)
         popularTimesView.snp.makeConstraints { make in
@@ -451,6 +452,14 @@ extension CampusEateryMenuViewController: TabbedPageViewControllerDelegate {
 
         mealViewController.view.layoutIfNeeded()
         return mealViewController.tableView.contentSize.height
+    }
+
+}
+
+extension CampusEateryMenuViewController: PopularTimesViewLayoutDelegate {
+
+    func popularTimesContentSizeDidChange(_ popularTimesView: PopularTimesView) {
+        outerScrollView.layoutIfNeeded()
     }
 
 }

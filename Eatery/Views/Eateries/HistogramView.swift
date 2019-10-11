@@ -67,7 +67,7 @@ class HistogramView: UIView {
     private func setUpBarsLayoutGuide() {
         addLayoutGuide(barsLayoutGuide)
         barsLayoutGuide.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(32)
+            make.top.equalToSuperview().inset(48)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(axisView.snp.top)
         }
@@ -94,11 +94,11 @@ class HistogramView: UIView {
 
     private func setUpTagAndDropDownView() {
         addSubview(tagView)
-        tagView.isHidden = true
 
         addSubview(tagDropDownView)
-        tagDropDownView.isHidden = true
         tagDropDownView.backgroundColor = .inactive
+
+        setShowTag(false, animated: false)
     }
 
     private func setUpGestureRecognizer() {
@@ -185,9 +185,8 @@ class HistogramView: UIView {
 
     @objc private func longPressGestureDidChangeState(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
-        case .began, .changed:
-            tagView.isHidden = false
-            tagDropDownView.isHidden = false
+        case .began:
+            setShowTag(true, animated: true)
 
             let touchPoint = sender.location(in: self)
             guard let barContainerView = hitTest(touchPoint, with: nil) as? BarContainerView,
@@ -195,50 +194,90 @@ class HistogramView: UIView {
                 break
             }
 
-            moveTag(toBarViewAt: index)
-            highlightBarView(at: index)
+            moveTag(toBarViewAt: index, animated: false)
+            highlightBarView(at: index, animated: true)
+
+        case .changed:
+            let touchPoint = sender.location(in: self)
+            guard let barContainerView = hitTest(touchPoint, with: nil) as? BarContainerView,
+                let index = barContainerViews.index(of: barContainerView) else {
+                break
+            }
+
+            moveTag(toBarViewAt: index, animated: true)
+            highlightBarView(at: index, animated: true)
 
         case .ended:
-            break
+            setShowTag(false, animated: true)
+            unhighlightBarViews(animated: true)
 
         case .cancelled, .failed, .possible:
             break
         }
     }
 
-    private func moveTag(toBarViewAt index: Int) {
-        guard 0 <= index, index < barContainerViews.count else {
-            return
+    private func setShowTag(_ showTag: Bool, animated: Bool) {
+        let actions: (() -> Void) = {
+            self.tagView.alpha = showTag ? 1 : 0
+            self.tagDropDownView.alpha = showTag ? 1 : 0
         }
 
-        let description = dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
-        tagView.configure(description: description)
-
-        tagView.snp.remakeConstraints { make in
-            make.top.equalToSuperview().inset(2)
-            make.centerX.equalTo(barContainerViews[index]).priorityMedium()
-            make.leading.greaterThanOrEqualTo(barsLayoutGuide)
-            make.trailing.lessThanOrEqualTo(barsLayoutGuide)
-        }
-
-        tagDropDownView.snp.remakeConstraints { make in
-            make.top.equalTo(tagView.snp.bottom)
-            make.width.equalTo(2)
-            make.bottom.equalTo(barContainerViews[index].barViewTop)
-            make.centerX.equalTo(barContainerViews[index])
+        if animated {
+            UIViewPropertyAnimator(duration: 0.1, curve: .linear, animations: actions).startAnimation()
+        } else {
+            actions()
         }
     }
 
-    private func highlightBarView(at index: Int) {
+    private func moveTag(toBarViewAt index: Int, animated: Bool) {
+        guard 0 <= index, index < barContainerViews.count, selectedBarIndex != index else {
+            return
+        }
+
+        selectedBarIndex = index
+
+        let actions: (() -> Void) = {
+            let description = self.dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
+            self.tagView.configure(description: description)
+
+            self.tagView.snp.remakeConstraints { make in
+                make.top.equalToSuperview().inset(2)
+                make.centerX.equalTo(self.barContainerViews[index]).priorityMedium()
+                make.leading.greaterThanOrEqualTo(self.barsLayoutGuide)
+                make.trailing.lessThanOrEqualTo(self.barsLayoutGuide)
+            }
+
+            self.tagDropDownView.snp.remakeConstraints { make in
+                make.top.equalTo(self.tagView.snp.bottom)
+                make.width.equalTo(2)
+                make.bottom.equalTo(self.barContainerViews[index].barViewTop)
+                make.centerX.equalTo(self.barContainerViews[index])
+            }
+
+            self.layoutIfNeeded()
+        }
+
+        if animated {
+            UIViewPropertyAnimator(duration: 0.15, curve: .linear, animations: actions).startAnimation()
+        } else {
+            actions()
+        }
+    }
+
+    private func highlightBarView(at index: Int, animated: Bool) {
         guard 0 <= index, index < barContainerViews.count else {
             return
         }
 
-        for barContainerView in barContainerViews {
-            barContainerView.setHighlighted(false, animated: true)
-        }
+        unhighlightBarViews(animated: animated)
 
-        barContainerViews[index].setHighlighted(true, animated: true)
+        barContainerViews[index].setHighlighted(true, animated: animated)
+    }
+
+    private func unhighlightBarViews(animated: Bool) {
+        for barContainerView in barContainerViews {
+            barContainerView.setHighlighted(false, animated: animated)
+        }
     }
 
 }
@@ -348,7 +387,8 @@ private class BarTagView: UIView {
         label.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(8)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(48)
+            make.width.greaterThanOrEqualTo(90)
+            make.width.equalTo(90).priorityLow()
         }
     }
     

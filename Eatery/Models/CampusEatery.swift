@@ -140,12 +140,16 @@ struct CampusEatery: Eatery {
 
 extension CampusEatery {
 
-    func averageSwipeDensity(for militaryHour: Int) -> Double {
-        guard let points = swipeDataByHour[militaryHour], points.count > 1 else {
-            return 0
-        }
+    private func greatestSwipeDensity(at militaryHour: Int) -> SwipeDataPoint? {
+        return swipeDataByHour[militaryHour]?.max { $0.swipeDensity < $1.swipeDensity }
+    }
 
-        return points.map { $0.swipeDensity }.reduce(0, +) / Double(points.count)
+    func swipeDensity(for militaryHour: Int) -> Double {
+        return greatestSwipeDensity(at: militaryHour)?.swipeDensity ?? 0
+    }
+
+    func waitTimes(atHour hour: Int, minute: Int) -> (low: Int, high: Int)? {
+        return greatestSwipeDensity(at: hour).map { (low: $0.waitTimeLow, high: $0.waitTimeHigh) }
     }
     
 }
