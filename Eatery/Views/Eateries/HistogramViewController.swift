@@ -10,6 +10,10 @@ import UIKit
 
 // TODO: Create a protocol that encapsulates all Swipe Data and make HistogramViewController independent of Eatery variables
 class HistogramViewController: UIViewController {
+
+    private var histogramView: HistogramView!
+
+    private let eatery: CampusEatery
     
     // MARK: Data
     private let swipeDataByHour: [Int: Set<SwipeDataPoint>]
@@ -31,8 +35,10 @@ class HistogramViewController: UIViewController {
     
     // MARK: Initializers
     
-    init(frame: CGRect, swipeDataByHour: [Int: Set<SwipeDataPoint>]) {
+    init(frame: CGRect, swipeDataByHour: [Int: Set<SwipeDataPoint>], campusEatery: CampusEatery) {
         self.swipeDataByHour = swipeDataByHour
+
+        self.eatery = campusEatery
 
         super.init(nibName: nil, bundle: nil)
         
@@ -47,9 +53,18 @@ class HistogramViewController: UIViewController {
     
     override func viewDidLoad() {
         view.frame = viewFrame
+
+        histogramView = HistogramView()
+        histogramView.dataSource = self
+        view.addSubview(histogramView)
+        histogramView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
-        setUpBarViews()
-        setUpAxis()
+//        setUpBarViews()
+//        setUpAxis()
+
+        histogramView.reloadData()
     }
     
     // MARK: Initial view set up
@@ -268,4 +283,29 @@ class HistogramViewController: UIViewController {
         return waitTimeView
     }
     
+}
+
+extension HistogramViewController: HistogramViewDataSource {
+
+    func numberOfDataPoints(for histogramView: HistogramView) -> Int {
+        return overflowingEndTime - hourRange.startTime
+    }
+
+    func histogramView(_ histogramView: HistogramView, relativeValueOfDataPointAt index: Int) -> Double {
+        return eatery.averageSwipeDensity(for: containOverflowedMilitaryHour(hour: hourRange.startTime + index + 1))
+    }
+
+    func numberOfDataPointsPerTickMark(for histogramView: HistogramView) -> Int? {
+        return 3
+    }
+
+    func histogramView(_ histogramView: HistogramView, titleForTickMarkAt index: Int) -> String? {
+        let tickHour = containOverflowedMilitaryHour(hour: hourRange.startTime + index)
+        return formattedHourForTime(militaryHour: tickHour)
+    }
+
+    func histogramView(_ histogramView: HistogramView, descriptionForTickMarkAt index: Int) -> NSAttributedString? {
+        return nil
+    }
+
 }
