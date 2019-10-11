@@ -6,16 +6,17 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import SnapKit
 import UIKit
 
 protocol HistogramViewDataSource: AnyObject {
 
     func numberOfDataPoints(for histogramView: HistogramView) -> Int
     func histogramView(_ histogramView: HistogramView, relativeValueOfDataPointAt index: Int) -> Double
+    func histogramView(_ histogramView: HistogramView, descriptionForDataPointAt index: Int) -> NSAttributedString?
 
     func numberOfDataPointsPerTickMark(for histogramView: HistogramView) -> Int?
     func histogramView(_ histogramView: HistogramView, titleForTickMarkAt index: Int) -> String?
-    func histogramView(_ histogramView: HistogramView, descriptionForTickMarkAt index: Int) -> NSAttributedString?
 
 }
 
@@ -27,21 +28,25 @@ class HistogramView: UIView {
     /// histogram
     private let axisView = UIView()
 
-    /// The view to which all views in `bars` are added
-    private let barsContainerView = UIView()
-
-    private var barViews: [BarView] = []
+    /// The layoutGuide for which all views in `barContainerViews` are contained
+    private let barsLayoutGuide = UILayoutGuide()
+    private var barContainerViews: [BarContainerView] = []
 
     private let tickLabelContainerView = UIView()
-
     private var tickLabelViews: [TickLabelView] = []
+
+    private var selectedBarIndex: Int?
+    private let tagView = BarTagView()
+    private let tagDropDownView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         setUpAxisView()
-        setUpBarsContainerView()
+        setUpBarsLayoutGuide()
         setUpTickLabelContainerView()
+        setUpTagAndDropDownView()
+        setUpGestureRecognizer()
     }
 
     required init?(coder: NSCoder) {
@@ -59,20 +64,16 @@ class HistogramView: UIView {
         }
     }
 
-    private func setUpBarsContainerView() {
-        barsContainerView.backgroundColor = nil
-        addSubview(barsContainerView)
-
-        barsContainerView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+    private func setUpBarsLayoutGuide() {
+        addLayoutGuide(barsLayoutGuide)
+        barsLayoutGuide.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(32)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(axisView.snp.top)
         }
     }
 
     private func setUpTickLabelContainerView() {
-        tickLabelContainerView.backgroundColor = nil
-
         addSubview(tickLabelContainerView)
         tickLabelContainerView.snp.makeConstraints { make in
             make.top.equalTo(axisView.snp.bottom)
@@ -89,6 +90,21 @@ class HistogramView: UIView {
             make.trailing.equalTo(axisView.snp.trailing)
             make.top.equalTo(axisView.snp.bottom)
         }
+    }
+
+    private func setUpTagAndDropDownView() {
+        addSubview(tagView)
+        tagView.isHidden = true
+
+        addSubview(tagDropDownView)
+        tagDropDownView.isHidden = true
+        tagDropDownView.backgroundColor = .inactive
+    }
+
+    private func setUpGestureRecognizer() {
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidChangeState(_:)))
+        gestureRecognizer.minimumPressDuration = 0.0
+        addGestureRecognizer(gestureRecognizer)
     }
 
     func reloadData() {
@@ -109,18 +125,17 @@ class HistogramView: UIView {
             return
         }
 
-        var previous: BarView?
+        var previous: BarContainerView?
         for i in 0..<barCount {
-            let barView = BarView()
+            let barContainerView = BarContainerView()
 
-            // clamp the height factor to the range [0, 1]
-            let heightFactor = max(0, min(1, dataSource.histogramView(self, relativeValueOfDataPointAt: i)))
+            let heightFactor = dataSource.histogramView(self, relativeValueOfDataPointAt: i)
+            barContainerView.configure(heightFactor: heightFactor)
 
-            barsContainerView.addSubview(barView)
-            barView.snp.makeConstraints { make in
-                make.height.equalToSuperview().multipliedBy(heightFactor)
-                make.width.equalToSuperview().dividedBy(barCount)
-                make.bottom.equalToSuperview()
+            addSubview(barContainerView)
+            barContainerView.snp.makeConstraints { make in
+                make.width.equalTo(barsLayoutGuide).dividedBy(barCount)
+                make.top.bottom.equalTo(barsLayoutGuide)
 
                 if let previous = previous {
                     make.leading.equalTo(previous.snp.trailing)
@@ -129,16 +144,16 @@ class HistogramView: UIView {
                 }
             }
 
-            barViews.append(barView)
-            previous = barView
+            barContainerViews.append(barContainerView)
+            previous = barContainerView
         }
     }
 
     private func tearDownBars() {
-        for barView in barViews {
-            barView.removeFromSuperview()
+        for view in barContainerViews {
+            view.removeFromSuperview()
         }
-        barViews.removeAll(keepingCapacity: true)
+        barContainerViews.removeAll(keepingCapacity: true)
     }
 
     private func setUpTickMarks() {
@@ -148,14 +163,14 @@ class HistogramView: UIView {
 
         let pointsPerTick = dataSource.numberOfDataPointsPerTickMark(for: self) ?? 1
 
-        for (i, barView) in barViews.enumerated() where i % pointsPerTick == 0 {
+        for (i, barContainerView) in barContainerViews.enumerated() where i % pointsPerTick == 0 {
             let tickLabel = TickLabelView()
             let title = dataSource.histogramView(self, titleForTickMarkAt: i) ?? ""
             tickLabel.configure(title: title)
 
             tickLabelContainerView.addSubview(tickLabel)
             tickLabel.snp.makeConstraints { make in
-                make.leading.equalTo(barView)
+                make.leading.equalTo(barContainerView)
                 make.top.bottom.equalToSuperview()
             }
         }
@@ -168,22 +183,114 @@ class HistogramView: UIView {
         tickLabelViews.removeAll(keepingCapacity: true)
     }
 
+    @objc private func longPressGestureDidChangeState(_ sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began, .changed:
+            tagView.isHidden = false
+            tagDropDownView.isHidden = false
+
+            let touchPoint = sender.location(in: self)
+            guard let barContainerView = hitTest(touchPoint, with: nil) as? BarContainerView,
+                let index = barContainerViews.index(of: barContainerView) else {
+                break
+            }
+
+            moveTag(toBarViewAt: index)
+            highlightBarView(at: index)
+
+        case .ended:
+            break
+
+        case .cancelled, .failed, .possible:
+            break
+        }
+    }
+
+    private func moveTag(toBarViewAt index: Int) {
+        guard 0 <= index, index < barContainerViews.count else {
+            return
+        }
+
+        let description = dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
+        tagView.configure(description: description)
+
+        tagView.snp.remakeConstraints { make in
+            make.top.equalToSuperview().inset(2)
+            make.centerX.equalTo(barContainerViews[index]).priorityMedium()
+            make.leading.greaterThanOrEqualTo(barsLayoutGuide)
+            make.trailing.lessThanOrEqualTo(barsLayoutGuide)
+        }
+
+        tagDropDownView.snp.remakeConstraints { make in
+            make.top.equalTo(tagView.snp.bottom)
+            make.width.equalTo(2)
+            make.bottom.equalTo(barContainerViews[index].barViewTop)
+            make.centerX.equalTo(barContainerViews[index])
+        }
+    }
+
+    private func highlightBarView(at index: Int) {
+        guard 0 <= index, index < barContainerViews.count else {
+            return
+        }
+
+        for barContainerView in barContainerViews {
+            barContainerView.setHighlighted(false, animated: true)
+        }
+
+        barContainerViews[index].setHighlighted(true, animated: true)
+    }
+
 }
 
-private class BarView: UIView {
+private class BarContainerView: UIView {
+
+    private let barView = UIView()
+
+    var barViewTop: ConstraintItem {
+        return barView.snp.top
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .histogramBarBlue
-        layer.cornerRadius = 3
-        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        barView.isUserInteractionEnabled = false
+        barView.backgroundColor = .histogramBarBlue
+        barView.layer.cornerRadius = 3
+        barView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
-        transform = CGAffineTransform(scaleX: 0.9, y: 1)
+        addSubview(barView)
+        setUpConstraints(heightFactor: 0)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(heightFactor: Double) {
+        // clamp heightFactor to the range [0, 1]
+        let clampedHeightFactor = max(0, min(1, heightFactor))
+        setUpConstraints(heightFactor: clampedHeightFactor)
+    }
+
+    private func setUpConstraints(heightFactor: Double) {
+        barView.snp.remakeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(2)
+            make.bottom.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(heightFactor)
+        }
+    }
+
+    func setHighlighted(_ isHighlighted: Bool, animated: Bool) {
+        let actions: (() -> Void) = {
+            self.barView.backgroundColor = isHighlighted ? .eateryBlue : .histogramBarBlue
+        }
+
+        if animated {
+            UIViewPropertyAnimator(duration: 0.05, curve: .linear, animations: actions).startAnimation()
+        } else {
+            actions()
+        }
     }
 
 }
@@ -220,6 +327,37 @@ private class TickLabelView: UIView {
 
     func configure(title: String) {
         titleLabel.text = title
+    }
+
+}
+
+private class BarTagView: UIView {
+
+    private let label = UILabel()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        layer.cornerRadius = 5
+        clipsToBounds = true
+        layer.borderColor = UIColor.inactive.cgColor
+        layer.borderWidth = 2
+
+        label.textAlignment = .center
+        addSubview(label)
+        label.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(48)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(description: NSAttributedString) {
+        label.attributedText = description
     }
 
 }
