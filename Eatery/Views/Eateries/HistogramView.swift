@@ -39,6 +39,8 @@ class HistogramView: UIView {
     private let tagView = BarTagView()
     private let tagDropDownView = UIView()
 
+    private let feedbackGenerator = UISelectionFeedbackGenerator()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -193,6 +195,8 @@ class HistogramView: UIView {
                 highlightBarView(at: index, animated: true)
             }
 
+            feedbackGenerator.prepare()
+
         case .changed:
             if let index = indexOfBar(atPoint: sender.location(in: self)) {
                 moveTag(toBarViewAt: index, animated: true)
@@ -261,6 +265,9 @@ class HistogramView: UIView {
         } else {
             actions()
         }
+
+        feedbackGenerator.selectionChanged()
+        feedbackGenerator.prepare()
     }
 
     private func highlightBarView(at index: Int, animated: Bool) {
