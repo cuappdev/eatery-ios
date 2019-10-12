@@ -187,7 +187,7 @@ class CampusEateryMenuViewController: UIViewController, UIScrollViewDelegate, Me
         // Popular times
         popularTimesView = PopularTimesView(eatery: eatery)
         popularTimesView.layoutDelegate = self
-        
+
         contentContainer.addSubview(popularTimesView)
         popularTimesView.snp.makeConstraints { make in
             make.top.equalTo(infoPopularTimesSeparator)
