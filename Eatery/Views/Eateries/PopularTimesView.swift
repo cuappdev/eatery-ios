@@ -93,8 +93,9 @@ class PopularTimesView: UIView {
             make.height.equalTo(166)
         }
 
-        setExpanded(isExpanded, animated: false)
         histogramView.reloadData()
+
+        setExpanded(!eatery.swipeDataByHour.isEmpty, animated: false)
     }
 
     required init?(coder: NSCoder) {
@@ -108,6 +109,7 @@ class PopularTimesView: UIView {
     func setExpanded(_ newValue: Bool, animated: Bool) {
         isExpanded = newValue
         showHideButton.setTitle(isExpanded ? "Hide" : "Show", for: .normal)
+        showHideButton.layoutIfNeeded()
 
         let actions: (() -> Void) = {
             self.histogramView.alpha = self.isExpanded ? 1.0 : 0.0
@@ -165,28 +167,33 @@ extension PopularTimesView: HistogramViewDataSource {
         let currentHour = Calendar.current.component(.hour, from: Date())
         let barHour = containOverflowedMilitaryHour(hour: startHour + index)
 
-        let hourText = currentHour == barHour ? "Now: " : formattedHourForTime(militaryHour: barHour).appending(": ")
-
-        let waitTimesText: String
         if let (low: lowEstimate, high: highEstimate) = eatery.waitTimes(atHour: barHour, minute: 0) {
-            waitTimesText = "\(lowEstimate)-\(highEstimate)m"
+            let waitTimesText = "\(lowEstimate)-\(highEstimate)m"
+
+            let hourText = currentHour == barHour ? "Now: " : formattedHourForTime(militaryHour: barHour).appending(": ")
+
+            let labelText = "\(hourText)\(waitTimesText) wait"
+
+            let string = NSMutableAttributedString(
+                string: labelText,
+                attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium)]
+            )
+            string.addAttributes(
+                [NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
+                 NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)
+                ],
+                range: NSRange(location: hourText.count, length: waitTimesText.count)
+            )
+            return string
         } else {
-            waitTimesText = "?"
+            return NSAttributedString(
+                string: "No Estimate",
+                attributes: [
+                    NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+                    NSAttributedStringKey.foregroundColor: UIColor.secondary
+                ]
+            )
         }
-
-        let labelText = "\(hourText)\(waitTimesText) wait"
-
-        let string = NSMutableAttributedString(
-            string: labelText,
-            attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium)]
-        )
-        string.addAttributes(
-            [NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
-             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)
-            ],
-            range: NSRange(location: hourText.count, length: waitTimesText.count)
-        )
-        return string
     }
 
     func numberOfDataPointsPerTickMark(for histogramView: HistogramView) -> Int? {

@@ -103,7 +103,7 @@ class HistogramView: UIView {
 
     private func setUpGestureRecognizer() {
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidChangeState(_:)))
-        gestureRecognizer.minimumPressDuration = 0
+        gestureRecognizer.minimumPressDuration = 0.05
         addGestureRecognizer(gestureRecognizer)
     }
 
@@ -188,24 +188,16 @@ class HistogramView: UIView {
         case .began:
             setShowTag(true, animated: true)
 
-            let touchPoint = sender.location(in: self)
-            guard let barContainerView = hitTest(touchPoint, with: nil) as? BarContainerView,
-                let index = barContainerViews.index(of: barContainerView) else {
-                break
+            if let index = indexOfBar(atPoint: sender.location(in: self)) {
+                moveTag(toBarViewAt: index, animated: false)
+                highlightBarView(at: index, animated: true)
             }
-
-            moveTag(toBarViewAt: index, animated: false)
-            highlightBarView(at: index, animated: true)
 
         case .changed:
-            let touchPoint = sender.location(in: self)
-            guard let barContainerView = hitTest(touchPoint, with: nil) as? BarContainerView,
-                let index = barContainerViews.index(of: barContainerView) else {
-                break
+            if let index = indexOfBar(atPoint: sender.location(in: self)) {
+                moveTag(toBarViewAt: index, animated: true)
+                highlightBarView(at: index, animated: true)
             }
-
-            moveTag(toBarViewAt: index, animated: true)
-            highlightBarView(at: index, animated: true)
 
         case .ended:
             setShowTag(false, animated: true)
@@ -214,6 +206,12 @@ class HistogramView: UIView {
         case .cancelled, .failed, .possible:
             break
         }
+    }
+
+    private func indexOfBar(atPoint point: CGPoint) -> Int? {
+        return barContainerViews
+            .enumerated()
+            .first(where: { $0.element.frame.minX <= point.x && point.x <= $0.element.frame.maxX })?.offset
     }
 
     private func setShowTag(_ showTag: Bool, animated: Bool) {
@@ -236,6 +234,14 @@ class HistogramView: UIView {
 
         selectedBarIndex = index
 
+        tagDropDownView.snp.remakeConstraints { make in
+            make.top.equalTo(tagView.snp.bottom)
+            make.width.equalTo(2)
+            make.bottom.equalTo(barContainerViews[index].barViewTop)
+            make.centerX.equalTo(barContainerViews[index])
+        }
+        layoutIfNeeded()
+
         let actions: (() -> Void) = {
             let description = self.dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
             self.tagView.configure(description: description)
@@ -247,18 +253,11 @@ class HistogramView: UIView {
                 make.trailing.lessThanOrEqualTo(self.barsLayoutGuide)
             }
 
-            self.tagDropDownView.snp.remakeConstraints { make in
-                make.top.equalTo(self.tagView.snp.bottom)
-                make.width.equalTo(2)
-                make.bottom.equalTo(self.barContainerViews[index].barViewTop)
-                make.centerX.equalTo(self.barContainerViews[index])
-            }
-
             self.layoutIfNeeded()
         }
 
         if animated {
-            UIViewPropertyAnimator(duration: 0.15, curve: .linear, animations: actions).startAnimation()
+            UIViewPropertyAnimator(duration: 0.1, curve: .linear, animations: actions).startAnimation()
         } else {
             actions()
         }
@@ -347,7 +346,7 @@ private class TickLabelView: UIView {
         addSubview(tickMark)
         tickMark.snp.makeConstraints { make in
             make.leading.top.equalToSuperview()
-            make.width.equalTo(2)
+            make.width.equalTo(1)
             make.height.equalTo(6)
         }
 
