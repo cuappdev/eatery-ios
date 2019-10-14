@@ -50,6 +50,7 @@ class PopularTimesView: UIView {
 
         super.init(frame: .zero)
 
+        translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
 
         let popularTimesLabel = UILabel()

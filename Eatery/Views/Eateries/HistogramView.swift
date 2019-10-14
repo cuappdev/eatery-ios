@@ -383,8 +383,10 @@ private class BarTagView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        layer.cornerRadius = 5
+        translatesAutoresizingMaskIntoConstraints = false
+        
         clipsToBounds = true
+        layer.cornerRadius = 5
         layer.borderColor = UIColor.inactive.cgColor
         layer.borderWidth = 2
 
