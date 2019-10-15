@@ -18,13 +18,13 @@ import UIKit
  */
 class ImageParallaxScrollViewController: UIViewController {
 
-    private var animateNavigationBarOnViewDidAppear = true
+    private var fadeInOnViewDidAppear = true
     private let navigationBar = UINavigationBar()
     private let navigationBarBackground = UIView()
 
     private let scrollView = UIScrollView()
-    private let imageView = UIImageView()
-    private let gradientView = GradientView()
+    let imageView = UIImageView()
+    let gradientView = ImageParallaxGradientView()
 
     let headerView = UIView()
     let contentView = UIView()
@@ -109,24 +109,21 @@ class ImageParallaxScrollViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if animateNavigationBarOnViewDidAppear {
-            navigationBar.alpha = 0
-            gradientView.alpha = 0
-            UIView.animate(withDuration: 0.25) {
-                self.navigationBar.alpha = 1
-                self.gradientView.alpha = 1
-            }
-            animateNavigationBarOnViewDidAppear = false
+        // Why fade in the navigation bar instead of using hero?
+        //
+        // Hero does not play well with transparent navigation bars: the
+        // background is rendered opaquely.
+        if fadeInOnViewDidAppear {
+            fadeInNavigationBar()
+            fadeInOnViewDidAppear = false
         }
     }
 
-    func loadImage(from url: URL) {
-        imageView.kf.setImage(with: url)
-    }
-
-    func configureImageViewHero(id: String?) {
-        imageView.hero.id = id
-        imageView.hero.modifiers = [.useGlobalCoordinateSpace]
+    private func fadeInNavigationBar() {
+        navigationBar.alpha = 0
+        UIView.animate(withDuration: 0.25) {
+            self.navigationBar.alpha = 1
+        }
     }
 
     func setBackButtonTitle(_ title: String) {
@@ -178,7 +175,7 @@ extension ImageParallaxScrollViewController: UINavigationBarDelegate {
 
 }
 
-private class GradientView: UIView {
+class ImageParallaxGradientView: UIView {
 
     override class var layerClass: AnyClass {
         return CAGradientLayer.self

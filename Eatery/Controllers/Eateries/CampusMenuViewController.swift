@@ -48,9 +48,8 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
 
         setBackButtonTitle("Eateries")
 
-        hero.isEnabled = true
-
         setUpImageView()
+        setUpGradientView()
         setUpHeaderView()
 
         setUpStackView()
@@ -67,11 +66,15 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
     }
 
     private func setUpImageView() {
-        configureImageViewHero(id: EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery))
+        imageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
 
         if let url = eatery.imageUrl {
-            loadImage(from: url)
+            imageView.kf.setImage(with: url)
         }
+    }
+
+    private func setUpGradientView() {
+        gradientView.hero.modifiers = createHeroModifiers(.translate, .fade)
     }
 
     private func setUpHeaderView() {
