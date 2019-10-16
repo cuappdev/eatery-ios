@@ -1,6 +1,6 @@
 
 //
-//  SettingsTableViewController.swift
+//  AboutTableViewController.swift
 //  Eatery
 //
 //  Created by William Ma on 3/2/19.
@@ -10,13 +10,13 @@
 import UIKit
 import SafariServices
 
-protocol SettingsTableViewControllerDelegate: AnyObject {
+protocol AboutTableViewControllerDelegate: AnyObject {
 
-    func settingsTableViewControllerDidLogoutUser(_ stvc: SettingsTableViewController)
+    func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
 
 }
 
-class SettingsTableViewController: UITableViewController {
+class AboutTableViewController: UITableViewController {
 
     private enum CellIdentifier: String {
 
@@ -35,7 +35,7 @@ class SettingsTableViewController: UITableViewController {
         fatalError("init(coder:) will not be implemented")
     }
 
-    weak var delegate: SettingsTableViewControllerDelegate?
+    weak var delegate: AboutTableViewControllerDelegate?
 
     var logoutEnabled: Bool = false {
         didSet {
@@ -49,7 +49,7 @@ class SettingsTableViewController: UITableViewController {
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
-        navigationItem.title = "Settings"
+        navigationItem.title = "About"
 
         tableView.register(DescriptionTableViewCell.self, forCellReuseIdentifier: CellIdentifier.description.rawValue)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellIdentifier.link.rawValue)
@@ -155,7 +155,7 @@ class SettingsTableViewController: UITableViewController {
 
         case (2, 0):
             if logoutEnabled {
-                delegate?.settingsTableViewControllerDidLogoutUser(self)
+                delegate?.aboutTableViewControllerDidLogoutUser(self)
             }
 
         default:
