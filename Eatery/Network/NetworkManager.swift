@@ -172,7 +172,7 @@ struct NetworkManager {
             }
 
             let brbHistory = accountInfo.history.compactMap { $0 }.map { historyItem in
-                return BRBHistory(name: historyItem.name, timestamp: historyItem.timestamp, amount: historyItem.amount)
+                return BRBHistory(name: historyItem.name, timestamp: historyItem.timestamp, amount: historyItem.amount, positive: historyItem.positive)
             }
 
             let brbAccount = BRBAccount(cityBucks: accountInfo.cityBucks, laundry: accountInfo.laundry, brbs: accountInfo.brbs, swipes: accountInfo.swipes, history: brbHistory)

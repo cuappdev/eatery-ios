@@ -77,8 +77,8 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C0F182FC1B674DCB00063D77 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182FB1B674DCB00063D77 /* AnalyticsManager.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
-		C8AAAB54234F7A6F00A6FE20 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */; };
-		C8AAAB55234F7A6F00A6FE20 /* Pods_Eatery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -132,7 +132,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C8AAAB55234F7A6F00A6FE20 /* Pods_Eatery.framework in Embed Frameworks */,
+				C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,7 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8AAAB54234F7A6F00A6FE20 /* Pods_Eatery.framework in Frameworks */,
+				C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */,
 				D97142E1219A4B6000E2EE05 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,7 +329,6 @@
 		340372A2A23D5433FB653F66 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C8AAAB53234F7A6F00A6FE20 /* Pods_Eatery.framework */,
 				9584FE541CDD7A26001A3AB5 /* Security.framework */,
 				19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */,
 				0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */,
