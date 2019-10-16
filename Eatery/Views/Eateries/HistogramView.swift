@@ -382,8 +382,6 @@ private class BarTagView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        translatesAutoresizingMaskIntoConstraints = false
         
         clipsToBounds = true
         layer.cornerRadius = 5
@@ -393,10 +391,11 @@ private class BarTagView: UIView {
         label.textAlignment = .center
         addSubview(label)
         label.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(8)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.center.equalToSuperview()
             make.width.greaterThanOrEqualTo(90)
-            make.width.equalTo(90).priorityLow()
+
+            make.leading.trailing.equalToSuperview().inset(16).priority(.high)
+            make.top.bottom.equalToSuperview().inset(8).priority(.high)
         }
     }
     
