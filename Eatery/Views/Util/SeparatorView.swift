@@ -16,6 +16,7 @@ class SeparatorView: UIView {
         super.init(frame: .zero)
 
         separator.backgroundColor = .inactive
+
         addSubview(separator)
         separator.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(insets)

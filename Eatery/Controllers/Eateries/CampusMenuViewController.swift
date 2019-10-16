@@ -22,10 +22,10 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
 
     private let eatery: CampusEatery
 
-    private var stackView: UIStackView!
+    private let stackView = UIStackView()
 
-    private var menuHeaderView: MenuHeaderView!
-    private var infoView: CampusMenuInfoView!
+    private let menuHeaderView = MenuHeaderView()
+    private let infoView = CampusMenuInfoView()
 
     private let userLocation: CLLocation?
 
@@ -78,7 +78,6 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
     }
 
     private func setUpHeaderView() {
-        menuHeaderView = MenuHeaderView()
         menuHeaderView.set(eatery: eatery, date: Date())
         headerView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
@@ -92,7 +91,6 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
     }
 
     private func setUpStackView() {
-        stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -278,7 +276,7 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
             return 0
         }
 
-        mealViewController.view.layoutIfNeeded()
+        mealViewController.tableView.layoutIfNeeded()
         return mealViewController.tableView.contentSize.height
     }
     
