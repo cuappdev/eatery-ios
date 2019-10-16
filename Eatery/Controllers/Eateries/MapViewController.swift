@@ -69,10 +69,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenter(defaultCoordinate, animated: true)
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -171,10 +167,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let eatery = eateries[index]
 
         if let campusEatery = eatery as? CampusEatery {
-            let menuViewController = CampusEateryMenuViewController(eatery: campusEatery, delegate: nil, userLocation: userLocation)
+            let menuViewController = CampusMenuViewController(eatery: campusEatery, userLocation: userLocation)
             navigationController?.pushViewController(menuViewController, animated: true)
         } else if let collegetownEatery = eatery as? CollegetownEatery {
-            let menuViewController = CollegetownEateriesMenuViewController(eatery: collegetownEatery, delegate: nil)
+            let menuViewController = CollegetownEateriesMenuViewController(eatery: collegetownEatery)
             navigationController?.pushViewController(menuViewController, animated: true)
         }
 

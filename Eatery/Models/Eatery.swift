@@ -56,17 +56,6 @@ enum EateryStatus {
 
 }
 
-struct SwipeDataPoint {
-    
-    let eateryId: Int
-    let militaryHour: Int
-    let minuteRange: ClosedRange<Int>
-    let swipeDensity: Double
-    let waitTimeLow: Int
-    let waitTimeHigh: Int
-    
-}
-
 protocol Eatery {
 
     /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)
@@ -224,8 +213,16 @@ extension Eatery {
                 ar.removeAll(where: { $0 == name })
             }
             UserDefaults.standard.set(ar, forKey: "favorites")
+
+            NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
         }
     }
+
+}
+
+extension NSNotification.Name {
+
+    static let eateryIsFavoriteDidChange = NSNotification.Name("org.cuappdev.eatery.eateryIsFavoriteDidChangeNotificationName")
 
 }
 

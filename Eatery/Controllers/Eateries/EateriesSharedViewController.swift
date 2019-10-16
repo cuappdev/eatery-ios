@@ -62,7 +62,7 @@ class EateriesSharedViewController: UIViewController {
 
     private func setUpNavigationItem() {
         navigationItem.title = "Eateries"
-        navigationController?.hero.isEnabled = true
+        navigationController?.hero.isEnabled = !UIAccessibility.isReduceMotionEnabled
         navigationController?.hero.navigationAnimationType = .fade
 
         let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(openMap))

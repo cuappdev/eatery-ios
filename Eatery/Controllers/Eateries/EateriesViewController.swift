@@ -89,7 +89,6 @@ class EateriesViewController: UIViewController {
         case title = "title"
         case starIcon = "starIcon"
         case paymentView = "paymentView"
-        case distanceLabel = "distanceLabel"
         case infoContainer = "infoContainer"
 
         func id(eatery: Eatery) -> String {
@@ -190,6 +189,8 @@ class EateriesViewController: UIViewController {
         failedToLoadView.alpha = 0
 
         scheduleUpdateTimer()
+
+        registerForEateryIsFavoriteDidChangeNotification()
     }
     
     private func setUpCollectionView() {
@@ -493,6 +494,19 @@ class EateriesViewController: UIViewController {
     func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
     }
 
+    // MARK: Favorites Did Change
+
+    private func registerForEateryIsFavoriteDidChangeNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(eateryIsFavoriteDidChange),
+                                               name: .eateryIsFavoriteDidChange,
+                                               object: nil)
+    }
+
+    @objc private func eateryIsFavoriteDidChange() {
+        reloadEateries(animated: false)
+    }
+
 }
 
 // MARK: - Collection View Helper Methods
@@ -547,7 +561,6 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
         cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
         cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
-        cell.distanceLabel.hero.id = AnimationKey.distanceLabel.id(eatery: eatery)
         cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
         cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
         
@@ -756,16 +769,6 @@ extension EateriesViewController: UIScrollViewDelegate {
 
         appDevLogo.transform = CGAffineTransform(translationX: navBarWidth - margin - width, y: navBarHeight - margin - width)
         appDevLogo.tintColor = .white
-    }
-
-}
-
-// MARK: - Menu Buttons Delegate
-
-extension EateriesViewController: MenuButtonsDelegate {
-
-    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView) {
-        reloadEateries(animated: false)
     }
 
 }

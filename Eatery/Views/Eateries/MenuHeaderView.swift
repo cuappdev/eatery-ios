@@ -11,22 +11,13 @@ import SnapKit
 import Crashlytics
 import Kingfisher
 
-protocol MenuButtonsDelegate: AnyObject {
-
-    func favoriteButtonPressed(on menuHeaderView: MenuHeaderView)
-
-}
-
 class MenuHeaderView: UIView {
     
     var eatery: CampusEatery?
     var displayedDate: Date?
 
-    weak var delegate: MenuButtonsDelegate?
-
     let container = UIView()
 
-    let backgroundImageView = UIImageView()
     let titleLabel = UILabel()
     let favoriteButton = UIButton()
     let paymentView = PaymentMethodsView()
@@ -36,12 +27,6 @@ class MenuHeaderView: UIView {
 
         addSubview(container)
         container.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        backgroundImageView.contentMode = .scaleAspectFill
-        container.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
@@ -87,11 +72,6 @@ class MenuHeaderView: UIView {
         
         titleLabel.text = eatery.nickname
 
-        if let url = eatery.imageUrl {
-            let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
-            backgroundImageView.kf.setImage(with: url, placeholder: placeholder)
-        }
-
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         favoriteButton.tintColor = .favoriteYellow
 
@@ -101,14 +81,7 @@ class MenuHeaderView: UIView {
             titleLabel.textColor = .white
 
         case .closed, .openingSoon:
-            titleLabel.textColor = UIColor.darkGray
-
-            let closedView = UIView()
-            closedView.backgroundColor = UIColor(white: 1.0, alpha: 0.65)
-            backgroundImageView.addSubview(closedView)
-            closedView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+            titleLabel.textColor = UIColor.lightGray
         }
     }
     
@@ -128,8 +101,7 @@ class MenuHeaderView: UIView {
         eatery.isFavorite.toggle()
         
         updateFavoriteButtonImage()
-        
-        delegate?.favoriteButtonPressed(on: self)
+
         if eatery.isFavorite {
             Answers.logEateryFavorited(eateryId: eatery.slug)
         } else {
