@@ -6,6 +6,7 @@
 //  Copyright © 2019 William Ma. All rights reserved.
 //
 
+import Hero
 import Kingfisher
 import SnapKit
 import UIKit
@@ -17,107 +18,116 @@ import UIKit
  */
 class ImageParallaxScrollViewController: UIViewController {
 
+    private var fadeInOnViewDidAppear = true
     private let navigationBar = UINavigationBar()
-    var backButtonTitle: String? {
-        didSet {
-            reloadNavigationBarItems()
-        }
-    }
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    private let navigationBarBackground = UIView()
 
     private let scrollView = UIScrollView()
-    private let imageView = UIImageView()
+    let imageView = UIImageView()
+    let gradientView = ImageParallaxGradientView()
 
-    private let titleLabel = UILabel()
-    override var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-
-    let accessoryView = UIView()
+    let headerView = UIView()
     let contentView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setUpScrollView()
+        setUpImageView()
+        setUpGradientView()
+        setUpHeaderView()
+        setUpContentView()
+        setUpNavigationBarAndBackground()
+    }
+
+    private func setUpScrollView() {
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
-        scrollView.delaysContentTouches = false
+        scrollView.delaysContentTouches = true
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
 
+    private func setUpImageView() {
         imageView.contentMode = .scaleAspectFill
         scrollView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.height.equalTo(view).dividedBy(3)
             make.top.leading.trailing.width.equalToSuperview()
         }
+    }
 
-        navigationBar.tintColor = .white
-        navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationBar.barTintColor = .blue
-        navigationBar.shadowImage = UIImage()
-        navigationBar.delegate = self
-        scrollView.addSubview(navigationBar)
-        navigationBar.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-        }
-
-        let gradientView = GradientView(frame: .zero)
-        gradientView.alpha = 0.5
+    private func setUpGradientView() {
         scrollView.addSubview(gradientView)
         gradientView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(imageView)
             make.height.equalTo(imageView).multipliedBy(2.0 / 3.0)
         }
+    }
 
-        titleLabel.isOpaque = false
-        titleLabel.font = .boldSystemFont(ofSize: 34)
-        titleLabel.numberOfLines = 2
-        titleLabel.textColor = .white
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 100), for: .horizontal)
-        scrollView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.bottom.equalTo(imageView.snp.bottom).inset(16)
+    private func setUpHeaderView() {
+        scrollView.addSubview(headerView)
+        headerView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(imageView)
+            make.leading.trailing.width.equalToSuperview()
         }
+    }
 
-        scrollView.addSubview(accessoryView)
-        accessoryView.snp.makeConstraints { make in
-            make.leading.equalTo(titleLabel.snp.trailing).offset(16)
-            make.width.equalTo(0).priority(.low) // compress the view if its not needed
-            make.trailing.equalToSuperview()
-            make.bottom.equalTo(imageView.snp.bottom).inset(16)
-        }
-
-        contentView.backgroundColor = .green
+    private func setUpContentView() {
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.bottom.width.equalToSuperview()
+        }
+    }
+
+    private func setUpNavigationBarAndBackground() {
+        navigationBar.tintColor = .white
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.delegate = self
+
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.topMargin)
+            make.leading.trailing.equalToSuperview()
         }
 
-        reloadNavigationBarItems()
+        navigationBarBackground.backgroundColor = nil
+        view.insertSubview(navigationBarBackground, belowSubview: navigationBar)
+        navigationBarBackground.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.bottom.equalTo(navigationBar)
+        }
     }
 
-    func loadImage(from url: URL) {
-        imageView.kf.setImage(with: url)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // Why fade in the navigation bar instead of using hero?
+        //
+        // Hero does not play well with transparent navigation bars: the
+        // background is rendered opaquely.
+        if fadeInOnViewDidAppear {
+            fadeInNavigationBar()
+            fadeInOnViewDidAppear = false
+        }
     }
 
-    private func reloadNavigationBarItems() {
-        navigationBar.items = [
-            UINavigationItem(title: backButtonTitle ?? ""),
-            UINavigationItem(title: "")
-        ]
+    private func fadeInNavigationBar() {
+        navigationBar.alpha = 0
+        UIView.animate(withDuration: 0.25) {
+            self.navigationBar.alpha = 1
+        }
+    }
+
+    func setBackButtonTitle(_ title: String) {
+        navigationBar.items = [UINavigationItem(title: title), UINavigationItem(title: "")]
     }
 
 }
@@ -139,11 +149,14 @@ extension ImageParallaxScrollViewController: UIScrollViewDelegate {
             }
         }
 
-        let adjustedOffset = scrollView.contentOffset.y + view.layoutMargins.top
-        if adjustedOffset < 0 {
-            navigationBar.transform = CGAffineTransform(translationX: 0, y: 2 / 3 * adjustedOffset)
+        if navigationBar.frame.intersects(contentView.convert(contentView.bounds, to: view)) {
+            UIView.animate(withDuration: 0.25) {
+                self.navigationBarBackground.backgroundColor = .eateryBlue
+            }
         } else {
-            navigationBar.transform = .identity
+            UIView.animate(withDuration: 0.25) {
+                self.navigationBarBackground.backgroundColor = nil
+            }
         }
     }
 
@@ -156,11 +169,13 @@ extension ImageParallaxScrollViewController: UINavigationBarDelegate {
         return false
     }
 
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
+    }
+
 }
 
-// MARK: - Gradient View
-
-private class GradientView: UIView {
+class ImageParallaxGradientView: UIView {
 
     override class var layerClass: AnyClass {
         return CAGradientLayer.self

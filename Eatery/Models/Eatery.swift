@@ -213,8 +213,16 @@ extension Eatery {
                 ar.removeAll(where: { $0 == name })
             }
             UserDefaults.standard.set(ar, forKey: "favorites")
+
+            NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
         }
     }
+
+}
+
+extension NSNotification.Name {
+
+    static let eateryIsFavoriteDidChange = NSNotification.Name("org.cuappdev.eatery.eateryIsFavoriteDidChangeNotificationName")
 
 }
 

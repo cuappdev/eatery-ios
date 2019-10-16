@@ -137,7 +137,12 @@ class TabbedPageViewController: UIViewController {
     }
 
     @objc private func tabBarControlSelectedSegmentIndexDidChange(_ tabBar: UnderlineTabBarControl) {
-        setPage(forViewControllerAt: tabBar.selectedSegmentIndex, animated: true)
+        // Why is animated set to false here?
+        // Because of a bug in UIPageViewController that causes the app to crash
+        // when UIPageViewController.setViewControllers is called when the
+        // previous animation did not complete
+        // Source: https://stackoverflow.com/a/47878351
+        setPage(forViewControllerAt: tabBar.selectedSegmentIndex, animated: false)
     }
 
 }

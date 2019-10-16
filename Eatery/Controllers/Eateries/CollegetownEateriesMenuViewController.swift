@@ -13,7 +13,6 @@ import UIKit
 class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var eatery: CollegetownEatery
-    var delegate: MenuButtonsDelegate?
     
     var outerScrollView: UIScrollView!
     var backButton: UIButton!
@@ -32,9 +31,8 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     var delta: (lat: Double, lon: Double)!
     var maxDelta = (lat: 2/69.172, lon: 2/51.2738554594)
 
-    init(eatery: CollegetownEatery, delegate: MenuButtonsDelegate?){
+    init(eatery: CollegetownEatery) {
         self.eatery = eatery
-        self.delegate = delegate
         self.mapView = MKMapView()
         super.init(nibName: nil, bundle: nil)
         

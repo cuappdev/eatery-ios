@@ -100,6 +100,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private func setUpInfoViews() {
+        infoContainer.isOpaque = false
         infoContainer.backgroundColor = .white
         contentView.addSubview(infoContainer)
         infoContainer.snp.makeConstraints { make in

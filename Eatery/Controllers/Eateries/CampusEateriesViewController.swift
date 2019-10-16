@@ -76,7 +76,7 @@ class CampusEateriesViewController: EateriesViewController {
     }
 
     private func showMenu(of eatery: CampusEatery, animated: Bool) {
-        let menuViewController = CampusEateryMenuViewController(eatery: eatery, delegate: self, userLocation: userLocation)
+        let menuViewController = CampusMenuViewController(eatery: eatery, userLocation: userLocation)
         navigationController?.popToRootViewController(animated: animated)
         navigationController?.pushViewController(menuViewController, animated: animated)
 

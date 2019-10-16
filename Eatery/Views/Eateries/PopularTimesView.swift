@@ -94,8 +94,6 @@ class PopularTimesView: UIView {
         }
 
         histogramView.reloadData()
-
-        setExpanded(!eatery.swipeDataByHour.isEmpty, animated: false)
     }
 
     required init?(coder: NSCoder) {
@@ -129,6 +127,14 @@ class PopularTimesView: UIView {
             UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: actions).startAnimation()
         } else {
             actions()
+        }
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        if superview != nil {
+            setExpanded(!eatery.swipeDataByHour.isEmpty, animated: false)
         }
     }
 
