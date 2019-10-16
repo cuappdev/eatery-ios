@@ -94,6 +94,9 @@ class PopularTimesView: UIView {
         }
 
         histogramView.reloadData()
+
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        histogramView.selectBar(at: currentHour - startHour, animated: true, generateFeedback: false)
     }
 
     required init?(coder: NSCoder) {
