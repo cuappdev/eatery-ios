@@ -86,7 +86,8 @@ extension BRBAccountViewController: UITableViewDataSource {
         let historyItem = account.history[indexPath.row]
         cell.configure(title: historyItem.name,
                        subtitle: historyItem.timestamp,
-                       amount: historyItem.amount, positive: historyItem.positive)
+                       amount: historyItem.amount,
+                       positive: historyItem.positive)
         return cell
     }
 

@@ -13,7 +13,6 @@ class BRBHistoryTableViewCell: UITableViewCell {
     private var titleLabel: UILabel!
     private var subtitleLabel: UILabel!
     private var priceLabel: UILabel!
-    private var positive: Bool!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,16 +53,15 @@ class BRBHistoryTableViewCell: UITableViewCell {
     }
 
     func configure(title: String, subtitle: String, amount: String, positive: Bool) {
-        self.titleLabel.text = title
-        self.subtitleLabel.text = subtitle
-        self.positive = positive
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
         
         if positive {
             priceLabel.textColor = .eateryGreen
-            self.priceLabel.text = "+$\(amount)"
+            priceLabel.text = "+$\(amount)"
         } else {
             priceLabel.textColor = .eateryRed
-            self.priceLabel.text = "-$\(amount)"
+            priceLabel.text = "-$\(amount)"
         }
     }
     
