@@ -8,6 +8,7 @@ query BrbInfo($accountId: String) {
             amount
             name
             timestamp
+            positive
         }
     }
 }

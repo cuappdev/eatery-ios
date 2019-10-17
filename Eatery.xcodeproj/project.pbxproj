@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0753371CD00AE1882FF112 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BA424221755E1008E320D /* LookAheadMenuView.swift */; };
 		5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */; };
 		5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D8E0E223B286D001ADB85 /* EateriesFailedToLoadView.swift */; };
@@ -298,7 +299,6 @@
 			files = (
 				C8AAAB54234F7A6F00A6FE20 /* BuildFile in Frameworks */,
 				D97142E1219A4B6000E2EE05 /* Security.framework in Frameworks */,
-				AF1F85CA4DF88675BB94388A /* Pods_Eatery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

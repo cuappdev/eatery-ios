@@ -37,7 +37,6 @@ class BRBHistoryTableViewCell: UITableViewCell {
         }
         
         priceLabel = UILabel(frame: .zero)
-        priceLabel.textColor = .eateryRed
         priceLabel.font = .preferredFont(forTextStyle: .body)
         priceLabel.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         contentView.addSubview(priceLabel)
@@ -53,10 +52,17 @@ class BRBHistoryTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String, subtitle: String, amount: String) {
+    func configure(title: String, subtitle: String, amount: String, positive: Bool) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
-        priceLabel.text = "-$\(amount)"
+        
+        if positive {
+            priceLabel.textColor = .eateryGreen
+            priceLabel.text = "+$\(amount)"
+        } else {
+            priceLabel.textColor = .eateryRed
+            priceLabel.text = "-$\(amount)"
+        }
     }
     
 }
