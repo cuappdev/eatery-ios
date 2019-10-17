@@ -72,6 +72,7 @@
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
 		A7EBF8F274D563F7CE96F82D /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */; };
+		AF1F85CA4DF88675BB94388A /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
@@ -298,7 +299,6 @@
 			files = (
 				C8AAAB54234F7A6F00A6FE20 /* BuildFile in Frameworks */,
 				D97142E1219A4B6000E2EE05 /* Security.framework in Frameworks */,
-				4A0753371CD00AE1882FF112 /* Pods_Eatery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
