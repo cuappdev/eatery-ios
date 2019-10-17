@@ -39,7 +39,8 @@ class HistogramView: UIView {
     private let tagView = BarTagView()
     private let tagDropDownView = UIView()
 
-    private let feedbackGenerator = UISelectionFeedbackGenerator()
+    private let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,7 +49,7 @@ class HistogramView: UIView {
         setUpBarsLayoutGuide()
         setUpTickLabelContainerView()
         setUpTagAndDropDownView()
-        setUpGestureRecognizer()
+        setUpGestureRecognizers()
     }
 
     required init?(coder: NSCoder) {
@@ -99,14 +100,18 @@ class HistogramView: UIView {
 
         addSubview(tagDropDownView)
         tagDropDownView.backgroundColor = .inactive
-
-        setShowTag(false, animated: false)
     }
 
-    private func setUpGestureRecognizer() {
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidChangeState(_:)))
-        gestureRecognizer.minimumPressDuration = 0.05
-        addGestureRecognizer(gestureRecognizer)
+    private func setUpGestureRecognizers() {
+        let longPressGestureRecognizer =
+            UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidChangeState(_:)))
+        longPressGestureRecognizer.minimumPressDuration = 0.25
+        addGestureRecognizer(longPressGestureRecognizer)
+
+        let tapGestureRecognizer =
+            UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognizeDidChangeState(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        addGestureRecognizer(tapGestureRecognizer)
     }
 
     func reloadData() {
@@ -188,28 +193,32 @@ class HistogramView: UIView {
     @objc private func longPressGestureDidChangeState(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
-            setShowTag(true, animated: true)
+            impactFeedbackGenerator.impactOccurred()
 
             if let index = indexOfBar(atPoint: sender.location(in: self)) {
-                moveTag(toBarViewAt: index, animated: false)
-                highlightBarView(at: index, animated: true)
+                selectBar(at: index, animated: true, generateFeedback: false)
             }
-
-            feedbackGenerator.prepare()
 
         case .changed:
             if let index = indexOfBar(atPoint: sender.location(in: self)) {
-                moveTag(toBarViewAt: index, animated: true)
-                highlightBarView(at: index, animated: true)
+                selectBar(at: index, animated: true, generateFeedback: true)
             }
 
-        case .ended:
-            setShowTag(false, animated: true)
-            unhighlightBarViews(animated: true)
-
-        case .cancelled, .failed, .possible:
+        case .ended, .cancelled, .failed, .possible:
             break
         }
+    }
+
+    @objc private func tapGestureRecognizeDidChangeState(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended, let index = indexOfBar(atPoint: sender.location(in: self)) {
+            selectBar(at: index, animated: true, generateFeedback: true)
+        }
+    }
+
+    // move the tag and highlight the correct bar
+    func selectBar(at index: Int, animated: Bool, generateFeedback: Bool) {
+        moveTag(toBarViewAt: index, animated: animated, generateFeedback: generateFeedback)
+        highlightBarView(at: index, animated: animated)
     }
 
     private func indexOfBar(atPoint point: CGPoint) -> Int? {
@@ -231,7 +240,7 @@ class HistogramView: UIView {
         }
     }
 
-    private func moveTag(toBarViewAt index: Int, animated: Bool) {
+    private func moveTag(toBarViewAt index: Int, animated: Bool, generateFeedback: Bool) {
         guard 0 <= index, index < barContainerViews.count, selectedBarIndex != index else {
             return
         }
@@ -266,8 +275,10 @@ class HistogramView: UIView {
             actions()
         }
 
-        feedbackGenerator.selectionChanged()
-        feedbackGenerator.prepare()
+        if generateFeedback {
+            selectionFeedbackGenerator.selectionChanged()
+            selectionFeedbackGenerator.prepare()
+        }
     }
 
     private func highlightBarView(at index: Int, animated: Bool) {
