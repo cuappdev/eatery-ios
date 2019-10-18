@@ -9,7 +9,7 @@
 import NVActivityIndicatorView
 import UIKit
 
-private enum BRBAccountSettings {
+enum BRBAccountSettings {
     
     typealias LoginInfo = (netid: String, password: String)
     

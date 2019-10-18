@@ -44,6 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("RUNNING EATERY IN RELEASE CONFIGURATION")
             Crashlytics.start(withAPIKey: Keys.fabricAPIKey.value)
         #endif
+        
+        // Get the BRB account username and password from UserDefaults
+        // Make network request
+        
+        // Check to see if the user's credentials are saved
+        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
+            
+        }
 
         return true
     }
