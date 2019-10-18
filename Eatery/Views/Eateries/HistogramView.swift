@@ -39,7 +39,6 @@ class HistogramView: UIView {
     private let tagView = BarTagView()
     private let tagDropDownView = UIView()
 
-    private let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
     override init(frame: CGRect) {
@@ -103,10 +102,10 @@ class HistogramView: UIView {
     }
 
     private func setUpGestureRecognizers() {
-        let longPressGestureRecognizer =
-            UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidChangeState(_:)))
-        longPressGestureRecognizer.minimumPressDuration = 0.25
-        addGestureRecognizer(longPressGestureRecognizer)
+        let panGestureRecognizer =
+            UIPanGestureRecognizer(target: self, action: #selector(holdDownGestureDidChangeState(_:)))
+        panGestureRecognizer.delegate = self
+        addGestureRecognizer(panGestureRecognizer)
 
         let tapGestureRecognizer =
             UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognizeDidChangeState(_:)))
@@ -190,16 +189,9 @@ class HistogramView: UIView {
         tickLabelViews.removeAll(keepingCapacity: true)
     }
 
-    @objc private func longPressGestureDidChangeState(_ sender: UILongPressGestureRecognizer) {
+    @objc private func holdDownGestureDidChangeState(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
-        case .began:
-            impactFeedbackGenerator.impactOccurred()
-
-            if let index = indexOfBar(atPoint: sender.location(in: self)) {
-                selectBar(at: index, animated: true, generateFeedback: false)
-            }
-
-        case .changed:
+        case .began, .changed:
             if let index = indexOfBar(atPoint: sender.location(in: self)) {
                 selectBar(at: index, animated: true, generateFeedback: true)
             }
@@ -295,6 +287,19 @@ class HistogramView: UIView {
         for barContainerView in barContainerViews {
             barContainerView.setHighlighted(false, animated: animated)
         }
+    }
+
+}
+
+extension HistogramView: UIGestureRecognizerDelegate {
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
+            return super.gestureRecognizerShouldBegin(gestureRecognizer)
+        }
+
+        let velocity = panGesture.velocity(in: self)
+        return abs(velocity.x) > abs(velocity.y)
     }
 
 }
