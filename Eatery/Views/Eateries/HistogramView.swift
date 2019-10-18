@@ -189,7 +189,7 @@ class HistogramView: UIView {
         tickLabelViews.removeAll(keepingCapacity: true)
     }
 
-    @objc private func holdDownGestureDidChangeState(_ sender: UILongPressGestureRecognizer) {
+    @objc private func holdDownGestureDidChangeState(_ sender: UIGestureRecognizer) {
         switch sender.state {
         case .began, .changed:
             if let index = indexOfBar(atPoint: sender.location(in: self)) {
