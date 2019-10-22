@@ -207,9 +207,8 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
 
         if let currentEvent = eatery.activeEvent(atExactly: Date()) {
             for (index, viewController) in viewControllers.enumerated() {
-                if currentEvent.desc == "Lite Lunch", viewController.meal == "Lunch" {
-                    pageViewController.currentViewControllerIndex = index
-                } else if viewController.event?.desc == currentEvent.desc {
+                if viewController.event?.desc == currentEvent.desc
+                    || currentEvent.desc == "Lite Lunch" && viewController.meal == "Lunch" {
                     pageViewController.currentViewControllerIndex = index
                 }
             }
