@@ -204,6 +204,15 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.hero.modifiers = createHeroModifiers(.fade, .translate)
+
+        if let currentEvent = eatery.activeEvent(atExactly: Date()) {
+            for (index, viewController) in viewControllers.enumerated() {
+                if viewController.event?.desc == currentEvent.desc
+                    || currentEvent.desc == "Lite Lunch" && viewController.meal == "Lunch" {
+                    pageViewController.currentViewControllerIndex = index
+                }
+            }
+        }
     }
 
     // MARK: Actions
