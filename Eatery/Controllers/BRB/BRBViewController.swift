@@ -27,13 +27,13 @@ class BRBViewController: UIViewController {
     
     private var state: State = .login
     
-    private var activityIndicator: NVActivityIndicatorView!
-    var isLoading: Bool = false {
+    private var activityIndicator: NVActivityIndicatorView?
+    var isLoading: Bool? {
         didSet {
-            if isLoading {
-                activityIndicator.startAnimating()
+            if isLoading != nil && isLoading! {
+                activityIndicator?.startAnimating()
             } else {
-                activityIndicator.stopAnimating()
+                activityIndicator?.stopAnimating()
             }
         }
     }
@@ -68,9 +68,11 @@ class BRBViewController: UIViewController {
                 loggedIn = true
                 
                 activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
-                let activityItem = UIBarButtonItem(customView: activityIndicator)
+                let activityItem = UIBarButtonItem(customView: activityIndicator!)
                 navigationItem.setLeftBarButton(activityItem, animated: true)
-                isLoading = true
+                if isLoading == nil {
+                    isLoading = true
+                }
             }
         }
     }

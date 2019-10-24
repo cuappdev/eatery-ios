@@ -115,9 +115,9 @@ extension AppDelegate: BRBConnectionDelegate {
                     defaults.set(encoded, forKey: "BRBAccount")
                 }
                 let brbViewController = self.eateryTabBarController.brbViewController
-                brbViewController.isLoading = false
                 brbViewController.accountViewController?.account = account
                 brbViewController.accountViewController?.tableView.reloadData()
+                brbViewController.isLoading = false
             } else {
                 self.loginFailed(with: error?.message ?? "")
             }
