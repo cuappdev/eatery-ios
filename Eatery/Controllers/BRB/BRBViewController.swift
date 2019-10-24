@@ -54,17 +54,6 @@ class BRBViewController: UIViewController {
             if let loadedBRBAccount = try? decoder.decode(BRBAccount.self, from: brbAccount) {
                 self.setState(.account(loadedBRBAccount))
                 loggedIn = true
-                let accountViewController = BRBAccountViewController(account: loadedBRBAccount)
-                self.accountViewController = accountViewController
-                
-                addChildViewController(accountViewController)
-                view.insertSubview(accountViewController.view, at: 0)
-                accountViewController.view.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
-                accountViewController.didMove(toParentViewController: self)
-                
-                loginViewController.view.isHidden = true
             }
         }
     }
@@ -73,7 +62,7 @@ class BRBViewController: UIViewController {
         let aboutVC = AboutTableViewController()
         aboutVC.delegate = self
         
-        if case .finished = connectionHandler.stage{
+        if case .finished = connectionHandler.stage {
             aboutVC.logoutEnabled = true
         } else if loggedIn {
             aboutVC.logoutEnabled = true
@@ -150,13 +139,13 @@ extension BRBViewController: BRBConnectionDelegate {
                 self.loginViewController.isLoading = false
                 self.setState(.account(account))
                 
-//                if BRBAccountSettings.saveLoginInfo {
-//                    let encoder = JSONEncoder()
-//                    if let encoded = try? encoder.encode(account) {
-//                        let defaults = UserDefaults.standard
-//                        defaults.set(encoded, forKey: "BRBAccount")
-//                    }
-//                }
+                if BRBAccountSettings.saveLoginInfo {
+                    let encoder = JSONEncoder()
+                    if let encoded = try? encoder.encode(account) {
+                        let defaults = UserDefaults.standard
+                        defaults.set(encoded, forKey: "BRBAccount")
+                    }
+                }
                 
                 if let requestStart = self.requestStart {
                     Answers.login(succeeded: true, timeLapsed: Date().timeIntervalSince(requestStart))
