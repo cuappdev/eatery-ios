@@ -8,6 +8,7 @@
 
 import Crashlytics
 import UIKit
+import NVActivityIndicatorView
 
 class BRBViewController: UIViewController {
     
@@ -22,9 +23,20 @@ class BRBViewController: UIViewController {
     private var loggedIn = false
     
     private lazy var loginViewController = BRBLoginViewController()
-    private var accountViewController: BRBAccountViewController?
+    var accountViewController: BRBAccountViewController?
     
     private var state: State = .login
+    
+    private var activityIndicator: NVActivityIndicatorView!
+    var isLoading: Bool = false {
+        didSet {
+            if isLoading {
+                activityIndicator.startAnimating()
+            } else {
+                activityIndicator.stopAnimating()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +66,11 @@ class BRBViewController: UIViewController {
             if let loadedBRBAccount = try? decoder.decode(BRBAccount.self, from: brbAccount) {
                 self.setState(.account(loadedBRBAccount))
                 loggedIn = true
+                
+                activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
+                let activityItem = UIBarButtonItem(customView: activityIndicator)
+                navigationItem.setLeftBarButton(activityItem, animated: true)
+                isLoading = true
             }
         }
     }

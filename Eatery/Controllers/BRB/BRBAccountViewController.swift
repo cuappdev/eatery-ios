@@ -15,9 +15,9 @@ class BRBAccountViewController: UIViewController {
         static let history = "history"
     }
     
-    private let account: BRBAccount
+    var account: BRBAccount
     
-    private var tableView: UITableView!
+    var tableView: UITableView!
     
     init(account: BRBAccount) {
         self.account = account
