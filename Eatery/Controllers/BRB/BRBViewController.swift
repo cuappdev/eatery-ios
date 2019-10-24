@@ -18,6 +18,8 @@ class BRBViewController: UIViewController {
     
     private var connectionHandler: BRBConnectionHandler!
     private var requestStart: Date?
+    private var account: BRBAccount?
+    private var loggedIn = false
     
     private lazy var loginViewController = BRBLoginViewController()
     private var accountViewController: BRBAccountViewController?
@@ -38,7 +40,7 @@ class BRBViewController: UIViewController {
         
         connectionHandler = BRBConnectionHandler()
         connectionHandler.delegate = self
-
+        
         loginViewController.delegate = self
         addChildViewController(loginViewController)
         view.addSubview(loginViewController.view)
@@ -46,13 +48,34 @@ class BRBViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         loginViewController.didMove(toParentViewController: self)
+
+        if let brbAccount = UserDefaults.standard.object(forKey: "BRBAccount") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedBRBAccount = try? decoder.decode(BRBAccount.self, from: brbAccount) {
+                self.setState(.account(loadedBRBAccount))
+                loggedIn = true
+                let accountViewController = BRBAccountViewController(account: loadedBRBAccount)
+                self.accountViewController = accountViewController
+                
+                addChildViewController(accountViewController)
+                view.insertSubview(accountViewController.view, at: 0)
+                accountViewController.view.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                accountViewController.didMove(toParentViewController: self)
+                
+                loginViewController.view.isHidden = true
+            }
+        }
     }
     
     @objc private func aboutButtonPressed(_ sender: UIBarButtonItem) {
         let aboutVC = AboutTableViewController()
         aboutVC.delegate = self
         
-        if case .finished = connectionHandler.stage {
+        if case .finished = connectionHandler.stage{
+            aboutVC.logoutEnabled = true
+        } else if loggedIn {
             aboutVC.logoutEnabled = true
         } else {
             aboutVC.logoutEnabled = false
@@ -127,6 +150,14 @@ extension BRBViewController: BRBConnectionDelegate {
                 self.loginViewController.isLoading = false
                 self.setState(.account(account))
                 
+//                if BRBAccountSettings.saveLoginInfo {
+//                    let encoder = JSONEncoder()
+//                    if let encoded = try? encoder.encode(account) {
+//                        let defaults = UserDefaults.standard
+//                        defaults.set(encoded, forKey: "BRBAccount")
+//                    }
+//                }
+                
                 if let requestStart = self.requestStart {
                     Answers.login(succeeded: true, timeLapsed: Date().timeIntervalSince(requestStart))
                 }
@@ -149,10 +180,10 @@ extension BRBViewController: AboutTableViewControllerDelegate {
     
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController) {
         setState(.login)
-        
+        UserDefaults.standard.set(nil, forKey: "BRBAccount")
         connectionHandler = BRBConnectionHandler()
         connectionHandler.delegate = self
-        
+        loggedIn = false
         navigationController?.popToViewController(self, animated: true)
     }
     

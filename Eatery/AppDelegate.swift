@@ -11,9 +11,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var eateryTabBarController: EateryTabBarController!
+    var connectionHandler: BRBConnectionHandler!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+        
         FirebaseApp.configure()
 
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
@@ -45,13 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Crashlytics.start(withAPIKey: Keys.fabricAPIKey.value)
         #endif
         
-        // Get the BRB account username and password from UserDefaults
-        // Make network request
-        
-        // Check to see if the user's credentials are saved
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
-            
-        }
+        queryBRBData()
 
         return true
     }
@@ -89,4 +84,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SKStoreReviewController.requestReview()
         }
     }
+    
+    // MARK: - Query BRB Account Data
+    
+    // We need a strong connection to BRBConnectionHandler, other we have to insert it as a subview
+    // view.insertSubview(connectionHandler, at: 0)
+    func queryBRBData() {
+        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
+            connectionHandler = BRBConnectionHandler()
+            connectionHandler.delegate = self
+            connectionHandler.netid = netid
+            connectionHandler.password = password
+            connectionHandler.handleLogin()
+        }
+    }
+
+}
+
+extension AppDelegate: BRBConnectionDelegate {
+    func retrievedSessionId(id: String) {
+        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
+            guard let self = self else {
+                return
+            }
+            
+            if let account = account {
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(account) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "BRBAccount")
+                }
+            } else {
+                self.loginFailed(with: error?.message ?? "")
+            }
+        }
+    }
+    
+    func loginFailed(with error: String) {
+        // Login failed
+    }
+    
+    
 }
