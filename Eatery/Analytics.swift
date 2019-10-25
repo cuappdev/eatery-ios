@@ -6,7 +6,6 @@
 //  Copyright © 2019 Kevin Chan. All rights reserved.
 //
 
-import Crashlytics
 import FirebaseAnalytics
 
 class AppDevAnalytics {

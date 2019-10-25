@@ -6,7 +6,6 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import Crashlytics
 import MapKit
 import UIKit
 
@@ -67,9 +66,7 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -314,21 +311,13 @@ class CollegetownEateriesMenuViewController: UIViewController, UIScrollViewDeleg
     
     @objc private func callNumber() {
         if let url = URL(string: "tel://\(eatery.phone)"), UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            UIApplication.shared.open(url)
         }
     }
     
     @objc private func visitWebsite() {
         if let url = eatery.url, UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            UIApplication.shared.open(url)
         }
     }
     

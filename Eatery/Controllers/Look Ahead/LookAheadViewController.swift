@@ -6,7 +6,6 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import Crashlytics
 import UIKit
 import SwiftyJSON
 import NVActivityIndicatorView
@@ -152,9 +151,7 @@ class LookAheadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Upcoming Menus"
         view.backgroundColor = .wash
 
@@ -164,8 +161,6 @@ class LookAheadViewController: UIViewController {
 
         tableView.contentInset.top = filterView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         computeFilterViewPosition()
-
-        Answers.logWeeklyMenuOpened()
 
         selectedMeal = MealChoice(from: Date())
         selectedDay = .today
