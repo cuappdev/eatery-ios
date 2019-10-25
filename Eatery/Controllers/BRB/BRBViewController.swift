@@ -6,7 +6,6 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import Crashlytics
 import UIKit
 
 class BRBViewController: UIViewController {
@@ -32,9 +31,7 @@ class BRBViewController: UIViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(aboutButtonPressed(_:)))
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         connectionHandler = BRBConnectionHandler()
         connectionHandler.delegate = self
@@ -126,11 +123,6 @@ extension BRBViewController: BRBConnectionDelegate {
             if let account = account {
                 self.loginViewController.isLoading = false
                 self.setState(.account(account))
-                
-                if let requestStart = self.requestStart {
-                    Answers.login(succeeded: true, timeLapsed: Date().timeIntervalSince(requestStart))
-                }
-                
             } else {
                 self.loginFailed(with: error?.message ?? "")
             }

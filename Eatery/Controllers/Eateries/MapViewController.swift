@@ -1,7 +1,6 @@
 import UIKit
 import MapKit
 import SnapKit
-import Crashlytics
 import CoreLocation
 
 // MARK: - Map View Controller

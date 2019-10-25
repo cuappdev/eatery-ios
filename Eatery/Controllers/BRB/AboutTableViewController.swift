@@ -46,9 +46,7 @@ class AboutTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.title = "About"
 
         tableView.register(DescriptionTableViewCell.self, forCellReuseIdentifier: CellIdentifier.description.rawValue)

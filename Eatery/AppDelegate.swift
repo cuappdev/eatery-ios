@@ -1,4 +1,3 @@
-import Crashlytics
 import Fabric
 import Firebase
 import Hero
@@ -49,15 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        if #available(iOS 9.1, *) {
-            let favorites = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-            UIApplication.shared.shortcutItems = favorites.map {
-                UIApplicationShortcutItem(type: $0,
-                                          localizedTitle: $0,
-                                          localizedSubtitle: nil,
-                                          icon: UIApplicationShortcutIcon(type: .favorite),
-                                          userInfo: nil)
-            }
+        let favorites = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+        UIApplication.shared.shortcutItems = favorites.map {
+            UIApplicationShortcutItem(type: $0,
+                                      localizedTitle: $0,
+                                      localizedSubtitle: nil,
+                                      icon: UIApplicationShortcutIcon(type: .favorite),
+                                      userInfo: nil)
         }
     }
 
@@ -77,8 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - StoreKit
 
     func requestReview() {
-        if #available(iOS 10.3, *) {
-            SKStoreReviewController.requestReview()
-        }
+        SKStoreReviewController.requestReview()
     }
 }
