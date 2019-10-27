@@ -1,6 +1,6 @@
 //
-//  ImageParallaxScrollViewController.swift
-//  ScrollImageView
+//  MenuViewController.swift
+//  Eatery
 //
 //  Created by William Ma on 9/18/19.
 //  Copyright © 2019 William Ma. All rights reserved.
@@ -11,12 +11,7 @@ import Kingfisher
 import SnapKit
 import UIKit
 
-// MARK: - Image Parallalax Scroll View Controller
-
-/**
- Manage a scroll view and an image view with a parallax effect.
- */
-class ImageParallaxScrollViewController: UIViewController {
+class MenuViewController: UIViewController {
 
     private var fadeInOnViewDidAppear = true
     private let navigationBar = UINavigationBar()
@@ -24,7 +19,7 @@ class ImageParallaxScrollViewController: UIViewController {
 
     private let scrollView = UIScrollView()
     let imageView = UIImageView()
-    let gradientView = ImageParallaxGradientView()
+    let gradientView = MenuGradientView()
 
     let headerView = UIView()
     let contentView = UIView()
@@ -132,7 +127,7 @@ class ImageParallaxScrollViewController: UIViewController {
 
 }
 
-extension ImageParallaxScrollViewController: UIScrollViewDelegate {
+extension MenuViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0 {
@@ -162,7 +157,7 @@ extension ImageParallaxScrollViewController: UIScrollViewDelegate {
 
 }
 
-extension ImageParallaxScrollViewController: UINavigationBarDelegate {
+extension MenuViewController: UINavigationBarDelegate {
 
     func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
         navigationController?.popViewController(animated: true)
@@ -175,7 +170,7 @@ extension ImageParallaxScrollViewController: UINavigationBarDelegate {
 
 }
 
-class ImageParallaxGradientView: UIView {
+class MenuGradientView: UIView {
 
     override class var layerClass: AnyClass {
         return CAGradientLayer.self

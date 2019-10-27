@@ -11,7 +11,7 @@ import Hero
 import MapKit
 import UIKit
 
-class CampusMenuViewController: ImageParallaxScrollViewController {
+class CampusMenuViewController: MenuViewController {
 
     private enum HeroModifierGroups {
 
@@ -20,11 +20,11 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
 
     }
 
-    private let eatery: CampusEatery
+    private var eatery: CampusEatery
 
     private let stackView = UIStackView()
 
-    private let menuHeaderView = MenuHeaderView()
+    private let menuHeaderView = CampusMenuHeaderView()
     private let infoView = CampusMenuInfoView()
 
     private let userLocation: CLLocation?
@@ -78,16 +78,17 @@ class CampusMenuViewController: ImageParallaxScrollViewController {
     }
 
     private func setUpHeaderView() {
-        menuHeaderView.set(eatery: eatery, date: Date())
+        menuHeaderView.configure(eatery: eatery)
+        menuHeaderView.delegate = self
         headerView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
-        menuHeaderView.titleLabel.hero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
-        menuHeaderView.paymentView.hero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
+        menuHeaderView.titleHero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
+        menuHeaderView.paymentHero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
 
-        menuHeaderView.favoriteButton.hero.modifiers = createHeroModifiers(.fade)
+        menuHeaderView.favoriteHero.modifiers = createHeroModifiers(.fade)
     }
 
     private func setUpStackView() {
@@ -289,4 +290,13 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
         return mealViewController.tableView.contentSize.height
     }
     
+}
+
+extension CampusMenuViewController: CampusMenuHeaderViewDelegate {
+
+    func favoriteButtonPressed(on sender: CampusMenuHeaderView) {
+        eatery.isFavorite.toggle()
+        sender.configure(eatery: eatery)
+    }
+
 }
