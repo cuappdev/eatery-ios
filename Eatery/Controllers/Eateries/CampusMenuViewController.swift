@@ -20,7 +20,7 @@ class CampusMenuViewController: MenuViewController {
 
     }
 
-    private let eatery: CampusEatery
+    private var eatery: CampusEatery
 
     private let stackView = UIStackView()
 
@@ -79,6 +79,7 @@ class CampusMenuViewController: MenuViewController {
 
     private func setUpHeaderView() {
         menuHeaderView.configure(eatery: eatery)
+        menuHeaderView.delegate = self
         headerView.addSubview(menuHeaderView)
         menuHeaderView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -289,4 +290,13 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
         return mealViewController.tableView.contentSize.height
     }
     
+}
+
+extension CampusMenuViewController: CampusMenuHeaderViewDelegate {
+
+    func favoriteButtonPressed(on sender: CampusMenuHeaderView) {
+        eatery.isFavorite.toggle()
+        sender.configure(eatery: eatery)
+    }
+
 }

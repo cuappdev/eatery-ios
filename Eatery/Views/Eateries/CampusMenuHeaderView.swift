@@ -67,7 +67,7 @@ class CampusMenuHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String,
+    private func configure(title: String,
                    status: EateryStatus,
                    isFavorite: Bool,
                    paymentMethods: [PaymentMethod]) {
