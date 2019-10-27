@@ -47,7 +47,7 @@ class EateriesSharedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setUpNavigationItem()
         setUpNavigationBar()
         setUpChildViewControllers()

@@ -11,7 +11,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var eateryTabBarController: EateryTabBarController!
-    var connectionHandler: BRBConnectionHandler!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -45,8 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("RUNNING EATERY IN RELEASE CONFIGURATION")
             Crashlytics.start(withAPIKey: Keys.fabricAPIKey.value)
         #endif
-        
-        queryBRBData()
 
         return true
     }
@@ -84,49 +81,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SKStoreReviewController.requestReview()
         }
     }
-    
-    // MARK: - Query BRB Account Data
-    
-    // We need a strong connection to BRBConnectionHandler, other we have to insert it as a subview
-    // view.insertSubview(connectionHandler, at: 0)
-    func queryBRBData() {
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
-            connectionHandler = BRBConnectionHandler()
-            connectionHandler.delegate = self
-            connectionHandler.netid = netid
-            connectionHandler.password = password
-            connectionHandler.handleLogin()
-        }
-    }
-
-}
-
-extension AppDelegate: BRBConnectionDelegate {
-    func retrievedSessionId(id: String) {
-        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
-            guard let self = self else {
-                return
-            }
-            
-            if let account = account {
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(account) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "BRBAccount")
-                }
-                let brbViewController = self.eateryTabBarController.brbViewController
-                brbViewController.accountViewController?.account = account
-                brbViewController.accountViewController?.tableView.reloadData()
-                brbViewController.isLoading = false
-            } else {
-                self.loginFailed(with: error?.message ?? "")
-            }
-        }
-    }
-    
-    func loginFailed(with error: String) {
-        // Login failed
-    }
-    
-    
 }

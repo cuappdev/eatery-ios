@@ -15,10 +15,13 @@ class EateryTabBarController: UITabBarController {
     let eateriesSharedViewController = EateriesSharedViewController()
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
+    let accountManager = BRBAccountManager()
 
     override func viewDidLoad() {
         delegate = self
-
+        accountManager.delegate = self
+        accountManager.queryCachedBRBData()
+        
         let eateriesNavigationController = EateryNavigationController(rootViewController: eateriesSharedViewController)
         eateriesNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0)
 
@@ -74,4 +77,18 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 
     }
 
+}
+
+extension EateryTabBarController: BRBAccountManagerDelegate {
+    func failedToGetAccount(with error: String) {
+        // Handle Error (times out)
+    }
+    
+    func queriedAccount(account: BRBAccount) {
+        brbViewController.accountViewController?.account = account
+        brbViewController.accountViewController?.tableView.reloadData()
+        brbViewController.isLoading = false
+    }
+    
+    
 }

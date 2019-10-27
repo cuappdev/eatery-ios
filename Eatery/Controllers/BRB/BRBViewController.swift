@@ -17,7 +17,7 @@ class BRBViewController: UIViewController {
         case account(BRBAccount)
     }
     
-    private var connectionHandler: BRBConnectionHandler!
+    var accountManager: BRBAccountManager!
     private var requestStart: Date?
     private var account: BRBAccount?
     private var loggedIn = false
@@ -50,29 +50,26 @@ class BRBViewController: UIViewController {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
         
-        connectionHandler = BRBConnectionHandler()
-        connectionHandler.delegate = self
-        
         loginViewController.delegate = self
+        loginViewController.accountManager = self.accountManager
         addChildViewController(loginViewController)
         view.addSubview(loginViewController.view)
         loginViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         loginViewController.didMove(toParentViewController: self)
-
-        if let brbAccount = UserDefaults.standard.object(forKey: "BRBAccount") as? Data {
-            let decoder = JSONDecoder()
-            if let loadedBRBAccount = try? decoder.decode(BRBAccount.self, from: brbAccount) {
-                self.setState(.account(loadedBRBAccount))
-                loggedIn = true
-                
-                activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
-                let activityItem = UIBarButtonItem(customView: activityIndicator!)
-                navigationItem.setLeftBarButton(activityItem, animated: true)
-                if isLoading == nil {
-                    isLoading = true
-                }
+        
+        accountManager = BRBAccountManager()
+        accountManager.delegate = self
+        if let account = accountManager.getCachedAccount() {
+            self.setState(.account(account))
+            loggedIn = true
+            
+            activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
+            let activityItem = UIBarButtonItem(customView: activityIndicator!)
+            navigationItem.setLeftBarButton(activityItem, animated: true)
+            if isLoading == nil {
+                isLoading = true
             }
         }
     }
@@ -81,7 +78,7 @@ class BRBViewController: UIViewController {
         let aboutVC = AboutTableViewController()
         aboutVC.delegate = self
         
-        if case .finished = connectionHandler.stage {
+        if case .finished = accountManager.getConnectionStage() {
             aboutVC.logoutEnabled = true
         } else if loggedIn {
             aboutVC.logoutEnabled = true
@@ -97,13 +94,16 @@ class BRBViewController: UIViewController {
         case (.login, .account(let account)):
             let accountViewController = BRBAccountViewController(account: account)
             self.accountViewController = accountViewController
-            
             addChildViewController(accountViewController)
             view.insertSubview(accountViewController.view, at: 0)
             accountViewController.view.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
             accountViewController.didMove(toParentViewController: self)
+            let refreshControl = UIRefreshControl(frame: .zero)
+            refreshControl.tintColor = .white
+            refreshControl.addTarget(self, action: #selector(refreshBRBAccount), for: .valueChanged)
+            self.accountViewController?.tableView.refreshControl = refreshControl
             
             loginViewController.view.isHidden = true
             
@@ -125,6 +125,12 @@ class BRBViewController: UIViewController {
         
         state = newState
     }
+    
+    @objc private func refreshBRBAccount(_ sender: Any) {
+        accountManager.queryCachedBRBData()
+        accountViewController?.tableView.refreshControl?.endRefreshing()
+        isLoading = true
+    }
 
 }
 
@@ -133,9 +139,7 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
     func loginViewController(_ loginViewController: BRBLoginViewController,
                              didRequestLoginWithNetid netid: String,
                              password: String) {
-        connectionHandler.netid = netid
-        connectionHandler.password = password
-        connectionHandler.handleLogin()
+        accountManager.queryBRBData(netid: netid, password: password)
         
         loginViewController.isLoading = true
         
@@ -144,39 +148,15 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
     
 }
 
-extension BRBViewController: BRBConnectionDelegate {
+extension BRBViewController: BRBAccountManagerDelegate {
     
-    func retrievedSessionId(id: String) {
-        loginViewController.setShowErrorMessage(false, animated: true)
-        
-        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
-            guard let self = self else {
-                return
-            }
-            
-            if let account = account {
-                self.loginViewController.isLoading = false
-                self.setState(.account(account))
-                
-                if BRBAccountSettings.saveLoginInfo {
-                    let encoder = JSONEncoder()
-                    if let encoded = try? encoder.encode(account) {
-                        let defaults = UserDefaults.standard
-                        defaults.set(encoded, forKey: "BRBAccount")
-                    }
-                }
-                
-                if let requestStart = self.requestStart {
-                    Answers.login(succeeded: true, timeLapsed: Date().timeIntervalSince(requestStart))
-                }
-                
-            } else {
-                self.loginFailed(with: error?.message ?? "")
-            }
-        }
+    func queriedAccount(account: BRBAccount) {
+        self.loginViewController.isLoading = false
+        self.setState(.account(account))
+        isLoading = false
     }
     
-    func loginFailed(with error: String) {
+    func failedToGetAccount(with error: String) {
         loginViewController.errorDescription = error
         loginViewController.setShowErrorMessage(true, animated: true)
         loginViewController.isLoading = false
@@ -189,9 +169,10 @@ extension BRBViewController: AboutTableViewControllerDelegate {
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController) {
         setState(.login)
         UserDefaults.standard.set(nil, forKey: "BRBAccount")
-        connectionHandler = BRBConnectionHandler()
-        connectionHandler.delegate = self
+        accountManager = BRBAccountManager()
+        accountManager.delegate = self
         loggedIn = false
+        isLoading = false
         navigationController?.popToViewController(self, animated: true)
     }
     

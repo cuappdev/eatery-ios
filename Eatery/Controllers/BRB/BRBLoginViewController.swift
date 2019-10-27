@@ -9,45 +9,6 @@
 import NVActivityIndicatorView
 import UIKit
 
-enum BRBAccountSettings {
-    
-    typealias LoginInfo = (netid: String, password: String)
-    
-    private static let saveLoginInfoKey = "save_login_info"
-    
-    static var saveLoginInfo: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: BRBAccountSettings.saveLoginInfoKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: BRBAccountSettings.saveLoginInfoKey)
-        }
-    }
-    
-    static func saveToKeychain(loginInfo: LoginInfo) {
-        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        keychain["netid"] = loginInfo.netid as AnyObject
-        keychain["password"] = loginInfo.password as AnyObject
-    }
-    
-    static func removeKeychainLoginInfo() {
-        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        keychain["netid"] = nil
-        keychain["password"] = nil
-        
-        BRBAccountSettings.saveLoginInfo = false
-    }
-    
-    static func loadFromKeychain() -> LoginInfo? {
-        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        guard let netid = keychain["netid"] as? String, let password = keychain["password"] as? String else {
-            return nil
-        }
-        return (netid: netid, password: password)
-    }
-    
-}
-
 protocol BRBLoginViewControllerDelegate: AnyObject {
     
     func loginViewController(_ loginViewController: BRBLoginViewController,
@@ -94,6 +55,8 @@ class BRBLoginViewController: UIViewController {
             loginButton.isEnabled = !isLoading
         }
     }
+    
+    var accountManager: BRBAccountManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,7 +87,7 @@ class BRBLoginViewController: UIViewController {
         setUpSaveLoginInfoViews()
         setUpLoginViews()
 
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain(), !netid.isEmpty, !password.isEmpty {
+        if let (netid, password) = accountManager?.getCredentials(), !netid.isEmpty, !password.isEmpty {
             netidTextField.text = netid
             passwordTextField.text = password
         }
@@ -222,7 +185,7 @@ class BRBLoginViewController: UIViewController {
         }
         
         saveLoginInfoSwitch = UISwitch(frame: .zero)
-        saveLoginInfoSwitch.isOn = BRBAccountSettings.saveLoginInfo
+        saveLoginInfoSwitch.isOn = accountManager?.saveLoginInfo ?? false
         saveLoginInfoSwitch.addTarget(self,
                                       action: #selector(saveMyLoginInfoSwitchToggled(_:)),
                                       for: .valueChanged)
@@ -269,10 +232,10 @@ class BRBLoginViewController: UIViewController {
     }
     
     @objc private func saveMyLoginInfoSwitchToggled(_ sender: UISwitch) {
-        BRBAccountSettings.saveLoginInfo = saveLoginInfoSwitch.isOn
+        accountManager?.saveLoginInfo = saveLoginInfoSwitch.isOn
         
         if !saveLoginInfoSwitch.isOn {
-            BRBAccountSettings.removeKeychainLoginInfo()
+            accountManager?.removeSavedLoginInfo()
         }
     }
     
@@ -298,9 +261,9 @@ class BRBLoginViewController: UIViewController {
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         
-        if BRBAccountSettings.saveLoginInfo {
+        if accountManager != nil && accountManager!.saveLoginInfo {
             let loginInfo = (netid: netid, password: password)
-            BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
+            accountManager?.saveLoginInfo(loginInfo: loginInfo)
         }
         
         delegate?.loginViewController(self, didRequestLoginWithNetid: netid, password: password)
