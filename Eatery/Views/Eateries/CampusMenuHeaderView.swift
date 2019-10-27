@@ -36,18 +36,15 @@ class CampusMenuHeaderView: UIView {
         titleLabel.textColor = .white
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.25
-
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.leading.bottom.equalToSuperview().inset(16)
         }
 
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: .normal)
-
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
         favoriteButton.tintColor = .favoriteYellow
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed(_:)), for: .touchUpInside)
-
         addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
