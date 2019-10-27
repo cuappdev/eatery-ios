@@ -38,8 +38,6 @@ class BRBLoginViewController: UIViewController {
     private var passwordPrompt: UILabel!
     private var passwordTextField: UITextField!
     
-    private var saveLoginInfoSwitch: UISwitch!
-    
     private var loginButton: UIButton!
     private var activityIndicator: NVActivityIndicatorView!
     
@@ -56,7 +54,7 @@ class BRBLoginViewController: UIViewController {
         }
     }
     
-    var accountManager: BRBAccountManager?
+    var accountManager: BRBAccountManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,13 +82,7 @@ class BRBLoginViewController: UIViewController {
         setUpErrorView()
         setUpNetidViews()
         setUpPasswordViews()
-        setUpSaveLoginInfoViews()
         setUpLoginViews()
-
-        if let (netid, password) = accountManager?.getCredentials(), !netid.isEmpty, !password.isEmpty {
-            netidTextField.text = netid
-            passwordTextField.text = password
-        }
     }
     
     private func setUpHeaderLabel() {
@@ -172,32 +164,6 @@ class BRBLoginViewController: UIViewController {
         }
     }
     
-    private func setUpSaveLoginInfoViews() {
-        let saveLoginInfoContainerView = UIView(frame: .zero)
-        
-        let saveLoginInfoLabel = UILabel(frame: .zero)
-        saveLoginInfoLabel.text = "Save my login info"
-        saveLoginInfoLabel.font = .preferredFont(forTextStyle: .body)
-        saveLoginInfoLabel.textColor = .darkGray
-        saveLoginInfoContainerView.addSubview(saveLoginInfoLabel)
-        saveLoginInfoLabel.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
-        }
-        
-        saveLoginInfoSwitch = UISwitch(frame: .zero)
-        saveLoginInfoSwitch.isOn = accountManager?.saveLoginInfo ?? false
-        saveLoginInfoSwitch.addTarget(self,
-                                      action: #selector(saveMyLoginInfoSwitchToggled(_:)),
-                                      for: .valueChanged)
-        saveLoginInfoContainerView.addSubview(saveLoginInfoSwitch)
-        saveLoginInfoSwitch.snp.makeConstraints { make in
-            make.leading.equalTo(saveLoginInfoLabel.snp.trailing).offset(8)
-            make.top.trailing.bottom.equalToSuperview()
-        }
-        
-        stackView.addArrangedSubview(saveLoginInfoContainerView)
-    }
-    
     private func setUpLoginViews() {
         let loginAndActivityContainerView = UIView(frame: .zero)
         
@@ -231,14 +197,6 @@ class BRBLoginViewController: UIViewController {
         navigationController?.pushViewController(privacyStatementViewController, animated: true)
     }
     
-    @objc private func saveMyLoginInfoSwitchToggled(_ sender: UISwitch) {
-        accountManager?.saveLoginInfo = saveLoginInfoSwitch.isOn
-        
-        if !saveLoginInfoSwitch.isOn {
-            accountManager?.removeSavedLoginInfo()
-        }
-    }
-    
     @objc private func loginButtonPressed(_ sender: UIButton) {
         AppDevAnalytics.shared.logFirebase(BRBLoginPressPayload())
         requestLoginIfPossible()
@@ -261,10 +219,8 @@ class BRBLoginViewController: UIViewController {
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         
-        if accountManager != nil && accountManager!.saveLoginInfo {
-            let loginInfo = (netid: netid, password: password)
-            accountManager?.saveLoginInfo(loginInfo: loginInfo)
-        }
+        let loginInfo = (netid: netid, password: password)
+        accountManager?.saveLoginInfo(loginInfo: loginInfo)
         
         delegate?.loginViewController(self, didRequestLoginWithNetid: netid, password: password)
     }

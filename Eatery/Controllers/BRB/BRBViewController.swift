@@ -50,8 +50,11 @@ class BRBViewController: UIViewController {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
         
-        loginViewController.delegate = self
+        accountManager = BRBAccountManager()
+        accountManager.delegate = self
         loginViewController.accountManager = self.accountManager
+        
+        loginViewController.delegate = self
         addChildViewController(loginViewController)
         view.addSubview(loginViewController.view)
         loginViewController.view.snp.makeConstraints { make in
@@ -59,8 +62,6 @@ class BRBViewController: UIViewController {
         }
         loginViewController.didMove(toParentViewController: self)
         
-        accountManager = BRBAccountManager()
-        accountManager.delegate = self
         if let account = accountManager.getCachedAccount() {
             self.setState(.account(account))
             loggedIn = true
@@ -177,6 +178,7 @@ extension BRBViewController: AboutTableViewControllerDelegate {
         UserDefaults.standard.set(nil, forKey: "BRBAccount")
         accountManager = BRBAccountManager()
         accountManager.delegate = self
+        accountManager.removeSavedLoginInfo()
         loggedIn = false
         isLoading = false
         navigationController?.popToViewController(self, animated: true)

@@ -42,17 +42,6 @@ typealias LoginInfo = (netid: String, password: String)
 
 private enum BRBAccountSettings {
     
-    private static let saveLoginInfoKey = "save_login_info"
-    
-    static var saveLoginInfo: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: BRBAccountSettings.saveLoginInfoKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: BRBAccountSettings.saveLoginInfoKey)
-        }
-    }
-    
     static func saveToKeychain(loginInfo: LoginInfo) {
         let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
         keychain["netid"] = loginInfo.netid as AnyObject
@@ -63,8 +52,6 @@ private enum BRBAccountSettings {
         let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
         keychain["netid"] = nil
         keychain["password"] = nil
-        
-        BRBAccountSettings.saveLoginInfo = false
     }
     
     static func loadFromKeychain() -> LoginInfo? {
@@ -93,12 +80,10 @@ class BRBAccountManager: BRBConnectionDelegate {
     
     private var connectionHandler: BRBConnectionHandler!
     var delegate: BRBAccountManagerDelegate?
-    var saveLoginInfo: Bool!
     
     init() {
         connectionHandler = BRBConnectionHandler()
         connectionHandler.delegate = self
-        saveLoginInfo = BRBAccountSettings.saveLoginInfo
     }
     
     func saveLoginInfo(loginInfo: LoginInfo) {
@@ -149,12 +134,10 @@ class BRBAccountManager: BRBConnectionDelegate {
             
             if let account = account {
                 
-                if BRBAccountSettings.saveLoginInfo {
-                    let encoder = JSONEncoder()
-                    if let encoded = try? encoder.encode(account) {
-                        let defaults = UserDefaults.standard
-                        defaults.set(encoded, forKey: "BRBAccount")
-                    }
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(account) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "BRBAccount")
                 }
                 
                 self.delegate?.queriedAccount(account: account)
