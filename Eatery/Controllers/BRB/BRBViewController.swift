@@ -157,9 +157,15 @@ extension BRBViewController: BRBAccountManagerDelegate {
     }
     
     func failedToGetAccount(with error: String) {
-        loginViewController.errorDescription = error
-        loginViewController.setShowErrorMessage(true, animated: true)
-        loginViewController.isLoading = false
+        if loggedIn {
+            let errorAlert = UIAlertController(title: "Unable to Connect", message: "Unable to fetch new BRB account data. Please check your connection and try ahgain.", preferredStyle: UIAlertControllerStyle.alert)
+            errorAlert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.destructive, handler: nil))
+            self.present(errorAlert, animated: true, completion: nil)
+        } else {
+            loginViewController.errorDescription = error
+            loginViewController.setShowErrorMessage(true, animated: true)
+            loginViewController.isLoading = false
+        }
     }
     
 }
