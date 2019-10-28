@@ -64,6 +64,7 @@ class BRBViewController: UIViewController {
         
         if let account = accountManager.getCachedAccount() {
             self.setState(.account(account))
+            navigationItem.title = "Hello, \(accountManager.getCredentials()!.netid)"
             loggedIn = true
             
             activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)

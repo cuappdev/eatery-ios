@@ -76,84 +76,7 @@ protocol BRBAccountManagerDelegate {
     func queriedAccount(account: BRBAccount)
 }
 
-class BRBAccountManager: BRBConnectionDelegate {
-    
-    private var connectionHandler: BRBConnectionHandler!
-    var delegate: BRBAccountManagerDelegate?
-    
-    init() {
-        connectionHandler = BRBConnectionHandler()
-        connectionHandler.delegate = self
-    }
-    
-    func saveLoginInfo(loginInfo: LoginInfo) {
-        BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
-    }
-    
-    func removeSavedLoginInfo() {
-        BRBAccountSettings.removeKeychainLoginInfo()
-    }
-    
-    func getCredentials() -> LoginInfo? {
-        return BRBAccountSettings.loadFromKeychain()
-    }
-    
-    @objc func queryCachedBRBData() {
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
-            connectionHandler.netid = netid
-            connectionHandler.password = password
-            connectionHandler.handleLogin()
-        }
-    }
-    
-    func queryBRBData(netid: String, password: String) {
-        connectionHandler.netid = netid
-        connectionHandler.password = password
-        connectionHandler.handleLogin()
-    }
-    
-    func getConnectionStage() -> Stages {
-        return connectionHandler.stage
-    }
-    
-    func getCachedAccount() -> BRBAccount? {
-        if let brbAccount = UserDefaults.standard.object(forKey: "BRBAccount") as? Data {
-            let decoder = JSONDecoder()
-            if let loadedBRBAccount = try? decoder.decode(BRBAccount.self, from: brbAccount) {
-                return loadedBRBAccount
-            }
-        }
-        return nil
-    }
-    
-    internal func retrievedSessionId(id: String) {
-        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
-            guard let self = self else {
-                return
-            }
-            
-            if let account = account {
-                
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(account) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "BRBAccount")
-                }
-                
-                self.delegate?.queriedAccount(account: account)
-                
-            } else {
-                self.loginFailed(with: error?.message ?? "")
-            }
-        }
-    }
-    
-    func loginFailed(with error: String) {
-        self.delegate?.failedToGetAccount(with: error)
-    }
-}
-
-protocol BRBConnectionDelegate {
+private protocol BRBConnectionDelegate {
 
     func retrievedSessionId(id: String)
     func loginFailed(with error: String)
@@ -285,5 +208,86 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             block()
         })
     }
+}
+
+class BRBAccountManager {
+    
+    private var connectionHandler: BRBConnectionHandler!
+    var delegate: BRBAccountManagerDelegate?
+    
+    init() {
+        connectionHandler = BRBConnectionHandler()
+        connectionHandler.delegate = self
+    }
+    
+    func saveLoginInfo(loginInfo: LoginInfo) {
+        BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
+    }
+    
+    func removeSavedLoginInfo() {
+        BRBAccountSettings.removeKeychainLoginInfo()
+    }
+    
+    func getCredentials() -> LoginInfo? {
+        return BRBAccountSettings.loadFromKeychain()
+    }
+    
+    @objc func queryCachedBRBData() {
+        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
+            connectionHandler.netid = netid
+            connectionHandler.password = password
+            connectionHandler.handleLogin()
+        }
+    }
+    
+    func queryBRBData(netid: String, password: String) {
+        connectionHandler.netid = netid
+        connectionHandler.password = password
+        connectionHandler.handleLogin()
+    }
+    
+    func getConnectionStage() -> Stages {
+        return connectionHandler.stage
+    }
+    
+    func getCachedAccount() -> BRBAccount? {
+        if let brbAccount = UserDefaults.standard.object(forKey: "BRBAccount") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedBRBAccount = try? decoder.decode(BRBAccount.self, from: brbAccount) {
+                return loadedBRBAccount
+            }
+        }
+        return nil
+    }
+}
+
+extension BRBAccountManager: BRBConnectionDelegate {
+    func retrievedSessionId(id: String) {
+        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
+            guard let self = self else {
+                return
+            }
+            
+            if let account = account {
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(account) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "BRBAccount")
+                }
+                
+                self.delegate?.queriedAccount(account: account)
+                
+            } else {
+                self.loginFailed(with: error?.message ?? "")
+            }
+        }
+    }
+    
+    func loginFailed(with error: String) {
+        self.delegate?.failedToGetAccount(with: error)
+    }
+    
+    
 }
 
