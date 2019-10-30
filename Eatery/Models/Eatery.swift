@@ -200,22 +200,20 @@ extension Eatery {
 
 extension Eatery {
 
-    var isFavorite: Bool {
-        get {
-            let ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-            return ar.contains { $0 == name }
-        }
-        set {
-            var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-            if newValue {
-                ar.append(name)
-            } else {
-                ar.removeAll(where: { $0 == name })
-            }
-            UserDefaults.standard.set(ar, forKey: "favorites")
+    func isFavorite() -> Bool {
+        return UserDefaults.standard.stringArray(forKey: "favorites")?.contains(name) ?? false
+    }
 
-            NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
+    func setFavorite(_ newValue: Bool) {
+        var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+        if newValue {
+            ar.append(name)
+        } else {
+            ar.removeAll(where: { $0 == name })
         }
+        UserDefaults.standard.set(ar, forKey: "favorites")
+
+        NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
     }
 
 }

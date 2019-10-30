@@ -37,7 +37,7 @@ extension EateryNavigationController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         viewController.extendedLayoutIncludesOpaqueBars = true
 
-        let isParallax = viewController is MenuViewController
+        let isParallax = viewController is ImageParallaxScrollViewController
         setNavigationBarHidden(isParallax, animated: true)
     }
 

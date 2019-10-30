@@ -11,29 +11,18 @@ import Hero
 import MapKit
 import UIKit
 
-class CampusMenuViewController: MenuViewController {
+class CampusMenuViewController: EateriesMenuViewController {
 
-    private enum HeroModifierGroups {
-
-        case fade
-        case translate
-
-    }
-
-    private var eatery: CampusEatery
-
+    private let eatery: CampusEatery
+    
     private let stackView = UIStackView()
 
-    private let menuHeaderView = CampusMenuHeaderView()
     private let infoView = CampusMenuInfoView()
-
-    private let userLocation: CLLocation?
 
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
-        self.userLocation = userLocation
 
-        super.init(nibName: nil, bundle: nil)
+        super.init(eatery: eatery, userLocation: userLocation)
     }
 
     required init?(coder: NSCoder) {
@@ -42,15 +31,6 @@ class CampusMenuViewController: MenuViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
-        contentView.backgroundColor = .white
-
-        setBackButtonTitle("Eateries")
-
-        setUpImageView()
-        setUpGradientView()
-        setUpHeaderView()
 
         setUpStackView()
 
@@ -63,32 +43,6 @@ class CampusMenuViewController: MenuViewController {
 
         addMenuLabel()
         addMenuPageViewController()
-    }
-
-    private func setUpImageView() {
-        imageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
-
-        if let url = eatery.imageUrl {
-            imageView.kf.setImage(with: url)
-        }
-    }
-
-    private func setUpGradientView() {
-        gradientView.hero.modifiers = createHeroModifiers(.translate, .fade)
-    }
-
-    private func setUpHeaderView() {
-        menuHeaderView.configure(eatery: eatery)
-        menuHeaderView.delegate = self
-        headerView.addSubview(menuHeaderView)
-        menuHeaderView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        menuHeaderView.titleHero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
-        menuHeaderView.paymentHero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
-
-        menuHeaderView.favoriteHero.modifiers = createHeroModifiers(.fade)
     }
 
     private func setUpStackView() {
@@ -253,13 +207,6 @@ class CampusMenuViewController: MenuViewController {
         mapItem.name = eatery.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
-
-    private func createHeroModifiers(_ groups: HeroModifierGroups...) -> [HeroModifier] {
-        return [.useGlobalCoordinateSpace, .whenPresenting(.delay(0.15))]
-            + (groups.contains(.fade) ? [.fade] : [])
-            + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
-    }
-
 }
 
 extension CampusMenuViewController: PopularTimesViewLayoutDelegate {
@@ -292,11 +239,4 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
     
 }
 
-extension CampusMenuViewController: CampusMenuHeaderViewDelegate {
 
-    func favoriteButtonPressed(on sender: CampusMenuHeaderView) {
-        eatery.isFavorite.toggle()
-        sender.configure(eatery: eatery)
-    }
-
-}
