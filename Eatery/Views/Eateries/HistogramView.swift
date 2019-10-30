@@ -20,6 +20,8 @@ protocol HistogramViewDataSource: AnyObject {
 
 }
 
+// MARK: Histogram View
+
 class HistogramView: UIView {
 
     weak var dataSource: HistogramViewDataSource?
@@ -113,6 +115,12 @@ class HistogramView: UIView {
         addGestureRecognizer(tapGestureRecognizer)
     }
 
+}
+
+// MARK: Reload Data
+
+extension HistogramView {
+
     func reloadData() {
         tearDownBars()
         setUpBars()
@@ -189,6 +197,12 @@ class HistogramView: UIView {
         tickLabelViews.removeAll(keepingCapacity: true)
     }
 
+}
+
+// MARK: Gesture Recognition
+
+extension HistogramView: UIGestureRecognizerDelegate {
+
     @objc private func holdDownGestureDidChangeState(_ sender: UIGestureRecognizer) {
         switch sender.state {
         case .began, .changed:
@@ -207,19 +221,28 @@ class HistogramView: UIView {
         }
     }
 
-    // move the tag and highlight the correct bar
-    func selectBar(at index: Int, animated: Bool, generateFeedback: Bool) {
-        moveTag(toBarViewAt: index, animated: animated, generateFeedback: generateFeedback)
-        highlightBarView(at: index, animated: animated)
-    }
-
     private func indexOfBar(atPoint point: CGPoint) -> Int? {
         return barContainerViews
             .enumerated()
             .first(where: { $0.element.frame.minX <= point.x && point.x <= $0.element.frame.maxX })?.offset
     }
 
-    private func setShowTag(_ showTag: Bool, animated: Bool) {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
+            return super.gestureRecognizerShouldBegin(gestureRecognizer)
+        }
+
+        let velocity = panGesture.velocity(in: self)
+        return abs(velocity.x) > abs(velocity.y)
+    }
+
+}
+
+// MARK: Bar Visibility
+
+extension HistogramView {
+
+    func setShowTag(_ showTag: Bool, animated: Bool) {
         let actions: (() -> Void) = {
             self.tagView.alpha = showTag ? 1 : 0
             self.tagDropDownView.alpha = showTag ? 1 : 0
@@ -229,6 +252,31 @@ class HistogramView: UIView {
             UIViewPropertyAnimator(duration: 0.1, curve: .linear, animations: actions).startAnimation()
         } else {
             actions()
+        }
+    }
+
+}
+
+// MARK: Bar Selection
+
+extension HistogramView {
+
+    /// Highlight and tag the bar at `index`
+    func selectBar(at index: Int, animated: Bool, generateFeedback: Bool) {
+        moveTag(toBarViewAt: index, animated: animated, generateFeedback: generateFeedback)
+        highlightBarView(at: index, animated: animated)
+    }
+
+    /// Calls `layoutIfNeeded` if the view is currently added to a window.
+    ///
+    /// Why is this needed? This view may update its constraints and call
+    /// `layoutIfNeeded` before it has been added to a window, which causes
+    /// UIKit to add an encapsulated height/width constraint to the window.
+    /// Although this does not have a visible impact, the sheer number of
+    /// error messages in the console makes it worthwhile to have this method.
+    private func layoutIfAddedToWindow() {
+        if window != nil {
+            layoutIfNeeded()
         }
     }
 
@@ -245,7 +293,7 @@ class HistogramView: UIView {
             make.bottom.equalTo(barContainerViews[index].barViewTop)
             make.centerX.equalTo(barContainerViews[index])
         }
-        layoutIfNeeded()
+        layoutIfAddedToWindow()
 
         let actions: (() -> Void) = {
             let description = self.dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
@@ -258,7 +306,7 @@ class HistogramView: UIView {
                 make.trailing.lessThanOrEqualTo(self.barsLayoutGuide)
             }
 
-            self.layoutIfNeeded()
+            self.layoutIfAddedToWindow()
         }
 
         if animated {
@@ -287,19 +335,6 @@ class HistogramView: UIView {
         for barContainerView in barContainerViews {
             barContainerView.setHighlighted(false, animated: animated)
         }
-    }
-
-}
-
-extension HistogramView: UIGestureRecognizerDelegate {
-
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-            return super.gestureRecognizerShouldBegin(gestureRecognizer)
-        }
-
-        let velocity = panGesture.velocity(in: self)
-        return abs(velocity.x) > abs(velocity.y)
     }
 
 }
