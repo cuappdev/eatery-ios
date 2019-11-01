@@ -13,6 +13,7 @@ import SafariServices
 protocol AboutTableViewControllerDelegate: AnyObject {
 
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
+    func didClickBackButton()
 
 }
 
@@ -55,6 +56,13 @@ class AboutTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellIdentifier.link.rawValue)
         tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: CellIdentifier.saveLoginInfo.rawValue)
         tableView.register(LogoutTableViewCell.self, forCellReuseIdentifier: CellIdentifier.logout.rawValue)
+    }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        if parent == nil {
+            delegate?.didClickBackButton()
+        }
     }
 
     // MARK: - Table view data source

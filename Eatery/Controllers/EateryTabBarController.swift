@@ -80,9 +80,6 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 }
 
 extension EateryTabBarController: BRBAccountManagerDelegate {
-    func failedToGetAccount(with error: String) {
-        // Handle Error (times out)
-    }
     
     func queriedAccount(account: BRBAccount) {
         brbViewController.accountViewController?.account = account
@@ -90,5 +87,8 @@ extension EateryTabBarController: BRBAccountManagerDelegate {
         brbViewController.isLoading = false
     }
     
+    func failedToGetAccount(with error: String) {
+        brbViewController.showErrorAlert(error: error)
+    }
     
 }

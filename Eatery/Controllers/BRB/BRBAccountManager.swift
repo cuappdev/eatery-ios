@@ -169,6 +169,10 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         }
     }
     
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        self.delegate?.loginFailed(with: error.localizedDescription)
+    }
+    
     /**
      - Gets the stage enum for the currently displayed web page and runs a block after fetching
      the HTML for the page.
@@ -275,11 +279,10 @@ extension BRBAccountManager: BRBConnectionDelegate {
                     let defaults = UserDefaults.standard
                     defaults.set(encoded, forKey: "BRBAccount")
                 }
-                
                 self.delegate?.queriedAccount(account: account)
                 
             } else {
-                self.loginFailed(with: error?.message ?? "")
+                self.loginFailed(with: "Unable to parse account")
             }
         }
     }

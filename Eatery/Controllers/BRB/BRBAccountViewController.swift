@@ -105,4 +105,10 @@ extension BRBAccountViewController: UITableViewDelegate {
         return nil
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 30
+        }
+        return UITableViewAutomaticDimension
+    }
 }
