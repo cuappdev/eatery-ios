@@ -161,21 +161,6 @@ extension BRBViewController: BRBAccountManagerDelegate {
         self.loginViewController.isLoading = false
         self.setState(.account(account))
         isLoading = false
-    func retrievedSessionId(id: String) {
-        loginViewController.setShowErrorMessage(false, animated: true)
-        
-        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
-            guard let self = self else {
-                return
-            }
-            
-            if let account = account {
-                self.loginViewController.isLoading = false
-                self.setState(.account(account))
-            } else {
-                self.loginFailed(with: error?.message ?? "")
-            }
-        }
     }
     
     func BRBAccountManagerDidFailToQueryAccount(with error: String) {
