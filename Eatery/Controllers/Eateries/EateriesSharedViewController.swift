@@ -6,7 +6,6 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import Crashlytics
 import CoreLocation
 import UIKit
 
@@ -122,7 +121,6 @@ class EateriesSharedViewController: UIViewController {
     }
 
     @objc private func openMap() {
-        Answers.logMapOpened()
         AppDevAnalytics.shared.logFirebase(MapPressPayload())
         
         activeViewController.pushMapViewController()
@@ -156,12 +154,7 @@ extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
     }
     
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
-        let adjustedOffset: CGFloat // the y offset adjusted for bars and any internal contentInset
-        if #available(iOS 11.0, *) {
-            adjustedOffset = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
-        } else {
-            adjustedOffset = scrollView.contentOffset.y + scrollView.contentInset.top
-        }
+        let adjustedOffset = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
         
         if adjustedOffset < 0 {
             // disregard when the scrollView is "bounced"

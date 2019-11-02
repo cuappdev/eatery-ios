@@ -753,12 +753,7 @@ extension EateriesViewController: UIScrollViewDelegate {
             return
         }
 
-        var offset = collectionView.contentOffset.y
-        if #available(iOS 11.0, *) {
-            offset += collectionView.adjustedContentInset.top
-        } else {
-            offset += collectionView.contentInset.top
-        }
+        let offset = collectionView.contentOffset.y + collectionView.adjustedContentInset.top
 
         appDevLogo.alpha = min(0.9, (-15.0 - offset) / 100.0)
 

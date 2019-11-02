@@ -41,7 +41,7 @@ class TabbedPageViewController: UIViewController {
         }
         set {
             if let index = newValue {
-                setPage(forViewControllerAt: index, animated: false)
+                setPage(forViewControllerAt: index)
             }
         }
     }
@@ -105,13 +105,19 @@ class TabbedPageViewController: UIViewController {
         }
     }
     
-    private func setPage(forViewControllerAt index: Int, animated: Bool) {
+    func setPage(forViewControllerAt index: Int) {
         guard let currentIndex = currentViewControllerIndex, index != currentIndex else {
             return
         }
 
         let direction: UIPageViewControllerNavigationDirection = index > currentIndex ? .forward : .reverse
-        pageViewController.setViewControllers([viewControllers[index]], direction: direction, animated: animated, completion: nil)
+
+        // Why is animated set to false here?
+        // Because of a bug in UIPageViewController that causes the app to crash
+        // when UIPageViewController.setViewControllers is called when the
+        // previous animation did not complete
+        // Source: https://stackoverflow.com/a/47878351
+        pageViewController.setViewControllers([viewControllers[index]], direction: direction, animated: false, completion: nil)
 
         pageViewControllerDidChangeViewController()
     }
@@ -137,12 +143,7 @@ class TabbedPageViewController: UIViewController {
     }
 
     @objc private func tabBarControlSelectedSegmentIndexDidChange(_ tabBar: UnderlineTabBarControl) {
-        // Why is animated set to false here?
-        // Because of a bug in UIPageViewController that causes the app to crash
-        // when UIPageViewController.setViewControllers is called when the
-        // previous animation did not complete
-        // Source: https://stackoverflow.com/a/47878351
-        setPage(forViewControllerAt: tabBar.selectedSegmentIndex, animated: false)
+        setPage(forViewControllerAt: tabBar.selectedSegmentIndex)
     }
 
 }

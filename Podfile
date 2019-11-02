@@ -10,7 +10,6 @@ target 'Eatery' do
 
     pod 'ARCL'
     pod 'Apollo', :git => 'https://github.com/apollographql/apollo-ios.git'
-    pod 'Crashlytics'
     pod 'FLEX', '~> 2.0', :configurations => ['Debug']
     pod 'Fabric'
     pod 'Firebase/Analytics'

@@ -165,7 +165,7 @@ class KeychainItemWrapper {
             var tempCheck = self.dictToSecItemData(self.keychainItemData)
             tempCheck.removeValue(forKey: kSecClass as AnyHashable)
             
-            if TARGET_IPHONE_SIMULATOR == 1 {
+            if TARGET_OS_SIMULATOR == 1 {
                 tempCheck.removeValue(forKey: kSecAttrAccessGroup as AnyHashable)
             }
             

@@ -6,7 +6,6 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import Crashlytics
 import UIKit
 import NVActivityIndicatorView
 
@@ -45,9 +44,7 @@ class BRBViewController: UIViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(aboutButtonPressed(_:)))
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         accountManager = BRBAccountManager()
         accountManager.delegate = self
@@ -166,6 +163,21 @@ extension BRBViewController: BRBAccountManagerDelegate {
         self.loginViewController.isLoading = false
         self.setState(.account(account))
         isLoading = false
+    func retrievedSessionId(id: String) {
+        loginViewController.setShowErrorMessage(false, animated: true)
+        
+        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
+            guard let self = self else {
+                return
+            }
+            
+            if let account = account {
+                self.loginViewController.isLoading = false
+                self.setState(.account(account))
+            } else {
+                self.loginFailed(with: error?.message ?? "")
+            }
+        }
     }
     
     func failedToGetAccount(with error: String) {
