@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import Crashlytics
 import Kingfisher
 
 class MenuHeaderView: UIView {
@@ -101,12 +100,6 @@ class MenuHeaderView: UIView {
         eatery.isFavorite.toggle()
         
         updateFavoriteButtonImage()
-
-        if eatery.isFavorite {
-            Answers.logEateryFavorited(eateryId: eatery.slug)
-        } else {
-            Answers.logEateryUnfavorited(eateryId: eatery.slug)
-        }
 
         self.eatery = eatery
     }

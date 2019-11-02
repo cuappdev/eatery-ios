@@ -1,6 +1,5 @@
 import UIKit
 import SnapKit
-import Crashlytics
 
 enum Filter: String {
 
@@ -153,7 +152,6 @@ class FilterBar: UIView {
             selectedFilters.insert(filter)
 
             delegate?.filterBar(self, filterWasSelected: filter)
-            Answers.logEateryFilterApplied(filterType: filter.rawValue)
         } else {
             selectedFilters.remove(displayedFilters[sender.tag])
         }

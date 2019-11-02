@@ -135,8 +135,8 @@ extension Eatery {
 
     func activeEvent(atExactly date: Date) -> Event? {
         let calendar = Calendar.current
-        guard let yesterday = calendar.date(byAdding: .day, value: -1, to: Date()),
-            let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) else {
+        guard let yesterday = calendar.date(byAdding: .day, value: -1, to: date),
+            let tomorrow = calendar.date(byAdding: .day, value: 1, to: date) else {
                 return nil
         }
 
