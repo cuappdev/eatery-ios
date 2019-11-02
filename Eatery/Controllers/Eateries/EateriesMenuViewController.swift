@@ -25,6 +25,14 @@ protocol MenuInfoView {
 
 }
 
+/// An abstract menu view controller
+///
+/// The Eateries Menu View Controller manages the header, image, favorite,
+/// and setting up the stack view for menu view controllers.
+///
+/// This class provides standardized hero animations for subclasses to use.
+/// It automatically applies hero animations to the image view, title, and
+/// payment views.
 class EateriesMenuViewController: ImageParallaxScrollViewController {
 
     enum HeroModifierGroups {
@@ -117,8 +125,11 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         stackView.addArrangedSubview(separator)
     }
 
-    func addMenuInfoView<T: MenuInfoView & UIView>(_ infoViewClass: T.Type) {
-        let infoView = T()
+    /// Add a menu info view to the stack view
+    ///
+    /// This method sets up hero animations for the hero objects of the menu
+    /// info view, and calls `configure` with the provided eatery and location.
+    func addMenuInfoView<T: UIView & MenuInfoView>(_ infoView: T) {
         infoView.configure(eatery: eatery, userLocation: userLocation)
 
         stackView.addArrangedSubview(infoView)
@@ -132,6 +143,7 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         infoView.distanceHero.modifiers = fadeModifiers
     }
 
+    /// Add a custom view to the stack view
     func addToStackView(_ view: UIView) {
         stackView.addArrangedSubview(view)
     }

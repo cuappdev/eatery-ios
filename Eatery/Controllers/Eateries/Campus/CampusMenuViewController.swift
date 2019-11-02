@@ -30,7 +30,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addMenuInfoView(CampusMenuInfoView.self)
+        addMenuInfoView(CampusMenuInfoView())
         addSeparatorView()
         addPopularTimesView()
         addSeparatorView()

@@ -27,7 +27,7 @@ class CollegetownMenuViewController: EateriesMenuViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addMenuInfoView(CollegetownMenuInfoView.self)
+        addMenuInfoView(CollegetownMenuInfoView())
         addBlockSeparator()
 
         addActionButton("Get Directions", action: #selector(directionsButtonPressed(_:)))
