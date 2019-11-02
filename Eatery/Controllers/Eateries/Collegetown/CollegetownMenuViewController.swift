@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import MapKit
 import UIKit
 
 class CollegetownMenuViewController: EateriesMenuViewController {
@@ -37,7 +38,6 @@ class CollegetownMenuViewController: EateriesMenuViewController {
         addBlockSeparator()
 
         addMapView()
-        addBlockSeparator()
     }
 
     private func addActionButton(_ title: String, action: Selector) {
@@ -59,8 +59,27 @@ class CollegetownMenuViewController: EateriesMenuViewController {
     }
 
     private func addMapView() {
+        let mapView = MKMapView()
+        mapView.showsBuildings = true
+        mapView.showsUserLocation = true
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.delegate = self
 
-        
+        let eateryCoordinate = eatery.location.coordinate
+        mapView.setCenter(eateryCoordinate, animated: true)
+        mapView.setRegion(MKCoordinateRegionMake(eateryCoordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
+
+        let eateryAnnotation = MKPointAnnotation()
+        eateryAnnotation.coordinate = eatery.location.coordinate
+        eateryAnnotation.title = eatery.displayName
+        eateryAnnotation.subtitle = eatery.isOpen(atExactly: Date()) ? "open" : "closed"
+        mapView.addAnnotation(eateryAnnotation)
+
+        mapView.snp.makeConstraints { make in
+            make.width.equalTo(mapView.snp.height)
+        }
+        addToStackView(mapView)
     }
 
     // MARK: Actions
@@ -79,6 +98,14 @@ class CollegetownMenuViewController: EateriesMenuViewController {
         if let url = eatery.url, UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
+    }
+
+}
+
+extension CollegetownMenuViewController: MKMapViewDelegate {
+
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+
     }
 
 }

@@ -446,6 +446,26 @@
 			path = "Giving Day";
 			sourceTree = "<group>";
 		};
+		5DFF2121236E17820060BCD9 /* Campus */ = {
+			isa = PBXGroup;
+			children = (
+				5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */,
+				5DA97E2B2353D69900CD7E2C /* CampusMenuViewController.swift */,
+				5DAC0015233C1331009FCCB0 /* TabbedPageViewController.swift */,
+				E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */,
+			);
+			path = Campus;
+			sourceTree = "<group>";
+		};
+		5DFF2122236E178D0060BCD9 /* Collegetown */ = {
+			isa = PBXGroup;
+			children = (
+				5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */,
+				5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */,
+			);
+			path = Collegetown;
+			sourceTree = "<group>";
+		};
 		6560D4411F51F373009E7CEF /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,15 +473,11 @@
 				5DE1D430225ECB62008054F4 /* PillViewController.swift */,
 				CE9C1FE0226431630062C398 /* EateriesViewController.swift */,
 				5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */,
-				5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */,
-				5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */,
-				5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */,
-				5DA97E2B2353D69900CD7E2C /* CampusMenuViewController.swift */,
-				E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */,
-				5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */,
-				5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */,
-				5DAC0015233C1331009FCCB0 /* TabbedPageViewController.swift */,
 				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
+				5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */,
+				5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */,
+				5DFF2121236E17820060BCD9 /* Campus */,
+				5DFF2122236E178D0060BCD9 /* Collegetown */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
