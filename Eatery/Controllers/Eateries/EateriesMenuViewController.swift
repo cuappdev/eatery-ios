@@ -11,6 +11,20 @@ import Hero
 import MapKit
 import UIKit
 
+protocol MenuInfoView {
+
+    var statusHero: HeroExtension<UILabel> { get }
+
+    var hoursHero: HeroExtension<UILabel> { get }
+
+    var locationHero: HeroExtension<UILabel> { get }
+
+    var distanceHero: HeroExtension<UILabel> { get }
+
+    func configure(eatery: Eatery, userLocation: CLLocation?)
+
+}
+
 class EateriesMenuViewController: ImageParallaxScrollViewController {
 
     enum HeroModifierGroups {
@@ -24,6 +38,8 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
     let userLocation: CLLocation?
 
     private let menuHeaderView = EateryMenuHeaderView()
+
+    private let stackView = UIStackView()
 
     init(eatery: Eatery, userLocation: CLLocation?) {
         self.eatery = eatery
@@ -47,6 +63,8 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         setUpImageView()
         setUpGradientView()
         setUpHeaderView()
+
+        setUpStackView()
     }
 
     private func setUpImageView() {
@@ -75,10 +93,86 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         menuHeaderView.favoriteHero.modifiers = createHeroModifiers(.fade)
     }
 
+    private func setUpStackView() {
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    func addSeparatorView() {
+        let separatorView = SeparatorView(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        stackView.addArrangedSubview(separatorView)
+    }
+
+    func addBlockSeparator() {
+        let separator = UIView()
+        separator.backgroundColor = .wash
+        separator.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        stackView.addArrangedSubview(separator)
+    }
+
+    func addMenuInfoView<T: MenuInfoView & UIView>(_ infoViewClass: T.Type) {
+        let infoView = T()
+        infoView.configure(eatery: eatery, userLocation: userLocation)
+
+        stackView.addArrangedSubview(infoView)
+
+        infoView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
+
+        let fadeModifiers = createHeroModifiers(.fade)
+        infoView.hoursHero.modifiers = fadeModifiers
+        infoView.statusHero.modifiers = fadeModifiers
+        infoView.locationHero.modifiers = fadeModifiers
+        infoView.distanceHero.modifiers = fadeModifiers
+    }
+
+    func addToStackView(_ view: UIView) {
+        stackView.addArrangedSubview(view)
+    }
+
     func createHeroModifiers(_ groups: HeroModifierGroups...) -> [HeroModifier] {
         return [.useGlobalCoordinateSpace, .whenPresenting(.delay(0.15))]
             + (groups.contains(.fade) ? [.fade] : [])
             + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
+    }
+
+    // MARK: Actions
+
+    @objc func openDirectionsToEatery() {
+        let coordinate = eatery.location.coordinate
+
+        if let url = URL(string: "comgooglemaps://"), UIApplication.shared.canOpenURL(url) {
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+            alertController.addAction(UIAlertAction(title: "Open in Apple Maps", style: .default) { _ in
+                self.openAppleMapsDirections()
+            })
+
+            alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .default) { _ in
+                guard let url = URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking") else {
+                    return
+                }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            })
+
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+            present(alertController, animated: true, completion: nil)
+        } else {
+            openAppleMapsDirections()
+        }
+    }
+
+    private func openAppleMapsDirections() {
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
+        mapItem.name = eatery.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 
 }

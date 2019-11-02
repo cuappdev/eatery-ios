@@ -41,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("RUNNING EATERY IN DEBUG CONFIGURATION")
         #else
             print("RUNNING EATERY IN RELEASE CONFIGURATION")
-            Crashlytics.start(withAPIKey: Keys.fabricAPIKey.value)
         #endif
 
         return true

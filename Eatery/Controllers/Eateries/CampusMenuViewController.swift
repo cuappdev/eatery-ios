@@ -14,8 +14,6 @@ import UIKit
 class CampusMenuViewController: EateriesMenuViewController {
 
     private let eatery: CampusEatery
-    
-    private let stackView = UIStackView()
 
     private let infoView = CampusMenuInfoView()
 
@@ -32,9 +30,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUpStackView()
-
-        addInfoView()
+        addMenuInfoView(CampusMenuInfoView.self)
         addSeparatorView()
         addPopularTimesView()
         addSeparatorView()
@@ -45,50 +41,10 @@ class CampusMenuViewController: EateriesMenuViewController {
         addMenuPageViewController()
     }
 
-    private func setUpStackView() {
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        contentView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-
-    private func addInfoView() {
-        let infoView = CampusMenuInfoView()
-
-        let distance: String
-        if let userLocation = userLocation {
-            let miles = userLocation.distance(from: eatery.location, in: .miles)
-            distance = "\(Double(round(10 * miles) / 10)) mi"
-        } else {
-            distance = "-- mi"
-        }
-        infoView.configure(presentation: eatery.currentPresentation(),
-                           address: eatery.address,
-                           distance: distance)
-
-        stackView.addArrangedSubview(infoView)
-        
-        infoView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
-
-        let fadeModifiers = createHeroModifiers(.fade)
-        infoView.hoursHero.modifiers = fadeModifiers
-        infoView.statusHero.modifiers = fadeModifiers
-        infoView.locationHero.modifiers = fadeModifiers
-        infoView.distanceHero.modifiers = fadeModifiers
-    }
-
-    private func addSeparatorView() {
-        let separatorView = SeparatorView(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-        stackView.addArrangedSubview(separatorView)
-    }
-
     private func addPopularTimesView() {
         let popularTimesView = PopularTimesView(eatery: eatery)
         popularTimesView.layoutDelegate = self
-        stackView.addArrangedSubview(popularTimesView)
+        addToStackView(popularTimesView)
 
         popularTimesView.hero.modifiers = createHeroModifiers(.fade)
     }
@@ -98,23 +54,14 @@ class CampusMenuViewController: EateriesMenuViewController {
         directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         directionsButton.setTitle("Get Directions", for: .normal)
         directionsButton.tintColor = .eateryBlue
-        directionsButton.addTarget(self, action: #selector(directionsButtonPressed(sender:)), for: .touchUpInside)
+        directionsButton.addTarget(self, action: #selector(directionsButtonPressed(_:)), for: .touchUpInside)
         directionsButton.snp.makeConstraints { make in
             make.height.equalTo(34.0)
         }
 
-        stackView.addArrangedSubview(directionsButton)
+        addToStackView(directionsButton)
 
         directionsButton.hero.modifiers = createHeroModifiers(.fade)
-    }
-
-    private func addBlockSeparator() {
-        let separator = UIView()
-        separator.backgroundColor = .wash
-        separator.snp.makeConstraints { make in
-            make.height.equalTo(20)
-        }
-        stackView.addArrangedSubview(separator)
     }
 
     private func addMenuLabel() {
@@ -132,7 +79,7 @@ class CampusMenuViewController: EateriesMenuViewController {
             make.top.bottom.equalToSuperview()
         }
 
-        stackView.addArrangedSubview(containerView)
+        addToStackView(containerView)
 
         menuLabel.hero.modifiers = createHeroModifiers(.fade, .translate)
     }
@@ -155,7 +102,7 @@ class CampusMenuViewController: EateriesMenuViewController {
         pageViewController.delegate = self
 
         addChildViewController(pageViewController)
-        stackView.addArrangedSubview(pageViewController.view)
+        addToStackView(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
 
         pageViewController.view.hero.modifiers = createHeroModifiers(.fade, .translate)
@@ -170,43 +117,10 @@ class CampusMenuViewController: EateriesMenuViewController {
         }
     }
 
-    // MARK: Actions
-
-    @objc func directionsButtonPressed(sender: UIButton) {
-        let coordinate = eatery.location.coordinate
-
-        if let url = URL(string: "comgooglemaps://"), UIApplication.shared.canOpenURL(url) {
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-            alertController.addAction(UIAlertAction(title: "Open in Apple Maps", style: .default) { _ in
-                self.openAppleMapsDirections()
-            })
-            
-            alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .default) { _ in
-                guard let url = URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking") else {
-                    return
-                }
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            })
-
-            if let presentationController = alertController.popoverPresentationController {
-                presentationController.sourceView = sender
-                presentationController.sourceRect = sender.bounds
-            } else {
-                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            }
-
-            present(alertController, animated: true, completion: nil)
-        } else {
-            openAppleMapsDirections()
-        }
+    @objc private func directionsButtonPressed(_ sender: UIButton) {
+        openDirectionsToEatery()
     }
 
-    private func openAppleMapsDirections() {
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: eatery.location.coordinate, addressDictionary: nil))
-        mapItem.name = eatery.name
-        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
-    }
 }
 
 extension CampusMenuViewController: PopularTimesViewLayoutDelegate {

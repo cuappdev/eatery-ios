@@ -41,10 +41,10 @@
 		5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC06B7921FE36020043701A /* PaymentMethodsView.swift */; };
 		5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */; };
 		5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */; };
+		5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */; };
+		5DC7CB3A236A3F79005C57DB /* CollegetownMenuInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */; };
 		5DD8A8962315843900ED25FD /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */; };
 		5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */; };
-		5DE1D427225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D426225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift */; };
-		5DE1D42B225E95EB008054F4 /* CollegetownMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */; };
 		5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D429225E95EB008054F4 /* RatingView.swift */; };
 		5DE1D42F225EC710008054F4 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D42E225EC710008054F4 /* PillView.swift */; };
 		5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D430225ECB62008054F4 /* PillViewController.swift */; };
@@ -206,6 +206,8 @@
 		5DC06B7921FE36020043701A /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
 		5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = collegetownEateries.graphql; sourceTree = "<group>"; };
 		5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesMenuViewController.swift; sourceTree = "<group>"; };
+		5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownMenuViewController.swift; sourceTree = "<group>"; };
+		5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownMenuInfoView.swift; sourceTree = "<group>"; };
 		5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
 		5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadTableViewCell.swift; sourceTree = "<group>"; };
 		5DE1D426225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegetownEateriesMenuViewController.swift; sourceTree = "<group>"; };
@@ -347,12 +349,12 @@
 				5DC06B7921FE36020043701A /* PaymentMethodsView.swift */,
 				5D871CCB2365397B00F9BF75 /* EateryMenuHeaderView.swift */,
 				5D34C4E02356A64B00A1132F /* CampusMenuInfoView.swift */,
+				5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */,
 				5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */,
 				5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */,
 				5D218C1A21FBE39700327516 /* NavigationTitleView.swift */,
 				5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */,
 				5D0D8E0E223B286D001ADB85 /* EateriesFailedToLoadView.swift */,
-				5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */,
 				5DE1D429225E95EB008054F4 /* RatingView.swift */,
 				5DE1D42E225EC710008054F4 /* PillView.swift */,
 				5DB4677F23502E4B005CE574 /* PopularTimesView.swift */,
@@ -406,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				5D218C1821FBE39700327516 /* MenuHeaderView.swift */,
+				5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */,
 			);
 			path = Eatery;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */,
+				5DE1D426225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -455,7 +459,7 @@
 				5DA97E2B2353D69900CD7E2C /* CampusMenuViewController.swift */,
 				E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */,
 				5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */,
-				5DE1D426225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift */,
+				5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */,
 				5DAC0015233C1331009FCCB0 /* TabbedPageViewController.swift */,
 				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
 			);
@@ -985,7 +989,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DE1D42B225E95EB008054F4 /* CollegetownMenuHeaderView.swift in Sources */,
 				5D34C4E12356A64B00A1132F /* CampusMenuInfoView.swift in Sources */,
 				5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */,
 				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
@@ -1012,8 +1015,8 @@
 				5DAC0016233C1331009FCCB0 /* TabbedPageViewController.swift in Sources */,
 				5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */,
 				5DF17737231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift in Sources */,
+				5DC7CB3A236A3F79005C57DB /* CollegetownMenuInfoView.swift in Sources */,
 				9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */,
-				5DE1D427225E95CD008054F4 /* CollegetownEateriesMenuViewController.swift in Sources */,
 				5DB4677E234FFC37005CE574 /* HistogramView.swift in Sources */,
 				5DF1772F231C470100194D14 /* BRBLoginViewController.swift in Sources */,
 				5D856458222A2D4E003A712B /* Menu.swift in Sources */,
@@ -1042,6 +1045,7 @@
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
 				5D871CCD23653A7C00F9BF75 /* EateryMenuHeaderView.swift in Sources */,
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
+				5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */,
 				5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */,
 				CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */,
 				872E528B232DBA09006D12D4 /* Analytics.swift in Sources */,

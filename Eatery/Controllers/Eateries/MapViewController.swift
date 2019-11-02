@@ -166,10 +166,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let eatery = eateries[index]
 
         if let campusEatery = eatery as? CampusEatery {
-            let menuViewController = CampusMenuViewController(eatery: campusEatery, userLocation: userLocation)
+            let menuViewController = CampusMenuViewController(eatery: campusEatery,
+                                                              userLocation: userLocation)
             navigationController?.pushViewController(menuViewController, animated: true)
         } else if let collegetownEatery = eatery as? CollegetownEatery {
-            let menuViewController = CollegetownEateriesMenuViewController(eatery: collegetownEatery)
+            let menuViewController = CollegetownMenuViewController(eatery: collegetownEatery,
+                                                                   userLocation: userLocation)
             navigationController?.pushViewController(menuViewController, animated: true)
         }
 
