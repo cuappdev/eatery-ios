@@ -51,7 +51,6 @@ class BRBViewController: UIViewController {
         
         accountManager = BRBAccountManager()
         accountManager.delegate = self
-        loginViewController.accountManager = self.accountManager
         
         loginViewController.delegate = self
         addChildViewController(loginViewController)
@@ -73,8 +72,8 @@ class BRBViewController: UIViewController {
     @objc private func aboutButtonPressed(_ sender: UIBarButtonItem) {
         let aboutVC = AboutTableViewController()
         aboutVC.delegate = self
-        
-        if case .finished = accountManager.getConnectionStage() {
+
+        if case .finished = accountManager.stage {
             aboutVC.logoutEnabled = true
         } else if loggedIn {
             aboutVC.logoutEnabled = true
@@ -106,9 +105,7 @@ class BRBViewController: UIViewController {
             refreshControl.tintColor = .white
             refreshControl.addTarget(self, action: #selector(refreshBRBAccount), for: .valueChanged)
             self.accountViewController?.tableView.refreshControl = refreshControl
-            if accountManager.getCredentials() != nil {
-                navigationItem.title = "Hello, \(accountManager.getCredentials()!.netid)"
-            }
+            navigationItem.title = "Hello, \(accountManager.getCredentials()!.netid)"
             
             loginViewController.view.isHidden = true
             
@@ -139,7 +136,7 @@ class BRBViewController: UIViewController {
     }
     
     @objc private func refreshBRBAccount(_ sender: Any) {
-        accountManager.queryCachedBRBData()
+        accountManager.queryBRBDataWithSavedLogin()
         accountViewController?.tableView.refreshControl?.endRefreshing()
         isLoading = true
     }
@@ -151,6 +148,7 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
     func loginViewController(_ loginViewController: BRBLoginViewController,
                              didRequestLoginWithNetid netid: String,
                              password: String) {
+        accountManager.saveLoginInfo(loginInfo: LoginInfo(netid: netid, password: password))
         accountManager.queryBRBData(netid: netid, password: password)
         
         loginViewController.isLoading = true
@@ -162,13 +160,13 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
 
 extension BRBViewController: BRBAccountManagerDelegate {
     
-    func queriedAccount(account: BRBAccount) {
+    func BRBAccountManagerDidQueryAccount(account: BRBAccount) {
         self.loginViewController.isLoading = false
         self.setState(.account(account))
         isLoading = false
     }
     
-    func failedToGetAccount(with error: String) {
+    func BRBAccountManagerDidFailToQueryAccount(with error: String) {
         isLoading = false
         if loggedIn {
             showErrorAlert(error: error)
@@ -185,19 +183,17 @@ extension BRBViewController: AboutTableViewControllerDelegate {
 
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController) {
         setState(.login)
-        UserDefaults.standard.set(nil, forKey: "BRBAccount")
         navigationItem.title = "Meal Plan"
-        accountManager = BRBAccountManager()
-        accountManager.delegate = self
         accountManager.removeSavedLoginInfo()
+        accountManager.resetConnectionHandler()
         loggedIn = false
         isLoading = false
         navigationController?.popToViewController(self, animated: true)
     }
     
-    func didClickBackButton() {
-        if accountManager.getCredentials() != nil {
-            navigationItem.title = "Hello, \(accountManager.getCredentials()!.netid)"
+    func aboutTaleViewControllerDidTapBackButton(_ stvc: AboutTableViewController) {
+        if let credentials = accountManager.getCredentials() {
+            navigationItem.title = "Hello, \(credentials.netid)"
         } else {
             navigationItem.title = "Meal Plan"
         }

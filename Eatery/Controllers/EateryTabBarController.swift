@@ -20,7 +20,7 @@ class EateryTabBarController: UITabBarController {
     override func viewDidLoad() {
         delegate = self
         accountManager.delegate = self
-        accountManager.queryCachedBRBData()
+        accountManager.queryBRBDataWithSavedLogin()
         
         let eateriesNavigationController = EateryNavigationController(rootViewController: eateriesSharedViewController)
         eateriesNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0)
@@ -81,13 +81,13 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 
 extension EateryTabBarController: BRBAccountManagerDelegate {
     
-    func queriedAccount(account: BRBAccount) {
+    func BRBAccountManagerDidQueryAccount(account: BRBAccount) {
         brbViewController.accountViewController?.account = account
         brbViewController.accountViewController?.tableView.reloadData()
         brbViewController.isLoading = false
     }
     
-    func failedToGetAccount(with error: String) {
+    func BRBAccountManagerDidFailToQueryAccount(with error: String) {
         brbViewController.showErrorAlert(error: error)
     }
     

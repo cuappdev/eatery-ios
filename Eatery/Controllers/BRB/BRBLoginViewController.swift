@@ -53,8 +53,6 @@ class BRBLoginViewController: UIViewController {
             loginButton.isEnabled = !isLoading
         }
     }
-    
-    var accountManager: BRBAccountManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -218,9 +216,6 @@ class BRBLoginViewController: UIViewController {
     
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
-        
-        let loginInfo = (netid: netid, password: password)
-        accountManager?.saveLoginInfo(loginInfo: loginInfo)
         
         delegate?.loginViewController(self, didRequestLoginWithNetid: netid, password: password)
     }

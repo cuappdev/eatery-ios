@@ -13,7 +13,7 @@ import SafariServices
 protocol AboutTableViewControllerDelegate: AnyObject {
 
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
-    func didClickBackButton()
+    func aboutTaleViewControllerDidTapBackButton(_ stvc: AboutTableViewController)
 
 }
 
@@ -57,11 +57,13 @@ class AboutTableViewController: UITableViewController {
         tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: CellIdentifier.saveLoginInfo.rawValue)
         tableView.register(LogoutTableViewCell.self, forCellReuseIdentifier: CellIdentifier.logout.rawValue)
     }
-    
+
+    // Detects when user taps the 'Back' button in navigation bar
+    // Source: https://stackoverflow.com/a/32245222
     override func willMove(toParentViewController parent: UIViewController?) {
         super.willMove(toParentViewController: parent)
         if parent == nil {
-            delegate?.didClickBackButton()
+            delegate?.aboutTaleViewControllerDidTapBackButton(self)
         }
     }
 

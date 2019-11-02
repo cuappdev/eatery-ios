@@ -17,15 +17,6 @@ struct HistoryEntry {
 
 }
 
-struct AccountBalance {
-
-    var brbs: String = ""
-    var cityBucks: String = ""
-    var laundry: String = ""
-    var swipes: String = "0"
-
-}
-
 enum Stages {
 
     case loginScreen
@@ -72,23 +63,22 @@ private let trialDelay = 500
 //MARK: Account Manager
 
 protocol BRBAccountManagerDelegate {
-    func failedToGetAccount(with error: String)
-    func queriedAccount(account: BRBAccount)
+    func BRBAccountManagerDidFailToQueryAccount(with error: String)
+    func BRBAccountManagerDidQueryAccount(account: BRBAccount)
 }
 
 private protocol BRBConnectionDelegate {
 
-    func retrievedSessionId(id: String)
-    func loginFailed(with error: String)
+    func BRBConnectionHandlerDelegateDidRetrieveSessionId(id: String)
+    func BRBConnectionHandlerDelegateDidFailLogin(with error: String)
 
 }
 
 private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
     var stage: Stages = .loginScreen
-    var accountBalance: AccountBalance!
-    var diningHistory: [HistoryEntry] = []
-    var loginCount = 0
+    private var diningHistory: [HistoryEntry] = []
+    private var loginCount = 0
     var netid: String = ""
     var password: String = ""
     var delegate: BRBConnectionDelegate?
@@ -113,7 +103,7 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     func getHTML(block: @escaping (NSString) -> ()){
         evaluateJavaScript("document.documentElement.outerHTML.toString()",
                            completionHandler: { (html: Any?, error: Error?) in
-                            if error == nil {
+                            if let html = html {
                                 block(html as! NSString)
                             }
         })
@@ -129,8 +119,9 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         // Remove cache
         URLCache.shared.removeAllCachedResponses()
 
-        let loginURL = URL(string: loginURLString)!
-        load(URLRequest(url: loginURL))
+        if let loginURL = URL(string: loginURLString) {
+            load(URLRequest(url: loginURL))
+        }
     }
     
     func failedToLogin() -> Bool {
@@ -143,10 +134,10 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         evaluateJavaScript(javascript){ (result: Any?, error: Error?) -> Void in
             if let error = error {
                 print(error)
-                self.delegate?.loginFailed(with: error.localizedDescription)
+                self.delegate?.BRBConnectionHandlerDelegateDidFailLogin(with: error.localizedDescription)
             } else {
                 if self.failedToLogin() {
-                    self.delegate?.loginFailed(with: "Incorrect netid and/or password")
+                    self.delegate?.BRBConnectionHandlerDelegateDidFailLogin(with: "Incorrect netid and/or password")
                 }
             }
             self.loginCount += 1
@@ -157,20 +148,20 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         self.getStageAndRunBlock {
             switch self.stage {
             case .loginFailed:
-                self.delegate?.loginFailed(with: "Incorrect netid and/or password")
+                self.delegate?.BRBConnectionHandlerDelegateDidFailLogin(with: "Incorrect netid and/or password")
             case .loginScreen:
                 if self.loginCount < 1 {
                     self.login()
                 }
             case .finished(let sessionId):
-                self.delegate?.retrievedSessionId(id: sessionId)
+                self.delegate?.BRBConnectionHandlerDelegateDidRetrieveSessionId(id: sessionId)
             default: break
             }
         }
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        self.delegate?.loginFailed(with: error.localizedDescription)
+        self.delegate?.BRBConnectionHandlerDelegateDidFailLogin(with: error.localizedDescription)
     }
     
     /**
@@ -218,6 +209,9 @@ class BRBAccountManager {
     
     private var connectionHandler: BRBConnectionHandler!
     var delegate: BRBAccountManagerDelegate?
+    var stage: Stages {
+        return connectionHandler.stage
+    }
     
     init() {
         connectionHandler = BRBConnectionHandler()
@@ -229,18 +223,22 @@ class BRBAccountManager {
     }
     
     func removeSavedLoginInfo() {
+        UserDefaults.standard.set(nil, forKey: "BRBAccount")
         BRBAccountSettings.removeKeychainLoginInfo()
     }
     
     func getCredentials() -> LoginInfo? {
         return BRBAccountSettings.loadFromKeychain()
     }
+
+    func resetConnectionHandler() {
+        connectionHandler = BRBConnectionHandler()
+        connectionHandler.delegate = self
+    }
     
-    @objc func queryCachedBRBData() {
+    @objc func queryBRBDataWithSavedLogin() {
         if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
-            connectionHandler.netid = netid
-            connectionHandler.password = password
-            connectionHandler.handleLogin()
+            queryBRBData(netid: netid, password: password)
         }
     }
     
@@ -248,10 +246,6 @@ class BRBAccountManager {
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
-    }
-    
-    func getConnectionStage() -> Stages {
-        return connectionHandler.stage
     }
     
     func getCachedAccount() -> BRBAccount? {
@@ -266,7 +260,7 @@ class BRBAccountManager {
 }
 
 extension BRBAccountManager: BRBConnectionDelegate {
-    func retrievedSessionId(id: String) {
+    func BRBConnectionHandlerDelegateDidRetrieveSessionId(id: String) {
         NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
             guard let self = self else {
                 return
@@ -279,18 +273,15 @@ extension BRBAccountManager: BRBConnectionDelegate {
                     let defaults = UserDefaults.standard
                     defaults.set(encoded, forKey: "BRBAccount")
                 }
-                self.delegate?.queriedAccount(account: account)
+                self.delegate?.BRBAccountManagerDidQueryAccount(account: account)
                 
             } else {
-                self.loginFailed(with: "Unable to parse account")
+                self.BRBConnectionHandlerDelegateDidFailLogin(with: "Unable to parse account")
             }
         }
     }
     
-    func loginFailed(with error: String) {
-        self.delegate?.failedToGetAccount(with: error)
+    func BRBConnectionHandlerDelegateDidFailLogin(with error: String) {
+        self.delegate?.BRBAccountManagerDidFailToQueryAccount(with: error)
     }
-    
-    
 }
-
