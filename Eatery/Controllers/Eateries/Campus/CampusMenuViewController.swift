@@ -15,8 +15,6 @@ class CampusMenuViewController: EateriesMenuViewController {
 
     private let eatery: CampusEatery
 
-    private let infoView = CampusMenuInfoView()
-
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
 
