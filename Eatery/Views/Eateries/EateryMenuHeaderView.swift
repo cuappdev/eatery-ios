@@ -1,5 +1,5 @@
 //
-//  CampusMenuHeaderView.swift
+//  EateryMenuHeaderView.swift
 //  Eatery
 //
 //  Created by William Ma on 10/26/19.
@@ -9,13 +9,13 @@
 import Hero
 import UIKit
 
-protocol CampusMenuHeaderViewDelegate: AnyObject {
+protocol EateryMenuHeaderViewDelegate: AnyObject {
 
-    func favoriteButtonPressed(on sender: CampusMenuHeaderView)
+    func favoriteButtonPressed(on sender: EateryMenuHeaderView)
 
 }
 
-class CampusMenuHeaderView: UIView {
+class EateryMenuHeaderView: UIView {
 
     private let titleLabel = UILabel()
     var titleHero: HeroExtension<UILabel> { return titleLabel.hero }
@@ -26,7 +26,7 @@ class CampusMenuHeaderView: UIView {
     private let paymentView = PaymentMethodsView()
     var paymentHero: HeroExtension<PaymentMethodsView> { return paymentView.hero }
 
-    weak var delegate: CampusMenuHeaderViewDelegate?
+    weak var delegate: EateryMenuHeaderViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,10 +80,10 @@ class CampusMenuHeaderView: UIView {
         paymentView.paymentMethods = paymentMethods
     }
 
-    func configure(eatery: CampusEatery) {
-        configure(title: eatery.nickname,
+    func configure(eatery: Eatery) {
+        configure(title: eatery.displayName,
                   status: eatery.currentStatus(),
-                  isFavorite: eatery.isFavorite,
+                  isFavorite: eatery.isFavorite(),
                   paymentMethods: eatery.paymentMethods)
     }
 

@@ -32,7 +32,7 @@ class BRBViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(aboutButtonPressed(_:)))
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         connectionHandler = BRBConnectionHandler()
         connectionHandler.delegate = self
 
