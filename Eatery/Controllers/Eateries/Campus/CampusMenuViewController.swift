@@ -54,7 +54,7 @@ class CampusMenuViewController: EateriesMenuViewController {
         directionsButton.tintColor = .eateryBlue
         directionsButton.addTarget(self, action: #selector(directionsButtonPressed(_:)), for: .touchUpInside)
         directionsButton.snp.makeConstraints { make in
-            make.height.equalTo(34.0)
+            make.height.equalTo(34)
         }
 
         addToStackView(directionsButton)
@@ -83,17 +83,15 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private func addMenuPageViewController() {
-        // meals sorted by start time without lite lunch
+        // Meals sorted by start time without lite lunch
         let meals = eatery
             .eventsByName(onDayOf: Date())
             .sorted { $0.1.start < $1.1.start }
             .map { $0.key }
             .filter { $0 != "Lite Lunch" }
 
-        var viewControllers: [CampusEateryMealTableViewController] = []
-        for meal in meals {
-            let viewController = CampusEateryMealTableViewController(eatery: eatery, meal: meal, date: Date())
-            viewControllers.append(viewController)
+        let viewControllers = meals.map {
+            CampusEateryMealTableViewController(eatery: eatery, meal: $0 , date: Date())
         }
 
         let pageViewController = TabbedPageViewController(viewControllers: viewControllers)

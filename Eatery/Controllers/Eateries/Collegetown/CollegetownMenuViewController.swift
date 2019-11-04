@@ -64,7 +64,6 @@ class CollegetownMenuViewController: EateriesMenuViewController {
         mapView.showsUserLocation = true
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
-        mapView.delegate = self
 
         let eateryCoordinate = eatery.location.coordinate
         mapView.setCenter(eateryCoordinate, animated: true)
@@ -98,14 +97,6 @@ class CollegetownMenuViewController: EateriesMenuViewController {
         if let url = eatery.url, UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
-    }
-
-}
-
-extension CollegetownMenuViewController: MKMapViewDelegate {
-
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-
     }
 
 }
