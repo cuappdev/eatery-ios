@@ -82,6 +82,13 @@ class BRBLoginViewController: UIViewController {
         setUpPasswordViews()
         setUpLoginViews()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        if netidTextField.text != nil && passwordTextField.text != nil {
+            netidTextField.text = nil
+            passwordTextField.text = nil
+        }
+    }
     
     private func setUpHeaderLabel() {
         headerLabel = UILabel(frame: .zero)
