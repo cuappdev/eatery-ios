@@ -13,7 +13,7 @@ import SafariServices
 protocol AboutTableViewControllerDelegate: AnyObject {
 
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
-    func aboutTaleViewControllerDidTapBackButton(_ stvc: AboutTableViewController)
+    func aboutTableViewControllerDidTapBackButton(_ stvc: AboutTableViewController)
 
 }
 
@@ -61,7 +61,7 @@ class AboutTableViewController: UITableViewController {
     override func willMove(toParentViewController parent: UIViewController?) {
         super.willMove(toParentViewController: parent)
         if parent == nil {
-            delegate?.aboutTaleViewControllerDidTapBackButton(self)
+            delegate?.aboutTableViewControllerDidTapBackButton(self)
         }
     }
 

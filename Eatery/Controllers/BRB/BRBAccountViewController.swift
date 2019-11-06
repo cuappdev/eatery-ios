@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol BRBAccountViewControllerDelegate {
+    func brbAccountViewControllerDidRefresh()
+}
+
 class BRBAccountViewController: UIViewController {
     
     private enum CellIdentifiers {
@@ -16,8 +20,10 @@ class BRBAccountViewController: UIViewController {
     }
     
     var account: BRBAccount
+    var delegate: BRBAccountViewControllerDelegate?
     
     var tableView: UITableView!
+    var refreshControl: UIRefreshControl!
     
     init(account: BRBAccount) {
         self.account = account
@@ -43,6 +49,17 @@ class BRBAccountViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        refreshControl = UIRefreshControl(frame: .zero)
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(refreshBRBAccount), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
+    }
+
+    @objc private func refreshBRBAccount(_ sender: Any) {
+        delegate?.brbAccountViewControllerDidRefresh()
+        tableView.refreshControl!.endRefreshing()
     }
 
 }

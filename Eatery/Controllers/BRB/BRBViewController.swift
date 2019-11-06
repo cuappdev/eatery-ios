@@ -26,17 +26,23 @@ class BRBViewController: UIViewController {
     
     private var state: State = .login
     
-    private var activityIndicator: NVActivityIndicatorView?
-    var isLoading: Bool? {
-        didSet {
-            if isLoading! && activityIndicator != nil {
-                activityIndicator!.startAnimating()
-            } else if !isLoading! && activityIndicator != nil{
-                activityIndicator!.stopAnimating()
-            }
-        }
-    }
+    private var activityIndicator: NVActivityIndicatorView!
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+        activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
+        let activityItem = UIBarButtonItem(customView: activityIndicator!)
+        navigationItem.setLeftBarButton(activityItem, animated: true)
+
+        accountManager = BRBAccountManager()
+        accountManager.delegate = self
+        accountManager.queryBRBDataWithSavedLogin()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Meal Plan"
@@ -45,10 +51,7 @@ class BRBViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(aboutButtonPressed(_:)))
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        accountManager = BRBAccountManager()
-        accountManager.delegate = self
-        
+
         loginViewController.delegate = self
         addChildViewController(loginViewController)
         view.addSubview(loginViewController.view)
@@ -60,9 +63,7 @@ class BRBViewController: UIViewController {
         if let account = accountManager.getCachedAccount() {
             self.setState(.account(account))
             loggedIn = true
-            if isLoading == nil {
-                isLoading = true
-            }
+            activityIndicator.startAnimating()
         }
     }
     
@@ -87,22 +88,17 @@ class BRBViewController: UIViewController {
         case (.login, .account(let account)):
             let accountViewController = BRBAccountViewController(account: account)
             self.accountViewController = accountViewController
+            self.accountViewController?.delegate = self
             addChildViewController(accountViewController)
             view.insertSubview(accountViewController.view, at: 0)
             accountViewController.view.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
             accountViewController.didMove(toParentViewController: self)
-            
-            activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
-            let activityItem = UIBarButtonItem(customView: activityIndicator!)
-            navigationItem.setLeftBarButton(activityItem, animated: true)
-            
-            let refreshControl = UIRefreshControl(frame: .zero)
-            refreshControl.tintColor = .white
-            refreshControl.addTarget(self, action: #selector(refreshBRBAccount), for: .valueChanged)
-            self.accountViewController?.tableView.refreshControl = refreshControl
-            navigationItem.title = "Hello, \(accountManager.getCredentials()!.netid)"
+
+            if let credentials = accountManager.getCredentials() {
+                navigationItem.title = "Hello, \(credentials.netid)"
+            }
             
             loginViewController.view.isHidden = true
             
@@ -129,13 +125,7 @@ class BRBViewController: UIViewController {
         let errorAlert = UIAlertController(title: error, message: "Unable to fetch new BRB account data. Please check your connection and try again.", preferredStyle: UIAlertControllerStyle.alert)
         errorAlert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.destructive, handler: nil))
         self.present(errorAlert, animated: true, completion: nil)
-        isLoading = false
-    }
-    
-    @objc private func refreshBRBAccount(_ sender: Any) {
-        accountManager.queryBRBDataWithSavedLogin()
-        accountViewController?.tableView.refreshControl?.endRefreshing()
-        isLoading = true
+        activityIndicator.stopAnimating()
     }
 
 }
@@ -157,14 +147,14 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
 
 extension BRBViewController: BRBAccountManagerDelegate {
     
-    func BRBAccountManagerDidQueryAccount(account: BRBAccount) {
+    func brbAccountManagerDidQuery(account: BRBAccount) {
         self.loginViewController.isLoading = false
         self.setState(.account(account))
-        isLoading = false
+        activityIndicator.stopAnimating()
     }
     
-    func BRBAccountManagerDidFailToQueryAccount(with error: String) {
-        isLoading = false
+    func brbAccountManagerDidFailToQueryAccount(with error: String) {
+        activityIndicator.stopAnimating()
         if loggedIn {
             showErrorAlert(error: error)
         } else {
@@ -176,6 +166,13 @@ extension BRBViewController: BRBAccountManagerDelegate {
     
 }
 
+extension BRBViewController: BRBAccountViewControllerDelegate {
+    func brbAccountViewControllerDidRefresh() {
+        accountManager.queryBRBDataWithSavedLogin()
+        activityIndicator.startAnimating()
+    }
+}
+
 extension BRBViewController: AboutTableViewControllerDelegate {
 
     func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController) {
@@ -184,11 +181,11 @@ extension BRBViewController: AboutTableViewControllerDelegate {
         accountManager.removeSavedLoginInfo()
         accountManager.resetConnectionHandler()
         loggedIn = false
-        isLoading = false
+        activityIndicator.stopAnimating()
         navigationController?.popToViewController(self, animated: true)
     }
     
-    func aboutTaleViewControllerDidTapBackButton(_ stvc: AboutTableViewController) {
+    func aboutTableViewControllerDidTapBackButton(_ stvc: AboutTableViewController) {
         if let credentials = accountManager.getCredentials() {
             navigationItem.title = "Hello, \(credentials.netid)"
         } else {
