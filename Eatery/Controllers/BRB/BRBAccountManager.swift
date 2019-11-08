@@ -17,7 +17,7 @@ struct HistoryEntry {
 
 }
 
-enum Stages {
+enum Stage {
 
     case loginScreen
     case transition
@@ -26,7 +26,7 @@ enum Stages {
 
 }
 
-//MARK: - Account Settings
+// MARK: - Account Settings
 
 typealias LoginInfo = (netid: String, password: String)
 
@@ -58,7 +58,7 @@ private let loginURL = URL(string: "https://get.cbord.com/cornell/full/login.php
 private let maxTrials = 3
 private let trialDelay = 500
 
-//MARK: - Connection Handler
+// MARK: - Connection Handler
 
 private protocol BRBConnectionHandlerDelegate {
 
@@ -69,7 +69,7 @@ private protocol BRBConnectionHandlerDelegate {
 
 private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     
-    var stage: Stages = .loginScreen
+    var stage: Stage = .loginScreen
     private var diningHistory: [HistoryEntry] = []
     private var loginCount = 0
     var netid: String = ""
@@ -188,7 +188,7 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
 }
 
-//MARK: - Account Manager
+// MARK: - Account Manager
 
 protocol BRBAccountManagerDelegate {
     func brbAccountManagerDidFailToQueryAccount(with error: String)
@@ -199,7 +199,7 @@ class BRBAccountManager {
     
     private var connectionHandler: BRBConnectionHandler!
     var delegate: BRBAccountManagerDelegate?
-    var stage: Stages {
+    var stage: Stage {
         return connectionHandler.stage
     }
     

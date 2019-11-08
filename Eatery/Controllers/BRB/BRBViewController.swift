@@ -22,7 +22,7 @@ class BRBViewController: UIViewController {
     private var loggedIn = false
     
     private lazy var loginViewController = BRBLoginViewController()
-    var accountViewController: BRBAccountViewController?
+    private var accountViewController: BRBAccountViewController?
     
     private var state: State = .login
     
@@ -37,6 +37,12 @@ class BRBViewController: UIViewController {
         accountManager = BRBAccountManager()
         accountManager.delegate = self
         accountManager.queryBRBDataWithSavedLogin()
+
+        if let account = accountManager.getCachedAccount() {
+            setState(.account(account))
+            activityIndicator.startAnimating()
+            loggedIn = true
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -60,11 +66,11 @@ class BRBViewController: UIViewController {
         }
         loginViewController.didMove(toParentViewController: self)
         
-        if let account = accountManager.getCachedAccount() {
-            self.setState(.account(account))
-            loggedIn = true
-            activityIndicator.startAnimating()
-        }
+//        if let account = accountManager.getCachedAccount() {
+//            setState(.account(account))
+//            activityIndicator.startAnimating()
+//            loggedIn = true
+//        }
     }
     
     @objc private func aboutButtonPressed(_ sender: UIBarButtonItem) {
@@ -148,8 +154,10 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
 extension BRBViewController: BRBAccountManagerDelegate {
     
     func brbAccountManagerDidQuery(account: BRBAccount) {
-        self.loginViewController.isLoading = false
-        self.setState(.account(account))
+        if !loggedIn {
+            loginViewController.isLoading = false
+        }
+        setState(.account(account))
         activityIndicator.stopAnimating()
     }
     

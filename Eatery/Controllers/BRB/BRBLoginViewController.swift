@@ -84,7 +84,7 @@ class BRBLoginViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if netidTextField.text != nil && passwordTextField.text != nil {
+        if !(netidTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true) {
             netidTextField.text = nil
             passwordTextField.text = nil
         }

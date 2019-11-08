@@ -54,7 +54,6 @@ class BRBAccountViewController: UIViewController {
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refreshBRBAccount), for: .valueChanged)
         tableView.refreshControl = refreshControl
-        
     }
 
     @objc private func refreshBRBAccount(_ sender: Any) {
@@ -123,9 +122,6 @@ extension BRBAccountViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 30
-        }
-        return UITableViewAutomaticDimension
+        return section == 0 ? 30 : UITableViewAutomaticDimension
     }
 }

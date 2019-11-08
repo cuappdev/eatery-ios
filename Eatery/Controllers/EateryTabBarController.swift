@@ -18,7 +18,6 @@ class EateryTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         delegate = self
-        
         let eateriesNavigationController = EateryNavigationController(rootViewController: eateriesSharedViewController)
         eateriesNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0)
 
