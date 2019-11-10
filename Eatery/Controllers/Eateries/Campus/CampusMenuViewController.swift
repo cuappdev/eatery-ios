@@ -30,8 +30,12 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         addMenuInfoView(CampusMenuInfoView())
         addSeparatorView()
-        addPopularTimesView()
-        addSeparatorView()
+
+        if !eatery.swipeDataByHour.isEmpty {
+            addPopularTimesView()
+            addSeparatorView()
+        }
+
         addDirectionsButton()
         addBlockSeparator()
 
