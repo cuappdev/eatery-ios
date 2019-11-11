@@ -1,5 +1,5 @@
 //
-//  MenuViewController.swift
+//  ImageParallaxScrollViewController.swift
 //  Eatery
 //
 //  Created by William Ma on 9/18/19.
@@ -11,7 +11,7 @@ import Kingfisher
 import SnapKit
 import UIKit
 
-class MenuViewController: UIViewController {
+class ImageParallaxScrollViewController: UIViewController {
 
     private var fadeInOnViewDidAppear = true
     private let navigationBar = UINavigationBar()
@@ -127,7 +127,7 @@ class MenuViewController: UIViewController {
 
 }
 
-extension MenuViewController: UIScrollViewDelegate {
+extension ImageParallaxScrollViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0 {
@@ -157,7 +157,7 @@ extension MenuViewController: UIScrollViewDelegate {
 
 }
 
-extension MenuViewController: UINavigationBarDelegate {
+extension ImageParallaxScrollViewController: UINavigationBarDelegate {
 
     func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
         navigationController?.popViewController(animated: true)

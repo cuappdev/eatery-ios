@@ -10,96 +10,67 @@ import UIKit
 
 class RatingView: UIView {
 
-    var containerView: UIView!
-    var containerImageView: [UIImageView]!
-    var ratingImageView: [UIImageView]!
-    
+    /// Stars arranged from left to right. That is, ratingImageView[0] is on the
+    /// leading edge and ratingImageView[4] is on the trailing edge
+    private let ratingImageViews: [UIImageView] = (0...4).map { _ in UIImageView() }
+
+    var rating: Double? = nil {
+        didSet {
+            guard let rating = rating else {
+                for imageView in ratingImageViews {
+                    imageView.image = UIImage(named: "unselected")
+                }
+
+                return
+            }
+
+            var accumulatedRating = 0.0
+            for imageView in ratingImageViews {
+                if accumulatedRating + 1 <= rating {
+                    imageView.image = UIImage(named: "selected")
+                    accumulatedRating += 1
+                } else if accumulatedRating < rating {
+                    imageView.image = UIImage(named: "halfSelected")
+                    accumulatedRating += 1
+                } else {
+                    imageView.image = UIImage(named: "unselected")
+                }
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        containerView = UIView()
-        addSubview(containerView)
-        
-        containerImageView = [UIImageView]()
-        ratingImageView = [UIImageView]()
-        
-        for i in 0...5{
-            let container = UIImageView()
-            let star = UIImageView()
-            containerImageView.append(container)
-            ratingImageView.append(star)
-            addSubview(containerImageView[i])
-            addSubview(ratingImageView[i])
+
+        for imageView in ratingImageViews {
+            addSubview(imageView)
+            imageView.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.height.width.equalTo(22)
+            }
         }
-        
-        setupConstraints()
-    }
-    
-    func setupConstraints(){
-        
-        let containerOffset = 0.5
-        let starInset = 1.75
-        
-        containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.height.equalTo(20)
-            make.width.equalTo(104)
+
+        ratingImageViews[0].snp.makeConstraints { make in
+            make.leading.equalToSuperview()
         }
-        containerImageView[4].snp.makeConstraints { make in
-            make.top.bottom.equalTo(containerView)
-            make.trailing.equalTo(containerView)
-            make.width.equalTo(20)
+
+        for i in 1...4 {
+            ratingImageViews[i].snp.makeConstraints { make in
+                make.leading.equalTo(ratingImageViews[i - 1].snp.trailing).offset(2)
+            }
         }
-        
-        ratingImageView[4].snp.makeConstraints { make in
-            make.edges.equalTo(containerImageView[4]).inset(starInset)
+
+        ratingImageViews[4].snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
         }
-        
-        containerImageView[3].snp.makeConstraints { make in
-            make.top.bottom.equalTo(containerView)
-            make.trailing.equalTo(containerImageView[4].snp.leading).offset(containerOffset)
-            make.width.equalTo(20)
-        }
-        
-        ratingImageView[3].snp.makeConstraints { make in
-            make.edges.equalTo(containerImageView[3]).inset(starInset)
-        }
-        
-        containerImageView[2].snp.makeConstraints { make in
-            make.top.bottom.equalTo(containerView)
-            make.trailing.equalTo(containerImageView[3].snp.leading).offset(containerOffset)
-            make.width.equalTo(20)
-        }
-        
-        ratingImageView[2].snp.makeConstraints { make in
-            make.edges.equalTo(containerImageView[2]).inset(starInset)
-        }
-        
-        containerImageView[1].snp.makeConstraints { make in
-            make.top.bottom.equalTo(containerView)
-            make.trailing.equalTo(containerImageView[2].snp.leading).offset(containerOffset)
-            make.width.equalTo(20)
-        }
-        
-        ratingImageView[1].snp.makeConstraints { make in
-            make.edges.equalTo(containerImageView[1]).inset(starInset)
-        }
-        
-        containerImageView[0].snp.makeConstraints { make in
-            make.top.bottom.equalTo(containerView)
-            make.trailing.equalTo(containerImageView[1].snp.leading).offset(containerOffset)
-            make.width.equalTo(20)
-        }
-        
-        ratingImageView[0].snp.makeConstraints { make in
-            make.edges.equalTo(containerImageView[0]).inset(starInset)
+
+        for imageView in ratingImageViews {
+            imageView.image = UIImage(named: "unselected")
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
 }

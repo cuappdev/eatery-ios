@@ -6,10 +6,11 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import CoreLocation
 import Hero
 import UIKit
 
-class CampusMenuInfoView: UIView {
+class CampusMenuInfoView: UIView, MenuInfoView {
 
     private let statusLabel = UILabel()
     private let hoursLabel = UILabel()
@@ -78,15 +79,24 @@ class CampusMenuInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(presentation: EateryPresentation, address: String, distance: String) {
+    func configure(eatery: Eatery, userLocation: CLLocation?) {
+        guard let eatery = eatery as? CampusEatery else {
+            return
+        }
+
+        let presentation = eatery.currentPresentation()
         statusLabel.text = presentation.statusText
         statusLabel.textColor = presentation.statusColor
-
         hoursLabel.text = presentation.nextEventText
 
-        locationLabel.text = address
+        locationLabel.text = eatery.address
 
-        distanceLabel.text = distance
+        if let userLocation = userLocation {
+            let miles = userLocation.distance(from: eatery.location, in: .miles)
+            distanceLabel.text = "\(Double(round(10 * miles) / 10)) mi"
+        } else {
+            distanceLabel.text = "-- mi"
+        }
     }
 
 }

@@ -49,7 +49,7 @@ class CollegetownEateriesViewController: EateriesViewController {
     }
 
     private func showMenu(of eatery: CollegetownEatery) {
-        let menuViewController = CollegetownEateriesMenuViewController(eatery: eatery)
+        let menuViewController = CollegetownMenuViewController(eatery: eatery, userLocation: userLocation)
         navigationController?.pushViewController(menuViewController, animated: true)
         AppDevAnalytics.shared.logFirebase(CollegetownCellPressPayload())
     }
