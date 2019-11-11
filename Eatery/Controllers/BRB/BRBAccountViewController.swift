@@ -22,8 +22,7 @@ class BRBAccountViewController: UIViewController {
     var account: BRBAccount
     var delegate: BRBAccountViewControllerDelegate?
     
-    var tableView: UITableView!
-    var refreshControl: UIRefreshControl!
+    private var tableView: UITableView!
     
     init(account: BRBAccount) {
         self.account = account
@@ -50,7 +49,7 @@ class BRBAccountViewController: UIViewController {
             make.edges.equalToSuperview()
         }
 
-        refreshControl = UIRefreshControl(frame: .zero)
+        let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refreshBRBAccount), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -58,7 +57,7 @@ class BRBAccountViewController: UIViewController {
 
     @objc private func refreshBRBAccount(_ sender: Any) {
         delegate?.brbAccountViewControllerDidRefresh()
-        tableView.refreshControl!.endRefreshing()
+        tableView.refreshControl?.endRefreshing()
     }
 
 }
