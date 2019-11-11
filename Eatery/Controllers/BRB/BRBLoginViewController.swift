@@ -86,6 +86,8 @@ class BRBLoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         netidTextField.text = nil
         passwordTextField.text = nil
+        netidTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
     }
     
     private func setUpHeaderLabel() {
