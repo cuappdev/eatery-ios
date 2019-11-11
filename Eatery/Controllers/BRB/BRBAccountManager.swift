@@ -26,21 +26,23 @@ enum Stage {
 
 typealias LoginInfo = (netid: String, password: String)
 
-private enum BRBAccountSettings {
-    
-    static func saveToKeychain(loginInfo: LoginInfo) {
+private class BRBAccountSettings {
+
+    static let shared: BRBAccountSettings = BRBAccountSettings()
+
+    fileprivate func saveToKeychain(loginInfo: LoginInfo) {
         let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
         keychain["netid"] = loginInfo.netid as AnyObject
         keychain["password"] = loginInfo.password as AnyObject
     }
     
-    static func removeKeychainLoginInfo() {
+    fileprivate func removeKeychainLoginInfo() {
         let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
         keychain["netid"] = nil
         keychain["password"] = nil
     }
     
-    static func loadFromKeychain() -> LoginInfo? {
+    fileprivate func loadFromKeychain() -> LoginInfo? {
         let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
         guard let netid = keychain["netid"] as? String, let password = keychain["password"] as? String else {
             return nil
@@ -112,7 +114,7 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     @objc func login() {
         let javascript = "document.getElementsByName('netid')[0].value = '\(netid)';document.getElementsByName('password')[0].value = '\(password)';document.forms[0].submit();"
         
-        evaluateJavaScript(javascript) { (result: Any?, error: Error?) -> Void in
+        evaluateJavaScript(javascript) { (result, error) -> () in
             if let error = error {
                 self.delegate?.brbConnectionHandler(didFailWith: error.localizedDescription)
             } else {
@@ -124,7 +126,7 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         }
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
         self.getStageAndRunBlock {
             switch self.stage {
             case .loginFailed:
@@ -197,16 +199,16 @@ class BRBAccountManager {
     }
     
     func saveLoginInfo(loginInfo: LoginInfo) {
-        BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
+        BRBAccountSettings.shared.saveToKeychain(loginInfo: loginInfo)
     }
     
     func removeSavedLoginInfo() {
         UserDefaults.standard.set(nil, forKey: "BRBAccount")
-        BRBAccountSettings.removeKeychainLoginInfo()
+        BRBAccountSettings.shared.removeKeychainLoginInfo()
     }
     
     func getCredentials() -> LoginInfo? {
-        return BRBAccountSettings.loadFromKeychain()
+        return BRBAccountSettings.shared.loadFromKeychain()
     }
 
     func resetConnectionHandler() {
@@ -215,7 +217,7 @@ class BRBAccountManager {
     }
     
     @objc func queryBRBDataWithSavedLogin() {
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain() {
+        if let (netid, password) = BRBAccountSettings.shared.loadFromKeychain() {
             queryBRBData(netid: netid, password: password)
         }
     }
