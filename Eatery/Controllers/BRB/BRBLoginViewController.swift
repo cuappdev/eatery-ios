@@ -9,45 +9,6 @@
 import NVActivityIndicatorView
 import UIKit
 
-private enum BRBAccountSettings {
-    
-    typealias LoginInfo = (netid: String, password: String)
-    
-    private static let saveLoginInfoKey = "save_login_info"
-    
-    static var saveLoginInfo: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: BRBAccountSettings.saveLoginInfoKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: BRBAccountSettings.saveLoginInfoKey)
-        }
-    }
-    
-    static func saveToKeychain(loginInfo: LoginInfo) {
-        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        keychain["netid"] = loginInfo.netid as AnyObject
-        keychain["password"] = loginInfo.password as AnyObject
-    }
-    
-    static func removeKeychainLoginInfo() {
-        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        keychain["netid"] = nil
-        keychain["password"] = nil
-        
-        BRBAccountSettings.saveLoginInfo = false
-    }
-    
-    static func loadFromKeychain() -> LoginInfo? {
-        let keychain = KeychainItemWrapper(identifier: "netid", accessGroup: nil)
-        guard let netid = keychain["netid"] as? String, let password = keychain["password"] as? String else {
-            return nil
-        }
-        return (netid: netid, password: password)
-    }
-    
-}
-
 protocol BRBLoginViewControllerDelegate: AnyObject {
     
     func loginViewController(_ loginViewController: BRBLoginViewController,
@@ -76,8 +37,6 @@ class BRBLoginViewController: UIViewController {
     
     private var passwordPrompt: UILabel!
     private var passwordTextField: UITextField!
-    
-    private var saveLoginInfoSwitch: UISwitch!
     
     private var loginButton: UIButton!
     private var activityIndicator: NVActivityIndicatorView!
@@ -121,13 +80,14 @@ class BRBLoginViewController: UIViewController {
         setUpErrorView()
         setUpNetidViews()
         setUpPasswordViews()
-        setUpSaveLoginInfoViews()
         setUpLoginViews()
+    }
 
-        if let (netid, password) = BRBAccountSettings.loadFromKeychain(), !netid.isEmpty, !password.isEmpty {
-            netidTextField.text = netid
-            passwordTextField.text = password
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        netidTextField.text = nil
+        passwordTextField.text = nil
+        netidTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
     }
     
     private func setUpHeaderLabel() {
@@ -209,32 +169,6 @@ class BRBLoginViewController: UIViewController {
         }
     }
     
-    private func setUpSaveLoginInfoViews() {
-        let saveLoginInfoContainerView = UIView(frame: .zero)
-        
-        let saveLoginInfoLabel = UILabel(frame: .zero)
-        saveLoginInfoLabel.text = "Save my login info"
-        saveLoginInfoLabel.font = .preferredFont(forTextStyle: .body)
-        saveLoginInfoLabel.textColor = .darkGray
-        saveLoginInfoContainerView.addSubview(saveLoginInfoLabel)
-        saveLoginInfoLabel.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
-        }
-        
-        saveLoginInfoSwitch = UISwitch(frame: .zero)
-        saveLoginInfoSwitch.isOn = BRBAccountSettings.saveLoginInfo
-        saveLoginInfoSwitch.addTarget(self,
-                                      action: #selector(saveMyLoginInfoSwitchToggled(_:)),
-                                      for: .valueChanged)
-        saveLoginInfoContainerView.addSubview(saveLoginInfoSwitch)
-        saveLoginInfoSwitch.snp.makeConstraints { make in
-            make.leading.equalTo(saveLoginInfoLabel.snp.trailing).offset(8)
-            make.top.trailing.bottom.equalToSuperview()
-        }
-        
-        stackView.addArrangedSubview(saveLoginInfoContainerView)
-    }
-    
     private func setUpLoginViews() {
         let loginAndActivityContainerView = UIView(frame: .zero)
         
@@ -268,14 +202,6 @@ class BRBLoginViewController: UIViewController {
         navigationController?.pushViewController(privacyStatementViewController, animated: true)
     }
     
-    @objc private func saveMyLoginInfoSwitchToggled(_ sender: UISwitch) {
-        BRBAccountSettings.saveLoginInfo = saveLoginInfoSwitch.isOn
-        
-        if !saveLoginInfoSwitch.isOn {
-            BRBAccountSettings.removeKeychainLoginInfo()
-        }
-    }
-    
     @objc private func loginButtonPressed(_ sender: UIButton) {
         AppDevAnalytics.shared.logFirebase(BRBLoginPressPayload())
         requestLoginIfPossible()
@@ -297,11 +223,6 @@ class BRBLoginViewController: UIViewController {
     
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
-        
-        if BRBAccountSettings.saveLoginInfo {
-            let loginInfo = (netid: netid, password: password)
-            BRBAccountSettings.saveToKeychain(loginInfo: loginInfo)
-        }
         
         delegate?.loginViewController(self, didRequestLoginWithNetid: netid, password: password)
     }

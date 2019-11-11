@@ -53,7 +53,6 @@
 		5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */; };
 		5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */; };
 		5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA5222B377000855902 /* LogoutTableViewCell.swift */; };
-		5DF1772D231C46DA00194D14 /* BRBConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */; };
 		5DF1772F231C470100194D14 /* BRBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1772E231C470100194D14 /* BRBLoginViewController.swift */; };
 		5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF17730231C471C00194D14 /* BRBAccountViewController.swift */; };
 		5DF17733231C4BA200194D14 /* BRBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF17732231C4BA200194D14 /* BRBViewController.swift */; };
@@ -72,11 +71,13 @@
 		9584FE521CDD6C3B001A3AB5 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
 		A7EBF8F274D563F7CE96F82D /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */; };
+		BDED220CF98246CF49570C52 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
+		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
@@ -105,7 +106,6 @@
 		D971431D219A7F3D00E2EE05 /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D971431C219A7F3D00E2EE05 /* TimeFactory.swift */; };
 		D9714321219B953800E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B216F1C70796600F3B138 /* Assets.xcassets */; };
 		D9714322219B953D00E2EE05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659B21831C70796600F3B138 /* Assets.xcassets */; };
-		E32CDD32CC76DB0BCE881863 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
 /* End PBXBuildFile section */
 
@@ -248,7 +248,6 @@
 		87E712ED23416C3300085DB5 /* GivingDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GivingDayViewController.swift; path = "Eatery/Controllers/Giving Day/GivingDayViewController.swift"; sourceTree = SOURCE_ROOT; };
 		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
-		9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRBConnectionHandler.swift; sourceTree = "<group>"; };
 		9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
 		9584FE541CDD7A26001A3AB5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -261,6 +260,7 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
+		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 			files = (
 				C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */,
 				D97142E1219A4B6000E2EE05 /* Security.framework in Frameworks */,
-				E32CDD32CC76DB0BCE881863 /* Pods_Eatery.framework in Frameworks */,
+				BDED220CF98246CF49570C52 /* Pods_Eatery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,7 +539,7 @@
 		9584FE531CDD6C40001A3AB5 /* BRB */ = {
 			isa = PBXGroup;
 			children = (
-				9584FE4B1CDD6C3B001A3AB5 /* BRBConnectionHandler.swift */,
+				C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */,
 				5DF17732231C4BA200194D14 /* BRBViewController.swift */,
 				5DF1772E231C470100194D14 /* BRBLoginViewController.swift */,
 				5DF17736231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift */,
@@ -1027,7 +1027,6 @@
 				5DF17733231C4BA200194D14 /* BRBViewController.swift in Sources */,
 				5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */,
 				D956DCB42187B4B1001BB9B0 /* NetworkManager.swift in Sources */,
-				5DF1772D231C46DA00194D14 /* BRBConnectionHandler.swift in Sources */,
 				5DAC0016233C1331009FCCB0 /* TabbedPageViewController.swift in Sources */,
 				5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */,
 				5DF17737231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift in Sources */,
@@ -1052,6 +1051,7 @@
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,
+				C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */,
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class BRBViewController: UIViewController {
     
@@ -14,27 +15,45 @@ class BRBViewController: UIViewController {
         case login
         case account(BRBAccount)
     }
-    
-    private var connectionHandler: BRBConnectionHandler!
-    private var requestStart: Date?
-    
+
+    private var loggedIn = false
+
+    private var accountManager = BRBAccountManager()
     private lazy var loginViewController = BRBLoginViewController()
     private var accountViewController: BRBAccountViewController?
     
     private var state: State = .login
+    
+    private var activityIndicator: NVActivityIndicatorView!
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+        activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 22, height: 22), type: .circleStrokeSpin, color: .white)
+        let activityItem = UIBarButtonItem(customView: activityIndicator!)
+        navigationItem.setLeftBarButton(activityItem, animated: true)
+
+        accountManager.delegate = self
+        accountManager.queryBRBDataWithSavedLogin()
+
+        if let account = accountManager.getCachedAccount() {
+            setState(.account(account))
+            activityIndicator.startAnimating()
+            loggedIn = true
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "Meal Plan"
+        navigationItem.title = "Account Info"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "infoIcon"),
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(aboutButtonPressed(_:)))
         navigationController?.navigationBar.prefersLargeTitles = true
-
-        connectionHandler = BRBConnectionHandler()
-        connectionHandler.delegate = self
 
         loginViewController.delegate = self
         addChildViewController(loginViewController)
@@ -48,14 +67,17 @@ class BRBViewController: UIViewController {
     @objc private func aboutButtonPressed(_ sender: UIBarButtonItem) {
         let aboutVC = AboutTableViewController()
         aboutVC.delegate = self
-        
-        if case .finished = connectionHandler.stage {
+
+        if case .finished = accountManager.stage {
+            aboutVC.logoutEnabled = true
+        } else if loggedIn {
             aboutVC.logoutEnabled = true
         } else {
             aboutVC.logoutEnabled = false
         }
         
         navigationController?.pushViewController(aboutVC, animated: true)
+        navigationItem.title = "Back"
     }
     
     private func setState(_ newState: State) {
@@ -63,7 +85,7 @@ class BRBViewController: UIViewController {
         case (.login, .account(let account)):
             let accountViewController = BRBAccountViewController(account: account)
             self.accountViewController = accountViewController
-            
+            self.accountViewController?.delegate = self
             addChildViewController(accountViewController)
             view.insertSubview(accountViewController.view, at: 0)
             accountViewController.view.snp.makeConstraints { make in
@@ -78,7 +100,6 @@ class BRBViewController: UIViewController {
                 accountViewController.willMove(toParentViewController: nil)
                 accountViewController.view.removeFromSuperview()
                 accountViewController.removeFromParentViewController()
-                
                 self.accountViewController = nil
             }
             
@@ -91,6 +112,13 @@ class BRBViewController: UIViewController {
         
         state = newState
     }
+    
+    func showErrorAlert(error: String) {
+        let errorAlert = UIAlertController(title: error, message: "Unable to fetch new BRB account data. Please check your connection and try again.", preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        self.present(errorAlert, animated: true, completion: nil)
+        activityIndicator.stopAnimating()
+    }
 
 }
 
@@ -99,53 +127,62 @@ extension BRBViewController: BRBLoginViewControllerDelegate {
     func loginViewController(_ loginViewController: BRBLoginViewController,
                              didRequestLoginWithNetid netid: String,
                              password: String) {
-        connectionHandler.netid = netid
-        connectionHandler.password = password
-        connectionHandler.handleLogin()
+        accountManager.saveLoginInfo(loginInfo: LoginInfo(netid: netid, password: password))
+        accountManager.queryBRBData(netid: netid, password: password)
         
         loginViewController.isLoading = true
-        
-        requestStart = Date()
     }
     
 }
 
-extension BRBViewController: BRBConnectionDelegate {
+extension BRBViewController: BRBAccountManagerDelegate {
     
-    func retrievedSessionId(id: String) {
-        loginViewController.setShowErrorMessage(false, animated: true)
-        
-        NetworkManager.shared.getBRBAccountInfo(sessionId: id) { [weak self] (account, error) in
-            guard let self = self else {
-                return
-            }
-            
-            if let account = account {
-                self.loginViewController.isLoading = false
-                self.setState(.account(account))
-            } else {
-                self.loginFailed(with: error?.message ?? "")
-            }
+    func brbAccountManager(didQuery account: BRBAccount) {
+        if !loggedIn {
+            loginViewController.isLoading = false
+        }
+        setState(.account(account))
+        activityIndicator.stopAnimating()
+    }
+    
+    func brbAccountManager(didFailWith error: String) {
+        activityIndicator.stopAnimating()
+        if loggedIn {
+            showErrorAlert(error: error)
+        } else {
+            loginViewController.errorDescription = error
+            loginViewController.setShowErrorMessage(true, animated: true)
+            loginViewController.isLoading = false
         }
     }
     
-    func loginFailed(with error: String) {
-        loginViewController.errorDescription = error
-        loginViewController.setShowErrorMessage(true, animated: true)
-        loginViewController.isLoading = false
+}
+
+extension BRBViewController: BRBAccountViewControllerDelegate {
+
+    func brbAccountViewControllerDidRefresh() {
+        if !activityIndicator.isAnimating {
+            accountManager.queryBRBDataWithSavedLogin()
+            activityIndicator.startAnimating()
+        }
     }
-    
+
 }
 
 extension BRBViewController: AboutTableViewControllerDelegate {
-    
-    func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController) {
+
+    func aboutTableViewControllerDidLogoutUser() {
         setState(.login)
-        
-        connectionHandler = BRBConnectionHandler()
-        connectionHandler.delegate = self
-        
+        navigationItem.title = "Account Info"
+        accountManager.removeSavedLoginInfo()
+        accountManager.resetConnectionHandler()
+        loggedIn = false
+        activityIndicator.stopAnimating()
         navigationController?.popToViewController(self, animated: true)
+    }
+    
+    func aboutTableViewControllerDidTapBackButton() {
+        navigationItem.title = "Account Info"
     }
     
 }

@@ -12,7 +12,8 @@ import SafariServices
 
 protocol AboutTableViewControllerDelegate: AnyObject {
 
-    func aboutTableViewControllerDidLogoutUser(_ stvc: AboutTableViewController)
+    func aboutTableViewControllerDidLogoutUser()
+    func aboutTableViewControllerDidTapBackButton()
 
 }
 
@@ -53,6 +54,14 @@ class AboutTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellIdentifier.link.rawValue)
         tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: CellIdentifier.saveLoginInfo.rawValue)
         tableView.register(LogoutTableViewCell.self, forCellReuseIdentifier: CellIdentifier.logout.rawValue)
+    }
+
+    // Detects when user taps the 'Back' button in navigation bar
+    // Source: https://stackoverflow.com/a/32245222
+    override func willMove(toParentViewController parent: UIViewController?) {
+        if parent == nil {
+            delegate?.aboutTableViewControllerDidTapBackButton()
+        }
     }
 
     // MARK: - Table view data source
@@ -153,7 +162,7 @@ class AboutTableViewController: UITableViewController {
 
         case (2, 0):
             if logoutEnabled {
-                delegate?.aboutTableViewControllerDidLogoutUser(self)
+                delegate?.aboutTableViewControllerDidLogoutUser()
             }
 
         default:
