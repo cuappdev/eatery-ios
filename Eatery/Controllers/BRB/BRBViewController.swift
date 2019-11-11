@@ -161,8 +161,10 @@ extension BRBViewController: BRBAccountManagerDelegate {
 extension BRBViewController: BRBAccountViewControllerDelegate {
 
     func brbAccountViewControllerDidRefresh() {
-        accountManager.queryBRBDataWithSavedLogin()
-        activityIndicator.startAnimating()
+        if !activityIndicator.isAnimating {
+            accountManager.queryBRBDataWithSavedLogin()
+            activityIndicator.startAnimating()
+        }
     }
 
 }

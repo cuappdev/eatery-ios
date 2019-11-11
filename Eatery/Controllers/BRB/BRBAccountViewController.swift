@@ -19,7 +19,7 @@ class BRBAccountViewController: UIViewController {
         static let history = "history"
     }
     
-    var account: BRBAccount
+    let account: BRBAccount
     var delegate: BRBAccountViewControllerDelegate?
     
     private var tableView: UITableView!
