@@ -11,9 +11,9 @@ import UIKit
 class OnboardingModel {
     var title: String
     var subtitle: String
-    var image: UIImage
+    var image: UIImage?
 
-    init(title: String, subtitle: String, image: UIImage) {
+    init(title: String, subtitle: String, image: UIImage?) {
         self.title = title
         self.subtitle = subtitle
         self.image = image

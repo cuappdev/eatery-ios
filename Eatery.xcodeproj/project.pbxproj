@@ -79,9 +79,11 @@
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
 		C83AEAB2237A495A00663C8D /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83AEAB1237A495A00663C8D /* OnboardingModel.swift */; };
 		C83AEAB5237A4ADE00663C8D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */; };
+		C853D040237AF5E0003C1F29 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */; };
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -264,7 +266,9 @@
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
 		C83AEAB1237A495A00663C8D /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
+		C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
@@ -675,6 +679,8 @@
 			isa = PBXGroup;
 			children = (
 				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
+				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
+				C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1042,6 +1048,7 @@
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
+				C853D040237AF5E0003C1F29 /* OnboardingPageViewController.swift in Sources */,
 				5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,
@@ -1079,6 +1086,7 @@
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* (null) in Sources */,
 				5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */,
+				C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,

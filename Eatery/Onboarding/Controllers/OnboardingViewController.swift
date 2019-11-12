@@ -8,14 +8,20 @@
 
 import UIKit
 
+protocol OnboardingViewControllerDelegate {
+    func onboardingViewControllerDidTapNextButton(viewController: OnboardingViewController)
+}
+
 class OnboardingViewController: UIViewController {
 
-    private var stackView: UIStackView!
+    internal var stackView: UIStackView!
 
-    private var titleLabel: UILabel!
-    private var subtitleLabel: UILabel!
-    private var imageView: UIImageView!
-    private var nextButton: UIButton!
+    internal var titleLabel: UILabel!
+    internal var subtitleLabel: UILabel!
+    internal var imageView: UIImageView!
+    internal var nextButton: UIButton!
+
+    var delegate: OnboardingViewControllerDelegate?
 
     let model: OnboardingModel!
 
@@ -38,10 +44,13 @@ class OnboardingViewController: UIViewController {
         stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.alignment = .fill
+        stackView.alignment = .center
+        stackView.spacing = 40
         self.view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(127)
+            make.width.equalToSuperview()
         }
 
         setUpTitleLabel()
@@ -67,23 +76,38 @@ class OnboardingViewController: UIViewController {
         subtitleLabel.textAlignment = .center
         subtitleLabel.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         stackView.addArrangedSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().inset(30)
+        }
     }
 
     private func setUpImageView() {
         imageView = UIImageView(image: model.image)
         imageView.contentMode = .scaleAspectFit
         stackView.addArrangedSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.height.equalTo(124)
+        }
     }
 
-    private func setUpButton() {
-        nextButton = UIButton(frame: CGRect(x: 0, y: 0, width: 240, height: 60))
+    internal func setUpButton() {
+        nextButton = UIButton()
         nextButton.layer.borderWidth = 2
         nextButton.layer.borderColor = UIColor.white.cgColor
-        nextButton.layer.cornerRadius = 29
+        nextButton.layer.cornerRadius = 30
         nextButton.setTitle("NEXT", for: .normal)
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
         nextButton.titleLabel?.textColor = .white
+        nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         stackView.addArrangedSubview(nextButton)
+        nextButton.snp.makeConstraints { make in
+            make.width.equalTo(240)
+            make.height.equalTo(60)
+        }
+    }
+
+    @objc func didTapNextButton(sender: UIButton!) {
+        delegate?.onboardingViewControllerDidTapNextButton(viewController: self)
     }
 
 }

@@ -26,14 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up view controllers
         
         //eateryTabBarController = EateryTabBarController()
-
-        let models = [
-            OnboardingModel(title: "Menus", subtitle: "See what’s being served at any campus eatery.", image: UIImage(named: "menuIcon")!),
-            OnboardingModel(title: "Collegetown", subtitle: "Find info about your favorite Collegetown spots.", image: UIImage(named: "ctownIcon")!),
-            OnboardingModel(title: "Transactions", subtitle: "Track your swipes, BRBs, meal history, and more.", image: UIImage(named: "transactionsIcon")!)
-        ]
-        let onboardingViewController = OnboardingViewController(model: models[1], nibName: nil, bundle: nil)
-        window?.rootViewController = onboardingViewController
+        window?.rootViewController = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         window?.makeKeyAndVisible()
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
