@@ -24,9 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Hero.shared.containerColor = .white
 
         // Set up view controllers
-        
-        //eateryTabBarController = EateryTabBarController()
-        window?.rootViewController = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        //UserDefaults.standard.set(false, forKey: "hasOnboarded")
+        if UserDefaults.standard.bool(forKey: "hasOnboarded") {
+            eateryTabBarController = EateryTabBarController()
+            window?.rootViewController = eateryTabBarController
+        } else {
+            window?.rootViewController = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        }
         window?.makeKeyAndVisible()
 
         let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")

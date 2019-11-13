@@ -151,6 +151,7 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     @objc func didTapSkipButton() {
+        UserDefaults.standard.set(true, forKey: "hasOnboarded")
         delegate?.onboardingViewControllerDidTapNextButton(viewController: self)
     }
 
@@ -185,6 +186,7 @@ extension OnboardingLoginViewController: BRBAccountManagerDelegate {
     }
 
     func brbAccountManager(didQuery account: BRBAccount) {
+        UserDefaults.standard.set(true, forKey: "hasOnboarded")
         delegate?.onboardingViewControllerDidTapNextButton(viewController: self)
     }
 
