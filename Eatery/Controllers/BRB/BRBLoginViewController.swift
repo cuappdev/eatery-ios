@@ -127,7 +127,7 @@ class BRBLoginViewController: UIViewController {
         
         netidTextField = UITextField(frame: .zero)
         netidTextField.textColor = .darkGray
-        netidTextField.placeholder = "type your netid (e.g. abc123)"
+        netidTextField.placeholder = "Type your NetID (e.g. abc123)"
         netidTextField.font = .preferredFont(forTextStyle: .body)
         netidTextField.autocapitalizationType = .none
         netidTextField.tintColor = .darkGray
@@ -152,7 +152,7 @@ class BRBLoginViewController: UIViewController {
         
         passwordTextField = UITextField(frame: .zero)
         passwordTextField.textColor = .darkGray
-        passwordTextField.placeholder = "type your password"
+        passwordTextField.placeholder = "Type your password"
         passwordTextField.font = .preferredFont(forTextStyle: .body)
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none

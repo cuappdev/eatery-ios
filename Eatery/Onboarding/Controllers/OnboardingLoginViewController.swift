@@ -21,8 +21,15 @@ class OnboardingLoginViewController: OnboardingViewController {
 
     private var loginButton: UIButton!
     private var skipButton: UIButton!
+    private var privacyStatementButton: UIButton!
 
     private var activityIndicator: NVActivityIndicatorView!
+    
+    private var errorView: BRBLoginErrorView!
+    var errorDescription: String? {
+        get { return errorView.errorLabel.text }
+        set { errorView.errorLabel.text = newValue }
+    }
 
     let accountManager = BRBAccountManager()
 
@@ -30,8 +37,10 @@ class OnboardingLoginViewController: OnboardingViewController {
         didSet {
             if isLoading {
                 activityIndicator.startAnimating()
+                loginButton.setTitle(nil, for: .normal)
             } else {
                 activityIndicator.stopAnimating()
+                loginButton.setTitle("LOG IN", for: .normal)
             }
 
             stackView.isUserInteractionEnabled = !isLoading
@@ -49,14 +58,40 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginStackView.distribution = .fill
         loginStackView.spacing = 10
         stackView.insertArrangedSubview(loginStackView, at: 2)
+        stackView.setCustomSpacing(20, after: subtitleLabel)
+        stackView.setCustomSpacing(40, after: loginStackView)
         loginStackView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalTo(128)
         }
 
+        setUpPrivacyStatementButton()
+        setUpErrorView()
         setUpNetidViews()
         setUpPasswordViews()
         setUpSkipButton()
+    }
+
+    private func setUpPrivacyStatementButton() {
+        privacyStatementButton = UIButton(type: .system)
+        privacyStatementButton.setTitle("Privacy Statement", for: .normal)
+        privacyStatementButton.setTitleColor(.white, for: .normal)
+        privacyStatementButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+        privacyStatementButton.setTitleColor(.black, for: .highlighted)
+        privacyStatementButton.addTarget(self,
+                                         action: #selector(privacyStatementButtonPressed(_:)),
+                                         for: .touchUpInside)
+        loginStackView.addArrangedSubview(privacyStatementButton)
+    }
+
+    @objc private func privacyStatementButtonPressed(_ sender: UIButton) {
+        let privacyStatementViewController = BRBPrivacyStatementViewController()
+        self.present(privacyStatementViewController, animated: true, completion: nil)
+    }
+
+    private func setUpErrorView() {
+        errorView = BRBLoginErrorView(frame: .zero)
+        errorView.isCollapsed = true
+        loginStackView.addArrangedSubview(errorView)
     }
 
     private func setUpNetidViews() {
@@ -68,11 +103,11 @@ class OnboardingLoginViewController: OnboardingViewController {
 
         netidTextField = UITextField(frame: .zero)
         netidTextField.textColor = UIColor(white: 225.0 / 255.0, alpha: 1.0)
-        netidTextField.placeholder = "Type your NetID (e.g. abc123)"
+        netidTextField.attributedPlaceholder = NSAttributedString(string: "Type your NetID (e.g. abc123)",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 225.0 / 255.0, alpha: 1.0)])
         netidTextField.font = .preferredFont(forTextStyle: .body)
         netidTextField.autocapitalizationType = .none
         netidTextField.tintColor = UIColor(white: 225.0 / 255.0, alpha: 1.0)
-        netidTextField.delegate = self
         netidTextField.autocorrectionType = .no
         loginStackView.addArrangedSubview(netidTextField)
 
@@ -93,13 +128,13 @@ class OnboardingLoginViewController: OnboardingViewController {
 
         passwordTextField = UITextField(frame: .zero)
         passwordTextField.textColor = UIColor(white: 225.0 / 255.0, alpha: 1.0)
-        passwordTextField.placeholder = "Type your password"
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Type your password",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 225.0 / 255.0, alpha: 1.0)])
         passwordTextField.font = .preferredFont(forTextStyle: .body)
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none
         passwordTextField.autocorrectionType = .no
         passwordTextField.tintColor = UIColor(white: 225.0 / 255.0, alpha: 1.0)
-        passwordTextField.delegate = self
         loginStackView.addArrangedSubview(passwordTextField)
 
         let passwordSeparator = UIView()
@@ -140,13 +175,22 @@ class OnboardingLoginViewController: OnboardingViewController {
     private func setUpSkipButton() {
         skipButton = UIButton()
         skipButton.setTitle("SKIP", for: .normal)
-        skipButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        skipButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         skipButton.titleLabel?.textColor = .white
         skipButton.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
         self.view.addSubview(skipButton)
         skipButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            // Check to see if iPhone has a notch
+            let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+            if bottom > 10 {
+                // Has notch
+                make.top.equalToSuperview().offset(55)
+                make.right.equalToSuperview().offset(-40)
+            } else {
+                make.top.equalToSuperview().offset(32)
+                make.right.equalToSuperview().offset(-32)
+            }
+
         }
     }
 
@@ -175,13 +219,30 @@ class OnboardingLoginViewController: OnboardingViewController {
         accountManager.saveLoginInfo(loginInfo: LoginInfo(netid: netid, password: password))
         accountManager.queryBRBData(netid: netid, password: password)
         isLoading = true
-        loginButton.setTitle(nil, for: .normal)
+    }
+
+    func setShowErrorMessage(_ newValue: Bool, animated: Bool) {
+        let actions: () -> Void = {
+            self.errorView.isCollapsed = !newValue
+            self.view.layoutIfNeeded()
+        }
+
+        if animated {
+            UIViewPropertyAnimator(duration: 0.35, dampingRatio: 1, animations: actions).startAnimation()
+        } else {
+            actions()
+        }
     }
 
 }
 
 extension OnboardingLoginViewController: BRBAccountManagerDelegate {
+
     func brbAccountManager(didFailWith error: String) {
+
+        errorDescription = error
+        setShowErrorMessage(true, animated: true)
+        isLoading = false
 
     }
 
@@ -189,10 +250,5 @@ extension OnboardingLoginViewController: BRBAccountManagerDelegate {
         UserDefaults.standard.set(true, forKey: "hasOnboarded")
         delegate?.onboardingViewControllerDidTapNextButton(viewController: self)
     }
-
-
-}
-
-extension OnboardingLoginViewController: UITextFieldDelegate {
 
 }

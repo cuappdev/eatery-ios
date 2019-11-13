@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Hero.shared.containerColor = .white
 
         // Set up view controllers
-        //UserDefaults.standard.set(false, forKey: "hasOnboarded")
         if UserDefaults.standard.bool(forKey: "hasOnboarded") {
             eateryTabBarController = EateryTabBarController()
             window?.rootViewController = eateryTabBarController

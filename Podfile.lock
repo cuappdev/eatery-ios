@@ -4,6 +4,7 @@ PODS:
     - Apollo/Core (= 0.9.5)
   - Apollo/Core (0.9.5)
   - ARCL (1.0.4)
+  - CHIPageControl/Jaloro (0.2)
   - DiningStack (1.0):
     - Alamofire
     - SwiftyJSON
@@ -72,6 +73,7 @@ PODS:
 DEPENDENCIES:
   - Apollo (from `https://github.com/apollographql/apollo-ios.git`)
   - ARCL
+  - CHIPageControl/Jaloro
   - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
   - Fabric
   - Firebase/Analytics
@@ -100,6 +102,8 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - SnapKit
     - SwiftyJSON
+  trunk:
+    - CHIPageControl
 
 EXTERNAL SOURCES:
   Apollo:
@@ -119,6 +123,7 @@ SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Apollo: 09002d68c46e4098766fe376151d9ff8bd6aad36
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
+  CHIPageControl: a787bf7205c9b7e7fbfc412be36c5e8636b68f86
   DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
@@ -135,6 +140,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 9b8209a1adb9e8cdd4dd5534738c9ff7a7760234
+PODFILE CHECKSUM: b8800e78d0536478313ef07c2c373e4791b32507
 
 COCOAPODS: 1.8.4
