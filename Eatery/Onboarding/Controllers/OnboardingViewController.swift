@@ -46,11 +46,11 @@ class OnboardingViewController: UIViewController {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 40
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(127)
-            make.width.equalToSuperview()
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().inset(30)
         }
 
         setUpTitleLabel()
@@ -76,17 +76,17 @@ class OnboardingViewController: UIViewController {
         subtitleLabel.textAlignment = .center
         subtitleLabel.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         stackView.addArrangedSubview(subtitleLabel)
-        subtitleLabel.snp.makeConstraints { make in
-            make.width.equalToSuperview().inset(30)
-        }
+        
     }
 
     private func setUpImageView() {
-        imageView = UIImageView(image: model.image)
-        imageView.contentMode = .scaleAspectFit
-        stackView.addArrangedSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.height.equalTo(124)
+        if let image = model.image {
+            imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFit
+            stackView.addArrangedSubview(imageView)
+            imageView.snp.makeConstraints { make in
+                make.height.equalTo(128)
+            }
         }
     }
 

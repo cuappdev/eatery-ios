@@ -46,12 +46,12 @@ class OnboardingLoginViewController: OnboardingViewController {
 
         loginStackView = UIStackView(frame: .zero)
         loginStackView.axis = .vertical
-        loginStackView.layoutMargins = UIEdgeInsets(top: 40, left: 20, bottom: 0, right: 20)
-        loginStackView.isLayoutMarginsRelativeArrangement = true
-        loginStackView.spacing = 16
+        loginStackView.distribution = .fill
+        loginStackView.spacing = 10
         stackView.insertArrangedSubview(loginStackView, at: 2)
         loginStackView.snp.makeConstraints { make in
-            make.width.equalToSuperview().inset(20)
+            make.width.equalToSuperview()
+            make.height.equalTo(128)
         }
 
         setUpNetidViews()
