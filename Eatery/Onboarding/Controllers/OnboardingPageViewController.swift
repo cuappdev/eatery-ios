@@ -48,7 +48,7 @@ class OnboardingPageViewController: UIPageViewController {
 
         pageControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.baseline.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
 
