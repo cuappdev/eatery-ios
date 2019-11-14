@@ -14,20 +14,24 @@ protocol OnboardingViewControllerDelegate {
 
 class OnboardingViewController: UIViewController {
 
-    internal var stackView: UIStackView!
-
+    var stackView: UIStackView!
+    var subtitleLabel: UILabel!
+    
     private var titleLabel: UILabel!
-    internal var subtitleLabel: UILabel!
     private var imageView: UIImageView!
     private var nextButton: UIButton!
 
+    private var onboardingTitle: String!
+    private var onboardingSubtitle: String!
+    private var onboardingImage: UIImage?
+
     var delegate: OnboardingViewControllerDelegate?
 
-    private let model: OnboardingModel!
-
-    init(model: OnboardingModel) {
-      self.model = model
+    init(title: String, subtitle: String, image: UIImage?) {
       super.init(nibName: nil, bundle: nil)
+        self.onboardingTitle = title
+        self.onboardingSubtitle = subtitle
+        self.onboardingImage = image
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +62,7 @@ class OnboardingViewController: UIViewController {
 
     private func setUpTitleLabel() {
         titleLabel = UILabel()
-        titleLabel.text = model.title
+        titleLabel.text = onboardingTitle
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 36, weight: .bold)
@@ -67,7 +71,7 @@ class OnboardingViewController: UIViewController {
 
     private func setUpSubtitleLabel() {
         subtitleLabel = UILabel()
-        subtitleLabel.text = model.subtitle
+        subtitleLabel.text = onboardingSubtitle
         subtitleLabel.textColor = .white
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
@@ -76,7 +80,7 @@ class OnboardingViewController: UIViewController {
     }
 
     private func setUpImageView() {
-        if let image = model.image {
+        if let image = self.onboardingImage {
             imageView = UIImageView(image: image)
             imageView.contentMode = .scaleAspectFit
             stackView.addArrangedSubview(imageView)

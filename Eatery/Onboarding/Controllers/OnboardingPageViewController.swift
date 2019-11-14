@@ -14,23 +14,16 @@ class OnboardingPageViewController: UIPageViewController {
     private var pages = [OnboardingViewController]()
     private let pageControl = CHIPageControlJaloro()
 
-    private let models = [
-        OnboardingModel(title: "Menus", subtitle: "See what’s being served at any campus eatery.", image: UIImage(named: "menuIcon")!),
-        OnboardingModel(title: "Collegetown", subtitle: "Find info about your favorite Collegetown spots.", image: UIImage(named: "ctownIcon")!),
-        OnboardingModel(title: "Transactions", subtitle: "Track your swipes, BRBs, meal history, and more.", image: UIImage(named: "transactionsIcon")!),
-        OnboardingModel(title: "Login", subtitle: "To get the most out of Eatery, log in with your NetID.", image: nil)
-    ]
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .eateryBlue
 
         pages = [
-            OnboardingViewController(model: models[0]),
-            OnboardingViewController(model: models[1]),
-            OnboardingViewController(model: models[2]),
-            OnboardingLoginViewController(model: models[3])
+            OnboardingViewController(title: "Menus", subtitle: "See what’s being served at any campus eatery.", image: UIImage(named: "menuIcon")),
+            OnboardingViewController(title: "Collegetown", subtitle: "Find info about your favorite Collegetown spots.", image: UIImage(named: "ctownIcon")),
+            OnboardingViewController(title: "Transactions", subtitle: "Track your swipes, BRBs, meal history, and more.", image: UIImage(named: "transactionsIcon")),
+            OnboardingLoginViewController(title: "Login", subtitle: "To get the most out of Eatery, log in with your NetID.", image: nil)
         ]
 
         pages.forEach({ $0.delegate = self })
@@ -42,9 +35,9 @@ class OnboardingPageViewController: UIPageViewController {
         pageControl.elementWidth = 24
         pageControl.elementHeight = 5
         pageControl.radius = 2.5
-        pageControl.numberOfPages = self.pages.count
+        pageControl.numberOfPages = pages.count
         pageControl.set(progress: 0, animated: true)
-        view.addSubview(self.pageControl)
+        view.addSubview(pageControl)
 
         pageControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

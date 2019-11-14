@@ -39,7 +39,7 @@ class OnboardingLoginViewController: OnboardingViewController {
                 loginButton.setTitle("LOG IN", for: .normal)
             }
 
-            stackView.isUserInteractionEnabled = !isLoading
+            loginStackView.isUserInteractionEnabled = !isLoading
             loginButton.isEnabled = !isLoading
         }
     }
@@ -63,6 +63,8 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginStackView.axis = .vertical
         loginStackView.distribution = .fill
         loginStackView.spacing = 10
+
+        // Insert at index of 2 after the titleLabel and subtitleLabel
         stackView.insertArrangedSubview(loginStackView, at: 2)
         stackView.setCustomSpacing(20, after: subtitleLabel)
         stackView.setCustomSpacing(40, after: loginStackView)
@@ -85,7 +87,7 @@ class OnboardingLoginViewController: OnboardingViewController {
 
     @objc private func didTapPrivacyButton(_ sender: UIButton) {
         let privacyStatementViewController = BRBPrivacyStatementViewController()
-        self.present(privacyStatementViewController, animated: true, completion: nil)
+        present(privacyStatementViewController, animated: true, completion: nil)
     }
 
     private func setUpErrorView() {
@@ -99,17 +101,17 @@ class OnboardingLoginViewController: OnboardingViewController {
         netidPromptLabel.font = .preferredFont(forTextStyle: .headline)
         loginStackView.addArrangedSubview(netidPromptLabel)
 
-        netidTextField.textColor = .textFieldColor
+        netidTextField.textColor = .veryLightPink
         netidTextField.attributedPlaceholder = NSAttributedString(string: "Type your NetID (e.g. abc123)",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.textFieldColor])
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
         netidTextField.font = .preferredFont(forTextStyle: .body)
         netidTextField.autocapitalizationType = .none
-        netidTextField.tintColor = .textFieldColor
+        netidTextField.tintColor = .veryLightPink
         netidTextField.autocorrectionType = .no
         loginStackView.addArrangedSubview(netidTextField)
 
         let netidSeparator = UIView()
-        netidSeparator.backgroundColor = .textFieldColor
+        netidSeparator.backgroundColor = .veryLightPink
         loginStackView.addArrangedSubview(netidSeparator)
 
         netidSeparator.snp.makeConstraints { make in
@@ -123,18 +125,18 @@ class OnboardingLoginViewController: OnboardingViewController {
         passwordPromptLabel.font = .preferredFont(forTextStyle: .headline)
         loginStackView.addArrangedSubview(passwordPromptLabel)
 
-        passwordTextField.textColor = .textFieldColor
+        passwordTextField.textColor = .veryLightPink
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Type your password",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.textFieldColor])
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
         passwordTextField.font = .preferredFont(forTextStyle: .body)
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none
         passwordTextField.autocorrectionType = .no
-        passwordTextField.tintColor = .textFieldColor
+        passwordTextField.tintColor = .veryLightPink
         loginStackView.addArrangedSubview(passwordTextField)
 
         let passwordSeparator = UIView()
-        passwordSeparator.backgroundColor = .textFieldColor
+        passwordSeparator.backgroundColor = .veryLightPink
         loginStackView.addArrangedSubview(passwordSeparator)
         
         passwordSeparator.snp.makeConstraints { make in
@@ -147,7 +149,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginButton.layer.borderColor = UIColor.white.cgColor
         loginButton.layer.cornerRadius = 30
         loginButton.setTitle("LOG IN", for: .normal)
-        loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        loginButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .heavy)
         loginButton.titleLabel?.textColor = .white
         loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         stackView.addArrangedSubview(loginButton)
@@ -169,7 +171,7 @@ class OnboardingLoginViewController: OnboardingViewController {
 
     private func setUpSkipButton() {
         skipButton.setTitle("SKIP", for: .normal)
-        skipButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        skipButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         skipButton.titleLabel?.textColor = .white
         skipButton.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
         view.addSubview(skipButton)
@@ -202,7 +204,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
 
-        //accountManager.saveLoginInfo(loginInfo: LoginInfo(netid: netid, password: password))
+        accountManager.saveLoginInfo(loginInfo: LoginInfo(netid: netid, password: password))
         accountManager.queryBRBData(netid: netid, password: password)
         isLoading = true
     }
