@@ -8,14 +8,8 @@
 
 import UIKit
 
-class OnboardingModel {
+struct OnboardingModel {
     var title: String
     var subtitle: String
     var image: UIImage?
-
-    init(title: String, subtitle: String, image: UIImage?) {
-        self.title = title
-        self.subtitle = subtitle
-        self.image = image
-    }
 }

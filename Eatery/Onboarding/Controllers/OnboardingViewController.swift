@@ -9,27 +9,25 @@
 import UIKit
 
 protocol OnboardingViewControllerDelegate {
-    func onboardingViewControllerDidTapNextButton(viewController: OnboardingViewController)
+    func onboardingViewControllerDidTapNext(_ viewController: OnboardingViewController)
 }
 
 class OnboardingViewController: UIViewController {
 
     internal var stackView: UIStackView!
 
-    internal var titleLabel: UILabel!
+    private var titleLabel: UILabel!
     internal var subtitleLabel: UILabel!
-    internal var imageView: UIImageView!
-    internal var nextButton: UIButton!
+    private var imageView: UIImageView!
+    private var nextButton: UIButton!
 
     var delegate: OnboardingViewControllerDelegate?
 
-    let model: OnboardingModel!
+    private let model: OnboardingModel!
 
-    init(model: OnboardingModel,
-         nibName nibNameOrNil: String?,
-         bundle nibBundleOrNil: Bundle?) {
+    init(model: OnboardingModel) {
       self.model = model
-      super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+      super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,14 +37,13 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .eateryBlue
+        view.backgroundColor = .eateryBlue
 
         stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 40
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -60,23 +57,22 @@ class OnboardingViewController: UIViewController {
     }
 
     private func setUpTitleLabel() {
-        titleLabel = UILabel(frame: CGRect.zero)
+        titleLabel = UILabel()
         titleLabel.text = model.title
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.systemFont(ofSize: 36, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 36, weight: .bold)
         stackView.addArrangedSubview(titleLabel)
     }
 
     private func setUpSubtitleLabel() {
-        subtitleLabel = UILabel(frame: CGRect.zero)
+        subtitleLabel = UILabel()
         subtitleLabel.text = model.subtitle
         subtitleLabel.textColor = .white
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
-        subtitleLabel.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        subtitleLabel.font = .systemFont(ofSize: 24, weight: .medium)
         stackView.addArrangedSubview(subtitleLabel)
-        
     }
 
     private func setUpImageView() {
@@ -84,6 +80,7 @@ class OnboardingViewController: UIViewController {
             imageView = UIImageView(image: image)
             imageView.contentMode = .scaleAspectFit
             stackView.addArrangedSubview(imageView)
+
             imageView.snp.makeConstraints { make in
                 make.height.equalTo(128)
             }
@@ -96,18 +93,19 @@ class OnboardingViewController: UIViewController {
         nextButton.layer.borderColor = UIColor.white.cgColor
         nextButton.layer.cornerRadius = 30
         nextButton.setTitle("NEXT", for: .normal)
-        nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        nextButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .heavy)
         nextButton.titleLabel?.textColor = .white
         nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         stackView.addArrangedSubview(nextButton)
+
         nextButton.snp.makeConstraints { make in
             make.width.equalTo(240)
             make.height.equalTo(60)
         }
     }
 
-    @objc func didTapNextButton(sender: UIButton!) {
-        delegate?.onboardingViewControllerDidTapNextButton(viewController: self)
+    @objc private func didTapNextButton(sender: UIButton) {
+        delegate?.onboardingViewControllerDidTapNext(self)
     }
 
 }

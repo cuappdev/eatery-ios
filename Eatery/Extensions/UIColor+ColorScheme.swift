@@ -55,6 +55,9 @@ extension UIColor {
     /// 0xF8E71C
     static let favoriteYellow = colorFromCode(0xF8E71C)
 
+    /// 0xE1E1E1
+    static let textFieldColor = colorFromCode(0xE1E1E1)
+
 }
 
 extension UIImage {
