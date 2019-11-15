@@ -82,6 +82,7 @@
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C8D460AF237F28820009FED2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */; };
 		C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
@@ -266,6 +267,7 @@
 		C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
+		C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
 		C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
@@ -669,6 +671,7 @@
 			children = (
 				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
 				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
+				C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */,
 				C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */,
 			);
 			path = Controllers;
@@ -1035,6 +1038,7 @@
 				5D34C4E12356A64B00A1132F /* CampusMenuInfoView.swift in Sources */,
 				5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */,
 				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
+				C8D460AF237F28820009FED2 /* OnboardingInfoViewController.swift in Sources */,
 				87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,

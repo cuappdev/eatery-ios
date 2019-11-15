@@ -165,6 +165,7 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     @objc func didTapLoginButton() {
+        setShowErrorMessage(false, animated: true)
         requestLoginIfPossible()
     }
 
