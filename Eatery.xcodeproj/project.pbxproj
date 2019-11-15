@@ -77,9 +77,12 @@
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
+		C83AEAB5237A4ADE00663C8D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */; };
+		C853D040237AF5E0003C1F29 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */; };
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -260,7 +263,10 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
+		C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
+		C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
@@ -587,6 +593,7 @@
 				65E93178206C186B00547D14 /* Keys.swift */,
 				D956DCAC2187B074001BB9B0 /* Keys.plist */,
 				D956DCAF2187B2A2001BB9B0 /* Queries */,
+				C83AEAAF237A476B00663C8D /* Onboarding */,
 				D956DCB72187B875001BB9B0 /* Models */,
 				D956DCB22187B496001BB9B0 /* Network */,
 				1D10A4151C67FF0C00772D31 /* Controllers */,
@@ -647,6 +654,24 @@
 				95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C83AEAAF237A476B00663C8D /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C83AEAB3237A4AB800663C8D /* Controllers */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		C83AEAB3237A4AB800663C8D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
+				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
+				C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		CE1B2E45224BFE8E005014AE /* Recovered References */ = {
@@ -881,6 +906,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Eatery/Pods-Eatery-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
@@ -894,6 +920,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
@@ -1012,6 +1039,7 @@
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
+				C853D040237AF5E0003C1F29 /* OnboardingPageViewController.swift in Sources */,
 				5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,
@@ -1036,6 +1064,7 @@
 				5DF1772F231C470100194D14 /* BRBLoginViewController.swift in Sources */,
 				5D856458222A2D4E003A712B /* Menu.swift in Sources */,
 				5D44519E231D45C30035164F /* BRBHistoryTableViewCell.swift in Sources */,
+				C83AEAB5237A4ADE00663C8D /* OnboardingViewController.swift in Sources */,
 				5DA97E2C2353D69900CD7E2C /* CampusMenuViewController.swift in Sources */,
 				5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */,
 				5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */,
@@ -1048,6 +1077,7 @@
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				D10246301C7A320C000D5CD8 /* (null) in Sources */,
 				5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */,
+				C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,

@@ -18,6 +18,7 @@ target 'Eatery' do
     pod 'NVActivityIndicatorView'
     pod 'SnapKit'
     pod 'SwiftyJSON'
+    pod 'CHIPageControl/Jaloro'
 end
 
 target 'Eatery Watch App' do
