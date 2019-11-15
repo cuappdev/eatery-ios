@@ -14,12 +14,12 @@ protocol OnboardingViewControllerDelegate {
 
 class OnboardingViewController: UIViewController {
 
-    var stackView: UIStackView!
-    var subtitleLabel: UILabel!
+    let stackView = UIStackView()
+    let subtitleLabel = UILabel()
     
-    private var titleLabel: UILabel!
+    private let titleLabel = UILabel()
     private var imageView: UIImageView!
-    private var nextButton: UIButton!
+    private let nextButton = UIButton()
 
     private var onboardingTitle: String!
     private var onboardingSubtitle: String!
@@ -28,7 +28,7 @@ class OnboardingViewController: UIViewController {
     var delegate: OnboardingViewControllerDelegate?
 
     init(title: String, subtitle: String, image: UIImage?) {
-      super.init(nibName: nil, bundle: nil)
+        super.init(nibName: nil, bundle: nil)
         self.onboardingTitle = title
         self.onboardingSubtitle = subtitle
         self.onboardingImage = image
@@ -43,12 +43,11 @@ class OnboardingViewController: UIViewController {
 
         view.backgroundColor = .eateryBlue
 
-        stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 40
-        self.view.addSubview(stackView)
+        view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalToSuperview().inset(30)
@@ -61,7 +60,6 @@ class OnboardingViewController: UIViewController {
     }
 
     private func setUpTitleLabel() {
-        titleLabel = UILabel()
         titleLabel.text = onboardingTitle
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
@@ -70,7 +68,6 @@ class OnboardingViewController: UIViewController {
     }
 
     private func setUpSubtitleLabel() {
-        subtitleLabel = UILabel()
         subtitleLabel.text = onboardingSubtitle
         subtitleLabel.textColor = .white
         subtitleLabel.numberOfLines = 0
@@ -80,7 +77,7 @@ class OnboardingViewController: UIViewController {
     }
 
     private func setUpImageView() {
-        if let image = self.onboardingImage {
+        if let image = onboardingImage {
             imageView = UIImageView(image: image)
             imageView.contentMode = .scaleAspectFit
             stackView.addArrangedSubview(imageView)
@@ -92,7 +89,6 @@ class OnboardingViewController: UIViewController {
     }
 
     internal func setUpButton() {
-        nextButton = UIButton()
         nextButton.layer.borderWidth = 2
         nextButton.layer.borderColor = UIColor.white.cgColor
         nextButton.layer.cornerRadius = 30

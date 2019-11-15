@@ -235,6 +235,10 @@ class BRBAccountManager {
         }
         return nil
     }
+
+    func cancelRequest() {
+        connectionHandler.stopLoading()
+    }
 }
 
 extension BRBAccountManager: BRBConnectionHandlerDelegate {

@@ -50,11 +50,11 @@ class OnboardingPageViewController: UIPageViewController {
 extension OnboardingPageViewController: OnboardingViewControllerDelegate {
 
     func onboardingViewControllerDidTapNext(_ viewController: OnboardingViewController) {
-        if let viewControllerIndex = self.pages.index(of: viewController) {
-            if viewControllerIndex < self.pages.count - 1 {
+        if let viewControllerIndex = pages.index(of: viewController) {
+            if viewControllerIndex < pages.count - 1 {
                 setViewControllers([pages[viewControllerIndex + 1]], direction: .forward, animated: true, completion: nil)
                 self.pageControl.set(progress: viewControllerIndex + 1, animated: true)
-            } else if viewControllerIndex == self.pages.count - 1 {
+            } else if viewControllerIndex == pages.count - 1 {
                 let eateryTabBarController = EateryTabBarController()
                 guard let appDelegate = UIApplication.shared.delegate else {
                     return

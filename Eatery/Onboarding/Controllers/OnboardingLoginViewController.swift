@@ -11,7 +11,7 @@ import UIKit
 
 class OnboardingLoginViewController: OnboardingViewController {
 
-    private var loginStackView: UIStackView!
+    private let loginStackView = UIStackView()
 
     private let netidPromptLabel = UILabel()
     private let netidTextField = UITextField()
@@ -59,7 +59,6 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     private func setUpStackView() {
-        loginStackView = UIStackView()
         loginStackView.axis = .vertical
         loginStackView.distribution = .fill
         loginStackView.spacing = 10
@@ -184,6 +183,8 @@ class OnboardingLoginViewController: OnboardingViewController {
 
     @objc func didTapSkipButton() {
         UserDefaults.standard.set(true, forKey: "hasOnboarded")
+        accountManager.removeSavedLoginInfo()
+        accountManager.cancelRequest()
         delegate?.onboardingViewControllerDidTapNext(self)
     }
 
