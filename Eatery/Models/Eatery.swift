@@ -9,6 +9,8 @@
 import CoreLocation
 import UIKit
 
+// MARK: - Eatery Data
+
 /// Different meals served by eateries
 enum Meal: String {
 
@@ -56,6 +58,8 @@ enum EateryStatus {
 
 }
 
+// MARK: - Eatery
+
 protocol Eatery {
 
     /// A string of the form YYYY-MM-dd (ISO 8601 Calendar dates)
@@ -71,6 +75,8 @@ protocol Eatery {
     var displayName: String { get }
 
     var imageUrl: URL? { get }
+
+    var highQualityImageUrl: URL? { get }
 
     var eateryType: EateryType { get }
 
@@ -88,6 +94,14 @@ protocol Eatery {
 
 }
 
+extension Eatery {
+
+    var highQualityImageUrl: URL? {
+        return imageUrl
+    }
+
+}
+
 /// Converts the date to its day for use with eatery events
 private let dayFormatter: ISO8601DateFormatter = {
     let formatter = ISO8601DateFormatter()
@@ -96,7 +110,7 @@ private let dayFormatter: ISO8601DateFormatter = {
     return formatter
 }()
 
-// MARK: -
+// MARK: - Utils
 
 extension Eatery {
 
@@ -224,7 +238,7 @@ extension NSNotification.Name {
 
 }
 
-// MARK: - Eatery Presentation
+// MARK: - Presentation
 
 struct EateryPresentation {
 

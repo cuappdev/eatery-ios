@@ -78,9 +78,7 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
     private func setUpImageView() {
         imageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
 
-        if let url = eatery.imageUrl {
-            imageView.kf.setImage(with: url)
-        }
+        imageView.kf.setImage(with: eatery)
     }
 
     private func setUpGradientView() {

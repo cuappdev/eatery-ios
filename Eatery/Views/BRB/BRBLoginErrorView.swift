@@ -22,7 +22,7 @@ class BRBLoginErrorView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         layer.shadowOpacity = 0.33
         layer.shadowOffset = .zero
         layer.cornerRadius = 8
