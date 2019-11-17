@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import Kingfisher
 import NVActivityIndicatorView
 import UIKit
 
@@ -643,6 +644,19 @@ extension EateriesViewController: UICollectionViewDelegate {
                        animations: {
             cell.transform = .identity
         })
+    }
+
+}
+
+// MARK: - Collection View Prefetching Data Source
+
+extension EateriesViewController: UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let resources = indexPaths
+            .compactMap { eateries(in: $0.section)[$0.row].highQualityImageUrl }
+            .map { ImageResource(downloadURL: $0) }
+        ImagePrefetcher(resources: resources).start()
     }
 
 }
