@@ -204,6 +204,7 @@ class EateriesViewController: UIViewController {
         collectionView.delaysContentTouches = false
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
         collectionView.register(UICollectionViewCell.self,
                                 forCellWithReuseIdentifier: CellIdentifier.container.rawValue)
         collectionView.register(EateryCollectionViewCell.self,
@@ -654,8 +655,16 @@ extension EateriesViewController: UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let resources = indexPaths
-            .compactMap { eateries(in: $0.section)[$0.row].imageUrl }
-            .map { ImageResource(downloadURL: $0) }
+            .compactMap {
+                let section = eateries(in: $0.section)
+                if 0 <= $0.row && $0.row < section.count {
+                    return section[$0.row].imageUrl
+                } else {
+                    return nil
+                }
+        }.map {
+            ImageResource(downloadURL: $0)
+        }
         ImagePrefetcher(resources: resources).start()
     }
 
