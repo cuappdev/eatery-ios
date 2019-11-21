@@ -654,7 +654,7 @@ extension EateriesViewController: UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let resources = indexPaths
-            .compactMap { eateries(in: $0.section)[$0.row].highQualityImageUrl }
+            .compactMap { eateries(in: $0.section)[$0.row].imageUrl }
             .map { ImageResource(downloadURL: $0) }
         ImagePrefetcher(resources: resources).start()
     }

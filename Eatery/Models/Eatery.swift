@@ -76,8 +76,6 @@ protocol Eatery {
 
     var imageUrl: URL? { get }
 
-    var highQualityImageUrl: URL? { get }
-
     var eateryType: EateryType { get }
 
     var address: String { get }
@@ -91,14 +89,6 @@ protocol Eatery {
     var events: [DayString: [EventName: Event]] { get }
 
     var allEvents: [Event] { get }
-
-}
-
-extension Eatery {
-
-    var highQualityImageUrl: URL? {
-        return imageUrl
-    }
 
 }
 
