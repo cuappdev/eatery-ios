@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import Kingfisher
 import NVActivityIndicatorView
 import UIKit
 
@@ -203,6 +204,7 @@ class EateriesViewController: UIViewController {
         collectionView.delaysContentTouches = false
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
         collectionView.register(UICollectionViewCell.self,
                                 forCellWithReuseIdentifier: CellIdentifier.container.rawValue)
         collectionView.register(EateryCollectionViewCell.self,
@@ -643,6 +645,20 @@ extension EateriesViewController: UICollectionViewDelegate {
                        animations: {
             cell.transform = .identity
         })
+    }
+
+}
+
+// MARK: - Collection View Prefetching Data Source
+
+extension EateriesViewController: UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let resources = indexPaths.compactMap {
+            let section = eateries(in: $0.section)
+            return 0 <= $0.row && $0.row < section.count ? section[$0.row].imageUrl : nil
+        }.map { ImageResource(downloadURL: $0) }
+        ImagePrefetcher(resources: resources).start()
     }
 
 }

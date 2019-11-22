@@ -202,10 +202,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         // start loading background image view as soon as possible
 
-        if let url = eatery.imageUrl {
-            let placeholder = UIImage.image(withColor: UIColor(white: 0.97, alpha: 1.0))
-            backgroundImageView.kf.setImage(with: url, placeholder: placeholder, options: [.transition(.fade(0.35))])
-        }
+        backgroundImageView.kf.setImage(with: eatery)
         
         // title
 
