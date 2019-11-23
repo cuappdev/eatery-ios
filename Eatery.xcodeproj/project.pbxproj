@@ -669,10 +669,10 @@
 		C83AEAB3237A4AB800663C8D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
-				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
-				C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */,
 				C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */,
+				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
+				C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */,
+				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

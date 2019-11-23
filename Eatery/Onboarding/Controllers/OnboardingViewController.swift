@@ -14,24 +14,21 @@ protocol OnboardingViewControllerDelegate {
 
 class OnboardingViewController: UIViewController {
 
-    let stackView = UIStackView()
-    let subtitleLabel = UILabel()
-    
+    private let stackView = UIStackView()
     private let titleLabel = UILabel()
-    private var imageView: UIImageView!
-    private let nextButton = UIButton()
+    private let subtitleLabel = UILabel()
 
     private var onboardingTitle: String!
     private var onboardingSubtitle: String!
-    private var onboardingImage: UIImage?
+
+    let contentView = UIView()
 
     var delegate: OnboardingViewControllerDelegate?
 
-    init(title: String, subtitle: String, image: UIImage?) {
+    init(title: String, subtitle: String) {
         super.init(nibName: nil, bundle: nil)
         self.onboardingTitle = title
         self.onboardingSubtitle = subtitle
-        self.onboardingImage = image
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,6 +40,13 @@ class OnboardingViewController: UIViewController {
 
         view.backgroundColor = .eateryBlue
 
+        setUpStackView()
+        setUpTitleLabel()
+        setUpSubtitleLabel()
+        setUpContentView()
+    }
+
+    private func setUpStackView() {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -52,11 +56,6 @@ class OnboardingViewController: UIViewController {
             make.center.equalToSuperview()
             make.width.equalToSuperview().inset(30)
         }
-
-        setUpTitleLabel()
-        setUpSubtitleLabel()
-        setUpImageView()
-        setUpButton()
     }
 
     private func setUpTitleLabel() {
@@ -76,36 +75,8 @@ class OnboardingViewController: UIViewController {
         stackView.addArrangedSubview(subtitleLabel)
     }
 
-    private func setUpImageView() {
-        if let image = onboardingImage {
-            imageView = UIImageView(image: image)
-            imageView.contentMode = .scaleAspectFit
-            stackView.addArrangedSubview(imageView)
-
-            imageView.snp.makeConstraints { make in
-                make.height.equalTo(128)
-            }
-        }
-    }
-
-    internal func setUpButton() {
-        nextButton.layer.borderWidth = 2
-        nextButton.layer.borderColor = UIColor.white.cgColor
-        nextButton.layer.cornerRadius = 30
-        nextButton.setTitle("NEXT", for: .normal)
-        nextButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .heavy)
-        nextButton.titleLabel?.textColor = .white
-        nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
-        stackView.addArrangedSubview(nextButton)
-
-        nextButton.snp.makeConstraints { make in
-            make.width.equalTo(240)
-            make.height.equalTo(60)
-        }
-    }
-
-    @objc private func didTapNextButton(sender: UIButton) {
-        delegate?.onboardingViewControllerDidTapNext(self)
+    private func setUpContentView() {
+        stackView.addArrangedSubview(contentView)
     }
 
 }

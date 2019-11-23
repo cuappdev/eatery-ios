@@ -11,6 +11,7 @@ import UIKit
 
 class OnboardingLoginViewController: OnboardingViewController {
 
+    private let stackView = UIStackView()
     private let loginStackView = UIStackView()
 
     private let netidPromptLabel = UILabel()
@@ -55,18 +56,33 @@ class OnboardingLoginViewController: OnboardingViewController {
         setUpErrorView()
         setUpNetidViews()
         setUpPasswordViews()
+        setUpButton()
         setUpSkipButton()
+
+        stackView.layoutIfNeeded()
+        contentView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            // 52.5 is the height of the errorView
+            make.height.equalTo(stackView.frame.height + 52.5)
+        }
     }
 
     private func setUpStackView() {
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 40
+        contentView.addSubview(stackView)
+
+        stackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
         loginStackView.axis = .vertical
         loginStackView.distribution = .fill
         loginStackView.spacing = 10
-
-        // Insert at index of 2 after the titleLabel and subtitleLabel
-        stackView.insertArrangedSubview(loginStackView, at: 2)
-        stackView.setCustomSpacing(20, after: subtitleLabel)
-        stackView.setCustomSpacing(40, after: loginStackView)
+        stackView.addArrangedSubview(loginStackView)
 
         loginStackView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -143,7 +159,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         }
     }
 
-    override func setUpButton() {
+    private func setUpButton() {
         loginButton.layer.borderWidth = 2
         loginButton.layer.borderColor = UIColor.white.cgColor
         loginButton.layer.cornerRadius = 30
@@ -152,12 +168,14 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginButton.titleLabel?.textColor = .white
         loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         stackView.addArrangedSubview(loginButton)
+
         loginButton.snp.makeConstraints { make in
             make.width.equalTo(240)
             make.height.equalTo(60)
         }
 
         loginButton.addSubview(activityIndicator)
+        
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(22)
