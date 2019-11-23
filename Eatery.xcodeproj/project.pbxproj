@@ -29,6 +29,7 @@
 		5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */; };
 		5D77412E2332E08400E9E699 /* ImageParallaxScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */; };
 		5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */; };
+		5D82E1E12381AD1300823715 /* Kingfisher+Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D82E1E02381AD1300823715 /* Kingfisher+Eatery.swift */; };
 		5D856458222A2D4E003A712B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D856457222A2D4E003A712B /* Menu.swift */; };
 		5D871CCD23653A7C00F9BF75 /* EateryMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D871CCB2365397B00F9BF75 /* EateryMenuHeaderView.swift */; };
 		5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */; };
@@ -82,7 +83,6 @@
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C8D460AF237F28820009FED2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */; };
 		C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
@@ -198,6 +198,7 @@
 		5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
 		5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageParallaxScrollViewController.swift; sourceTree = "<group>"; };
 		5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEateriesViewController.swift; sourceTree = "<group>"; };
+		5D82E1E02381AD1300823715 /* Kingfisher+Eatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kingfisher+Eatery.swift"; sourceTree = "<group>"; };
 		5D856457222A2D4E003A712B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		5D871CCB2365397B00F9BF75 /* EateryMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryMenuHeaderView.swift; sourceTree = "<group>"; };
 		5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineTabBarControl.swift; sourceTree = "<group>"; };
@@ -267,7 +268,6 @@
 		C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
-		C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
 		C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
@@ -635,6 +635,7 @@
 				C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */,
 				5D218C4721FC136E00327516 /* CLLocation+Distance.swift */,
 				5D2790352336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift */,
+				5D82E1E02381AD1300823715 /* Kingfisher+Eatery.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -669,10 +670,6 @@
 		C83AEAB3237A4AB800663C8D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */,
-				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
-				C8D460AE237F28820009FED2 /* OnboardingInfoViewController.swift */,
-				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1109,6 +1106,7 @@
 				5DE1D42F225EC710008054F4 /* PillView.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
 				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
+				5D82E1E12381AD1300823715 /* Kingfisher+Eatery.swift in Sources */,
 				5DEF1AA0222B2EBB00855902 /* AboutTableViewController.swift in Sources */,
 				5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */,
 			);

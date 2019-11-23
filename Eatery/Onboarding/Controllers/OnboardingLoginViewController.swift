@@ -175,7 +175,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         }
 
         loginButton.addSubview(activityIndicator)
-        
+      
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(22)
