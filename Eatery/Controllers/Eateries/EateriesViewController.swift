@@ -418,19 +418,6 @@ class EateriesViewController: UIViewController {
             newEateriesByGroup = (favorites: [], open: [], closed: [])
         }
 
-        if let oldEateriesByGroup = eateriesByGroup {
-            let oldEateriesById = (oldEateriesByGroup.favorites.map { $0.id },
-                                   oldEateriesByGroup.open.map { $0.id },
-                                   oldEateriesByGroup.closed.map { $0.id })
-            let newEateriesById = (newEateriesByGroup.favorites.map { $0.id },
-                                   newEateriesByGroup.open.map { $0.id },
-                                   newEateriesByGroup.closed.map { $0.id })
-
-            if oldEateriesById == newEateriesById {
-                return
-            }
-        }
-
         self.eateriesByGroup = newEateriesByGroup
 
         let actions: () -> Void = {
