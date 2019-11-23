@@ -418,19 +418,6 @@ class EateriesViewController: UIViewController {
             newEateriesByGroup = (favorites: [], open: [], closed: [])
         }
 
-        if let oldEateriesByGroup = eateriesByGroup {
-            let oldEateriesById = (oldEateriesByGroup.favorites.map { $0.id },
-                                   oldEateriesByGroup.open.map { $0.id },
-                                   oldEateriesByGroup.closed.map { $0.id })
-            let newEateriesById = (newEateriesByGroup.favorites.map { $0.id },
-                                   newEateriesByGroup.open.map { $0.id },
-                                   newEateriesByGroup.closed.map { $0.id })
-
-            if oldEateriesById == newEateriesById {
-                return
-            }
-        }
-
         self.eateriesByGroup = newEateriesByGroup
 
         let actions: () -> Void = {
@@ -481,7 +468,7 @@ class EateriesViewController: UIViewController {
         updateTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
             guard let self = self else { return }
             print("Updating \(type(of: self))", Date())
-            self.reloadEateries(animated: true)
+            self.reloadEateries(animated: false)
 
             self.scheduleUpdateTimer()
         }
