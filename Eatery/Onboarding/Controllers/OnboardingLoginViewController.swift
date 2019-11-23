@@ -62,8 +62,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         stackView.layoutIfNeeded()
         contentView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            // 52.5 is the height of the errorView
-            make.height.equalTo(stackView.frame.height + 52.5)
+            make.height.equalTo(stackView)
         }
     }
 
@@ -75,7 +74,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         contentView.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.center.equalToSuperview()
             make.width.equalToSuperview()
         }
         
@@ -117,6 +116,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginStackView.addArrangedSubview(netidPromptLabel)
 
         netidTextField.textColor = .veryLightPink
+        netidTextField.delegate = self
         netidTextField.attributedPlaceholder = NSAttributedString(string: "Type your NetID (e.g. abc123)",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
         netidTextField.font = .preferredFont(forTextStyle: .body)
@@ -141,6 +141,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginStackView.addArrangedSubview(passwordPromptLabel)
 
         passwordTextField.textColor = .veryLightPink
+        passwordTextField.delegate = self
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Type your password",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
         passwordTextField.font = .preferredFont(forTextStyle: .body)
@@ -255,6 +256,16 @@ extension OnboardingLoginViewController: BRBAccountManagerDelegate {
     func brbAccountManager(didQuery account: BRBAccount) {
         UserDefaults.standard.set(true, forKey: "hasOnboarded")
         delegate?.onboardingViewControllerDidTapNext(self)
+    }
+
+}
+
+extension OnboardingLoginViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        setShowErrorMessage(false, animated: true)
+        requestLoginIfPossible()
+        return true
     }
 
 }

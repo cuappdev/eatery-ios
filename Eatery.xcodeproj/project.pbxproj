@@ -78,15 +78,15 @@
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
-		C83AEAB5237A4ADE00663C8D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */; };
-		C853D040237AF5E0003C1F29 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */; };
+		C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */; };
+		C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */; };
+		C82E5F052388E96400C881B2 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
+		C82E5F062388E96400C881B2 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */; };
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
-		D10246301C7A320C000D5CD8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
 		D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = D930FBD7218BC00200B0B1CE /* BRBAccount.swift */; };
 		D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D956DCAC2187B074001BB9B0 /* Keys.plist */; };
@@ -265,6 +265,10 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
+		C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
+		C82E5F012388E96400C881B2 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
@@ -670,6 +674,10 @@
 		C83AEAB3237A4AB800663C8D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */,
+				C82E5F012388E96400C881B2 /* OnboardingViewController.swift */,
+				C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */,
+				C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -677,6 +685,9 @@
 		CE1B2E45224BFE8E005014AE /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */,
+				C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */,
+				C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1033,19 +1044,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D34C4E12356A64B00A1132F /* CampusMenuInfoView.swift in Sources */,
+				C82E5F062388E96400C881B2 /* OnboardingLoginViewController.swift in Sources */,
 				5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */,
 				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
-				C8D460AF237F28820009FED2 /* OnboardingInfoViewController.swift in Sources */,
+				C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */,
 				87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
-				C853D040237AF5E0003C1F29 /* OnboardingPageViewController.swift in Sources */,
 				5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,
 				5D2790362336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift in Sources */,
 				65E93179206C186B00547D14 /* Keys.swift in Sources */,
+				C82E5F052388E96400C881B2 /* OnboardingViewController.swift in Sources */,
 				D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */,
 				874D83702336751D00E26728 /* EventPayload.swift in Sources */,
 				5D4451A0231D51FE0035164F /* BRBLoginErrorView.swift in Sources */,
@@ -1065,7 +1077,6 @@
 				5DF1772F231C470100194D14 /* BRBLoginViewController.swift in Sources */,
 				5D856458222A2D4E003A712B /* Menu.swift in Sources */,
 				5D44519E231D45C30035164F /* BRBHistoryTableViewCell.swift in Sources */,
-				C83AEAB5237A4ADE00663C8D /* OnboardingViewController.swift in Sources */,
 				5DA97E2C2353D69900CD7E2C /* CampusMenuViewController.swift in Sources */,
 				5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */,
 				5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */,
@@ -1076,9 +1087,7 @@
 				60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */,
 				D956DCC12187B94E001BB9B0 /* Event.swift in Sources */,
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
-				D10246301C7A320C000D5CD8 /* (null) in Sources */,
 				5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */,
-				C8EDDFE2237B41E1005C7490 /* OnboardingLoginViewController.swift in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,
@@ -1087,6 +1096,7 @@
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
+				C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */,
 				5DB4678023502E4B005CE574 /* PopularTimesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,

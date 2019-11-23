@@ -13,11 +13,11 @@ class OnboardingInfoViewController: OnboardingViewController {
     private let stackView = UIStackView()
     private let imageView = UIImageView()
     private let nextButton = UIButton()
-    private var onboardingImage = UIImage()
+    private let onboardingImage: UIImage?
 
-    init(title: String, subtitle: String, image: UIImage!) {
-        super.init(title: title, subtitle: subtitle)
+    init(title: String, subtitle: String, image: UIImage?) {
         self.onboardingImage = image
+        super.init(title: title, subtitle: subtitle)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,7 +34,7 @@ class OnboardingInfoViewController: OnboardingViewController {
         stackView.layoutIfNeeded()
         contentView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalTo(stackView.frame.height)
+            make.height.equalTo(stackView)
         }
     }
 
@@ -45,7 +45,7 @@ class OnboardingInfoViewController: OnboardingViewController {
         stackView.spacing = 40
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.center.equalToSuperview()
             make.width.equalToSuperview()
         }
     }

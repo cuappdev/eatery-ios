@@ -17,18 +17,17 @@ class OnboardingViewController: UIViewController {
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
-
-    private var onboardingTitle: String!
-    private var onboardingSubtitle: String!
+    private let onboardingTitle: String
+    private let onboardingSubtitle: String
 
     let contentView = UIView()
 
     var delegate: OnboardingViewControllerDelegate?
 
     init(title: String, subtitle: String) {
-        super.init(nibName: nil, bundle: nil)
         self.onboardingTitle = title
         self.onboardingSubtitle = subtitle
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
