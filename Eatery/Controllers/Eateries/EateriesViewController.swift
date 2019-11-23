@@ -468,7 +468,7 @@ class EateriesViewController: UIViewController {
         updateTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
             guard let self = self else { return }
             print("Updating \(type(of: self))", Date())
-            self.reloadEateries(animated: true)
+            self.reloadEateries(animated: false)
 
             self.scheduleUpdateTimer()
         }
