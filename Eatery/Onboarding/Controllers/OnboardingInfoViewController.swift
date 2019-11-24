@@ -31,7 +31,6 @@ class OnboardingInfoViewController: OnboardingViewController {
         setUpImageView()
         setUpButton()
 
-        stackView.layoutIfNeeded()
         contentView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(stackView)
@@ -44,9 +43,10 @@ class OnboardingInfoViewController: OnboardingViewController {
         stackView.alignment = .center
         stackView.spacing = 40
         contentView.addSubview(stackView)
+
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.equalToSuperview()
+            make.center.width.equalToSuperview()
         }
     }
 
