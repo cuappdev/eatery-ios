@@ -33,14 +33,20 @@ class PopularTimesView: UIView {
 
     private let eatery: CampusEatery
 
-    private var isExpanded: Bool = true
+    private var isHistogramExpanded = true
     private var showHideButton = UIButton(type: .system)
 
     private let histogramContainerView = UIView()
     private var histogramExpandConstraint: Constraint?
     private var histogramCollapseConstraint: Constraint?
 
-    private var histogramView = HistogramView()
+    private let histogramView = HistogramView()
+
+    private var isAccuracyPromptExpanded = true
+    private let accuracyPromptContainerView = UIView()
+    private let accuracyPrompt = PopularTimesAccuracyPrompt()
+    private var accuracyPromptExpandConstraint: Constraint?
+    private var accuracyPromptCollapseConstraint: Constraint?
 
     private let startHour = 6
     private let overflowedEndHour = 27
@@ -78,11 +84,10 @@ class PopularTimesView: UIView {
         histogramContainerView.snp.makeConstraints { make in
             make.top.equalTo(popularTimesLabel.snp.bottom).offset(4)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().inset(4)
         }
         histogramContainerView.snp.prepareConstraints { make in
-            histogramExpandConstraint = make.height.equalTo(166).priorityMedium().constraint
-            histogramCollapseConstraint = make.height.equalTo(0).priorityMedium().constraint
+            histogramExpandConstraint = make.height.equalTo(166).priority(.medium).constraint
+            histogramCollapseConstraint = make.height.equalTo(0).priority(.medium).constraint
         }
 
         histogramView.dataSource = self
@@ -92,6 +97,27 @@ class PopularTimesView: UIView {
             make.leading.trailing.equalToSuperview().inset(32)
             make.height.equalTo(166)
         }
+
+        addSubview(accuracyPromptContainerView)
+        accuracyPromptContainerView.snp.makeConstraints { make in
+            make.top.equalTo(histogramContainerView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(4)
+        }
+
+        accuracyPrompt.delegate = self
+        accuracyPromptContainerView.addSubview(accuracyPrompt)
+        accuracyPrompt.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+        }
+
+        accuracyPromptContainerView.snp.prepareConstraints { make in
+            accuracyPromptExpandConstraint = make.height.equalTo(accuracyPrompt).constraint
+            accuracyPromptCollapseConstraint = make.height.equalTo(0).constraint
+        }
+
+        accuracyPromptExpandConstraint?.activate()
 
         histogramView.reloadData()
 
@@ -104,18 +130,19 @@ class PopularTimesView: UIView {
     }
 
     @objc private func showHideButtonPressed(_ sender: UIButton) {
-        setExpanded(!isExpanded, animated: true)
+        setHistogramExpanded(!isHistogramExpanded, animated: true)
+        setAccuracyPromptExpanded(false, animated: true)
     }
 
-    func setExpanded(_ newValue: Bool, animated: Bool) {
-        isExpanded = newValue
-        showHideButton.setTitle(isExpanded ? "Hide" : "Show", for: .normal)
+    func setHistogramExpanded(_ newValue: Bool, animated: Bool) {
+        isHistogramExpanded = newValue
+        showHideButton.setTitle(isHistogramExpanded ? "Hide" : "Show", for: .normal)
         showHideButton.layoutIfNeeded()
 
         let actions: (() -> Void) = {
-            self.histogramView.alpha = self.isExpanded ? 1.0 : 0.0
+            self.histogramView.alpha = self.isHistogramExpanded ? 1.0 : 0.0
 
-            if self.isExpanded {
+            if self.isHistogramExpanded {
                 self.histogramCollapseConstraint?.deactivate()
                 self.histogramExpandConstraint?.activate()
             } else {
@@ -137,7 +164,31 @@ class PopularTimesView: UIView {
         super.didMoveToSuperview()
 
         if superview != nil {
-            setExpanded(!eatery.swipeDataByHour.isEmpty, animated: false)
+            setHistogramExpanded(!eatery.swipeDataByHour.isEmpty, animated: false)
+        }
+    }
+
+    func setAccuracyPromptExpanded(_ newValue: Bool, animated: Bool) {
+        isAccuracyPromptExpanded = newValue
+
+        let actions: (() -> Void) = {
+            self.accuracyPrompt.alpha = self.isAccuracyPromptExpanded ? 1.0 : 0.0
+
+            if self.isAccuracyPromptExpanded {
+                self.accuracyPromptCollapseConstraint?.deactivate()
+                self.accuracyPromptExpandConstraint?.activate()
+            } else {
+                self.accuracyPromptExpandConstraint?.deactivate()
+                self.accuracyPromptCollapseConstraint?.activate()
+            }
+
+            self.layoutDelegate?.popularTimesContentSizeDidChange(self)
+        }
+
+        if animated {
+            UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: actions).startAnimation()
+        } else {
+            actions()
         }
     }
 
@@ -212,6 +263,18 @@ extension PopularTimesView: HistogramViewDataSource {
     func histogramView(_ histogramView: HistogramView, titleForTickMarkAt index: Int) -> String? {
         let tickHour = containOverflowedMilitaryHour(hour: startHour + index)
         return formattedHourForTime(militaryHour: tickHour)
+    }
+
+}
+
+extension PopularTimesView: PopularTimesAccuracyPromptDelegate {
+
+    func popularTimesAccuracyPrompt(_ popularTimesAccuracyPrompt: PopularTimesAccuracyPrompt,
+                                    didReceiveUserResponse userResponse: PopularTimesAccuracyPrompt.UserResponse) {
+        Timer.scheduledTimer(withTimeInterval: 0.35, repeats: false) { [weak self] _ in
+            self?.setAccuracyPromptExpanded(false, animated: true)
+        }
+
     }
 
 }
