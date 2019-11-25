@@ -89,7 +89,6 @@
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
 		D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = D930FBD7218BC00200B0B1CE /* BRBAccount.swift */; };
-		D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D956DCAC2187B074001BB9B0 /* Keys.plist */; };
 		D956DCB12187B2BF001BB9B0 /* campusEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D956DCB02187B2BF001BB9B0 /* campusEateries.graphql */; };
 		D956DCB42187B4B1001BB9B0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956DCB32187B4B1001BB9B0 /* NetworkManager.swift */; };
 		D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956DCB82187B885001BB9B0 /* CampusEatery.swift */; };
@@ -880,7 +879,6 @@
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
-				D956DCAD2187B074001BB9B0 /* Keys.plist in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
 				5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,

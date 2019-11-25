@@ -63,10 +63,6 @@ class OnboardingLoginViewController: OnboardingViewController {
             make.width.equalToSuperview()
             make.height.equalTo(stackView)
         }
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     private func setUpStackView() {
@@ -243,30 +239,6 @@ class OnboardingLoginViewController: OnboardingViewController {
             UIViewPropertyAnimator(duration: 0.35, dampingRatio: 1, animations: actions).startAnimation()
         } else {
             actions()
-        }
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-
-        guard let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-
-        let keyboardFrame = keyboardSize.cgRectValue
-
-        if self.view.frame.origin.y == 0 {
-            self.view.frame.origin.y -= keyboardFrame.height * 2 / 3
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-
-        guard let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-
-        let keyboardFrame = keyboardSize.cgRectValue
-
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y += keyboardFrame.height * 2 / 3
         }
     }
 

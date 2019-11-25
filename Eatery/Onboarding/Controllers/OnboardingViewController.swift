@@ -15,6 +15,7 @@ protocol OnboardingViewControllerDelegate {
 class OnboardingViewController: UIViewController {
 
     private let stackView = UIStackView()
+    private var stackViewBottomConstraint: NSLayoutConstraint?
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let onboardingTitle: String
@@ -43,6 +44,16 @@ class OnboardingViewController: UIViewController {
         setUpTitleLabel()
         setUpSubtitleLabel()
         setUpContentView()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: .UIKeyboardWillShow,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: .UIKeyboardWillHide,
+                                               object: nil)
     }
 
     private func setUpStackView() {
@@ -52,9 +63,12 @@ class OnboardingViewController: UIViewController {
         stackView.spacing = 40
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(32)
+            make.centerY.equalToSuperview().priority(.high)
         }
+
+        stackViewBottomConstraint = view.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
+        stackViewBottomConstraint?.isActive = false
     }
 
     private func setUpTitleLabel() {
@@ -76,6 +90,46 @@ class OnboardingViewController: UIViewController {
 
     private func setUpContentView() {
         stackView.addArrangedSubview(contentView)
+    }
+
+}
+
+extension OnboardingViewController {
+
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+
+        let actions: () -> Void = {
+            self.stackViewBottomConstraint?.constant = keyboardFrame.height + 16
+            self.stackViewBottomConstraint?.isActive = true
+            self.view.layoutIfNeeded()
+        }
+
+        if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: actions)
+        } else {
+            actions()
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+                return
+        }
+
+        let actions: () -> Void = {
+            self.stackViewBottomConstraint?.isActive = false
+            self.view.layoutIfNeeded()
+        }
+
+        if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: actions)
+        } else {
+            actions()
+        }
     }
 
 }
