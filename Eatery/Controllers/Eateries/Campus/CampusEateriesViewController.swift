@@ -80,7 +80,12 @@ class CampusEateriesViewController: EateriesViewController {
         navigationController?.popToRootViewController(animated: animated)
         navigationController?.pushViewController(menuViewController, animated: animated)
 
-        let payload: Payload = eatery.eateryType == .dining ? CampusDiningCellPressPayload() : CampusCafeCellPressPayload()
+        let payload: Payload
+        if eatery.eateryType == .dining {
+            payload = CampusDiningCellPressPayload(diningHallName: eatery.displayName)
+        } else {
+            payload = CampusCafeCellPressPayload(cafeName: eatery.displayName)
+        }
         AppDevAnalytics.shared.logFirebase(payload)
     }
 
