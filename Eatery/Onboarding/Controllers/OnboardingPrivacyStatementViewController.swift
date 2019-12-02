@@ -19,14 +19,13 @@ class OnboardingPrivacyStatementViewController: BRBPrivacyStatementViewControlle
 
     private func setUpCloseButton() {
         let closeButton = UIButton()
-        closeButton.setImage(UIImage(named: "closeIcon.png"), for: .normal)
+        closeButton.setImage(UIImage(named: "closeIcon"), for: .normal)
         closeButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
         view.addSubview(closeButton)
 
         closeButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
-            make.topMargin.equalToSuperview().offset(10)
-            make.rightMargin.equalToSuperview().offset(-10)
+            make.topMargin.rightMargin.equalToSuperview().inset(10)
         }
     }
 
