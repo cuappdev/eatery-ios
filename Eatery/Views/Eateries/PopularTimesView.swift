@@ -29,6 +29,17 @@ protocol PopularTimesViewLayoutDelegate: AnyObject {
 
 class PopularTimesView: UIView {
 
+    /// collapsed - height is zero
+    /// partiallyExpanded - the call to action displays "Popular times inaccurate?"
+    /// fullyExpanded - the accuracy prompt displays three buttons asking for the wait times
+    private enum AccuracyPromptState {
+
+        case collapsed
+        case partiallyExpanded
+        case fullyExpanded
+
+    }
+
     weak var layoutDelegate: PopularTimesViewLayoutDelegate?
 
     private let eatery: CampusEatery
@@ -42,11 +53,15 @@ class PopularTimesView: UIView {
 
     private let histogramView = HistogramView()
 
-    private var isAccuracyPromptExpanded = true
+    private var accuracyPromptState: AccuracyPromptState = .partiallyExpanded
     private let accuracyPromptContainerView = UIView()
+
+    private let callToActionButton = UIButton()
     private let accuracyPrompt = PopularTimesAccuracyPrompt()
-    private var accuracyPromptExpandConstraint: Constraint?
-    private var accuracyPromptCollapseConstraint: Constraint?
+
+    private var accuracyPromptCollapsedConstraint: Constraint?
+    private var accuracyPromptPartiallyExpandedConstraint: Constraint?
+    private var accuracyPromptFullyExpandedConstraint: Constraint?
 
     private let startHour = 6
     private let overflowedEndHour = 27
@@ -105,6 +120,17 @@ class PopularTimesView: UIView {
             make.bottom.equalToSuperview().inset(4)
         }
 
+        callToActionButton.setTitle("Popular Times Inaccurate?", for: .normal)
+        callToActionButton.setTitleColor(.eateryBlue, for: .normal)
+        callToActionButton.addTarget(self, action: #selector(callToActionButtonPressed(_:)), for: .touchUpInside)
+        callToActionButton.contentHorizontalAlignment = .leading
+        callToActionButton.titleLabel?.font = .systemFont(ofSize: 16)
+        accuracyPromptContainerView.addSubview(callToActionButton)
+        callToActionButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(4)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+
         accuracyPrompt.delegate = self
         accuracyPromptContainerView.addSubview(accuracyPrompt)
         accuracyPrompt.snp.makeConstraints { make in
@@ -113,16 +139,10 @@ class PopularTimesView: UIView {
         }
 
         accuracyPromptContainerView.snp.prepareConstraints { make in
-            accuracyPromptExpandConstraint = make.height.equalTo(accuracyPrompt).constraint
-            accuracyPromptCollapseConstraint = make.height.equalTo(0).constraint
+            accuracyPromptCollapsedConstraint = make.height.equalTo(0).constraint
+            accuracyPromptPartiallyExpandedConstraint = make.height.equalTo(callToActionButton).offset(8).constraint
+            accuracyPromptFullyExpandedConstraint = make.height.equalTo(accuracyPrompt).constraint
         }
-
-        accuracyPromptExpandConstraint?.activate()
-
-        histogramView.reloadData()
-
-        let currentHour = Calendar.current.component(.hour, from: Date())
-        histogramView.selectBar(at: currentHour - startHour, animated: true, generateFeedback: false)
     }
 
     required init?(coder: NSCoder) {
@@ -131,7 +151,14 @@ class PopularTimesView: UIView {
 
     @objc private func showHideButtonPressed(_ sender: UIButton) {
         setHistogramExpanded(!isHistogramExpanded, animated: true)
-        setAccuracyPromptExpanded(false, animated: true)
+
+        if isHistogramExpanded,
+            eatery.isOpen(atExactly: Date()),
+            eatery.popularTimesResponse.userMaySubmitResponse {
+            setAccuracyPromptState(.partiallyExpanded, animated: true)
+        } else {
+            setAccuracyPromptState(.collapsed, animated: true)
+        }
     }
 
     func setHistogramExpanded(_ newValue: Bool, animated: Bool) {
@@ -139,7 +166,7 @@ class PopularTimesView: UIView {
         showHideButton.setTitle(isHistogramExpanded ? "Hide" : "Show", for: .normal)
         showHideButton.layoutIfNeeded()
 
-        let actions: (() -> Void) = {
+        let actions: () -> Void = {
             self.histogramView.alpha = self.isHistogramExpanded ? 1.0 : 0.0
 
             if self.isHistogramExpanded {
@@ -164,22 +191,53 @@ class PopularTimesView: UIView {
         super.didMoveToSuperview()
 
         if superview != nil {
-            setHistogramExpanded(!eatery.swipeDataByHour.isEmpty, animated: false)
+            histogramView.reloadData()
+
+            let currentHour = Calendar.current.component(.hour, from: Date())
+            histogramView.selectBar(at: currentHour - startHour, animated: true, generateFeedback: false)
+
+            setHistogramExpanded(true, animated: false)
+
+            if eatery.isOpen(atExactly: Date()),
+                eatery.popularTimesResponse.userMaySubmitResponse {
+                setAccuracyPromptState(.partiallyExpanded, animated: false)
+            } else {
+                setAccuracyPromptState(.collapsed, animated: false)
+            }
         }
     }
 
-    func setAccuracyPromptExpanded(_ newValue: Bool, animated: Bool) {
-        isAccuracyPromptExpanded = newValue
+    private func setAccuracyPromptState(_ newValue: AccuracyPromptState, animated: Bool) {
+        accuracyPromptState = newValue
 
-        let actions: (() -> Void) = {
-            self.accuracyPrompt.alpha = self.isAccuracyPromptExpanded ? 1.0 : 0.0
+        let actions: () -> Void = {
+            switch self.accuracyPromptState {
+            case .collapsed:
+                self.accuracyPrompt.alpha = 0
+                self.callToActionButton.alpha = 0
 
-            if self.isAccuracyPromptExpanded {
-                self.accuracyPromptCollapseConstraint?.deactivate()
-                self.accuracyPromptExpandConstraint?.activate()
-            } else {
-                self.accuracyPromptExpandConstraint?.deactivate()
-                self.accuracyPromptCollapseConstraint?.activate()
+                self.accuracyPromptFullyExpandedConstraint?.deactivate()
+                self.accuracyPromptPartiallyExpandedConstraint?.deactivate()
+
+                self.accuracyPromptCollapsedConstraint?.activate()
+
+            case .partiallyExpanded:
+                self.accuracyPrompt.alpha = 0
+                self.callToActionButton.alpha = 1
+
+                self.accuracyPromptFullyExpandedConstraint?.deactivate()
+                self.accuracyPromptCollapsedConstraint?.deactivate()
+
+                self.accuracyPromptPartiallyExpandedConstraint?.activate()
+
+            case .fullyExpanded:
+                self.accuracyPrompt.alpha = 1
+                self.callToActionButton.alpha = 0
+
+                self.accuracyPromptCollapsedConstraint?.deactivate()
+                self.accuracyPromptPartiallyExpandedConstraint?.deactivate()
+
+                self.accuracyPromptFullyExpandedConstraint?.activate()
             }
 
             self.layoutDelegate?.popularTimesContentSizeDidChange(self)
@@ -190,6 +248,10 @@ class PopularTimesView: UIView {
         } else {
             actions()
         }
+    }
+
+    @objc private func callToActionButtonPressed(_ sender: UIButton) {
+        setAccuracyPromptState(.fullyExpanded, animated: true)
     }
 
 }
@@ -271,8 +333,16 @@ extension PopularTimesView: PopularTimesAccuracyPromptDelegate {
 
     func popularTimesAccuracyPrompt(_ popularTimesAccuracyPrompt: PopularTimesAccuracyPrompt,
                                     didReceiveUserResponse userResponse: PopularTimesAccuracyPrompt.UserResponse) {
-        Timer.scheduledTimer(withTimeInterval: 0.35, repeats: false) { [weak self] _ in
-            self?.setAccuracyPromptExpanded(false, animated: true)
+        let level: PopularTimesResponse.Level
+        switch userResponse {
+        case .lessThanFiveMinutes: level = .low
+        case .fiveToTenMinutes: level = .medium
+        case .moreThanTenMinutes: level = .high
+        }
+        eatery.popularTimesResponse.recordResponse(level: level)
+
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+            self?.setAccuracyPromptState(.collapsed, animated: true)
         }
 
     }

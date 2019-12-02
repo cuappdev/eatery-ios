@@ -15,6 +15,8 @@ protocol PopularTimesAccuracyPromptDelegate: AnyObject {
 
 }
 
+/// Displays a label "how long did you wait" and three buttons for the user to press.
+/// This view handles no logic: it merely displays three buttons and notifies its delegate when one of them is pressed
 class PopularTimesAccuracyPrompt: UIView {
 
     enum UserResponse: CaseIterable {
@@ -98,13 +100,12 @@ class PopularTimesAccuracyPrompt: UIView {
 
         feedbackGenerator.impactOccurred()
 
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25) {
             sender.backgroundColor = .eateryBlue
             sender.setTitleColor(.white, for: .normal)
-        }, completion: { [weak self] _ in
-            guard let self = self else { return }
-            self.delegate?.popularTimesAccuracyPrompt(self, didReceiveUserResponse: userResponse)
-        })
+        }
+
+        delegate?.popularTimesAccuracyPrompt(self, didReceiveUserResponse: userResponse)
     }
 
 }
