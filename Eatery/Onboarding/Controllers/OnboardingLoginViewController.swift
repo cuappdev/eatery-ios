@@ -11,6 +11,7 @@ import UIKit
 
 class OnboardingLoginViewController: OnboardingViewController {
 
+    private let stackView = UIStackView()
     private let loginStackView = UIStackView()
 
     private let netidPromptLabel = UILabel()
@@ -20,7 +21,6 @@ class OnboardingLoginViewController: OnboardingViewController {
     private let passwordTextField = UITextField()
 
     private let loginButton = UIButton()
-    private let skipButton = UIButton()
     private let privacyStatementButton = UIButton(type: .system)
 
     private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .circleStrokeSpin, color: .white)
@@ -55,18 +55,31 @@ class OnboardingLoginViewController: OnboardingViewController {
         setUpErrorView()
         setUpNetidViews()
         setUpPasswordViews()
-        setUpSkipButton()
+        setUpButton()
+        setUpSkipButton(target: self, action: #selector(didTapSkipButton))
+        
+
+        contentView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(stackView)
+        }
     }
 
     private func setUpStackView() {
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 40
+        contentView.addSubview(stackView)
+
+        stackView.snp.makeConstraints { make in
+            make.center.width.equalToSuperview()
+        }
+        
         loginStackView.axis = .vertical
         loginStackView.distribution = .fill
         loginStackView.spacing = 10
-
-        // Insert at index of 2 after the titleLabel and subtitleLabel
-        stackView.insertArrangedSubview(loginStackView, at: 2)
-        stackView.setCustomSpacing(20, after: subtitleLabel)
-        stackView.setCustomSpacing(40, after: loginStackView)
+        stackView.addArrangedSubview(loginStackView)
 
         loginStackView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -85,7 +98,8 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     @objc private func didTapPrivacyButton(_ sender: UIButton) {
-        let privacyStatementViewController = BRBPrivacyStatementViewController()
+        let privacyStatementViewController = OnboardingPrivacyStatementViewController()
+        privacyStatementViewController.modalPresentationStyle = .fullScreen
         present(privacyStatementViewController, animated: true, completion: nil)
     }
 
@@ -101,6 +115,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginStackView.addArrangedSubview(netidPromptLabel)
 
         netidTextField.textColor = .veryLightPink
+        netidTextField.delegate = self
         netidTextField.attributedPlaceholder = NSAttributedString(string: "Type your NetID (e.g. abc123)",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
         netidTextField.font = .preferredFont(forTextStyle: .body)
@@ -125,6 +140,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginStackView.addArrangedSubview(passwordPromptLabel)
 
         passwordTextField.textColor = .veryLightPink
+        passwordTextField.delegate = self
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Type your password",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
         passwordTextField.font = .preferredFont(forTextStyle: .body)
@@ -143,7 +159,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         }
     }
 
-    override func setUpButton() {
+    private func setUpButton() {
         loginButton.layer.borderWidth = 2
         loginButton.layer.borderColor = UIColor.white.cgColor
         loginButton.layer.cornerRadius = 30
@@ -152,12 +168,14 @@ class OnboardingLoginViewController: OnboardingViewController {
         loginButton.titleLabel?.textColor = .white
         loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         stackView.addArrangedSubview(loginButton)
+
         loginButton.snp.makeConstraints { make in
             make.width.equalTo(240)
             make.height.equalTo(60)
         }
 
         loginButton.addSubview(activityIndicator)
+      
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(22)
@@ -165,27 +183,8 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     @objc func didTapLoginButton() {
+        setShowErrorMessage(false, animated: true)
         requestLoginIfPossible()
-    }
-
-    private func setUpSkipButton() {
-        skipButton.setTitle("SKIP", for: .normal)
-        skipButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        skipButton.titleLabel?.textColor = .white
-        skipButton.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
-        view.addSubview(skipButton)
-
-        skipButton.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(32)
-            make.rightMargin.equalToSuperview().offset(-32)
-        }
-    }
-
-    @objc func didTapSkipButton() {
-        UserDefaults.standard.set(true, forKey: "hasOnboarded")
-        accountManager.removeSavedLoginInfo()
-        accountManager.cancelRequest()
-        delegate?.onboardingViewControllerDidTapNext(self)
     }
 
     private func requestLoginIfPossible() {
@@ -223,6 +222,13 @@ class OnboardingLoginViewController: OnboardingViewController {
         }
     }
 
+    @objc func didTapSkipButton() {
+        UserDefaults.standard.set(true, forKey: "hasOnboarded")
+        accountManager.removeSavedLoginInfo()
+        accountManager.cancelRequest()
+        delegate?.onboardingViewControllerDidTapNext(self)
+    }
+
 }
 
 extension OnboardingLoginViewController: BRBAccountManagerDelegate {
@@ -236,6 +242,18 @@ extension OnboardingLoginViewController: BRBAccountManagerDelegate {
     func brbAccountManager(didQuery account: BRBAccount) {
         UserDefaults.standard.set(true, forKey: "hasOnboarded")
         delegate?.onboardingViewControllerDidTapNext(self)
+    }
+
+}
+
+extension OnboardingLoginViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        setShowErrorMessage(false, animated: true)
+        requestLoginIfPossible()
+        netidTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        return true
     }
 
 }

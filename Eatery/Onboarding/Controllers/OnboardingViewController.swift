@@ -14,24 +14,23 @@ protocol OnboardingViewControllerDelegate {
 
 class OnboardingViewController: UIViewController {
 
-    let stackView = UIStackView()
-    let subtitleLabel = UILabel()
-    
+    private let stackView = UIStackView()
+    private var stackViewBottomConstraint: NSLayoutConstraint?
+    private var skipButtonTopContraint: NSLayoutConstraint?
     private let titleLabel = UILabel()
-    private var imageView: UIImageView!
-    private let nextButton = UIButton()
+    private let subtitleLabel = UILabel()
+    private let onboardingTitle: String
+    private let onboardingSubtitle: String
+    private let skipButton = UIButton()
 
-    private var onboardingTitle: String!
-    private var onboardingSubtitle: String!
-    private var onboardingImage: UIImage?
+    let contentView = UIView()
 
     var delegate: OnboardingViewControllerDelegate?
 
-    init(title: String, subtitle: String, image: UIImage?) {
-        super.init(nibName: nil, bundle: nil)
+    init(title: String, subtitle: String) {
         self.onboardingTitle = title
         self.onboardingSubtitle = subtitle
-        self.onboardingImage = image
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,20 +42,35 @@ class OnboardingViewController: UIViewController {
 
         view.backgroundColor = .eateryBlue
 
+        setUpStackView()
+        setUpTitleLabel()
+        setUpSubtitleLabel()
+        setUpContentView()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: .UIKeyboardWillShow,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: .UIKeyboardWillHide,
+                                               object: nil)
+    }
+
+    private func setUpStackView() {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 40
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(32)
+            make.centerY.equalToSuperview().priority(.high)
         }
 
-        setUpTitleLabel()
-        setUpSubtitleLabel()
-        setUpImageView()
-        setUpButton()
+        stackViewBottomConstraint = view.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
+        stackViewBottomConstraint?.isActive = false
     }
 
     private func setUpTitleLabel() {
@@ -76,36 +90,67 @@ class OnboardingViewController: UIViewController {
         stackView.addArrangedSubview(subtitleLabel)
     }
 
-    private func setUpImageView() {
-        if let image = onboardingImage {
-            imageView = UIImageView(image: image)
-            imageView.contentMode = .scaleAspectFit
-            stackView.addArrangedSubview(imageView)
+    private func setUpContentView() {
+        stackView.addArrangedSubview(contentView)
+    }
 
-            imageView.snp.makeConstraints { make in
-                make.height.equalTo(128)
-            }
+    func setUpSkipButton(target: Any?, action: Selector) {
+        skipButton.setTitle("SKIP", for: .normal)
+        skipButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        skipButton.titleLabel?.textColor = .white
+        skipButton.addTarget(target, action: action, for: .touchUpInside)
+        view.addSubview(skipButton)
+
+        skipButton.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(32)
+            make.rightMargin.equalToSuperview().offset(-32)
+        }
+
+        skipButtonTopContraint = view.topAnchor.constraint(equalTo: skipButton.topAnchor)
+        skipButtonTopContraint?.isActive = false
+    }
+
+}
+
+extension OnboardingViewController {
+
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+
+        let actions: () -> Void = {
+            self.stackViewBottomConstraint?.constant = keyboardFrame.height + 16
+            self.stackViewBottomConstraint?.isActive = true
+            self.skipButtonTopContraint?.constant = keyboardFrame.height + 16
+            self.skipButtonTopContraint?.isActive = true
+            self.view.layoutIfNeeded()
+        }
+
+        if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: actions)
+        } else {
+            actions()
         }
     }
 
-    internal func setUpButton() {
-        nextButton.layer.borderWidth = 2
-        nextButton.layer.borderColor = UIColor.white.cgColor
-        nextButton.layer.cornerRadius = 30
-        nextButton.setTitle("NEXT", for: .normal)
-        nextButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .heavy)
-        nextButton.titleLabel?.textColor = .white
-        nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
-        stackView.addArrangedSubview(nextButton)
-
-        nextButton.snp.makeConstraints { make in
-            make.width.equalTo(240)
-            make.height.equalTo(60)
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+                return
         }
-    }
 
-    @objc private func didTapNextButton(sender: UIButton) {
-        delegate?.onboardingViewControllerDidTapNext(self)
+        let actions: () -> Void = {
+            self.stackViewBottomConstraint?.isActive = false
+            self.skipButtonTopContraint?.isActive = false
+            self.view.layoutIfNeeded()
+        }
+
+        if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: actions)
+        } else {
+            actions()
+        }
     }
 
 }
