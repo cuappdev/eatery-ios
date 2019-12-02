@@ -45,7 +45,6 @@ class OnboardingInfoViewController: OnboardingViewController {
         contentView.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
             make.center.width.equalToSuperview()
         }
     }

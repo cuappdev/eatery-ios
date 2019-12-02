@@ -21,7 +21,6 @@ class OnboardingLoginViewController: OnboardingViewController {
     private let passwordTextField = UITextField()
 
     private let loginButton = UIButton()
-    private let skipButton = UIButton()
     private let privacyStatementButton = UIButton(type: .system)
 
     private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .circleStrokeSpin, color: .white)
@@ -57,7 +56,8 @@ class OnboardingLoginViewController: OnboardingViewController {
         setUpNetidViews()
         setUpPasswordViews()
         setUpButton()
-        setUpSkipButton()
+        setUpSkipButton(target: self, action: #selector(didTapSkipButton))
+        
 
         contentView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -73,8 +73,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         contentView.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview()
+            make.center.width.equalToSuperview()
         }
         
         loginStackView.axis = .vertical
@@ -99,7 +98,8 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     @objc private func didTapPrivacyButton(_ sender: UIButton) {
-        let privacyStatementViewController = BRBPrivacyStatementViewController()
+        let privacyStatementViewController = OnboardingPrivacyStatementViewController()
+        privacyStatementViewController.modalPresentationStyle = .fullScreen
         present(privacyStatementViewController, animated: true, completion: nil)
     }
 
@@ -187,26 +187,6 @@ class OnboardingLoginViewController: OnboardingViewController {
         requestLoginIfPossible()
     }
 
-    private func setUpSkipButton() {
-        skipButton.setTitle("SKIP", for: .normal)
-        skipButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        skipButton.titleLabel?.textColor = .white
-        skipButton.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
-        view.addSubview(skipButton)
-
-        skipButton.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().offset(32)
-            make.rightMargin.equalToSuperview().offset(-32)
-        }
-    }
-
-    @objc func didTapSkipButton() {
-        UserDefaults.standard.set(true, forKey: "hasOnboarded")
-        accountManager.removeSavedLoginInfo()
-        accountManager.cancelRequest()
-        delegate?.onboardingViewControllerDidTapNext(self)
-    }
-
     private func requestLoginIfPossible() {
         let netid = netidTextField.text?.lowercased() ?? ""
         let password = passwordTextField.text ?? ""
@@ -240,6 +220,13 @@ class OnboardingLoginViewController: OnboardingViewController {
         } else {
             actions()
         }
+    }
+
+    @objc func didTapSkipButton() {
+        UserDefaults.standard.set(true, forKey: "hasOnboarded")
+        accountManager.removeSavedLoginInfo()
+        accountManager.cancelRequest()
+        delegate?.onboardingViewControllerDidTapNext(self)
     }
 
 }

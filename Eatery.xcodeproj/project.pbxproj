@@ -78,6 +78,7 @@
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
+		C82C9B83238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */; };
 		C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */; };
 		C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */; };
 		C82E5F052388E96400C881B2 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
@@ -264,6 +265,7 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
+		C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPrivacyStatementViewController.swift; sourceTree = "<group>"; };
 		C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
 		C82E5F012388E96400C881B2 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -677,6 +679,7 @@
 				C82E5F012388E96400C881B2 /* OnboardingViewController.swift */,
 				C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */,
 				C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */,
+				C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1112,6 +1115,7 @@
 				5D218C2F21FBE39700327516 /* MealStationTableViewCell.swift in Sources */,
 				5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */,
 				5DE1D42F225EC710008054F4 /* PillView.swift in Sources */,
+				C82C9B83238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift in Sources */,
 				5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */,
 				5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */,
 				5D82E1E12381AD1300823715 /* Kingfisher+Eatery.swift in Sources */,

@@ -16,10 +16,12 @@ class OnboardingViewController: UIViewController {
 
     private let stackView = UIStackView()
     private var stackViewBottomConstraint: NSLayoutConstraint?
+    private var skipButtonTopContraint: NSLayoutConstraint?
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let onboardingTitle: String
     private let onboardingSubtitle: String
+    private let skipButton = UIButton()
 
     let contentView = UIView()
 
@@ -92,6 +94,22 @@ class OnboardingViewController: UIViewController {
         stackView.addArrangedSubview(contentView)
     }
 
+    func setUpSkipButton(target: Any?, action: Selector) {
+        skipButton.setTitle("SKIP", for: .normal)
+        skipButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        skipButton.titleLabel?.textColor = .white
+        skipButton.addTarget(target, action: action, for: .touchUpInside)
+        view.addSubview(skipButton)
+
+        skipButton.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(32)
+            make.rightMargin.equalToSuperview().offset(-32)
+        }
+
+        skipButtonTopContraint = view.topAnchor.constraint(equalTo: skipButton.topAnchor)
+        skipButtonTopContraint?.isActive = false
+    }
+
 }
 
 extension OnboardingViewController {
@@ -105,6 +123,8 @@ extension OnboardingViewController {
         let actions: () -> Void = {
             self.stackViewBottomConstraint?.constant = keyboardFrame.height + 16
             self.stackViewBottomConstraint?.isActive = true
+            self.skipButtonTopContraint?.constant = keyboardFrame.height + 16
+            self.skipButtonTopContraint?.isActive = true
             self.view.layoutIfNeeded()
         }
 
@@ -122,6 +142,7 @@ extension OnboardingViewController {
 
         let actions: () -> Void = {
             self.stackViewBottomConstraint?.isActive = false
+            self.skipButtonTopContraint?.isActive = false
             self.view.layoutIfNeeded()
         }
 
