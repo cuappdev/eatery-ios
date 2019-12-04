@@ -78,10 +78,13 @@
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
+		C817959923976A9F0032DDF8 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
+		C817959D23976D3A0032DDF8 /* collegetown.json in Resources */ = {isa = PBXBuildFile; fileRef = C817959A23976D390032DDF8 /* collegetown.json */; };
+		C817959E23976D3A0032DDF8 /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = C817959B23976D390032DDF8 /* transactions.json */; };
+		C817959F23976D3A0032DDF8 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = C817959C23976D390032DDF8 /* menu.json */; };
 		C82C9B83238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */; };
 		C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */; };
 		C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */; };
-		C82E5F052388E96400C881B2 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
 		C82E5F062388E96400C881B2 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */; };
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -265,6 +268,9 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
+		C817959A23976D390032DDF8 /* collegetown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegetown.json; sourceTree = "<group>"; };
+		C817959B23976D390032DDF8 /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
+		C817959C23976D390032DDF8 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
 		C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPrivacyStatementViewController.swift; sourceTree = "<group>"; };
 		C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
@@ -600,6 +606,9 @@
 			children = (
 				8724A0772349637E00D92EE3 /* GoogleService-Info.plist */,
 				D97142E6219A6B6F00E2EE05 /* API.swift */,
+				C817959A23976D390032DDF8 /* collegetown.json */,
+				C817959C23976D390032DDF8 /* menu.json */,
+				C817959B23976D390032DDF8 /* transactions.json */,
 				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
 				42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */,
 				E99C63E91B6EDE12000A5886 /* Info.plist */,
@@ -887,11 +896,14 @@
 				D956DCB12187B2BF001BB9B0 /* campusEateries.graphql in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */,
+				C817959D23976D3A0032DDF8 /* collegetown.json in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
+				C817959E23976D3A0032DDF8 /* transactions.json in Resources */,
 				5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,
 				D97142E02197542A00E2EE05 /* brbQuery.graphql in Resources */,
+				C817959F23976D3A0032DDF8 /* menu.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,6 +944,7 @@
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -946,6 +959,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1103,6 +1117,7 @@
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */,
+				C817959923976A9F0032DDF8 /* OnboardingViewController.swift in Sources */,
 				5DB4678023502E4B005CE574 /* PopularTimesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,

@@ -20,9 +20,9 @@ class OnboardingPageViewController: UIPageViewController {
         view.backgroundColor = .eateryBlue
 
         pages = [
-            OnboardingInfoViewController(title: "Menus", subtitle: "See what’s being served at any campus eatery.", image: UIImage(named: "menuIcon")),
-            OnboardingInfoViewController(title: "Collegetown", subtitle: "Find info about your favorite Collegetown spots.", image: UIImage(named: "ctownIcon")),
-            OnboardingInfoViewController(title: "Transactions", subtitle: "Track your swipes, BRBs, meal history, and more.", image: UIImage(named: "transactionsIcon")),
+            OnboardingInfoViewController(title: "Menus", subtitle: "See what’s being served at any campus eatery.", animation: "menu"),
+            OnboardingInfoViewController(title: "Collegetown", subtitle: "Find info about your favorite Collegetown spots.", animation: "collegetown"),
+            OnboardingInfoViewController(title: "Transactions", subtitle: "Track your swipes, BRBs, meal history, and more.", animation: "transactions"),
             OnboardingLoginViewController(title: "Login", subtitle: "To get the most out of Eatery, log in with your NetID.")
         ]
 

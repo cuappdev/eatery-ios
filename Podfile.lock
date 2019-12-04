@@ -59,6 +59,7 @@ PODS:
     - GoogleUtilities/Logger
   - Hero (1.4.0)
   - Kingfisher (4.10.1)
+  - lottie-ios (3.1.5)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -80,6 +81,7 @@ DEPENDENCIES:
   - FLEX (~> 2.0)
   - Hero
   - Kingfisher
+  - lottie-ios
   - NVActivityIndicatorView
   - SnapKit
   - SwiftyJSON
@@ -104,6 +106,7 @@ SPEC REPOS:
     - SwiftyJSON
   trunk:
     - CHIPageControl
+    - lottie-ios
 
 EXTERNAL SOURCES:
   Apollo:
@@ -135,11 +138,12 @@ SPEC CHECKSUMS:
   GoogleUtilities: 84df567c76ca84f67b7bb40e769fdd4acc746a10
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  lottie-ios: 32bf84389337d86fbc8b12266e88452e0abf1dee
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: b8800e78d0536478313ef07c2c373e4791b32507
+PODFILE CHECKSUM: a96deee9338e17f8dd0a0b5baf3810d19ce9c3f0
 
 COCOAPODS: 1.8.4

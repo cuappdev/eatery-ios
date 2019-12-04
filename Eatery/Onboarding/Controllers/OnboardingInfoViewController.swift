@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import Lottie
 
 class OnboardingInfoViewController: OnboardingViewController {
 
     private let stackView = UIStackView()
-    private let imageView = UIImageView()
+    private let animationView = AnimationView()
     private let nextButton = UIButton()
-    private let onboardingImage: UIImage?
+    private let animation: String
 
-    init(title: String, subtitle: String, image: UIImage?) {
-        self.onboardingImage = image
+    init(title: String, subtitle: String, animation: String) {
+        self.animation = animation
         super.init(title: title, subtitle: subtitle)
     }
 
@@ -28,7 +29,7 @@ class OnboardingInfoViewController: OnboardingViewController {
         super.viewDidLoad()
 
         setUpStackView()
-        setUpImageView()
+        setUpAnimationView()
         setUpButton()
 
         contentView.snp.makeConstraints { make in
@@ -36,6 +37,14 @@ class OnboardingInfoViewController: OnboardingViewController {
             make.height.equalTo(stackView)
         }
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.async {
+            self.animationView.play()
+        }
+    }
+
 
     private func setUpStackView() {
         stackView.axis = .vertical
@@ -49,12 +58,12 @@ class OnboardingInfoViewController: OnboardingViewController {
         }
     }
 
-    private func setUpImageView() {
-        imageView.image = onboardingImage
-        imageView.contentMode = .scaleAspectFit
-        stackView.addArrangedSubview(imageView)
+    private func setUpAnimationView() {
+        animationView.animation = Animation.named(animation)
+        animationView.contentMode = .scaleAspectFit
+        stackView.addArrangedSubview(animationView)
 
-        imageView.snp.makeConstraints { make in
+        animationView.snp.makeConstraints { make in
             make.height.equalTo(128)
         }
     }
