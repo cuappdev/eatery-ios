@@ -61,6 +61,10 @@ class OnboardingInfoViewController: OnboardingViewController {
     private func setUpAnimationView() {
         animationView.animation = Animation.named(animation)
         animationView.contentMode = .scaleAspectFit
+        if animation == "data" {
+            animationView.transform = CGAffineTransform(scaleX: 5, y: 5)
+            .concatenating(CGAffineTransform(translationX: 0, y: -192))
+        }
         stackView.addArrangedSubview(animationView)
 
         animationView.snp.makeConstraints { make in
