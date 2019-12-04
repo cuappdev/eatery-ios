@@ -46,6 +46,7 @@
 		5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */; };
 		5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */; };
 		5DC7CB3A236A3F79005C57DB /* CollegetownMenuInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */; };
+		5DD5472423986E2C00C57B6C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
 		5DD8A8962315843900ED25FD /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */; };
 		5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */; };
 		5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D429225E95EB008054F4 /* RatingView.swift */; };
@@ -81,7 +82,6 @@
 		C82C9B83238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */; };
 		C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */; };
 		C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */; };
-		C82E5F052388E96400C881B2 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
 		C82E5F062388E96400C881B2 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */; };
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -1103,6 +1103,7 @@
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */,
+				5DD5472423986E2C00C57B6C /* OnboardingViewController.swift in Sources */,
 				5DB4678023502E4B005CE574 /* PopularTimesView.swift in Sources */,
 				5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */,
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
