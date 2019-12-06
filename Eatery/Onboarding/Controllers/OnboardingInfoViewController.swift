@@ -6,14 +6,15 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import Lottie
+import UIKit
 
 class OnboardingInfoViewController: OnboardingViewController {
 
     private let stackView = UIStackView()
     private let animationView = AnimationView()
     private let nextButton = UIButton()
+
     private let animation: String
 
     init(title: String, subtitle: String, animation: String) {
