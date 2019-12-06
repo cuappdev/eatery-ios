@@ -19,6 +19,7 @@ target 'Eatery' do
     pod 'SnapKit'
     pod 'SwiftyJSON'
     pod 'CHIPageControl/Jaloro'
+    pod 'lottie-ios'
 end
 
 target 'Eatery Watch App' do
