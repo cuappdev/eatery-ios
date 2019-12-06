@@ -79,13 +79,13 @@
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
 		C817959923976A9F0032DDF8 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F012388E96400C881B2 /* OnboardingViewController.swift */; };
-		C817959E23976D3A0032DDF8 /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = C817959B23976D390032DDF8 /* transactions.json */; };
-		C817959F23976D3A0032DDF8 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = C817959C23976D390032DDF8 /* menu.json */; };
 		C82C9B83238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */; };
 		C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */; };
 		C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */; };
 		C82E5F062388E96400C881B2 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */; };
-		C881D71A239868C100529ABB /* collegetown.json in Resources */ = {isa = PBXBuildFile; fileRef = C881D719239868C100529ABB /* collegetown.json */; };
+		C87E76F62399F0B60098160B /* menus.json in Resources */ = {isa = PBXBuildFile; fileRef = C87E76F52399F0B50098160B /* menus.json */; };
+		C87E76F82399F0F10098160B /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = C87E76F72399F0F10098160B /* transactions.json */; };
+		C87E76FA2399F1010098160B /* collegetown.json in Resources */ = {isa = PBXBuildFile; fileRef = C87E76F92399F1010098160B /* collegetown.json */; };
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -268,8 +268,6 @@
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
-		C817959B23976D390032DDF8 /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
-		C817959C23976D390032DDF8 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
 		C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPrivacyStatementViewController.swift; sourceTree = "<group>"; };
 		C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C82E5F002388E96400C881B2 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
@@ -277,7 +275,9 @@
 		C82E5F022388E96400C881B2 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		C83AEAB4237A4ADE00663C8D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		C853D03F237AF5E0003C1F29 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
-		C881D719239868C100529ABB /* collegetown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegetown.json; sourceTree = "<group>"; };
+		C87E76F52399F0B50098160B /* menus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menus.json; sourceTree = "<group>"; };
+		C87E76F72399F0F10098160B /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
+		C87E76F92399F1010098160B /* collegetown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegetown.json; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
 		C8EDDFE1237B41E1005C7490 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
@@ -606,10 +606,10 @@
 			children = (
 				8724A0772349637E00D92EE3 /* GoogleService-Info.plist */,
 				D97142E6219A6B6F00E2EE05 /* API.swift */,
-				C881D719239868C100529ABB /* collegetown.json */,
-				C817959C23976D390032DDF8 /* menu.json */,
-				C817959B23976D390032DDF8 /* transactions.json */,
 				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
+				C87E76F52399F0B50098160B /* menus.json */,
+				C87E76F72399F0F10098160B /* transactions.json */,
+				C87E76F92399F1010098160B /* collegetown.json */,
 				42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */,
 				E99C63E91B6EDE12000A5886 /* Info.plist */,
 				9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */,
@@ -893,17 +893,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C87E76FA2399F1010098160B /* collegetown.json in Resources */,
 				D956DCB12187B2BF001BB9B0 /* campusEateries.graphql in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
-				C817959E23976D3A0032DDF8 /* transactions.json in Resources */,
-				C881D71A239868C100529ABB /* collegetown.json in Resources */,
 				5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */,
+				C87E76F62399F0B60098160B /* menus.json in Resources */,
+				C87E76F82399F0F10098160B /* transactions.json in Resources */,
 				9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */,
 				D97142E02197542A00E2EE05 /* brbQuery.graphql in Resources */,
-				C817959F23976D3A0032DDF8 /* menu.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
