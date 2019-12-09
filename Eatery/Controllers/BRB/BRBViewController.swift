@@ -105,7 +105,18 @@ class BRBViewController: UIViewController {
             
             loginViewController.view.isHidden = false
             
-        case (.account, .account), (.login, .login):
+        case (.account, .account(let account)):
+            accountViewController?.view.removeFromSuperview()
+            let accountViewController = BRBAccountViewController(account: account)
+            self.accountViewController = accountViewController
+            self.accountViewController?.delegate = self
+            addChildViewController(accountViewController)
+            view.insertSubview(accountViewController.view, at: 0)
+            accountViewController.view.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            accountViewController.didMove(toParentViewController: self)
+        case (.login, .login):
             break
             
         }
@@ -175,6 +186,7 @@ extension BRBViewController: AboutTableViewControllerDelegate {
         setState(.login)
         navigationItem.title = "Account Info"
         accountManager.removeSavedLoginInfo()
+        accountManager.cancelRequest()
         accountManager.resetConnectionHandler()
         loggedIn = false
         activityIndicator.stopAnimating()
