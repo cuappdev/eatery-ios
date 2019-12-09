@@ -106,7 +106,7 @@ class BRBViewController: UIViewController {
             loginViewController.view.isHidden = false
             
         case (.account, .account(let account)):
-            self.accountViewController?.view.removeFromSuperview()
+            accountViewController?.view.removeFromSuperview()
             let accountViewController = BRBAccountViewController(account: account)
             self.accountViewController = accountViewController
             self.accountViewController?.delegate = self
