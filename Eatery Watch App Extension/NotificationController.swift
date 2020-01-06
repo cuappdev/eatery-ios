@@ -2,21 +2,18 @@
 //  NotificationController.swift
 //  Eatery Watch App Extension
 //
-//  Created by Daniel Li on 2/14/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
+//  Created by William Ma on 1/5/20.
+//  Copyright © 2020 CUAppDev. All rights reserved.
 //
 
 import WatchKit
-import Foundation
+import SwiftUI
+import UserNotifications
 
+class NotificationController: WKUserNotificationHostingController<NotificationView> {
 
-class NotificationController: WKUserNotificationInterfaceController {
-
-    override init() {
-        // Initialize variables here.
-        super.init()
-        
-        // Configure interface objects here.
+    override var body: NotificationView {
+        return NotificationView()
     }
 
     override func willActivate() {
@@ -29,25 +26,9 @@ class NotificationController: WKUserNotificationInterfaceController {
         super.didDeactivate()
     }
 
-    /*
-    override func didReceiveLocalNotification(localNotification: UILocalNotification, withCompletion completionHandler: ((WKUserNotificationInterfaceType) -> Void)) {
-        // This method is called when a local notification needs to be presented.
+    override func didReceive(_ notification: UNNotification) {
+        // This method is called when a notification needs to be presented.
         // Implement it if you use a dynamic notification interface.
         // Populate your dynamic notification interface as quickly as possible.
-        //
-        // After populating your dynamic notification interface call the completion block.
-        completionHandler(.Custom)
     }
-    */
-    
-    /*
-    override func didReceiveRemoteNotification(remoteNotification: [NSObject : AnyObject], withCompletion completionHandler: ((WKUserNotificationInterfaceType) -> Void)) {
-        // This method is called when a remote notification needs to be presented.
-        // Implement it if you use a dynamic notification interface.
-        // Populate your dynamic notification interface as quickly as possible.
-        //
-        // After populating your dynamic notification interface call the completion block.
-        completionHandler(.Custom)
-    }
-    */
 }

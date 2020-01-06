@@ -1,135 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14868" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14815" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NBu-mt-KyX">
     <device id="watch38"/>
     <dependencies>
-        <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14643"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14621"/>
     </dependencies>
     <scenes>
-        <!--Eateries-->
-        <scene sceneID="aou-V4-d1y">
+        <!--Hosting Controller-->
+        <scene sceneID="RUd-og-cv4">
             <objects>
-                <controller title="Eateries" id="AgC-eL-Hgc" customClass="EateriesInterfaceController" customModule="Eatery_Watch_App_Extension">
-                    <items>
-                        <table alignment="left" id="6r3-Hb-92T">
-                            <items>
-                                <tableRow identifier="EateryRow" id="bDG-rU-bIV" customClass="EateryRowController" customModule="Eatery_Watch_App_Extension">
-                                    <group key="rootItem" width="1" height="0.0" alignment="left" spacing="6" id="QTK-4n-swZ">
-                                        <items>
-                                            <separator alignment="left" id="Rs7-0R-dRd"/>
-                                            <group alignment="left" layout="vertical" spacing="0.0" id="oVg-yw-arh">
-                                                <items>
-                                                    <group width="1" alignment="left" spacing="8" id="QFU-Wf-9SH">
-                                                        <items>
-                                                            <label alignment="left" verticalAlignment="center" text="Atrium Cafe" textAlignment="left" minimumScaleFactor="0.5" id="xOI-dM-od6">
-                                                                <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                                                            </label>
-                                                        </items>
-                                                    </group>
-                                                    <group width="1" alignment="left" id="0qr-G3-O3u">
-                                                        <items>
-                                                            <label height="20" alignment="right" verticalAlignment="center" text="7:00AM" textAlignment="right" minimumScaleFactor="0.5" id="HOt-04-DhA">
-                                                                <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                                                            </label>
-                                                        </items>
-                                                    </group>
-                                                </items>
-                                            </group>
-                                        </items>
-                                    </group>
-                                    <connections>
-                                        <outlet property="statusSeparator" destination="Rs7-0R-dRd" id="xGo-do-k1C"/>
-                                        <outlet property="timeLabel" destination="HOt-04-DhA" id="iys-IC-oTa"/>
-                                        <outlet property="titleLabel" destination="xOI-dM-od6" id="nlX-zK-zad"/>
-                                    </connections>
-                                </tableRow>
-                            </items>
-                        </table>
-                    </items>
-                    <menu key="menu" id="gin-Gx-FhB">
-                        <items>
-                            <menuItem title="Refresh" icon="repeat" id="A2d-ES-Q1s">
-                                <connections>
-                                    <action selector="refreshMenuItem" destination="AgC-eL-Hgc" id="ABO-in-mra"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Sort" icon="shuffle" id="a0i-zR-oPv">
-                                <connections>
-                                    <action selector="sortMenuItem" destination="AgC-eL-Hgc" id="AHD-bg-hDu"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                    <connections>
-                        <outlet property="table" destination="6r3-Hb-92T" id="9R9-ek-ueD"/>
-                    </connections>
-                </controller>
+                <hostingController id="NBu-mt-KyX" customClass="HostingController" 
+                customModuleProvider="target"/>                
             </objects>
-            <point key="canvasLocation" x="220" y="345"/>
-        </scene>
-        <!--Menu-->
-        <scene sceneID="LEJ-OC-ko7">
-            <objects>
-                <controller identifier="Menu" id="3Ox-J4-Gu8" customClass="MenuInterfaceController" customModule="Eatery_Watch_App_Extension">
-                    <items>
-                        <group width="1" alignment="left" layout="vertical" spacing="12" id="UvQ-rs-fAQ">
-                            <items>
-                                <group width="1" alignment="left" layout="vertical" id="WjF-dn-uPq">
-                                    <items>
-                                        <separator width="1" alignment="center" alpha="0.20000000000000001" id="Cpk-zQ-H8B"/>
-                                        <label width="1" alignment="left" text="Atrium Cafe" textAlignment="center" numberOfLines="0" id="KEt-44-zBV">
-                                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                                        </label>
-                                        <label alignment="center" text="Open 8am to 2pm" textAlignment="center" numberOfLines="0" minimumScaleFactor="0.5" id="6aZ-Xe-Bo6">
-                                            <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
-                                        </label>
-                                    </items>
-                                </group>
-                                <group width="1" alignment="left" layout="vertical" id="mtQ-bZ-mC3">
-                                    <items>
-                                        <label alignment="left" text="MENU" id="bgw-Yg-ajT">
-                                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                                        </label>
-                                        <label width="1" alignment="left" text="Menu Items" numberOfLines="0" id="raA-zZ-FgO"/>
-                                    </items>
-                                </group>
-                            </items>
-                        </group>
-                    </items>
-                    <connections>
-                        <outlet property="menuItemsLabel" destination="raA-zZ-FgO" id="gwj-vR-tEE"/>
-                        <outlet property="menuLabel" destination="bgw-Yg-ajT" id="KA5-EQ-Y0z"/>
-                        <outlet property="openTimesLabel" destination="6aZ-Xe-Bo6" id="zQC-ja-Z78"/>
-                        <outlet property="titleLabel" destination="KEt-44-zBV" id="ucM-bt-OIj"/>
-                    </connections>
-                </controller>
-            </objects>
-            <point key="canvasLocation" x="468" y="345"/>
+            <point key="canvasLocation" x="187" y="141"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
             <objects>
                 <notificationController id="YCC-NB-fut">
                     <items>
-                        <label alignment="left" text="Alert Label" id="IdU-wH-bcW"/>
+                        <label alignment="left" text="Alert Label" numberOfLines="0" id="IdU-wH-bcW"/>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
-                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                        <segue destination="eXb-UN-Cd0" kind="relationship" relationship="dynamicInteractiveNotificationInterface" id="mpB-YA-K8N"/>
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="220" y="643"/>
+            <point key="canvasLocation" x="187" y="462"/>
         </scene>
-        <!--Notification Controller-->
-        <scene sceneID="ZPc-GJ-vnh">
+        <!--Notification Hosting Controller-->
+        <scene sceneID="Niz-AI-uX2">
             <objects>
-                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="Eatery_Watch_App" customModuleProvider="target"/>
+                <controller id="eXb-UN-Cd0" customClass="NotificationController"
+                customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="468" y="643"/>
+            <point key="canvasLocation" x="488" y="462"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="0.40000000000000002" green="0.69019607843137254" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

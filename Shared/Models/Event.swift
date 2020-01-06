@@ -6,8 +6,7 @@
 //  Copyright © 2015 CUAppDev. All rights reserved.
 //
 
-import UIKit
-import SwiftyJSON
+import Foundation
 
 /**
  *  An Event of an Eatery such as Breakfast, Lunch, or Dinner

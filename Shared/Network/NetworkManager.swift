@@ -157,6 +157,8 @@ struct NetworkManager {
         }
     }
 
+    #if os(iOS)
+
     func getBRBAccountInfo(sessionId: String, completion: @escaping (BRBAccount?, NetworkError?) -> Void) {
         apollo.fetch(query: BrbInfoQuery(accountId: sessionId)) { (result, error) in
             guard error == nil else {
@@ -265,5 +267,7 @@ struct NetworkManager {
             completion(eateries, nil)
         }
     }
+
+    #endif
 
 }
