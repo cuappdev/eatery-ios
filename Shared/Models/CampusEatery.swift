@@ -30,6 +30,18 @@ struct SwipeDataPoint: Hashable {
 
 }
 
+enum MenuType {
+
+    /// The menu is provided from an event-based eatery, e.g. RPCC, Okenshields
+    case event
+
+    /// The menu is provided from an eatery with a constant menu, e.g Nasties, Ivy Room
+    /// Typically, dining halls do *not* provide dining menus.
+    /// This is a naming quirk caused by older versions of Eatery.
+    case dining
+
+}
+
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
 struct CampusEatery: Eatery {
@@ -132,6 +144,39 @@ struct CampusEatery: Eatery {
     func diningItems(onDayOf date: Date) -> [Menu.Item] {
         let dayString = CampusEatery.dayFormatter.string(from: date)
         return diningMenu?.data[dayString] ?? []
+    }
+
+}
+
+// MARK: - Meal Information
+
+extension CampusEatery {
+
+    func meals(onDayOf date: Date) -> [String] {
+        return eventsByName(onDayOf: date)
+            .sorted { $0.1.start < $1.1.start }
+            .map { $0.key }
+            .filter { $0 != "Lite Lunch" }
+    }
+
+    func getEvent(meal: String, onDayOf date: Date) -> Event? {
+        return eventsByName(onDayOf: date)[meal]
+    }
+
+    func getMenuAndType(meal: String, onDayOf date: Date) -> (Menu, MenuType)? {
+        let event = getEvent(meal: meal, onDayOf: date)
+
+        if diningMenu != nil {
+            return (Menu(data: ["": diningItems(onDayOf: date)]), .dining)
+        } else if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
+            return (eventMenu, .event)
+        } else {
+            return nil
+        }
+    }
+
+    func getMenu(meal: String, onDayOf date: Date) -> Menu? {
+        getMenuAndType(meal: meal, onDayOf: date)?.0
     }
 
 }

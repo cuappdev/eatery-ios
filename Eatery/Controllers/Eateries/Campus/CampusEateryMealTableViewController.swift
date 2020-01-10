@@ -4,28 +4,14 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     let meal: String
     let eatery: CampusEatery
-    let date: Date
-
-    let event: Event?
 
     private let menu: Menu?
 
-    init(eatery: CampusEatery, meal: String, date: Date) {
+    init(eatery: CampusEatery, meal: String) {
         self.eatery = eatery
         self.meal = meal
-        self.date = date
 
-        self.event = eatery.eventsByName(onDayOf: date)[meal]
-
-        if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
-            menu = eventMenu
-        } else if eatery.diningMenu != nil, eatery.eateryType != .dining {
-            // the eatery has a constant menu, and it's not a dining hall (think Bear Necessities)
-            menu = Menu(data: ["": eatery.diningItems(onDayOf: Date())])
-        } else {
-            // don't know the menu
-            menu = nil
-        }
+        self.menu = eatery.getMenu(meal: meal, onDayOf: Date())
 
         super.init(nibName: nil, bundle: nil)
     }
