@@ -92,7 +92,7 @@ class CampusMenuInfoView: UIView, MenuInfoView {
         locationLabel.text = eatery.address
 
         if let userLocation = userLocation {
-            let miles = userLocation.distance(from: eatery.location, in: .miles)
+            let miles = userLocation.distance(from: eatery.location).converted(to: .miles).value
             distanceLabel.text = "\(Double(round(10 * miles) / 10)) mi"
         } else {
             distanceLabel.text = "-- mi"

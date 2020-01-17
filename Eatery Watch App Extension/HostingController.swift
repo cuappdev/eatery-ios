@@ -15,7 +15,7 @@ class HostingController: WKHostingController<AnyView> {
     private var userData = UserData()
 
     override var body: AnyView {
-        AnyView(ContentView().environmentObject(userData))
+        AnyView(CampusEateriesView(userData: userData))
     }
 
     override func willActivate() {
@@ -26,11 +26,14 @@ class HostingController: WKHostingController<AnyView> {
 
             if let campusEateries = campusEateries {
                 self.userData.campusEateries = campusEateries
-                self.userData.startReloadTimer()
-            } else {
-                // TODO: Display error
+            } else if let error = error {
+                self.presentError(error)
             }
         }
+    }
+
+    private func presentError(_ error: Error) {
+
     }
 
 }

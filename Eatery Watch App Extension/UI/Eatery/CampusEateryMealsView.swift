@@ -20,7 +20,7 @@ struct CampusEateryMealsView: View {
                 Text("No meals today")
             } else {
                 ForEach(self.eatery.meals(onDayOf: Date()), id: \.self) { meal in
-                    self.menuLink(for: meal)
+                    self.menuLink(for: meal).padding([.top, .bottom], 2)
                 }
             }
         }

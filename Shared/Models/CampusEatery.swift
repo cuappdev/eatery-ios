@@ -11,11 +11,15 @@ import SwiftyJSON
 import CoreLocation
 
 /// Represents a location on Cornell Campus
-enum Area: String {
+enum Area: String, CaseIterable, CustomStringConvertible {
 
-    case west = "West"
-    case north = "North"
     case central = "Central"
+    case north = "North"
+    case west = "West"
+
+    var description: String {
+        rawValue
+    }
 
 }
 
@@ -97,7 +101,7 @@ struct CampusEatery: Eatery {
     let area: Area?
 
     /// A menu of constant dining items. Exists if this eatery's menu
-    /// never changes. This should be used if it exists.
+    /// never changes.
     var diningMenu: Menu?
 
     init(
@@ -166,10 +170,10 @@ extension CampusEatery {
     func getMenuAndType(meal: String, onDayOf date: Date) -> (Menu, MenuType)? {
         let event = getEvent(meal: meal, onDayOf: date)
 
-        if diningMenu != nil {
-            return (Menu(data: ["": diningItems(onDayOf: date)]), .dining)
-        } else if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
+        if let eventMenu = event?.menu, !eventMenu.data.isEmpty {
             return (eventMenu, .event)
+        } else if diningMenu != nil {
+            return (Menu(data: ["": diningItems(onDayOf: date)]), .dining)
         } else {
             return nil
         }

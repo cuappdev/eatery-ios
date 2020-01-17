@@ -13,8 +13,8 @@ extension CLLocation {
 
     static let olinLibrary = CLLocation(latitude: 42.448078,longitude: -76.484291)
 
-    func distance(from other: CLLocation, in unit: UnitLength) -> Double {
-        return Measurement(value: distance(from: other), unit: UnitLength.meters).converted(to: unit).value
+    func distance(from other: CLLocation) -> Measurement<UnitLength> {
+        return Measurement(value: distance(from: other), unit: UnitLength.meters)
     }
 
 }

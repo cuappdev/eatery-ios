@@ -51,6 +51,16 @@ enum EateryType: String {
 
 enum EateryStatus {
 
+    static func equalsIgnoreAssociatedValue(_ lhs: EateryStatus, rhs: EateryStatus) -> Bool {
+        switch (lhs, rhs) {
+        case (.openingSoon, .openingSoon),
+             (.open, .open),
+             (.closingSoon, .closingSoon),
+             (.closed, .closed): return true
+        default: return false
+        }
+    }
+
     case openingSoon(minutesUntilOpen: Int)
     case open
     case closingSoon(minutesUntilClose: Int)
@@ -148,16 +158,16 @@ extension Eatery {
             .filter {
                 // disregard events that are not currently happening or that have happened in the past
                 $0.occurs(atExactly: date) || date < $0.start
-            }.min { (lhs, rhs) -> Bool in
-                if lhs.occurs(atExactly: date) {
-                    return true
-                } else if rhs.occurs(atExactly: date) {
-                    return false
-                }
+        }.min { (lhs, rhs) -> Bool in
+            if lhs.occurs(atExactly: date) {
+                return true
+            } else if rhs.occurs(atExactly: date) {
+                return false
+            }
 
-                let timeUntilLeftStart = lhs.start.timeIntervalSince(date)
-                let timeUntilRightStart = rhs.start.timeIntervalSince(date)
-                return timeUntilLeftStart < timeUntilRightStart
+            let timeUntilLeftStart = lhs.start.timeIntervalSince(date)
+            let timeUntilRightStart = rhs.start.timeIntervalSince(date)
+            return timeUntilLeftStart < timeUntilRightStart
         }
     }
 

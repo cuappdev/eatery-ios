@@ -44,19 +44,21 @@ struct CampusEateryMenuView: View {
             MenuCategory(title: $0.0, items: $0.1.map {
                 Item(name: $0)
             })
+        }.sorted { lhs, rhs in
+            lhs.title < rhs.title
         }
 
         return AnyView(
             ScrollView {
                 ForEach(categories) { category in
-                    if !category.title.isEmpty {
-                        Text(category.title)
-                            .font(.headline)
-                    }
-
                     VStack(alignment: .leading) {
                         HStack {
                             Spacer()
+                        }
+
+                        if !category.title.isEmpty {
+                            Text(category.title)
+                                .font(.headline)
                         }
 
                         ForEach(category.items) { item in
