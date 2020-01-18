@@ -13,4 +13,16 @@ class UserData: ObservableObject {
 
     @Published var campusEateries: [CampusEatery] = []
 
+    func fetchCampusEateries(presentError: @escaping (Error) -> Void) {
+        NetworkManager.shared.getCampusEateries { [weak self] (campusEateries, error) in
+            guard let self = self else { return }
+
+            if let campusEateries = campusEateries {
+                self.campusEateries = campusEateries
+            } else if let error = error {
+                presentError(error)
+            }
+        }
+    }
+
 }

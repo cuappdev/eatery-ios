@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14815" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NBu-mt-KyX">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="15702" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NBu-mt-KyX">
     <device id="watch38"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14770"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14621"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="15501"/>
     </dependencies>
     <scenes>
         <!--Hosting Controller-->
         <scene sceneID="RUd-og-cv4">
             <objects>
-                <hostingController id="NBu-mt-KyX" customClass="HostingController" 
-                customModuleProvider="target"/>                
+                <hostingController id="NBu-mt-KyX" customClass="HostingController" customModule="Eatery_Watch_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="187" y="141"/>
         </scene>
@@ -30,13 +29,13 @@
             </objects>
             <point key="canvasLocation" x="187" y="462"/>
         </scene>
-        <!--Notification Hosting Controller-->
+        <!--Notification Controller-->
         <scene sceneID="Niz-AI-uX2">
             <objects>
-                <controller id="eXb-UN-Cd0" customClass="NotificationController"
-                customModuleProvider="target"/>
+                <controller id="eXb-UN-Cd0" customClass="NotificationController" customModule="Eatery_Watch_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="488" y="462"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.29019607843137252" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
 </document>

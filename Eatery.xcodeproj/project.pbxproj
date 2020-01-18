@@ -39,11 +39,6 @@
 		5D1FAFFF23C3B8FC005A7A47 /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAFFE23C3B8FC005A7A47 /* PaymentMethodsView.swift */; };
 		5D1FB00023C3BA72005A7A47 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		5D1FB00423C429BA005A7A47 /* CampusEateryMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FB00323C429BA005A7A47 /* CampusEateryMenuView.swift */; };
-		5D1FB00D23C5218C005A7A47 /* Eatery+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FB00C23C5218C005A7A47 /* Eatery+Codable.swift */; };
-		5D1FB00F23C533A8005A7A47 /* saved.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D1FB00E23C533A8005A7A47 /* saved.json */; };
-		5D1FB01123C534C3005A7A47 /* NetworkManager+Saved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FB01023C534C3005A7A47 /* NetworkManager+Saved.swift */; };
-		5D1FB01223C5359A005A7A47 /* Eatery+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FB00C23C5218C005A7A47 /* Eatery+Codable.swift */; };
-		5D1FB01323C5359C005A7A47 /* saved.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D1FB00E23C533A8005A7A47 /* saved.json */; };
 		5D218C2F21FBE39700327516 /* MealStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */; };
 		5D218C3121FBE39700327516 /* MealItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */; };
 		5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C1A21FBE39700327516 /* NavigationTitleView.swift */; };
@@ -76,6 +71,7 @@
 		5D8DC5352345533B004E7D2C /* UnderlineTabBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC5342345533B004E7D2C /* UnderlineTabBarControl.swift */; };
 		5D94B90B238B27DB0043BE1A /* PopularTimesAccuracyPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D94B90A238B27DB0043BE1A /* PopularTimesAccuracyPrompt.swift */; };
 		5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A119123368F0B00F430A1 /* EateryNavigationController.swift */; };
+		5D9EC15F23D1880E00912E39 /* appendix.json in Resources */ = {isa = PBXBuildFile; fileRef = E9CFC0A81C0E4A3000ED884A /* appendix.json */; };
 		5DA97E2C2353D69900CD7E2C /* CampusMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA97E2B2353D69900CD7E2C /* CampusMenuViewController.swift */; };
 		5DAC0016233C1331009FCCB0 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAC0015233C1331009FCCB0 /* TabbedPageViewController.swift */; };
 		5DACA8F7225B78B0009B0A2F /* CollegetownEatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */; };
@@ -230,9 +226,6 @@
 		5D1FAFFA23C2D86E005A7A47 /* CampusEateryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryView.swift; sourceTree = "<group>"; };
 		5D1FAFFE23C3B8FC005A7A47 /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
 		5D1FB00323C429BA005A7A47 /* CampusEateryMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryMenuView.swift; sourceTree = "<group>"; };
-		5D1FB00C23C5218C005A7A47 /* Eatery+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Eatery+Codable.swift"; sourceTree = "<group>"; };
-		5D1FB00E23C533A8005A7A47 /* saved.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = saved.json; sourceTree = "<group>"; };
-		5D1FB01023C534C3005A7A47 /* NetworkManager+Saved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkManager+Saved.swift"; sourceTree = "<group>"; };
 		5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealStationTableViewCell.swift; sourceTree = "<group>"; };
 		5D218C1821FBE39700327516 /* MenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		5D218C1921FBE39700327516 /* MealItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -411,8 +404,8 @@
 			children = (
 				5D05FF4723C2C14600EF8CC9 /* ExtensionDelegate.swift */,
 				5D05FF4523C2C14600EF8CC9 /* HostingController.swift */,
-				5D1FB01023C534C3005A7A47 /* NetworkManager+Saved.swift */,
 				5D05FF7123C2C60D00EF8CC9 /* API.swift */,
+				5D8A3BD723CE827900CA7B28 /* LocationPublisherProxy.swift */,
 				5D05FF6E23C2C53000EF8CC9 /* Queries */,
 				5D05FF7323C2CB0000EF8CC9 /* Notification (Unused) */,
 				5D05FF7423C2CB2000EF8CC9 /* UI */,
@@ -448,6 +441,7 @@
 			children = (
 				D956DCB72187B875001BB9B0 /* Models */,
 				D956DCB22187B496001BB9B0 /* Network */,
+				C0497ACB1B64AA1800AC1C6C /* Data */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -473,7 +467,6 @@
 			isa = PBXGroup;
 			children = (
 				5D05FF7523C2CBDB00EF8CC9 /* UserData.swift */,
-				5D8A3BD723CE827900CA7B28 /* LocationPublisherProxy.swift */,
 				5D369EA323CD3F9100C5ACD2 /* Eateries */,
 				5D369EA523CD3FA200C5ACD2 /* Eatery */,
 			);
@@ -740,9 +733,8 @@
 				C83AEAAF237A476B00663C8D /* Onboarding */,
 				1D10A4151C67FF0C00772D31 /* Controllers */,
 				C0497AE41B64AA1800AC1C6C /* Views */,
-				C0497ACB1B64AA1800AC1C6C /* Data */,
 				C0497AEE1B64AA1800AC1C6C /* Extensions */,
-				C0497AF21B64AA1800AC1C6C /* Global */,
+				C0497AF21B64AA1800AC1C6C /* Utils */,
 			);
 			path = Eatery;
 			sourceTree = "<group>";
@@ -780,13 +772,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		C0497AF21B64AA1800AC1C6C /* Global */ = {
+		C0497AF21B64AA1800AC1C6C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				654E37401DEEA738000E4FAB /* Sort.swift */,
 				C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */,
 			);
-			path = Global;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		C0497B1D1B64AA3800AC1C6C /* Resources */ = {
@@ -847,8 +839,6 @@
 				5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */,
 				5D856457222A2D4E003A712B /* Menu.swift */,
 				D930FBD7218BC00200B0B1CE /* BRBAccount.swift */,
-				5D1FB00C23C5218C005A7A47 /* Eatery+Codable.swift */,
-				5D1FB00E23C533A8005A7A47 /* saved.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1008,9 +998,9 @@
 			files = (
 				5D05FF5123C2C14700EF8CC9 /* Preview Assets.xcassets in Resources */,
 				5D1FB00023C3BA72005A7A47 /* Images.xcassets in Resources */,
+				5D9EC15F23D1880E00912E39 /* appendix.json in Resources */,
 				5D05FF4E23C2C14700EF8CC9 /* Assets.xcassets in Resources */,
 				5D05FF7023C2C54700EF8CC9 /* campusEateries.graphql in Resources */,
-				5D1FB01323C5359C005A7A47 /* saved.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1019,7 +1009,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C87E76FA2399F1010098160B /* collegetown.json in Resources */,
-				5D1FB00F23C533A8005A7A47 /* saved.json in Resources */,
 				D956DCB12187B2BF001BB9B0 /* campusEateries.graphql in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */,
@@ -1227,9 +1216,7 @@
 				5D05FF6923C2C35700EF8CC9 /* BRBAccount.swift in Sources */,
 				5D8A3BD823CE827900CA7B28 /* LocationPublisherProxy.swift in Sources */,
 				5D369EA223CD22DA00C5ACD2 /* CampusEatery+Identifiable.swift in Sources */,
-				5D1FB01123C534C3005A7A47 /* NetworkManager+Saved.swift in Sources */,
 				5D05FF6723C2C35700EF8CC9 /* CollegetownEatery.swift in Sources */,
-				5D1FB01223C5359A005A7A47 /* Eatery+Codable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1280,7 +1267,6 @@
 				D956DCC12187B94E001BB9B0 /* Event.swift in Sources */,
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,
 				5D9A119223368F0B00F430A1 /* EateryNavigationController.swift in Sources */,
-				5D1FB00D23C5218C005A7A47 /* Eatery+Codable.swift in Sources */,
 				5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */,
 				C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */,
 				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,

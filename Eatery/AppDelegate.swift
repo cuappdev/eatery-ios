@@ -45,14 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
             print("RUNNING EATERY IN RELEASE CONFIGURATION")
         #endif
-
-        NetworkManager.shared.getCampusEateries { (eateries, _) in
-            let jsonEncoder = JSONEncoder()
-            jsonEncoder.outputFormatting = .prettyPrinted
-            let testing = String(data: try! jsonEncoder.encode(eateries!), encoding: .utf8)!
-            print(testing)
-        }
-
+        
         return true
     }
 

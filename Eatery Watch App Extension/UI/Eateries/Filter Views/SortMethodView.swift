@@ -43,7 +43,9 @@ enum SortMethod: CustomStringConvertible, View {
 
 struct SortMethodView: View {
 
-    @Binding var sortMethod: SortMethod
+    @Binding private var sortMethod: SortMethod
+
+    private let onAction: (() -> Void)?
 
     var body: some View {
         Button(action: {
@@ -51,13 +53,16 @@ struct SortMethodView: View {
             case .name: self.sortMethod = .distance
             case .distance: self.sortMethod = .name
             }
+
+            self.onAction?()
         }, label: {
             sortMethod
         })
     }
 
-    init(_ sortMethod: Binding<SortMethod>) {
+    init(_ sortMethod: Binding<SortMethod>, onAction: (() -> Void)? = nil) {
         self._sortMethod = sortMethod
+        self.onAction = onAction
     }
 
 }

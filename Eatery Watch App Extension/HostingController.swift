@@ -10,30 +10,12 @@ import WatchKit
 import Foundation
 import SwiftUI
 
-class HostingController: WKHostingController<AnyView> {
+class HostingController: WKHostingController<CampusEateriesView> {
 
     private var userData = UserData()
 
-    override var body: AnyView {
-        AnyView(CampusEateriesView(userData: userData))
-    }
-
-    override func willActivate() {
-        super.willActivate()
-
-        NetworkManager.shared.getSavedCampusEateries { [weak self] (campusEateries, error) in
-            guard let self = self else { return }
-
-            if let campusEateries = campusEateries {
-                self.userData.campusEateries = campusEateries
-            } else if let error = error {
-                self.presentError(error)
-            }
-        }
-    }
-
-    private func presentError(_ error: Error) {
-
+    override var body: CampusEateriesView {
+        CampusEateriesView()
     }
 
 }

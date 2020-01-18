@@ -30,5 +30,5 @@ end
 target 'Eatery Watch App Extension' do
     platform :watchos, '6.0'
     shared_pods
-    pod 'SDWebImageSwiftUI'
+    pod
 end

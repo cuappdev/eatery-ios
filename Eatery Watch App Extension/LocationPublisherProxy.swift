@@ -9,7 +9,17 @@
 import Combine
 import CoreLocation
 
-final class LocationPublisherProxy: NSObject {
+final class LocationProxy: NSObject {
+
+    enum LocationError: Error {
+        case permissionDenied
+
+        var localizedDescription: String {
+            switch self {
+            case .permissionDenied: return "Permission denied"
+            }
+        }
+    }
 
     private lazy var manager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -18,34 +28,49 @@ final class LocationPublisherProxy: NSObject {
         return manager
     }()
 
-    private let subject = CurrentValueSubject<CLLocation?, Never>(nil)
-
-    private(set) lazy var publisher: AnyPublisher<CLLocation?, Never> = subject.eraseToAnyPublisher()
-
     private var lastLocationUpdate: Date?
+    private var lastLocation: CLLocation?
     private var didRequestLocation = false
 
-    func requestLocation() {
-        if let lastLocationUpdate = lastLocationUpdate, lastLocationUpdate.addingTimeInterval(60) > Date() {
+    private var locationFetches: [(Result<CLLocation, Error>) -> Void] = []
+
+    func fetchLocation(_ completion: @escaping (Result<CLLocation, Error>) -> Void) {
+        if let lastLocationUpdate = lastLocationUpdate,
+            lastLocationUpdate.addingTimeInterval(60) > Date(),
+            let location = lastLocation {
+            completion(.success(location))
             return
         }
 
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways, .authorizedWhenInUse:
             manager.requestLocation()
+            locationFetches.append(completion)
+
         case .denied, .restricted:
-            subject.send(nil)
+            completion(.failure(LocationError.permissionDenied))
+
         case .notDetermined:
             didRequestLocation = true
             manager.requestWhenInUseAuthorization()
+            locationFetches.append(completion)
+
         @unknown default:
             break
         }
     }
 
+    private func notify(_ result: Result<CLLocation, Error>) {
+        for completion in locationFetches {
+            completion(result)
+        }
+
+        locationFetches.removeAll(keepingCapacity: true)
+    }
+
 }
 
-extension LocationPublisherProxy: CLLocationManagerDelegate {
+extension LocationProxy: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if didRequestLocation {
@@ -53,7 +78,7 @@ extension LocationPublisherProxy: CLLocationManagerDelegate {
             case .authorizedAlways, .authorizedWhenInUse:
                 manager.requestLocation()
             case .denied, .restricted, .notDetermined:
-                subject.send(nil)
+                notify(.failure(LocationError.permissionDenied))
             @unknown default:
                 break
             }
@@ -64,15 +89,19 @@ extension LocationPublisherProxy: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error, error.localizedDescription)
+
+        notify(.failure(error))
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let last = locations.last {
-            print(last)
-
-            subject.send(last)
-            lastLocationUpdate = Date()
+        guard let last = locations.last else {
+            return
         }
+
+        notify(.success(last))
+
+        lastLocation = last
+        lastLocationUpdate = Date()
     }
 
 }
