@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// A view that, on press, expands to present menu items
 struct SelectionView<T, V, W>: View where T: CaseIterable & CustomStringConvertible, T.AllCases: RandomAccessCollection, V: View, W: View {
     
     enum Stage<T> {

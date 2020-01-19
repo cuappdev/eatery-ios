@@ -41,6 +41,7 @@ enum SortMethod: CustomStringConvertible, View {
 
 }
 
+/// A view that toggles between the two sort methods
 struct SortMethodView: View {
 
     @Binding private var sortMethod: SortMethod

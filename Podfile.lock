@@ -66,11 +66,6 @@ PODS:
   - NVActivityIndicatorView (4.6.1):
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
-  - SDWebImage (5.4.1):
-    - SDWebImage/Core (= 5.4.1)
-  - SDWebImage/Core (5.4.1)
-  - SDWebImageSwiftUI (0.10.0):
-    - SDWebImage (~> 5.3)
   - SnapKit (4.2.0)
   - SwiftyJSON (4.1.0)
 
@@ -85,7 +80,6 @@ DEPENDENCIES:
   - Kingfisher
   - lottie-ios
   - NVActivityIndicatorView
-  - SDWebImageSwiftUI
   - SnapKit
   - SwiftyJSON
 
@@ -109,8 +103,6 @@ SPEC REPOS:
     - CHIPageControl
     - Kingfisher
     - lottie-ios
-    - SDWebImage
-    - SDWebImageSwiftUI
 
 EXTERNAL SOURCES:
   Apollo:
@@ -138,11 +130,9 @@ SPEC CHECKSUMS:
   lottie-ios: 32bf84389337d86fbc8b12266e88452e0abf1dee
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
-  SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
-  SDWebImageSwiftUI: 56541a8970e6dfad07c48bd03bc411611c644d15
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 232f1322a0cd06ca65c291071ec0ab99b630a1f3
+PODFILE CHECKSUM: b43927d38723f841405c1520028c97a693563063
 
 COCOAPODS: 1.8.4

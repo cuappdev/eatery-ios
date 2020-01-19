@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// A list of menus that
 struct CampusEateryMealsView: View {
     let eatery: CampusEatery
 

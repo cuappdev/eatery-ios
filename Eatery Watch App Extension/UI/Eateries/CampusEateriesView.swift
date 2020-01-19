@@ -77,6 +77,7 @@ private class ErrorInfo: Identifiable {
 
 }
 
+/// Presents a list of campus eateries, along with sort and filter settings.
 struct CampusEateriesView: View {
 
     @ObservedObject private var viewData = CampusEateriesData()

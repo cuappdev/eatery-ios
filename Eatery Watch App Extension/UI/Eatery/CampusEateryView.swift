@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct CampusEateryView: View {
     let eatery: CampusEatery

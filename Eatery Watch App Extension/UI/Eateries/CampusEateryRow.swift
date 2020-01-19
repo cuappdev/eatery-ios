@@ -27,6 +27,9 @@ private class PresentationState: ObservableObject {
 
 }
 
+/// A row in the campus eatery list
+///
+/// The view will display a distance label if `userLocation` is non-nil.
 struct CampusEateryRow: View {
 
     private let displayName: String

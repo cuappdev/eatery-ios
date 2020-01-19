@@ -12,8 +12,6 @@ import SwiftUI
 
 class HostingController: WKHostingController<CampusEateriesView> {
 
-    private var userData = UserData()
-
     override var body: CampusEateriesView {
         CampusEateriesView()
     }
