@@ -32,6 +32,7 @@ private class Item: Identifiable {
 
 // Displays a title and each item in the category 
 struct CampusEateryMenuView: View {
+
     let menu: Menu?
 
     var body: AnyView {
@@ -70,4 +71,5 @@ struct CampusEateryMenuView: View {
             }
         )
     }
+    
 }

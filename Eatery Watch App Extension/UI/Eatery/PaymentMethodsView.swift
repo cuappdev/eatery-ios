@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct PaymentMethodsView: View {
+
     let paymentMethods: [PaymentMethod]
 
     var body: some View {
@@ -28,9 +29,11 @@ struct PaymentMethodsView: View {
             }
         }
     }
+
 }
 
 struct PaymentMethodsView_Previews: PreviewProvider {
+
     static var previews: some View {
         Group {
             PaymentMethodsView(paymentMethods: [.creditCard, .swipes])
@@ -38,4 +41,5 @@ struct PaymentMethodsView_Previews: PreviewProvider {
             PaymentMethodsView(paymentMethods: [.creditCard, .cash, .swipes])
         }
     }
+
 }

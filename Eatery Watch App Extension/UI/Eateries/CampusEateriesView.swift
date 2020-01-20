@@ -90,8 +90,8 @@ struct CampusEateriesView: View {
     @State private var firstAppearance = true
 
     var body: some View {
-        let open = sort(filter(self.viewData.openEateries))
-        let closed = sort(filter(self.viewData.closedEateries))
+        let openEateries = sorted(filter(self.viewData.openEateries))
+        let closedEateries = sorted(filter(self.viewData.closedEateries))
 
         return ScrollView {
             SortMethodView(self.$sortMethod) {
@@ -113,8 +113,8 @@ struct CampusEateriesView: View {
                 Spacer()
             }
 
-            if !open.isEmpty {
-                self.eateriesView(open)
+            if !openEateries.isEmpty {
+                self.eateriesView(openEateries)
             } else {
                 Group {
                     Text("No Open Eateries")
@@ -126,8 +126,8 @@ struct CampusEateriesView: View {
                 Spacer()
             }
 
-            if !closed.isEmpty {
-                self.eateriesView(closed)
+            if !closedEateries.isEmpty {
+                self.eateriesView(closedEateries)
             } else {
                 Group {
                     Text("No Closed Eateries")
@@ -183,7 +183,7 @@ struct CampusEateriesView: View {
         }
     }
 
-    private func sort(_ eateries: [CampusEatery]) -> [CampusEatery] {
+    private func sorted(_ eateries: [CampusEatery]) -> [CampusEatery] {
         switch (self.sortMethod, self.viewData.userLocation) {
         case (.name, _), (.distance, .none):
             return eateries.sorted { (lhs, rhs) in

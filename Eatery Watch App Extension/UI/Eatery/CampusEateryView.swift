@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct CampusEateryView: View {
+
     let eatery: CampusEatery
 
     var body: some View {
@@ -41,4 +42,5 @@ struct CampusEateryView: View {
         }
         .navigationBarTitle(eatery.displayName)
     }
+    
 } 

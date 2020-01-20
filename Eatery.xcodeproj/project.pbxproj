@@ -13,8 +13,6 @@
 		5D05FF3F23C2C14600EF8CC9 /* Eatery Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5D05FF3E23C2C14600EF8CC9 /* Eatery Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5D05FF4623C2C14600EF8CC9 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05FF4523C2C14600EF8CC9 /* HostingController.swift */; };
 		5D05FF4823C2C14600EF8CC9 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05FF4723C2C14600EF8CC9 /* ExtensionDelegate.swift */; };
-		5D05FF4A23C2C14600EF8CC9 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05FF4923C2C14600EF8CC9 /* NotificationController.swift */; };
-		5D05FF4C23C2C14600EF8CC9 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05FF4B23C2C14600EF8CC9 /* NotificationView.swift */; };
 		5D05FF4E23C2C14700EF8CC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D05FF4D23C2C14700EF8CC9 /* Assets.xcassets */; };
 		5D05FF5123C2C14700EF8CC9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D05FF5023C2C14700EF8CC9 /* Preview Assets.xcassets */; };
 		5D05FF5623C2C14700EF8CC9 /* Eatery Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5D05FF3223C2C14400EF8CC9 /* Eatery Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -207,8 +205,6 @@
 		5D05FF3E23C2C14600EF8CC9 /* Eatery Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Eatery Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D05FF4523C2C14600EF8CC9 /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		5D05FF4723C2C14600EF8CC9 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
-		5D05FF4923C2C14600EF8CC9 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		5D05FF4B23C2C14600EF8CC9 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		5D05FF4D23C2C14700EF8CC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D05FF5023C2C14700EF8CC9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5D05FF5223C2C14700EF8CC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -405,7 +401,6 @@
 				5D05FF7123C2C60D00EF8CC9 /* API.swift */,
 				5D8A3BD723CE827900CA7B28 /* LocationPublisherProxy.swift */,
 				5D05FF6E23C2C53000EF8CC9 /* Queries */,
-				5D05FF7323C2CB0000EF8CC9 /* Notification (Unused) */,
 				5D05FF7423C2CB2000EF8CC9 /* UI */,
 				5DBD658923C7A1B70070EA1F /* Extensions */,
 				5D05FF4D23C2C14700EF8CC9 /* Assets.xcassets */,
@@ -450,15 +445,6 @@
 				5D05FF6F23C2C54700EF8CC9 /* campusEateries.graphql */,
 			);
 			path = Queries;
-			sourceTree = "<group>";
-		};
-		5D05FF7323C2CB0000EF8CC9 /* Notification (Unused) */ = {
-			isa = PBXGroup;
-			children = (
-				5D05FF4923C2C14600EF8CC9 /* NotificationController.swift */,
-				5D05FF4B23C2C14600EF8CC9 /* NotificationView.swift */,
-			);
-			path = "Notification (Unused)";
 			sourceTree = "<group>";
 		};
 		5D05FF7423C2CB2000EF8CC9 /* UI */ = {
@@ -1188,14 +1174,12 @@
 				5D05FF6323C2C32500EF8CC9 /* NetworkManager.swift in Sources */,
 				5D05FF4623C2C14600EF8CC9 /* HostingController.swift in Sources */,
 				5D05FF6B23C2C3C600EF8CC9 /* UIColor+ColorScheme.swift in Sources */,
-				5D05FF4A23C2C14600EF8CC9 /* NotificationController.swift in Sources */,
 				5D05FF7223C2C60D00EF8CC9 /* API.swift in Sources */,
 				5D1FAFF923C2D385005A7A47 /* CampusEateryRow.swift in Sources */,
 				5D05FF6823C2C35700EF8CC9 /* Menu.swift in Sources */,
 				5D369EA023CD01E100C5ACD2 /* SortMethodView.swift in Sources */,
 				5D1FAFF723C2D355005A7A47 /* CampusEateriesView.swift in Sources */,
 				5D05FF4823C2C14600EF8CC9 /* ExtensionDelegate.swift in Sources */,
-				5D05FF4C23C2C14600EF8CC9 /* NotificationView.swift in Sources */,
 				5DBD658423C566320070EA1F /* CampusEateryMealsView.swift in Sources */,
 				5D1FAFFB23C2D86E005A7A47 /* CampusEateryView.swift in Sources */,
 				5D05FF6623C2C35700EF8CC9 /* CampusEatery.swift in Sources */,

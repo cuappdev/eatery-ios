@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
             print("RUNNING EATERY IN RELEASE CONFIGURATION")
         #endif
-        
+
         return true
     }
 
