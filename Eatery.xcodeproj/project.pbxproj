@@ -218,7 +218,7 @@
 		5D1FAFF623C2D355005A7A47 /* CampusEateriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesView.swift; sourceTree = "<group>"; };
 		5D1FAFF823C2D385005A7A47 /* CampusEateryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryRow.swift; sourceTree = "<group>"; };
 		5D1FAFFA23C2D86E005A7A47 /* CampusEateryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryView.swift; sourceTree = "<group>"; };
-		5D1FAFFE23C3B8FC005A7A47 /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
+		5D1FAFFE23C3B8FC005A7A47 /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D1FB00323C429BA005A7A47 /* CampusEateryMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryMenuView.swift; sourceTree = "<group>"; };
 		5D218C1721FBE39700327516 /* MealStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealStationTableViewCell.swift; sourceTree = "<group>"; };
 		5D218C1821FBE39700327516 /* MenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };

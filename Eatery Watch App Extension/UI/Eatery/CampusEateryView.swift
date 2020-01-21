@@ -21,18 +21,16 @@ struct CampusEateryView: View {
                     Spacer()
                 }
 
-                Text(presentation.statusText)
+                Text(self.eatery.address)
+                    .font(.footnote)
+
+
+                (Text(presentation.statusText)
                     .foregroundColor(Color(presentation.statusColor))
-                    + Text(" " + presentation.nextEventText)
+                    + Text(" " + presentation.nextEventText))
+                    .font(.headline)
 
-                HStack(alignment: .center) {
-                    Text(self.eatery.address)
-                        .font(.footnote)
-
-                    Spacer()
-
-                    PaymentMethodsView(paymentMethods: self.eatery.paymentMethods)
-                }
+                PaymentMethodsView(paymentMethods: self.eatery.paymentMethods)
 
                 Spacer()
                 Divider()

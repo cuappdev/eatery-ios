@@ -13,21 +13,26 @@ struct PaymentMethodsView: View {
     let paymentMethods: [PaymentMethod]
 
     var body: some View {
-        let imageSize = CGSize(width: 16, height: 16)
-
         return HStack(alignment: .center, spacing: 2) {
             if paymentMethods.contains(.cash) || paymentMethods.contains(.creditCard) {
-                Image("cashIcon").resizable().frame(width: imageSize.width, height: imageSize.height)
+                getImage("cashIcon")
             }
 
             if paymentMethods.contains(.brb) {
-                Image("brbIcon").resizable().frame(width: imageSize.width, height: imageSize.height)
+                getImage("brbIcon")
             }
 
             if paymentMethods.contains(.swipes) {
-                Image("swipeIcon").resizable().frame(width: imageSize.width, height: imageSize.height)
+                getImage("swipeIcon")
             }
         }
+    }
+
+    private func getImage(_ named: String) -> some View {
+        Image(named)
+            .resizable()
+            .frame(width: 18, height: 18)
+            .padding(2)
     }
 
 }
