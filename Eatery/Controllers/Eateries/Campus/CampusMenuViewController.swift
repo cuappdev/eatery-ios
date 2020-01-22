@@ -87,15 +87,8 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private func addMenuPageViewController() {
-        // Meals sorted by start time without lite lunch
-        let meals = eatery
-            .eventsByName(onDayOf: Date())
-            .sorted { $0.1.start < $1.1.start }
-            .map { $0.key }
-            .filter { $0 != "Lite Lunch" }
-
-        let viewControllers = meals.map {
-            CampusEateryMealTableViewController(eatery: eatery, meal: $0 , date: Date())
+        let viewControllers = eatery.meals(onDayOf: Date()).map {
+            CampusEateryMealTableViewController(eatery: eatery, meal: $0)
         }
 
         let pageViewController = TabbedPageViewController(viewControllers: viewControllers)
@@ -107,9 +100,10 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         pageViewController.view.hero.modifiers = createHeroModifiers(.fade, .translate)
 
-        if let currentEvent = eatery.activeEvent(atExactly: Date()) {
+        if let currentEvent = eatery.currentActiveEvent() {
             for (index, viewController) in viewControllers.enumerated() {
-                if viewController.event?.desc == currentEvent.desc
+                let event = eatery.getEvent(meal: viewController.meal, onDayOf: Date())
+                if event?.desc == currentEvent.desc
                     || currentEvent.desc == "Lite Lunch" && viewController.meal == "Lunch" {
                     pageViewController.currentViewControllerIndex = index
                 }

@@ -100,8 +100,8 @@ struct Sort {
                 }
             case .location:
                 //default location is Olin Library
-                let distanceA = location.distance(from: a.location)
-                let distanceB = location.distance(from: b.location)
+                let distanceA = location.distance(from: a.location).value
+                let distanceB = location.distance(from: b.location).value
                 return distanceA < distanceB
             }
             return false

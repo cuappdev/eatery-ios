@@ -392,7 +392,7 @@ class EateriesViewController: UIViewController {
         case .alphabetical:
             sortedEateries = eateries.sorted { $0.displayName < $1.displayName }
         case let .nearest(location):
-            sortedEateries = eateries.sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
+            sortedEateries = eateries.sorted { $0.location.distance(from: location).value < $1.location.distance(from: location).value }
         }
 
         let favorites = sortedEateries.filter { $0.isFavorite() }

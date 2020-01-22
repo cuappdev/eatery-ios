@@ -188,7 +188,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     private func updateDistanceLabelText() {
         if let eatery = eatery, let userLocation = userLocation {
-            let distance = userLocation.distance(from: eatery.location, in: .miles)
+            let distance = userLocation.distance(from: eatery.location).converted(to: .miles).value
             distanceLabel.text = "\(Double(round(10 * distance) / 10)) mi"
         } else {
             distanceLabel.text = "-- mi"

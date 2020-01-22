@@ -1,13 +1,9 @@
 PODS:
-  - Alamofire (4.8.1)
   - Apollo (0.9.5):
     - Apollo/Core (= 0.9.5)
   - Apollo/Core (0.9.5)
   - ARCL (1.0.4)
   - CHIPageControl/Jaloro (0.2)
-  - DiningStack (1.0):
-    - Alamofire
-    - SwiftyJSON
   - Fabric (1.9.0)
   - Firebase/Analytics (6.1.0):
     - Firebase/Core
@@ -58,7 +54,9 @@ PODS:
   - GoogleUtilities/UserDefaults (6.1.0):
     - GoogleUtilities/Logger
   - Hero (1.4.0)
-  - Kingfisher (4.10.1)
+  - Kingfisher (5.12.0):
+    - Kingfisher/Core (= 5.12.0)
+  - Kingfisher/Core (5.12.0)
   - lottie-ios (3.1.5)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -75,7 +73,6 @@ DEPENDENCIES:
   - Apollo (from `https://github.com/apollographql/apollo-ios.git`)
   - ARCL
   - CHIPageControl/Jaloro
-  - DiningStack (from `https://github.com/cuappdev/DiningStack.git`)
   - Fabric
   - Firebase/Analytics
   - FLEX (~> 2.0)
@@ -88,7 +85,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Alamofire
     - ARCL
     - Fabric
     - Firebase
@@ -99,35 +95,28 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - Hero
-    - Kingfisher
     - nanopb
     - NVActivityIndicatorView
     - SnapKit
     - SwiftyJSON
   trunk:
     - CHIPageControl
+    - Kingfisher
     - lottie-ios
 
 EXTERNAL SOURCES:
   Apollo:
     :git: https://github.com/apollographql/apollo-ios.git
-  DiningStack:
-    :git: https://github.com/cuappdev/DiningStack.git
 
 CHECKOUT OPTIONS:
   Apollo:
     :commit: 43dd373b9a64cd877f6331be6c56b24c125ca778
     :git: https://github.com/apollographql/apollo-ios.git
-  DiningStack:
-    :commit: a730c7acc1dbee567a41606b101fb569c8ade01d
-    :git: https://github.com/cuappdev/DiningStack.git
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Apollo: 09002d68c46e4098766fe376151d9ff8bd6aad36
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
   CHIPageControl: a787bf7205c9b7e7fbfc412be36c5e8636b68f86
-  DiningStack: 59e407be613232bf102c674eb425dbdfebe4f8ad
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
   FirebaseAnalytics: 629301c2b9925f3537d4093a17a72751ae5b7084
@@ -137,13 +126,13 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
   GoogleUtilities: 84df567c76ca84f67b7bb40e769fdd4acc746a10
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
-  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  Kingfisher: dc6e0f53bb5b12c3e75bedb0e01bbd7a640eea69
   lottie-ios: 32bf84389337d86fbc8b12266e88452e0abf1dee
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: a96deee9338e17f8dd0a0b5baf3810d19ce9c3f0
+PODFILE CHECKSUM: b43927d38723f841405c1520028c97a693563063
 
 COCOAPODS: 1.8.4

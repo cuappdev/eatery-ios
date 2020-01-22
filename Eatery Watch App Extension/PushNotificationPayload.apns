@@ -2,9 +2,11 @@
     "aps": {
         "alert": {
             "body": "Test message",
-            "title": "Optional title"
+            "title": "Optional title",
+            "subtitle": "Optional subtitle"
         },
-        "category": "myCategory"
+        "category": "myCategory",
+        "thread-id": "5280"
     },
     
     "WatchKit Simulator Actions": [

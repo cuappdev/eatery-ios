@@ -138,24 +138,27 @@ struct NetworkManager {
                     swipeDataPoints.append(swipeDataPoint)
                 }
 
-                return CampusEatery(id: eatery.id,
-                              name: eatery.name,
-                              eateryType: eateryType,
-                              about: eatery.about,
-                              area: area,
-                              address: eatery.location,
-                              paymentMethods: paymentTypes,
-                              location: location,
-                              phone: eatery.phone,
-                              slug: eatery.slug,
-                              events: eventItems,
-                              diningMenu: diningItems,
-                              swipeDataPoints: swipeDataPoints)
+                return CampusEatery(
+                    id: eatery.id,
+                    name: eatery.name,
+                    eateryType: eateryType,
+                    about: eatery.about,
+                    area: area,
+                    address: eatery.location,
+                    paymentMethods: paymentTypes,
+                    location: location,
+                    phone: eatery.phone,
+                    slug: eatery.slug,
+                    events: eventItems,
+                    diningMenu: diningItems,
+                    swipeDataPoints: swipeDataPoints)
             }
 
             completion(finalEateries, nil)
         }
     }
+
+    #if os(iOS)
 
     func getBRBAccountInfo(sessionId: String, completion: @escaping (BRBAccount?, NetworkError?) -> Void) {
         apollo.fetch(query: BrbInfoQuery(accountId: sessionId)) { (result, error) in
@@ -234,10 +237,10 @@ struct NetworkManager {
                         let endDate = self.timeDateFormatter.date(from: graphQlEvent.endTime) ?? Date()
 
                         let event = Event(start: startDate,
-                                               end: endDate,
-                                               desc: graphQlEvent.description,
-                                               summary: graphQlEvent.description,
-                                               menu: Menu(data: [:]))
+                                          end: endDate,
+                                          desc: graphQlEvent.description,
+                                          summary: graphQlEvent.description,
+                                          menu: Menu(data: [:]))
                         eventsByName[graphQlEvent.startTime] = event
                     }
 
@@ -265,5 +268,7 @@ struct NetworkManager {
             completion(eateries, nil)
         }
     }
+
+    #endif
 
 }
