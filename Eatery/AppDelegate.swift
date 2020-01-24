@@ -3,6 +3,7 @@ import Firebase
 import Hero
 import StoreKit
 import SwiftyJSON
+import SwiftyUserDefaults
 import UIKit
 
 @UIApplicationMain
@@ -24,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Hero.shared.containerColor = .white
 
         // Set up view controllers
-        if UserDefaults.standard.bool(forKey: "hasOnboarded") {
+        if Defaults[\.hasOnboarded] {
             eateryTabBarController = EateryTabBarController()
             window?.rootViewController = eateryTabBarController
         } else {
@@ -32,12 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         window?.makeKeyAndVisible()
 
-        let significantEvents = UserDefaults.standard.integer(forKey: "significantEvents")
-        UserDefaults.standard.set(significantEvents + 1, forKey:"significantEvents")
-
-        if significantEvents > 30 {
+        Defaults[\.significantEvents] += 1
+        if Defaults[\.significantEvents] > 30 {
             requestReview()
-            UserDefaults.standard.set(0, forKey:"significantEvents")
+            Defaults[\.significantEvents] = 0
         }
 
         #if DEBUG
@@ -50,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        let favorites = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+        let favorites = Defaults[\.favorites]
         UIApplication.shared.shortcutItems = favorites.map {
             UIApplicationShortcutItem(type: $0,
                                       localizedTitle: $0,

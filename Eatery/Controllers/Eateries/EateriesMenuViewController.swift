@@ -190,7 +190,7 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
 extension EateriesMenuViewController: EateryMenuHeaderViewDelegate {
 
     func favoriteButtonPressed(on sender: EateryMenuHeaderView) {
-        eatery.setFavorite(!eatery.isFavorite())
+        eatery.isFavorite.toggle()
         sender.configure(eatery: eatery)
     }
 

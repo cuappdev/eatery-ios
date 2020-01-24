@@ -3,6 +3,7 @@ PODS:
     - Apollo/Core (= 0.9.5)
   - Apollo/Core (0.9.5)
   - ARCL (1.0.4)
+  - BulletinBoard (4.1.0)
   - CHIPageControl/Jaloro (0.2)
   - Fabric (1.9.0)
   - Firebase/Analytics (6.1.0):
@@ -68,10 +69,12 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.6.1)
   - SnapKit (4.2.0)
   - SwiftyJSON (4.1.0)
+  - SwiftyUserDefaults (5.0.0)
 
 DEPENDENCIES:
   - Apollo (from `https://github.com/apollographql/apollo-ios.git`)
   - ARCL
+  - BulletinBoard
   - CHIPageControl/Jaloro
   - Fabric
   - Firebase/Analytics
@@ -82,6 +85,7 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - SnapKit
   - SwiftyJSON
+  - SwiftyUserDefaults
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -100,9 +104,11 @@ SPEC REPOS:
     - SnapKit
     - SwiftyJSON
   trunk:
+    - BulletinBoard
     - CHIPageControl
     - Kingfisher
     - lottie-ios
+    - SwiftyUserDefaults
 
 EXTERNAL SOURCES:
   Apollo:
@@ -116,6 +122,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Apollo: 09002d68c46e4098766fe376151d9ff8bd6aad36
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
+  BulletinBoard: c774340545b5cfd05a96a89f63b105ecc95c86f9
   CHIPageControl: a787bf7205c9b7e7fbfc412be36c5e8636b68f86
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
@@ -132,7 +139,8 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  SwiftyUserDefaults: 33fcb42bd1feb53a37d873feb62c82967db5f7f6
 
-PODFILE CHECKSUM: b43927d38723f841405c1520028c97a693563063
+PODFILE CHECKSUM: 1c5d8dde84bdc9fd451aeff03150714afe7dc373
 
 COCOAPODS: 1.8.4

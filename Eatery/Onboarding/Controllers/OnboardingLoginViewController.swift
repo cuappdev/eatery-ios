@@ -7,6 +7,7 @@
 //
 
 import NVActivityIndicatorView
+import SwiftyUserDefaults
 import UIKit
 
 class OnboardingLoginViewController: OnboardingViewController {
@@ -223,7 +224,7 @@ class OnboardingLoginViewController: OnboardingViewController {
     }
 
     @objc func didTapSkipButton() {
-        UserDefaults.standard.set(true, forKey: "hasOnboarded")
+        Defaults[\.hasOnboarded] = true
         accountManager.removeSavedLoginInfo()
         accountManager.cancelRequest()
         delegate?.onboardingViewControllerDidTapNext(self)
@@ -240,7 +241,7 @@ extension OnboardingLoginViewController: BRBAccountManagerDelegate {
     }
 
     func brbAccountManager(didQuery account: BRBAccount) {
-        UserDefaults.standard.set(true, forKey: "hasOnboarded")
+        Defaults[\.hasOnboarded] = true
         delegate?.onboardingViewControllerDidTapNext(self)
     }
 

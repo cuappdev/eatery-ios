@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import SwiftyUserDefaults
 import UIKit
 
 // MARK: - Eatery Data
@@ -214,20 +215,19 @@ extension Eatery {
 
 extension Eatery {
 
-    func isFavorite() -> Bool {
-        return UserDefaults.standard.stringArray(forKey: "favorites")?.contains(name) ?? false
-    }
-
-    func setFavorite(_ newValue: Bool) {
-        var ar = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
-        if newValue {
-            ar.append(name)
-        } else {
-            ar.removeAll(where: { $0 == name })
+    var isFavorite: Bool {
+        get {
+            Defaults[\.favorites].contains(name)
         }
-        UserDefaults.standard.set(ar, forKey: "favorites")
+        nonmutating set {
+            if newValue {
+                Defaults[\.favorites].append(name)
+            } else {
+                Defaults[\.favorites].removeAll(where: { $0 == name })
+            }
 
-        NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
+            NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
+        }
     }
 
 }

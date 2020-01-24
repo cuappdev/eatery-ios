@@ -30,11 +30,11 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Eatery uses your location to determine how close Eateries are to you.</string>
 	<key>WKExtensionDelegateClassName</key>
 	<string>$(PRODUCT_MODULE_NAME).ExtensionDelegate</string>
 	<key>WKRunsIndependentlyOfCompanionApp</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Eatery uses your location to determine how close Eateries are to you.</string>
 </dict>
 </plist>

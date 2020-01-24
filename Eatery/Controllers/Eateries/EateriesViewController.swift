@@ -395,9 +395,9 @@ class EateriesViewController: UIViewController {
             sortedEateries = eateries.sorted { $0.location.distance(from: location).value < $1.location.distance(from: location).value }
         }
 
-        let favorites = sortedEateries.filter { $0.isFavorite() }
-        let open = sortedEateries.filter { !$0.isFavorite() && $0.isOpen(atExactly: Date()) }
-        let closed = sortedEateries.filter { !$0.isFavorite() && !$0.isOpen(atExactly: Date()) }
+        let favorites = sortedEateries.filter { $0.isFavorite }
+        let open = sortedEateries.filter { !$0.isFavorite && $0.isOpen(atExactly: Date()) }
+        let closed = sortedEateries.filter { !$0.isFavorite && !$0.isOpen(atExactly: Date()) }
         return (favorites: favorites, open: open, closed: closed)
     }
 
