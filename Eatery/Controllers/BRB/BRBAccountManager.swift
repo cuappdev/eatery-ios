@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 import UIKit
 import WebKit
 
@@ -203,7 +204,7 @@ class BRBAccountManager {
     }
     
     func removeSavedLoginInfo() {
-        UserDefaults.standard.set(nil, forKey: "BRBAccount")
+        Defaults[\.brbAccountData] = nil
         BRBAccountSettings.shared.removeKeychainLoginInfo()
     }
     
@@ -229,7 +230,7 @@ class BRBAccountManager {
     }
     
     func getCachedAccount() -> BRBAccount? {
-        if let accountData = UserDefaults.standard.object(forKey: "BRBAccount") as? Data,
+        if let accountData = Defaults[\.brbAccountData],
             let account = try? JSONDecoder().decode(BRBAccount.self, from: accountData) {
             return account
         }
@@ -252,8 +253,7 @@ extension BRBAccountManager: BRBConnectionHandlerDelegate {
             if let account = account {
                 let encoder = JSONEncoder()
                 if let encoded = try? encoder.encode(account) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "BRBAccount")
+                    Defaults[\.brbAccountData] = encoded
                 }
                 self.delegate?.brbAccountManager(didQuery: account)
             } else {

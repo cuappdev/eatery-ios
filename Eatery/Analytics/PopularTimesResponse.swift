@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 private struct PopularTimesResponsePayload: Payload {
 
@@ -82,11 +83,7 @@ final class PopularTimesResponse {
     }
 
     var lastResponse: Date? {
-        guard let lastResponses = UserDefaults.standard.object(forKey: PopularTimesResponse.lastResponseUserDefaultsKey) as? [String: Date] else {
-            return nil
-        }
-
-        return lastResponses[eateryDisplayName]
+        return Defaults[\.popularTimesLastResponse][eateryDisplayName]
     }
 
     var userMaySubmitResponse: Bool {
@@ -105,9 +102,7 @@ final class PopularTimesResponse {
         let payload = PopularTimesResponsePayload(level: level, eateryName: eateryDisplayName, date: Date())
         AppDevAnalytics.shared.logFirebase(payload)
 
-        var lastResponses = (UserDefaults.standard.object(forKey: PopularTimesResponse.lastResponseUserDefaultsKey) as? [String: Date]) ?? [:]
-        lastResponses[eateryDisplayName] = Date()
-        UserDefaults.standard.set(lastResponses, forKey: PopularTimesResponse.lastResponseUserDefaultsKey)
+        Defaults[\.popularTimesLastResponse][eateryDisplayName] = Date()
     }
 
 }

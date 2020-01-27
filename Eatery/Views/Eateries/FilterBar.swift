@@ -1,5 +1,6 @@
-import UIKit
 import SnapKit
+import SwiftyUserDefaults
+import UIKit
 
 enum Filter: String {
 
@@ -61,16 +62,14 @@ class FilterBar: UIView {
         didSet {
             layoutButtons(filters: displayedFilters)
 
-            if let prevFilters = UserDefaults.standard.stringArray(forKey: "filters") {
-                for string in prevFilters {
-                    if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
-                        selectedFilters.insert(filter)
-                        buttons[filter]!.isSelected = true
-                    }
+            for string in Defaults[\.filters] {
+                if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
+                    selectedFilters.insert(filter)
+                    buttons[filter]?.isSelected = true
                 }
-
-                delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
             }
+
+            delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
         }
     }
     var selectedFilters: Set<Filter> = []
@@ -155,9 +154,8 @@ class FilterBar: UIView {
         } else {
             selectedFilters.remove(displayedFilters[sender.tag])
         }
-        
-        let defaults = UserDefaults.standard
-        defaults.set(selectedFilters.map { $0.rawValue }, forKey: "filters")
+
+        Defaults[\.filters] = selectedFilters.map { $0.rawValue }
 
         delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
     }

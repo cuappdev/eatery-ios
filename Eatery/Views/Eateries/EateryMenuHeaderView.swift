@@ -83,7 +83,7 @@ class EateryMenuHeaderView: UIView {
     func configure(eatery: Eatery) {
         configure(title: eatery.displayName,
                   status: eatery.currentStatus(),
-                  isFavorite: eatery.isFavorite(),
+                  isFavorite: eatery.isFavorite,
                   paymentMethods: eatery.paymentMethods)
     }
 

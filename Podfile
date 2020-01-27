@@ -4,6 +4,7 @@ inhibit_all_warnings!
 def shared_pods
     pod 'Apollo', :git => 'https://github.com/apollographql/apollo-ios.git'
     pod 'SwiftyJSON'
+    pod 'SwiftyUserDefaults'
 end
 
 target 'Eatery' do
@@ -11,6 +12,7 @@ target 'Eatery' do
     shared_pods
 
     pod 'ARCL'
+    pod 'BulletinBoard'
     pod 'FLEX', '~> 2.0', :configurations => ['Debug']
     pod 'Fabric'
     pod 'Firebase/Analytics'

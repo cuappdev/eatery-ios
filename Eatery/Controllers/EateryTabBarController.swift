@@ -6,7 +6,10 @@
 //  Copyright © 2018 CUAppDev. All rights reserved.
 //
 
+import BLTNBoard
+import SwiftyUserDefaults
 import UIKit
+import WatchConnectivity
 
 class EateryTabBarController: UITabBarController {
 
@@ -15,6 +18,24 @@ class EateryTabBarController: UITabBarController {
     let eateriesSharedViewController = EateriesSharedViewController()
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
+
+    lazy var watchAppRedesignBulletinManager: BLTNItemManager = {
+        let page = BLTNPageItem(title: "Eatery Watch App Redesign")
+        page.image = UIImage(named: "watchAppPreview")
+
+        page.descriptionText = "Eatery for watchOS has been completely redone. Browse menus and hours right from your wrist."
+
+        page.actionButtonTitle = "Open Watch App"
+        page.actionHandler = { _ in
+            if let url = URL(string: "itms-watch://"), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        }
+
+        page.alternativeButtonTitle = "Not now"
+
+        return BLTNItemManager(rootItem: page)
+    }()
 
     override func viewDidLoad() {
         delegate = self
@@ -35,6 +56,16 @@ class EateryTabBarController: UITabBarController {
         tabBar.barTintColor = .white
         tabBar.tintColor = .eateryBlue
         tabBar.shadowImage = UIImage()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !Defaults[\.hasShownWatchRedesign], WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
     }
     
     func tabBarControllerSupportedInterfaceOrientations(_ tabBarController: UITabBarController) -> UIInterfaceOrientationMask {
@@ -61,16 +92,33 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
-        case 0:
-            AppDevAnalytics.shared.logFirebase(EateryPressPayload())
-        case 1:
-            AppDevAnalytics.shared.logFirebase(LookAheadPressPayload())
-        case 2:
-            AppDevAnalytics.shared.logFirebase(BRBPressPayload())
+        case 0: AppDevAnalytics.shared.logFirebase(EateryPressPayload())
+        case 1: AppDevAnalytics.shared.logFirebase(LookAheadPressPayload())
+        case 2: AppDevAnalytics.shared.logFirebase(BRBPressPayload())
         default:
             break
         }
 
+    }
+
+}
+
+extension EateryTabBarController: WCSessionDelegate {
+
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        if activationState == .activated, session.isPaired {
+            DispatchQueue.main.async {
+                self.watchAppRedesignBulletinManager.showBulletin(above: self)
+            }
+
+            Defaults[\.hasShownWatchRedesign] = true
+        }
+    }
+
+    func sessionDidBecomeInactive(_ session: WCSession) {
+    }
+
+    func sessionDidDeactivate(_ session: WCSession) {
     }
 
 }
