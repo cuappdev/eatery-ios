@@ -18,7 +18,8 @@ We use [Firebase](https://firebase.google.com) for our user analytics. You will 
 
 We also use `GraphQL` to retrieve data from our backend server and use `Apollo` on the client side in order to help us do so. 
 
-To setup `Apollo`, you will have to first install it by running `npm install -g apollo@1.9` in the project directory.
-Next, You will have to retrieve a `schema.json` file by running: `apollo schema:download --endpoint={Backend_URL} schema.json` in the <strong>project directory</strong>.
+To setup `Apollo`, you will have to first install it by running `npm install -g apollo@1.9` in the project directory (make sure you specify version 1.9).
+
+You will also have to retrieve a `schema.json` file by running: `apollo schema:download --endpoint={Backend_URL} schema.json` in the <strong>project directory</strong>.
 
 Finally, open `Eatery.xcworkspace` and enjoy Eatery!
