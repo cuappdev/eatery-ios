@@ -136,6 +136,18 @@ extension Eatery {
         return events[dayString] ?? [:]
     }
 
+    func eventsByDay(withName name: String) -> [DayString: Event] {
+        var eventsByDay: [DayString: Event] = [:]
+        for (dayString, eventsByName) in events {
+            for (eventName, event) in eventsByName {
+                if eventName == name {
+                    eventsByDay[dayString] = event
+                }
+            }
+        }
+        return eventsByDay
+    }
+
     func isOpen(onDayOf date: Date) -> Bool {
         return !eventsByName(onDayOf: date).isEmpty
     }

@@ -29,6 +29,7 @@
 		5D0BA425221755E1008E320D /* LookAheadMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BA424221755E1008E320D /* LookAheadMenuView.swift */; };
 		5D0CC8E0223A949300526480 /* CampusEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */; };
 		5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D8E0E223B286D001ADB85 /* EateriesFailedToLoadView.swift */; };
+		5D10358323E9E69B002EBE90 /* HoursThisWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D10358223E9E69B002EBE90 /* HoursThisWeekView.swift */; };
 		5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E720B2234B0680028D7C7 /* Eatery.swift */; };
 		5D1FAFF723C2D355005A7A47 /* CampusEateriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAFF623C2D355005A7A47 /* CampusEateriesView.swift */; };
 		5D1FAFF923C2D385005A7A47 /* CampusEateryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAFF823C2D385005A7A47 /* CampusEateryRow.swift */; };
@@ -216,6 +217,7 @@
 		5D0BA424221755E1008E320D /* LookAheadMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadMenuView.swift; sourceTree = "<group>"; };
 		5D0CC8DF223A949300526480 /* CampusEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesViewController.swift; sourceTree = "<group>"; };
 		5D0D8E0E223B286D001ADB85 /* EateriesFailedToLoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesFailedToLoadView.swift; sourceTree = "<group>"; };
+		5D10358223E9E69B002EBE90 /* HoursThisWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursThisWeekView.swift; sourceTree = "<group>"; };
 		5D1E720B2234B0680028D7C7 /* Eatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eatery.swift; sourceTree = "<group>"; };
 		5D1FAFF623C2D355005A7A47 /* CampusEateriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesView.swift; sourceTree = "<group>"; };
 		5D1FAFF823C2D385005A7A47 /* CampusEateryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryRow.swift; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				5DB4677F23502E4B005CE574 /* PopularTimesView.swift */,
 				5D94B90A238B27DB0043BE1A /* PopularTimesAccuracyPrompt.swift */,
 				5DB4677D234FFC37005CE574 /* HistogramView.swift */,
+				5D10358223E9E69B002EBE90 /* HoursThisWeekView.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -1272,6 +1275,7 @@
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
 				5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */,
 				5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */,
+				5D10358323E9E69B002EBE90 /* HoursThisWeekView.swift in Sources */,
 				CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */,
 				872E528B232DBA09006D12D4 /* Analytics.swift in Sources */,
 				5D34C4DF2356A60600A1132F /* SeparatorView.swift in Sources */,
@@ -1343,7 +1347,7 @@
 				);
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1410,7 +1414,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1478,7 +1482,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1546,7 +1550,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1586,7 +1590,7 @@
 				);
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1654,7 +1658,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1723,7 +1727,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1792,7 +1796,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1877,7 +1881,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
@@ -1955,7 +1959,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2032,7 +2036,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2109,7 +2113,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";

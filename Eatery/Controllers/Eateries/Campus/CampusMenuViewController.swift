@@ -29,6 +29,7 @@ class CampusMenuViewController: EateriesMenuViewController {
         super.viewDidLoad()
 
         addMenuInfoView(CampusMenuInfoView())
+        addHoursThisWeekView()
         addSeparatorView()
 
         if !eatery.swipeDataByHour.isEmpty {
@@ -41,6 +42,10 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         addMenuLabel()
         addMenuPageViewController()
+    }
+
+    private func addHoursThisWeekView() {
+        addToStackView(HoursThisWeekView(eatery: eatery, eventName: "Lunch"))
     }
 
     private func addPopularTimesView() {

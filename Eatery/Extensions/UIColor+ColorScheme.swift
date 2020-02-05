@@ -26,7 +26,7 @@ extension UIColor {
 
     /// 0x4A90E2
     static let eateryBlue = colorFromCode(0x4A90E2)
-    
+
     /// 0xb7d3f3
     static let histogramBarBlue = colorFromCode(0xb7d3f3)
 
@@ -57,6 +57,9 @@ extension UIColor {
 
     /// 0xE1E1E1
     static let veryLightPink = colorFromCode(0xE1E1E1)
+
+    /// 0x7d8288
+    static let steel = colorFromCode(0x7D8288)
 
 }
 
