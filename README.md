@@ -14,24 +14,12 @@ We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should
 To access the project, clone the project, and run `pod install` in the project directory.
 
 ### 2. Configuration
-We use [Fabric](https://fabric.io) and Crashlytics for our user analytics. To run the project without a Fabric account, comment out this line in `AppDelegate.swift`:
-```swift
-Crashlytics.start(withAPIKey: Keys.fabricAPIKey.value)
-```
+We use [Firebase](https://firebase.google.com) for our user analytics. You will have to retrieve a `GoogleService-Info.plist` from Firebase and then place it inside the `Eatery/` directory.
 
-Otherwise, to build the project, you need a `Secrets/Keys.plist` file in the project in order to use Fabric / Crashlytics:
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>fabric-api-key</key>
-	<string>INSERT_API_KEY</string>
-	<key>fabric-build-secret</key>
-	<string>INSERT_BUILD_SECRET</string>
-</dict>
-</plist>
+We also use `GraphQL` to retrieve data from our backend server and use `Apollo` on the client side in order to help us do so. 
 
-```
+To setup `Apollo`, you will have to first install it by running `npm install -g apollo@1.9` in the project directory (make sure you specify version 1.9).
+
+You will also have to retrieve a `schema.json` file by running: `apollo schema:download --endpoint={Backend_URL} schema.json` in the <strong>project directory</strong>.
 
 Finally, open `Eatery.xcworkspace` and enjoy Eatery!
