@@ -27,7 +27,7 @@ class CollegetownMenuViewController: EateriesMenuViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addMenuInfoView(CollegetownMenuInfoView())
+        addMenuInfoView()
         addBlockSeparator()
 
         addActionButton("Get Directions", action: #selector(directionsButtonPressed(_:)))
@@ -38,6 +38,19 @@ class CollegetownMenuViewController: EateriesMenuViewController {
         addBlockSeparator()
 
         addMapView()
+    }
+
+    private func addMenuInfoView() {
+        let infoView = CollegetownMenuInfoView()
+        infoView.configure(eatery: eatery, userLocation: userLocation)
+        addToStackView(infoView)
+
+        infoView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
+        let fadeModifiers = createHeroModifiers(.fade)
+        infoView.hoursHero.modifiers = fadeModifiers
+        infoView.statusHero.modifiers = fadeModifiers
+        infoView.locationHero.modifiers = fadeModifiers
+        infoView.distanceHero.modifiers = fadeModifiers
     }
 
     private func addActionButton(_ title: String, action: Selector) {

@@ -10,7 +10,7 @@ import CoreLocation
 import Hero
 import UIKit
 
-class CollegetownMenuInfoView: UIView, MenuInfoView {
+class CollegetownMenuInfoView: UIView {
 
     private let statusHoursRatingLayoutGuide = UILayoutGuide()
     private let statusLabel = UILabel()
