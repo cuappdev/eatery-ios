@@ -46,11 +46,9 @@ class CampusMenuViewController: EateriesMenuViewController {
     private func addMenuInfoView() {
         let infoView = CampusMenuInfoView()
         infoView.configure(eatery: eatery, userLocation: userLocation, meal: "Lunch")
-
         addToStackView(infoView)
 
         infoView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
-
         let fadeModifiers = createHeroModifiers(.fade)
         infoView.hoursHero.modifiers = fadeModifiers
         infoView.statusHero.modifiers = fadeModifiers

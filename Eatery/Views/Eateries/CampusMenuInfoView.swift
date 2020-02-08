@@ -111,9 +111,8 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         locationLabel.textColor = .gray
         addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
             make.top.equalTo(hoursThisWeekContainer.snp.bottom).offset(8)
-            make.bottom.equalToSuperview().inset(16)
+            make.leading.bottom.equalToSuperview().inset(16)
         }
     }
 
@@ -122,7 +121,7 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
     }
 
     override func didMoveToWindow() {
-        // defer layout until view has been added to view hierarchy
+        // Defer layout until view has been added to view hierarchy
         // to avoid unsatisfiable layout constraints
         setHoursThisWeekExpanded(false, animated: false)
     }

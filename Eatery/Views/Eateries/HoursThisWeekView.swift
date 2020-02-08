@@ -26,9 +26,11 @@ class HoursThisWeekView: UIView {
     init() {
         super.init(frame: .zero)
 
-        segmentedControl.addTarget(self,
-                                   action: #selector(segmentedControlValueChanged(_:)),
-                                   for: .valueChanged)
+        segmentedControl.addTarget(
+            self,
+            action: #selector(segmentedControlValueChanged(_:)),
+            for: .valueChanged
+        )
         addSubview(segmentedControl)
 
         verticalSeparator.backgroundColor = .separator
@@ -52,8 +54,8 @@ class HoursThisWeekView: UIView {
             make.top.equalToSuperview().inset(12)
         }
 
-        segmentedControl.snp.prepareConstraints { make in
-            hideDiningHallConstraints.append(make.height.equalTo(0).constraint)
+        segmentedControl.snp.prepareConstraints { prepare  in
+            hideDiningHallConstraints.append(prepare.height.equalTo(0).constraint)
         }
 
         let contentLayoutGuide = UILayoutGuide()
@@ -63,9 +65,9 @@ class HoursThisWeekView: UIView {
             make.bottom.equalToSuperview().inset(8)
         }
 
-        contentLayoutGuide.snp.prepareConstraints { make in
-            hideDiningHallConstraints.append(make.top.equalToSuperview().inset(8).constraint)
-            showDiningHallConstraints.append(make.top.equalTo(segmentedControl.snp.bottom).offset(8).constraint)
+        contentLayoutGuide.snp.prepareConstraints { prepare in
+            hideDiningHallConstraints.append(prepare.top.equalToSuperview().inset(8).constraint)
+            showDiningHallConstraints.append(prepare.top.equalTo(segmentedControl.snp.bottom).offset(8).constraint)
         }
 
         verticalSeparator.snp.makeConstraints { make in
@@ -88,9 +90,11 @@ class HoursThisWeekView: UIView {
 
             segmentedControl.removeAllSegments()
             for meal in diningMeals {
-                segmentedControl.insertSegment(withTitle: meal,
-                                               at: segmentedControl.numberOfSegments,
-                                               animated: false)
+                segmentedControl.insertSegment(
+                    withTitle: meal,
+                    at: segmentedControl.numberOfSegments,
+                    animated: false
+                )
             }
 
             let indexToDisplay: Int
@@ -149,20 +153,11 @@ class HoursThisWeekView: UIView {
     }
 
     private func setShowDiningHall(_ show: Bool) {
-        if show {
-            for constraint in hideDiningHallConstraints {
-                constraint.deactivate()
-            }
-            for constraint in showDiningHallConstraints {
-                constraint.activate()
-            }
-        } else {
-            for constraint in showDiningHallConstraints {
-                constraint.deactivate()
-            }
-            for constraint in hideDiningHallConstraints {
-                constraint.activate()
-            }
+        for constraint in hideDiningHallConstraints {
+            show ? constraint.deactivate() : constraint.activate()
+        }
+        for constraint in showDiningHallConstraints {
+            show ? constraint.activate() : constraint.deactivate()
         }
     }
 
