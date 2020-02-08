@@ -9,25 +9,7 @@
 import SnapKit
 import UIKit
 
-/**
- Why is this layout delegate needed?
-
- To animate the expansion of the popular times view, we must change the frame
- of the scroll view. The popular times view is able to manage its own
- constraints to change its own height. However, without direct access to the
- outer scroll view (in CampusEateryMenuViewController), it is unable to
- animate the change.
-
- This delegate is the cleanest (albeit still not super clean) way to access the
- outer scroll view.
- */
-protocol PopularTimesViewLayoutDelegate: AnyObject {
-
-    func popularTimesContentSizeDidChange(_ popularTimesView: PopularTimesView)
-
-}
-
-class PopularTimesView: UIView {
+class PopularTimesView: UIView, DynamicContentSizeView {
 
     /// collapsed - height is zero
     /// partiallyExpanded - the call to action displays "Popular times inaccurate?"
@@ -39,8 +21,6 @@ class PopularTimesView: UIView {
         case fullyExpanded
 
     }
-
-    weak var layoutDelegate: PopularTimesViewLayoutDelegate?
 
     private let eatery: CampusEatery
 
@@ -65,6 +45,8 @@ class PopularTimesView: UIView {
 
     private let startHour = 6
     private let overflowedEndHour = 27
+
+    var contentSizeDidChange: (() -> Void)?
 
     init(eatery: CampusEatery) {
         self.eatery = eatery
@@ -177,7 +159,7 @@ class PopularTimesView: UIView {
                 self.histogramCollapseConstraint?.activate()
             }
 
-            self.layoutDelegate?.popularTimesContentSizeDidChange(self)
+            self.contentSizeDidChange?()
         }
 
         if animated {
@@ -240,7 +222,7 @@ class PopularTimesView: UIView {
                 self.accuracyPromptFullyExpandedConstraint?.activate()
             }
 
-            self.layoutDelegate?.popularTimesContentSizeDidChange(self)
+            self.contentSizeDidChange?()
         }
 
         if animated {

@@ -28,8 +28,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addMenuInfoView(CampusMenuInfoView())
-        addHoursThisWeekView()
+        addMenuInfoView()
         addSeparatorView()
 
         if !eatery.swipeDataByHour.isEmpty {
@@ -44,13 +43,23 @@ class CampusMenuViewController: EateriesMenuViewController {
         addMenuPageViewController()
     }
 
-    private func addHoursThisWeekView() {
-        addToStackView(HoursThisWeekView(eatery: eatery, eventName: "Lunch"))
+    private func addMenuInfoView() {
+        let infoView = CampusMenuInfoView()
+        infoView.configure(eatery: eatery, userLocation: userLocation, meal: "Lunch")
+
+        addToStackView(infoView)
+
+        infoView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
+
+        let fadeModifiers = createHeroModifiers(.fade)
+        infoView.hoursHero.modifiers = fadeModifiers
+        infoView.statusHero.modifiers = fadeModifiers
+        infoView.locationHero.modifiers = fadeModifiers
+        infoView.distanceHero.modifiers = fadeModifiers
     }
 
     private func addPopularTimesView() {
         let popularTimesView = PopularTimesView(eatery: eatery)
-        popularTimesView.layoutDelegate = self
         addToStackView(popularTimesView)
 
         popularTimesView.hero.modifiers = createHeroModifiers(.fade)
@@ -118,14 +127,6 @@ class CampusMenuViewController: EateriesMenuViewController {
 
     @objc private func directionsButtonPressed(_ sender: UIButton) {
         openDirectionsToEatery()
-    }
-
-}
-
-extension CampusMenuViewController: PopularTimesViewLayoutDelegate {
-
-    func popularTimesContentSizeDidChange(_ popularTimesView: PopularTimesView) {
-        view.layoutIfNeeded()
     }
 
 }

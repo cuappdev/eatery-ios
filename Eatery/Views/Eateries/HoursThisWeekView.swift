@@ -6,32 +6,38 @@
 //  Copyright © 2020 CUAppDev. All rights reserved.
 //
 
+import SnapKit
 import UIKit
 
 class HoursThisWeekView: UIView {
 
-    private let verticalSeparator = UIView()
+    // only shown for dining halls
+    private let segmentedControl = UISegmentedControl()
+    private var showDiningHallConstraints: [Constraint] = []
+    private var hideDiningHallConstraints: [Constraint] = []
 
+    private let verticalSeparator = UIView()
     private let stackView = UIStackView()
 
-    init(eatery: Eatery, eventName: String) {
+    private var eatery: Eatery?
+
+    private let diningMeals = ["Breakfast", "Lunch", "Dinner"]
+
+    init() {
         super.init(frame: .zero)
+
+        segmentedControl.addTarget(self,
+                                   action: #selector(segmentedControlValueChanged(_:)),
+                                   for: .valueChanged)
+        addSubview(segmentedControl)
 
         verticalSeparator.backgroundColor = .separator
         addSubview(verticalSeparator)
 
         stackView.axis = .vertical
         stackView.alignment = .fill
+        stackView.spacing = 3
         addSubview(stackView)
-
-        let events = eatery.eventsByDay(withName: eventName)
-            .map { $0.1 }
-            .sorted { $0.dateInterval.start < $1.dateInterval.start }
-
-        for event in events {
-            let dayAndHoursView = DayAndHoursView(interval: event.dateInterval)
-            stackView.addArrangedSubview(dayAndHoursView)
-        }
 
         setUpConstraints()
     }
@@ -41,14 +47,122 @@ class HoursThisWeekView: UIView {
     }
 
     private func setUpConstraints() {
+        segmentedControl.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(12)
+        }
+
+        segmentedControl.snp.prepareConstraints { make in
+            hideDiningHallConstraints.append(make.height.equalTo(0).constraint)
+        }
+
+        let contentLayoutGuide = UILayoutGuide()
+        addLayoutGuide(contentLayoutGuide)
+        contentLayoutGuide.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(8)
+        }
+
+        contentLayoutGuide.snp.prepareConstraints { make in
+            hideDiningHallConstraints.append(make.top.equalToSuperview().inset(8).constraint)
+            showDiningHallConstraints.append(make.top.equalTo(segmentedControl.snp.bottom).offset(8).constraint)
+        }
+
         verticalSeparator.snp.makeConstraints { make in
-            make.width.equalTo(2)
-            make.top.leading.bottom.equalToSuperview().inset(16)
+            make.width.equalTo(1)
+            make.top.leading.bottom.equalTo(contentLayoutGuide)
         }
 
         stackView.snp.makeConstraints { make in
             make.leading.equalTo(verticalSeparator.snp.trailing).offset(16)
-            make.top.bottom.trailing.equalToSuperview().inset(16)
+            make.top.trailing.bottom.equalTo(contentLayoutGuide)
+        }
+    }
+
+    func configure(eatery: Eatery) {
+        self.eatery = eatery
+
+        switch eatery.eateryType {
+        case .dining:
+            setShowDiningHall(true)
+
+            segmentedControl.removeAllSegments()
+            for meal in diningMeals {
+                segmentedControl.insertSegment(withTitle: meal,
+                                               at: segmentedControl.numberOfSegments,
+                                               animated: false)
+            }
+
+            let indexToDisplay: Int
+            if let activeMealName = eatery.currentActiveEvent()?.desc,
+                let index = diningMeals.firstIndex(of: activeMealName) {
+                indexToDisplay = index
+            } else {
+                indexToDisplay = 0
+            }
+            displayMeal(withName: diningMeals[indexToDisplay])
+            segmentedControl.selectedSegmentIndex = indexToDisplay
+
+        default:
+            setShowDiningHall(false)
+
+            for subview in stackView.arrangedSubviews {
+                subview.removeFromSuperview()
+            }
+
+            let daysAndEvents = datesThisWeek().map { ($0, eatery.eventsByName(onDayOf: $0)) }
+
+            for (day, events) in daysAndEvents {
+                let openIntervals = events.map { $0.value.dateInterval }
+                let dayAndHoursView = DayAndHoursView()
+                dayAndHoursView.configure(day: day, openIntervals: openIntervals)
+                stackView.addArrangedSubview(dayAndHoursView)
+            }
+        }
+    }
+
+    @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        let index = sender.selectedSegmentIndex
+        guard 0 <= index, index < diningMeals.count else {
+            return
+        }
+
+        displayMeal(withName: diningMeals[sender.selectedSegmentIndex])
+    }
+
+    private func displayMeal(withName name: String) {
+        for subview in stackView.arrangedSubviews {
+            subview.removeFromSuperview()
+        }
+
+        let daysAndEvents = datesThisWeek().map { ($0, eatery?.eventsByName(onDayOf: $0)[name]) }
+
+        for (day, event) in daysAndEvents {
+            let dayAndHoursView = DayAndHoursView()
+            dayAndHoursView.configure(day: day, openIntervals: event.map { [$0.dateInterval] } ?? [])
+            stackView.addArrangedSubview(dayAndHoursView)
+        }
+    }
+
+    private func datesThisWeek() -> [Date] {
+        (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date()) }
+    }
+
+    private func setShowDiningHall(_ show: Bool) {
+        if show {
+            for constraint in hideDiningHallConstraints {
+                constraint.deactivate()
+            }
+            for constraint in showDiningHallConstraints {
+                constraint.activate()
+            }
+        } else {
+            for constraint in showDiningHallConstraints {
+                constraint.deactivate()
+            }
+            for constraint in hideDiningHallConstraints {
+                constraint.activate()
+            }
         }
     }
 
@@ -72,30 +186,14 @@ private class DayAndHoursView: UIView {
     private let dotwLabel = UILabel()
     private let hoursLabel = UILabel()
 
-    init(interval: DateInterval) {
+    init() {
         super.init(frame: .zero)
 
-        let dotw = DayAndHoursView.dayFormatter.string(from: interval.start)
-
-        let textColor: UIColor
-        if DayAndHoursView.dayFormatter.string(from: Date()) == dotw {
-            textColor = .black
-        } else {
-            textColor = .steel
-        }
-
-        dotwLabel.text = dotw + ":"
-        dotwLabel.textColor = textColor
-        dotwLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        addSubview(dotwLabel)
-
-        hoursLabel.text =
-            DayAndHoursView.hoursFormatter.string(from: interval.start)
-            + " - "
-            + DayAndHoursView.hoursFormatter.string(from: interval.end)
-        hoursLabel.textColor = textColor
         hoursLabel.font = .systemFont(ofSize: 14, weight: .medium)
         addSubview(hoursLabel)
+
+        dotwLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        addSubview(dotwLabel)
 
         setUpConstraints()
     }
@@ -115,6 +213,32 @@ private class DayAndHoursView: UIView {
             make.leading.equalTo(dotwLabel.snp.trailing)
             make.top.bottom.equalToSuperview()
             make.trailing.equalToSuperview()
+        }
+    }
+
+    func configure(day: Date, openIntervals: [DateInterval]) {
+        let dotw = DayAndHoursView.dayFormatter.string(from: day)
+
+        let textColor: UIColor
+        if DayAndHoursView.dayFormatter.string(from: Date()) == dotw {
+            textColor = .black
+        } else {
+            textColor = .steel
+        }
+
+        hoursLabel.textColor = textColor
+
+        dotwLabel.text = dotw + ":"
+        dotwLabel.textColor = textColor
+
+        if openIntervals.isEmpty {
+            hoursLabel.text = "Closed"
+        } else {
+            hoursLabel.text = openIntervals.map { interval in
+                DayAndHoursView.hoursFormatter.string(from: interval.start)
+                    + " - "
+                    + DayAndHoursView.hoursFormatter.string(from: interval.end)
+            }.joined(separator: ", ")
         }
     }
 

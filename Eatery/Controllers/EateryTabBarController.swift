@@ -21,6 +21,8 @@ class EateryTabBarController: UITabBarController {
 
     lazy var watchAppRedesignBulletinManager: BLTNItemManager = {
         let page = BLTNPageItem(title: "Eatery Watch App Redesign")
+        let manager = BLTNItemManager(rootItem: page)
+
         page.image = UIImage(named: "watchAppPreview")
 
         page.descriptionText = "Eatery for watchOS has been completely redone. Browse menus and hours right from your wrist."
@@ -33,8 +35,11 @@ class EateryTabBarController: UITabBarController {
         }
 
         page.alternativeButtonTitle = "Not now"
+        page.alternativeHandler = { _ in
+            manager.dismissBulletin()
+        }
 
-        return BLTNItemManager(rootItem: page)
+        return manager
     }()
 
     override func viewDidLoad() {

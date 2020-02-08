@@ -11,17 +11,9 @@ import Hero
 import MapKit
 import UIKit
 
-protocol MenuInfoView {
+protocol DynamicContentSizeView {
 
-    var statusHero: HeroExtension<UILabel> { get }
-
-    var hoursHero: HeroExtension<UILabel> { get }
-
-    var locationHero: HeroExtension<UILabel> { get }
-
-    var distanceHero: HeroExtension<UILabel> { get }
-
-    func configure(eatery: Eatery, userLocation: CLLocation?)
+    var contentSizeDidChange: (() -> Void)? { get nonmutating set }
 
 }
 
@@ -34,6 +26,8 @@ protocol MenuInfoView {
 /// It automatically applies hero animations to the image view, title, and
 /// payment views.
 class EateriesMenuViewController: ImageParallaxScrollViewController {
+
+    typealias ExpandingView = UIView & DynamicContentSizeView
 
     enum HeroModifierGroups {
 
@@ -111,7 +105,7 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
 
     func addSeparatorView() {
         let separatorView = SeparatorView(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-        stackView.addArrangedSubview(separatorView)
+        addToStackView(separatorView)
     }
 
     func addBlockSeparator() {
@@ -120,30 +114,16 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         separator.snp.makeConstraints { make in
             make.height.equalTo(20)
         }
-        stackView.addArrangedSubview(separator)
-    }
-
-    /// Add a menu info view to the stack view
-    ///
-    /// This method sets up hero animations for the hero objects of the menu
-    /// info view, and calls `configure` with the provided eatery and location.
-    func addMenuInfoView<T: UIView & MenuInfoView>(_ infoView: T) {
-        infoView.configure(eatery: eatery, userLocation: userLocation)
-
-        stackView.addArrangedSubview(infoView)
-
-        infoView.hero.id = EateriesViewController.AnimationKey.infoContainer.id(eatery: eatery)
-
-        let fadeModifiers = createHeroModifiers(.fade)
-        infoView.hoursHero.modifiers = fadeModifiers
-        infoView.statusHero.modifiers = fadeModifiers
-        infoView.locationHero.modifiers = fadeModifiers
-        infoView.distanceHero.modifiers = fadeModifiers
+        addToStackView(separator)
     }
 
     /// Add a custom view to the stack view
     func addToStackView(_ view: UIView) {
         stackView.addArrangedSubview(view)
+
+        (view as? DynamicContentSizeView)?.contentSizeDidChange = { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
     }
 
     func createHeroModifiers(_ groups: HeroModifierGroups...) -> [HeroModifier] {

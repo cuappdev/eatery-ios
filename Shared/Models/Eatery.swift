@@ -160,6 +160,7 @@ extension Eatery {
         return event(atExactly: date) != nil
     }
 
+    /// The next event if the eatery is closed, or the current event if the eatery is open
     func activeEvent(atExactly date: Date) -> Event? {
         let calendar = Calendar.current
         guard let yesterday = calendar.date(byAdding: .day, value: -1, to: date),
