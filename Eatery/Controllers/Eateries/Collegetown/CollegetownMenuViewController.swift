@@ -42,6 +42,7 @@ class CollegetownMenuViewController: EateriesMenuViewController {
 
     private func addMenuInfoView() {
         let infoView = CollegetownMenuInfoView()
+        infoView.configure(eatery: eatery, userLocation: userLocation)
 
         addToStackView(infoView)
 
