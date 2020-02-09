@@ -68,8 +68,11 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         }
 
         moreHoursButton.setImage(UIImage(named: "upArrow")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        moreHoursButton.tintColor = .secondary
-        moreHoursButton.imageEdgeInsets = UIEdgeInsets(top: 7, left: 3, bottom: 7, right: 3)
+        moreHoursButton.tintColor = .eateryBlue
+        moreHoursButton.contentHorizontalAlignment = .leading
+        moreHoursButton.imageView?.contentMode = .scaleAspectFit
+        moreHoursButton.imageEdgeInsets = UIEdgeInsets(top: 6.5, left: 0, bottom: 6.5, right: 0)
+        moreHoursButton.setContentHuggingPriority(UILayoutPriority(249), for: .horizontal)
         moreHoursButton.addTarget(self, action: #selector(moreHoursButtonPressed(_:)), for: .touchUpInside)
         addSubview(moreHoursButton)
         moreHoursButton.snp.makeConstraints { make in
@@ -83,7 +86,7 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         distanceLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(hoursLabel.snp.trailing)
+            make.leading.equalTo(moreHoursButton.snp.trailing).offset(8)
             make.trailing.equalToSuperview().inset(16)
             make.top.equalToSuperview().inset(16)
         }
