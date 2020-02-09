@@ -17,7 +17,7 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
     private let hoursLabel = UILabel()
     private let locationLabel = UILabel()
     private let distanceLabel = UILabel()
-    private let moreHoursButton = UIButton(type: .custom)
+    private let moreHoursImageView = UIImageView()
 
     private var isHoursThisWeekExpanded = false
     private let hoursThisWeekContainer = UIView()
@@ -67,18 +67,14 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
             make.leading.equalTo(statusLabel.snp.trailing).offset(2)
         }
 
-        moreHoursButton.setImage(UIImage(named: "upArrow")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        moreHoursButton.tintColor = .eateryBlue
-        moreHoursButton.contentHorizontalAlignment = .leading
-        moreHoursButton.imageView?.contentMode = .scaleAspectFit
-        moreHoursButton.imageEdgeInsets = UIEdgeInsets(top: 6.5, left: 0, bottom: 6.5, right: 0)
-        moreHoursButton.setContentHuggingPriority(UILayoutPriority(249), for: .horizontal)
-        moreHoursButton.addTarget(self, action: #selector(moreHoursButtonPressed(_:)), for: .touchUpInside)
-        addSubview(moreHoursButton)
-        moreHoursButton.snp.makeConstraints { make in
+        moreHoursImageView.image = UIImage(named: "upArrow")?.withRenderingMode(.alwaysTemplate)
+        moreHoursImageView.tintColor = .eateryBlue
+        moreHoursImageView.contentMode = .scaleAspectFit
+        addSubview(moreHoursImageView)
+        moreHoursImageView.snp.makeConstraints { make in
             make.centerY.equalTo(hoursLabel)
             make.leading.equalTo(hoursLabel.snp.trailing).offset(8)
-            make.height.equalTo(22)
+            make.height.equalTo(8)
         }
 
         distanceLabel.isOpaque = false
@@ -86,7 +82,6 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         distanceLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
-            make.leading.equalTo(moreHoursButton.snp.trailing).offset(8)
             make.trailing.equalToSuperview().inset(16)
             make.top.equalToSuperview().inset(16)
         }
@@ -117,6 +112,9 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
             make.top.equalTo(hoursThisWeekContainer.snp.bottom).offset(8)
             make.leading.bottom.equalToSuperview().inset(16)
         }
+
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(moreHoursButtonPressed))
+        addGestureRecognizer(gestureRecognizer)
     }
 
     required init?(coder: NSCoder) {
@@ -151,14 +149,14 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         hoursThisWeek.configure(eatery: eatery)
     }
 
-    @objc private func moreHoursButtonPressed(_ button: UIButton) {
+    @objc private func moreHoursButtonPressed() {
         setHoursThisWeekExpanded(!isHoursThisWeekExpanded, animated: true)
     }
 
     private func setHoursThisWeekExpanded(_ newValue: Bool, animated: Bool) {
         self.isHoursThisWeekExpanded = newValue
 
-        moreHoursButton.imageView?.transform = isHoursThisWeekExpanded
+        moreHoursImageView.transform = isHoursThisWeekExpanded
             ? .identity
             : CGAffineTransform(scaleX: 1, y: -1)
 
