@@ -113,7 +113,7 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
             make.leading.bottom.equalToSuperview().inset(16)
         }
 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(moreHoursButtonPressed))
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleHoursThisWeekExpanded))
         addGestureRecognizer(gestureRecognizer)
     }
 
@@ -149,7 +149,7 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         hoursThisWeek.configure(eatery: eatery)
     }
 
-    @objc private func moreHoursButtonPressed() {
+    @objc private func toggleHoursThisWeekExpanded() {
         setHoursThisWeekExpanded(!isHoursThisWeekExpanded, animated: true)
     }
 
