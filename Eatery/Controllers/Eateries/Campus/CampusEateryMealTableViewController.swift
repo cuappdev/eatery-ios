@@ -6,6 +6,9 @@ class CampusEateryMealTableViewController: UITableViewController {
     let eatery: CampusEatery
 
     private let menu: Menu?
+    private lazy var sortedMenu: [(String, [Menu.Item])]? = {
+        (menu == nil) ? nil : Sort.sortMenu(menu!.data.map { ($0, $1) })
+    }()
 
     init(eatery: CampusEatery, meal: String) {
         self.eatery = eatery
@@ -27,7 +30,7 @@ class CampusEateryMealTableViewController: UITableViewController {
         view.backgroundColor = .green
         
         // TableView Config
-        tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = (eatery.eateryType == .dining) ? 36 : 44
         tableView.backgroundColor = .clear
         tableView.rowHeight = UITableViewAutomaticDimension;
 
@@ -53,6 +56,15 @@ class CampusEateryMealTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        if let menu = menu, eatery.eateryType == .dining, menu.data.count > 1 {
+            // only have multiple sections if this is a dining hall meal with more than one station
+            return menu.data.count
+        } else {
+            return 1
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let menu = menu else {
@@ -65,8 +77,34 @@ class CampusEateryMealTableViewController: UITableViewController {
             return item.value.count
         } else {
             // display the menu items
-            return menu.data.count
+            let stations = sortedMenu!.map { $0.0 }
+            return menu.data[stations[section]]!.count
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let menu = menu, menu.data.count > section, tableView.numberOfSections > 1 else {
+            return nil
+        }
+        
+        let stationTitles = sortedMenu!.map { $0.0 }
+        
+        let headerView = UIView()
+        let sectionLabel = UILabel()
+        sectionLabel.text = stationTitles[section]
+        sectionLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        headerView.addSubview(sectionLabel)
+        sectionLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().inset(10)
+        }
+
+        return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return (eatery.eateryType == .dining) ? 40 : 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,7 +118,7 @@ class CampusEateryMealTableViewController: UITableViewController {
             return diningStationsCell(in: tableView, forRowAt: indexPath)
         }
     }
-
+    
     /// Create a table view cell when there is no menu for an eatery
     private func emptyMenuCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
@@ -97,25 +135,31 @@ class CampusEateryMealTableViewController: UITableViewController {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        let name = station.value[indexPath.row].name
-
+        let menuItem = station.value[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealItem", for: indexPath) as! MealItemTableViewCell
-        cell.nameLabel.text = name
+        cell.configure(for: menuItem)
         return cell
     }
 
     /// Create a table view cell when there are multiple dining stations in the menu
     private func diningStationsCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
-
-        guard let menu = menu else {
+        guard let menu = menu, menu.data.count > indexPath.section else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MealItem", for: indexPath) as! MealItemTableViewCell
+        
+        let stationTitles = sortedMenu!.map { $0.0 }
+        let stationItems = menu.data[stationTitles[indexPath.section]]!
+        
+        guard stationItems.count > indexPath.row else {
+            cell.setLabelText("No item")
+            return cell
+        }
 
-        let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
-        let stationTitles = sortedMenu.map { $0.0 }
-
-        // set title
+        let menuItem = stationItems[indexPath.row]
+        cell.configure(for: menuItem)
+        return cell
+        /*
         let possibleTitle = stationTitles[indexPath.row]
         if possibleTitle == "General" {
             cell.titleLabel.text = ""
@@ -123,36 +167,7 @@ class CampusEateryMealTableViewController: UITableViewController {
         } else {
             cell.titleLabel.text = possibleTitle
             cell.titleCollapsed = false
-        }
-
-        // set content
-        let menuItems = sortedMenu[indexPath.row].1
-        let names = menuItems.map { item -> NSMutableAttributedString in
-            if item.healthy {
-                return NSMutableAttributedString(string: "\(item.name.trim()) ")
-                    .appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
-            } else {
-                return NSMutableAttributedString(string: item.name)
-            }
-        }
-
-        let font = UIFont.systemFont(ofSize: 14)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
-        let content = NSMutableAttributedString(string: "",
-                                                attributes: [.foregroundColor: UIColor.primary,
-                                                             .font: font,
-                                                             .paragraphStyle: paragraphStyle])
-
-        if names.isEmpty {
-            content.append(NSMutableAttributedString(string: "No items to show"))
-        } else {
-            content.append(NSMutableAttributedString(string: "\n").join(names))
-        }
-
-        cell.contentLabel.attributedText = content
-
-        return cell
+        }*/
     }
     
 }

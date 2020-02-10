@@ -20,6 +20,29 @@ struct Menu: Codable {
 
         /// Flag indicating if the item is deemed healthy or not by Cornell
         let healthy: Bool
+        
+        /// Flag indicating if the user has favorited this item
+        var favorited: Bool {
+            get {
+                if let favorites = UserDefaults.standard.value(forKey: "FavoriteMenuItems") as? [String] {
+                    return favorites.contains(name)
+                }
+                return false
+            }
+            set {
+                var newFavorites = [String]()
+                if let favorites = UserDefaults.standard.value(forKey: "FavoriteMenuItems") as? [String] {
+                    newFavorites.append(contentsOf: favorites)
+                }
+                newFavorites.append(name)
+                UserDefaults.standard.set(newFavorites, forKey: "FavoriteMenuItems")
+            }
+        }
+        
+        init(name: String, healthy: Bool) {
+            self.name = name
+            self.healthy = healthy
+        }
 
     }
 
@@ -28,6 +51,10 @@ struct Menu: Codable {
     typealias StringRepresentation = [(String, [String])]
 
     var data: [Category: [Item]]
+    
+    init(data: [Category: [Item]]) {
+        self.data = data
+    }
 
     /**
      A list of tuples in the form (category, [item list]).
