@@ -34,14 +34,13 @@ struct Menu: Codable {
                 if let favorites = UserDefaults.standard.value(forKey: "FavoriteMenuItems") as? [String] {
                     newFavorites.append(contentsOf: favorites)
                 }
-                newFavorites.append(name)
+                if (newValue) {
+                    newFavorites.append(name)
+                } else {
+                    newFavorites.removeAll { $0 == name }
+                }
                 UserDefaults.standard.set(newFavorites, forKey: "FavoriteMenuItems")
             }
-        }
-        
-        init(name: String, healthy: Bool) {
-            self.name = name
-            self.healthy = healthy
         }
 
     }
@@ -51,10 +50,6 @@ struct Menu: Codable {
     typealias StringRepresentation = [(String, [String])]
 
     var data: [Category: [Item]]
-    
-    init(data: [Category: [Item]]) {
-        self.data = data
-    }
 
     /**
      A list of tuples in the form (category, [item list]).
