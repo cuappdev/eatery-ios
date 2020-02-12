@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        let favorites = Defaults[\.favorites]
+        let favorites = Defaults[\.favoriteEateries]
         UIApplication.shared.shortcutItems = favorites.map {
             UIApplicationShortcutItem(type: $0,
                                       localizedTitle: $0,

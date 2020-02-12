@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 struct Menu: Codable {
 
@@ -22,24 +23,17 @@ struct Menu: Codable {
         let healthy: Bool
         
         /// Flag indicating if the user has favorited this item
+        
         var favorited: Bool {
             get {
-                if let favorites = UserDefaults.standard.value(forKey: "FavoriteMenuItems") as? [String] {
-                    return favorites.contains(name)
-                }
-                return false
+                Defaults[\.favoriteMenuItems].contains(name)
             }
-            set {
-                var newFavorites = [String]()
-                if let favorites = UserDefaults.standard.value(forKey: "FavoriteMenuItems") as? [String] {
-                    newFavorites.append(contentsOf: favorites)
-                }
-                if (newValue) {
-                    newFavorites.append(name)
+            nonmutating set {
+                if newValue {
+                    Defaults[\.favoriteMenuItems].append(name)
                 } else {
-                    newFavorites.removeAll { $0 == name }
+                    Defaults[\.favoriteMenuItems].removeAll { $0 == name }
                 }
-                UserDefaults.standard.set(newFavorites, forKey: "FavoriteMenuItems")
             }
         }
 

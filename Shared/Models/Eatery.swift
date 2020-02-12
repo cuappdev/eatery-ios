@@ -242,13 +242,13 @@ extension Eatery {
 
     var isFavorite: Bool {
         get {
-            Defaults[\.favorites].contains(name)
+            Defaults[\.favoriteEateries].contains(name)
         }
         nonmutating set {
             if newValue {
-                Defaults[\.favorites].append(name)
+                Defaults[\.favoriteEateries].append(name)
             } else {
-                Defaults[\.favorites].removeAll(where: { $0 == name })
+                Defaults[\.favoriteEateries].removeAll { $0 == name }
             }
 
             NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)

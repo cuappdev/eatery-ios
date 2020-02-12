@@ -10,7 +10,7 @@ import UIKit
 
 class MealItemTableViewCell: UITableViewCell {
 
-    private var favoriteButton: UIImageView?
+    private var favoriteButton: UIButton?
     private(set) var menuItem: Menu.Item?
     private let nameLabel = UILabel()
     
@@ -46,16 +46,14 @@ class MealItemTableViewCell: UITableViewCell {
         
         let starImageName = favoriteButtonAttributes!.imageName
         let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
-        favoriteButton = UIImageView(image: starImage)
+        favoriteButton = UIButton(type: .custom)
+        favoriteButton!.setImage(starImage, for: .normal)
         favoriteButton!.tintColor = favoriteButtonAttributes!.tintColor
-        favoriteButton!.isUserInteractionEnabled = true
-        let favoriteTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedFavorite))
-        favoriteButton!.addGestureRecognizer(favoriteTapGestureRecognizer)
+        favoriteButton!.addTarget(self, action: #selector(tappedFavorite), for: .touchUpInside)
         addSubview(favoriteButton!)
         favoriteButton!.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton!.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(4)
-            make.bottom.equalToSuperview().inset(4)
+            make.top.bottom.equalToSuperview()
             make.trailing.equalToSuperview().inset(16)
             make.width.equalTo(favoriteButton!.snp_width)
         }
@@ -75,7 +73,7 @@ class MealItemTableViewCell: UITableViewCell {
         print(menuItem!.favorited)
         let starImageName = favoriteButtonAttributes!.imageName
         let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
-        favoriteButton!.image = starImage
+        favoriteButton!.setImage(starImage, for: .normal)
         favoriteButton!.tintColor = favoriteButtonAttributes!.tintColor
     }
 

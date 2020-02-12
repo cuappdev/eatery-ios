@@ -10,7 +10,8 @@ import SwiftyUserDefaults
 
 extension DefaultsKeys {
 
-    var favorites: DefaultsKey<[String]> { .init("favorites", defaultValue: []) }
+    var favoriteEateries: DefaultsKey<[String]> { .init("favorites", defaultValue: []) }
+    var favoriteMenuItems: DefaultsKey<[String]> { .init("favoriteMenuItems", defaultValue: []) }
 
     #if os(iOS)
     var significantEvents: DefaultsKey<Int> { .init("significantEvents", defaultValue: 0) }
