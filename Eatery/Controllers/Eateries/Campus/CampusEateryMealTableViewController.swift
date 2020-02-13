@@ -32,6 +32,7 @@ class CampusEateryMealTableViewController: UITableViewController {
         // TableView Config
         tableView.estimatedRowHeight = (eatery.eateryType == .dining) ? 36 : 44
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension;
 
         tableView.register(MealItemTableViewCell.self, forCellReuseIdentifier: "MealItem")
@@ -39,20 +40,20 @@ class CampusEateryMealTableViewController: UITableViewController {
 
         tableView.isScrollEnabled = false
 
-        let topSeparator = UIView()
+        /*let topSeparator = UIView()
         topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
         topSeparator.backgroundColor = .inactive
         tableView.tableHeaderView = topSeparator
+        TODO ethan: consider making less wide and more aligned with "Menu"*/
 
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
 
-        if let menu = menu, menu.data.count == 1, eatery.eateryType != .dining {
+        /*if let menu = menu, menu.data.count == 1, eatery.eateryType != .dining {
             topSeparator.isHidden = false
-            tableView.separatorStyle = .singleLine
         } else {
             topSeparator.isHidden = true
-            tableView.separatorStyle = .none
         }
+        TODO ethan: same as above*/
     }
 
     // MARK: - Table view data source
@@ -159,7 +160,7 @@ class CampusEateryMealTableViewController: UITableViewController {
         let menuItem = stationItems[indexPath.row]
         cell.configure(for: menuItem)
         return cell
-        /*
+        /* TODO ETHAN RM
         let possibleTitle = stationTitles[indexPath.row]
         if possibleTitle == "General" {
             cell.titleLabel.text = ""

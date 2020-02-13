@@ -187,6 +187,18 @@ extension CampusEatery {
     func getMenu(meal: String, onDayOf date: Date) -> Menu? {
         getMenuAndType(meal: meal, onDayOf: date)?.0
     }
+    
+    func getFavoriteMealItems(meal: String, onDayOf date: Date) -> [Menu.Item] {
+        var favorites = [Menu.Item]()
+        getMenuAndType(meal: meal, onDayOf: date)?.0.data.forEach { categoryItems in
+            categoryItems.value.forEach {
+                if $0.favorited {
+                    favorites.append($0)
+                }
+            }
+        }
+        return favorites
+    }
 
 }
 
