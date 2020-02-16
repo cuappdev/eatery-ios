@@ -8,10 +8,11 @@
 
 import UIKit
 import SwiftyJSON
+import SwiftyUserDefaults
 import CoreLocation
 
 /// Represents a location on Cornell Campus
-enum Area: String, CaseIterable, CustomStringConvertible {
+enum Area: String, CaseIterable, CustomStringConvertible, Codable {
 
     case central = "Central"
     case north = "North"
@@ -23,7 +24,7 @@ enum Area: String, CaseIterable, CustomStringConvertible {
 
 }
 
-struct SwipeDataPoint: Hashable {
+struct SwipeDataPoint: Hashable, Codable {
 
     let eateryId: Int
     let militaryHour: Int
@@ -34,7 +35,7 @@ struct SwipeDataPoint: Hashable {
 
 }
 
-enum MenuType {
+enum MenuType: String, Codable {
 
     /// The menu is provided from an event-based eatery, e.g. RPCC, Okenshields
     case event
@@ -48,7 +49,7 @@ enum MenuType {
 
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
-struct CampusEatery: Eatery {
+struct CampusEatery: Eatery, Codable, DefaultsSerializable {
 
     private static let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
@@ -84,7 +85,9 @@ struct CampusEatery: Eatery {
 
     let paymentMethods: [PaymentMethod]
 
-    let location: CLLocation
+    let latitude: Double
+
+    let longitude: Double
 
     let phone: String
 
@@ -112,7 +115,8 @@ struct CampusEatery: Eatery {
         area: Area?,
         address: String,
         paymentMethods: [PaymentMethod],
-        location: CLLocation,
+        latitude: CLLocationDegrees,
+        longitude: CLLocationDegrees,
         phone: String,
         slug: String,
         events: [String: [String: Event]],
@@ -127,7 +131,8 @@ struct CampusEatery: Eatery {
         self.area = area
         self.address = address
         self.paymentMethods = paymentMethods
-        self.location = location
+        self.latitude = latitude
+        self.longitude = longitude
         self.phone = phone
 
         self.slug = slug

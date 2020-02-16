@@ -8,6 +8,8 @@
 
 import os.log
 import CoreLocation
+import SwiftyUserDefaults
+import NVActivityIndicatorView
 import UIKit
 
 class CampusEateriesViewController: EateriesViewController {
@@ -15,6 +17,8 @@ class CampusEateriesViewController: EateriesViewController {
     private var allEateries: [CampusEatery]?
 
     private var preselectedEateryName: String?
+
+    var networkActivityIndicator: NVActivityIndicatorView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +35,30 @@ class CampusEateriesViewController: EateriesViewController {
             .brb
         ]
 
-        queryCampusEateries()
+        if let eateries = Defaults[\.cachedCampusEateries],
+            let lastRefresh = Defaults[\.cachedCampusEateriesLastRefresh],
+            lastRefresh.addingTimeInterval(60 * 60 * 24) > Date() {
+
+            self.allEateries = eateries
+            self.updateState(.presenting(cached: true), animated: false)
+
+            networkActivityIndicator?.startAnimating()
+
+            queryCampusEateries {
+                self.networkActivityIndicator?.stopAnimating()
+            }
+
+        } else {
+            queryCampusEateries()
+        }
     }
 
-    private func queryCampusEateries() {
+    private func queryCampusEateries(_ completion: (() -> Void)? = nil) {
         NetworkManager.shared.getCampusEateries { [weak self] (eateries, error) in
+            defer {
+                completion?()
+            }
+
             guard let `self` = self else {
                 return
             }
@@ -50,8 +73,11 @@ class CampusEateriesViewController: EateriesViewController {
 
             os_log("Successfully loaded %d campus eateries", eateries.count)
 
+            Defaults[\.cachedCampusEateries] = eateries
+            Defaults[\.cachedCampusEateriesLastRefresh] = Date()
+
             self.allEateries = eateries
-            self.updateState(.presenting, animated: true)
+            self.updateState(.presenting(cached: false), animated: true)
 
             self.pushPreselectedEateryIfPossible()
         }
@@ -71,7 +97,7 @@ class CampusEateriesViewController: EateriesViewController {
             return
         }
 
-        showMenu(of: eatery, animated: false)
+        showMenu(of: eatery, animated: true)
         preselectedEateryName = nil
     }
 

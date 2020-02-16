@@ -44,7 +44,7 @@ class CollegetownEateriesViewController: EateriesViewController {
             os_log("Successfully loaded %d collegetown eateries", eateries.count)
 
             self.allEateries = eateries
-            self.updateState(.presenting, animated: true)
+            self.updateState(.presenting(cached: false), animated: true)
         }
     }
 

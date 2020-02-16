@@ -13,7 +13,7 @@ import UIKit
 // MARK: - Eatery Data
 
 /// Different meals served by eateries
-enum Meal: String {
+enum Meal: String, Codable {
 
     case breakfast = "Breakfast"
     case brunch = "Brunch"
@@ -24,7 +24,7 @@ enum Meal: String {
 }
 
 /// Assorted types of payment accepted by an Eatery
-enum PaymentMethod: String {
+enum PaymentMethod: String, Codable {
 
     case brb = "Meal Plan - Debit"
     case swipes = "Meal Plan - Swipe"
@@ -37,7 +37,7 @@ enum PaymentMethod: String {
 }
 
 /// Different types of eateries on campus
-enum EateryType: String {
+enum EateryType: String, Codable{
 
     case dining = "all you care to eat dining room"
     case cafe = "cafe"
@@ -93,6 +93,10 @@ protocol Eatery {
 
     var paymentMethods: [PaymentMethod] { get }
 
+    var latitude: CLLocationDegrees { get }
+
+    var longitude: CLLocationDegrees { get }
+
     var location: CLLocation { get }
 
     var phone: String { get }
@@ -100,6 +104,14 @@ protocol Eatery {
     var events: [DayString: [EventName: Event]] { get }
 
     var allEvents: [Event] { get }
+
+}
+
+extension Eatery {
+
+    var location: CLLocation {
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
 
 }
 

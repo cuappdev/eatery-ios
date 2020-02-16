@@ -102,7 +102,7 @@ class EateriesViewController: UIViewController {
 
     enum State: Equatable {
 
-        case presenting
+        case presenting(cached: Bool)
         case loading
         case failedToLoad(Error)
         
@@ -136,7 +136,7 @@ class EateriesViewController: UIViewController {
 
     weak var dataSource: EateriesViewControllerDataSource?
 
-    private var state: State = .loading
+    private(set) var state: State = .loading
     private var eateriesByGroup: EateriesByGroup?
 
     private var updateTimer: Timer?
@@ -172,6 +172,10 @@ class EateriesViewController: UIViewController {
             }
         }
     }
+
+    // Preselection
+
+    private var preselectedEatery: Eatery?
 
     // MARK: View Controller
 
@@ -277,23 +281,28 @@ class EateriesViewController: UIViewController {
         }
     }
 
-    func updateState(_ newState: State, animated: Bool) {
-        guard state != newState else {
-            return
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
+        reloadEateries(animated: false)
+    }
+
+    func updateState(_ newState: State, animated: Bool) {
         switch state {
         case .loading:
             fadeOut(views: [activityIndicator], animated: true, completion: activityIndicator.stopAnimating)
 
         case .presenting:
-            fadeOut(views: [collectionView, searchBar, filterBar], animated: true)
+            switch newState {
+            case .failedToLoad, .loading:
+                fadeOut(views: [collectionView, searchBar, filterBar], animated: true)
+            default:
+                break
+            }
 
         case .failedToLoad:
             fadeOut(views: [failedToLoadView], animated: true)
         }
-
-        state = newState
 
         switch newState {
         case .loading:
@@ -302,19 +311,26 @@ class EateriesViewController: UIViewController {
             fadeIn(views: [activityIndicator], animated: true)
 
         case .presenting:
-            reloadEateries(animated: false)
+            reloadEateries(animated: true)
 
-            fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
+            switch state {
+            case .failedToLoad, .loading:
+                fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
 
-            if animated {
-                animateCollectionViewCells()
+                if animated {
+                    animateCollectionViewCells()
+                }
+            case .presenting:
+                break
             }
 
         case .failedToLoad:
             fadeIn(views: [failedToLoadView], animated: animated)
-
-            break
         }
+
+        pushPreselectedEateryIfPossible()
+
+        state = newState
     }
 
     private func fadeIn(views: [UIView], animated: Bool, completion: (() -> Void)? = nil) {
@@ -348,8 +364,41 @@ class EateriesViewController: UIViewController {
         }
     }
 
+    private func preselectEatery(_ preselected: Eatery) {
+        preselectedEatery = preselected
+
+        for cell in collectionView.visibleCells {
+            guard let cell = cell as? EateryCollectionViewCell,
+                let indexPath = collectionView.indexPath(for: cell) else {
+                    continue
+            }
+
+            let eatery = eateries(in: indexPath.section)[indexPath.row]
+
+            cell.setActivityIndicatorAnimating(preselected.id == eatery.id, animated: true)
+        }
+    }
+
+    private func pushPreselectedEateryIfPossible() {
+        if let eatery = preselectedEatery {
+            delegate?.eateriesViewController(self, didSelectEatery: eatery)
+        }
+
+        preselectedEatery = nil
+
+        for cell in collectionView.visibleCells {
+            if let cell = cell as? EateryCollectionViewCell {
+                cell.setActivityIndicatorAnimating(false, animated: true)
+            }
+        }
+    }
+
     /// Fade in and animate the cells of the collection view
     private func animateCollectionViewCells() {
+        guard view.window != nil else {
+            return
+        }
+
         // `layoutIfNeeded` forces the collectionView to add cells and headers
         collectionView.layoutIfNeeded()
         collectionView.isHidden = false
@@ -402,6 +451,10 @@ class EateriesViewController: UIViewController {
     }
 
     private func reloadEateries(animated: Bool) {
+        guard view.window != nil else {
+            return
+        }
+
         let newEateriesByGroup: EateriesByGroup
         if let dataSource = dataSource {
             let searchText = searchBar.text ?? ""
@@ -543,7 +596,7 @@ extension EateriesViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.eatery.rawValue, for: indexPath) as! EateryCollectionViewCell
         let eatery = eateries(in: indexPath.section)[indexPath.row]
-        cell.eatery = eatery
+        cell.configure(eatery: eatery)
         cell.userLocation = userLocation
         
         cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
@@ -552,8 +605,10 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.statusLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
         cell.paymentView.hero.id = AnimationKey.paymentView.id(eatery: eatery)
         cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
+
+        cell.setActivityIndicatorAnimating(eatery.id == preselectedEatery?.id, animated: true)
         
-        if .presenting == state,
+        if case .presenting = state,
             let searchText = searchBar.text, !searchText.isEmpty,
             let text = highlightedText(for: eatery) {
             cell.menuTextView.attributedText = text
@@ -597,7 +652,18 @@ extension EateriesViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let eatery = eateries(in: indexPath.section)[indexPath.row]
-        delegate?.eateriesViewController(self, didSelectEatery: eatery)
+        switch state {
+        case .presenting(cached: false):
+            delegate?.eateriesViewController(self, didSelectEatery: eatery)
+        case .presenting(cached: true):
+            preselectEatery(eatery)
+
+            if let cell = collectionView.cellForItem(at: indexPath) as? EateryCollectionViewCell {
+                cell.setActivityIndicatorAnimating(true, animated: true)
+            }
+        default:
+            break
+        }
     }
 
     // Cell "Bounce" when selected
@@ -608,7 +674,7 @@ extension EateriesViewController: UICollectionViewDelegate {
                 return
         }
 
-        UIView.animate(withDuration: 0.35,
+        UIView.animate(withDuration: 0.25,
                        delay: 0.0,
                        usingSpringWithDamping: 1.0,
                        initialSpringVelocity: 0.0,
@@ -624,7 +690,7 @@ extension EateriesViewController: UICollectionViewDelegate {
                 return
         }
 
-        UIView.animate(withDuration: 0.35,
+        UIView.animate(withDuration: 0.25,
                        delay: 0.0,
                        usingSpringWithDamping: 1.0,
                        initialSpringVelocity: 0.0,
