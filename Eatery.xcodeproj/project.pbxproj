@@ -127,6 +127,7 @@
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE10AE1423FB8E6300706A81 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10AE1323FB8E6300706A81 /* NotificationManager.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
 		D1EE777A1C702469001823D8 /* String+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE77791C702469001823D8 /* String+Manipulation.swift */; };
@@ -320,6 +321,7 @@
 		C87E76F72399F0F10098160B /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 		C87E76F92399F1010098160B /* collegetown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegetown.json; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
+		CE10AE1323FB8E6300706A81 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				D956DCB72187B875001BB9B0 /* Models */,
 				D956DCB22187B496001BB9B0 /* Network */,
 				C0497ACB1B64AA1800AC1C6C /* Data */,
+				CE10AE1223FB8E4A00706A81 /* Notifications */,
 				5DAA55AB23DA919200C378DE /* DefaultsKeys.swift */,
 			);
 			path = Shared;
@@ -814,6 +817,14 @@
 				C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE10AE1223FB8E4A00706A81 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				CE10AE1323FB8E6300706A81 /* NotificationManager.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		D956DCAF2187B2A2001BB9B0 /* Queries */ = {
@@ -1271,6 +1282,7 @@
 				5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */,
 				5D77412E2332E08400E9E699 /* ImageParallaxScrollViewController.swift in Sources */,
 				C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */,
+				CE10AE1423FB8E6300706A81 /* NotificationManager.swift in Sources */,
 				60FF4E1C1CBEE03E0051FD01 /* MapViewController.swift in Sources */,
 				D956DCC12187B94E001BB9B0 /* Event.swift in Sources */,
 				6502AF871DCFB9ED00390EAA /* FilterBar.swift in Sources */,

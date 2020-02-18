@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class MealItemTableViewCell: UITableViewCell {
 
@@ -70,7 +71,11 @@ class MealItemTableViewCell: UITableViewCell {
     @objc private func tappedFavorite() {
         guard menuItem != nil else { return }
         menuItem!.favorited.toggle()
-        print(menuItem!.favorited)
+        if menuItem!.favorited {
+            NotificationsManager.shared.requestAuthorization()
+            NotificationsManager.shared.setUpNotification(for: menuItem!)
+        }
+        
         let starImageName = favoriteButtonAttributes!.imageName
         let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
         favoriteButton!.setImage(starImage, for: .normal)
