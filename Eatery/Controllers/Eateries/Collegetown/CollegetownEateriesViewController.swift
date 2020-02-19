@@ -159,6 +159,10 @@ extension CollegetownEateriesViewController: EateriesViewControllerDelegate {
         showMenu(of: collegeTownEatey)
     }
 
+    func eateriesViewController(_ evc: EateriesViewController, didPreselectEatery cachedEatery: Eatery) {
+        // Collegetown Eateries do not support caching (yet)
+    }
+
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController) {
         updateState(.loading, animated: true)
 

@@ -276,6 +276,16 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         showMenu(of: campusEatery, animated: true)
     }
 
+    func eateriesViewController(_ evc: EateriesViewController, didPreselectEatery cachedEatery: Eatery) {
+        guard let campusEatery = cachedEatery as? CampusEatery else {
+            return
+        }
+
+        if let eatery = allEateries?.first(where: { $0.name == campusEatery.name }) {
+            showMenu(of: eatery, animated: true)
+        }
+    }
+
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController) {
         updateState(.loading, animated: true)
 

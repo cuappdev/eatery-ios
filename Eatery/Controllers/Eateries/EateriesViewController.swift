@@ -36,6 +36,8 @@ protocol EateriesViewControllerDelegate: AnyObject {
 
     func eateriesViewController(_ evc: EateriesViewController, didSelectEatery eatery: Eatery)
 
+    func eateriesViewController(_ evc: EateriesViewController, didPreselectEatery cachedEatery: Eatery)
+
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController)
 
     func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController)
@@ -340,6 +342,8 @@ class EateriesViewController: UIViewController {
             fadeIn(views: [failedToLoadView], animated: animated)
         }
 
+        preselectedEatery = nil
+
         state = newState
     }
 
@@ -391,10 +395,8 @@ class EateriesViewController: UIViewController {
 
     private func pushPreselectedEateryIfPossible() {
         if let eatery = preselectedEatery {
-            delegate?.eateriesViewController(self, didSelectEatery: eatery)
+            delegate?.eateriesViewController(self, didPreselectEatery: eatery)
         }
-
-        preselectedEatery = nil
 
         for cell in collectionView.visibleCells {
             if let cell = cell as? EateryCollectionViewCell {
