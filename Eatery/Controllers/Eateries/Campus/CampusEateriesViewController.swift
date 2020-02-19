@@ -37,10 +37,10 @@ class CampusEateriesViewController: EateriesViewController {
 
         if let eateries = Defaults[\.cachedCampusEateries],
             let lastRefresh = Defaults[\.cachedCampusEateriesLastRefresh],
-            lastRefresh.addingTimeInterval(60 * 60 * 24) > Date() {
+            lastRefresh + (24 * 60 * 60) > Date() {
 
-            self.allEateries = eateries
-            self.updateState(.presenting(cached: true), animated: false)
+            allEateries = eateries
+            updateState(.presenting(cached: true), animated: false)
 
             networkActivityIndicator?.startAnimating()
 
@@ -49,6 +49,7 @@ class CampusEateriesViewController: EateriesViewController {
             }
 
         } else {
+            updateState(.loading, animated: false)
             queryCampusEateries()
         }
     }

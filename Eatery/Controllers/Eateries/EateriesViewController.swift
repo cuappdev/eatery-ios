@@ -297,25 +297,25 @@ class EateriesViewController: UIViewController {
     func updateState(_ newState: State, animated: Bool) {
         switch state {
         case .loading:
-            fadeOut(views: [activityIndicator], animated: true, completion: activityIndicator.stopAnimating)
+            fadeOut(views: [activityIndicator], animated: animated, completion: activityIndicator.stopAnimating)
 
         case .presenting:
             switch newState {
             case .failedToLoad, .loading:
-                fadeOut(views: [collectionView, searchBar, filterBar], animated: true)
+                fadeOut(views: [collectionView, searchBar, filterBar], animated: animated)
             default:
                 break
             }
 
         case .failedToLoad:
-            fadeOut(views: [failedToLoadView], animated: true)
+            fadeOut(views: [failedToLoadView], animated: animated)
         }
 
         switch newState {
         case .loading:
             activityIndicator.startAnimating()
 
-            fadeIn(views: [activityIndicator], animated: true)
+            fadeIn(views: [activityIndicator], animated: animated)
 
         case .presenting(let cached):
             searchBar.isUserInteractionEnabled = !cached
@@ -323,6 +323,8 @@ class EateriesViewController: UIViewController {
             switch state {
             case .failedToLoad, .loading:
                 fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
+
+                reloadEateries(animated: animated)
 
                 if animated {
                     animateCollectionViewCells()
@@ -696,7 +698,7 @@ extension EateriesViewController: UICollectionViewDelegate {
                        initialSpringVelocity: 0.0,
                        options: [],
                        animations: {
-            cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+                        cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
         })
     }
 
@@ -712,7 +714,7 @@ extension EateriesViewController: UICollectionViewDelegate {
                        initialSpringVelocity: 0.0,
                        options: [],
                        animations: {
-            cell.transform = .identity
+                        cell.transform = .identity
         })
     }
 
@@ -735,7 +737,7 @@ extension EateriesViewController: UICollectionViewDataSourcePrefetching {
 // MARK: - Collection View Delegate Flow Layout
 
 extension EateriesViewController: UICollectionViewDelegateFlowLayout {
- 
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
