@@ -54,7 +54,7 @@ class CampusEateriesViewController: EateriesViewController {
     }
 
     private func queryCampusEateries(_ completion: (() -> Void)? = nil) {
-        NetworkManager.shared.getCampusEateries { [weak self] (eateries, error) in
+        NetworkManager.shared.getCampusEateries(useCachedData: false) { [weak self] (eateries, error) in
             defer {
                 completion?()
             }

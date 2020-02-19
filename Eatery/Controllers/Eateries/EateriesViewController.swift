@@ -175,7 +175,12 @@ class EateriesViewController: UIViewController {
 
     // Preselection
 
+    /// The eatery to present after we switch presentation modes.
     private var preselectedEatery: Eatery?
+
+    // Haptics
+
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 
     // MARK: View Controller
 
@@ -190,7 +195,7 @@ class EateriesViewController: UIViewController {
         collectionView.alpha = 0
         searchBar.alpha = 0
         filterBar.alpha = 0
-        activityIndicator.startAnimating()
+        activityIndicator.alpha = 0
         failedToLoadView.alpha = 0
 
         scheduleUpdateTimer()
@@ -265,6 +270,8 @@ class EateriesViewController: UIViewController {
             make.center.equalToSuperview()
             make.size.equalTo(44)
         }
+
+        activityIndicator.startAnimating()
     }
     
     private func setUpFailedToLoadView() {
@@ -310,8 +317,8 @@ class EateriesViewController: UIViewController {
 
             fadeIn(views: [activityIndicator], animated: true)
 
-        case .presenting:
-            reloadEateries(animated: true)
+        case .presenting(let cached):
+            searchBar.isUserInteractionEnabled = !cached
 
             switch state {
             case .failedToLoad, .loading:
@@ -320,15 +327,16 @@ class EateriesViewController: UIViewController {
                 if animated {
                     animateCollectionViewCells()
                 }
+
             case .presenting:
-                break
+                reloadEateries(animated: false)
             }
+
+            pushPreselectedEateryIfPossible()
 
         case .failedToLoad:
             fadeIn(views: [failedToLoadView], animated: animated)
         }
-
-        pushPreselectedEateryIfPossible()
 
         state = newState
     }
@@ -651,6 +659,12 @@ extension EateriesViewController: UICollectionViewDataSource {
 extension EateriesViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard 1 <= indexPath.section, indexPath.section <= 3 else {
+            return
+        }
+
+        feedbackGenerator.impactOccurred()
+
         let eatery = eateries(in: indexPath.section)[indexPath.row]
         switch state {
         case .presenting(cached: false):
@@ -674,7 +688,9 @@ extension EateriesViewController: UICollectionViewDelegate {
                 return
         }
 
-        UIView.animate(withDuration: 0.25,
+        feedbackGenerator.prepare()
+
+        UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        usingSpringWithDamping: 1.0,
                        initialSpringVelocity: 0.0,

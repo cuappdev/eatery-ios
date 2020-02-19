@@ -35,8 +35,11 @@ struct NetworkManager {
         return formatter
     }()
 
-    func getCampusEateries(completion: @escaping ([CampusEatery]?, NetworkError?) -> Void) {
-        apollo.fetch(query: CampusEateriesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+    func getCampusEateries(useCachedData: Bool, completion: @escaping ([CampusEatery]?, NetworkError?) -> Void) {
+        apollo.fetch(
+            query: CampusEateriesQuery(),
+            cachePolicy: useCachedData ? .returnCacheDataElseFetch : .fetchIgnoringCacheData
+        ) { (result, error) in
             guard error == nil else { completion(nil, NetworkError(message: error?.localizedDescription ?? "")); return }
 
             guard let result = result,

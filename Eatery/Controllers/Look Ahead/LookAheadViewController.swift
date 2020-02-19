@@ -207,7 +207,7 @@ class LookAheadViewController: UIViewController {
     }
 
     private func queryEateries() {
-        NetworkManager.shared.getCampusEateries { (eateries, error) in
+        NetworkManager.shared.getCampusEateries(useCachedData: true) { (eateries, error) in
             DispatchQueue.main.async(execute: { [weak self] in
                 guard let `self` = self else { return }
 
