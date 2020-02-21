@@ -90,7 +90,7 @@ struct NotificationsManager {
                     let eateries = servings.map { $0.eatery }
                     
                     let numSecondsInHour: TimeInterval = 60 * 60
-                    let notificationDate = Date().addingTimeInterval(10)//sortedServings[0].eventStart.addingTimeInterval(-numSecondsInHour)
+                    let notificationDate = sortedServings[0].eventStart.addingTimeInterval(-numSecondsInHour)
                     self.setUpNotification(for: menuItem, eateryDisplayNames: eateries, on: notificationDate)
                 }
             }
