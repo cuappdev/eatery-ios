@@ -74,6 +74,8 @@ class MealItemTableViewCell: UITableViewCell {
         if menuItem!.favorited {
             NotificationsManager.shared.requestAuthorization()
             NotificationsManager.shared.setUpNotification(for: menuItem!)
+        } else {
+            NotificationsManager.shared.removeScheduledNotifications(for: menuItem!)
         }
         
         let starImageName = favoriteButtonAttributes!.imageName

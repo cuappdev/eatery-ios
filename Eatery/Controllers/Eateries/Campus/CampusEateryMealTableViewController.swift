@@ -105,7 +105,11 @@ class CampusEateryMealTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return (eatery.eateryType == .dining) ? 40 : 0
+        if let menu = menu, menu.data.count > 1, eatery.eateryType == .dining {
+            return 40
+        } else {
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
