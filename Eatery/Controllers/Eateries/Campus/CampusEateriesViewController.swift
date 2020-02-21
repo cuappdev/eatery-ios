@@ -8,11 +8,13 @@
 
 import os.log
 import CoreLocation
-import SwiftyUserDefaults
 import NVActivityIndicatorView
+import SwiftyUserDefaults
 import UIKit
 
 class CampusEateriesViewController: EateriesViewController {
+
+    private static let cacheTimeToLive: TimeInterval = 24 * 60 * 60 // one day
 
     private var allEateries: [CampusEatery]?
 
@@ -37,7 +39,7 @@ class CampusEateriesViewController: EateriesViewController {
 
         if let eateries = Defaults[\.cachedCampusEateries],
             let lastRefresh = Defaults[\.cachedCampusEateriesLastRefresh],
-            lastRefresh + (24 * 60 * 60) > Date() {
+            lastRefresh + CampusEateriesViewController.cacheTimeToLive > Date() {
 
             allEateries = eateries
             updateState(.presenting(cached: true), animated: false)
@@ -47,7 +49,6 @@ class CampusEateriesViewController: EateriesViewController {
             queryCampusEateries {
                 self.networkActivityIndicator?.stopAnimating()
             }
-
         } else {
             updateState(.loading, animated: false)
             queryCampusEateries()
@@ -60,7 +61,7 @@ class CampusEateriesViewController: EateriesViewController {
                 completion?()
             }
 
-            guard let `self` = self else {
+            guard let self = self else {
                 return
             }
 

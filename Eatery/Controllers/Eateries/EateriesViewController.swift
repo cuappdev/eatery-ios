@@ -663,7 +663,7 @@ extension EateriesViewController: UICollectionViewDataSource {
 extension EateriesViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard 1 <= indexPath.section, indexPath.section <= 3 else {
+        guard collectionView.cellForItem(at: indexPath)?.reuseIdentifier == CellIdentifier.eatery.rawValue else {
             return
         }
 
