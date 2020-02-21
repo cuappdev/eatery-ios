@@ -22,6 +22,7 @@ struct NotificationsManager {
         UNUserNotificationCenter.current().requestAuthorization(options: authorizationOptions) { (granted, error) in }
     }
     
+    /// Schedule a notification for a menu item being served at any of the dining hall in eateries, to be triggered on date
     private func setUpNotification(for menuItem: Menu.Item, eateries: [CampusEatery], on date: Date) {
         guard date > Date(), !eateries.isEmpty else { return }
         
@@ -87,7 +88,10 @@ struct NotificationsManager {
                     var sortedServings = servings
                     sortedServings.sort { $0.eventStart < $1.eventStart }
                     let eateries = servings.map { $0.eatery }
-                    self.setUpNotification(for: menuItem, eateries: eateries, on: sortedServings[0].eventStart)
+                    
+                    let numSecondsInHour: TimeInterval = 60 * 60
+                    let notificationDate = sortedServings[0].eventStart.addingTimeInterval(-numSecondsInHour)
+                    self.setUpNotification(for: menuItem, eateries: eateries, on: notificationDate)
                 }
             }
         }
