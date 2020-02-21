@@ -22,24 +22,24 @@ struct NotificationsManager {
         UNUserNotificationCenter.current().requestAuthorization(options: authorizationOptions) { (granted, error) in }
     }
     
-    /// Schedule a notification for a menu item being served at any of the dining hall in eateries, to be triggered on date
-    private func setUpNotification(for menuItem: Menu.Item, eateries: [CampusEatery], on date: Date) {
-        guard date > Date(), !eateries.isEmpty else { return }
+    /// Schedule a notification for a menu item being served at any of the eateries in eateryDisplayNames, to be triggered on date
+    private func setUpNotification(for menuItem: Menu.Item, eateryDisplayNames: [String], on date: Date) {
+        guard date > Date(), !eateryDisplayNames.isEmpty else { return }
         
         let notifContent = UNMutableNotificationContent()
         notifContent.title = self.favoriteMenuItemNotifTitle
         var multipleServingsPostfix: String
-        switch eateries.count {
+        switch eateryDisplayNames.count {
         case 1:
             multipleServingsPostfix = ""
         case 2:
-            multipleServingsPostfix = " and \(eateries[1].displayName)"
+            multipleServingsPostfix = " and \(eateryDisplayNames[1])"
         case 3:
-            multipleServingsPostfix = ", \(eateries[1].displayName), and 1 other"
+            multipleServingsPostfix = ", \(eateryDisplayNames[1]), and 1 other"
         default:
-            multipleServingsPostfix = ", \(eateries[1].displayName), and \(eateries.count - 2) others"
+            multipleServingsPostfix = ", \(eateryDisplayNames[1]), and \(eateryDisplayNames.count - 2) others"
         }
-        notifContent.body = "\(menuItem.name) is being served at \(eateries[0].displayName)" + multipleServingsPostfix
+        notifContent.body = "\(menuItem.name) is being served at \(eateryDisplayNames[0])" + multipleServingsPostfix
         notifContent.sound = UNNotificationSound.default()
 
         let notifDateComponents = Calendar.current.dateComponents([.second, .minute, .hour, .day, .month, .year], from: date)
@@ -53,7 +53,7 @@ struct NotificationsManager {
         NetworkManager.shared.getCampusEateries { (eateries, error) in
             guard let eateries = eateries else { return }
             
-            var itemServingsByDate = [Int : [(eatery: CampusEatery, eventStart: Date, eventName: CampusEatery.EventName)]]()
+            var itemServingsByDate = [Int : [(eatery: String, eventStart: Date, eventName: CampusEatery.EventName)]]()
             for eatery in eateries {
                 for event in eatery.allEvents {
                     let eventStatus = event.status(atExactly: Date())
@@ -69,18 +69,18 @@ struct NotificationsManager {
                         guard event.start == eateryEvent.start else { continue }
                         let day = Calendar.current.component(.day, from: event.start)
                         if itemServingsByDate[day] == nil {
-                            itemServingsByDate[day] = [(CampusEatery, Date, CampusEatery.EventName)]()
+                            itemServingsByDate[day] = [(String, Date, CampusEatery.EventName)]()
                         }
-                        itemServingsByDate[day]!.append((eatery, event.start, eventName))
+                        itemServingsByDate[day]!.append((eatery.displayName, event.start, eventName))
                     }
                 }
             }
             
             for (_, itemServings) in itemServingsByDate {
-                var servingsByEventName = [CampusEatery.EventName : [(eatery: CampusEatery, eventStart: Date)]]()
+                var servingsByEventName = [CampusEatery.EventName : [(eatery: String, eventStart: Date)]]()
                 for serving in itemServings {
                     if servingsByEventName[serving.eventName] == nil {
-                        servingsByEventName[serving.eventName] = [(CampusEatery, Date)]()
+                        servingsByEventName[serving.eventName] = [(String, Date)]()
                     }
                     servingsByEventName[serving.eventName]!.append((serving.eatery, serving.eventStart))
                 }
@@ -90,8 +90,8 @@ struct NotificationsManager {
                     let eateries = servings.map { $0.eatery }
                     
                     let numSecondsInHour: TimeInterval = 60 * 60
-                    let notificationDate = sortedServings[0].eventStart.addingTimeInterval(-numSecondsInHour)
-                    self.setUpNotification(for: menuItem, eateries: eateries, on: notificationDate)
+                    let notificationDate = Date().addingTimeInterval(10)//sortedServings[0].eventStart.addingTimeInterval(-numSecondsInHour)
+                    self.setUpNotification(for: menuItem, eateryDisplayNames: eateries, on: notificationDate)
                 }
             }
         }

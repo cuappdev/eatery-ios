@@ -23,7 +23,6 @@ struct Menu: Codable {
         let healthy: Bool
         
         /// Flag indicating if the user has favorited this item
-        
         var favorited: Bool {
             get {
                 Defaults[\.favoriteMenuItems].contains(name)
