@@ -2,6 +2,7 @@ Secrets/
 Eatery/schema.json
 Eatery/API.swift
 Eatery/GoogleService-Info.plist
+Eatery/Supporting/Secrets.plist
 build/
 *.pbxuser
 !default.pbxuser

@@ -14,12 +14,31 @@ We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should
 To access the project, clone the project, and run `pod install` in the project directory.
 
 ### 2. Configuration
-We use [Firebase](https://firebase.google.com) for our user analytics. You will have to retrieve a `GoogleService-Info.plist` from Firebase and then place it inside the `Eatery/` directory.
+1. We use [Firebase](https://firebase.google.com) for our user analytics. You will have to retrieve a `GoogleService-Info.plist` from Firebase and then place it inside the `Eatery/` directory.
 
-We also use `GraphQL` to retrieve data from our backend server and use `Apollo` on the client side in order to help us do so. 
+2. We also use `GraphQL` to retrieve data from our backend server and use `Apollo` on the client side in order to help us do so. 
 
 To setup `Apollo`, you will have to first install it by running `npm install -g apollo@1.9` in the project directory (make sure you specify version 1.9).
 
 You will also have to retrieve a `schema.json` file by running: `apollo schema:download --endpoint={Backend_URL} schema.json` in the <strong>project directory</strong>.
+
+3. Lastly, you will need a `Secrets.plist` file that you will want to place inside the `Eatery/Supporting/` directory. The following is a template for the `Secrets.plist` file:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>announcements-scheme</key>
+	<string>insert-value-here</string>
+	<key>announcements-host</key>
+	<string>insert-value-here</string>
+	<key>announcements-common-path</key>
+	<string>insert-value-here</string>
+	<key>announcements-path</key>
+	<string>insert-value-here</string>
+</dict>
+</plist>
+```
 
 Finally, open `Eatery.xcworkspace` and enjoy Eatery!

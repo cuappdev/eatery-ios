@@ -11,8 +11,10 @@ target 'Eatery' do
     platform :ios, '11.0'
     shared_pods
 
+    pod 'AppDevAnnouncements', :git => 'https://github.com/cuappdev/appdev-announcements.git'
     pod 'ARCL'
     pod 'BulletinBoard'
+    pod 'CHIPageControl/Jaloro'
     pod 'FLEX', '~> 2.0', :configurations => ['Debug']
     pod 'Fabric'
     pod 'Firebase/Analytics'
@@ -20,7 +22,6 @@ target 'Eatery' do
     pod 'Kingfisher'
     pod 'NVActivityIndicatorView'
     pod 'SnapKit'
-    pod 'CHIPageControl/Jaloro'
     pod 'lottie-ios'
 end
 

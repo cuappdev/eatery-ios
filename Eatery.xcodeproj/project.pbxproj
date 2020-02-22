@@ -113,6 +113,8 @@
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
 		C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0497B581B64AA3800AC1C6C /* Images.xcassets */; };
 		C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F182F81B674B1300063D77 /* AppDelegate.swift */; };
+		C21D107D2400F535000A488B /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21D107C2400F535000A488B /* Secrets.swift */; };
+		C21D107F2400FC53000A488B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = C21D107E2400FC53000A488B /* Secrets.plist */; };
 		C26C57A0219642BC000E7FC9 /* EateryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */; };
 		C82C9B83238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */; };
 		C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */; };
@@ -306,6 +308,8 @@
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
 		C0497B581B64AA3800AC1C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0F182F81B674B1300063D77 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C21D107C2400F535000A488B /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		C21D107E2400FC53000A488B /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		C26C579F219642BC000E7FC9 /* EateryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryTabBarController.swift; sourceTree = "<group>"; };
 		C82C9B82238D75C200DC18CF /* OnboardingPrivacyStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPrivacyStatementViewController.swift; sourceTree = "<group>"; };
 		C82E5EFF2388E96400C881B2 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
@@ -712,6 +716,7 @@
 		C0497ACA1B64AA1800AC1C6C /* Eatery */ = {
 			isa = PBXGroup;
 			children = (
+				C21D10792400F48B000A488B /* Supporting */,
 				8724A0772349637E00D92EE3 /* GoogleService-Info.plist */,
 				D97142E6219A6B6F00E2EE05 /* API.swift */,
 				C0F182F81B674B1300063D77 /* AppDelegate.swift */,
@@ -779,6 +784,15 @@
 				95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C21D10792400F48B000A488B /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				C21D107E2400FC53000A488B /* Secrets.plist */,
+				C21D107C2400F535000A488B /* Secrets.swift */,
+			);
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 		C83AEAAF237A476B00663C8D /* Onboarding */ = {
@@ -1002,6 +1016,7 @@
 				D956DCB12187B2BF001BB9B0 /* campusEateries.graphql in Resources */,
 				C0497BAF1B64AA3800AC1C6C /* Images.xcassets in Resources */,
 				8724A0782349637E00D92EE3 /* GoogleService-Info.plist in Resources */,
+				C21D107F2400FC53000A488B /* Secrets.plist in Resources */,
 				E9CFC0AA1C0E4A3000ED884A /* appendix.json in Resources */,
 				95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */,
 				5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */,
@@ -1046,6 +1061,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Eatery/Pods-Eatery-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo-iOS/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/AppDevAnnouncements/AppDevAnnouncements.framework",
 				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BLTNBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
@@ -1063,6 +1079,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppDevAnnouncements.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLTNBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
@@ -1263,6 +1280,7 @@
 				87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */,
 				C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */,
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
+				C21D107D2400F535000A488B /* Secrets.swift in Sources */,
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
