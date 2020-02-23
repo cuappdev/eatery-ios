@@ -1,3 +1,4 @@
+import AppDevAnnouncements
 import Fabric
 import Firebase
 import Hero
@@ -18,6 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         Foundation.URLCache.shared = URLCache
+
+        AnnouncementNetworking.setupConfig(
+            scheme: Secrets.announcementsScheme,
+            host: Secrets.announcementsHost,
+            commonPath: Secrets.announcementsCommonPath,
+            announcementPath: Secrets.announcementsPath
+        )
 
         window = UIWindow()
         window?.backgroundColor = .white

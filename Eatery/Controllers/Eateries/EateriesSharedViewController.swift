@@ -6,6 +6,7 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import AppDevAnnouncements
 import CoreLocation
 import UIKit
 
@@ -50,6 +51,13 @@ class EateriesSharedViewController: UIViewController {
         setUpNavigationBar()
         setUpChildViewControllers()
         setUpPillView()
+
+        // Present announcement if there are any new ones to present
+        presentAnnouncement { presented in
+            if presented {
+                AppDevAnalytics.shared.logFirebase(AnnouncementPresentedPayload())
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
