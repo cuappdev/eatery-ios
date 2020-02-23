@@ -129,3 +129,8 @@ struct CampusCafeCellPressPayload: Payload {
 struct CollegetownCellPressPayload: Payload {
     let eventName = "collegetown_eatery_press"
 }
+
+/// Log whenever an announcement is presented to the user
+struct AnnouncementPresentedPayload: Payload {
+    let eventName = "announcement_presented"
+}

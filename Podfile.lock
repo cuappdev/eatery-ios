@@ -123,7 +123,7 @@ CHECKOUT OPTIONS:
     :commit: 43dd373b9a64cd877f6331be6c56b24c125ca778
     :git: https://github.com/apollographql/apollo-ios.git
   AppDevAnnouncements:
-    :commit: df02a92d50f0adc131359d4f51b76b4fd595759b
+    :commit: 31c4502ac6e9e77e3c478bc46b4e4960cfc90fe9
     :git: https://github.com/cuappdev/appdev-announcements.git
 
 SPEC CHECKSUMS:

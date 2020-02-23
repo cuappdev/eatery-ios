@@ -53,7 +53,11 @@ class EateriesSharedViewController: UIViewController {
         setUpPillView()
 
         // Present announcement if there are any new ones to present
-        presentAnnouncement(completion: nil)
+        presentAnnouncement { presented in
+            if presented {
+                AppDevAnalytics.shared.logFirebase(AnnouncementPresentedPayload())
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
