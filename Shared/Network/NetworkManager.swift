@@ -35,8 +35,11 @@ struct NetworkManager {
         return formatter
     }()
 
-    func getCampusEateries(completion: @escaping ([CampusEatery]?, NetworkError?) -> Void) {
-        apollo.fetch(query: CampusEateriesQuery()) { (result, error) in
+    func getCampusEateries(useCachedData: Bool, completion: @escaping ([CampusEatery]?, NetworkError?) -> Void) {
+        apollo.fetch(
+            query: CampusEateriesQuery(),
+            cachePolicy: useCachedData ? .returnCacheDataElseFetch : .fetchIgnoringCacheData
+        ) { (result, error) in
             guard error == nil else { completion(nil, NetworkError(message: error?.localizedDescription ?? "")); return }
 
             guard let result = result,
@@ -51,8 +54,6 @@ struct NetworkManager {
                 let eateryType = EateryType(rawValue: eatery.eateryType.lowercased()) ?? .unknown
 
                 let area = Area(rawValue: eatery.campusArea.descriptionShort)
-
-                let location = CLLocation(latitude: eatery.coordinates.latitude, longitude: eatery.coordinates.longitude)
 
                 var paymentTypes: [PaymentMethod] = []
                 let paymentMethods = eatery.paymentMethods
@@ -97,6 +98,7 @@ struct NetworkManager {
                                 return Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy)
                             }
                         }
+
                         let startDate = self.timeDateFormatter.date(from: event.startTime) ?? Date()
                         let endDate = self.timeDateFormatter.date(from: event.endTime) ?? Date()
 
@@ -146,7 +148,8 @@ struct NetworkManager {
                     area: area,
                     address: eatery.location,
                     paymentMethods: paymentTypes,
-                    location: location,
+                    latitude: eatery.coordinates.latitude,
+                    longitude: eatery.coordinates.longitude,
                     phone: eatery.phone,
                     slug: eatery.slug,
                     events: eventItems,
@@ -161,7 +164,7 @@ struct NetworkManager {
     #if os(iOS)
 
     func getBRBAccountInfo(sessionId: String, completion: @escaping (BRBAccount?, NetworkError?) -> Void) {
-        apollo.fetch(query: BrbInfoQuery(accountId: sessionId)) { (result, error) in
+        apollo.fetch(query: BrbInfoQuery(accountId: sessionId), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             guard error == nil else {
                 completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
                 return
@@ -185,7 +188,7 @@ struct NetworkManager {
     }
 
     func getCollegetownEateries(completion: @escaping ([CollegetownEatery]?, NetworkError?) -> Void) {
-        apollo.fetch(query: CollegetownEateriesQuery()) { (result, error) in
+        apollo.fetch(query: CollegetownEateriesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             guard error == nil else {
                 completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
                 return
@@ -202,9 +205,6 @@ struct NetworkManager {
 
             for graphQlEatery in graphQlEateries {
                 let eateryType = EateryType(rawValue: graphQlEatery.eateryType.lowercased()) ?? .unknown
-
-                let location = CLLocation(latitude: graphQlEatery.coordinates.latitude,
-                                          longitude: graphQlEatery.coordinates.longitude)
 
                 var paymentTypes: [PaymentMethod] = []
                 let paymentMethods = graphQlEatery.paymentMethods
@@ -254,7 +254,8 @@ struct NetworkManager {
                     eateryType: eateryType,
                     address: graphQlEatery.address,
                     paymentMethods: paymentTypes,
-                    location: location,
+                    latitude: graphQlEatery.coordinates.latitude,
+                    longitude: graphQlEatery.coordinates.longitude,
                     phone: graphQlEatery.phone,
                     events: events,
                     price: graphQlEatery.price,

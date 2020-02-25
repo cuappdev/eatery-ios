@@ -41,7 +41,9 @@ struct CollegetownEatery: Eatery {
 
     let paymentMethods: [PaymentMethod]
 
-    let location: CLLocation
+    let latitude: CLLocationDegrees
+
+    let longitude: CLLocationDegrees
 
     let phone: String
 
@@ -66,7 +68,8 @@ struct CollegetownEatery: Eatery {
         eateryType: EateryType,
         address: String,
         paymentMethods: [PaymentMethod],
-        location: CLLocation,
+        latitude: CLLocationDegrees,
+        longitude: CLLocationDegrees,
         phone: String,
         events: [String: [String: Event]],
         price: String,
@@ -79,7 +82,8 @@ struct CollegetownEatery: Eatery {
         self.eateryType = eateryType
         self.address = address
         self.paymentMethods = paymentMethods
-        self.location = location
+        self.latitude = latitude
+        self.longitude = longitude
         self.phone = phone
         self.events = events
         self.price = price

@@ -41,7 +41,7 @@ private class CampusEateriesData: ObservableObject {
     }
 
     func fetchCampusEateries(_ presentError: @escaping (Error) -> Void) {
-        NetworkManager.shared.getCampusEateries { [weak self] (campusEateries, error) in
+        NetworkManager.shared.getCampusEateries(useCachedData: true) { [weak self] (campusEateries, error) in
             guard let self = self else { return }
 
             if let campusEateries = campusEateries {

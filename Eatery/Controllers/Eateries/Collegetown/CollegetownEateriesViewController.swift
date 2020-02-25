@@ -44,7 +44,7 @@ class CollegetownEateriesViewController: EateriesViewController {
             os_log("Successfully loaded %d collegetown eateries", eateries.count)
 
             self.allEateries = eateries
-            self.updateState(.presenting, animated: true)
+            self.updateState(.presenting(cached: false), animated: true)
         }
     }
 
@@ -157,6 +157,10 @@ extension CollegetownEateriesViewController: EateriesViewControllerDelegate {
         }
 
         showMenu(of: collegeTownEatey)
+    }
+
+    func eateriesViewController(_ evc: EateriesViewController, didPreselectEatery cachedEatery: Eatery) {
+        // Collegetown Eateries do not support caching (yet)
     }
 
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController) {

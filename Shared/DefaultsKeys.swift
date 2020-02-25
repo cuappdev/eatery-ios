@@ -19,6 +19,10 @@ extension DefaultsKeys {
     var brbAccountData: DefaultsKey<Data?> { .init("BRBAccount") }
     var filters: DefaultsKey<[String]> { .init("filters", defaultValue: []) }
     var hasShownWatchRedesign: DefaultsKey<Bool> { .init("hasShownWatchRedesign", defaultValue: false) }
+
+    var cachedCampusEateriesLastRefresh: DefaultsKey<Date?> { .init("cachedCampusEateriesLastRefresh") }
+    var cachedCampusEateries: DefaultsKey<[CampusEatery]?> { .init("cachedCampusEateries") }
+
     #endif
 
 }

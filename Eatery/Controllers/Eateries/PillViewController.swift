@@ -9,6 +9,12 @@
 import SnapKit
 import UIKit
 
+protocol PillViewControllerDelegate: AnyObject {
+
+    func pillViewControllerSelectedSegmentDidChange(_ pillViewController: PillViewController)
+
+}
+
 class PillViewController: UIViewController {
 
     let pillView = PillView()
@@ -38,6 +44,8 @@ class PillViewController: UIViewController {
     private let containerView = UIView()
     let leftViewController: UIViewController
     let rightViewController: UIViewController
+
+    weak var delegate: PillViewControllerDelegate?
 
     init(leftViewController: UIViewController, rightViewController: UIViewController) {
         self.leftViewController = leftViewController
@@ -130,6 +138,8 @@ class PillViewController: UIViewController {
         leftViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        delegate?.pillViewControllerSelectedSegmentDidChange(self)
     }
 
     private func showRightViewController() {
@@ -139,6 +149,8 @@ class PillViewController: UIViewController {
         rightViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        delegate?.pillViewControllerSelectedSegmentDidChange(self)
     }
 
 }

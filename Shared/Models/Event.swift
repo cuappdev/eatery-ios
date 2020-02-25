@@ -11,7 +11,7 @@ import Foundation
 /**
  *  An Event of an Eatery such as Breakfast, Lunch, or Dinner
  */
-struct Event {
+struct Event: Codable {
 
     enum Status {
 

@@ -8,13 +8,14 @@
 
 import AppDevAnnouncements
 import CoreLocation
+import NVActivityIndicatorView
 import UIKit
 
 class EateriesSharedViewController: UIViewController {
     
     // Scroll
 
-    var lastContentOffset: CGFloat = 0
+    private var lastContentOffset: CGFloat = 0
     
     private var showPillOnScrollStopTimer: Timer?
 
@@ -23,7 +24,10 @@ class EateriesSharedViewController: UIViewController {
     private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
     private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
 
-    private(set) lazy var pillViewController = PillViewController(leftViewController: campusEateriesViewController, rightViewController: collegetownEateriesViewController)
+    private(set) lazy var pillViewController = PillViewController(
+        leftViewController: campusEateriesViewController,
+        rightViewController: collegetownEateriesViewController
+    )
     
     var activeViewController: EateriesViewController {
         if pillViewController.pillView.leftSegmentSelected {
@@ -43,10 +47,19 @@ class EateriesSharedViewController: UIViewController {
         return l
     }()
 
+    private let activityIndicator = NVActivityIndicatorView(
+        frame: CGRect(x: 0, y: 0, width: 22, height: 22),
+        type: .circleStrokeSpin,
+        color: .white
+    )
+
     // MARK: View Controller
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        pillViewController.delegate = self
+
         setUpNavigationItem()
         setUpNavigationBar()
         setUpChildViewControllers()
@@ -74,6 +87,8 @@ class EateriesSharedViewController: UIViewController {
         let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(openMap))
         mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
         navigationItem.rightBarButtonItems = [mapButton]
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: activityIndicator)
     }
     
     private func setUpNavigationBar() {
@@ -93,7 +108,9 @@ class EateriesSharedViewController: UIViewController {
     }
 
     private func setUpChildViewControllers() {
+        campusEateriesViewController.networkActivityIndicator = activityIndicator
         campusEateriesViewController.scrollDelegate = self
+
         collegetownEateriesViewController.scrollDelegate = self
 
         addChildViewController(pillViewController)
@@ -190,6 +207,15 @@ extension EateriesSharedViewController: CLLocationManagerDelegate {
 
         campusEateriesViewController.userLocation = userLocation
         collegetownEateriesViewController.userLocation = userLocation
+    }
+
+}
+
+// MARK: - Pill View Controller Delegate
+
+extension EateriesSharedViewController: PillViewControllerDelegate {
+
+    func pillViewControllerSelectedSegmentDidChange(_ pillViewController: PillViewController) {
     }
 
 }

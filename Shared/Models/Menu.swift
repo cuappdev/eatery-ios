@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct Menu {
+struct Menu: Codable {
 
     /**
      * Basic representation of an individual menu entry
      */
-    struct Item {
+    struct Item: Codable {
 
         /// English description of the menu item
         let name: String

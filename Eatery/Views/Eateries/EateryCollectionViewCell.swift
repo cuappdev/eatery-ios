@@ -1,6 +1,7 @@
 import UIKit
 import CoreLocation
 import Kingfisher
+import NVActivityIndicatorView
 import SnapKit
 
 class EateryCollectionViewCell: UICollectionViewCell {
@@ -31,6 +32,14 @@ class EateryCollectionViewCell: UICollectionViewCell {
     private var menuTextViewHiddenConstraints = [Constraint]()
     private var menuTextViewVisibleConstraints = [Constraint]()
 
+    var userLocation: CLLocation? {
+        didSet {
+            updateDistanceLabelText()
+        }
+    }
+
+    private var eatery: Eatery?
+
     var isMenuTextViewVisible: Bool = false {
         didSet {
             if isMenuTextViewVisible {
@@ -41,17 +50,13 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var eatery: Eatery? {
-        didSet {
-            updateInfoViews()
-        }
-    }
+    private let activityIndicatorBackground = UIView()
 
-    var userLocation: CLLocation? {
-        didSet {
-            updateDistanceLabelText()
-        }
-    }
+    private let activityIndicator = NVActivityIndicatorView(
+        frame: CGRect(x: 0, y: 0, width: 22, height: 22),
+        type: .circleStrokeSpin,
+        color: .white
+    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,11 +71,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         contentView.backgroundColor = .white
 
-        setUpBackgroundViews()
         setUpPaymentView()
         setUpInfoViews()
         setUpSeparator()
         setUpMenuView()
+        setUpBackgroundViews()
 
         // activate constraints to hide text view
         hideMenuTextView()
@@ -78,7 +83,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     private func setUpBackgroundViews() {
         backgroundImageView.contentMode = .scaleAspectFill
-        contentView.addSubview(backgroundImageView)
+        contentView.insertSubview(backgroundImageView, at: 0)
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -87,6 +92,28 @@ class EateryCollectionViewCell: UICollectionViewCell {
         backgroundImageView.addSubview(closedOverlay)
         closedOverlay.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+
+        let layoutGuide = UILayoutGuide()
+        addLayoutGuide(layoutGuide)
+        layoutGuide.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(infoContainer.snp.top)
+        }
+
+        activityIndicatorBackground.backgroundColor = UIColor(white: 0.0, alpha: 0.65)
+        activityIndicatorBackground.layer.cornerRadius = 8
+        backgroundImageView.addSubview(activityIndicatorBackground)
+        activityIndicatorBackground.snp.makeConstraints { make in
+            make.width.height.equalTo(44)
+            make.center.equalTo(layoutGuide)
+        }
+
+        activityIndicatorBackground.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.width.height.equalTo(22)
+            make.center.equalToSuperview()
         }
     }
 
@@ -195,10 +222,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private func updateInfoViews() {
-        guard let eatery = eatery else {
-            return
-        }
+    func configure(eatery: Eatery) {
+        self.eatery = eatery
 
         // start loading background image view as soon as possible
 
@@ -265,6 +290,28 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
         
         backgroundImageView.isHidden = true
+    }
+
+    func setActivityIndicatorAnimating(_ animating: Bool, animated: Bool) {
+        let actions: () -> Void = {
+            if animating {
+                self.activityIndicator.startAnimating()
+
+                self.activityIndicator.alpha = 1
+                self.activityIndicatorBackground.alpha = 1
+            } else {
+                self.activityIndicator.stopAnimating()
+
+                self.activityIndicator.alpha = 0
+                self.activityIndicatorBackground.alpha = 0
+            }
+        }
+
+        if animated {
+            UIView.animate(withDuration: 0.25, animations: actions)
+        } else {
+            actions()
+        }
     }
 
 }
