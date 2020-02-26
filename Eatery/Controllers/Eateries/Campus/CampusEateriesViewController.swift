@@ -238,7 +238,9 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
             }
         }
 
-        return (items.count == 0) ? nil : items.reduce(into: NSMutableAttributedString()) { result, element in
+        return (items.count == 0) ? nil : items.sorted { lhs, rhs in
+            lhs.string < rhs.string
+        }.reduce(into: NSMutableAttributedString()) { result, element in
             result.append(element)
         }
     }
