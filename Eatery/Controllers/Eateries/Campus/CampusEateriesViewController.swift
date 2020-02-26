@@ -222,23 +222,25 @@ extension CampusEateriesViewController: EateriesViewControllerDataSource {
             return nil
         }
 
-        let string = NSMutableAttributedString()
+        var items = Set<NSAttributedString>()
 
         for itemText in eatery.diningItems(onDayOf: Date()).map({ $0.name }) {
             if let range = matchRange(of: searchText, in: itemText) {
-                string.append(highlighted(text: itemText + "\n", range: range))
+                items.insert(highlighted(text: itemText + "\n", range: range))
             }
         }
 
         if let activeEvent = eatery.activeEvent(atExactly: Date()) {
             for itemText in activeEvent.menu.stringRepresentation.flatMap({ $0.1 }) {
                 if let range = matchRange(of: searchText, in: itemText) {
-                    string.append(highlighted(text: itemText + "\n", range: range))
+                    items.insert(highlighted(text: itemText + "\n", range: range))
                 }
             }
         }
 
-        return (string.length == 0) ? nil : string
+        return (items.count == 0) ? nil : items.reduce(into: NSMutableAttributedString()) { result, element in
+            result.append(element)
+        }
     }
 
     private func matchRange(of searchText: String, in text: String) -> Range<String.Index>? {
