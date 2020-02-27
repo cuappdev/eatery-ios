@@ -127,6 +127,7 @@
 		C89E17FB236E3FB300E89014 /* BRBAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */; };
 		C8AAAB54234F7A6F00A6FE20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8AAAB55234F7A6F00A6FE20 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE10706E2408190A001B7E97 /* CampusEateryStationTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10706D2408190A001B7E97 /* CampusEateryStationTableHeaderView.swift */; };
 		CE10AE1423FB8E6300706A81 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10AE1323FB8E6300706A81 /* NotificationsManager.swift */; };
 		CE1B2E46224BFFF1005014AE /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */; };
 		CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C1FE0226431630062C398 /* EateriesViewController.swift */; };
@@ -321,6 +322,7 @@
 		C87E76F72399F0F10098160B /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 		C87E76F92399F1010098160B /* collegetown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegetown.json; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
+		CE10706D2408190A001B7E97 /* CampusEateryStationTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryStationTableHeaderView.swift; sourceTree = "<group>"; };
 		CE10AE1323FB8E6300706A81 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				5D94B90A238B27DB0043BE1A /* PopularTimesAccuracyPrompt.swift */,
 				5DB4677D234FFC37005CE574 /* HistogramView.swift */,
 				5D10358223E9E69B002EBE90 /* HoursThisWeekView.swift */,
+				CE10706D2408190A001B7E97 /* CampusEateryStationTableHeaderView.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -1248,6 +1251,7 @@
 				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
 				C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */,
 				87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */,
+				CE10706E2408190A001B7E97 /* CampusEateryStationTableHeaderView.swift in Sources */,
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5DAA55AC23DA919200C378DE /* DefaultsKeys.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,

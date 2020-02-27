@@ -18,6 +18,7 @@ class NotificationsManager {
     private let notifContentEateriesKey = "eateryNames"
     private let notifContentEventNameKey = "eventName"
     private let notifContentMenuItemKey = "menuItemName"
+    private let notificationCenter = UNUserNotificationCenter.current()
     /// Maps menu item names to an an array of scheduled notification requests
     private var scheduledNotifications = [String : [UNNotificationRequest]]()
     
@@ -27,12 +28,12 @@ class NotificationsManager {
         if #available(iOS 13.0, *) {
             authorizationOptions.insert(.announcement)
         }
-        UNUserNotificationCenter.current().requestAuthorization(options: authorizationOptions) { (granted, error) in }
+        notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in }
     }
     
     /// Map scheduled notifications to the item they are scheduled to notify about
     private func populateScheduledNotifications() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (requests) in
+        notificationCenter.getPendingNotificationRequests(completionHandler: { (requests) in
             for request in requests {
                 let notifInfo = request.content.userInfo
                 guard let menuItemName = notifInfo[self.notifContentMenuItemKey] as? String else { continue }
@@ -81,7 +82,7 @@ class NotificationsManager {
         let notifDateComponents = Calendar.current.dateComponents([.second, .minute, .hour, .day, .month, .year], from: date)
         let notifTrigger = UNCalendarNotificationTrigger(dateMatching: notifDateComponents, repeats: false)
         let notifRequest = UNNotificationRequest(identifier: UUID().uuidString, content: notifContent, trigger: notifTrigger)
-        UNUserNotificationCenter.current().add(notifRequest, withCompletionHandler: nil)
+        notificationCenter.add(notifRequest, withCompletionHandler: nil)
         
         var newMenuItemNotifRequests: [UNNotificationRequest]
         if let menuItemNotifRequests = scheduledNotifications[menuItemName] {
@@ -98,22 +99,30 @@ class NotificationsManager {
         NetworkManager.shared.getCampusEateries(useCachedData: true) { (eateries, error) in
             guard let eateries = eateries else { return }
             
+            // Maps each menuItemName in menuItemNames to a dictionary that maps from the day menuItemName is served during a meal to the eatery at which this meal is served at, the event start date for this meal, and the event name of this meal
             var itemServingsByMealAndDate = [String : [Int : [(eatery: String, eventStart: Date, eventName: CampusEatery.EventName)]]]()
+            // Iterate over all events at every eatery
             for eatery in eateries {
                 for event in eatery.allEvents {
                     let eventStatus = event.status(atExactly: Date())
+                    // Skip the event if it is currently occuring
                     guard !(eventStatus == .started || eventStatus == .endingSoon) else { continue }
                     let menuItems = event.menu.data.values
+                    // Stores a list of all menu items being served at event
                     var eventMenuItemNames = [String]()
                     menuItems.forEach { (items) in
                         eventMenuItemNames.append(contentsOf: items.map { $0.name })
                     }
+                    // Stores a list of all menu items being served at event that are favorite menu items (in menuItemNames)
                     let eventFavoriteItems = Set(eventMenuItemNames).intersection(menuItemNames)
                     guard !eventFavoriteItems.isEmpty else { continue }
                           
+                    // Iterate through events by their event name at eatery in order to extrapolate the event name
                     for (eventName, eateryEvent) in eatery.eventsByName(onDayOf: event.start) {
+                        // Skip the event if it's not the event being analyzed
                         guard event.start == eateryEvent.start else { continue }
                         let day = Calendar.current.component(.day, from: event.start)
+                        // Organize favorite dining item servings by the menu item name and the day an item is being served
                         for menuItemName in menuItemNames {
                             if itemServingsByMealAndDate[menuItemName] == nil {
                                 itemServingsByMealAndDate[menuItemName] = [Int : [(String, Date, CampusEatery.EventName)]]()
@@ -127,8 +136,11 @@ class NotificationsManager {
                 }
             }
                   
+            // Iterate through all servings of all favorite menu items on all days
             for (menuItemName, daysAndServings) in itemServingsByMealAndDate {
+                // Iterate through all servings of menuItemName on each day it is served
                 for (_, itemServings) in daysAndServings {
+                    // Groups menuItemName servings by which event name they're contained in
                     var servingsByEventName = [CampusEatery.EventName : [(eatery: String, eventStart: Date)]]()
                     for serving in itemServings {
                         if servingsByEventName[serving.eventName] == nil {
@@ -136,16 +148,21 @@ class NotificationsManager {
                         }
                         servingsByEventName[serving.eventName]!.append((serving.eatery, serving.eventStart))
                     }
+                    // Iterate through menuItemName servings by which event name they're contained in, on a specific day
                     for (eventName, servings) in servingsByEventName {
+                        // Sort servings on a specific event day and date and then store the eateries at which such servings take place, in increasing order of event start
                         var sortedServings = servings
                         sortedServings.sort { $0.eventStart < $1.eventStart }
-                        let eateryNames = servings.map { $0.eatery }
+                        let eateryNames = sortedServings.map { $0.eatery }
                               
+                        // Set the notification date to be one hour before the event start of the first serving at  any eatery on day and eventName
                         let numSecondsInHour: TimeInterval = 60 * 60
                         let notificationDate = sortedServings[0].eventStart.addingTimeInterval(-numSecondsInHour)
                         
                         var requiresNotifScheduling = true
+                        // Stores scheduled notification identifiers that are to be unscheduled
                         var disposableNotifIdentifiers = [String]()
+                        // Iterate through current scheduled notifications, removing any scheduled notifications with outdated information, keeping notifications that match the most recent menu information, and adding notifications if an oudated notification existed or no notification existed
                         if let scheduledMenuItemNotifs = self.scheduledNotifications[menuItemName] {
                             for scheduledNotif in scheduledMenuItemNotifs {
                                 let notifInfo = scheduledNotif.content.userInfo
@@ -167,7 +184,9 @@ class NotificationsManager {
                             }
                         }
                         
-                        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: disposableNotifIdentifiers)
+                        // Unschedules all disposable notifications
+                        self.notificationCenter.removePendingNotificationRequests(withIdentifiers: disposableNotifIdentifiers)
+                        // Sets up a notification if one did not originally exist or an outdated one was removed
                         if requiresNotifScheduling {
                             self.setUpNotification(menuItemName: menuItemName, eateryDisplayNames: eateryNames, on: notificationDate, eventName: eventName)
                         }
@@ -179,14 +198,11 @@ class NotificationsManager {
     
     // Remove all scheduled notifications for a particular menu item
     func removeScheduledNotifications(menuItemName: String) {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-            var requestIdsToRemove = [String]()
-            requests.forEach {
-                if $0.content.body.contains(menuItemName) {
-                    requestIdsToRemove.append($0.identifier)
-                }
-            }
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: requestIdsToRemove)
+        notificationCenter.getPendingNotificationRequests { requests in
+            let requestIdsToRemove = requests
+                .filter { $0.content.body.contains(menuItemName) }
+                .map { $0.identifier }
+            self.notificationCenter.removePendingNotificationRequests(withIdentifiers: requestIdsToRemove)
         }
     }
     
