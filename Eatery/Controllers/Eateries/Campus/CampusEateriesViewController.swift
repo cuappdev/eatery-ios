@@ -82,6 +82,8 @@ class CampusEateriesViewController: EateriesViewController {
             self.updateState(.presenting(cached: false), animated: true)
 
             self.pushPreselectedEateryIfPossible()
+            
+            NotificationsManager.shared.verifyCurrentNotifications()
         }
     }
 

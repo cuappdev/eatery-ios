@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import UserNotifications
 
 class MealItemTableViewCell: UITableViewCell {
 
-    private var favoriteButton: UIButton?
+    private var favoriteButton: UIImageView?
     private(set) var menuItem: Menu.Item?
     private let nameLabel = UILabel()
     
@@ -47,14 +46,16 @@ class MealItemTableViewCell: UITableViewCell {
         
         let starImageName = favoriteButtonAttributes!.imageName
         let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
-        favoriteButton = UIButton(type: .custom)
-        favoriteButton!.setImage(starImage, for: .normal)
+        favoriteButton = UIImageView(image: starImage)
         favoriteButton!.tintColor = favoriteButtonAttributes!.tintColor
-        favoriteButton!.addTarget(self, action: #selector(tappedFavorite), for: .touchUpInside)
+        favoriteButton!.isUserInteractionEnabled = true
+        let favoriteTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedFavorite))
+        favoriteButton!.addGestureRecognizer(favoriteTapGestureRecognizer)
         addSubview(favoriteButton!)
         favoriteButton!.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton!.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(4)
+            make.bottom.equalToSuperview().inset(4)
             make.trailing.equalToSuperview().inset(16)
             make.width.equalTo(favoriteButton!.snp_width)
         }
@@ -69,18 +70,12 @@ class MealItemTableViewCell: UITableViewCell {
     }
     
     @objc private func tappedFavorite() {
-        guard let menuItem = menuItem else { return }
-        menuItem.favorited.toggle()
-        if menuItem.favorited {
-            NotificationsManager.shared.requestAuthorization()
-            NotificationsManager.shared.updateNotifications(menuItemNames: [menuItem.name])
-        } else {
-            NotificationsManager.shared.removeScheduledNotifications(menuItemName: menuItem.name)
-        }
-        
+        guard menuItem != nil else { return }
+        menuItem!.favorited.toggle()
+        print(menuItem!.favorited)
         let starImageName = favoriteButtonAttributes!.imageName
         let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
-        favoriteButton!.setImage(starImage, for: .normal)
+        favoriteButton!.image = starImage
         favoriteButton!.tintColor = favoriteButtonAttributes!.tintColor
     }
 
