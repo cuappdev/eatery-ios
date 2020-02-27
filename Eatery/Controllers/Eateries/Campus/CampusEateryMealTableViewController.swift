@@ -164,15 +164,6 @@ class CampusEateryMealTableViewController: UITableViewController {
         let menuItem = stationItems[indexPath.row]
         cell.configure(for: menuItem)
         return cell
-        /* TODO ETHAN RM
-        let possibleTitle = stationTitles[indexPath.row]
-        if possibleTitle == "General" {
-            cell.titleLabel.text = ""
-            cell.titleCollapsed = true
-        } else {
-            cell.titleLabel.text = possibleTitle
-            cell.titleCollapsed = false
-        }*/
     }
     
 }
