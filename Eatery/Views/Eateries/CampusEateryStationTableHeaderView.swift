@@ -10,17 +10,14 @@ import UIKit
 
 class CampusEateryStationTableHeaderView: UITableViewHeaderFooterView {
     
-    private var headerView: UIView
-    private var sectionLabel: UILabel
+    private let headerView = UIView()
+    private let sectionLabel = UILabel()
     
     override init(reuseIdentifier: String?) {
-        headerView = UIView()
-        headerView.backgroundColor = .white
-        sectionLabel = UILabel()
-        sectionLabel.font = .systemFont(ofSize: 18, weight: .medium)
-        
         super.init(reuseIdentifier: reuseIdentifier)
         
+        headerView.backgroundColor = .white
+        sectionLabel.font = .systemFont(ofSize: 18, weight: .medium)
         addSubview(headerView)
         headerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -28,8 +25,7 @@ class CampusEateryStationTableHeaderView: UITableViewHeaderFooterView {
         headerView.addSubview(sectionLabel)
         sectionLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
     }
     

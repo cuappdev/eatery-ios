@@ -11,7 +11,7 @@ import UserNotifications
 
 class MealItemTableViewCell: UITableViewCell {
 
-    private var favoriteButton = UIButton(type: .custom)
+    private let favoriteButton = UIButton(type: .custom)
     private(set) var menuItem: Menu.Item?
     private let nameLabel = UILabel()
 
@@ -22,7 +22,6 @@ class MealItemTableViewCell: UITableViewCell {
 
         nameLabel.font = UIFont.systemFont(ofSize: 14)
         addSubview(nameLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
         }
@@ -30,7 +29,6 @@ class MealItemTableViewCell: UITableViewCell {
         favoriteButton.addTarget(self, action: #selector(tappedFavorite), for: .touchUpInside)
         favoriteButton.isHidden = true
         addSubview(favoriteButton)
-        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.trailing.equalToSuperview().inset(16)

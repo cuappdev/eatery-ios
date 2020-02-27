@@ -86,12 +86,7 @@ class NotificationsManager {
         let notifRequest = UNNotificationRequest(identifier: UUID().uuidString, content: notifContent, trigger: notifTrigger)
         notificationCenter.add(notifRequest, withCompletionHandler: nil)
         
-        var newMenuItemNotifRequests: [UNNotificationRequest]
-        if let menuItemNotifRequests = scheduledNotifications[menuItemName] {
-            newMenuItemNotifRequests = menuItemNotifRequests
-        } else {
-            newMenuItemNotifRequests = [UNNotificationRequest]()
-        }
+        var newMenuItemNotifRequests: [UNNotificationRequest] = scheduledNotifications[menuItemName] ?? []
         newMenuItemNotifRequests.append(notifRequest)
         scheduledNotifications[menuItemName] = newMenuItemNotifRequests
     }
@@ -129,10 +124,10 @@ class NotificationsManager {
                             if itemServingsByMealAndDate[menuItemName] == nil {
                                 itemServingsByMealAndDate[menuItemName] = [Int : [(String, Date, CampusEatery.EventName)]]()
                             }
-                            if itemServingsByMealAndDate[menuItemName]![day] == nil {
-                                itemServingsByMealAndDate[menuItemName]![day] = [(String, Date, CampusEatery.EventName)]()
+                            if itemServingsByMealAndDate[menuItemName]?[day] == nil {
+                                itemServingsByMealAndDate[menuItemName]?[day] = [(String, Date, CampusEatery.EventName)]()
                             }
-                            itemServingsByMealAndDate[menuItemName]![day]?.append((eatery: eatery.displayName, eventStart: event.start, eventName: eventName))
+                            itemServingsByMealAndDate[menuItemName]?[day]?.append((eatery: eatery.displayName, eventStart: event.start, eventName: eventName))
                         }
                     }
                 }
@@ -148,14 +143,13 @@ class NotificationsManager {
                         if servingsByEventName[serving.eventName] == nil {
                             servingsByEventName[serving.eventName] = [(String, Date)]()
                         }
-                        servingsByEventName[serving.eventName]!.append((serving.eatery, serving.eventStart))
+                        servingsByEventName[serving.eventName]?.append((serving.eatery, serving.eventStart))
                     }
                     // Iterate through menuItemName servings by which event name they're contained in, on a specific day
                     for (eventName, servings) in servingsByEventName {
                         // Sort servings on a specific event day and date and then store the eateries at which such servings take place, in increasing order of event start
-                        var sortedServings = servings
-                        sortedServings.sort { $0.eventStart < $1.eventStart }
-                        let eateryNames = sortedServings.map { $0.eatery }
+                        let sortedServings = servings.sorted { $0.eventStart < $1.eventStart }
+                        let sortedEateryNames = sortedServings.map { $0.eatery }
                               
                         // Set the notification date to be one hour before the event start of the first serving at  any eatery on day and eventName
                         let numSecondsInHour: TimeInterval = 60 * 60
@@ -176,7 +170,7 @@ class NotificationsManager {
                                     let notifDay = Calendar.current.dateComponents([.day], from: notifDate).day,
                                     notifDay == Calendar.current.dateComponents([.day], from: notificationDate).day {
                                     if let notifEateries = notifInfo[self.notifContentEateriesKey] as? [String] {
-                                        if notifEateries == eateryNames {
+                                        if notifEateries.elementsEqual(sortedEateryNames) {
                                             requiresNotifScheduling = false
                                         } else {
                                             disposableNotifIdentifiers.append(scheduledNotif.identifier)
@@ -190,7 +184,7 @@ class NotificationsManager {
                         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: disposableNotifIdentifiers)
                         // Sets up a notification if one did not originally exist or an outdated one was removed
                         if requiresNotifScheduling {
-                            self.setUpNotification(menuItemName: menuItemName, eateryDisplayNames: eateryNames, on: notificationDate, eventName: eventName)
+                            self.setUpNotification(menuItemName: menuItemName, eateryDisplayNames: sortedEateryNames, on: notificationDate, eventName: eventName)
                         }
                     }
                 }
