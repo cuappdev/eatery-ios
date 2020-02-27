@@ -136,12 +136,12 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     /// Create a table view cell when there are multiple dining stations in the menu
     private func diningStationsCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let menu = menu, menu.data.count > indexPath.section else {
+        guard let menu = menu, let sortedMenu = sortedMenu, menu.data.count > indexPath.section else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: mealItemCellIdentifier, for: indexPath) as! MealItemTableViewCell
         
-        let stationTitles = sortedMenu!.map { $0.0 }
+        let stationTitles = sortedMenu.map { $0.0 }
         let stationItems = menu.data[stationTitles[indexPath.section]]!
         
         guard stationItems.count > indexPath.row else {

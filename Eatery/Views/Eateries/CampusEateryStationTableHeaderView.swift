@@ -10,22 +10,27 @@ import UIKit
 
 class CampusEateryStationTableHeaderView: UITableViewHeaderFooterView {
     
-    private var headerView: UIView!
-    private var sectionLabel: UILabel!
+    private var headerView: UIView
+    private var sectionLabel: UILabel
     
     override init(reuseIdentifier: String?) {
         headerView = UIView()
         headerView.backgroundColor = .white
         sectionLabel = UILabel()
         sectionLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        addSubview(headerView)
+        headerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         headerView.addSubview(sectionLabel)
         sectionLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().inset(10)
         }
-        
-        super.init(reuseIdentifier: reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -33,10 +38,6 @@ class CampusEateryStationTableHeaderView: UITableViewHeaderFooterView {
     }
     
     func configure(stationTitle: String) {
-        addSubview(headerView)
-        headerView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
-        }
         sectionLabel.text = stationTitle
     }
     

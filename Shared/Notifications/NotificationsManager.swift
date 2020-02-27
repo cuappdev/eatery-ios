@@ -22,6 +22,8 @@ class NotificationsManager {
     /// Maps menu item names to an an array of scheduled notification requests
     private var scheduledNotifications = [String : [UNNotificationRequest]]()
     
+    private init() { }
+    
     /// Requests authorization to the user for notifications
     func requestAuthorization() {
         var authorizationOptions: UNAuthorizationOptions = [.alert]
@@ -33,7 +35,7 @@ class NotificationsManager {
     
     /// Map scheduled notifications to the item they are scheduled to notify about
     private func populateScheduledNotifications() {
-        notificationCenter.getPendingNotificationRequests(completionHandler: { (requests) in
+        notificationCenter.getPendingNotificationRequests(completionHandler: { requests in
             for request in requests {
                 let notifInfo = request.content.userInfo
                 guard let menuItemName = notifInfo[self.notifContentMenuItemKey] as? String else { continue }

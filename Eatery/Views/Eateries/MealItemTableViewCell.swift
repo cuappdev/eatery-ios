@@ -11,13 +11,13 @@ import UserNotifications
 
 class MealItemTableViewCell: UITableViewCell {
 
-    private var favoriteButton: UIButton?
+    private var favoriteButton = UIButton(type: .custom)
     private(set) var menuItem: Menu.Item?
     private let nameLabel = UILabel()
     
     private var favoriteButtonAttributes: (imageName: String, tintColor: UIColor)? {
         guard let menuItem = menuItem else { return nil }
-        return (menuItem.favorited) ? ("selected", UIColor.favoriteYellow) : ("unselected", UIColor.eateryBlue)
+        return menuItem.favorited ? ("selected", .favoriteYellow) : ("unselected", .eateryBlue)
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -29,7 +29,18 @@ class MealItemTableViewCell: UITableViewCell {
         addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.snp.makeConstraints { make in
-            make.edges.equalTo(self).inset(UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
+        }
+        
+        favoriteButton.tintColor = favoriteButtonAttributes!.tintColor
+        favoriteButton.addTarget(self, action: #selector(tappedFavorite), for: .touchUpInside)
+        favoriteButton.isHidden = true
+        addSubview(favoriteButton)
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        favoriteButton.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(favoriteButton.snp_width)
         }
     }
 
@@ -40,32 +51,25 @@ class MealItemTableViewCell: UITableViewCell {
     /// Configures the cell's nameLabel text to match the menu item text (adjusting for whether or not the item is healthy) and adds a favorite button to the cell corresponding to whether the user has favorited the menu item
     func configure(for menuItem: Menu.Item) {
         self.menuItem = menuItem
-        
-        let itemText = (menuItem.healthy) ? NSMutableAttributedString(string: "\(menuItem.name.trim()) ")
-        .appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5) : NSMutableAttributedString(string: menuItem.name)
+
+        let itemText = menuItem.healthy
+            ? NSMutableAttributedString(string: "\(menuItem.name.trim()) ")
+             .appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
+            : NSMutableAttributedString(string: menuItem.name.trim())
         nameLabel.attributedText = itemText
         
-        let starImageName = favoriteButtonAttributes!.imageName
-        let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
-        favoriteButton = UIButton(type: .custom)
-        favoriteButton!.setImage(starImage, for: .normal)
-        favoriteButton!.tintColor = favoriteButtonAttributes!.tintColor
-        favoriteButton!.addTarget(self, action: #selector(tappedFavorite), for: .touchUpInside)
-        addSubview(favoriteButton!)
-        favoriteButton!.translatesAutoresizingMaskIntoConstraints = false
-        favoriteButton!.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(favoriteButton!.snp_width)
+        if let favoriteButtonAttributes = favoriteButtonAttributes {
+            let starImageName = favoriteButtonAttributes.imageName
+            let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
+            favoriteButton.setImage(starImage, for: .normal)
+            favoriteButton.isHidden = false
         }
     }
     
     /// Sets label text but removes favoriting ability
     func setLabelText(_ text: String) {
         nameLabel.text = text
-        if let favoriteButton = favoriteButton {
-            favoriteButton.removeFromSuperview()
-        }
+        favoriteButton.removeFromSuperview()
     }
     
     @objc private func tappedFavorite() {
@@ -80,8 +84,8 @@ class MealItemTableViewCell: UITableViewCell {
         
         let starImageName = favoriteButtonAttributes!.imageName
         let starImage = UIImage(named: starImageName)?.withRenderingMode(.alwaysTemplate)
-        favoriteButton!.setImage(starImage, for: .normal)
-        favoriteButton!.tintColor = favoriteButtonAttributes!.tintColor
+        favoriteButton.setImage(starImage, for: .normal)
+        favoriteButton.tintColor = favoriteButtonAttributes!.tintColor
     }
 
 }
