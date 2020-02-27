@@ -39,21 +39,7 @@ class CampusEateryMealTableViewController: UITableViewController {
         tableView.register(MealStationTableViewCell.self, forCellReuseIdentifier: "MealStation")
 
         tableView.isScrollEnabled = false
-
-        /*let topSeparator = UIView()
-        topSeparator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 1)
-        topSeparator.backgroundColor = .inactive
-        tableView.tableHeaderView = topSeparator
-        TODO ethan: consider making less wide and more aligned with "Menu"*/
-
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
-
-        /*if let menu = menu, menu.data.count == 1, eatery.eateryType != .dining {
-            topSeparator.isHidden = false
-        } else {
-            topSeparator.isHidden = true
-        }
-        TODO ethan: same as above*/
     }
 
     // MARK: - Table view data source
