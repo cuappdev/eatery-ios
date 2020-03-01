@@ -31,7 +31,7 @@ class MealItemTableViewCell: UITableViewCell {
         favoriteButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(favoriteButton.snp_width)
+            make.width.equalTo(favoriteButton.snp_height)
         }
     }
 

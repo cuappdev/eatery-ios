@@ -61,7 +61,7 @@ class NotificationsManager {
         
         let notifContent = UNMutableNotificationContent()
         notifContent.title = self.favoriteMenuItemNotifTitle
-        var multipleServingsPostfix: String
+        let multipleServingsPostfix: String
         switch eateryDisplayNames.count {
         case 1:
             multipleServingsPostfix = ""

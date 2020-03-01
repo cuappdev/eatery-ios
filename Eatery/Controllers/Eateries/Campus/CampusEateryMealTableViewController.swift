@@ -69,10 +69,10 @@ class CampusEateryMealTableViewController: UITableViewController {
             // display menu items (of the only "dining station") as a table
             return item.value.count
         } else {
-            if let sortedMenu = sortedMenu {
+            if let stations = sortedMenu?.map({ $0.0 }),
+                let stationItemCount = menu.data[stations[section]]?.count {
                 // display the menu items
-                let stations = sortedMenu.map { $0.0 }
-                return menu.data[stations[section]]!.count
+                return stationItemCount
             } else {
                 // display the unknown menu cell
                 return 1
