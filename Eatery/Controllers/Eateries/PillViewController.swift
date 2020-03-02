@@ -41,7 +41,8 @@ class PillViewController: UIViewController {
         }
     }
 
-    private let containerView = UIView()
+    private let containerController = UIViewController()
+    private var containerView: UIView { containerController.view }
     let leftViewController: UIViewController
     let rightViewController: UIViewController
 
@@ -62,25 +63,28 @@ class PillViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        addChildViewController(containerController)
+        containerController.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
         containerView.backgroundColor = .clear
         view.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        containerController.didMove(toParentViewController: self)
 
-        addChildViewController(leftViewController)
+        containerController.addChildViewController(leftViewController)
         containerView.addSubview(leftViewController.view)
         leftViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        leftViewController.didMove(toParentViewController: self)
+        leftViewController.didMove(toParentViewController: containerController)
 
-        addChildViewController(rightViewController)
+        containerController.addChildViewController(rightViewController)
         containerView.addSubview(rightViewController.view)
         rightViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        rightViewController.didMove(toParentViewController: self)
+        rightViewController.didMove(toParentViewController: containerController)
 
         pillView.addTarget(self, action: #selector(pillSelectionDidChange), for: .valueChanged)
         view.addSubview(pillView)
@@ -95,10 +99,6 @@ class PillViewController: UIViewController {
         hidePillConstraints = pillView.snp.prepareConstraints { make in
             make.top.equalTo(view.snp.bottom).offset(8)
         }
-
-        leftViewController.view.preservesSuperviewLayoutMargins = true
-        rightViewController.view.preservesSuperviewLayoutMargins = true
-        containerView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
 
         setShowPill(true, animated: false)
         if pillView.leftSegmentSelected {

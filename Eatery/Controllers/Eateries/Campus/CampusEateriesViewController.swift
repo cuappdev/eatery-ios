@@ -90,6 +90,17 @@ class CampusEateriesViewController: EateriesViewController {
         pushPreselectedEateryIfPossible()
     }
 
+    override func pushMapViewController() {
+        super.pushMapViewController()
+
+        guard let eateries = allEateries else {
+            return
+        }
+
+        let mapViewController = MapViewController(eateries: eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
+    }
+
     private func pushPreselectedEateryIfPossible() {
         guard let name = preselectedEateryName else {
             return
@@ -298,15 +309,6 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
             self.queryCampusEateries()
         }
-    }
-
-    func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController) {
-        guard let eateries = allEateries else {
-            return
-        }
-
-        let mapViewController = MapViewController(eateries: eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
     }
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController) {

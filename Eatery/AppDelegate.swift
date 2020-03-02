@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eateryTabBarController.eateriesSharedViewController.campusEateriesViewController.preselectEatery(withName: shortcutItem.type)
+        eateryTabBarController.eateriesSharedViewController.preselectEatery(withName: shortcutItem.type)
         
         return true
     }

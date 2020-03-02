@@ -48,6 +48,17 @@ class CollegetownEateriesViewController: EateriesViewController {
         }
     }
 
+    override func pushMapViewController() {
+        super.pushMapViewController()
+
+        guard let eateries = allEateries else {
+            return
+        }
+
+        let mapViewController = MapViewController(eateries: eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
+    }
+
     private func showMenu(of eatery: CollegetownEatery) {
         let menuViewController = CollegetownMenuViewController(eatery: eatery, userLocation: userLocation)
         navigationController?.pushViewController(menuViewController, animated: true)

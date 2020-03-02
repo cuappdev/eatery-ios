@@ -16,25 +16,23 @@ class EateriesSharedViewController: UIViewController {
     // Scroll
 
     private var lastContentOffset: CGFloat = 0
-    
     private var showPillOnScrollStopTimer: Timer?
 
     // View Controllers
 
-    private(set) lazy var campusEateriesViewController = CampusEateriesViewController()
-    private(set) lazy var collegetownEateriesViewController = CollegetownEateriesViewController()
-
-    private(set) lazy var pillViewController = PillViewController(
-        leftViewController: campusEateriesViewController,
-        rightViewController: collegetownEateriesViewController
+    private lazy var campusEateries = CampusEateriesViewController()
+    private lazy var campusNavigation = EateryNavigationController(rootViewController: campusEateries)
+    private lazy var collegetownEateries = CollegetownEateriesViewController()
+    private lazy var collegetownNavigation = EateryNavigationController(rootViewController: collegetownEateries)
+    private lazy var pillViewController = PillViewController(
+        leftViewController: campusNavigation,
+        rightViewController: collegetownNavigation
     )
-    
+
     var activeViewController: EateriesViewController {
-        if pillViewController.pillView.leftSegmentSelected {
-            return campusEateriesViewController
-        } else {
-            return collegetownEateriesViewController
-        }
+        pillViewController.pillView.leftSegmentSelected
+            ? campusEateries
+            : collegetownEateries
     }
 
     // Location
@@ -47,23 +45,23 @@ class EateriesSharedViewController: UIViewController {
         return l
     }()
 
-    private let activityIndicator = NVActivityIndicatorView(
-        frame: CGRect(x: 0, y: 0, width: 22, height: 22),
-        type: .circleStrokeSpin,
-        color: .white
-    )
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: View Controller
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        pillViewController.delegate = self
-
-        setUpNavigationItem()
-        setUpNavigationBar()
-        setUpChildViewControllers()
+        setUpEateriesViewControllers()
         setUpPillView()
+
+        pillViewController.delegate = self
 
         // Present announcement if there are any new ones to present
         presentAnnouncement { presented in
@@ -79,39 +77,16 @@ class EateriesSharedViewController: UIViewController {
         setUpLocationManager()
     }
 
-    private func setUpNavigationItem() {
-        navigationItem.title = "Eateries"
-        navigationController?.hero.isEnabled = !UIAccessibility.isReduceMotionEnabled
-        navigationController?.hero.navigationAnimationType = .fade
-
-        let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(openMap))
-        mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
-        navigationItem.rightBarButtonItems = [mapButton]
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: activityIndicator)
-    }
-    
-    private func setUpNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-
-        let logo = UIImageView(image: UIImage(named: "appDevLogo"))
-        logo.tintColor = .eateryBlue
-        logo.contentMode = .scaleAspectFit
-        navigationController?.navigationBar.addSubview(logo)
-        logo.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(28.0)
-        }
-
-        campusEateriesViewController.appDevLogo = logo
-        collegetownEateriesViewController.appDevLogo = logo
+    func preselectEatery(withName name: String) {
+        campusEateries.preselectEatery(withName: name)
     }
 
-    private func setUpChildViewControllers() {
-        campusEateriesViewController.networkActivityIndicator = activityIndicator
-        campusEateriesViewController.scrollDelegate = self
+    private func setUpEateriesViewControllers() {
+        campusNavigation.delegate = self
+        collegetownNavigation.delegate = self
 
-        collegetownEateriesViewController.scrollDelegate = self
+        campusEateries.scrollDelegate = self
+        collegetownEateries.scrollDelegate = self
 
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)
@@ -144,18 +119,19 @@ class EateriesSharedViewController: UIViewController {
         }
     }
 
-    @objc private func openMap() {
-        AppDevAnalytics.shared.logFirebase(MapPressPayload())
-        
-        activeViewController.pushMapViewController()
-    }
-
     @objc private func pillSelectionDidChange(_ sender: PillView) {
         if pillViewController.pillView.leftSegmentSelected {
             AppDevAnalytics.shared.logFirebase(CampusPressPayload())
         } else {
             AppDevAnalytics.shared.logFirebase(CollegetownPressPayload())
         }
+    }
+
+    private func updateShowPill() {
+        let showPill = pillViewController.pillView.leftSegmentSelected && campusNavigation.viewControllers.count == 1
+            || !pillViewController.pillView.leftSegmentSelected && collegetownNavigation.viewControllers.count == 1
+
+        pillViewController.setShowPill(showPill, animated: true)
     }
 
 }
@@ -205,8 +181,8 @@ extension EateriesSharedViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.last
 
-        campusEateriesViewController.userLocation = userLocation
-        collegetownEateriesViewController.userLocation = userLocation
+        campusEateries.userLocation = userLocation
+        collegetownEateries.userLocation = userLocation
     }
 
 }
@@ -216,6 +192,24 @@ extension EateriesSharedViewController: CLLocationManagerDelegate {
 extension EateriesSharedViewController: PillViewControllerDelegate {
 
     func pillViewControllerSelectedSegmentDidChange(_ pillViewController: PillViewController) {
+        updateShowPill()
+    }
+
+}
+
+// MARK: - Navigation Controller Delegate
+
+extension EateriesSharedViewController: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        viewController.extendedLayoutIncludesOpaqueBars = true
+
+        let isParallax = viewController is ImageParallaxScrollViewController
+        navigationController.setNavigationBarHidden(isParallax, animated: true)
+    }
+
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        updateShowPill()
     }
 
 }
