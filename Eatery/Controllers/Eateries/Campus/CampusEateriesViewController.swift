@@ -90,17 +90,6 @@ class CampusEateriesViewController: EateriesViewController {
         pushPreselectedEateryIfPossible()
     }
 
-    override func pushMapViewController() {
-        super.pushMapViewController()
-
-        guard let eateries = allEateries else {
-            return
-        }
-
-        let mapViewController = MapViewController(eateries: eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
-    }
-
     private func pushPreselectedEateryIfPossible() {
         guard let name = preselectedEateryName else {
             return
@@ -146,6 +135,10 @@ class CampusEateriesViewController: EateriesViewController {
 // MARK: - Eateries View Controller Data Source
 
 extension CampusEateriesViewController: EateriesViewControllerDataSource {
+
+    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery] {
+        return allEateries ?? []
+    }
 
     func eateriesViewController(_ evc: EateriesViewController,
                                 eateriesToPresentWithSearchText searchText: String,

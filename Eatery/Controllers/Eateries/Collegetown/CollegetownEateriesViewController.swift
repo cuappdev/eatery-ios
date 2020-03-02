@@ -48,17 +48,6 @@ class CollegetownEateriesViewController: EateriesViewController {
         }
     }
 
-    override func pushMapViewController() {
-        super.pushMapViewController()
-
-        guard let eateries = allEateries else {
-            return
-        }
-
-        let mapViewController = MapViewController(eateries: eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
-    }
-
     private func showMenu(of eatery: CollegetownEatery) {
         let menuViewController = CollegetownMenuViewController(eatery: eatery, userLocation: userLocation)
         navigationController?.pushViewController(menuViewController, animated: true)
@@ -74,6 +63,10 @@ class CollegetownEateriesViewController: EateriesViewController {
 // MARK: -
 
 extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
+
+    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery] {
+        return allEateries ?? []
+    }
 
     func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> [Eatery] {
         guard let eateries = allEateries else {

@@ -128,8 +128,9 @@ class EateriesSharedViewController: UIViewController {
     }
 
     private func updateShowPill() {
-        let showPill = pillViewController.pillView.leftSegmentSelected && campusNavigation.viewControllers.count == 1
-            || !pillViewController.pillView.leftSegmentSelected && collegetownNavigation.viewControllers.count == 1
+        let showPill =
+            (pillViewController.pillView.leftSegmentSelected && campusNavigation.viewControllers.count == 1)
+            || (!pillViewController.pillView.leftSegmentSelected && collegetownNavigation.viewControllers.count == 1)
 
         pillViewController.setShowPill(showPill, animated: true)
     }

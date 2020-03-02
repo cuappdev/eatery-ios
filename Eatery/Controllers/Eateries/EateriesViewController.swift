@@ -28,6 +28,8 @@ protocol EateriesViewControllerDataSource: AnyObject {
                                 searchText: String,
                                 filters: Set<Filter>) -> NSAttributedString?
 
+    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery]
+
 }
 
 // MARK: - Delegate
@@ -553,6 +555,11 @@ class EateriesViewController: UIViewController {
 
     @objc func pushMapViewController() {
         AppDevAnalytics.shared.logFirebase(MapPressPayload())
+
+        guard let eateries = dataSource?.eateriesToPresentInMapViewController(self) else { return }
+
+        let mapViewController = MapViewController(eateries: eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
     }
 
     // MARK: Scroll View
