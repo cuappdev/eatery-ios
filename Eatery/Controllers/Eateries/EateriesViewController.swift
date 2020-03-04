@@ -207,8 +207,6 @@ class EateriesViewController: UIViewController {
         activityIndicator.alpha = 0
         failedToLoadView.alpha = 0
 
-        scheduleUpdateTimer()
-
         registerForEateryIsFavoriteDidChangeNotification()
     }
 
@@ -344,6 +342,8 @@ class EateriesViewController: UIViewController {
     }
 
     func updateState(_ newState: State, animated: Bool) {
+        updateTimer?.invalidate()
+
         switch state {
         case .loading:
             fadeOut(views: [activityIndicator], animated: animated, completion: activityIndicator.stopAnimating)
@@ -372,9 +372,9 @@ class EateriesViewController: UIViewController {
 
             switch state {
             case .failedToLoad, .loading:
-                fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
+                reloadEateries(animated: false)
 
-                reloadEateries(animated: animated)
+                fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
 
                 if animated {
                     animateCollectionViewCells()
@@ -385,6 +385,7 @@ class EateriesViewController: UIViewController {
             }
 
             pushPreselectedEateryIfPossible()
+            scheduleUpdateTimer()
 
         case .failedToLoad:
             fadeIn(views: [failedToLoadView], animated: animated)
@@ -580,7 +581,7 @@ class EateriesViewController: UIViewController {
         // update the timer on the minute
         let seconds = 60 - (Calendar.current.dateComponents([.second], from: Date()).second ?? 0)
 
-        updateTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
             guard let self = self else { return }
             print("Updating \(type(of: self))", Date())
             self.reloadEateries(animated: false)
