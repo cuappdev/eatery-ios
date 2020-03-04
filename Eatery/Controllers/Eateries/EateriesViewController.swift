@@ -169,6 +169,8 @@ class EateriesViewController: UIViewController {
 
     var userLocation: CLLocation? {
         didSet {
+            loadViewIfNeeded()
+
             for cell in collectionView.visibleCells.compactMap({ $0 as? EateryCollectionViewCell }) {
                 cell.userLocation = userLocation
             }
