@@ -20,19 +20,19 @@ class EateriesSharedViewController: UIViewController {
 
     // View Controllers
 
-    private lazy var campusEateries = CampusEateriesViewController()
-    private lazy var campusNavigation = EateryNavigationController(rootViewController: campusEateries)
-    private lazy var collegetownEateries = CollegetownEateriesViewController()
-    private lazy var collegetownNavigation = EateryNavigationController(rootViewController: collegetownEateries)
+    private lazy var campusEateriesVC = CampusEateriesViewController()
+    private lazy var campusNavigationVC = EateryNavigationController(rootViewController: campusEateriesVC)
+    private lazy var collegetownEateriesVC = CollegetownEateriesViewController()
+    private lazy var collegetownNavigationVC = EateryNavigationController(rootViewController: collegetownEateriesVC)
     private lazy var pillViewController = PillViewController(
-        leftViewController: campusNavigation,
-        rightViewController: collegetownNavigation
+        leftViewController: campusNavigationVC,
+        rightViewController: collegetownNavigationVC
     )
 
     var activeViewController: EateriesViewController {
         pillViewController.pillView.leftSegmentSelected
-            ? campusEateries
-            : collegetownEateries
+            ? campusEateriesVC
+            : collegetownEateriesVC
     }
 
     // Location
@@ -78,15 +78,15 @@ class EateriesSharedViewController: UIViewController {
     }
 
     func preselectEatery(withName name: String) {
-        campusEateries.preselectEatery(withName: name)
+        campusEateriesVC.preselectEatery(withName: name)
     }
 
     private func setUpEateriesViewControllers() {
-        campusNavigation.delegate = self
-        collegetownNavigation.delegate = self
+        campusNavigationVC.delegate = self
+        collegetownNavigationVC.delegate = self
 
-        campusEateries.scrollDelegate = self
-        collegetownEateries.scrollDelegate = self
+        campusEateriesVC.scrollDelegate = self
+        collegetownEateriesVC.scrollDelegate = self
 
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)
@@ -129,8 +129,8 @@ class EateriesSharedViewController: UIViewController {
 
     private func updateShowPill() {
         let showPill =
-            (pillViewController.pillView.leftSegmentSelected && campusNavigation.viewControllers.count == 1)
-            || (!pillViewController.pillView.leftSegmentSelected && collegetownNavigation.viewControllers.count == 1)
+            (pillViewController.pillView.leftSegmentSelected && campusNavigationVC.viewControllers.count == 1)
+            || (!pillViewController.pillView.leftSegmentSelected && collegetownNavigationVC.viewControllers.count == 1)
 
         pillViewController.setShowPill(showPill, animated: true)
     }
@@ -182,8 +182,8 @@ extension EateriesSharedViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.last
 
-        campusEateries.userLocation = userLocation
-        collegetownEateries.userLocation = userLocation
+        campusEateriesVC.userLocation = userLocation
+        collegetownEateriesVC.userLocation = userLocation
     }
 
 }
