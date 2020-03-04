@@ -581,7 +581,7 @@ class EateriesViewController: UIViewController {
         // update the timer on the minute
         let seconds = 60 - (Calendar.current.dateComponents([.second], from: Date()).second ?? 0)
 
-        updateTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
+        updateTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
             guard let self = self else { return }
             print("Updating \(type(of: self))", Date())
             self.reloadEateries(animated: false)
