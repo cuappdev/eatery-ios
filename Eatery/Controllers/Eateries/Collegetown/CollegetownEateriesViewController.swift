@@ -64,6 +64,10 @@ class CollegetownEateriesViewController: EateriesViewController {
 
 extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
 
+    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery] {
+        return allEateries ?? []
+    }
+
     func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> [Eatery] {
         guard let eateries = allEateries else {
             return []

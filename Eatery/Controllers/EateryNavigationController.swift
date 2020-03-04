@@ -13,7 +13,6 @@ class EateryNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        delegate = self
         // allow swipe back gesture even if navigation bar is hidden
         interactivePopGestureRecognizer?.delegate = nil
 
@@ -28,17 +27,6 @@ class EateryNavigationController: UINavigationController {
             navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
             navigationBar.isTranslucent = false
         }
-    }
-
-}
-
-extension EateryNavigationController: UINavigationControllerDelegate {
-
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        viewController.extendedLayoutIncludesOpaqueBars = true
-
-        let isParallax = viewController is ImageParallaxScrollViewController
-        setNavigationBarHidden(isParallax, animated: true)
     }
 
 }

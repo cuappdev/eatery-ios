@@ -136,6 +136,10 @@ class CampusEateriesViewController: EateriesViewController {
 
 extension CampusEateriesViewController: EateriesViewControllerDataSource {
 
+    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery] {
+        return allEateries ?? []
+    }
+
     func eateriesViewController(_ evc: EateriesViewController,
                                 eateriesToPresentWithSearchText searchText: String,
                                 filters: Set<Filter>) -> [Eatery] {
@@ -298,15 +302,6 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
             self.queryCampusEateries()
         }
-    }
-
-    func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController) {
-        guard let eateries = allEateries else {
-            return
-        }
-
-        let mapViewController = MapViewController(eateries: eateries)
-        navigationController?.pushViewController(mapViewController, animated: true)
     }
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController) {

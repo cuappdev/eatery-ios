@@ -28,6 +28,8 @@ protocol EateriesViewControllerDataSource: AnyObject {
                                 searchText: String,
                                 filters: Set<Filter>) -> NSAttributedString?
 
+    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery]
+
 }
 
 // MARK: - Delegate
@@ -39,8 +41,6 @@ protocol EateriesViewControllerDelegate: AnyObject {
     func eateriesViewController(_ evc: EateriesViewController, didPreselectEatery cachedEatery: Eatery)
 
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController)
-
-    func eateriesViewControllerDidPushMapViewController(_ evc: EateriesViewController)
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController)
 
@@ -148,7 +148,7 @@ class EateriesViewController: UIViewController {
     weak var delegate: EateriesViewControllerDelegate?
     weak var scrollDelegate: EateriesViewControllerScrollDelegate?
     
-    var appDevLogo: UIView?
+    private var appDevLogo: UIView?
     
     private var gridLayout: EateriesCollectionViewGridLayout!
     private var collectionView: UICollectionView!
@@ -175,7 +175,13 @@ class EateriesViewController: UIViewController {
         }
     }
 
-    // Preselection
+    // Caching
+
+    private let networkActivityIndicator = NVActivityIndicatorView(
+        frame: CGRect(x: 0, y: 0, width: 22, height: 22),
+        type: .circleStrokeSpin,
+        color: .white
+    )
 
     /// The eatery to present after we switch presentation modes.
     private var preselectedEatery: Eatery?
@@ -189,6 +195,7 @@ class EateriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setUpNavigationBar()
         setUpCollectionView()
         setUpSearchAndFilterBars()
         setUpActivityIndicator()
@@ -204,7 +211,47 @@ class EateriesViewController: UIViewController {
 
         registerForEateryIsFavoriteDidChangeNotification()
     }
-    
+
+    override func didMove(toParentViewController parent: UIViewController?) {
+        super.didMove(toParentViewController: parent)
+
+        // Adjust the navigation bar down when the app first launches.
+        // Why put this in didMove(toParentViewController:)? This code block should only be called once when the app
+        // launches, but after the view has been added to the view hiearchy so that we can compute the adjusted
+        // content inset.
+        let navigationBarLargeTitleHeight: CGFloat = 52
+        collectionView.setContentOffset(
+            CGPoint(x: 0, y: -(collectionView.adjustedContentInset.top + navigationBarLargeTitleHeight)),
+            animated: false)
+    }
+
+    private func setUpNavigationBar() {
+        navigationItem.title = "Eateries"
+        navigationItem.largeTitleDisplayMode = .automatic
+
+        let heroEnabled = !UIAccessibility.isReduceMotionEnabled
+        navigationController?.hero.isEnabled = heroEnabled
+        navigationController?.hero.navigationAnimationType = .fade
+        hero.isEnabled = heroEnabled
+
+        let mapButton = UIBarButtonItem(image: #imageLiteral(resourceName: "mapIcon"), style: .done, target: self, action: #selector(pushMapViewController))
+        mapButton.imageInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 8.0)
+        navigationItem.rightBarButtonItems = [mapButton]
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: networkActivityIndicator)
+
+        let logo = UIImageView(image: UIImage(named: "appDevLogo"))
+        logo.tintColor = .eateryBlue
+        logo.contentMode = .scaleAspectFit
+        navigationController?.navigationBar.addSubview(logo)
+        logo.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(28.0)
+        }
+
+        appDevLogo = logo
+    }
+
     private func setUpCollectionView() {
         gridLayout = EateriesCollectionViewGridLayout()
         
@@ -215,7 +262,7 @@ class EateriesViewController: UIViewController {
         collectionView.delaysContentTouches = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.prefetchDataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.register(UICollectionViewCell.self,
                                 forCellWithReuseIdentifier: CellIdentifier.container.rawValue)
         collectionView.register(EateryCollectionViewCell.self,
@@ -306,7 +353,7 @@ class EateriesViewController: UIViewController {
             case .failedToLoad, .loading:
                 fadeOut(views: [collectionView, searchBar, filterBar], animated: animated)
             default:
-                break
+                networkActivityIndicator.stopAnimating()
             }
 
         case .failedToLoad:
@@ -321,6 +368,7 @@ class EateriesViewController: UIViewController {
 
         case .presenting(let cached):
             searchBar.isUserInteractionEnabled = !cached
+            cached ? networkActivityIndicator.startAnimating() : networkActivityIndicator.stopAnimating()
 
             switch state {
             case .failedToLoad, .loading:
@@ -505,17 +553,19 @@ class EateriesViewController: UIViewController {
 
     // MARK: Map View
 
-    func pushMapViewController() {
-        delegate?.eateriesViewControllerDidPushMapViewController(self)
+    @objc func pushMapViewController() {
+        AppDevAnalytics.shared.logFirebase(MapPressPayload())
+
+        guard let eateries = dataSource?.eateriesToPresentInMapViewController(self) else { return }
+
+        let mapViewController = MapViewController(eateries: eateries)
+        navigationController?.pushViewController(mapViewController, animated: true)
     }
 
     // MARK: Scroll View
     
-    func scrollToTop() {
-        if collectionView.contentOffset.y > 0 {
-            let contentOffset = -(filterBar.frame.height + (navigationController?.navigationBar.frame.height ?? 0))
-            collectionView.setContentOffset(CGPoint(x: 0, y: contentOffset), animated: true)
-        }
+    func scrollToTop(animated: Bool) {
+        collectionView.setContentOffset(CGPoint(x: 0, y: -collectionView.adjustedContentInset.top), animated: animated)
     }
     
     override func viewWillLayoutSubviews() {
