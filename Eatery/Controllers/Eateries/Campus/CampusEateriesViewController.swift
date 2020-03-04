@@ -301,8 +301,8 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
     }
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController) {
-        queryCampusEateries()
         updateState(.loading, animated: true)
+        queryCampusEateries()
     }
 
 }
