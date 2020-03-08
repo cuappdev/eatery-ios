@@ -1365,7 +1365,7 @@
 				);
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1432,7 +1432,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1500,7 +1500,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1568,7 +1568,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
@@ -1608,7 +1608,7 @@
 				);
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1676,7 +1676,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1745,7 +1745,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1814,7 +1814,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Eatery_Watch_App_Extension;
 				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
@@ -1899,7 +1899,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
@@ -1977,7 +1977,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2054,7 +2054,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2131,7 +2131,7 @@
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
 				PRODUCT_NAME = "$(TARGET_NAME)";

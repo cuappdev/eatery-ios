@@ -74,7 +74,7 @@ PODS:
 
 DEPENDENCIES:
   - Apollo (from `https://github.com/apollographql/apollo-ios.git`)
-  - AppDevAnnouncements (from `https://github.com/cuappdev/appdev-announcements.git`)
+  - AppDevAnnouncements (from `https://github.com/cuappdev/appdev-announcements.git`, commit `4cfbcd46af092037ac6632fe5616a13e5f280615`)
   - ARCL
   - BulletinBoard
   - CHIPageControl/Jaloro
@@ -116,6 +116,7 @@ EXTERNAL SOURCES:
   Apollo:
     :git: https://github.com/apollographql/apollo-ios.git
   AppDevAnnouncements:
+    :commit: 4cfbcd46af092037ac6632fe5616a13e5f280615
     :git: https://github.com/cuappdev/appdev-announcements.git
 
 CHECKOUT OPTIONS:
@@ -123,12 +124,12 @@ CHECKOUT OPTIONS:
     :commit: 43dd373b9a64cd877f6331be6c56b24c125ca778
     :git: https://github.com/apollographql/apollo-ios.git
   AppDevAnnouncements:
-    :commit: 31c4502ac6e9e77e3c478bc46b4e4960cfc90fe9
+    :commit: 4cfbcd46af092037ac6632fe5616a13e5f280615
     :git: https://github.com/cuappdev/appdev-announcements.git
 
 SPEC CHECKSUMS:
   Apollo: 09002d68c46e4098766fe376151d9ff8bd6aad36
-  AppDevAnnouncements: da6074ec0011c8964caa11cabc959ca007cb958f
+  AppDevAnnouncements: e17a7f441fb0664583bb08e21dc709214d15b70f
   ARCL: 5fd2b0d7aabf91f15dbc0e8c510b25516b8a755a
   BulletinBoard: c774340545b5cfd05a96a89f63b105ecc95c86f9
   CHIPageControl: a787bf7205c9b7e7fbfc412be36c5e8636b68f86
@@ -149,6 +150,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   SwiftyUserDefaults: 33fcb42bd1feb53a37d873feb62c82967db5f7f6
 
-PODFILE CHECKSUM: 001412e9dcee71b81e01610fd92688768c99c741
+PODFILE CHECKSUM: a449adcece4576e4087aab6aa23dafe77f85d934
 
 COCOAPODS: 1.8.4
