@@ -297,19 +297,12 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
 
     func eateriesViewControllerDidPressRetryButton(_ evc: EateriesViewController) {
         updateState(.loading, animated: true)
-
-        // Delay the reload to give the impression that the app is querying
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.queryCampusEateries()
-        }
+        queryCampusEateries()
     }
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController) {
         updateState(.loading, animated: true)
-
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.queryCampusEateries()
-        }
+        queryCampusEateries()
     }
 
 }

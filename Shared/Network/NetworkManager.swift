@@ -196,7 +196,7 @@ struct NetworkManager {
 
             guard let result = result,
                 let data = result.data,
-                let graphQlEateries = data.collegetownEateriesVC?.compactMap({ $0 }) else {
+                let graphQlEateries = data.collegetownEateries?.compactMap({ $0 }) else {
                     completion(nil, NetworkError(message: "Could not parse response"))
                     return
             }

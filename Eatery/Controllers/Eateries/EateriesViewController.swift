@@ -169,6 +169,8 @@ class EateriesViewController: UIViewController {
 
     var userLocation: CLLocation? {
         didSet {
+            loadViewIfNeeded()
+
             for cell in collectionView.visibleCells.compactMap({ $0 as? EateryCollectionViewCell }) {
                 cell.userLocation = userLocation
             }
@@ -206,8 +208,6 @@ class EateriesViewController: UIViewController {
         filterBar.alpha = 0
         activityIndicator.alpha = 0
         failedToLoadView.alpha = 0
-
-        scheduleUpdateTimer()
 
         registerForEateryIsFavoriteDidChangeNotification()
     }
@@ -344,6 +344,8 @@ class EateriesViewController: UIViewController {
     }
 
     func updateState(_ newState: State, animated: Bool) {
+        updateTimer?.invalidate()
+
         switch state {
         case .loading:
             fadeOut(views: [activityIndicator], animated: animated, completion: activityIndicator.stopAnimating)
@@ -372,9 +374,9 @@ class EateriesViewController: UIViewController {
 
             switch state {
             case .failedToLoad, .loading:
-                fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
+                reloadEateries(animated: false)
 
-                reloadEateries(animated: animated)
+                fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
 
                 if animated {
                     animateCollectionViewCells()
@@ -385,6 +387,7 @@ class EateriesViewController: UIViewController {
             }
 
             pushPreselectedEateryIfPossible()
+            scheduleUpdateTimer()
 
         case .failedToLoad:
             fadeIn(views: [failedToLoadView], animated: animated)
