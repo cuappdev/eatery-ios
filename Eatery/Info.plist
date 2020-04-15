@@ -2,6 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>WinterIcon</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Icon-App-60x60</string>
+				</array>
+			</dict>
+		</dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>Normal</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<false/>
+		</dict>
+		<key>UINewsstandIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string></string>
+			</array>
+			<key>UINewsstandBindingType</key>
+			<string>UINewsstandBindingTypeMagazine</string>
+			<key>UINewsstandBindingEdge</key>
+			<string>UINewsstandBindingEdgeLeft</string>
+		</dict>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -85,5 +118,7 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>Icon-App-20x20@1x.pngIcon-App-20x20@2x-1.pngIcon-App-20x20@2x.pngIcon-App-20x20@3x.pngIcon-App-29x29@1x-1.pngIcon-App-29x29@1x.pngIcon-App-29x29@2x-1.pngIcon-App-29x29@2x.pngIcon-App-29x29@3x.pngIcon-App-40x40@1x.pngIcon-App-40x40@2x-1.pngIcon-App-40x40@2x.pngIcon-App-40x40@3x.pngIcon-App-57x57@1x.pngIcon-App-57x57@2x.pngIcon-App-60x60@2x.pngIcon-App-60x60@3x.pngIcon-App-72x72@1x.pngIcon-App-72x72@2x.pngIcon-App-76x76@1x.pngIcon-App-76x76@2x.pngIcon-App-83.5x83.5@2x.pngIcon-Small-50x50@1x.pngIcon-Small-50x50@2x.pngItunesArtwork@2x.pngwinter-logo.jpg</string>
 </dict>
 </plist>
