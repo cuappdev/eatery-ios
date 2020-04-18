@@ -24,6 +24,7 @@ class AboutTableViewController: UITableViewController {
         case description
         case link
         case saveLoginInfo
+        case appIcon
         case logout
 
     }
@@ -53,6 +54,7 @@ class AboutTableViewController: UITableViewController {
         tableView.register(DescriptionTableViewCell.self, forCellReuseIdentifier: CellIdentifier.description.rawValue)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellIdentifier.link.rawValue)
         tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: CellIdentifier.saveLoginInfo.rawValue)
+        tableView.register(AppIconTableViewCell.self, forCellReuseIdentifier: CellIdentifier.appIcon.rawValue)
         tableView.register(LogoutTableViewCell.self, forCellReuseIdentifier: CellIdentifier.logout.rawValue)
     }
 
@@ -67,13 +69,13 @@ class AboutTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0, 1: return 2
-        case 2: return 1
+        case 0, 1, 2: return 2
+        case 3: return 1
         default: return 0
         }
     }
@@ -119,6 +121,20 @@ class AboutTableViewController: UITableViewController {
             return cell
 
         case (2, 0):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue) as! AppIconTableViewCell
+
+            cell.configure(icon: UIImage(named: "AppIconImage"), title: "Summer")
+
+            return cell
+
+        case (2, 1):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue) as! AppIconTableViewCell
+
+            cell.configure(icon: UIImage(named: "AppIconWinterImage"), title: "Winter")
+
+            return cell
+
+        case (3, 0):
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.logout.rawValue, for: indexPath) as! LogoutTableViewCell
 
             cell.selectionStyle = logoutEnabled ? .default : .none
@@ -135,7 +151,8 @@ class AboutTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 1: return "Feedback"
-        case 2: return "Account Settings"
+        case 2: return "App Icon"
+        case 3: return "Account Settings"
         default: return nil
         }
     }
@@ -161,6 +178,16 @@ class AboutTableViewController: UITableViewController {
             UIApplication.shared.open(url)
 
         case (2, 0):
+            if UIApplication.shared.supportsAlternateIcons {
+                UIApplication.shared.setAlternateIconName(nil)
+            }
+
+        case (2, 1):
+            if UIApplication.shared.supportsAlternateIcons {
+                UIApplication.shared.setAlternateIconName("WinterIcon")
+            }
+
+        case (3, 0):
             if logoutEnabled {
                 delegate?.aboutTableViewControllerDidLogoutUser()
             }
