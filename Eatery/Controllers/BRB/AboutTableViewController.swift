@@ -130,7 +130,7 @@ class AboutTableViewController: UITableViewController {
         case (2, 1):
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue) as! AppIconTableViewCell
 
-            cell.configure(icon: UIImage(named: "AppIconWinterImage"), title: "Cornell")
+            cell.configure(icon: UIImage(named: "AppIconWinterImage"), title: "Winter")
 
             return cell
 
