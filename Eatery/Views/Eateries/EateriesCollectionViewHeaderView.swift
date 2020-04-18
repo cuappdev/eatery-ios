@@ -13,7 +13,7 @@ class EateriesCollectionViewHeaderView: UICollectionReusableView {
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.trailing.equalToSuperview().inset(EateriesViewController.collectionViewMargin)
             make.top.bottom.equalToSuperview().inset(8)
         }
     }
