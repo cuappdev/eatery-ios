@@ -15,11 +15,13 @@ class CollegetownEateriesViewController: EateriesViewController {
     private var favoritesNames: [String] = []
 
     private var allEateries: [CollegetownEatery]?
+    override var eateries: [Eatery] {
+        return allEateries ?? []
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataSource = self
         delegate = self
 
         availableFilters = [.nearest] + Filter.categoryFilters
@@ -56,97 +58,6 @@ class CollegetownEateriesViewController: EateriesViewController {
 
     override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
         AppDevAnalytics.shared.logFirebase(CollegetownFilterPressPayload())
-    }
-
-}
-
-// MARK: -
-
-extension CollegetownEateriesViewController: EateriesViewControllerDataSource {
-
-    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery] {
-        return allEateries ?? []
-    }
-
-    func eateriesViewController(_ evc: EateriesViewController, eateriesToPresentWithSearchText searchText: String, filters: Set<Filter>) -> [Eatery] {
-        guard let eateries = allEateries else {
-            return []
-        }
-
-        var filteredEateries = eateries
-
-        if !searchText.isEmpty {
-            filteredEateries = filter(eateries: filteredEateries, withSearchText: searchText)
-        }
-
-        filteredEateries = filter(eateries: filteredEateries, withFilters: filters)
-
-        return filteredEateries
-    }
-
-    private func filter(eateries: [CollegetownEatery], withSearchText searchText: String) -> [CollegetownEatery] {
-        return eateries.filter { eatery in
-            if search(searchText, matches: eatery.name) {
-                return true
-            }
-
-            if let activeEvent = eatery.activeEvent(atExactly: Date()),
-                activeEvent.menu.stringRepresentation.flatMap({ $0.1 }).contains(where: { search(searchText, matches: $0) }) {
-                return true
-            }
-
-            return false
-        }
-    }
-
-    private func filter(eateries: [CollegetownEatery], withFilters filters: Set<Filter>) -> [CollegetownEatery] {
-        var filteredEateries = eateries
-
-        filteredEateries = filteredEateries.filter {
-            if filters.contains(.swipes) { return $0.paymentMethods.contains(.swipes) }
-            if filters.contains(.brb) { return $0.paymentMethods.contains(.brb) }
-            return true
-        }
-
-        let selectedCategoryFilters = filters.intersection(Filter.categoryFilters).map { $0.rawValue }
-        if !selectedCategoryFilters.isEmpty {
-            filteredEateries = filteredEateries.filter { eatery -> Bool in
-                // check if an eatery has a category that is also in the
-                // selected category filters
-                eatery.categories.contains { eateryCategory -> Bool in
-                    selectedCategoryFilters.contains { filterCategory -> Bool in
-                        search(eateryCategory, matches: filterCategory) || search(filterCategory, matches: eateryCategory)
-                    }
-                }
-            }
-        }
-
-        return filteredEateries
-    }
-
-    func eateriesViewController(_ evc: EateriesViewController,
-                                sortMethodWithSearchText searchText: String,
-                                filters: Set<Filter>) -> EateriesViewController.SortMethod {
-        if filters.contains(.nearest), let userLocation = userLocation {
-            return .nearest(userLocation)
-        } else {
-            return .alphabetical
-        }
-    }
-
-    func eateriesViewController(_ evc: EateriesViewController,
-                                highlightedSearchDescriptionForEatery eatery: Eatery,
-                                searchText: String,
-                                filters: Set<Filter>) -> NSAttributedString? {
-        return nil
-    }
-
-    private func matchRange(of searchText: String, in text: String) -> Range<String.Index>? {
-        return text.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
-    }
-
-    private func search(_ searchText: String, matches text: String) -> Bool {
-        return matchRange(of: searchText, in: text) != nil
     }
 
 }

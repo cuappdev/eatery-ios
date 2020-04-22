@@ -11,27 +11,6 @@ import Kingfisher
 import NVActivityIndicatorView
 import UIKit
 
-// MARK: - Data Source
-
-protocol EateriesViewControllerDataSource: AnyObject {
-
-    func eateriesViewController(_ evc: EateriesViewController,
-                                eateriesToPresentWithSearchText searchText: String,
-                                filters: Set<Filter>) -> [Eatery]
-
-    func eateriesViewController(_ evc: EateriesViewController,
-                                sortMethodWithSearchText searchText: String,
-                                filters: Set<Filter>) -> EateriesViewController.SortMethod
-
-    func eateriesViewController(_ evc: EateriesViewController,
-                                highlightedSearchDescriptionForEatery eatery: Eatery,
-                                searchText: String,
-                                filters: Set<Filter>) -> NSAttributedString?
-
-    func eateriesToPresentInMapViewController(_ evc: EateriesViewController) -> [Eatery]
-
-}
-
 // MARK: - Delegate
 
 protocol EateriesViewControllerDelegate: AnyObject {
@@ -84,8 +63,6 @@ protocol EateriesViewControllerScrollDelegate: AnyObject {
  */
 class EateriesViewController: UIViewController {
 
-    static let collectionViewMargin: CGFloat = 16
-
     enum AnimationKey: String {
 
         case backgroundImageView = "backgroundImage"
@@ -134,9 +111,13 @@ class EateriesViewController: UIViewController {
         case alphabetical
     }
 
+    static let collectionViewMargin: CGFloat = 20
+
     // Model
 
-    weak var dataSource: EateriesViewControllerDataSource?
+    var eateries: [Eatery] {
+        []
+    }
 
     private(set) var state: State = .loading
     private var eateriesByGroup: EateriesByGroup?
@@ -154,8 +135,9 @@ class EateriesViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var refreshControl: UIRefreshControl!
 
-    private var searchFilterContainer: UIView!
-    private var searchBar: UISearchBar!
+    private var searchBar: UISearchBar? {
+        return navigationItem.searchController?.searchBar
+    }
     private var filterBar: FilterBar!
     var availableFilters: [Filter] {
         get { return filterBar.displayedFilters }
@@ -204,7 +186,6 @@ class EateriesViewController: UIViewController {
         setUpFailedToLoadView()
 
         collectionView.alpha = 0
-        searchBar.alpha = 0
         filterBar.alpha = 0
         activityIndicator.alpha = 0
         failedToLoadView.alpha = 0
@@ -219,9 +200,10 @@ class EateriesViewController: UIViewController {
         // Why put this in didMove(toParentViewController:)? This code block should only be called once when the app
         // launches, but after the view has been added to the view hiearchy so that we can compute the adjusted
         // content inset.
-        let navigationBarLargeTitleHeight: CGFloat = 52
+        let largeTitleHeight: CGFloat = 52
+        let searchBarHeight: CGFloat = 52
         collectionView.setContentOffset(
-            CGPoint(x: 0, y: -(collectionView.adjustedContentInset.top + navigationBarLargeTitleHeight)),
+            CGPoint(x: 0, y: -(collectionView.adjustedContentInset.top + largeTitleHeight + searchBarHeight)),
             animated: false)
     }
 
@@ -249,7 +231,29 @@ class EateriesViewController: UIViewController {
             make.size.equalTo(28.0)
         }
 
+        let searchResultsController = setUpSearchResultsController()
+        let searchController = UISearchController(searchResultsController: searchResultsController)
+        searchController.searchResultsUpdater = searchResultsController
+        searchController.delegate = self
+        navigationItem.searchController = searchController
+
+        let searchBar = searchController.searchBar
+        searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
+        searchBar.placeholder = "Search eateries and menus"
+        searchBar.autocapitalizationType = .none
+        searchBar.barTintColor = .black
+
+        if #available(iOS 13.0, *) {
+            searchBar.searchTextField.backgroundColor = .white
+            searchBar.searchTextField.tintColor = .eateryBlue
+        }
+
         appDevLogo = logo
+    }
+
+    func setUpSearchResultsController() -> (UIViewController & UISearchResultsUpdating)? {
+        nil
     }
 
     private func setUpCollectionView() {
@@ -285,29 +289,8 @@ class EateriesViewController: UIViewController {
     }
     
     private func setUpSearchAndFilterBars() {
-        searchFilterContainer = UIView()
-        
-        searchBar = UISearchBar(frame: .zero)
-        searchBar.searchBarStyle = .minimal
-        searchBar.backgroundColor = .white
-        searchBar.delegate = self
-        searchBar.placeholder = "Search eateries and menus"
-        searchBar.autocapitalizationType = .none
-        searchBar.enablesReturnKeyAutomatically = false
-        searchFilterContainer.addSubview(searchBar)
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(searchFilterContainer)
-            make.leading.trailing.equalToSuperview().inset(8)
-        }
-        
         filterBar = FilterBar(frame: .zero)
         filterBar.delegate = self
-        searchFilterContainer.addSubview(filterBar)
-        filterBar.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(searchFilterContainer)
-        }
     }
     
     private func setUpActivityIndicator() {
@@ -353,7 +336,7 @@ class EateriesViewController: UIViewController {
         case .presenting:
             switch newState {
             case .failedToLoad, .loading:
-                fadeOut(views: [collectionView, searchBar, filterBar], animated: animated)
+                fadeOut(views: [collectionView, filterBar], animated: animated)
             default:
                 networkActivityIndicator.stopAnimating()
             }
@@ -369,14 +352,14 @@ class EateriesViewController: UIViewController {
             fadeIn(views: [activityIndicator], animated: animated)
 
         case .presenting(let cached):
-            searchBar.isUserInteractionEnabled = !cached
+            searchBar?.isUserInteractionEnabled = !cached
             cached ? networkActivityIndicator.startAnimating() : networkActivityIndicator.stopAnimating()
 
             switch state {
             case .failedToLoad, .loading:
                 reloadEateries(animated: false)
 
-                fadeIn(views: [collectionView, searchBar, filterBar], animated: animated)
+                fadeIn(views: [collectionView, filterBar], animated: animated)
 
                 if animated {
                     animateCollectionViewCells()
@@ -518,21 +501,16 @@ class EateriesViewController: UIViewController {
             return
         }
 
-        let newEateriesByGroup: EateriesByGroup
-        if let dataSource = dataSource {
-            let searchText = searchBar.text ?? ""
-            let eateries = dataSource.eateriesViewController(self,
-                                                             eateriesToPresentWithSearchText: searchText,
-                                                             filters: filterBar.selectedFilters)
-
-            let sortMethod = dataSource.eateriesViewController(self,
-                                                               sortMethodWithSearchText: searchText,
-                                                               filters: filterBar.selectedFilters)
-
-            newEateriesByGroup = eateriesByGroup(from: eateries, sortedUsing: sortMethod)
+        let sortMethod: SortMethod
+        if filterBar.selectedFilters.contains(.nearest), let location = userLocation {
+            sortMethod = .nearest(location)
         } else {
-            newEateriesByGroup = (favorites: [], open: [], closed: [])
+            sortMethod = .alphabetical
         }
+
+        let newEateriesByGroup = eateriesByGroup(
+            from: eateries,
+            sortedUsing: sortMethod)
 
         self.eateriesByGroup = newEateriesByGroup
 
@@ -546,21 +524,11 @@ class EateriesViewController: UIViewController {
         }
     }
 
-    private func highlightedText(for eatery: Eatery) -> NSAttributedString? {
-        let searchText = searchBar.text ?? ""
-        return dataSource?.eateriesViewController(self,
-                                                  highlightedSearchDescriptionForEatery: eatery,
-                                                  searchText: searchText,
-                                                  filters: filterBar.selectedFilters)
-    }
-
     // MARK: Map View
 
     @objc func pushMapViewController() {
         AppDevAnalytics.shared.logFirebase(MapPressPayload())
-
-        guard let eateries = dataSource?.eateriesToPresentInMapViewController(self) else { return }
-
+        
         let mapViewController = MapViewController(eateries: eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
     }
@@ -650,9 +618,9 @@ extension EateriesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.container.rawValue, for: indexPath)
-            
-            cell.contentView.addSubview(searchFilterContainer)
-            searchFilterContainer.snp.makeConstraints { make in
+
+            cell.contentView.addSubview(filterBar)
+            filterBar.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
             
@@ -672,15 +640,11 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
 
         cell.setActivityIndicatorAnimating(eatery.id == preselectedEatery?.id, animated: true)
-        
-        if case .presenting = state,
-            let searchText = searchBar.text, !searchText.isEmpty,
-            let text = highlightedText(for: eatery) {
-            cell.menuTextView.attributedText = text
-            cell.isMenuTextViewVisible = true
-        } else {
-            cell.isMenuTextViewVisible = false
-        }
+
+        // Searched menu items were originally displayed inside a text field
+        // within each cell. Now that search results have been / will be moved
+        // to a new view controller, the menu text is no longer needed.
+        cell.isMenuTextViewVisible = false
         
         return cell
     }
@@ -797,7 +761,7 @@ extension EateriesViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            let height = searchFilterContainer.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let height = filterBar.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             return CGSize(width: collectionView.bounds.width, height: height)
         }
         
@@ -806,7 +770,9 @@ extension EateriesViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 || eateries(in: section).isEmpty {
+        if section == 0 {
+            return UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+        } else if eateries(in: section).isEmpty {
             return .zero
         }
         
@@ -881,8 +847,6 @@ extension EateriesViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-        
         transformAppDevLogo()
         
         scrollDelegate?.eateriesViewController(self, scrollViewDidScroll: scrollView)
@@ -904,8 +868,16 @@ extension EateriesViewController: UIScrollViewDelegate {
         let navBarWidth = (navigationController?.navigationBar.frame.width ?? 0.0) / 2
         let navBarHeight = (navigationController?.navigationBar.frame.height ?? 0.0) / 2
 
-        appDevLogo.transform = CGAffineTransform(translationX: navBarWidth - margin - width, y: navBarHeight - margin - width)
+        appDevLogo.transform = CGAffineTransform(
+            translationX: navBarWidth - margin - width,
+            y: navBarHeight - margin - width - (searchBar?.frame.height ?? 0))
         appDevLogo.tintColor = .white
     }
+
+}
+
+// MARK: - Search Controller Delegate
+
+extension EateriesViewController: UISearchControllerDelegate {
 
 }

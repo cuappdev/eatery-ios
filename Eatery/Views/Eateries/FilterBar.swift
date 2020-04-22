@@ -52,6 +52,9 @@ protocol FilterBarDelegate: AnyObject {
 
 class FilterBar: UIView {
 
+    // Half the height of a UISearchBar embedded in a UINavigationBar
+    private static let filterBarHeight = 56 / 2
+
     private var buttons: [Filter : UIButton] = [:]
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
@@ -90,7 +93,7 @@ class FilterBar: UIView {
         }
 
         snp.makeConstraints { make in
-            make.height.equalTo(44)
+            make.height.equalTo(FilterBar.filterBarHeight)
         }
     }
 
@@ -126,7 +129,7 @@ class FilterBar: UIView {
             button.snp.makeConstraints { make in
                 make.centerY.equalTo(snp.centerY)
                 make.width.equalTo(button.frame.size.width)
-                make.height.equalToSuperview().offset(-padding)
+                make.height.equalToSuperview()
                 if previousLayout == nil {
                     make.leading.equalToSuperview()
                 } else {
