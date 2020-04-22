@@ -133,7 +133,7 @@ class CampusEateriesViewController: EateriesViewController {
     }
 
     override func setUpSearchResultsController() -> (UIViewController & UISearchResultsUpdating)? {
-        return CampusEateriesSearchViewController()
+        return CampusEateriesSearchViewController(eateries: allEateries ?? [])
     }
 
 }

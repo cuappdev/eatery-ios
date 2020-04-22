@@ -235,6 +235,11 @@ class EateriesViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: searchResultsController)
         searchController.searchResultsUpdater = searchResultsController
         searchController.delegate = self
+
+        if #available(iOS 13.0, *) {
+            searchController.showsSearchResultsController = true
+        }
+
         navigationItem.searchController = searchController
 
         let searchBar = searchController.searchBar
