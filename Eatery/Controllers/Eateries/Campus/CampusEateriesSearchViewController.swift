@@ -127,6 +127,8 @@ class CampusEateriesSearchViewController: UIViewController {
 
     weak var searchController: UISearchController?
 
+    private var searchDebounceTimer: Timer?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -135,7 +137,7 @@ class CampusEateriesSearchViewController: UIViewController {
         setUpHeaderViews()
         setUpTableView()
 
-        setMode(.recentSearches, forced: true)
+        setMode(.recentSearches)
 
         displayedRecentSearches = Defaults[\.campusRecentSearches]
         NetworkManager.shared.getCampusEateries(useCachedData: true) { (campusEateries, _) in
@@ -191,11 +193,7 @@ class CampusEateriesSearchViewController: UIViewController {
         }
     }
 
-    private func setMode(_ mode: Mode, forced: Bool) {
-        guard self.mode != mode || forced else {
-            return
-        }
-
+    private func setMode(_ mode: Mode) {
         self.mode = mode
         switch mode {
         case .recentSearches:
@@ -249,14 +247,21 @@ extension CampusEateriesSearchViewController: UISearchResultsUpdating {
         let searchText = searchController.searchBar.text ?? ""
 
         if searchText.isEmpty {
-            setMode(.recentSearches, forced: false)
+            if mode != .recentSearches {
+                setMode(.recentSearches)
+            }
 
             tableView.reloadData()
         } else {
-            setMode(.searchResults, forced: false)
+            if mode != .searchResults {
+                setMode(.searchResults)
+            }
 
-            displayedSearchResults = searchResults.searchResult(searchText: searchText)
-            tableView.reloadData()
+            searchDebounceTimer?.invalidate()
+            searchDebounceTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false) { _ in
+                self.displayedSearchResults = self.searchResults.searchResult(searchText: searchText)
+                self.tableView.reloadData()
+            }
         }
     }
 
