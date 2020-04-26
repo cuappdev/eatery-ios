@@ -120,10 +120,10 @@ class CampusEateriesSearchViewController: UIViewController {
 
     // Views
 
-    private var titleLabel: UILabel!
-    private var clearButton: UIButton!
+    private let titleLabel = UILabel()
+    private let clearButton = UIButton(type: .system)
 
-    private var tableView: UITableView!
+    private let tableView = UITableView()
 
     weak var searchController: UISearchController?
 
@@ -168,10 +168,8 @@ class CampusEateriesSearchViewController: UIViewController {
     }
 
     private func setUpHeaderViews() {
-        titleLabel = UILabel(frame: .zero)
         titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
 
-        clearButton = UIButton(type: .system)
         clearButton.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
         clearButton.setTitle("Clear", for: .normal)
         clearButton.addTarget(self, action: #selector(clearButtonPressed(_:)), for: .touchUpInside)
@@ -200,7 +198,6 @@ class CampusEateriesSearchViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
         }
 
-        tableView = UITableView(frame: .zero, style: .plain)
         tableView.tableFooterView = UIView()
         tableView.register(
             SearchResultsTableViewCell.self,
