@@ -143,6 +143,28 @@ class CampusEateriesSearchViewController: UIViewController {
         NetworkManager.shared.getCampusEateries(useCachedData: true) { (campusEateries, _) in
             self.searchResults.eateries = campusEateries ?? []
         }
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardFrameWillChange(_:)),
+            name: NSNotification.Name.UIKeyboardWillChangeFrame,
+            object: nil)
+    }
+
+    @objc private func keyboardFrameWillChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+
+        let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
+        let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(
+            dx: 0,
+            dy: additionalSafeAreaInsets.bottom)
+        let intersection = safeAreaFrame.intersection(keyboardFrameInView)
+
+        tableView.contentInset.bottom = intersection.height
+        tableView.scrollIndicatorInsets.bottom = intersection.height
     }
 
     private func setUpHeaderViews() {
