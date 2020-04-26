@@ -18,23 +18,103 @@ private struct RecentSearch {
     let subtitle: String
 }
 
+private enum SearchSource {
+    case eatery(CampusEatery)
+    case menuItem(CampusEatery, Menu.Item)
+    case area(Area)
+}
+
 private struct SearchResult {
+
+    let source: SearchSource
+
     let title: String
     let subtitle: String
-    let isFavorited: Bool
+    let isFavorite: Bool?
+
+}
+
+private class SearchResultsManager {
+
+    var eateries: [CampusEatery] = []
+    
+    func getSearchResults(searchText: String) -> [SearchResult] {
+        let searchResults = eaterySearchResults(searchText: searchText)
+            + menuItemSearchResults(searchText: searchText)
+            + areaSearchResults(searchText: searchText)
+        
+        return searchResults
+    }
+
+    private func eaterySearchResults(searchText: String) -> [SearchResult] {
+        eateries.filter { eatery in
+            matches(eatery.name, searchText) || matches(eatery.displayName, searchText)
+        }.map { eatery in
+            let subtitle: String
+            switch eatery.eateryType {
+            case .dining: subtitle = "Dining Hall"
+            default: subtitle = "Café"
+            }
+
+            return SearchResult(
+                source: .eatery(eatery),
+                title: eatery.displayName,
+                subtitle: subtitle,
+                isFavorite: eatery.isFavorite)
+        }
+    }
+
+    private func menuItemSearchResults(searchText: String) -> [SearchResult] {
+        var searchResults: [SearchResult] = []
+
+        for eatery in eateries {
+            var items = Set(eatery.diningItems(onDayOf: Date()))
+            if let activeEvent = eatery.activeEvent(atExactly: Date()) {
+                items.formUnion(activeEvent.menu.data.values.flatMap { $0 })
+            }
+
+            let filteredItems = items
+                .filter { matches($0.name, searchText) }
+                .sorted { $0.name < $1.name }
+
+            searchResults += filteredItems.map {
+                SearchResult(
+                    source: .menuItem(eatery, $0),
+                    title: $0.name,
+                    subtitle: eatery.displayName,
+                    isFavorite: false)
+            }
+        }
+
+        return searchResults
+    }
+
+    private func areaSearchResults(searchText: String) -> [SearchResult] {
+        Area.allCases
+            .filter { area in matches(area.description, searchText) }
+            .map { area in
+                SearchResult(
+                    source: .area(area),
+                    title: area.description,
+                    subtitle: "Location",
+                    isFavorite: nil)
+        }
+    }
+
+    private func matches(_ textToSearch: String, _ searchText: String) -> Bool {
+        return textToSearch.localizedCaseInsensitiveContains(searchText)
+    }
+
 }
 
 class CampusEateriesSearchViewController: UIViewController {
 
     // Model
 
-    private let eateries: [CampusEatery]
-
     private var mode: Mode = .recentSearches
+    private let searchResults = SearchResultsManager()
 
     private var displayedRecentSearches: [RecentSearch] = []
-
-    private var searchText: String = ""
     private var displayedSearchResults: [SearchResult] = []
 
     // Views
@@ -43,16 +123,6 @@ class CampusEateriesSearchViewController: UIViewController {
     private var clearButton: UIButton!
 
     private var tableView: UITableView!
-
-    init(eateries: [CampusEatery]) {
-        self.eateries = eateries
-
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +133,10 @@ class CampusEateriesSearchViewController: UIViewController {
         setUpTableView()
 
         setMode(.recentSearches, forced: true)
+
+        NetworkManager.shared.getCampusEateries(useCachedData: true) { (campusEateries, _) in
+            self.searchResults.eateries = campusEateries ?? []
+        }
     }
 
     private func setUpHeaderViews() {
@@ -138,20 +212,12 @@ class CampusEateriesSearchViewController: UIViewController {
 
     }
 
-    private func getSearchResults() -> [SearchResult] {
-        return [
-            SearchResult(title: "Chicken Tenders", subtitle: "104 West", isFavorited: true),
-            SearchResult(title: "Chicken Sandwich", subtitle: "Bear Necessities", isFavorited: false),
-            SearchResult(title: "Buffalo Chicken Wings", subtitle: "104 West", isFavorited: false),
-        ]
-    }
-
 }
 
 extension CampusEateriesSearchViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
-        searchText = searchController.searchBar.text ?? ""
+        let searchText = searchController.searchBar.text ?? ""
 
         if searchText.isEmpty {
             setMode(.recentSearches, forced: false)
@@ -160,7 +226,7 @@ extension CampusEateriesSearchViewController: UISearchResultsUpdating {
         } else {
             setMode(.searchResults, forced: false)
 
-            displayedSearchResults = getSearchResults()
+            displayedSearchResults = searchResults.getSearchResults(searchText: searchText)
             tableView.reloadData()
         }
     }
@@ -189,7 +255,7 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
             cell.configure(
                 title: search.title,
                 subtitle: search.subtitle,
-                favorite: .hidden)
+                isFavorite: nil)
 
             return cell
 
@@ -204,11 +270,10 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
             cell.configure(
                 title: search.title,
                 subtitle: search.subtitle,
-                favorite: .visible(isFavorite: search.isFavorited))
+                isFavorite: search.isFavorite)
 
             return cell
         }
-
     }
 
 }

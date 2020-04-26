@@ -10,11 +10,6 @@ import UIKit
 
 class SearchResultsTableViewCell: UITableViewCell {
 
-    enum Favorite {
-        case hidden
-        case visible(isFavorite: Bool)
-    }
-
     private(set) var favoriteButton: UIButton!
 
     var favoriteButtonPressed: (() -> Void)?
@@ -31,15 +26,11 @@ class SearchResultsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String, subtitle: String, favorite: Favorite) {
+    func configure(title: String, subtitle: String, isFavorite: Bool?) {
         textLabel?.text = title
         detailTextLabel?.text = subtitle
 
-        switch favorite {
-        case .hidden:
-            favoriteButton.isHidden = true
-
-        case let .visible(isFavorite):
+        if let isFavorite = isFavorite {
             favoriteButton.isHidden = false
 
             if isFavorite {
@@ -52,8 +43,9 @@ class SearchResultsTableViewCell: UITableViewCell {
                     for: .normal)
                 favoriteButton.tintColor = .separator
             }
+        } else {
+            favoriteButton.isHidden = true
         }
-
     }
 
 }
