@@ -26,9 +26,10 @@ class SearchResultsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String, subtitle: String, isFavorite: Bool?) {
+    func configure(title: String, subtitle: String, subtitleColor: UIColor?, isFavorite: Bool?) {
         textLabel?.text = title
         detailTextLabel?.text = subtitle
+        detailTextLabel?.textColor = subtitleColor
 
         if let isFavorite = isFavorite {
             favoriteButton.isHidden = false

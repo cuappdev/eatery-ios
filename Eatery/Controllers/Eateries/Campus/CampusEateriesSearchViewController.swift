@@ -6,6 +6,7 @@
 //  Copyright © 2020 CUAppDev. All rights reserved.
 //
 
+import SwiftyUserDefaults
 import UIKit
 
 private enum Mode {
@@ -13,12 +14,12 @@ private enum Mode {
     case searchResults
 }
 
-private struct RecentSearch {
+struct RecentSearch: Equatable, Codable, DefaultsSerializable {
     let title: String
     let subtitle: String
 }
 
-private enum SearchSource {
+enum SearchSource {
     case eatery(CampusEatery)
     case menuItem(CampusEatery, Menu.Item)
     case area(Area)
@@ -38,7 +39,7 @@ private class SearchResultsManager {
 
     var eateries: [CampusEatery] = []
     
-    func getSearchResults(searchText: String) -> [SearchResult] {
+    func searchResult(searchText: String) -> [SearchResult] {
         let searchResults = eaterySearchResults(searchText: searchText)
             + menuItemSearchResults(searchText: searchText)
             + areaSearchResults(searchText: searchText)
@@ -124,6 +125,8 @@ class CampusEateriesSearchViewController: UIViewController {
 
     private var tableView: UITableView!
 
+    weak var searchController: UISearchController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -134,6 +137,7 @@ class CampusEateriesSearchViewController: UIViewController {
 
         setMode(.recentSearches, forced: true)
 
+        displayedRecentSearches = Defaults[\.campusRecentSearches]
         NetworkManager.shared.getCampusEateries(useCachedData: true) { (campusEateries, _) in
             self.searchResults.eateries = campusEateries ?? []
         }
@@ -209,7 +213,32 @@ class CampusEateriesSearchViewController: UIViewController {
     }
 
     @objc private func clearButtonPressed(_ sender: UIButton) {
+        clearRecentSearches()
 
+        tableView.reloadData()
+    }
+
+    private func addRecentSearch(_ searchResult: SearchResult) {
+        let recentSearch = RecentSearch(
+            title: searchResult.title,
+            subtitle: searchResult.subtitle)
+
+        if let index = displayedRecentSearches.firstIndex(of: recentSearch) {
+            displayedRecentSearches.remove(at: index)
+        }
+
+        displayedRecentSearches.insert(recentSearch, at: 0)
+
+        if displayedRecentSearches.count > 5 {
+            displayedRecentSearches = Array(displayedRecentSearches[..<5])
+        }
+
+        Defaults[\.campusRecentSearches] = displayedRecentSearches
+    }
+
+    private func clearRecentSearches() {
+        displayedRecentSearches = []
+        Defaults[\.campusRecentSearches] = []
     }
 
 }
@@ -226,7 +255,7 @@ extension CampusEateriesSearchViewController: UISearchResultsUpdating {
         } else {
             setMode(.searchResults, forced: false)
 
-            displayedSearchResults = searchResults.getSearchResults(searchText: searchText)
+            displayedSearchResults = searchResults.searchResult(searchText: searchText)
             tableView.reloadData()
         }
     }
@@ -255,6 +284,7 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
             cell.configure(
                 title: search.title,
                 subtitle: search.subtitle,
+                subtitleColor: .steel,
                 isFavorite: nil)
 
             return cell
@@ -270,6 +300,7 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
             cell.configure(
                 title: search.title,
                 subtitle: search.subtitle,
+                subtitleColor: .eateryBlue,
                 isFavorite: search.isFavorite)
 
             return cell
@@ -279,5 +310,21 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
 }
 
 extension CampusEateriesSearchViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        switch mode {
+        case .recentSearches:
+            let search = displayedRecentSearches[indexPath.row]
+            if let searchController = searchController {
+                searchController.searchBar.text = search.title
+                updateSearchResults(for: searchController)
+            }
+
+        case .searchResults:
+            addRecentSearch(displayedSearchResults[indexPath.row])
+        }
+    }
 
 }

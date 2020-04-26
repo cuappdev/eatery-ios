@@ -132,8 +132,31 @@ class CampusEateriesViewController: EateriesViewController {
         }
     }
 
-    override func setUpSearchResultsController() -> (UIViewController & UISearchResultsUpdating)? {
-        return CampusEateriesSearchViewController()
+    override func setUpSearchController() -> UISearchController {
+        let searchResultsController = CampusEateriesSearchViewController()
+        let searchController = UISearchController(searchResultsController: searchResultsController)
+        searchController.searchResultsUpdater = searchResultsController
+        searchResultsController.searchController = searchController
+
+        if #available(iOS 13.0, *) {
+            searchController.showsSearchResultsController = true
+        }
+
+        navigationItem.searchController = searchController
+
+        let searchBar = searchController.searchBar
+        searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
+        searchBar.placeholder = "Search eateries and menus"
+        searchBar.autocapitalizationType = .none
+        searchBar.barTintColor = .black
+
+        if #available(iOS 13.0, *) {
+            searchBar.searchTextField.backgroundColor = .white
+            searchBar.searchTextField.tintColor = .eateryBlue
+        }
+
+        return searchController
     }
 
 }
