@@ -10,7 +10,7 @@ import UIKit
 
 class SearchResultsTableViewCell: UITableViewCell {
 
-    let favoriteButton = UIButton(type: .system)
+    private let favoriteButton = UIButton(type: .system)
 
     var favoriteButtonPressed: (() -> Void)?
 

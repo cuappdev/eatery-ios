@@ -40,11 +40,9 @@ private class SearchResultsManager {
     var eateries: [CampusEatery] = []
     
     func searchResult(searchText: String) -> [SearchResult] {
-        let searchResults = eaterySearchResults(searchText: searchText)
+        return eaterySearchResults(searchText: searchText)
             + menuItemSearchResults(searchText: searchText)
             + areaSearchResults(searchText: searchText)
-        
-        return searchResults
     }
 
     private func eaterySearchResults(searchText: String) -> [SearchResult] {
