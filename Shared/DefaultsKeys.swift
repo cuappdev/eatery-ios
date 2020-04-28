@@ -23,6 +23,8 @@ extension DefaultsKeys {
     var cachedCampusEateriesLastRefresh: DefaultsKey<Date?> { .init("cachedCampusEateriesLastRefresh") }
     var cachedCampusEateries: DefaultsKey<[CampusEatery]?> { .init("cachedCampusEateries") }
 
+    var campusRecentSearches: DefaultsKey<[RecentSearch]> { .init("campusRecentSearches", defaultValue: []) }
+
     #endif
 
 }

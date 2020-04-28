@@ -13,7 +13,7 @@ struct Menu: Codable {
     /**
      * Basic representation of an individual menu entry
      */
-    struct Item: Codable {
+    struct Item: Codable, Hashable {
 
         /// English description of the menu item
         let name: String

@@ -231,28 +231,12 @@ class EateriesViewController: UIViewController {
             make.size.equalTo(28.0)
         }
 
-        let searchResultsController = setUpSearchResultsController()
-        let searchController = UISearchController(searchResultsController: searchResultsController)
-        searchController.searchResultsUpdater = searchResultsController
-        searchController.delegate = self
-        navigationItem.searchController = searchController
-
-        let searchBar = searchController.searchBar
-        searchBar.searchBarStyle = .minimal
-        searchBar.delegate = self
-        searchBar.placeholder = "Search eateries and menus"
-        searchBar.autocapitalizationType = .none
-        searchBar.barTintColor = .black
-
-        if #available(iOS 13.0, *) {
-            searchBar.searchTextField.backgroundColor = .white
-            searchBar.searchTextField.tintColor = .eateryBlue
-        }
+        navigationItem.searchController = setUpSearchController()
 
         appDevLogo = logo
     }
 
-    func setUpSearchResultsController() -> (UIViewController & UISearchResultsUpdating)? {
+    func setUpSearchController() -> UISearchController? {
         nil
     }
 
@@ -873,11 +857,5 @@ extension EateriesViewController: UIScrollViewDelegate {
             y: navBarHeight - margin - width - (searchBar?.frame.height ?? 0))
         appDevLogo.tintColor = .white
     }
-
-}
-
-// MARK: - Search Controller Delegate
-
-extension EateriesViewController: UISearchControllerDelegate {
 
 }
