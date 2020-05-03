@@ -47,7 +47,9 @@ private class SearchResultsManager {
 
     private func eaterySearchResults(searchText: String) -> [SearchResult] {
         eateries.filter { eatery in
-            matches(eatery.name, searchText) || matches(eatery.displayName, searchText)
+            matches(eatery.name, searchText)
+                || matches(eatery.displayName, searchText)
+                || eatery.allNicknames.contains { matches($0, searchText) }
         }.map { eatery in
             let subtitle: String
             switch eatery.eateryType {
@@ -106,6 +108,14 @@ private class SearchResultsManager {
 
 }
 
+protocol CampusEateriesSearchViewControllerDelegate: AnyObject {
+
+    func campusEateriesSearchViewController(
+        _ cesvc: CampusEateriesSearchViewController,
+        didSelectSearchResult searchResult: SearchSource)
+
+}
+
 class CampusEateriesSearchViewController: UIViewController {
 
     // Model
@@ -126,6 +136,10 @@ class CampusEateriesSearchViewController: UIViewController {
     weak var searchController: UISearchController?
 
     private var searchDebounceTimer: Timer?
+
+    // Delegate
+
+    weak var delegate: CampusEateriesSearchViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -275,7 +289,7 @@ extension CampusEateriesSearchViewController: UISearchResultsUpdating {
             }
 
             searchDebounceTimer?.invalidate()
-            searchDebounceTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false) { _ in
+            searchDebounceTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
                 self.displayedSearchResults = self.searchResults.searchResult(searchText: searchText)
                 self.tableView.reloadData()
             }
@@ -345,7 +359,9 @@ extension CampusEateriesSearchViewController: UITableViewDelegate {
             }
 
         case .searchResults:
-            addRecentSearch(displayedSearchResults[indexPath.row])
+            let searchResult = displayedSearchResults[indexPath.row]
+            addRecentSearch(searchResult)
+            delegate?.campusEateriesSearchViewController(self, didSelectSearchResult: searchResult.source)
         }
     }
 

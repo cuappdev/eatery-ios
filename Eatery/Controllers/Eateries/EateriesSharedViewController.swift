@@ -83,10 +83,11 @@ class EateriesSharedViewController: UIViewController {
 
     private func setUpEateriesViewControllers() {
         campusNavigationVC.delegate = self
-        collegetownNavigationVC.delegate = self
-
         campusEateriesVC.scrollDelegate = self
+
+        collegetownNavigationVC.delegate = self
         collegetownEateriesVC.scrollDelegate = self
+        collegetownEateriesVC.loadViewIfNeeded()
 
         addChildViewController(pillViewController)
         view.addSubview(pillViewController.view)

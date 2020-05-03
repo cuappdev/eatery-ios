@@ -25,6 +25,8 @@ class CampusEateriesViewController: EateriesViewController {
 
     var networkActivityIndicator: NVActivityIndicatorView?
 
+    private var selectedSearchResult: SearchSource?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,6 +57,8 @@ class CampusEateriesViewController: EateriesViewController {
             updateState(.loading, animated: false)
             queryCampusEateries()
         }
+
+        setUpSearchController()
     }
 
     private func queryCampusEateries(_ completion: (() -> Void)? = nil) {
@@ -132,9 +136,11 @@ class CampusEateriesViewController: EateriesViewController {
         }
     }
 
-    override func setUpSearchController() -> UISearchController {
+    private func setUpSearchController() {
         let searchResultsController = CampusEateriesSearchViewController()
+        searchResultsController.delegate = self
         let searchController = UISearchController(searchResultsController: searchResultsController)
+        searchController.delegate = self
         searchController.searchResultsUpdater = searchResultsController
         searchResultsController.searchController = searchController
 
@@ -156,7 +162,32 @@ class CampusEateriesViewController: EateriesViewController {
             searchBar.searchTextField.tintColor = .eateryBlue
         }
 
-        return searchController
+        navigationItem.searchController = searchController
+    }
+
+    private func pushSelectedSearchResult() {
+        guard let searchResult = selectedSearchResult else {
+            return
+        }
+        selectedSearchResult = nil
+
+        switch searchResult {
+        case let .area(area):
+            let filter: Filter
+            switch area {
+            case .central: filter = .central
+            case .west: filter = .west
+            case .north: filter = .north
+            }
+            filterBar.toggleFilter(filter, scrollVisible: true, notifyDelegate: true)
+
+        case let .eatery(eatery):
+            showMenu(of: eatery, animated: true)
+
+        case let .menuItem(eatery, _):
+            showMenu(of: eatery, animated: true)
+
+        }
     }
 
 }
@@ -191,6 +222,58 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController) {
         updateState(.loading, animated: true)
         queryCampusEateries()
+    }
+
+    func eateriesViewController(_ evc: EateriesViewController, filter eateries: [Eatery], with filters: Set<Filter>) -> [Eatery] {
+        guard var filteredEateries = eateries as? [CampusEatery] else {
+            return eateries
+        }
+
+        filteredEateries = filteredEateries.filter {
+            if filters.contains(.swipes) { return $0.paymentMethods.contains(.swipes) }
+            if filters.contains(.brb) { return $0.paymentMethods.contains(.brb) }
+            return true
+        }
+
+        if !filters.intersection(Filter.areaFilters).isEmpty {
+            filteredEateries = filteredEateries.filter {
+                guard let area = $0.area else {
+                    return false
+                }
+
+                switch area {
+                case .north: return filters.contains(.north)
+                case .west: return filters.contains(.west)
+                case .central: return filters.contains(.central)
+                }
+            }
+        }
+
+        return filteredEateries
+    }
+
+
+}
+
+// MARK: - Campus Eateries Search View Controller Delegate
+
+extension CampusEateriesViewController: CampusEateriesSearchViewControllerDelegate {
+
+    func campusEateriesSearchViewController(
+        _ cesvc: CampusEateriesSearchViewController,
+        didSelectSearchResult searchResult: SearchSource) {
+        selectedSearchResult = searchResult
+        searchController?.isActive = false
+    }
+
+}
+
+// MARK: - Search Controller Delegate
+
+extension CampusEateriesViewController: UISearchControllerDelegate {
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        pushSelectedSearchResult()
     }
 
 }

@@ -23,6 +23,8 @@ protocol EateriesViewControllerDelegate: AnyObject {
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController)
 
+    func eateriesViewController(_ evc: EateriesViewController, filter eateries: [Eatery], with filters: Set<Filter>) -> [Eatery]
+
 }
 
 // MARK: - Scroll Delegate
@@ -135,10 +137,13 @@ class EateriesViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var refreshControl: UIRefreshControl!
 
-    private var searchBar: UISearchBar? {
-        return navigationItem.searchController?.searchBar
+    var searchController: UISearchController? {
+        return navigationItem.searchController
     }
-    private var filterBar: FilterBar!
+    private var searchBar: UISearchBar? {
+        return searchController?.searchBar
+    }
+    var filterBar: FilterBar!
     var availableFilters: [Filter] {
         get { return filterBar.displayedFilters }
         set { filterBar.displayedFilters = newValue }
@@ -201,7 +206,7 @@ class EateriesViewController: UIViewController {
         // launches, but after the view has been added to the view hiearchy so that we can compute the adjusted
         // content inset.
         let largeTitleHeight: CGFloat = 52
-        let searchBarHeight: CGFloat = 52
+        let searchBarHeight: CGFloat = searchBar != nil ? 52 : 0
         collectionView.setContentOffset(
             CGPoint(x: 0, y: -(collectionView.adjustedContentInset.top + largeTitleHeight + searchBarHeight)),
             animated: false)
@@ -231,13 +236,7 @@ class EateriesViewController: UIViewController {
             make.size.equalTo(28.0)
         }
 
-        navigationItem.searchController = setUpSearchController()
-
         appDevLogo = logo
-    }
-
-    func setUpSearchController() -> UISearchController? {
-        nil
     }
 
     private func setUpCollectionView() {
@@ -492,9 +491,8 @@ class EateriesViewController: UIViewController {
             sortMethod = .alphabetical
         }
 
-        let newEateriesByGroup = eateriesByGroup(
-            from: eateries,
-            sortedUsing: sortMethod)
+        let filteredEateries = delegate?.eateriesViewController(self, filter: eateries, with: filterBar.selectedFilters) ?? eateries
+        let newEateriesByGroup = eateriesByGroup(from: filteredEateries, sortedUsing: sortMethod)
 
         self.eateriesByGroup = newEateriesByGroup
 
