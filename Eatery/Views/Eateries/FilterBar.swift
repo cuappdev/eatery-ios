@@ -68,14 +68,22 @@ class FilterBar: UIView {
             for string in Defaults[\.filters] {
                 if let filter = Filter(rawValue: string), buttons.keys.contains(filter) {
                     selectedFilters.insert(filter)
-                    buttons[filter]?.isSelected = true
                 }
             }
 
             delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
         }
     }
-    var selectedFilters: Set<Filter> = []
+    var selectedFilters: Set<Filter> = [] {
+        didSet {
+            for (filter, button) in buttons {
+                button.isSelected = selectedFilters.contains(filter)
+            }
+            Defaults[\.filters] = selectedFilters.map { $0.rawValue }
+        }
+    }
+
+    private let impactGenerator = UIImpactFeedbackGenerator(style: .light)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,6 +103,10 @@ class FilterBar: UIView {
         snp.makeConstraints { make in
             make.height.equalTo(FilterBar.filterBarHeight)
         }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func layoutButtons(filters: [Filter]) {
@@ -147,24 +159,30 @@ class FilterBar: UIView {
     }
 
     @objc func buttonPressed(sender: UIButton) {
-        sender.isSelected.toggle()
-
-        if sender.isSelected {
-            let filter = displayedFilters[sender.tag]
-            selectedFilters.insert(filter)
-
-            delegate?.filterBar(self, filterWasSelected: filter)
-        } else {
-            selectedFilters.remove(displayedFilters[sender.tag])
-        }
-
-        Defaults[\.filters] = selectedFilters.map { $0.rawValue }
-
-        delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
+        let filter = displayedFilters[sender.tag]
+        toggleFilter(filter, scrollVisible: false, notifyDelegate: true)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func toggleFilter(_ filter: Filter, scrollVisible: Bool, notifyDelegate: Bool = false) {
+        if selectedFilters.contains(filter) {
+            selectedFilters.remove(filter)
+        } else {
+            selectedFilters.insert(filter)
+
+            if notifyDelegate {
+                delegate?.filterBar(self, filterWasSelected: filter)
+            }
+        }
+
+        if scrollVisible, let button = buttons[filter] {
+            scrollView.scrollRectToVisible(button.frame, animated: true)
+        }
+
+        if notifyDelegate {
+            delegate?.filterBar(self, selectedFiltersDidChange: Array(selectedFilters))
+        }
+
+        impactGenerator.impactOccurred()
     }
 
 }
