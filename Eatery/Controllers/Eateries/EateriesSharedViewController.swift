@@ -29,6 +29,14 @@ class EateriesSharedViewController: UIViewController {
         rightViewController: collegetownNavigationVC
     )
 
+    var activeNavigationController: EateryNavigationController {
+        if pillViewController.pillView.leftSegmentSelected {
+            return campusNavigationVC
+        } else {
+            return collegetownNavigationVC
+        }
+    }
+
     var activeViewController: EateriesViewController {
         pillViewController.pillView.leftSegmentSelected
             ? campusEateriesVC

@@ -54,7 +54,11 @@ extension EateryTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if selectedViewController === viewController,
             let shared = viewController as? EateriesSharedViewController {
-            shared.activeViewController.scrollToTop(animated: true)
+            if shared.activeNavigationController.viewControllers.count > 1 {
+                shared.activeNavigationController.popViewController(animated: true)
+            } else {
+                shared.activeViewController.scrollToTop(animated: true)
+            }
         }
 
         return true
