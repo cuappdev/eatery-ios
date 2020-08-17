@@ -19,29 +19,6 @@ class EateryTabBarController: UITabBarController {
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
 
-    lazy var watchAppRedesignBulletinManager: BLTNItemManager = {
-        let page = BLTNPageItem(title: "Eatery Watch App Redesign")
-        let manager = BLTNItemManager(rootItem: page)
-
-        page.image = UIImage(named: "watchAppPreview")
-
-        page.descriptionText = "Eatery for watchOS has been completely redone. Browse menus and hours right from your wrist."
-
-        page.actionButtonTitle = "Open Watch App"
-        page.actionHandler = { _ in
-            if let url = URL(string: "itms-watch://"), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-            }
-        }
-
-        page.alternativeButtonTitle = "Not now"
-        page.alternativeHandler = { _ in
-            manager.dismissBulletin()
-        }
-
-        return manager
-    }()
-
     override func viewDidLoad() {
         delegate = self
         eateriesSharedViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "eateryTabIcon.png"), tag: 0)
@@ -62,16 +39,6 @@ class EateryTabBarController: UITabBarController {
         tabBar.shadowImage = UIImage()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if !Defaults[\.hasShownWatchRedesign], WCSession.isSupported() {
-            let session = WCSession.default
-            session.delegate = self
-            session.activate()
-        }
-    }
-    
     func tabBarControllerSupportedInterfaceOrientations(_ tabBarController: UITabBarController) -> UIInterfaceOrientationMask {
         return .portrait
     }
@@ -102,26 +69,6 @@ extension EateryTabBarController: UITabBarControllerDelegate {
             break
         }
 
-    }
-
-}
-
-extension EateryTabBarController: WCSessionDelegate {
-
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        if activationState == .activated, session.isPaired {
-            DispatchQueue.main.async {
-                self.watchAppRedesignBulletinManager.showBulletin(above: self)
-            }
-
-            Defaults[\.hasShownWatchRedesign] = true
-        }
-    }
-
-    func sessionDidBecomeInactive(_ session: WCSession) {
-    }
-
-    func sessionDidDeactivate(_ session: WCSession) {
     }
 
 }
