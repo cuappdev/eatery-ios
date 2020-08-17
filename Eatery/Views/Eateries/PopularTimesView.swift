@@ -7,6 +7,7 @@
 //
 
 import SnapKit
+import SwiftyUserDefaults
 import UIKit
 
 class PopularTimesView: UIView, DynamicContentSizeView {
@@ -24,7 +25,11 @@ class PopularTimesView: UIView, DynamicContentSizeView {
 
     private let eatery: CampusEatery
 
-    private var isHistogramExpanded = true
+    private var isHistogramExpanded = true {
+        didSet {
+            Defaults[\.isCampusPopularTimesExpanded] = isHistogramExpanded
+        }
+    }
     private var showHideButton = UIButton(type: .system)
 
     private let histogramContainerView = UIView()
@@ -178,10 +183,11 @@ class PopularTimesView: UIView, DynamicContentSizeView {
             let currentHour = Calendar.current.component(.hour, from: Date())
             histogramView.selectBar(at: currentHour - startHour, animated: true, generateFeedback: false)
 
-            setHistogramExpanded(true, animated: false)
+            setHistogramExpanded(Defaults[\.isCampusPopularTimesExpanded], animated: false)
 
             if eatery.isOpen(atExactly: Date()),
-                eatery.popularTimesResponse.userMaySubmitResponse {
+                eatery.popularTimesResponse.userMaySubmitResponse,
+                Defaults[\.isCampusPopularTimesExpanded] {
                 setAccuracyPromptState(.partiallyExpanded, animated: false)
             } else {
                 setAccuracyPromptState(.collapsed, animated: false)

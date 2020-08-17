@@ -29,6 +29,9 @@ extension DefaultsKeys {
 
     var campusRecentSearches: DefaultsKey<[RecentSearch]> { .init("campusRecentSearches", defaultValue: []) }
 
+    var isCampusHoursThisWeekExpanded: DefaultsKey<Bool> { .init("isCampusHoursThisWeekExpanded", defaultValue: false) }
+    var isCampusPopularTimesExpanded: DefaultsKey<Bool> { .init("isCampusPopularTimesExpanded", defaultValue: true) }
+
     #endif
 
 }
