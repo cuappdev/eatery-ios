@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D97142E9219A74E200E2EE05"
+               BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
                BuildableName = "Eatery Watch App.app"
                BlueprintName = "Eatery Watch App"
                ReferencedContainer = "container:Eatery.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D97142F5219A74E300E2EE05"
+               BlueprintIdentifier = "5D05FF3D23C2C14600EF8CC9"
                BuildableName = "Eatery Watch App Extension.appex"
                BlueprintName = "Eatery Watch App Extension"
                ReferencedContainer = "container:Eatery.xcodeproj">
@@ -55,8 +55,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -66,8 +64,8 @@
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "App Store"
@@ -89,8 +87,6 @@
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "App Store"
