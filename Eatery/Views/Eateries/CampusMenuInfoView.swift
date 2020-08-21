@@ -129,13 +129,6 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-
-        // Defer layout until view has been added to view hierarchy
-        // to avoid unsatisfiable layout constraints
-    }
-
     func configure(eatery: Eatery, userLocation: CLLocation?, meal: String) {
         guard let eatery = eatery as? CampusEatery else {
             return
