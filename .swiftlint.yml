@@ -1,0 +1,4 @@
+excluded: 
+  - Pods
+  - Eatery/API.swift
+  - Eatery Watch App Extension/API.swift

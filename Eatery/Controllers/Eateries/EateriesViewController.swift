@@ -760,7 +760,7 @@ extension EateriesViewController: UICollectionViewDelegateFlowLayout {
         
         return gridLayout.sectionInset
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
