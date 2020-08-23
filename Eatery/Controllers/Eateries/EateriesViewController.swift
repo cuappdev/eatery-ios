@@ -851,7 +851,11 @@ extension EateriesViewController: UIScrollViewDelegate {
         let x = centerOfRightNavigationBarItem - EateriesViewController.appDevLogoSize / 2
 
         appDevLogo.transform = CGAffineTransform(translationX: x, y: y)
-        appDevLogo.alpha = min(0.9, y / 60 - 2)
+
+        let startPoint: CGFloat = 120 // px until AppDev logo starts showing
+        let fullyVisiblePoint: CGFloat = 180 // px until AppDev logo is fully visible
+        let maxAlpha: CGFloat = 0.9
+        appDevLogo.alpha = min(maxAlpha, (y - startPoint) / (fullyVisiblePoint - startPoint))
     }
 
     private func appDevLogoYPosition(navBarHeight: CGFloat) -> CGFloat {
