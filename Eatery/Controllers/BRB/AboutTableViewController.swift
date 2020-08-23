@@ -1,4 +1,3 @@
-
 //
 //  AboutTableViewController.swift
 //  Eatery
@@ -69,7 +68,7 @@ class AboutTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,13 +82,18 @@ class AboutTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.description.rawValue, for: indexPath) as! DescriptionTableViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellIdentifier.description.rawValue,
+                for: indexPath
+            ) as! DescriptionTableViewCell
 
+            // swiftlint:disable line_length
             cell.textView.text = """
             Looking for somewhere to eat around Cornell University? Eatery has your back.
 
             See what's open on campus, browse menus of dining locations, search for your favorite foods, and so much more!
             """
+            // swiftlint:enable line_length
 
             return cell
 
@@ -103,7 +107,10 @@ class AboutTableViewController: UITableViewController {
             return cell
 
         case (1, 0):
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.description.rawValue, for: indexPath) as! DescriptionTableViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellIdentifier.description.rawValue,
+                for: indexPath
+            ) as! DescriptionTableViewCell
 
             cell.textView.text = """
             Let us know what you think! Send us feedback or give us ideas for new features.
@@ -121,21 +128,24 @@ class AboutTableViewController: UITableViewController {
             return cell
 
         case (2, 0):
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue) as! AppIconTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue)
+                as! AppIconTableViewCell
 
             cell.configure(icon: UIImage(named: "AppIconImage"), title: "Summer")
 
             return cell
 
         case (2, 1):
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue) as! AppIconTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.appIcon.rawValue)
+                as! AppIconTableViewCell
 
             cell.configure(icon: UIImage(named: "AppIconWinterImage"), title: "Winter")
 
             return cell
 
         case (3, 0):
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.logout.rawValue, for: indexPath) as! LogoutTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.logout.rawValue, for: indexPath)
+                as! LogoutTableViewCell
 
             cell.selectionStyle = logoutEnabled ? .default : .none
             cell.logoutLabel.isEnabled = logoutEnabled
