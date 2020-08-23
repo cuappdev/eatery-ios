@@ -70,7 +70,7 @@ extension BRBAccountViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 4
+            return 3
         }
         
         return account.history.count
@@ -81,17 +81,10 @@ extension BRBAccountViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.balance) as! BRBBalanceTableViewCell
 
             switch indexPath.row {
-            case 0:
-                cell.configure(title: "Meal Swipes",
-                               subtitle: account.swipes == "" ? "Unlimited" : account.swipes)
-            case 1:
-                cell.configure(title: "BRBs", subtitle: "$\(account.brbs)")
-            case 2:
-                cell.configure(title: "Laundry", subtitle: "$\(account.laundry)")
-            case 3:
-                cell.configure(title: "City Bucks", subtitle: "$\(account.cityBucks)")
-            default:
-                break
+            case 0: cell.configure(title: "BRBs", subtitle: "$\(account.brbs)")
+            case 1: cell.configure(title: "Laundry", subtitle: "$\(account.laundry)")
+            case 2: cell.configure(title: "City Bucks", subtitle: "$\(account.cityBucks)")
+            default: break
             }
 
             return cell

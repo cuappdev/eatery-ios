@@ -114,6 +114,7 @@ class EateriesViewController: UIViewController {
     }
 
     static let collectionViewMargin: CGFloat = 20
+    static let appDevLogoSize: CGFloat = 28
 
     // Model
 
@@ -228,12 +229,13 @@ class EateriesViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: networkActivityIndicator)
 
         let logo = UIImageView(image: UIImage(named: "appDevLogo"))
-        logo.tintColor = .eateryBlue
+        logo.tintColor = .white
         logo.contentMode = .scaleAspectFit
         navigationController?.navigationBar.addSubview(logo)
         logo.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(28.0)
+            // the position of the logo is adjusted using CGAffineTransform, which works better than using constraints or frames
+            make.leading.top.equalToSuperview()
+            make.size.equalTo(EateriesViewController.appDevLogoSize)
         }
 
         appDevLogo = logo
@@ -841,19 +843,45 @@ extension EateriesViewController: UIScrollViewDelegate {
             return
         }
 
-        let offset = collectionView.contentOffset.y + collectionView.adjustedContentInset.top
+        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0.0
+        let y = appDevLogoYPosition(navBarHeight: navBarHeight)
 
-        appDevLogo.alpha = min(0.9, (-15.0 - offset) / 100.0)
+        let navBarWidth = navigationController?.navigationBar.frame.width ?? 0.0
+        let centerOfRightNavigationBarItem = navBarWidth - 40
+        let x = centerOfRightNavigationBarItem - EateriesViewController.appDevLogoSize / 2
 
-        let margin: CGFloat = 4.0
-        let width = appDevLogo.frame.width
-        let navBarWidth = (navigationController?.navigationBar.frame.width ?? 0.0) / 2
-        let navBarHeight = (navigationController?.navigationBar.frame.height ?? 0.0) / 2
+        appDevLogo.transform = CGAffineTransform(translationX: x, y: y)
 
-        appDevLogo.transform = CGAffineTransform(
-            translationX: navBarWidth - margin - width,
-            y: navBarHeight - margin - width - (searchBar?.frame.height ?? 0))
-        appDevLogo.tintColor = .white
+        let startPoint: CGFloat = 120 // px until AppDev logo starts showing
+        let fullyVisiblePoint: CGFloat = 180 // px until AppDev logo is fully visible
+        let maxAlpha: CGFloat = 0.9
+        appDevLogo.alpha = min(maxAlpha, (y - startPoint) / (fullyVisiblePoint - startPoint))
+    }
+
+    private func appDevLogoYPosition(navBarHeight: CGFloat) -> CGFloat {
+        let bottomOffset: CGFloat = 12
+
+        if navigationItem.searchController == nil {
+            return navBarHeight - EateriesViewController.appDevLogoSize - bottomOffset
+        }
+
+        let breakPoint: CGFloat = 96 // height of nav bar with expanded title
+        let resumePoint: CGFloat = 148 // height of nav bar with expanded title + search bar
+
+        var y: CGFloat
+
+        if navBarHeight < breakPoint {
+            y = navBarHeight
+        } else if navBarHeight < resumePoint {
+            y = breakPoint
+        } else {
+            y = navBarHeight - (resumePoint - breakPoint)
+        }
+
+        y -= EateriesViewController.appDevLogoSize
+        y -= bottomOffset
+
+        return y
     }
 
 }

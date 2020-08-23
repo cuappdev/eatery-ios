@@ -219,14 +219,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		019B364D52B66BC8F8B6C25F /* Pods-Eatery Watch App.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.app store.xcconfig"; sourceTree = "<group>"; };
-		063BB995A36FB9F04B5D1D5F /* Pods-Eatery Watch App.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.external beta.xcconfig"; sourceTree = "<group>"; };
 		0A149DD6FAC488D584A8CB7E /* Pods_Eatery_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E7A3B80D08EC745DCB310AD /* Pods-Eatery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.release.xcconfig"; sourceTree = "<group>"; };
 		19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		295D96F3E987C9154F7D77DE /* Pods-Eatery Watch App.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.internal beta.xcconfig"; sourceTree = "<group>"; };
-		2EFE6B659BF68ECA9CE402B4 /* Pods-Eatery.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.app store.xcconfig"; sourceTree = "<group>"; };
 		42B1F4EE1BEAD5EE004C382A /* Eatery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Eatery.entitlements; sourceTree = "<group>"; };
-		561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.external beta.xcconfig"; sourceTree = "<group>"; };
+		47535FDDB39E9BD71EDAF886 /* Pods-Eatery Watch App Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.release.xcconfig"; sourceTree = "<group>"; };
 		5D05FF3223C2C14400EF8CC9 /* Eatery Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eatery Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D05FF3523C2C14400EF8CC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		5D05FF3723C2C14600EF8CC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -337,20 +334,17 @@
 		60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6502AF861DCFB9ED00390EAA /* FilterBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBar.swift; sourceTree = "<group>"; };
 		654E37401DEEA738000E4FAB /* Sort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
-		7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.internal beta.xcconfig"; sourceTree = "<group>"; };
 		7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery_Watch_App_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8724A0772349637E00D92EE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		872E5289232DBA07006D12D4 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		87E712EB23416C1900085DB5 /* GivingDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivingDayView.swift; sourceTree = "<group>"; };
 		87E712ED23416C3300085DB5 /* GivingDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivingDayViewController.swift; sourceTree = "<group>"; };
-		94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.internal beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.internal beta.xcconfig"; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
 		9584FE4D1CDD6C3B001A3AB5 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
 		9584FE541CDD7A26001A3AB5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.debug.xcconfig"; sourceTree = "<group>"; };
-		9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.external beta.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.external beta.xcconfig"; sourceTree = "<group>"; };
-		BA0F42CF72757B43C3DF64BE /* Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig"; sourceTree = "<group>"; };
+		BD082688B710875CB59FA212 /* Pods-Eatery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig"; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorScheme.swift"; sourceTree = "<group>"; };
 		C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFactory.swift; sourceTree = "<group>"; };
@@ -368,6 +362,7 @@
 		C87E76F72399F0F10098160B /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 		C87E76F92399F1010098160B /* collegetown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegetown.json; sourceTree = "<group>"; };
 		C8A1D69623628DC9004D6ED2 /* BRBAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccountManager.swift; sourceTree = "<group>"; };
+		CA2A0B9FE9BC6348A7E1CFFF /* Pods-Eatery Watch App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.release.xcconfig"; sourceTree = "<group>"; };
 		CE9C1FE0226431630062C398 /* EateriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesViewController.swift; sourceTree = "<group>"; };
 		D1EE77791C702469001823D8 /* String+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Manipulation.swift"; sourceTree = "<group>"; };
 		D930FBD7218BC00200B0B1CE /* BRBAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBAccount.swift; sourceTree = "<group>"; };
@@ -378,7 +373,6 @@
 		D97142DF2197542A00E2EE05 /* brbQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = brbQuery.graphql; sourceTree = "<group>"; };
 		D97142E6219A6B6F00E2EE05 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		E418A28B1A4C3F8781B50F84 /* Pods-Eatery Watch App Extension.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App Extension.app store.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App Extension/Pods-Eatery Watch App Extension.app store.xcconfig"; sourceTree = "<group>"; };
 		E93CD4161BE67AC400089CE5 /* CampusEateryMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusEateryMenuViewController.swift; sourceTree = "<group>"; };
 		E93CD41A1BE67DB000089CE5 /* CampusEateryMealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusEateryMealTableViewController.swift; sourceTree = "<group>"; };
 		E99C63E91B6EDE12000A5886 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -930,18 +924,12 @@
 		F71534A35C24A6E72160950C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BA0F42CF72757B43C3DF64BE /* Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig */,
-				561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */,
-				94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */,
-				2EFE6B659BF68ECA9CE402B4 /* Pods-Eatery.app store.xcconfig */,
+				BD082688B710875CB59FA212 /* Pods-Eatery.debug.xcconfig */,
 				977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */,
-				063BB995A36FB9F04B5D1D5F /* Pods-Eatery Watch App.external beta.xcconfig */,
-				295D96F3E987C9154F7D77DE /* Pods-Eatery Watch App.internal beta.xcconfig */,
-				019B364D52B66BC8F8B6C25F /* Pods-Eatery Watch App.app store.xcconfig */,
 				DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */,
-				9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */,
-				7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */,
-				E418A28B1A4C3F8781B50F84 /* Pods-Eatery Watch App Extension.app store.xcconfig */,
+				0E7A3B80D08EC745DCB310AD /* Pods-Eatery.release.xcconfig */,
+				CA2A0B9FE9BC6348A7E1CFFF /* Pods-Eatery Watch App.release.xcconfig */,
+				47535FDDB39E9BD71EDAF886 /* Pods-Eatery Watch App Extension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -957,6 +945,7 @@
 				5D05FF3023C2C14400EF8CC9 /* Resources */,
 				5D05FF5C23C2C14700EF8CC9 /* Embed App Extensions */,
 				BBBDEB14E2BBA02B8072AC01 /* Frameworks */,
+				5D9B4AC824F0664C00BDDBA5 /* [Release Build] Set build number */,
 			);
 			buildRules = (
 			);
@@ -978,6 +967,7 @@
 				5D05FF3B23C2C14600EF8CC9 /* Frameworks */,
 				5D05FF3C23C2C14600EF8CC9 /* Resources */,
 				D9930C678F84F3C556B7F6B3 /* [CP] Embed Pods Frameworks */,
+				5D9B4AC924F0668A00BDDBA5 /* [Release Build] Set build number */,
 			);
 			buildRules = (
 			);
@@ -1000,6 +990,7 @@
 				13A4C9728ACE643362E0E498 /* [CP] Embed Pods Frameworks */,
 				D9714310219A74E400E2EE05 /* Embed Watch Content */,
 				C8AAAB56234F7A6F00A6FE20 /* Embed Frameworks */,
+				5D9B4AC724F0212F00BDDBA5 /* [Release Build] Set build number */,
 			);
 			buildRules = (
 			);
@@ -1231,6 +1222,60 @@
 			shellPath = /bin/sh;
 			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"$APOLLO_FRAMEWORK_PATH\"/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=\"$SRCROOT\"/schema.json API.swift\n";
 		};
+		5D9B4AC724F0212F00BDDBA5 /* [Release Build] Set build number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Release Build] Set build number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Slightly modified version of https://blog.curtisherbert.com/automated-build-numbers/\n# This script sets the build number of Info.plist inside of derived data\n# to avoid unnecessary source changes. Note there are multiple copies of \n# this script: one for each target. If you decide to change the script, \n# make sure to change it in all places.\n\nbuild_number=$(git rev-list HEAD | wc -l | tr -d ' ')\n\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\ndsym_plist=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$plist\"\nif [ -f \"$DSYM_INFO_PLIST\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$dsym_plist\"\nfi\n";
+		};
+		5D9B4AC824F0664C00BDDBA5 /* [Release Build] Set build number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Release Build] Set build number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Slightly modified version of https://blog.curtisherbert.com/automated-build-numbers/\n# This script sets the build number of Info.plist inside of derived data\n# to avoid unnecessary source changes. Note there are multiple copies of \n# this script: one for each target. If you decide to change the script, \n# make sure to change it in all places.\n\nbuild_number=$(git rev-list HEAD | wc -l | tr -d ' ')\n\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\ndsym_plist=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$plist\"\nif [ -f \"$DSYM_INFO_PLIST\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$dsym_plist\"\nfi\n";
+		};
+		5D9B4AC924F0668A00BDDBA5 /* [Release Build] Set build number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Release Build] Set build number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Slightly modified version of https://blog.curtisherbert.com/automated-build-numbers/\n# This script sets the build number of Info.plist inside of derived data\n# to avoid unnecessary source changes. Note there are multiple copies of \n# this script: one for each target. If you decide to change the script, \n# make sure to change it in all places.\n\nbuild_number=$(git rev-list HEAD | wc -l | tr -d ' ')\n\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\ndsym_plist=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$plist\"\nif [ -f \"$DSYM_INFO_PLIST\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$dsym_plist\"\nfi\n";
+		};
 		9DEA07504979C55F42669623 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1449,6 +1494,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DFAF014CFABFD9D8E6AC7021 /* Pods-Eatery Watch App Extension.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1457,7 +1503,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"Eatery Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
@@ -1483,10 +1529,11 @@
 			};
 			name = Debug;
 		};
-		5D05FF5923C2C14700EF8CC9 /* External Beta */ = {
+		5D05FF5B23C2C14700EF8CC9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BE935BDA323618D9A779B07 /* Pods-Eatery Watch App Extension.external beta.xcconfig */;
+			baseConfigurationReference = 47535FDDB39E9BD71EDAF886 /* Pods-Eatery Watch App Extension.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1519,7 +1566,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Eatery Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
@@ -1549,149 +1596,13 @@
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
-			name = "External Beta";
-		};
-		5D05FF5A23C2C14700EF8CC9 /* Internal Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B7FDD4784AB7A79D5069FFC /* Pods-Eatery Watch App Extension.internal beta.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"Eatery Watch App Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.9;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-			};
-			name = "Internal Beta";
-		};
-		5D05FF5B23C2C14700EF8CC9 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E418A28B1A4C3F8781B50F84 /* Pods-Eatery Watch App Extension.app store.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"Eatery Watch App Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Eatery Watch App Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.9;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-			};
-			name = "App Store";
+			name = Release;
 		};
 		5D05FF5E23C2C14700EF8CC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1702,7 +1613,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1726,11 +1637,11 @@
 			};
 			name = Debug;
 		};
-		5D05FF5F23C2C14700EF8CC9 /* External Beta */ = {
+		5D05FF6123C2C14700EF8CC9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 063BB995A36FB9F04B5D1D5F /* Pods-Eatery Watch App.external beta.xcconfig */;
+			baseConfigurationReference = CA2A0B9FE9BC6348A7E1CFFF /* Pods-Eatery Watch App.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1765,7 +1676,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1793,145 +1704,7 @@
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
-			name = "External Beta";
-		};
-		5D05FF6023C2C14700EF8CC9 /* Internal Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295D96F3E987C9154F7D77DE /* Pods-Eatery Watch App.internal beta.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IBSC_MODULE = Eatery_Watch_App_Extension;
-				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.9;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-			};
-			name = "Internal Beta";
-		};
-		5D05FF6123C2C14700EF8CC9 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 019B364D52B66BC8F8B6C25F /* Pods-Eatery Watch App.app store.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IBSC_MODULE = Eatery_Watch_App_Extension;
-				INFOPLIST_FILE = "Eatery Watch App/Info.plist";
-				MARKETING_VERSION = 2.9;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-			};
-			name = "App Store";
+			name = Release;
 		};
 		C007CADC19E1BEAC00E3BD46 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1988,8 +1761,9 @@
 		};
 		C007CADF19E1BEAC00E3BD46 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA0F42CF72757B43C3DF64BE /* Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig */;
+			baseConfigurationReference = BD082688B710875CB59FA212 /* Pods-Eatery.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "-debug";
 				CLANG_ENABLE_MODULES = YES;
@@ -1997,7 +1771,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Eatery/Info.plist;
@@ -2016,7 +1790,7 @@
 			};
 			name = Debug;
 		};
-		C0142A041B68BBDA0090B33A /* App Store */ = {
+		C0142A041B68BBDA0090B33A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2062,12 +1836,13 @@
 				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = "App Store";
+			name = Release;
 		};
-		C0142A051B68BBDA0090B33A /* App Store */ = {
+		C0142A051B68BBDA0090B33A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EFE6B659BF68ECA9CE402B4 /* Pods-Eatery.app store.xcconfig */;
+			baseConfigurationReference = 0E7A3B80D08EC745DCB310AD /* Pods-Eatery.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
@@ -2075,7 +1850,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Eatery/Info.plist;
@@ -2091,161 +1866,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = "App Store";
-		};
-		C0142A061B68BBE50090B33A /* Internal Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Internal Beta";
-		};
-		C0142A071B68BBE50090B33A /* Internal Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94AE18508AA0B5D148EEA361 /* Pods-Eatery.internal beta.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_SUFFIX = "-internal-beta";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Eatery/Eatery.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Eatery/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.9;
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Internal Beta";
-		};
-		C0142A081B68BBF00090B33A /* External Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "External Beta";
-		};
-		C0142A091B68BBF00090B33A /* External Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 561CC64F0A1AF41712E60CD0 /* Pods-Eatery.external beta.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_SUFFIX = "-external-beta";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Eatery/Eatery.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Eatery/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.9;
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cuappdev.eatery;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "External Beta";
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -2254,45 +1875,37 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5D05FF5823C2C14700EF8CC9 /* Debug */,
-				5D05FF5923C2C14700EF8CC9 /* External Beta */,
-				5D05FF5A23C2C14700EF8CC9 /* Internal Beta */,
-				5D05FF5B23C2C14700EF8CC9 /* App Store */,
+				5D05FF5B23C2C14700EF8CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		5D05FF5D23C2C14700EF8CC9 /* Build configuration list for PBXNativeTarget "Eatery Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5D05FF5E23C2C14700EF8CC9 /* Debug */,
-				5D05FF5F23C2C14700EF8CC9 /* External Beta */,
-				5D05FF6023C2C14700EF8CC9 /* Internal Beta */,
-				5D05FF6123C2C14700EF8CC9 /* App Store */,
+				5D05FF6123C2C14700EF8CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		C007CABA19E1BEAC00E3BD46 /* Build configuration list for PBXProject "Eatery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C007CADC19E1BEAC00E3BD46 /* Debug */,
-				C0142A081B68BBF00090B33A /* External Beta */,
-				C0142A061B68BBE50090B33A /* Internal Beta */,
-				C0142A041B68BBDA0090B33A /* App Store */,
+				C0142A041B68BBDA0090B33A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		C007CADE19E1BEAC00E3BD46 /* Build configuration list for PBXNativeTarget "Eatery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C007CADF19E1BEAC00E3BD46 /* Debug */,
-				C0142A091B68BBF00090B33A /* External Beta */,
-				C0142A071B68BBE50090B33A /* Internal Beta */,
-				C0142A051B68BBDA0090B33A /* App Store */,
+				C0142A051B68BBDA0090B33A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

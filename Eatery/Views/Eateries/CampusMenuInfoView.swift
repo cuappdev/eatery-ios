@@ -9,6 +9,7 @@
 import CoreLocation
 import Hero
 import SnapKit
+import SwiftyUserDefaults
 import UIKit
 
 class CampusMenuInfoView: UIView, DynamicContentSizeView {
@@ -19,7 +20,12 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
     private let distanceLabel = UILabel()
     private let moreHoursImageView = UIImageView()
 
-    private var isHoursThisWeekExpanded = false
+    private var isHoursThisWeekExpanded = false {
+        didSet {
+            Defaults[\.isCampusHoursThisWeekExpanded] = isHoursThisWeekExpanded
+        }
+    }
+
     private let hoursThisWeekContainer = UIView()
     private let hoursThisWeek = HoursThisWeekView()
 
@@ -115,16 +121,12 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleHoursThisWeekExpanded))
         addGestureRecognizer(gestureRecognizer)
+
+        setHoursThisWeekExpanded(Defaults[\.isCampusHoursThisWeekExpanded], animated: false)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func didMoveToWindow() {
-        // Defer layout until view has been added to view hierarchy
-        // to avoid unsatisfiable layout constraints
-        setHoursThisWeekExpanded(false, animated: false)
     }
 
     func configure(eatery: Eatery, userLocation: CLLocation?, meal: String) {
