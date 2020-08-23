@@ -87,7 +87,8 @@ final class PopularTimesResponse {
     }
 
     var userMaySubmitResponse: Bool {
-        if let lastResponse = lastResponse, lastResponse.addingTimeInterval(PopularTimesResponse.minimumTimeBetweenResponses) > Date() {
+        if let lastResponse = lastResponse,
+           lastResponse.addingTimeInterval(PopularTimesResponse.minimumTimeBetweenResponses) > Date() {
             return false
         } else {
             return true
