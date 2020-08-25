@@ -111,7 +111,7 @@ struct CollegetownFilterPressPayload: Payload {
 struct CampusDiningCellPressPayload: Payload {
     let eventName = "campus_dining_hall_press"
     let diningHallName: String
-    var parameters: [String : Any]? {
+    var parameters: [String: Any]? {
         return ["dining_hall_name": diningHallName]
     }
 }
@@ -120,7 +120,7 @@ struct CampusDiningCellPressPayload: Payload {
 struct CampusCafeCellPressPayload: Payload {
     let eventName = "campus_cafe_press"
     let cafeName: String
-    var parameters: [String : Any]? {
+    var parameters: [String: Any]? {
         return ["cafe_name": cafeName]
     }
 }

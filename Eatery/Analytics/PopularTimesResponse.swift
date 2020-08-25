@@ -40,7 +40,7 @@ private struct PopularTimesResponsePayload: Payload {
 
     let date: Date
 
-    var parameters: [String : Any]? {
+    var parameters: [String: Any]? {
         let calendar = Calendar.current
         let dateRoundedDownToNearestHalfHour: Date? =
             calendar.nextDate(after: date,
@@ -57,7 +57,7 @@ private struct PopularTimesResponsePayload: Payload {
             ]
         } else {
             return [
-                "eatery_name": eateryName,
+                "eatery_name": eateryName
             ]
         }
     }
@@ -87,7 +87,8 @@ final class PopularTimesResponse {
     }
 
     var userMaySubmitResponse: Bool {
-        if let lastResponse = lastResponse, lastResponse.addingTimeInterval(PopularTimesResponse.minimumTimeBetweenResponses) > Date() {
+        if let lastResponse = lastResponse,
+           lastResponse.addingTimeInterval(PopularTimesResponse.minimumTimeBetweenResponses) > Date() {
             return false
         } else {
             return true
@@ -114,4 +115,3 @@ extension CampusEatery {
     }
 
 }
-
