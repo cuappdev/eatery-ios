@@ -31,7 +31,10 @@ class BRBLoginViewController: UIViewController {
     private var errorView: BRBLoginErrorView!
     var errorDescription: String? {
         get { errorView.errorLabel.text }
-        set { errorView.errorLabel.text = newValue }
+        set {
+            loadViewIfNeeded()
+            errorView.errorLabel.text = newValue
+        }
     }
 
     private var netidPrompt: UILabel!
@@ -45,6 +48,8 @@ class BRBLoginViewController: UIViewController {
 
     var isLoading: Bool = false {
         didSet {
+            loadViewIfNeeded()
+            
             if isLoading {
                 activityIndicator.startAnimating()
             } else {
