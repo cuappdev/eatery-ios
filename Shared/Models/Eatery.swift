@@ -37,9 +37,9 @@ enum PaymentMethod: String, Codable {
 }
 
 /// Different types of eateries on campus
-enum EateryType: String, Codable{
+enum EateryType: String, Codable {
 
-    case dining = "all you care to eat dining room"
+    case dining = "dining room"
     case cafe = "cafe"
     case cart = "cart"
     case foodCourt = "food court"
