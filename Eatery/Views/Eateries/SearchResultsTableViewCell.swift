@@ -18,7 +18,8 @@ class SearchResultsTableViewCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
 
         favoriteButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
-        accessoryView = favoriteButton
+        // TODO: enable once Favorite Items is implemented
+        // accessoryView = favoriteButton
     }
 
     required init?(coder: NSCoder) {
