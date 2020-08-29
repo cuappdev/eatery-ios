@@ -22,14 +22,14 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Appearance
         view.backgroundColor = .green
-        
+
         // TableView Config
         tableView.estimatedRowHeight = 44
         tableView.backgroundColor = .clear
-        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.rowHeight = UITableViewAutomaticDimension
 
         tableView.register(MealItemTableViewCell.self, forCellReuseIdentifier: "MealItem")
         tableView.register(MealStationTableViewCell.self, forCellReuseIdentifier: "MealStation")
@@ -83,7 +83,10 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     /// Create a table view cell when there is no menu for an eatery
     private func emptyMenuCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "MealStation",
+            for: indexPath
+        ) as! MealStationTableViewCell
 
         cell.titleLabel.text = "No menu available"
         cell.contentLabel.attributedText = NSAttributedString(string: "")
@@ -106,7 +109,10 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     /// Create a table view cell when there are multiple dining stations in the menu
     private func diningStationsCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MealStation", for: indexPath) as! MealStationTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "MealStation",
+            for: indexPath
+        ) as! MealStationTableViewCell
 
         guard let menu = menu else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
@@ -139,10 +145,14 @@ class CampusEateryMealTableViewController: UITableViewController {
         let font = UIFont.systemFont(ofSize: 14)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
-        let content = NSMutableAttributedString(string: "",
-                                                attributes: [.foregroundColor: UIColor.primary,
-                                                             .font: font,
-                                                             .paragraphStyle: paragraphStyle])
+        let content = NSMutableAttributedString(
+            string: "",
+            attributes: [
+                .foregroundColor: UIColor.primary,
+                .font: font,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
 
         if names.isEmpty {
             content.append(NSMutableAttributedString(string: "No items to show"))
@@ -154,5 +164,5 @@ class CampusEateryMealTableViewController: UITableViewController {
 
         return cell
     }
-    
+
 }

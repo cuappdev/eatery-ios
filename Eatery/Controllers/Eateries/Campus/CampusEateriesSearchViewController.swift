@@ -38,9 +38,9 @@ private struct SearchResult {
 private class SearchResultsManager {
 
     var eateries: [CampusEatery] = []
-    
+
     func searchResult(searchText: String) -> [SearchResult] {
-        return eaterySearchResults(searchText: searchText)
+        eaterySearchResults(searchText: searchText)
             + menuItemSearchResults(searchText: searchText)
             + areaSearchResults(searchText: searchText)
     }
@@ -50,7 +50,8 @@ private class SearchResultsManager {
             matches(eatery.name, searchText)
                 || matches(eatery.displayName, searchText)
                 || eatery.allNicknames.contains { matches($0, searchText) }
-        }.map { eatery in
+        }
+        .map { eatery in
             let subtitle: String
             switch eatery.eateryType {
             case .dining: subtitle = "Dining Hall"
@@ -61,7 +62,8 @@ private class SearchResultsManager {
                 source: .eatery(eatery),
                 title: eatery.displayName,
                 subtitle: subtitle,
-                isFavorite: eatery.isFavorite)
+                isFavorite: eatery.isFavorite
+            )
         }
     }
 
@@ -83,7 +85,8 @@ private class SearchResultsManager {
                     source: .menuItem(eatery, $0),
                     title: $0.name,
                     subtitle: eatery.displayName,
-                    isFavorite: false)
+                    isFavorite: false
+                )
             }
         }
 
@@ -98,12 +101,13 @@ private class SearchResultsManager {
                     source: .area(area),
                     title: area.description,
                     subtitle: "Location",
-                    isFavorite: nil)
-        }
+                    isFavorite: nil
+                )
+            }
     }
 
     private func matches(_ textToSearch: String, _ searchText: String) -> Bool {
-        return textToSearch.localizedCaseInsensitiveContains(searchText)
+        textToSearch.localizedCaseInsensitiveContains(searchText)
     }
 
 }
@@ -112,7 +116,8 @@ protocol CampusEateriesSearchViewControllerDelegate: AnyObject {
 
     func campusEateriesSearchViewController(
         _ cesvc: CampusEateriesSearchViewController,
-        didSelectSearchResult searchResult: SearchSource)
+        didSelectSearchResult searchResult: SearchSource
+    )
 
 }
 
@@ -160,7 +165,8 @@ class CampusEateriesSearchViewController: UIViewController {
             self,
             selector: #selector(keyboardFrameWillChange(_:)),
             name: NSNotification.Name.UIKeyboardWillChangeFrame,
-            object: nil)
+            object: nil
+        )
     }
 
     @objc private func keyboardFrameWillChange(_ notification: Notification) {
@@ -172,7 +178,8 @@ class CampusEateriesSearchViewController: UIViewController {
         let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
         let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(
             dx: 0,
-            dy: additionalSafeAreaInsets.bottom)
+            dy: additionalSafeAreaInsets.bottom
+        )
         let intersection = safeAreaFrame.intersection(keyboardFrameInView)
 
         tableView.contentInset.bottom = intersection.height
@@ -213,7 +220,8 @@ class CampusEateriesSearchViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.register(
             SearchResultsTableViewCell.self,
-            forCellReuseIdentifier: "searchResults")
+            forCellReuseIdentifier: "searchResults"
+        )
         tableView.dataSource = self
         tableView.delegate = self
 
@@ -250,7 +258,8 @@ class CampusEateriesSearchViewController: UIViewController {
     private func addRecentSearch(_ searchResult: SearchResult) {
         let recentSearch = RecentSearch(
             title: searchResult.title,
-            subtitle: searchResult.subtitle)
+            subtitle: searchResult.subtitle
+        )
 
         if let index = displayedRecentSearches.firstIndex(of: recentSearch) {
             displayedRecentSearches.remove(at: index)
@@ -312,8 +321,8 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
         case .recentSearches:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "searchResults",
-                for: indexPath)
-                as! SearchResultsTableViewCell
+                for: indexPath
+            ) as! SearchResultsTableViewCell
 
             let search = displayedRecentSearches[indexPath.row]
 
@@ -321,15 +330,16 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
                 title: search.title,
                 subtitle: search.subtitle,
                 subtitleColor: .steel,
-                isFavorite: nil)
+                isFavorite: nil
+            )
 
             return cell
 
         case .searchResults:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "searchResults",
-                for: indexPath)
-                as! SearchResultsTableViewCell
+                for: indexPath
+            ) as! SearchResultsTableViewCell
 
             let search = displayedSearchResults[indexPath.row]
 
@@ -337,7 +347,8 @@ extension CampusEateriesSearchViewController: UITableViewDataSource {
                 title: search.title,
                 subtitle: search.subtitle,
                 subtitleColor: .eateryBlue,
-                isFavorite: search.isFavorite)
+                isFavorite: search.isFavorite
+            )
 
             return cell
         }

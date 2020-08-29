@@ -165,7 +165,7 @@ extension ImageParallaxScrollViewController: UINavigationBarDelegate {
     }
 
     func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .topAttached
+        .topAttached
     }
 
 }
@@ -173,7 +173,7 @@ extension ImageParallaxScrollViewController: UINavigationBarDelegate {
 class MenuGradientView: UIView {
 
     override class var layerClass: AnyClass {
-        return CAGradientLayer.self
+        CAGradientLayer.self
     }
 
     override init(frame: CGRect) {

@@ -224,7 +224,11 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         queryCampusEateries()
     }
 
-    func eateriesViewController(_ evc: EateriesViewController, filter eateries: [Eatery], with filters: Set<Filter>) -> [Eatery] {
+    func eateriesViewController(
+        _ evc: EateriesViewController,
+        filter eateries: [Eatery],
+        with filters: Set<Filter>
+    ) -> [Eatery] {
         guard var filteredEateries = eateries as? [CampusEatery] else {
             return eateries
         }
@@ -235,7 +239,7 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
             return true
         }
 
-        if !filters.intersection(Filter.areaFilters).isEmpty {
+        if !filters.isDisjoint(with: Filter.areaFilters) {
             filteredEateries = filteredEateries.filter {
                 guard let area = $0.area else {
                     return false
@@ -252,7 +256,6 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         return filteredEateries
     }
 
-
 }
 
 // MARK: - Campus Eateries Search View Controller Delegate
@@ -261,7 +264,8 @@ extension CampusEateriesViewController: CampusEateriesSearchViewControllerDelega
 
     func campusEateriesSearchViewController(
         _ cesvc: CampusEateriesSearchViewController,
-        didSelectSearchResult searchResult: SearchSource) {
+        didSelectSearchResult searchResult: SearchSource
+    ) {
         selectedSearchResult = searchResult
         searchController?.isActive = false
     }

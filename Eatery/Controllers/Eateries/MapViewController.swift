@@ -8,31 +8,31 @@ import CoreLocation
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     var eateries: [Eatery]
-    var eateryAnnotations : [MKPointAnnotation] = []
+    var eateryAnnotations: [MKPointAnnotation] = []
     let mapView: MKMapView
     var locationManager: CLLocationManager!
     var userLocation: CLLocation?
-    
+
     let recenterButton = UIButton()
-    
+
     var defaultCoordinate: CLLocationCoordinate2D {
-        return locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
+        locationManager.location?.coordinate ?? CLLocation.olinLibrary.coordinate
     }
-    
+
     init(eateries allEateries: [Eatery]) {
         self.eateries = allEateries
         self.mapView = MKMapView()
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         mapView.delegate = self
-        
+
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
+
         if CLLocationManager.locationServicesEnabled() {
-            switch (CLLocationManager.authorizationStatus()) {
+            switch CLLocationManager.authorizationStatus() {
             case .authorizedWhenInUse:
                 locationManager.startUpdatingLocation()
                 mapView.showsUserLocation = true
@@ -46,14 +46,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
         mapEateries(allEateries)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = "Map"
 
         mapView.showsBuildings = true
@@ -62,19 +62,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+
         createMapButtons()
-        
+
         mapView.setCenter(defaultCoordinate, animated: true)
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     func mapEateries(_ eateries: [Eatery]) {
         self.eateries = eateries
-        
+
         for eatery in eateries {
             let annotationTitle = eatery.displayName
             let eateryAnnotation = MKPointAnnotation()
@@ -84,12 +84,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapView.addAnnotation(eateryAnnotation)
             eateryAnnotations.append(eateryAnnotation)
         }
-        
+
         mapView.setRegion(MKCoordinateRegionMake(defaultCoordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: false)
     }
-    
+
     // MARK: - Button Methods
-    
+
     func createMapButtons() {
         // Create bottom left re-center button
         recenterButton.layer.cornerRadius = 6
@@ -110,14 +110,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             make.width.equalTo(120)
         }
     }
-    
+
     @objc func recenterButtonPressed(_ sender: UIButton) {
         if eateryAnnotations.count == 1 {
             mapView.selectAnnotation(eateryAnnotations.first!, animated: true)
         } else if mapView.selectedAnnotations.count > 0 {
             mapView.deselectAnnotation(mapView.selectedAnnotations.first!, animated: true)
         }
-        
+
         if eateryAnnotations.count == 1 {
             let annotationPoint = MKMapPointForCoordinate(defaultCoordinate)
             var zoomRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1)
@@ -128,12 +128,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
             let inset = min(-2250.0, -zoomRect.size.width)
             mapView.setVisibleMapRect(MKMapRectInset(zoomRect, inset, inset), animated: true)
-            
+
             let myMapView = mapView
             let request = MKDirectionsRequest()
             request.source = MKMapItem.forCurrentLocation()
-            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: eateryAnnotations.first!.coordinate, addressDictionary: nil))
-            request.transportType = .walking;
+            request.destination = MKMapItem(
+                placemark: MKPlacemark(
+                    coordinate: eateryAnnotations.first!.coordinate,
+                    addressDictionary: nil
+                )
+            )
+            request.transportType = .walking
             let directions = MKDirections(request: request)
             directions.calculate { (response, error) in
                 if let response = response, error == nil {
@@ -146,17 +151,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapView.setCenter(defaultCoordinate, animated: true)
         }
     }
-    
+
     // MARK: - MKMapViewDelegate Methods
-    
+
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let lineRendered = MKPolylineRenderer(polyline: mapView.overlays.first! as! MKPolyline)
         lineRendered.strokeColor = .eateryBlue
         lineRendered.lineWidth = 3
         return lineRendered
     }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+
+    func mapView(
+        _ mapView: MKMapView,
+        annotationView view: MKAnnotationView,
+        calloutAccessoryControlTapped control: UIControl
+    ) {
         guard let eateryAnnotation = view.annotation as? MKPointAnnotation,
             let index = eateryAnnotations.index(of: eateryAnnotation),
             index < eateries.count else {
@@ -166,27 +175,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let eatery = eateries[index]
 
         if let campusEatery = eatery as? CampusEatery {
-            let menuViewController = CampusMenuViewController(eatery: campusEatery,
-                                                              userLocation: userLocation)
+            let menuViewController = CampusMenuViewController(
+                eatery: campusEatery,
+                userLocation: userLocation
+            )
             navigationController?.pushViewController(menuViewController, animated: true)
         } else if let collegetownEatery = eatery as? CollegetownEatery {
-            let menuViewController = CollegetownMenuViewController(eatery: collegetownEatery,
-                                                                   userLocation: userLocation)
+            let menuViewController = CollegetownMenuViewController(
+                eatery: collegetownEatery,
+                userLocation: userLocation
+            )
             navigationController?.pushViewController(menuViewController, animated: true)
         }
+    }
 
-        // TODO: Answers.logMapSeguedToEateryMenu(eateryId: eatery.slug)
-    }
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        // TODO: Answers.logMapAnnotationOpened(eateryId: eatery.slug)
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is MKPointAnnotation) {
             return nil
         }
-        
+
         let annotationView: MKAnnotationView
 
         if let dequeued = mapView.dequeueReusableAnnotationView(withIdentifier: "eateryPin") {
@@ -197,22 +204,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotationView.canShowCallout = true
             annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
-        
-        annotationView.image = annotation.subtitle == "open" ? UIImage(named: "eateryPin") : UIImage(named: "blackEateryPin")
-        
+
+        annotationView.image =
+            annotation.subtitle == "open"
+            ? UIImage(named: "eateryPin")
+            : UIImage(named: "blackEateryPin")
+
         return annotationView
     }
-    
+
     // MARK: - CLLocationManagerDelegate Methods
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
         recenterButtonPressed(recenterButton)
         locationManager.stopUpdatingLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Error: \(error)")
     }
-    
+
 }

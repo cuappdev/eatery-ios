@@ -2,6 +2,8 @@ disabled_rules:
   - cyclomatic_complexity
   - force_cast
   - function_body_length
+  - type_body_length
+  - file_length
 
 opt_in_rules:
   - closure_end_indentation
