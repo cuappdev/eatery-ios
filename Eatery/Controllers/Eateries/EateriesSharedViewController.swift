@@ -12,7 +12,7 @@ import NVActivityIndicatorView
 import UIKit
 
 class EateriesSharedViewController: UIViewController {
-    
+
     // Scroll
 
     private var lastContentOffset: CGFloat = 0
@@ -46,11 +46,11 @@ class EateriesSharedViewController: UIViewController {
     // Location
 
     private lazy var locationManager: CLLocationManager = {
-        let l = CLLocationManager()
-        l.delegate = self
-        l.desiredAccuracy = kCLLocationAccuracyBest
-        l.startUpdatingLocation()
-        return l
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        return locationManager
     }()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -149,11 +149,11 @@ class EateriesSharedViewController: UIViewController {
 // MARK: - Eateries View Controller Scroll Delegate
 
 extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
-    
+
     func eateriesViewController(_ evc: EateriesViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
         showPillOnScrollStopTimer?.invalidate()
         showPillOnScrollStopTimer = nil
-        
+
         lastContentOffset = scrollView.contentOffset.y
     }
 
@@ -162,22 +162,22 @@ extension EateriesSharedViewController: EateriesViewControllerScrollDelegate {
             self?.pillViewController.setShowPill(true, animated: true)
         }
     }
-    
+
     func eateriesViewController(_ evc: EateriesViewController, scrollViewDidScroll scrollView: UIScrollView) {
         let adjustedOffset = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
-        
+
         if adjustedOffset < 0 {
             // disregard when the scrollView is "bounced"
             lastContentOffset = 0
         } else {
             let isScrollingDownward = adjustedOffset > lastContentOffset
-            
+
             if isScrollingDownward, pillViewController.isShowingPill {
                 pillViewController.setShowPill(false, animated: true)
             } else if !isScrollingDownward, !pillViewController.isShowingPill {
                 pillViewController.setShowPill(true, animated: true)
             }
-            
+
             lastContentOffset = adjustedOffset
         }
     }
@@ -211,14 +211,22 @@ extension EateriesSharedViewController: PillViewControllerDelegate {
 
 extension EateriesSharedViewController: UINavigationControllerDelegate {
 
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    func navigationController(
+        _ navigationController: UINavigationController,
+        willShow viewController: UIViewController,
+        animated: Bool
+    ) {
         viewController.extendedLayoutIncludesOpaqueBars = true
 
         let isParallax = viewController is ImageParallaxScrollViewController
         navigationController.setNavigationBarHidden(isParallax, animated: true)
     }
 
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    func navigationController(
+        _ navigationController: UINavigationController,
+        didShow viewController: UIViewController,
+        animated: Bool
+    ) {
         updateShowPill()
     }
 

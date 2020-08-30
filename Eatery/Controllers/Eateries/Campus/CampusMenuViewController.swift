@@ -131,7 +131,10 @@ class CampusMenuViewController: EateriesMenuViewController {
 
 extension CampusMenuViewController: TabbedPageViewControllerDelegate {
 
-    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController, titleForViewController viewController: UIViewController) -> String? {
+    func tabbedPageViewController(
+        _ tabbedPageViewController: TabbedPageViewController,
+        titleForViewController viewController: UIViewController
+    ) -> String? {
         guard let mealViewController = viewController as? CampusEateryMealTableViewController else {
             return nil
         }
@@ -139,8 +142,10 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
         return mealViewController.meal
     }
 
-    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
-                                  heightOfContentForViewController viewController: UIViewController) -> CGFloat {
+    func tabbedPageViewController(
+        _ tabbedPageViewController: TabbedPageViewController,
+        heightOfContentForViewController viewController: UIViewController
+    ) -> CGFloat {
         guard let mealViewController = viewController as? CampusEateryMealTableViewController else {
             return 0
         }
@@ -148,7 +153,5 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
         mealViewController.tableView.layoutIfNeeded()
         return mealViewController.tableView.contentSize.height
     }
-    
+
 }
-
-

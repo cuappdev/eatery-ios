@@ -16,7 +16,7 @@ class CollegetownEateriesViewController: EateriesViewController {
 
     private var allEateries: [CollegetownEatery]?
     override var eateries: [Eatery] {
-        return allEateries ?? []
+        allEateries ?? []
     }
 
     override func viewDidLoad() {
@@ -104,7 +104,11 @@ extension CollegetownEateriesViewController: EateriesViewControllerDelegate {
         }
     }
 
-    func eateriesViewController(_ evc: EateriesViewController, filter eateries: [Eatery], with filters: Set<Filter>) -> [Eatery] {
+    func eateriesViewController(
+        _ evc: EateriesViewController,
+        filter eateries: [Eatery],
+        with filters: Set<Filter>
+    ) -> [Eatery] {
         guard var filteredEateries = eateries as? [CollegetownEatery] else {
             return eateries
         }
@@ -116,7 +120,8 @@ extension CollegetownEateriesViewController: EateriesViewControllerDelegate {
                 // selected category filters
                 eatery.categories.contains { eateryCategory -> Bool in
                     selectedCategoryFilters.contains { filterCategory -> Bool in
-                        search(eateryCategory, matches: filterCategory) || search(filterCategory, matches: eateryCategory)
+                        search(eateryCategory, matches: filterCategory)
+                            || search(filterCategory, matches: eateryCategory)
                     }
                 }
             }
@@ -126,11 +131,11 @@ extension CollegetownEateriesViewController: EateriesViewControllerDelegate {
     }
 
     private func matchRange(of searchText: String, in text: String) -> Range<String.Index>? {
-        return text.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
+        text.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
     }
 
     private func search(_ searchText: String, matches text: String) -> Bool {
-        return matchRange(of: searchText, in: text) != nil
+        matchRange(of: searchText, in: text) != nil
     }
 
 }

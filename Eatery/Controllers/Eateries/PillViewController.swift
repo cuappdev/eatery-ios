@@ -52,7 +52,7 @@ class PillViewController: UIViewController {
         self.leftViewController = leftViewController
         self.rightViewController = rightViewController
         self.isShowingPill = false
-        
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -133,7 +133,7 @@ class PillViewController: UIViewController {
 
     private func showLeftViewController() {
         rightViewController.view.removeFromSuperview()
-        
+
         containerView.addSubview(leftViewController.view)
         leftViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()

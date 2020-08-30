@@ -127,7 +127,7 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
     }
 
     func createHeroModifiers(_ groups: HeroModifierGroups...) -> [HeroModifier] {
-        return [.useGlobalCoordinateSpace, .whenPresenting(.delay(0.15))]
+        [.useGlobalCoordinateSpace, .whenPresenting(.delay(0.15))]
             + (groups.contains(.fade) ? [.fade] : [])
             + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
     }
@@ -140,16 +140,21 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         if let url = URL(string: "comgooglemaps://"), UIApplication.shared.canOpenURL(url) {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-            alertController.addAction(UIAlertAction(title: "Open in Apple Maps", style: .default) { _ in
+            let openInAppleMaps = UIAlertAction(title: "Open in Apple Maps", style: .default) { _ in
                 self.openAppleMapsDirections()
-            })
+            }
+            alertController.addAction(openInAppleMaps)
 
-            alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .default) { _ in
-                guard let url = URL(string: "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking") else {
+            let openInGoogleMaps = UIAlertAction(title: "Open in Google Maps", style: .default) { _ in
+                // swiftlint:disable line_length
+                let urlString = "comgooglemaps://?saddr=&daddr=\(coordinate.latitude),\(coordinate.longitude)&directionsmode=walking"
+                // swiftlint:enable line_length
+                guard let url = URL(string: urlString) else {
                     return
                 }
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            })
+            }
+            alertController.addAction(openInGoogleMaps)
 
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 

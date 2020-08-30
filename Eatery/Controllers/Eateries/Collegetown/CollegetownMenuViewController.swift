@@ -16,8 +16,8 @@ class CollegetownMenuViewController: EateriesMenuViewController {
 
     init(eatery: CollegetownEatery, userLocation: CLLocation?) {
         self.eatery = eatery
-        
-        super.init(eatery: eatery , userLocation: userLocation)
+
+        super.init(eatery: eatery, userLocation: userLocation)
     }
 
     required init?(coder: NSCoder) {

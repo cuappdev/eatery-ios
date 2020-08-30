@@ -23,46 +23,56 @@ protocol EateriesViewControllerDelegate: AnyObject {
 
     func eateriesViewControllerDidRefreshEateries(_ evc: EateriesViewController)
 
-    func eateriesViewController(_ evc: EateriesViewController, filter eateries: [Eatery], with filters: Set<Filter>) -> [Eatery]
+    func eateriesViewController(
+        _ evc: EateriesViewController,
+        filter eateries: [Eatery],
+        with filters: Set<Filter>
+    ) -> [Eatery]
 
 }
 
 // MARK: - Scroll Delegate
 
 protocol EateriesViewControllerScrollDelegate: AnyObject {
-    
-    func eateriesViewController(_ evc: EateriesViewController,
-                                scrollViewWillBeginDragging scrollView: UIScrollView)
 
-    func eateriesViewController(_ evc: EateriesViewController,
-                                scrollViewDidStopScrolling scrollView: UIScrollView)
+    func eateriesViewController(
+        _ evc: EateriesViewController,
+        scrollViewWillBeginDragging scrollView: UIScrollView
+    )
 
-    func eateriesViewController(_ evc: EateriesViewController,
-                                scrollViewDidScroll scrollView: UIScrollView)
+    func eateriesViewController(
+        _ evc: EateriesViewController,
+        scrollViewDidStopScrolling scrollView: UIScrollView
+    )
+
+    func eateriesViewController(
+        _ evc: EateriesViewController,
+        scrollViewDidScroll scrollView: UIScrollView
+    )
 
 }
 
 // MARK: - Eateries View Controller
 
 /**
- The `EateriesViewController` manages the presentation of Eateries. It works closely with its data
- source to control the content it displays.
+    The `EateriesViewController` manages the presentation of Eateries. It works closely with its data
+    source to control the content it displays.
 
- This view controller was intended to abstract shared functionality from the
- `CampusEateriesViewController` and `CollegetownEateriesViewController`. As such it is (somewhat)
- losely coupled with both of them.
+    This view controller was intended to abstract shared functionality from the
+    `CampusEateriesViewController` and `CollegetownEateriesViewController`. As such it is (somewhat)
+    losely coupled with both of them.
 
- The `EateriesViewController` has three states:
+    The `EateriesViewController` has three states:
 
- 1. presenting - eateries are actively presented and the Eateries View Controller can query its data
- source for updated Eateries whenever
- 2. loading - a loading indicator is displayed and no eateries are presented. The Eateries View
- Controller will not query its data source for Eateries in this state.
- 3. failedToLoad - an error view is displayed and no eateries are presented. The Eateries View
- Controller will not query its data source for Eateries in this state.
+    1. presenting - eateries are actively presented and the Eateries View Controller can query its data
+    source for updated Eateries whenever
+    2. loading - a loading indicator is displayed and no eateries are presented. The Eateries View
+    Controller will not query its data source for Eateries in this state.
+    3. failedToLoad - an error view is displayed and no eateries are presented. The Eateries View
+    Controller will not query its data source for Eateries in this state.
 
- States are able to be transitioned between freely.
- */
+    States are able to be transitioned between freely.
+*/
 class EateriesViewController: UIViewController {
 
     enum AnimationKey: String {
@@ -74,7 +84,7 @@ class EateriesViewController: UIViewController {
         case infoContainer = "infoContainer"
 
         func id(eatery: Eatery) -> String {
-            return "\(eatery.id)_\(rawValue)"
+            "\(eatery.id)_\(rawValue)"
         }
 
     }
@@ -86,7 +96,7 @@ class EateriesViewController: UIViewController {
         case presenting(cached: Bool)
         case loading
         case failedToLoad(Error)
-        
+
         static func == (lhs: EateriesViewController.State, rhs: EateriesViewController.State) -> Bool {
             switch (lhs, rhs) {
             case (.presenting, .presenting): return true
@@ -131,22 +141,22 @@ class EateriesViewController: UIViewController {
 
     weak var delegate: EateriesViewControllerDelegate?
     weak var scrollDelegate: EateriesViewControllerScrollDelegate?
-    
+
     private var appDevLogo: UIView?
-    
+
     private var gridLayout: EateriesCollectionViewGridLayout!
     private var collectionView: UICollectionView!
     private var refreshControl: UIRefreshControl!
 
     var searchController: UISearchController? {
-        return navigationItem.searchController
+        navigationItem.searchController
     }
     private var searchBar: UISearchBar? {
-        return searchController?.searchBar
+        searchController?.searchBar
     }
     var filterBar: FilterBar!
     var availableFilters: [Filter] {
-        get { return filterBar.displayedFilters }
+        get { filterBar.displayedFilters }
         set { filterBar.displayedFilters = newValue }
     }
 
@@ -210,7 +220,8 @@ class EateriesViewController: UIViewController {
         let searchBarHeight: CGFloat = searchBar != nil ? 52 : 0
         collectionView.setContentOffset(
             CGPoint(x: 0, y: -(collectionView.adjustedContentInset.top + largeTitleHeight + searchBarHeight)),
-            animated: false)
+            animated: false
+        )
     }
 
     private func setUpNavigationBar() {
@@ -233,7 +244,8 @@ class EateriesViewController: UIViewController {
         logo.contentMode = .scaleAspectFit
         navigationController?.navigationBar.addSubview(logo)
         logo.snp.makeConstraints { make in
-            // the position of the logo is adjusted using CGAffineTransform, which works better than using constraints or frames
+            // the position of the logo is adjusted using CGAffineTransform,
+            // which works better than using constraints or frames
             make.leading.top.equalToSuperview()
             make.size.equalTo(EateriesViewController.appDevLogoSize)
         }
@@ -243,7 +255,7 @@ class EateriesViewController: UIViewController {
 
     private func setUpCollectionView() {
         gridLayout = EateriesCollectionViewGridLayout()
-        
+
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
@@ -252,36 +264,46 @@ class EateriesViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.contentInsetAdjustmentBehavior = .always
-        collectionView.register(UICollectionViewCell.self,
-                                forCellWithReuseIdentifier: CellIdentifier.container.rawValue)
-        collectionView.register(EateryCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CellIdentifier.eatery.rawValue)
-        collectionView.register(UICollectionReusableView.self,
-                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue)
-        collectionView.register(EateriesCollectionViewHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue)
+        collectionView.register(
+            UICollectionViewCell.self,
+            forCellWithReuseIdentifier: CellIdentifier.container.rawValue
+        )
+        collectionView.register(
+            EateryCollectionViewCell.self,
+            forCellWithReuseIdentifier: CellIdentifier.eatery.rawValue
+        )
+        collectionView.register(
+            UICollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+            withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue
+        )
+        collectionView.register(
+            EateriesCollectionViewHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+            withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue
+        )
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+
         refreshControl = UIRefreshControl(frame: .zero)
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refreshEateries), for: .valueChanged)
         collectionView.refreshControl = refreshControl
     }
-    
+
     private func setUpSearchAndFilterBars() {
         filterBar = FilterBar(frame: .zero)
         filterBar.delegate = self
     }
-    
+
     private func setUpActivityIndicator() {
-        activityIndicator = NVActivityIndicatorView(frame: .zero,
-                                                    type: .circleStrokeSpin,
-                                                    color: .transparentEateryBlue)
+        activityIndicator = NVActivityIndicatorView(
+            frame: .zero,
+            type: .circleStrokeSpin,
+            color: .transparentEateryBlue
+        )
         view.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -290,7 +312,7 @@ class EateriesViewController: UIViewController {
 
         activityIndicator.startAnimating()
     }
-    
+
     private func setUpFailedToLoadView() {
         failedToLoadView = EateriesFailedToLoadView(frame: .zero)
         failedToLoadView.delegate = self
@@ -367,19 +389,27 @@ class EateriesViewController: UIViewController {
     }
 
     private func fadeIn(views: [UIView], animated: Bool, completion: (() -> Void)? = nil) {
-        perform(animations: {
-            for view in views {
-                view.alpha = 1
-            }
-        }, animated: animated, completion: completion)
+        perform(
+            animations: {
+                for view in views {
+                    view.alpha = 1
+                }
+            },
+            animated: animated,
+            completion: completion
+        )
     }
 
     private func fadeOut(views: [UIView], animated: Bool, completion: (() -> Void)? = nil) {
-        perform(animations: {
-            for view in views {
-                view.alpha = 0
-            }
-        }, animated: animated, completion: completion)
+        perform(
+            animations: {
+                for view in views {
+                    view.alpha = 0
+                }
+            },
+            animated: animated,
+            completion: completion
+        )
     }
 
     private func perform(animations: @escaping () -> Void, animated: Bool, completion: (() -> Void)? = nil) {
@@ -433,25 +463,33 @@ class EateriesViewController: UIViewController {
         // `layoutIfNeeded` forces the collectionView to add cells and headers
         collectionView.layoutIfNeeded()
         collectionView.isHidden = false
-        
+
         let cells = collectionView.visibleCells as [UIView]
         let headers = collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader) as [UIView]
         let views = (cells + headers).sorted {
             $0.convert($0.bounds, to: nil).minY < $1.convert($1.bounds, to: nil).minY
         }
-        
+
         for view in views {
             view.transform = CGAffineTransform(translationX: 0.0, y: 32.0)
             view.alpha = 0.0
         }
-        
+
         var delay: TimeInterval = 0.15
         for view in views {
             delay += 0.08
-            UIView.animate(withDuration: 0.55, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.allowUserInteraction], animations: {
-                view.transform = .identity
-                view.alpha = 1.0
-            }, completion: nil)
+            UIView.animate(
+                withDuration: 0.55,
+                delay: delay,
+                usingSpringWithDamping: 1.0,
+                initialSpringVelocity: 1.0,
+                options: [.allowUserInteraction],
+                animations: {
+                    view.transform = .identity
+                    view.alpha = 1.0
+                },
+                completion: nil
+            )
         }
     }
 
@@ -459,7 +497,7 @@ class EateriesViewController: UIViewController {
 
     @objc private func refreshEateries(_ sender: Any) {
         delegate?.eateriesViewControllerDidRefreshEateries(self)
-        
+
         refreshControl.endRefreshing()
     }
 
@@ -472,7 +510,9 @@ class EateriesViewController: UIViewController {
         case .alphabetical:
             sortedEateries = eateries.sorted { $0.displayName < $1.displayName }
         case let .nearest(location):
-            sortedEateries = eateries.sorted { $0.location.distance(from: location).value < $1.location.distance(from: location).value }
+            sortedEateries = eateries.sorted {
+                $0.location.distance(from: location).value < $1.location.distance(from: location).value
+            }
         }
 
         let favorites = sortedEateries.filter { $0.isFavorite }
@@ -493,7 +533,12 @@ class EateriesViewController: UIViewController {
             sortMethod = .alphabetical
         }
 
-        let filteredEateries = delegate?.eateriesViewController(self, filter: eateries, with: filterBar.selectedFilters) ?? eateries
+        let filteredEateries =
+            delegate?.eateriesViewController(
+                self,
+                filter: eateries,
+                with: filterBar.selectedFilters
+            ) ?? eateries
         let newEateriesByGroup = eateriesByGroup(from: filteredEateries, sortedUsing: sortMethod)
 
         self.eateriesByGroup = newEateriesByGroup
@@ -512,20 +557,20 @@ class EateriesViewController: UIViewController {
 
     @objc func pushMapViewController() {
         AppDevAnalytics.shared.logFirebase(MapPressPayload())
-        
+
         let mapViewController = MapViewController(eateries: eateries)
         navigationController?.pushViewController(mapViewController, animated: true)
     }
 
     // MARK: Scroll View
-    
+
     func scrollToTop(animated: Bool) {
         collectionView.setContentOffset(CGPoint(x: 0, y: -collectionView.adjustedContentInset.top), animated: animated)
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
+
         gridLayout.invalidateLayout()
     }
 
@@ -556,10 +601,12 @@ class EateriesViewController: UIViewController {
     // MARK: Favorites Did Change
 
     private func registerForEateryIsFavoriteDidChangeNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(eateryIsFavoriteDidChange),
-                                               name: .eateryIsFavoriteDidChange,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(eateryIsFavoriteDidChange),
+            name: .eateryIsFavoriteDidChange,
+            object: nil
+        )
     }
 
     @objc private func eateryIsFavoriteDidChange() {
@@ -588,34 +635,43 @@ extension EateriesViewController {
 extension EateriesViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        4
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         }
-        
+
         return eateries(in: section).count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.container.rawValue, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellIdentifier.container.rawValue,
+                for: indexPath
+            )
 
             cell.contentView.addSubview(filterBar)
             filterBar.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            
+
             return cell
         }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.eatery.rawValue, for: indexPath) as! EateryCollectionViewCell
+
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CellIdentifier.eatery.rawValue,
+            for: indexPath
+        ) as! EateryCollectionViewCell
         let eatery = eateries(in: indexPath.section)[indexPath.row]
         cell.configure(eatery: eatery)
         cell.userLocation = userLocation
-        
+
         cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
         cell.titleLabel.hero.id = AnimationKey.title.id(eatery: eatery)
         cell.timeLabel.hero.modifiers = [.useGlobalCoordinateSpace, .fade]
@@ -629,17 +685,29 @@ extension EateriesViewController: UICollectionViewDataSource {
         // within each cell. Now that search results have been / will be moved
         // to a new view controller, the menu text is no longer needed.
         cell.isMenuTextViewVisible = false
-        
+
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
         if indexPath.section == 0 || eateries(in: indexPath.section).isEmpty {
-            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue, for: indexPath)
+            return collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SupplementaryViewIdentifier.empty.rawValue,
+                for: indexPath
+            )
         }
-        
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue, for: indexPath) as! EateriesCollectionViewHeaderView
-        
+
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: SupplementaryViewIdentifier.header.rawValue,
+            for: indexPath
+        ) as! EateriesCollectionViewHeaderView
+
         switch indexPath.section {
         case 1:
             header.titleLabel.text = "Favorites"
@@ -653,7 +721,7 @@ extension EateriesViewController: UICollectionViewDataSource {
         default:
             break
         }
-        
+
         return header
     }
 
@@ -695,14 +763,16 @@ extension EateriesViewController: UICollectionViewDelegate {
 
         feedbackGenerator.prepare()
 
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       usingSpringWithDamping: 1.0,
-                       initialSpringVelocity: 0.0,
-                       options: [],
-                       animations: {
-                        cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
-        })
+        UIView.animate(
+            withDuration: 0.35,
+            delay: 0.0,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 0.0,
+            options: [],
+            animations: {
+                cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+            }
+        )
     }
 
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
@@ -711,14 +781,16 @@ extension EateriesViewController: UICollectionViewDelegate {
                 return
         }
 
-        UIView.animate(withDuration: 0.25,
-                       delay: 0.0,
-                       usingSpringWithDamping: 1.0,
-                       initialSpringVelocity: 0.0,
-                       options: [],
-                       animations: {
-                        cell.transform = .identity
-        })
+        UIView.animate(
+            withDuration: 0.25,
+            delay: 0.0,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 0.0,
+            options: [],
+            animations: {
+                cell.transform = .identity
+            }
+        )
     }
 
 }
@@ -731,7 +803,8 @@ extension EateriesViewController: UICollectionViewDataSourcePrefetching {
         let resources = indexPaths.compactMap {
             let section = eateries(in: $0.section)
             return 0 <= $0.row && $0.row < section.count ? section[$0.row].imageUrl : nil
-        }.map { ImageResource(downloadURL: $0) }
+        }
+        .map { ImageResource(downloadURL: $0) }
         ImagePrefetcher(resources: resources).start()
     }
 
@@ -741,41 +814,49 @@ extension EateriesViewController: UICollectionViewDataSourcePrefetching {
 
 extension EateriesViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         if indexPath.section == 0 {
             let height = filterBar.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             return CGSize(width: collectionView.bounds.width, height: height)
         }
-        
+
         return gridLayout.itemSize
-        
+
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
         if section == 0 {
             return UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         } else if eateries(in: section).isEmpty {
             return .zero
         }
-        
+
         return gridLayout.sectionInset
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
         if section == 0 || eateries(in: section).isEmpty {
             // Returning CGSize.zero here causes the collectionView to not query for a header at
             // all, but collectionView(_:viewForSupplementaryElementOfKind:at:) returns a blank
             // header to be safe
             return .zero
         }
-        
+
         return gridLayout.headerReferenceSize
     }
-    
+
 }
 
 // MARK: - Search Bar Delegate
@@ -791,7 +872,7 @@ extension EateriesViewController: UISearchBarDelegate {
     }
 
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
+        true
     }
 
 }
@@ -815,7 +896,7 @@ extension EateriesViewController: EateriesFailedToLoadViewDelegate {
 // MARK: - Scroll View Delegate
 
 extension EateriesViewController: UIScrollViewDelegate {
-    
+
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollDelegate?.eateriesViewController(self, scrollViewWillBeginDragging: scrollView)
     }
@@ -829,10 +910,10 @@ extension EateriesViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollDelegate?.eateriesViewController(self, scrollViewDidStopScrolling: scrollView)
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         transformAppDevLogo()
-        
+
         scrollDelegate?.eateriesViewController(self, scrollViewDidScroll: scrollView)
     }
 
@@ -844,18 +925,18 @@ extension EateriesViewController: UIScrollViewDelegate {
         }
 
         let navBarHeight = navigationController?.navigationBar.frame.height ?? 0.0
-        let y = appDevLogoYPosition(navBarHeight: navBarHeight)
+        let yPosition = appDevLogoYPosition(navBarHeight: navBarHeight)
 
         let navBarWidth = navigationController?.navigationBar.frame.width ?? 0.0
         let centerOfRightNavigationBarItem = navBarWidth - 40
-        let x = centerOfRightNavigationBarItem - EateriesViewController.appDevLogoSize / 2
+        let xPosition = centerOfRightNavigationBarItem - EateriesViewController.appDevLogoSize / 2
 
-        appDevLogo.transform = CGAffineTransform(translationX: x, y: y)
+        appDevLogo.transform = CGAffineTransform(translationX: xPosition, y: yPosition)
 
         let startPoint: CGFloat = 120 // px until AppDev logo starts showing
         let fullyVisiblePoint: CGFloat = 180 // px until AppDev logo is fully visible
         let maxAlpha: CGFloat = 0.9
-        appDevLogo.alpha = min(maxAlpha, (y - startPoint) / (fullyVisiblePoint - startPoint))
+        appDevLogo.alpha = min(maxAlpha, (yPosition - startPoint) / (fullyVisiblePoint - startPoint))
     }
 
     private func appDevLogoYPosition(navBarHeight: CGFloat) -> CGFloat {
@@ -868,20 +949,20 @@ extension EateriesViewController: UIScrollViewDelegate {
         let breakPoint: CGFloat = 96 // height of nav bar with expanded title
         let resumePoint: CGFloat = 148 // height of nav bar with expanded title + search bar
 
-        var y: CGFloat
+        var yPosition: CGFloat
 
         if navBarHeight < breakPoint {
-            y = navBarHeight
+            yPosition = navBarHeight
         } else if navBarHeight < resumePoint {
-            y = breakPoint
+            yPosition = breakPoint
         } else {
-            y = navBarHeight - (resumePoint - breakPoint)
+            yPosition = navBarHeight - (resumePoint - breakPoint)
         }
 
-        y -= EateriesViewController.appDevLogoSize
-        y -= bottomOffset
+        yPosition -= EateriesViewController.appDevLogoSize
+        yPosition -= bottomOffset
 
-        return y
+        return yPosition
     }
 
 }

@@ -10,11 +10,15 @@ import UIKit
 
 protocol TabbedPageViewControllerDelegate: AnyObject {
 
-    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
-                                  titleForViewController viewController: UIViewController) -> String?
+    func tabbedPageViewController(
+        _ tabbedPageViewController: TabbedPageViewController,
+        titleForViewController viewController: UIViewController
+    ) -> String?
 
-    func tabbedPageViewController(_ tabbedPageViewController: TabbedPageViewController,
-                                  heightOfContentForViewController viewController: UIViewController) -> CGFloat
+    func tabbedPageViewController(
+        _ tabbedPageViewController: TabbedPageViewController,
+        heightOfContentForViewController viewController: UIViewController
+    ) -> CGFloat
 
 }
 
@@ -28,7 +32,7 @@ class TabbedPageViewController: UIViewController {
     weak var delegate: TabbedPageViewControllerDelegate?
 
     private var currentViewController: UIViewController? {
-        return pageViewController.viewControllers?.first
+        pageViewController.viewControllers?.first
     }
 
     var currentViewControllerIndex: Int? {
@@ -62,9 +66,15 @@ class TabbedPageViewController: UIViewController {
         view.backgroundColor = .white
 
         if viewControllers.count > 1 {
-            let titles = viewControllers.map { delegate?.tabbedPageViewController(self, titleForViewController: $0) ?? "" }
+            let titles = viewControllers.map {
+                delegate?.tabbedPageViewController(self, titleForViewController: $0) ?? ""
+            }
             let tabBar = UnderlineTabBarControl(sections: titles)
-            tabBar.addTarget(self, action: #selector(tabBarControlSelectedSegmentIndexDidChange(_:)), for: .valueChanged)
+            tabBar.addTarget(
+                self,
+                action: #selector(tabBarControlSelectedSegmentIndexDidChange(_:)),
+                for: .valueChanged
+            )
 
             view.addSubview(tabBar)
             tabBar.snp.makeConstraints { make in
@@ -76,9 +86,11 @@ class TabbedPageViewController: UIViewController {
             self.tabBar = tabBar
         }
 
-        pageViewController = UIPageViewController(transitionStyle: .scroll,
-                                                  navigationOrientation: .horizontal,
-                                                  options: nil)
+        pageViewController = UIPageViewController(
+            transitionStyle: .scroll,
+            navigationOrientation: .horizontal,
+            options: nil
+        )
         pageViewController.dataSource = self
         pageViewController.delegate = self
         pageViewController.view.isUserInteractionEnabled = viewControllers.count != 1
@@ -96,15 +108,25 @@ class TabbedPageViewController: UIViewController {
         }
         pageViewController.didMove(toParentViewController: self)
 
-        if !viewControllers.isEmpty {
-            pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false, completion: nil)
-            pageViewController.view.snp.makeConstraints { make in
-                let height = delegate?.tabbedPageViewController(self, heightOfContentForViewController: viewControllers[0]) ?? 0
-                make.height.equalTo(height)
-            }
+        guard let first = viewControllers.first else {
+            return
+        }
+
+        pageViewController.setViewControllers(
+            [first],
+            direction: .forward,
+            animated: false,
+            completion: nil
+        )
+        pageViewController.view.snp.makeConstraints { make in
+            let height = delegate?.tabbedPageViewController(
+                self,
+                heightOfContentForViewController: first
+            ) ?? 0
+            make.height.equalTo(height)
         }
     }
-    
+
     func setPage(forViewControllerAt index: Int) {
         guard let currentIndex = currentViewControllerIndex, index != currentIndex else {
             return
@@ -117,7 +139,12 @@ class TabbedPageViewController: UIViewController {
         // when UIPageViewController.setViewControllers is called when the
         // previous animation did not complete
         // Source: https://stackoverflow.com/a/47878351
-        pageViewController.setViewControllers([viewControllers[index]], direction: direction, animated: false, completion: nil)
+        pageViewController.setViewControllers(
+            [viewControllers[index]],
+            direction: direction,
+            animated: false,
+            completion: nil
+        )
 
         pageViewControllerDidChangeViewController()
     }
@@ -136,7 +163,10 @@ class TabbedPageViewController: UIViewController {
     private func adjustPageViewControllerHeight() {
         pageViewController.view.snp.updateConstraints { make in
             if let viewController = currentViewController {
-                let height = delegate?.tabbedPageViewController(self, heightOfContentForViewController: viewController) ?? 0
+                let height = delegate?.tabbedPageViewController(
+                    self,
+                    heightOfContentForViewController: viewController
+                ) ?? 0
                 make.height.equalTo(height)
             }
         }
@@ -150,16 +180,20 @@ class TabbedPageViewController: UIViewController {
 
 extension TabbedPageViewController: UIPageViewControllerDataSource {
 
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
         if let index = viewControllers.index(of: viewController), index > 0 {
             return viewControllers[index - 1]
         }
         return nil
     }
 
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
         if let index = viewControllers.index(of: viewController), index < viewControllers.count - 1 {
             return viewControllers[index + 1]
         }
@@ -170,10 +204,12 @@ extension TabbedPageViewController: UIPageViewControllerDataSource {
 
 extension TabbedPageViewController: UIPageViewControllerDelegate {
 
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            didFinishAnimating finished: Bool,
-                            previousViewControllers: [UIViewController],
-                            transitionCompleted completed: Bool) {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool
+    ) {
         if completed {
             pageViewControllerDidChangeViewController()
         }
