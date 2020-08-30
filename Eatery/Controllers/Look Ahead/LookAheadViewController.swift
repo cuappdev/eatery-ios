@@ -32,8 +32,8 @@ class LookAheadViewController: UIViewController {
         case lunch
         case dinner
 
-        static func <(lhs: MealChoice, rhs: MealChoice) -> Bool {
-            return lhs.rawValue < rhs.rawValue
+        static func < (lhs: MealChoice, rhs: MealChoice) -> Bool {
+            lhs.rawValue < rhs.rawValue
         }
 
         init?(hour: Int) {
@@ -133,7 +133,7 @@ class LookAheadViewController: UIViewController {
         Calendar.current.date(byAdding: .day, value: $0.rawValue, to: Date()) ?? Date()
     }
     private var selectedDate: Date {
-        return dates[selectedDay.rawValue]
+        dates[selectedDay.rawValue]
     }
 
     // used to prevent table view jitter when recomputing layout
@@ -181,8 +181,14 @@ class LookAheadViewController: UIViewController {
             make.edges.equalToSuperview()
         }
 
-        tableView.register(LookAheadTableViewCell.self, forCellReuseIdentifier: CellIdentifier.eatery.rawValue)
-        tableView.register(LookAheadHeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderIdentifier.header.rawValue)
+        tableView.register(
+            LookAheadTableViewCell.self,
+            forCellReuseIdentifier: CellIdentifier.eatery.rawValue
+        )
+        tableView.register(
+            LookAheadHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: HeaderIdentifier.header.rawValue
+        )
     }
 
     private func setUpFilterView() {
@@ -207,7 +213,7 @@ class LookAheadViewController: UIViewController {
     }
 
     private func queryEateries() {
-        NetworkManager.shared.getCampusEateries(useCachedData: true) { (eateries, error) in
+        NetworkManager.shared.getCampusEateries(useCachedData: true) { (eateries, _) in
             DispatchQueue.main.async(execute: { [weak self] in
                 guard let `self` = self else { return }
 
@@ -241,7 +247,8 @@ class LookAheadViewController: UIViewController {
     private func computeFilterViewPosition() {
         filterView.frame.origin.y = max(
             view.layoutMargins.top - filterView.separatorY,
-            -(tableView.contentOffset.y + filterView.frame.height))
+            -(tableView.contentOffset.y + filterView.frame.height)
+        )
     }
 
 }
@@ -249,15 +256,17 @@ class LookAheadViewController: UIViewController {
 extension LookAheadViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return eateriesByArea.count
+        eateriesByArea.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return eateriesByArea[section].eateries.count
+        eateriesByArea[section].eateries.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.eatery.rawValue) as! LookAheadTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellIdentifier.eatery.rawValue
+        ) as! LookAheadTableViewCell
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
         cell.eateryNameLabel.text = eatery.displayName
@@ -325,7 +334,9 @@ extension LookAheadViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderIdentifier.header.rawValue) as! LookAheadHeaderView
+        let header = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: HeaderIdentifier.header.rawValue
+        ) as! LookAheadHeaderView
         header.titleLabel.text = eateriesByArea[section].area.rawValue
         return header
     }
@@ -338,7 +349,7 @@ extension LookAheadViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
-        guard let _ = findEvent(from: eatery.eventsByName(onDayOf: selectedDate), matching: selectedMeal) else {
+        guard findEvent(from: eatery.eventsByName(onDayOf: selectedDate), matching: selectedMeal) != nil else {
             return
         }
 
@@ -368,7 +379,7 @@ extension LookAheadViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeights[indexPath] ?? UITableViewAutomaticDimension
+        cellHeights[indexPath] ?? UITableViewAutomaticDimension
     }
 
 }
@@ -376,7 +387,8 @@ extension LookAheadViewController: UITableViewDelegate {
 extension LookAheadViewController: FilterEateriesViewDelegate {
 
     func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterDate sender: FilterDateView) {
-        guard let index = filterEateriesView.dateViews.firstIndex(of: sender), let day = DayChoice(rawValue: index) else {
+        guard let index = filterEateriesView.dateViews.firstIndex(of: sender),
+            let day = DayChoice(rawValue: index) else {
             return
         }
 
@@ -384,7 +396,8 @@ extension LookAheadViewController: FilterEateriesViewDelegate {
     }
 
     func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton) {
-        guard let index = filterEateriesView.mealButtons.firstIndex(of: sender), let meal = MealChoice(rawValue: index) else {
+        guard let index = filterEateriesView.mealButtons.firstIndex(of: sender),
+            let meal = MealChoice(rawValue: index) else {
             return
         }
 
