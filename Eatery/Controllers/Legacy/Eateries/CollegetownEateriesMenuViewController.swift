@@ -6,6 +6,8 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+//swiftlint:disable all
+
 import MapKit
 import UIKit
 

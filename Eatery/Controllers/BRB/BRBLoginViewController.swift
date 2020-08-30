@@ -49,7 +49,7 @@ class BRBLoginViewController: UIViewController {
     var isLoading: Bool = false {
         didSet {
             loadViewIfNeeded()
-            
+
             if isLoading {
                 activityIndicator.startAnimating()
             } else {
