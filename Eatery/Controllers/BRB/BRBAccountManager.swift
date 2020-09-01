@@ -222,6 +222,17 @@ class BRBAccountManager {
     }
 
     func queryBRBData(netid: String, password: String) {
+        if netid == "app-store-review", password == "password" {
+            // Process this login as App Store Review logging into Eatery.
+
+            // Slight delay to fake a network request
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+                self?.networkManager(didRetrieve: BRBAccount.fakeAccount)
+                self?.connectionHandler.stage = .finished(sessionId: "App Store Review Session ID")
+            }
+            return
+        }
+
         connectionHandler.netid = netid
         connectionHandler.password = password
         connectionHandler.handleLogin()
@@ -246,15 +257,19 @@ class BRBAccountManager {
             }
 
             if let account = account {
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(account) {
-                    Defaults[\.brbAccountData] = encoded
-                }
-                self.delegate?.brbAccountManager(didQuery: account)
+                self.networkManager(didRetrieve: account)
             } else {
                 self.brbConnectionHandler(didFailWith: "Unable to parse account")
             }
         }
+    }
+
+    private func networkManager(didRetrieve account: BRBAccount) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(account) {
+            Defaults[\.brbAccountData] = encoded
+        }
+        self.delegate?.brbAccountManager(didQuery: account)
     }
 
     fileprivate func brbConnectionHandler(didFailWith error: String) {
