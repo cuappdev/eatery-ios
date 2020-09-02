@@ -14,20 +14,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
-               BuildableName = "Eatery Watch App.app"
-               BlueprintName = "Eatery Watch App"
-               ReferencedContainer = "container:Eatery.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "C007CABE19E1BEAC00E3BD46"
                BuildableName = "Eatery.app"
                BlueprintName = "Eatery"
@@ -41,6 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C007CABE19E1BEAC00E3BD46"
+            BuildableName = "Eatery.app"
+            BlueprintName = "Eatery"
+            ReferencedContainer = "container:Eatery.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -48,25 +43,29 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableASanStackUseAfterReturn = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      notificationPayloadFile = "Eatery Watch App Extension/PushNotificationPayload.apns">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Eatery">
+      allowLocationSimulation = "NO">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
-            BuildableName = "Eatery Watch App.app"
-            BlueprintName = "Eatery Watch App"
+            BlueprintIdentifier = "C007CABE19E1BEAC00E3BD46"
+            BuildableName = "Eatery.app"
+            BlueprintName = "Eatery"
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
+      </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-FIRDebugDisabled"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <LocationScenarioReference
          identifier = "New York, NY, USA"
          referenceType = "1">
@@ -78,27 +77,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Eatery">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
-            BuildableName = "Eatery Watch App.app"
-            BlueprintName = "Eatery Watch App"
+            BlueprintIdentifier = "C007CABE19E1BEAC00E3BD46"
+            BuildableName = "Eatery.app"
+            BlueprintName = "Eatery"
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
-            BuildableName = "Eatery Watch App.app"
-            BlueprintName = "Eatery Watch App"
-            ReferencedContainer = "container:Eatery.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

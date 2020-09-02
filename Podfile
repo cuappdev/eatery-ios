@@ -23,6 +23,7 @@ target 'Eatery' do
     pod 'NVActivityIndicatorView'
     pod 'SnapKit'
     pod 'lottie-ios'
+    pod 'Wormholy', :configurations => ['Debug', 'TestFlight']
 end
 
 target 'Eatery Watch App' do
