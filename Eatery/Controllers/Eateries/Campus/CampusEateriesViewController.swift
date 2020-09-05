@@ -148,8 +148,6 @@ class CampusEateriesViewController: EateriesViewController {
             searchController.showsSearchResultsController = true
         }
 
-        navigationItem.searchController = searchController
-
         let searchBar = searchController.searchBar
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
