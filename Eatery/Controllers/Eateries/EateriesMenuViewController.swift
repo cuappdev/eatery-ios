@@ -69,6 +69,14 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         setUpStackView()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.menuHeaderView.exceptionsView.alpha = 1
+        }
+    }
+
     private func setUpImageView() {
         imageView.hero.id = EateriesViewController.AnimationKey.backgroundImageView.id(eatery: eatery)
 
@@ -91,6 +99,8 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         menuHeaderView.paymentHero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
 
         menuHeaderView.favoriteHero.modifiers = createHeroModifiers(.fade)
+
+        menuHeaderView.exceptionsView.alpha = 0
     }
 
     private func setUpStackView() {

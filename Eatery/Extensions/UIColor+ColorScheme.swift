@@ -10,6 +10,14 @@ import UIKit
 
 extension UIColor {
 
+    convenience init(hex: Int) {
+        let red = CGFloat((hex & 0xFF0000) >> 16) / 255
+        let green = CGFloat((hex & 0xFF00) >> 8) / 255
+        let blue = CGFloat(hex & 0xFF) / 255
+
+        self.init(red: red, green: green, blue: blue, alpha: 1)
+    }
+
     class func colorFromCode(_ code: Int) -> UIColor {
         let red = CGFloat((code & 0xFF0000) >> 16) / 255
         let green = CGFloat((code & 0xFF00) >> 8) / 255

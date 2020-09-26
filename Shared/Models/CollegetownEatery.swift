@@ -61,6 +61,8 @@ struct CollegetownEatery: Eatery {
 
     let categories: [String]
 
+    let exceptions: [String] = []
+
     init(
         id: Int,
         name: String,

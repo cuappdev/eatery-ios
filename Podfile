@@ -35,3 +35,10 @@ target 'Eatery Watch App Extension' do
     platform :watchos, '6.0'
     shared_pods
 end
+
+# https://stackoverflow.com/questions/63607158/xcode-12-building-for-ios-simulator-but-linking-in-object-file-built-for-ios
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+  end
+end

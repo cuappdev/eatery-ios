@@ -157,7 +157,8 @@ struct NetworkManager {
                     slug: eatery.slug,
                     events: eventItems,
                     diningMenu: diningItems,
-                    swipeDataPoints: swipeDataPoints)
+                    swipeDataPoints: swipeDataPoints,
+                    exceptions: [])
             }
 
             completion(finalEateries, nil)

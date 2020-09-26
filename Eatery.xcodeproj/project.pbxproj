@@ -104,6 +104,7 @@
 		5DBD658823C7A1930070EA1F /* Color+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBD658723C7A1930070EA1F /* Color+ColorScheme.swift */; };
 		5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC06B7921FE36020043701A /* PaymentMethodsView.swift */; };
 		5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */; };
+		5DC37327251ECC020001DC1C /* EateryExceptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC37326251ECC010001DC1C /* EateryExceptionsView.swift */; };
 		5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */; };
 		5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */; };
 		5DC7CB3A236A3F79005C57DB /* CollegetownMenuInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */; };
@@ -313,6 +314,7 @@
 		5DBD658723C7A1930070EA1F /* Color+ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ColorScheme.swift"; sourceTree = "<group>"; };
 		5DC06B7921FE36020043701A /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
 		5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = collegetownEateries.graphql; sourceTree = "<group>"; };
+		5DC37326251ECC010001DC1C /* EateryExceptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryExceptionsView.swift; sourceTree = "<group>"; };
 		5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesMenuViewController.swift; sourceTree = "<group>"; };
 		5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownMenuViewController.swift; sourceTree = "<group>"; };
 		5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownMenuInfoView.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 				5DB4677D234FFC37005CE574 /* HistogramView.swift */,
 				5D10358223E9E69B002EBE90 /* HoursThisWeekView.swift */,
 				5D5B8CC02450F1B2004E05EF /* SearchResultsTableViewCell.swift */,
+				5DC37326251ECC010001DC1C /* EateryExceptionsView.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -1017,7 +1020,7 @@
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1160;
-				ORGANIZATIONNAME = CUAppDev;
+				ORGANIZATIONNAME = "Cornell AppDev";
 				TargetAttributes = {
 					5D05FF3123C2C14400EF8CC9 = {
 						CreatedOnToolsVersion = 11.3;
@@ -1391,6 +1394,7 @@
 				C82E5F062388E96400C881B2 /* OnboardingLoginViewController.swift in Sources */,
 				5D0D8E0F223B286D001ADB85 /* EateriesFailedToLoadView.swift in Sources */,
 				5DF17731231C471C00194D14 /* BRBAccountViewController.swift in Sources */,
+				5DC37327251ECC020001DC1C /* EateryExceptionsView.swift in Sources */,
 				C82E5F042388E96400C881B2 /* OnboardingInfoViewController.swift in Sources */,
 				5DD59DD2244B7DF400F6FC36 /* CampusEateriesSearchViewController.swift in Sources */,
 				87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */,
@@ -1518,6 +1522,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Eatery Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1584,6 +1590,8 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1628,6 +1636,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1694,6 +1704,8 @@
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1788,6 +1800,8 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1823,6 +1837,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1863,6 +1879,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Eatery Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1953,6 +1971,8 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2033,6 +2053,8 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Eatery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

@@ -17,14 +17,17 @@ protocol EateryMenuHeaderViewDelegate: AnyObject {
 
 class EateryMenuHeaderView: UIView {
 
+    let exceptionsView = EateryExceptionsView()
+    var exceptionsHero: HeroExtension<EateryExceptionsView> { exceptionsView.hero }
+
     private let titleLabel = UILabel()
-    var titleHero: HeroExtension<UILabel> { return titleLabel.hero }
+    var titleHero: HeroExtension<UILabel> { titleLabel.hero }
 
     private let favoriteButton = UIButton()
-    var favoriteHero: HeroExtension<UIButton> { return favoriteButton.hero }
+    var favoriteHero: HeroExtension<UIButton> { favoriteButton.hero }
 
     private let paymentView = PaymentMethodsView()
-    var paymentHero: HeroExtension<PaymentMethodsView> { return paymentView.hero }
+    var paymentHero: HeroExtension<PaymentMethodsView> { paymentView.hero }
 
     weak var delegate: EateryMenuHeaderViewDelegate?
 
@@ -39,6 +42,13 @@ class EateryMenuHeaderView: UIView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.leading.bottom.equalToSuperview().inset(16)
+        }
+
+        exceptionsView.isOpaque = false
+        addSubview(exceptionsView)
+        exceptionsView.snp.makeConstraints { make in
+            make.leading.equalTo(titleLabel)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-4)
         }
 
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: .normal)
@@ -64,27 +74,65 @@ class EateryMenuHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configure(title: String,
-                   status: EateryStatus,
-                   isFavorite: Bool,
-                   paymentMethods: [PaymentMethod]) {
+    private func configure(
+        title: String,
+        status: EateryStatus,
+        isFavorite: Bool,
+        paymentMethods: [PaymentMethod],
+        exceptions: [String]
+    ) {
         titleLabel.text = title
         switch status {
         case .open, .closingSoon: titleLabel.textColor = .white
         case .closed, .openingSoon: titleLabel.textColor = .lightGray
         }
 
-        favoriteButton.setImage(UIImage(named: isFavorite ? "goldStar" : "whiteStar"),
-                                for: .normal)
+        favoriteButton.setImage(
+            UIImage(named: isFavorite ? "goldStar" : "whiteStar"),
+            for: .normal
+        )
 
         paymentView.paymentMethods = paymentMethods
+
+        if let exception = exceptions.first {
+            exceptionsView.isHidden = false
+
+            switch exception {
+            case "Cash Only After 3PM":
+                exceptionsView.configure(
+                    color: UIColor(hex: 0xFEC50E),
+                    exception: exception,
+                    image: UIImage(named: "warning")
+                )
+
+            case "Mobile Order Only":
+                exceptionsView.configure(
+                    color: UIColor(hex: 0x4A90E2),
+                    exception: exception,
+                    image: UIImage(named: "phone")
+                )
+
+            default:
+                exceptionsView.configure(
+                    color: UIColor(hex: 0xFEC50E),
+                    exception: exception,
+                    image: UIImage(named: "warning")
+                )
+            }
+
+        } else {
+            exceptionsView.isHidden = true
+        }
     }
 
     func configure(eatery: Eatery) {
-        configure(title: eatery.displayName,
-                  status: eatery.currentStatus(),
-                  isFavorite: eatery.isFavorite,
-                  paymentMethods: eatery.paymentMethods)
+        configure(
+            title: eatery.displayName,
+            status: eatery.currentStatus(),
+            isFavorite: eatery.isFavorite,
+            paymentMethods: eatery.paymentMethods,
+            exceptions: eatery.exceptions
+        )
     }
 
     @objc private func favoriteButtonPressed(_ sender: UIButton) {

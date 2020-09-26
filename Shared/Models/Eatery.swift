@@ -105,6 +105,8 @@ protocol Eatery {
 
     var allEvents: [Event] { get }
 
+    var exceptions: [String] { get }
+
 }
 
 extension Eatery {

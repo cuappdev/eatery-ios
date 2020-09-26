@@ -105,7 +105,9 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
 
     /// A menu of constant dining items. Exists if this eatery's menu
     /// never changes.
-    var diningMenu: Menu?
+    let diningMenu: Menu?
+
+    let exceptions: [String]
 
     init(
         id: Int,
@@ -121,7 +123,8 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         slug: String,
         events: [String: [String: Event]],
         diningMenu: [String : [Menu.Item]]?,
-        swipeDataPoints: [SwipeDataPoint]) {
+        swipeDataPoints: [SwipeDataPoint],
+        exceptions: [String]) {
 
         self.id = id
         self.name = name
@@ -148,6 +151,8 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         self.swipeDataByHour = swipeDataPoints.reduce(into: [:], { (swipeDataByHour, point) in
             swipeDataByHour[point.militaryHour, default: []].insert(point)
         })
+
+        self.exceptions = exceptions
     }
 
     func diningItems(onDayOf date: Date) -> [Menu.Item] {
