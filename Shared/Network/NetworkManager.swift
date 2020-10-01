@@ -39,11 +39,14 @@ struct NetworkManager {
         apollo.fetch(
             query: CampusEateriesQuery(),
             cachePolicy: useCachedData ? .returnCacheDataElseFetch : .fetchIgnoringCacheData
-        ) { (result, error) in
-            guard error == nil else { completion(nil, NetworkError(message: error?.localizedDescription ?? "")); return }
+        ) { result in
+            if case let .failure(error) = result {
+                completion(nil, NetworkError(message: error.localizedDescription))
+                return
+            }
 
-            guard let result = result,
-                let data = result.data,
+            guard case let .success(graphQlData) = result,
+                let data = graphQlData.data,
                 let eateriesArray = data.campusEateries else {
                     completion(nil, NetworkError(message: "Could not parse response"))
                     return
@@ -164,14 +167,14 @@ struct NetworkManager {
     #if os(iOS)
 
     func getBRBAccountInfo(sessionId: String, completion: @escaping (BRBAccount?, NetworkError?) -> Void) {
-        apollo.fetch(query: BrbInfoQuery(accountId: sessionId), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            guard error == nil else {
-                completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
+        apollo.fetch(query: BrbInfoQuery(accountId: sessionId), cachePolicy: .fetchIgnoringCacheData) { result in
+            if case let .failure(error) = result {
+                completion(nil, NetworkError(message: error.localizedDescription))
                 return
             }
 
-            guard let result = result,
-                let data = result.data,
+            guard case let .success(graphQlData) = result,
+                let data = graphQlData.data,
                 let accountInfo = data.accountInfo else {
                     completion(nil, NetworkError(message: "could not safely unwrap response"))
                     return
@@ -188,14 +191,14 @@ struct NetworkManager {
     }
 
     func getCollegetownEateries(completion: @escaping ([CollegetownEatery]?, NetworkError?) -> Void) {
-        apollo.fetch(query: CollegetownEateriesQuery(), cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            guard error == nil else {
-                completion(nil, NetworkError(message: error?.localizedDescription ?? ""))
+        apollo.fetch(query: CollegetownEateriesQuery(), cachePolicy: .fetchIgnoringCacheData) { result in
+            if case let .failure(error) = result {
+                completion(nil, NetworkError(message: error.localizedDescription))
                 return
             }
 
-            guard let result = result,
-                let data = result.data,
+            guard case let .success(graphQlData) = result,
+                let data = graphQlData.data,
                 let graphQlEateries = data.collegetownEateries?.compactMap({ $0 }) else {
                     completion(nil, NetworkError(message: "Could not parse response"))
                     return

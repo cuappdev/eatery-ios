@@ -1,20 +1,87 @@
+// @generated
 //  This file was automatically generated and should not be edited.
 
 import Apollo
+import Foundation
 
 public final class CampusEateriesQuery: GraphQLQuery {
-  public let operationDefinition =
-    "query CampusEateries {\n  campusEateries {\n    __typename\n    id\n    name\n    nameShort\n    slug\n    eateryType\n    about\n    phone\n    location\n    campusArea {\n      __typename\n      descriptionShort\n    }\n    paymentMethods {\n      __typename\n      swipes\n      brbs\n      cash\n      credit\n      cornellCard\n      mobile\n    }\n    swipeData {\n      __typename\n      startTime\n      endTime\n      swipeDensity\n      waitTimeLow\n      waitTimeHigh\n    }\n    coordinates {\n      __typename\n      latitude\n      longitude\n    }\n    operatingHours {\n      __typename\n      date\n      events {\n        __typename\n        startTime\n        endTime\n        description\n        calSummary\n        menu {\n          __typename\n          category\n          items {\n            __typename\n            item\n            healthy\n          }\n        }\n      }\n    }\n  }\n}"
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    query CampusEateries {
+      campusEateries {
+        __typename
+        id
+        name
+        nameShort
+        slug
+        eateryType
+        about
+        phone
+        location
+        campusArea {
+          __typename
+          descriptionShort
+        }
+        paymentMethods {
+          __typename
+          swipes
+          brbs
+          cash
+          credit
+          cornellCard
+          mobile
+        }
+        swipeData {
+          __typename
+          startTime
+          endTime
+          swipeDensity
+          waitTimeLow
+          waitTimeHigh
+        }
+        coordinates {
+          __typename
+          latitude
+          longitude
+        }
+        operatingHours {
+          __typename
+          date
+          events {
+            __typename
+            startTime
+            endTime
+            description
+            calSummary
+            menu {
+              __typename
+              category
+              items {
+                __typename
+                item
+                healthy
+              }
+            }
+          }
+        }
+      }
+    }
+    """
+
+  public let operationName: String = "CampusEateries"
 
   public init() {
   }
 
   public struct Data: GraphQLSelectionSet {
-    public static let possibleTypes = ["Query"]
+    public static let possibleTypes: [String] = ["Query"]
 
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("campusEateries", type: .list(.object(CampusEatery.selections))),
-    ]
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("campusEateries", type: .list(.object(CampusEatery.selections))),
+      ]
+    }
 
     public private(set) var resultMap: ResultMap
 
@@ -36,24 +103,26 @@ public final class CampusEateriesQuery: GraphQLQuery {
     }
 
     public struct CampusEatery: GraphQLSelectionSet {
-      public static let possibleTypes = ["CampusEateryType"]
+      public static let possibleTypes: [String] = ["CampusEateryType"]
 
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("id", type: .nonNull(.scalar(Int.self))),
-        GraphQLField("name", type: .nonNull(.scalar(String.self))),
-        GraphQLField("nameShort", type: .nonNull(.scalar(String.self))),
-        GraphQLField("slug", type: .nonNull(.scalar(String.self))),
-        GraphQLField("eateryType", type: .nonNull(.scalar(String.self))),
-        GraphQLField("about", type: .nonNull(.scalar(String.self))),
-        GraphQLField("phone", type: .nonNull(.scalar(String.self))),
-        GraphQLField("location", type: .nonNull(.scalar(String.self))),
-        GraphQLField("campusArea", type: .nonNull(.object(CampusArea.selections))),
-        GraphQLField("paymentMethods", type: .nonNull(.object(PaymentMethod.selections))),
-        GraphQLField("swipeData", type: .nonNull(.list(.object(SwipeDatum.selections)))),
-        GraphQLField("coordinates", type: .nonNull(.object(Coordinate.selections))),
-        GraphQLField("operatingHours", type: .nonNull(.list(.object(OperatingHour.selections)))),
-      ]
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          GraphQLField("nameShort", type: .nonNull(.scalar(String.self))),
+          GraphQLField("slug", type: .nonNull(.scalar(String.self))),
+          GraphQLField("eateryType", type: .nonNull(.scalar(String.self))),
+          GraphQLField("about", type: .nonNull(.scalar(String.self))),
+          GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+          GraphQLField("location", type: .nonNull(.scalar(String.self))),
+          GraphQLField("campusArea", type: .nonNull(.object(CampusArea.selections))),
+          GraphQLField("paymentMethods", type: .nonNull(.object(PaymentMethod.selections))),
+          GraphQLField("swipeData", type: .nonNull(.list(.object(SwipeDatum.selections)))),
+          GraphQLField("coordinates", type: .nonNull(.object(Coordinate.selections))),
+          GraphQLField("operatingHours", type: .nonNull(.list(.object(OperatingHour.selections)))),
+        ]
+      }
 
       public private(set) var resultMap: ResultMap
 
@@ -192,12 +261,14 @@ public final class CampusEateriesQuery: GraphQLQuery {
       }
 
       public struct CampusArea: GraphQLSelectionSet {
-        public static let possibleTypes = ["CampusAreaType"]
+        public static let possibleTypes: [String] = ["CampusAreaType"]
 
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("descriptionShort", type: .nonNull(.scalar(String.self))),
-        ]
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("descriptionShort", type: .nonNull(.scalar(String.self))),
+          ]
+        }
 
         public private(set) var resultMap: ResultMap
 
@@ -229,17 +300,19 @@ public final class CampusEateriesQuery: GraphQLQuery {
       }
 
       public struct PaymentMethod: GraphQLSelectionSet {
-        public static let possibleTypes = ["PaymentMethodsType"]
+        public static let possibleTypes: [String] = ["PaymentMethodsType"]
 
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("swipes", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("brbs", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("cash", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("credit", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("cornellCard", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("mobile", type: .nonNull(.scalar(Bool.self))),
-        ]
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("swipes", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("brbs", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("cash", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("credit", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("cornellCard", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("mobile", type: .nonNull(.scalar(Bool.self))),
+          ]
+        }
 
         public private(set) var resultMap: ResultMap
 
@@ -316,16 +389,18 @@ public final class CampusEateriesQuery: GraphQLQuery {
       }
 
       public struct SwipeDatum: GraphQLSelectionSet {
-        public static let possibleTypes = ["SwipeDataType"]
+        public static let possibleTypes: [String] = ["SwipeDataType"]
 
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("startTime", type: .nonNull(.scalar(String.self))),
-          GraphQLField("endTime", type: .nonNull(.scalar(String.self))),
-          GraphQLField("swipeDensity", type: .nonNull(.scalar(Double.self))),
-          GraphQLField("waitTimeLow", type: .nonNull(.scalar(Int.self))),
-          GraphQLField("waitTimeHigh", type: .nonNull(.scalar(Int.self))),
-        ]
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("startTime", type: .nonNull(.scalar(String.self))),
+            GraphQLField("endTime", type: .nonNull(.scalar(String.self))),
+            GraphQLField("swipeDensity", type: .nonNull(.scalar(Double.self))),
+            GraphQLField("waitTimeLow", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("waitTimeHigh", type: .nonNull(.scalar(Int.self))),
+          ]
+        }
 
         public private(set) var resultMap: ResultMap
 
@@ -393,13 +468,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
       }
 
       public struct Coordinate: GraphQLSelectionSet {
-        public static let possibleTypes = ["CoordinatesType"]
+        public static let possibleTypes: [String] = ["CoordinatesType"]
 
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("latitude", type: .nonNull(.scalar(Double.self))),
-          GraphQLField("longitude", type: .nonNull(.scalar(Double.self))),
-        ]
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("latitude", type: .nonNull(.scalar(Double.self))),
+            GraphQLField("longitude", type: .nonNull(.scalar(Double.self))),
+          ]
+        }
 
         public private(set) var resultMap: ResultMap
 
@@ -440,13 +517,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
       }
 
       public struct OperatingHour: GraphQLSelectionSet {
-        public static let possibleTypes = ["OperatingHoursType"]
+        public static let possibleTypes: [String] = ["OperatingHoursType"]
 
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("date", type: .nonNull(.scalar(String.self))),
-          GraphQLField("events", type: .nonNull(.list(.object(Event.selections)))),
-        ]
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("date", type: .nonNull(.scalar(String.self))),
+            GraphQLField("events", type: .nonNull(.list(.object(Event.selections)))),
+          ]
+        }
 
         public private(set) var resultMap: ResultMap
 
@@ -486,16 +565,18 @@ public final class CampusEateriesQuery: GraphQLQuery {
         }
 
         public struct Event: GraphQLSelectionSet {
-          public static let possibleTypes = ["EventType"]
+          public static let possibleTypes: [String] = ["EventType"]
 
-          public static let selections: [GraphQLSelection] = [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("startTime", type: .nonNull(.scalar(String.self))),
-            GraphQLField("endTime", type: .nonNull(.scalar(String.self))),
-            GraphQLField("description", type: .nonNull(.scalar(String.self))),
-            GraphQLField("calSummary", type: .nonNull(.scalar(String.self))),
-            GraphQLField("menu", type: .nonNull(.list(.object(Menu.selections)))),
-          ]
+          public static var selections: [GraphQLSelection] {
+            return [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("startTime", type: .nonNull(.scalar(String.self))),
+              GraphQLField("endTime", type: .nonNull(.scalar(String.self))),
+              GraphQLField("description", type: .nonNull(.scalar(String.self))),
+              GraphQLField("calSummary", type: .nonNull(.scalar(String.self))),
+              GraphQLField("menu", type: .nonNull(.list(.object(Menu.selections)))),
+            ]
+          }
 
           public private(set) var resultMap: ResultMap
 
@@ -562,13 +643,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
           }
 
           public struct Menu: GraphQLSelectionSet {
-            public static let possibleTypes = ["FoodStationType"]
+            public static let possibleTypes: [String] = ["FoodStationType"]
 
-            public static let selections: [GraphQLSelection] = [
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("category", type: .nonNull(.scalar(String.self))),
-              GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
-            ]
+            public static var selections: [GraphQLSelection] {
+              return [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("category", type: .nonNull(.scalar(String.self))),
+                GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+              ]
+            }
 
             public private(set) var resultMap: ResultMap
 
@@ -608,13 +691,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
             }
 
             public struct Item: GraphQLSelectionSet {
-              public static let possibleTypes = ["FoodItemType"]
+              public static let possibleTypes: [String] = ["FoodItemType"]
 
-              public static let selections: [GraphQLSelection] = [
-                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("item", type: .nonNull(.scalar(String.self))),
-                GraphQLField("healthy", type: .nonNull(.scalar(Bool.self))),
-              ]
+              public static var selections: [GraphQLSelection] {
+                return [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("item", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("healthy", type: .nonNull(.scalar(Bool.self))),
+                ]
+              }
 
               public private(set) var resultMap: ResultMap
 
