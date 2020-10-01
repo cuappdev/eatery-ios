@@ -158,7 +158,7 @@ struct NetworkManager {
                     events: eventItems,
                     diningMenu: diningItems,
                     swipeDataPoints: swipeDataPoints,
-                    exceptions: [])
+                    exceptions: eatery.exceptions.compactMap { $0 })
             }
 
             completion(finalEateries, nil)

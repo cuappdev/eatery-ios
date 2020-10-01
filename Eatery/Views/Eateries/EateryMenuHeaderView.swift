@@ -49,6 +49,7 @@ class EateryMenuHeaderView: UIView {
         exceptionsView.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel)
             make.bottom.equalTo(titleLabel.snp.top).offset(-4)
+            make.trailing.lessThanOrEqualToSuperview().inset(16)
         }
 
         favoriteButton.setImage(UIImage(named: "whiteStar"), for: .normal)
