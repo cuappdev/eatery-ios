@@ -19,6 +19,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
         about
         phone
         location
+        exceptions
         campusArea {
           __typename
           descriptionShort
@@ -116,6 +117,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
           GraphQLField("about", type: .nonNull(.scalar(String.self))),
           GraphQLField("phone", type: .nonNull(.scalar(String.self))),
           GraphQLField("location", type: .nonNull(.scalar(String.self))),
+          GraphQLField("exceptions", type: .nonNull(.list(.scalar(String.self)))),
           GraphQLField("campusArea", type: .nonNull(.object(CampusArea.selections))),
           GraphQLField("paymentMethods", type: .nonNull(.object(PaymentMethod.selections))),
           GraphQLField("swipeData", type: .nonNull(.list(.object(SwipeDatum.selections)))),
@@ -130,8 +132,8 @@ public final class CampusEateriesQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: Int, name: String, nameShort: String, slug: String, eateryType: String, about: String, phone: String, location: String, campusArea: CampusArea, paymentMethods: PaymentMethod, swipeData: [SwipeDatum?], coordinates: Coordinate, operatingHours: [OperatingHour?]) {
-        self.init(unsafeResultMap: ["__typename": "CampusEateryType", "id": id, "name": name, "nameShort": nameShort, "slug": slug, "eateryType": eateryType, "about": about, "phone": phone, "location": location, "campusArea": campusArea.resultMap, "paymentMethods": paymentMethods.resultMap, "swipeData": swipeData.map { (value: SwipeDatum?) -> ResultMap? in value.flatMap { (value: SwipeDatum) -> ResultMap in value.resultMap } }, "coordinates": coordinates.resultMap, "operatingHours": operatingHours.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }])
+      public init(id: Int, name: String, nameShort: String, slug: String, eateryType: String, about: String, phone: String, location: String, exceptions: [String?], campusArea: CampusArea, paymentMethods: PaymentMethod, swipeData: [SwipeDatum?], coordinates: Coordinate, operatingHours: [OperatingHour?]) {
+        self.init(unsafeResultMap: ["__typename": "CampusEateryType", "id": id, "name": name, "nameShort": nameShort, "slug": slug, "eateryType": eateryType, "about": about, "phone": phone, "location": location, "exceptions": exceptions, "campusArea": campusArea.resultMap, "paymentMethods": paymentMethods.resultMap, "swipeData": swipeData.map { (value: SwipeDatum?) -> ResultMap? in value.flatMap { (value: SwipeDatum) -> ResultMap in value.resultMap } }, "coordinates": coordinates.resultMap, "operatingHours": operatingHours.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }])
       }
 
       public var __typename: String {
@@ -212,6 +214,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "location")
+        }
+      }
+
+      public var exceptions: [String?] {
+        get {
+          return resultMap["exceptions"]! as! [String?]
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "exceptions")
         }
       }
 
