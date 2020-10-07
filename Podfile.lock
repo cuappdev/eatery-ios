@@ -149,7 +149,7 @@ SPEC CHECKSUMS:
   ARCL: db48b6927d6f3f49f29568295ed91c94ab8d4aab
   BulletinBoard: 1c0cb191b6c6245d08f51bd2445f1e36414ec0ed
   CHIPageControl: a787bf7205c9b7e7fbfc412be36c5e8636b68f86
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: 658370fa0181826a74b7cfca8d68c5856ca749ae
   FirebaseAnalytics: 0ca9aa2af7cc4dc92392b7a78bfc49feaa2eb60f
   FirebaseCore: 6fb954e350af0885803d5aa49865d15d9a6b264c
