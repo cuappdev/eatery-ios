@@ -993,6 +993,7 @@
 			buildPhases = (
 				E78631FC014922E867F30913 /* [CP] Check Pods Manifest.lock */,
 				5D854A8521AF85A00067F745 /* [Apollo] Build Apollo */,
+				5DCE4A012533E6F90025D7BE /* [SwiftLint] */,
 				C007CABB19E1BEAC00E3BD46 /* Sources */,
 				C007CABC19E1BEAC00E3BD46 /* Frameworks */,
 				C007CABD19E1BEAC00E3BD46 /* Resources */,
@@ -1288,6 +1289,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Slightly modified version of https://blog.curtisherbert.com/automated-build-numbers/\n# This script sets the build number of Info.plist inside of derived data\n# to avoid unnecessary source changes. Note there are multiple copies of \n# this script: one for each target. If you decide to change the script, \n# make sure to change it in all places.\n\nbuild_number=$(git rev-list HEAD | wc -l | tr -d ' ')\n\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\ndsym_plist=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$plist\"\nif [ -f \"$DSYM_INFO_PLIST\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $build_number\" \"$dsym_plist\"\nfi\n";
+		};
+		5DCE4A012533E6F90025D7BE /* [SwiftLint] */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[SwiftLint]";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nswiftlint lint\n";
 		};
 		9DEA07504979C55F42669623 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
