@@ -37,11 +37,13 @@ class SearchResultsTableViewCell: UITableViewCell {
             if isFavorite {
                 favoriteButton.setImage(
                     UIImage(named: "goldStar")?.withRenderingMode(.alwaysOriginal),
-                    for: .normal)
+                    for: .normal
+                )
             } else {
                 favoriteButton.setImage(
                     UIImage(named: "whiteStar")?.withRenderingMode(.alwaysTemplate),
-                    for: .normal)
+                    for: .normal
+                )
                 favoriteButton.tintColor = .separator
             }
         } else {

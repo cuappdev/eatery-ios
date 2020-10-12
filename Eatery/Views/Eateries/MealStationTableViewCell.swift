@@ -15,7 +15,7 @@ class MealStationTableViewCell: UITableViewCell {
 
     private var collapseTitleLabelConstraint: Constraint?
     var titleCollapsed: Bool {
-        get { return collapseTitleLabelConstraint?.isActive ?? false }
+        get { collapseTitleLabelConstraint?.isActive ?? false }
         set { collapseTitleLabelConstraint?.isActive = newValue }
     }
 

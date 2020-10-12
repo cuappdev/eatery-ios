@@ -248,7 +248,7 @@ extension PopularTimesView: HistogramViewDataSource {
 
     // Overflowed military hour is a time between 0...47
     private func containOverflowedMilitaryHour(hour: Int) -> Int {
-        return (hour >= 24) ? hour - 24 : hour
+        (hour >= 24) ? hour - 24 : hour
     }
 
     private func formattedHourForTime(militaryHour: Int) -> String {
@@ -266,11 +266,11 @@ extension PopularTimesView: HistogramViewDataSource {
     }
 
     func numberOfDataPoints(for histogramView: HistogramView) -> Int {
-        return overflowedEndHour - startHour
+        overflowedEndHour - startHour
     }
 
     func histogramView(_ histogramView: HistogramView, relativeValueOfDataPointAt index: Int) -> Double {
-        return eatery.swipeDensity(for: containOverflowedMilitaryHour(hour: startHour + index))
+        eatery.swipeDensity(for: containOverflowedMilitaryHour(hour: startHour + index))
     }
 
     func histogramView(_ histogramView: HistogramView, descriptionForDataPointAt index: Int) -> NSAttributedString? {
@@ -280,7 +280,10 @@ extension PopularTimesView: HistogramViewDataSource {
         if let (low: lowEstimate, high: highEstimate) = eatery.waitTimes(atHour: barHour, minute: 0) {
             let waitTimesText = "\(lowEstimate)-\(highEstimate)m"
 
-            let hourText = currentHour == barHour ? "Now: " : formattedHourForTime(militaryHour: barHour).appending(": ")
+            let hourText =
+                currentHour == barHour
+                ? "Now: "
+                : formattedHourForTime(militaryHour: barHour).appending(": ")
 
             let labelText = "\(hourText)\(waitTimesText) wait"
 
@@ -289,8 +292,9 @@ extension PopularTimesView: HistogramViewDataSource {
                 attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium)]
             )
             string.addAttributes(
-                [NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
-                 NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)
+                [
+                    NSAttributedStringKey.foregroundColor: UIColor.eateryBlue,
+                    NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)
                 ],
                 range: NSRange(location: hourText.count, length: waitTimesText.count)
             )
@@ -307,7 +311,7 @@ extension PopularTimesView: HistogramViewDataSource {
     }
 
     func numberOfDataPointsPerTickMark(for histogramView: HistogramView) -> Int? {
-        return 3
+        3
     }
 
     func histogramView(_ histogramView: HistogramView, titleForTickMarkAt index: Int) -> String? {
@@ -319,8 +323,10 @@ extension PopularTimesView: HistogramViewDataSource {
 
 extension PopularTimesView: PopularTimesAccuracyPromptDelegate {
 
-    func popularTimesAccuracyPrompt(_ popularTimesAccuracyPrompt: PopularTimesAccuracyPrompt,
-                                    didReceiveUserResponse userResponse: PopularTimesAccuracyPrompt.UserResponse) {
+    func popularTimesAccuracyPrompt(
+        _ popularTimesAccuracyPrompt: PopularTimesAccuracyPrompt,
+        didReceiveUserResponse userResponse: PopularTimesAccuracyPrompt.UserResponse
+    ) {
         let level: PopularTimesResponse.Level
         switch userResponse {
         case .lessThanFiveMinutes: level = .low

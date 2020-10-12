@@ -54,11 +54,10 @@ enum EateryStatus {
 
     static func equalsIgnoreAssociatedValue(_ lhs: EateryStatus, rhs: EateryStatus) -> Bool {
         switch (lhs, rhs) {
-        case (.openingSoon, .openingSoon),
-             (.open, .open),
-             (.closingSoon, .closingSoon),
-             (.closed, .closed): return true
-        default: return false
+        case (.openingSoon, .openingSoon), (.open, .open), (.closingSoon, .closingSoon), (.closed, .closed):
+            return true
+        default:
+            return false
         }
     }
 
@@ -112,7 +111,7 @@ protocol Eatery {
 extension Eatery {
 
     var location: CLLocation {
-        return CLLocation(latitude: latitude, longitude: longitude)
+        CLLocation(latitude: latitude, longitude: longitude)
     }
 
 }
@@ -132,14 +131,14 @@ extension Eatery {
     /// The event at an exact date and time, or nil if such an event does not
     /// exist.
     func event(atExactly date: Date) -> Event? {
-        return allEvents.first { $0.dateInterval.contains(date) }
+        allEvents.first { $0.dateInterval.contains(date) }
     }
 
     /// The events that happen within the specified time interval, regardless of
     /// the day the event occurs on
     /// i.e. events that are active for any amount of time during the interval.
     func events(in dateInterval: DateInterval) -> [Event] {
-        return allEvents.filter { dateInterval.intersects($0.dateInterval) }
+        allEvents.filter { dateInterval.intersects($0.dateInterval) }
     }
 
     /// The events by name that occur on the specified day
@@ -153,25 +152,23 @@ extension Eatery {
     func eventsByDay(withName name: String) -> [DayString: Event] {
         var eventsByDay: [DayString: Event] = [:]
         for (dayString, eventsByName) in events {
-            for (eventName, event) in eventsByName {
-                if eventName == name {
-                    eventsByDay[dayString] = event
-                }
+            for (eventName, event) in eventsByName where eventName == name {
+                eventsByDay[dayString] = event
             }
         }
         return eventsByDay
     }
 
     func isOpen(onDayOf date: Date) -> Bool {
-        return !eventsByName(onDayOf: date).isEmpty
+        !eventsByName(onDayOf: date).isEmpty
     }
 
     func isOpenToday() -> Bool {
-        return isOpen(onDayOf: Date())
+        isOpen(onDayOf: Date())
     }
 
     func isOpen(atExactly date: Date) -> Bool {
-        return event(atExactly: date) != nil
+        event(atExactly: date) != nil
     }
 
     /// The next event if the eatery is closed, or the current event if the eatery is open
@@ -186,7 +183,8 @@ extension Eatery {
             .filter {
                 // disregard events that are not currently happening or that have happened in the past
                 $0.occurs(atExactly: date) || date < $0.start
-        }.min { (lhs, rhs) -> Bool in
+            }
+            .min { (lhs, rhs) -> Bool in
             if lhs.occurs(atExactly: date) {
                 return true
             } else if rhs.occurs(atExactly: date) {
@@ -196,11 +194,11 @@ extension Eatery {
             let timeUntilLeftStart = lhs.start.timeIntervalSince(date)
             let timeUntilRightStart = rhs.start.timeIntervalSince(date)
             return timeUntilLeftStart < timeUntilRightStart
-        }
+            }
     }
 
     func currentActiveEvent() -> Event? {
-        return activeEvent(atExactly: Date())
+        activeEvent(atExactly: Date())
     }
 
     func status(onDayOf date: Date) -> EateryStatus {
@@ -233,7 +231,7 @@ extension Eatery {
     }
 
     func currentStatus() -> EateryStatus {
-        return status(onDayOf: Date())
+        status(onDayOf: Date())
     }
 
 }
@@ -261,7 +259,8 @@ extension Eatery {
 
 extension NSNotification.Name {
 
-    static let eateryIsFavoriteDidChange = NSNotification.Name("org.cuappdev.eatery.eateryIsFavoriteDidChangeNotificationName")
+    static let eateryIsFavoriteDidChange
+        = NSNotification.Name("org.cuappdev.eatery.eateryIsFavoriteDidChangeNotificationName")
 
 }
 
@@ -323,9 +322,11 @@ extension Eatery {
             }
         }
 
-        return EateryPresentation(statusText: statusText,
-                                  statusColor: statusColor,
-                                  nextEventText: nextEventText)
+        return EateryPresentation(
+            statusText: statusText,
+            statusColor: statusColor,
+            nextEventText: nextEventText
+        )
     }
 
 }

@@ -10,16 +10,16 @@ import SnapKit
 import UIKit
 
 class BRBLoginErrorView: UIView {
-    
+
     private var containerView: UIView!
     var errorLabel: UILabel!
-    
+
     private var collapsedConstraint: Constraint!
     var isCollapsed: Bool {
-        get { return collapsedConstraint.isActive }
+        get { collapsedConstraint.isActive }
         set { collapsedConstraint.isActive = newValue }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -34,7 +34,7 @@ class BRBLoginErrorView: UIView {
             make.center.width.equalToSuperview()
             make.height.equalToSuperview().priority(999)
         }
-        
+
         errorLabel = UILabel(frame: .zero)
         errorLabel.numberOfLines = 0
         errorLabel.textColor = .white
@@ -43,14 +43,14 @@ class BRBLoginErrorView: UIView {
         errorLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(16)
         }
-        
+
         snp.prepareConstraints { make in
             collapsedConstraint = make.height.equalTo(0).constraint
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

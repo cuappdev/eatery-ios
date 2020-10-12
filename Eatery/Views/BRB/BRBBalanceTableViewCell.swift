@@ -9,13 +9,13 @@
 import UIKit
 
 class BRBBalanceTableViewCell: UITableViewCell {
-    
+
     private var titleLabel: UILabel!
     private var subtitleLabel: UILabel!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         titleLabel = UILabel(frame: .zero)
         titleLabel.font = .preferredFont(forTextStyle: .headline)
         contentView.addSubview(titleLabel)
@@ -23,7 +23,7 @@ class BRBBalanceTableViewCell: UITableViewCell {
             make.top.bottom.equalToSuperview().inset(16)
             make.leading.equalToSuperview().inset(20)
         }
-        
+
         subtitleLabel = UILabel(frame: .zero)
         subtitleLabel.font = .preferredFont(forTextStyle: .body)
         subtitleLabel.textColor = .gray
@@ -35,7 +35,7 @@ class BRBBalanceTableViewCell: UITableViewCell {
             make.leading.equalTo(titleLabel.snp.trailing)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,5 +44,5 @@ class BRBBalanceTableViewCell: UITableViewCell {
         titleLabel.text = title
         subtitleLabel.text = subtitle
     }
-    
+
 }

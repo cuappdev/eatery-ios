@@ -23,7 +23,7 @@ class AppIconTableViewCell: UITableViewCell {
         if #available(iOS 13.0, *) {
             appImageView.layer.cornerCurve = .continuous
         }
-        
+
         contentView.addSubview(appImageView)
         appImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
@@ -32,7 +32,7 @@ class AppIconTableViewCell: UITableViewCell {
         }
 
         contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints{ make in
+        titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(appImageView.snp.trailing).offset(8)
             make.top.bottom.equalToSuperview().inset(8)
             make.trailing.equalToSuperview().inset(20)

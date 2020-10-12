@@ -46,7 +46,6 @@ class OnboardingInfoViewController: OnboardingViewController {
         }
     }
 
-
     private func setUpStackView() {
         stackView.axis = .vertical
         stackView.distribution = .fill

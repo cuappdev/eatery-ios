@@ -10,7 +10,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
-        return formatter 
+        return formatter
     }()
 
     private static let shadowRadius: CGFloat = 12
@@ -228,7 +228,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         // start loading background image view as soon as possible
 
         backgroundImageView.kf.setImage(with: eatery)
-        
+
         // title
 
         titleLabel.text = eatery.displayName
@@ -288,7 +288,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         for constraint in menuTextViewVisibleConstraints {
             constraint.activate()
         }
-        
+
         backgroundImageView.isHidden = true
     }
 

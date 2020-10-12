@@ -51,7 +51,8 @@ enum MenuType: String, Codable {
 /// such as open times, menus, location, etc.
 struct CampusEatery: Eatery, Codable, DefaultsSerializable {
 
-    private static let eateryImagesBaseURL = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
+    private static let eateryImagesBaseURL
+        = "https://raw.githubusercontent.com/cuappdev/assets/master/eatery/eatery-images/"
 
     /// Converts the date to its day for use with eatery events
     private static let dayFormatter: ISO8601DateFormatter = {
@@ -72,7 +73,7 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
     let name: String
 
     var displayName: String {
-        return nickname
+        nickname
     }
 
     let eateryType: EateryType
@@ -92,7 +93,7 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
     let phone: String
 
     let events: [DayString: [EventName: Event]]
-    
+
     let swipeDataByHour: [Int: Set<SwipeDataPoint>]
 
     let allEvents: [Event]
@@ -122,10 +123,10 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         phone: String,
         slug: String,
         events: [String: [String: Event]],
-        diningMenu: [String : [Menu.Item]]?,
+        diningMenu: [String: [Menu.Item]]?,
         swipeDataPoints: [SwipeDataPoint],
-        exceptions: [String]) {
-
+        exceptions: [String]
+    ) {
         self.id = id
         self.name = name
         self.imageUrl = URL(string: CampusEatery.eateryImagesBaseURL + slug + ".jpg")
@@ -167,14 +168,14 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
 extension CampusEatery {
 
     func meals(onDayOf date: Date) -> [String] {
-        return eventsByName(onDayOf: date)
+        eventsByName(onDayOf: date)
             .sorted { $0.1.start < $1.1.start }
             .map { $0.key }
             .filter { $0 != "Lite Lunch" }
     }
 
     func getEvent(meal: String, onDayOf date: Date) -> Event? {
-        return eventsByName(onDayOf: date)[meal]
+        eventsByName(onDayOf: date)[meal]
     }
 
     func getMenuAndType(meal: String, onDayOf date: Date) -> (Menu, MenuType)? {
@@ -200,17 +201,17 @@ extension CampusEatery {
 extension CampusEatery {
 
     private func greatestSwipeDensity(at militaryHour: Int) -> SwipeDataPoint? {
-        return swipeDataByHour[militaryHour]?.max { $0.swipeDensity < $1.swipeDensity }
+        swipeDataByHour[militaryHour]?.max { $0.swipeDensity < $1.swipeDensity }
     }
 
     func swipeDensity(for militaryHour: Int) -> Double {
-        return greatestSwipeDensity(at: militaryHour)?.swipeDensity ?? 0
+        greatestSwipeDensity(at: militaryHour)?.swipeDensity ?? 0
     }
 
     func waitTimes(atHour hour: Int, minute: Int) -> (low: Int, high: Int)? {
-        return greatestSwipeDensity(at: hour).map { (low: $0.waitTimeLow, high: $0.waitTimeHigh) }
+        greatestSwipeDensity(at: hour).map { (low: $0.waitTimeLow, high: $0.waitTimeHigh) }
     }
-    
+
 }
 
 // MARK: - Eatery Appendix
@@ -251,5 +252,5 @@ extension CampusEatery {
             return 250.0
         }
     }
-    
+
 }

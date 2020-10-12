@@ -13,7 +13,7 @@ struct PaymentMethodsView: View {
     let paymentMethods: [PaymentMethod]
 
     var body: some View {
-        return HStack(alignment: .center, spacing: 2) {
+        HStack(alignment: .center, spacing: 2) {
             if paymentMethods.contains(.cash) || paymentMethods.contains(.creditCard) {
                 getImage("cashIcon")
             }
