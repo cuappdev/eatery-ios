@@ -51,7 +51,12 @@ class GivingDayView: UIView {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 6
         let attributes = [NSAttributedStringKey.paragraphStyle : style]
-        supportDescriptionTextView.attributedText = NSAttributedString(string: "Support Eatery by donating to Cornell AppDev! Funding will help us add new features like crowdedness, collegetown eateries, and more!", attributes: attributes)
+        supportDescriptionTextView.attributedText =
+            NSAttributedString(
+                string: "Support Eatery by donating to Cornell AppDev! "
+                + "Funding will help us add new features like crowdedness, collegetown eateries, and more!",
+                attributes: attributes
+            )
         supportDescriptionTextView.isSelectable = false
         supportDescriptionTextView.isScrollEnabled = false
         supportDescriptionTextView.textAlignment = .center
