@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
- *  An Event of an Eatery such as Breakfast, Lunch, or Dinner
- */
+/// An Event of an Eatery such as Breakfast, Lunch, or Dinner
 struct Event: Codable {
 
     enum Status {
@@ -28,12 +26,12 @@ struct Event: Codable {
 
     /// Date and time that this event begins
     var start: Date {
-        return dateInterval.start
+        dateInterval.start
     }
 
     /// Date and time that this event ends
     var end: Date {
-        return dateInterval.end
+        dateInterval.end
     }
 
     /// Short description of the Event
@@ -58,19 +56,17 @@ struct Event: Codable {
         self.menu = menu
     }
 
-    /**
-     Tells whether or not this specific event is occurring at some date and time
-
-     - parameter date: The date for which to check if this event is active
-
-     - returns: true if `date` is between the `startDate` and `endDate` of the event
-     */
+    /// Tells whether or not this specific event is occurring at some date and time
+    ///
+    /// parameter date: The date for which to check if this event is active
+    ///
+    /// returns: true if `date` is between the `startDate` and `endDate` of the event
     func occurs(atExactly date: Date) -> Bool {
-        return dateInterval.contains(date)
+        dateInterval.contains(date)
     }
 
     func currentStatus() -> Status {
-        return status(atExactly: Date())
+        status(atExactly: Date())
     }
 
     func status(atExactly date: Date) -> Status {

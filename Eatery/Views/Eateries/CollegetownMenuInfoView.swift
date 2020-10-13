@@ -26,19 +26,19 @@ class CollegetownMenuInfoView: UIView {
     private let distanceLabel = UILabel()
 
     var statusHero: HeroExtension<UILabel> {
-        return statusLabel.hero
+        statusLabel.hero
     }
 
     var hoursHero: HeroExtension<UILabel> {
-        return hoursLabel.hero
+        hoursLabel.hero
     }
 
     var locationHero: HeroExtension<UILabel> {
-        return locationLabel.hero
+        locationLabel.hero
     }
 
     var distanceHero: HeroExtension<UILabel> {
-        return distanceLabel.hero
+        distanceLabel.hero
     }
 
     override init(frame: CGRect) {
@@ -146,11 +146,15 @@ class CollegetownMenuInfoView: UIView {
 
         categoriesLabel.text = eatery.categories.joined(separator: ", ")
 
-        let priceText = NSMutableAttributedString(string:"$$$")
-        priceText.addAttribute(.foregroundColor,
-                               value: UIColor.black,
-                               range: NSRange(location: 0,
-                                              length: max(1, min(3, eatery.price.count))))
+        let priceText = NSMutableAttributedString(string: "$$$")
+        priceText.addAttribute(
+            .foregroundColor,
+            value: UIColor.black,
+            range: NSRange(
+                location: 0,
+                length: max(1, min(3, eatery.price.count))
+            )
+        )
         priceLabel.attributedText = priceText
 
         locationLabel.text = eatery.address

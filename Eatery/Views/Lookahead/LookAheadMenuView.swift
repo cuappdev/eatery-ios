@@ -49,7 +49,7 @@ class LookAheadMenuView: UIView {
         let text = NSMutableAttributedString(string: "No Menu Available", attributes: [
             .paragraphStyle: centerParagraph,
             .font: UIFont.systemFont(ofSize: 18, weight: .bold)
-            ])
+        ])
 
         textView.attributedText = text
     }
@@ -66,7 +66,7 @@ class LookAheadMenuView: UIView {
         for (offset: i, element: (key: category, value: items)) in menu.data.enumerated() {
             let categoryText = NSAttributedString(string: "\(category)", attributes: [
                 .font: UIFont.systemFont(ofSize: 18, weight: .bold)
-                ])
+            ])
             text.append(categoryText)
             text.append(newline)
 
@@ -74,7 +74,7 @@ class LookAheadMenuView: UIView {
                 let itemText = NSAttributedString(string: "\(item.name)", attributes: [
                     .font: UIFont.systemFont(ofSize: 14),
                     .foregroundColor: UIColor.secondary
-                    ])
+                ])
                 text.append(itemText)
                 text.append(newline)
             }

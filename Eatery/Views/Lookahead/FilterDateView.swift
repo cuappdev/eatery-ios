@@ -13,7 +13,7 @@ class FilterDateView: UIView {
     private let dateButton = UIButton()
 
     weak var delegate: FilterDateViewDelegate?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 

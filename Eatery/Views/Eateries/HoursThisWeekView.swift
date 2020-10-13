@@ -233,7 +233,8 @@ private class DayAndHoursView: UIView {
                 DayAndHoursView.hoursFormatter.string(from: interval.start)
                     + " - "
                     + DayAndHoursView.hoursFormatter.string(from: interval.end)
-            }.joined(separator: ", ")
+            }
+            .joined(separator: ", ")
         }
     }
 

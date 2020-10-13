@@ -24,7 +24,6 @@ struct CampusEateryView: View {
                 Text(self.eatery.address)
                     .font(.footnote)
 
-
                 (Text(presentation.statusText)
                     .foregroundColor(Color(presentation.statusColor))
                     + Text(" " + presentation.nextEventText))
@@ -40,5 +39,5 @@ struct CampusEateryView: View {
         }
         .navigationBarTitle(eatery.displayName)
     }
-    
-} 
+
+}

@@ -25,9 +25,12 @@ private class CampusEateriesData: ObservableObject {
     init() {
         $campusEateries.sink(receiveValue: self.reloadEateries).store(in: &self.cancellables)
 
-        Timer.publish(every: 60, on: .current, in: .common).autoconnect().sink { _ in
-            self.reloadEateries(self.campusEateries)
-        }.store(in: &self.cancellables)
+        Timer.publish(every: 60, on: .current, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.reloadEateries(self.campusEateries)
+            }
+            .store(in: &self.cancellables)
     }
 
     private func reloadEateries(_ eateries: [CampusEatery]) {
@@ -142,7 +145,7 @@ struct CampusEateriesView: View {
                     self.errorInfo = ErrorInfo(title: "Could not fetch eateries.", error: error)
                 }
             }, label: {
-                VStack{
+                VStack {
                     Image(systemName: "arrow.clockwise")
                         .font(.title)
                     Text("Refresh Eateries")
@@ -150,9 +153,11 @@ struct CampusEateriesView: View {
             })
         }
         .alert(item: self.$errorInfo) { errorInfo -> Alert in
-            Alert(title: Text("Error: ") + Text(errorInfo.title),
-                  message: Text(errorInfo.error.localizedDescription),
-                  dismissButton: .default(Text("OK")))
+            Alert(
+                title: Text("Error: ") + Text(errorInfo.title),
+                message: Text(errorInfo.error.localizedDescription),
+                dismissButton: .default(Text("OK"))
+            )
         }
         .onAppear {
             if self.firstAppearance {
@@ -168,7 +173,10 @@ struct CampusEateriesView: View {
     func eateriesView(_ eateries: [CampusEatery]) -> some View {
         ForEach(eateries) { eatery in
             NavigationLink(destination: CampusEateryView(eatery: eatery)) {
-                CampusEateryRow(eatery: eatery, userLocation: self.sortMethod == .distance ? self.viewData.userLocation : nil)
+                CampusEateryRow(
+                    eatery: eatery,
+                    userLocation: self.sortMethod == .distance ? self.viewData.userLocation : nil
+                )
             }
         }
     }

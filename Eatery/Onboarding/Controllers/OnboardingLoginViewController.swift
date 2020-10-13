@@ -25,7 +25,7 @@ class OnboardingLoginViewController: OnboardingViewController {
     private let privacyStatementButton = UIButton(type: .system)
 
     private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .circleStrokeSpin, color: .white)
-    
+
     private let errorView = BRBLoginErrorView()
 
     private let accountManager = BRBAccountManager()
@@ -58,7 +58,6 @@ class OnboardingLoginViewController: OnboardingViewController {
         setUpPasswordViews()
         setUpButton()
         setUpSkipButton(target: self, action: #selector(didTapSkipButton))
-        
 
         contentView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -76,7 +75,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         stackView.snp.makeConstraints { make in
             make.center.width.equalToSuperview()
         }
-        
+
         loginStackView.axis = .vertical
         loginStackView.distribution = .fill
         loginStackView.spacing = 10
@@ -92,9 +91,11 @@ class OnboardingLoginViewController: OnboardingViewController {
         privacyStatementButton.setTitleColor(.white, for: .normal)
         privacyStatementButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
         privacyStatementButton.setTitleColor(.black, for: .highlighted)
-        privacyStatementButton.addTarget(self,
-                                         action: #selector(didTapPrivacyButton),
-                                         for: .touchUpInside)
+        privacyStatementButton.addTarget(
+            self,
+            action: #selector(didTapPrivacyButton),
+            for: .touchUpInside
+        )
         loginStackView.addArrangedSubview(privacyStatementButton)
     }
 
@@ -117,8 +118,11 @@ class OnboardingLoginViewController: OnboardingViewController {
 
         netidTextField.textColor = .veryLightPink
         netidTextField.delegate = self
-        netidTextField.attributedPlaceholder = NSAttributedString(string: "Type your NetID (e.g. abc123)",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
+        netidTextField.attributedPlaceholder =
+            NSAttributedString(
+                string: "Type your NetID (e.g. abc123)",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink]
+            )
         netidTextField.font = .preferredFont(forTextStyle: .body)
         netidTextField.autocapitalizationType = .none
         netidTextField.tintColor = .veryLightPink
@@ -142,8 +146,11 @@ class OnboardingLoginViewController: OnboardingViewController {
 
         passwordTextField.textColor = .veryLightPink
         passwordTextField.delegate = self
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Type your password",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink])
+        passwordTextField.attributedPlaceholder =
+            NSAttributedString(
+                string: "Type your password",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.veryLightPink]
+            )
         passwordTextField.font = .preferredFont(forTextStyle: .body)
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocapitalizationType = .none
@@ -154,7 +161,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         let passwordSeparator = UIView()
         passwordSeparator.backgroundColor = .veryLightPink
         loginStackView.addArrangedSubview(passwordSeparator)
-        
+
         passwordSeparator.snp.makeConstraints { make in
             make.height.equalTo(1)
         }
@@ -176,7 +183,7 @@ class OnboardingLoginViewController: OnboardingViewController {
         }
 
         loginButton.addSubview(activityIndicator)
-      
+
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(22)

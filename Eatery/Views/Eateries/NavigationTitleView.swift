@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 class NavigationTitleView: UIView {
-    
+
     let eateryNameLabel = UILabel()
 
     private var nameLabelHeightConstraint: NSLayoutConstraint

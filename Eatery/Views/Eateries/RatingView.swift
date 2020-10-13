@@ -38,7 +38,7 @@ class RatingView: UIView {
             }
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -68,7 +68,7 @@ class RatingView: UIView {
             imageView.image = UIImage(named: "unselected")
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

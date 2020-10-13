@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol OnboardingViewControllerDelegate {
+protocol OnboardingViewControllerDelegate: AnyObject {
     func onboardingViewControllerDidTapNext(_ viewController: OnboardingViewController)
 }
 
@@ -25,7 +25,7 @@ class OnboardingViewController: UIViewController {
 
     let contentView = UIView()
 
-    var delegate: OnboardingViewControllerDelegate?
+    weak var delegate: OnboardingViewControllerDelegate?
 
     init(title: String, subtitle: String) {
         self.onboardingTitle = title
@@ -34,7 +34,7 @@ class OnboardingViewController: UIViewController {
     }
 
     required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -47,15 +47,19 @@ class OnboardingViewController: UIViewController {
         setUpSubtitleLabel()
         setUpContentView()
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(notification:)),
-                                               name: .UIKeyboardWillShow,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: .UIKeyboardWillShow,
+            object: nil
+        )
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(notification:)),
-                                               name: .UIKeyboardWillHide,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: .UIKeyboardWillHide,
+            object: nil
+        )
     }
 
     private func setUpStackView() {
@@ -137,7 +141,7 @@ extension OnboardingViewController {
 
     @objc private func keyboardWillHide(notification: NSNotification) {
         guard let userInfo = notification.userInfo else {
-                return
+            return
         }
 
         let actions: () -> Void = {

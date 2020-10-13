@@ -3,11 +3,11 @@ import Foundation
 struct TimeFactory {
 
     static func interval(hours: Double, minutes: Double) -> TimeInterval {
-        return 60 * minutes + 60 * 60 * hours
+        60 * minutes + 60 * 60 * hours
     }
 
     static func displayTextForEvent(_ event: Event) -> String {
-        return dateConverter(date1: event.start, date2: event.end)
+        dateConverter(date1: event.start, date2: event.end)
     }
 
     static func dateConverter(date1: Date, date2: Date) -> String {
@@ -17,13 +17,17 @@ struct TimeFactory {
         let hour1 = calendar.component(.hour, from: date1)
         let minute1 = calendar.component(.minute, from: date1)
 
-        var first = "\(TimeFactory.hourConverter(hour1))\(TimeFactory.minConverter(minute1))\(TimeFactory.amOrPm(hour1))"
+        var first = "\(TimeFactory.hourConverter(hour1))"
+            + "\(TimeFactory.minConverter(minute1))"
+            + "\(TimeFactory.amOrPm(hour1))"
         first = shorthand(of: first) ?? first
 
         let hour2 = calendar.component(.hour, from: date2)
         let minute2 = calendar.component(.minute, from: date2)
 
-        var second = "\(TimeFactory.hourConverter(hour2))\(TimeFactory.minConverter(minute2))\(TimeFactory.amOrPm(hour2))"
+        var second = "\(TimeFactory.hourConverter(hour2))"
+            + "\(TimeFactory.minConverter(minute2))"
+            + "\(TimeFactory.amOrPm(hour2))"
         second = shorthand(of: second) ?? second
 
         return "\(first) to \(second)"
@@ -38,8 +42,8 @@ struct TimeFactory {
     }
 
     private static func minConverter(_ min: Int) -> String {
-        if (min != 0) {
-            if (min > 9) {
+        if min != 0 {
+            if min > 9 {
                 return ":\(min)"
             } else {
                 return ":0\(min)"

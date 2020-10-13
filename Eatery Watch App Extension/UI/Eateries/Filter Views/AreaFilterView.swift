@@ -27,7 +27,8 @@ struct AreaFilterView: View {
                         Spacer()
                     }
                 }
-        })
+            }
+        )
     }
 
     init(_ area: Binding<Area?>) {

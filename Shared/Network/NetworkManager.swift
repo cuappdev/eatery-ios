@@ -80,7 +80,7 @@ struct NetworkManager {
                 }
 
                 var diningItems: [String: [Menu.Item]] = [:]
-                var eventItems: [String : [String : Event]] = [:]
+                var eventItems: [String: [String: Event]] = [:]
 
                 eatery.operatingHours.compactMap { $0 }.forEach { operatingHour in
                     let dateString = operatingHour.date
@@ -98,25 +98,27 @@ struct NetworkManager {
                                 allMenuItems.append(Menu.Item(name: menuItem.item, healthy: menuItem.healthy))
                             }
                             categoryToMenu[item.category] = items.map { itemForEvent in
-                                return Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy)
+                                Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy)
                             }
                         }
 
                         let startDate = self.timeDateFormatter.date(from: event.startTime) ?? Date()
                         let endDate = self.timeDateFormatter.date(from: event.endTime) ?? Date()
 
-                        let eventFinal = Event(start: startDate,
-                                               end: endDate,
-                                               desc: event.description,
-                                               summary: event.calSummary,
-                                               menu: Menu(data: categoryToMenu))
+                        let eventFinal = Event(
+                            start: startDate,
+                            end: endDate,
+                            desc: event.description,
+                            summary: event.calSummary,
+                            menu: Menu(data: categoryToMenu)
+                        )
                         eventsDictionary[event.description] = eventFinal
                     }
 
                     diningItems[dateString] = allMenuItems
                     eventItems[dateString] = eventsDictionary
                 }
-                
+
                 var swipeDataPoints = [SwipeDataPoint]()
                 for swipeDatum in eatery.swipeData {
                     guard let swipeDatum = swipeDatum,
@@ -133,13 +135,15 @@ struct NetworkManager {
                     guard startMinute <= endMinute else {
                         continue
                     }
-                    
-                    let swipeDataPoint = SwipeDataPoint(eateryId: eatery.id,
-                                                        militaryHour: startHour,
-                                                        minuteRange: startMinute...endMinute,
-                                                        swipeDensity: swipeDatum.swipeDensity,
-                                                        waitTimeLow: swipeDatum.waitTimeLow,
-                                                        waitTimeHigh: swipeDatum.waitTimeHigh)
+
+                    let swipeDataPoint = SwipeDataPoint(
+                        eateryId: eatery.id,
+                        militaryHour: startHour,
+                        minuteRange: startMinute...endMinute,
+                        swipeDensity: swipeDatum.swipeDensity,
+                        waitTimeLow: swipeDatum.waitTimeLow,
+                        waitTimeHigh: swipeDatum.waitTimeHigh
+                    )
                     swipeDataPoints.append(swipeDataPoint)
                 }
 
@@ -158,7 +162,8 @@ struct NetworkManager {
                     events: eventItems,
                     diningMenu: diningItems,
                     swipeDataPoints: swipeDataPoints,
-                    exceptions: eatery.exceptions.compactMap { $0 })
+                    exceptions: eatery.exceptions.compactMap { $0 }
+                )
             }
 
             completion(finalEateries, nil)
@@ -182,11 +187,22 @@ struct NetworkManager {
             }
 
             let brbHistory = accountInfo.history.compactMap { $0 }.map { historyItem in
-                return BRBHistory(name: historyItem.name, timestamp: historyItem.timestamp, amount: historyItem.amount, positive: historyItem.positive)
+                BRBHistory(
+                    name: historyItem.name,
+                    timestamp: historyItem.timestamp,
+                    amount: historyItem.amount,
+                    positive: historyItem.positive
+                )
             }
 
-            let brbAccount = BRBAccount(cityBucks: accountInfo.cityBucks, laundry: accountInfo.laundry, brbs: accountInfo.brbs, swipes: accountInfo.swipes, history: brbHistory)
-            
+            let brbAccount = BRBAccount(
+                cityBucks: accountInfo.cityBucks,
+                laundry: accountInfo.laundry,
+                brbs: accountInfo.brbs,
+                swipes: accountInfo.swipes,
+                history: brbHistory
+            )
+
             completion(brbAccount, nil)
         }
     }
@@ -231,7 +247,7 @@ struct NetworkManager {
                     paymentTypes.append(.swipes)
                 }
 
-                var events: [String : [String : Event]] = [:]
+                var events: [String: [String: Event]] = [:]
 
                 for graphQlOperatingHours in graphQlEatery.operatingHours.compactMap({ $0 }) {
                     var eventsByName: [String: Event] = [:]
@@ -240,11 +256,13 @@ struct NetworkManager {
                         let startDate = self.timeDateFormatter.date(from: graphQlEvent.startTime) ?? Date()
                         let endDate = self.timeDateFormatter.date(from: graphQlEvent.endTime) ?? Date()
 
-                        let event = Event(start: startDate,
-                                          end: endDate,
-                                          desc: graphQlEvent.description,
-                                          summary: graphQlEvent.description,
-                                          menu: Menu(data: [:]))
+                        let event = Event(
+                            start: startDate,
+                            end: endDate,
+                            desc: graphQlEvent.description,
+                            summary: graphQlEvent.description,
+                            menu: Menu(data: [:])
+                        )
                         eventsByName[graphQlEvent.startTime] = event
                     }
 
@@ -265,7 +283,8 @@ struct NetworkManager {
                     price: graphQlEatery.price,
                     rating: Double(graphQlEatery.rating),
                     url: URL(string: graphQlEatery.url),
-                    categories: graphQlEatery.categories.compactMap { $0 })
+                    categories: graphQlEatery.categories.compactMap { $0 }
+                )
 
                 eateries.append(eatery)
             }

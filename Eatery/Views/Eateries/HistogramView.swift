@@ -222,7 +222,7 @@ extension HistogramView: UIGestureRecognizerDelegate {
     }
 
     private func indexOfBar(atPoint point: CGPoint) -> Int? {
-        return barContainerViews
+        barContainerViews
             .enumerated()
             .first(where: { $0.element.frame.minX <= point.x && point.x <= $0.element.frame.maxX })?.offset
     }
@@ -296,12 +296,13 @@ extension HistogramView {
         layoutIfAddedToWindow()
 
         let actions: (() -> Void) = {
-            let description = self.dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
+            let description =
+                self.dataSource?.histogramView(self, descriptionForDataPointAt: index) ?? NSAttributedString()
             self.tagView.configure(description: description)
 
             self.tagView.snp.remakeConstraints { make in
                 make.top.equalToSuperview().inset(2)
-                make.centerX.equalTo(self.barContainerViews[index]).priorityMedium()
+                make.centerX.equalTo(self.barContainerViews[index]).priority(.medium)
                 make.leading.greaterThanOrEqualTo(self.barsLayoutGuide)
                 make.trailing.lessThanOrEqualTo(self.barsLayoutGuide)
             }
@@ -344,7 +345,7 @@ private class BarContainerView: UIView {
     private let barView = UIView()
 
     var barViewTop: ConstraintItem {
-        return barView.snp.top
+        barView.snp.top
     }
 
     override init(frame: CGRect) {
@@ -433,7 +434,7 @@ private class BarTagView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         clipsToBounds = true
         layer.cornerRadius = 5
         layer.borderColor = UIColor.inactive.cgColor
@@ -449,11 +450,11 @@ private class BarTagView: UIView {
             make.top.bottom.equalToSuperview().inset(8).priority(.high)
         }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure(description: NSAttributedString) {
         label.attributedText = description
     }

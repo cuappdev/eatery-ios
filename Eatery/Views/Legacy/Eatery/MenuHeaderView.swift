@@ -11,7 +11,7 @@ import SnapKit
 import Kingfisher
 
 class MenuHeaderView: UIView {
-    
+
     var eatery: CampusEatery?
     var displayedDate: Date?
 
@@ -56,19 +56,19 @@ class MenuHeaderView: UIView {
             make.centerY.equalTo(titleLabel.snp.centerY)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) will not be implemented")
     }
-    
+
     func set(eatery: CampusEatery, date: Date) {
         self.eatery = eatery
         self.displayedDate = date
-        
+
         updateFavoriteButtonImage()
 
         paymentView.paymentMethods = eatery.paymentMethods
-        
+
         titleLabel.text = eatery.nickname
 
         favoriteButton.imageEdgeInsets = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
@@ -83,25 +83,28 @@ class MenuHeaderView: UIView {
             titleLabel.textColor = UIColor.lightGray
         }
     }
-    
+
     func updateFavoriteButtonImage() {
         guard let eatery = eatery else {
             return
         }
 
-        favoriteButton.setImage(eatery.isFavorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"), for: .normal)
+        favoriteButton.setImage(
+            eatery.isFavorite ? UIImage(named: "goldStar") : UIImage(named: "whiteStar"),
+            for: .normal
+        )
     }
-    
+
     @objc private func favoriteButtonPressed(_ sender: AnyObject) {
         guard var eatery = eatery else {
             return
         }
 
         eatery.isFavorite.toggle()
-        
+
         updateFavoriteButtonImage()
 
         self.eatery = eatery
     }
-    
+
 }
