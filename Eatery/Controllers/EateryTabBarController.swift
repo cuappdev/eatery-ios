@@ -15,18 +15,18 @@ class EateryTabBarController: UITabBarController {
 
     // MARK: View controllers
 
-    let eateriesSharedViewController = EateriesSharedViewController()
+    let eateriesViewController = CampusEateriesViewController()
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
 
     override func viewDidLoad() {
         delegate = self
-        eateriesSharedViewController.tabBarItem = UITabBarItem(
+        eateriesViewController.tabBarItem = UITabBarItem(
             title: nil,
             image: UIImage(named: "eateryTabIcon.png"),
             tag: 0
         )
-
+        
         let lookAheadNavigationController = EateryNavigationController(rootViewController: lookAheadViewController)
         lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "menu icon"), tag: 1)
 
@@ -34,7 +34,7 @@ class EateryTabBarController: UITabBarController {
         brbNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "accountIcon.png"), tag: 2)
 
         let navigationControllers = [
-            eateriesSharedViewController,
+            eateriesViewController.campusNavigationVC,
             lookAheadNavigationController,
             brbNavigationController
         ]
@@ -60,17 +60,18 @@ class EateryTabBarController: UITabBarController {
     ) -> UIInterfaceOrientation {
         .portrait
     }
+    
+    func preselectEatery(withName name: String) {
+        eateriesViewController.preselectEatery(withName: name)
+    }
 
 }
 
 extension EateryTabBarController: UITabBarControllerDelegate {
 
-    func tabBarController(
-        _ tabBarController: UITabBarController,
-        shouldSelect viewController: UIViewController
-    ) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if selectedViewController === viewController,
-            let shared = viewController as? EateriesSharedViewController {
+            let shared = viewController as? CampusEateriesViewController {
             if shared.activeNavigationController.viewControllers.count > 1 {
                 shared.activeNavigationController.popViewController(animated: true)
             } else {

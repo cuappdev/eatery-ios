@@ -7,6 +7,8 @@ import SwiftyJSON
 import SwiftyUserDefaults
 import UIKit
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -32,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Hero.shared.containerColor = .white
 
-        // Set up view controllers
+//        Set up view controllers
         if Defaults[\.hasOnboarded] {
             eateryTabBarController = EateryTabBarController()
             window?.rootViewController = eateryTabBarController
@@ -75,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        eateryTabBarController.eateriesSharedViewController.preselectEatery(withName: shortcutItem.type)
+        eateryTabBarController.eateriesViewController.preselectEatery(withName: shortcutItem.type)
         
         return true
     }

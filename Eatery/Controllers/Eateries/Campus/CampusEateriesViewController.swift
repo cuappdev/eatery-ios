@@ -14,6 +14,16 @@ import UIKit
 
 class CampusEateriesViewController: EateriesViewController {
 
+    
+    lazy var campusNavigationVC = EateryNavigationController(rootViewController: self)
+    
+    var activeNavigationController: EateryNavigationController {
+        return campusNavigationVC
+    }
+    var activeViewController: CampusEateriesViewController {
+        return self
+    }
+    
     private static let cacheTimeToLive: TimeInterval = 24 * 60 * 60 // one day
 
     private var allEateries: [CampusEatery]?
@@ -27,10 +37,12 @@ class CampusEateriesViewController: EateriesViewController {
 
     private var selectedSearchResult: SearchSource?
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         delegate = self
+        campusNavigationVC.delegate = self
 
         availableFilters = [
             .nearest,
@@ -279,3 +291,52 @@ extension CampusEateriesViewController: UISearchControllerDelegate {
     }
 
 }
+
+
+extension CampusEateriesViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        viewController.extendedLayoutIncludesOpaqueBars = true
+
+        let isParallax = viewController is ImageParallaxScrollViewController
+        navigationController.setNavigationBarHidden(isParallax, animated: true)
+    }
+}
+
+
+
+
+/*  The code below was taken from EateriesSharedViewController and it is unclear if it is needed
+    
+    extension CampusEate
+ 
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        return locationManager
+    }()
+     
+     private func setUpLocationManager() {
+         if CLLocationManager.locationServicesEnabled() {
+             switch CLLocationManager.authorizationStatus() {
+             case .authorizedWhenInUse:
+                 locationManager.startUpdatingLocation()
+             case .notDetermined:
+                 locationManager.requestWhenInUseAuthorization()
+             default: break
+             }
+         }
+     }
+ 
+     extension EateriesSharedViewController: CLLocationManagerDelegate {
+
+         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+             let userLocation = locations.last
+
+             campusEateriesVC.userLocation = userLocation
+             collegetownEateriesVC.userLocation = userLocation
+         }
+
+     }
+*/

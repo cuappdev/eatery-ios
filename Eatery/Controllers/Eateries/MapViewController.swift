@@ -180,12 +180,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 userLocation: userLocation
             )
             navigationController?.pushViewController(menuViewController, animated: true)
-        } else if let collegetownEatery = eatery as? CollegetownEatery {
-            let menuViewController = CollegetownMenuViewController(
-                eatery: collegetownEatery,
-                userLocation: userLocation
-            )
-            navigationController?.pushViewController(menuViewController, animated: true)
         }
     }
 
