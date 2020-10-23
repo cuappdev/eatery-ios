@@ -71,11 +71,11 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if selectedViewController === viewController,
-            let shared = viewController as? CampusEateriesViewController {
-            if shared.activeNavigationController.viewControllers.count > 1 {
-                shared.activeNavigationController.popViewController(animated: true)
+            let campusEateries = viewController as? CampusEateriesViewController {
+            if campusEateries.activeNavigationController.viewControllers.count > 1 {
+                campusEateries.activeNavigationController.popViewController(animated: true)
             } else {
-                shared.activeViewController.scrollToTop(animated: true)
+                campusEateries.activeViewController.scrollToTop(animated: true)
             }
         }
 

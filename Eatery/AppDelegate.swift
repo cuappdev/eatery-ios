@@ -7,8 +7,6 @@ import SwiftyJSON
 import SwiftyUserDefaults
 import UIKit
 
-
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -34,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Hero.shared.containerColor = .white
 
-//        Set up view controllers
+        // Set up view controllers
         if Defaults[\.hasOnboarded] {
             eateryTabBarController = EateryTabBarController()
             window?.rootViewController = eateryTabBarController
