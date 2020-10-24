@@ -18,23 +18,37 @@ class EateryTabBarController: UITabBarController {
     let eateriesViewController = CampusEateriesViewController()
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
-
+    
+    let eateriesNavigationController: EateryNavigationController
+    
+    init() {
+        self.eateriesNavigationController = EateryNavigationController(rootViewController: eateriesViewController)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         delegate = self
-        eateriesViewController.tabBarItem = UITabBarItem(
+        
+        eateriesNavigationController.delegate = self
+        eateriesNavigationController.tabBarItem = UITabBarItem(
             title: nil,
             image: UIImage(named: "eateryTabIcon.png"),
             tag: 0
         )
         
         let lookAheadNavigationController = EateryNavigationController(rootViewController: lookAheadViewController)
-        lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "menu icon"), tag: 1)
+        lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "menu icon"), tag: 1)
 
         let brbNavigationController = EateryNavigationController(rootViewController: brbViewController)
         brbNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "accountIcon.png"), tag: 2)
 
         let navigationControllers = [
-            eateriesViewController.campusNavigationVC,
+            eateriesNavigationController,
             lookAheadNavigationController,
             brbNavigationController
         ]
@@ -47,6 +61,7 @@ class EateryTabBarController: UITabBarController {
         tabBar.barTintColor = .white
         tabBar.tintColor = .eateryBlue
         tabBar.shadowImage = UIImage()
+        
     }
 
     func tabBarControllerSupportedInterfaceOrientations(
@@ -60,22 +75,17 @@ class EateryTabBarController: UITabBarController {
     ) -> UIInterfaceOrientation {
         .portrait
     }
-    
-    func preselectEatery(withName name: String) {
-        eateriesViewController.preselectEatery(withName: name)
-    }
-
 }
 
 extension EateryTabBarController: UITabBarControllerDelegate {
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if selectedViewController === viewController,
-            let campusEateries = viewController as? CampusEateriesViewController {
-            if campusEateries.activeNavigationController.viewControllers.count > 1 {
-                campusEateries.activeNavigationController.popViewController(animated: true)
+            viewController === eateriesNavigationController {
+            if eateriesNavigationController.viewControllers.count > 1 {
+                eateriesNavigationController.popViewController(animated: true)
             } else {
-                campusEateries.activeViewController.scrollToTop(animated: true)
+                eateriesViewController.scrollToTop(animated: true)
             }
         }
 
@@ -93,4 +103,19 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 
     }
 
+}
+
+extension EateryTabBarController: UINavigationControllerDelegate {
+    
+    func navigationController(
+        _ navigationController: UINavigationController,
+        willShow viewController: UIViewController,
+        animated: Bool
+    ) {
+        viewController.extendedLayoutIncludesOpaqueBars = true
+
+        let isParallax = viewController is ImageParallaxScrollViewController
+        navigationController.setNavigationBarHidden(isParallax, animated: true)
+    }
+    
 }
