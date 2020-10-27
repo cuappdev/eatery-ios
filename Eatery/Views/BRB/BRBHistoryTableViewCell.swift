@@ -16,7 +16,7 @@ class BRBHistoryTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         titleLabel = UILabel(frame: .zero)
         titleLabel.font = .preferredFont(forTextStyle: .headline)
         titleLabel.numberOfLines = 0
@@ -25,7 +25,7 @@ class BRBHistoryTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().inset(20)
             make.top.equalToSuperview().inset(12)
         }
-        
+
         subtitleLabel = UILabel(frame: .zero)
         subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
         subtitleLabel.textColor = .gray
@@ -35,7 +35,7 @@ class BRBHistoryTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().inset(12)
         }
-        
+
         priceLabel = UILabel(frame: .zero)
         priceLabel.font = .preferredFont(forTextStyle: .body)
         priceLabel.setContentHuggingPriority(.defaultLow + 1, for: .horizontal)
@@ -47,7 +47,7 @@ class BRBHistoryTableViewCell: UITableViewCell {
             make.leading.equalTo(subtitleLabel.snp.trailing)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -55,7 +55,7 @@ class BRBHistoryTableViewCell: UITableViewCell {
     func configure(title: String, subtitle: String, amount: String, positive: Bool) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
-        
+
         if positive {
             priceLabel.textColor = .eateryGreen
             priceLabel.text = "+$\(amount)"
@@ -64,5 +64,5 @@ class BRBHistoryTableViewCell: UITableViewCell {
             priceLabel.text = "-$\(amount)"
         }
     }
-    
+
 }

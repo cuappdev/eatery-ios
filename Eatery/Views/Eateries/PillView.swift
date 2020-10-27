@@ -24,7 +24,7 @@ class PillView: UIControl {
     let rightImageView = UIImageView()
     let rightLabel = UILabel()
     private var rightSegmentSelected: Bool {
-        return !leftSegmentSelected
+        !leftSegmentSelected
     }
 
     init() {
@@ -109,9 +109,9 @@ class PillView: UIControl {
 
         sendActions(for: .valueChanged)
     }
-    
+
     private func getAttributeSizes() -> (iconSideLength: Int, fontSize: CGFloat) {
-        return UIScreen.main.nativeBounds.height <= 1136 ? (14, 12) : (16, 14)
+        UIScreen.main.nativeBounds.height <= 1136 ? (14, 12) : (16, 14)
     }
 
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {

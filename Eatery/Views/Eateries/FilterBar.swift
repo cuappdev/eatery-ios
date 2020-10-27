@@ -55,7 +55,7 @@ class FilterBar: UIView {
     // Half the height of a UISearchBar embedded in a UINavigationBar
     private static let filterBarHeight = 56 / 2
 
-    private var buttons: [Filter : UIButton] = [:]
+    private var buttons: [Filter: UIButton] = [:]
     weak var delegate: FilterBarDelegate?
     var scrollView: UIScrollView!
 

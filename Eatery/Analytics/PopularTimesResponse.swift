@@ -43,11 +43,13 @@ private struct PopularTimesResponsePayload: Payload {
     var parameters: [String: Any]? {
         let calendar = Calendar.current
         let dateRoundedDownToNearestHalfHour: Date? =
-            calendar.nextDate(after: date,
-                              matching: DateComponents(minute: calendar.component(.minute, from: date) < 30 ? 0 : 30),
-                              matchingPolicy: .nextTime,
-                              repeatedTimePolicy: .first,
-                              direction: .backward)
+            calendar.nextDate(
+                after: date,
+                matching: DateComponents(minute: calendar.component(.minute, from: date) < 30 ? 0 : 30),
+                matchingPolicy: .nextTime,
+                repeatedTimePolicy: .first,
+                direction: .backward
+            )
 
         if let date = dateRoundedDownToNearestHalfHour {
             return [
@@ -83,12 +85,12 @@ final class PopularTimesResponse {
     }
 
     var lastResponse: Date? {
-        return Defaults[\.popularTimesLastResponse][eateryDisplayName]
+        Defaults[\.popularTimesLastResponse][eateryDisplayName]
     }
 
     var userMaySubmitResponse: Bool {
         if let lastResponse = lastResponse,
-           lastResponse.addingTimeInterval(PopularTimesResponse.minimumTimeBetweenResponses) > Date() {
+            lastResponse.addingTimeInterval(PopularTimesResponse.minimumTimeBetweenResponses) > Date() {
             return false
         } else {
             return true
@@ -111,7 +113,7 @@ final class PopularTimesResponse {
 extension CampusEatery {
 
     var popularTimesResponse: PopularTimesResponse {
-        return PopularTimesResponse(displayName)
+        PopularTimesResponse(displayName)
     }
 
 }

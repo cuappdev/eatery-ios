@@ -11,10 +11,10 @@ import Foundation
 
 extension CLLocation {
 
-    static let olinLibrary = CLLocation(latitude: 42.448078,longitude: -76.484291)
+    static let olinLibrary = CLLocation(latitude: 42.448078, longitude: -76.484291)
 
     func distance(from other: CLLocation) -> Measurement<UnitLength> {
-        return Measurement(value: distance(from: other), unit: UnitLength.meters)
+        Measurement(value: distance(from: other), unit: UnitLength.meters)
     }
 
 }
@@ -41,8 +41,11 @@ extension CLLocationCoordinate2D {
         return midpointCoordinates
     }
 
-    static func deltaLatLon(between p1: CLLocationCoordinate2D, and p2: CLLocationCoordinate2D) -> (lat: Double, lon: Double) {
-        return (lat: abs(p1.latitude - p2.latitude), lon: abs(p1.longitude - p2.longitude))
+    static func deltaLatLon(
+        between p1: CLLocationCoordinate2D,
+        and p2: CLLocationCoordinate2D
+    ) -> (lat: Double, lon: Double) {
+        (lat: abs(p1.latitude - p2.latitude), lon: abs(p1.longitude - p2.longitude))
     }
 
 }

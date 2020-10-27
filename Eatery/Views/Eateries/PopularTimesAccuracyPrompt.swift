@@ -10,8 +10,10 @@ import UIKit
 
 protocol PopularTimesAccuracyPromptDelegate: AnyObject {
 
-    func popularTimesAccuracyPrompt(_ popularTimesAccuracyPrompt: PopularTimesAccuracyPrompt,
-                                    didReceiveUserResponse userResponse: PopularTimesAccuracyPrompt.UserResponse)
+    func popularTimesAccuracyPrompt(
+        _ popularTimesAccuracyPrompt: PopularTimesAccuracyPrompt,
+        didReceiveUserResponse userResponse: PopularTimesAccuracyPrompt.UserResponse
+    )
 
 }
 

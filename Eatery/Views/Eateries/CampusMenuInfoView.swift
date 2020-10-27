@@ -35,19 +35,19 @@ class CampusMenuInfoView: UIView, DynamicContentSizeView {
     var contentSizeDidChange: (() -> Void)?
 
     var statusHero: HeroExtension<UILabel> {
-        return statusLabel.hero
+        statusLabel.hero
     }
 
     var hoursHero: HeroExtension<UILabel> {
-        return hoursLabel.hero
+        hoursLabel.hero
     }
 
     var locationHero: HeroExtension<UILabel> {
-        return locationLabel.hero
+        locationLabel.hero
     }
 
     var distanceHero: HeroExtension<UILabel> {
-        return distanceLabel.hero
+        distanceLabel.hero
     }
 
     init() {

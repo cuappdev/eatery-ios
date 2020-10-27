@@ -30,7 +30,7 @@ struct CollegetownEatery: Eatery {
     let name: String
 
     var displayName: String {
-        return name
+        name
     }
 
     let imageUrl: URL?
@@ -47,7 +47,7 @@ struct CollegetownEatery: Eatery {
 
     let phone: String
 
-    let events: [DayString : [EventName : Event]]
+    let events: [DayString: [EventName: Event]]
 
     let allEvents: [Event]
 
@@ -77,7 +77,8 @@ struct CollegetownEatery: Eatery {
         price: String,
         rating: Double?,
         url: URL?,
-        categories: [String]) {
+        categories: [String]
+    ) {
         self.id = id
         self.name = name
         self.imageUrl = imageUrl

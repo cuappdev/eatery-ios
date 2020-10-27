@@ -9,67 +9,72 @@
 import UIKit
 
 class GivingDayView: UIView {
-    
+
     var topPortionView: UIView!
     var closePopupButton: UIButton!
     var givingDayAppsImageView: UIImageView!
     var supportUsLabel: UILabel!
-    
+
     var bottomPortionView: UIView!
     var supportDescriptionTextView: UITextView!
     var donateButton: UIButton!
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         topPortionView = UIView()
         topPortionView.backgroundColor = .white
         addSubview(topPortionView)
-        
+
         closePopupButton = UIButton()
         closePopupButton.setImage(UIImage(named: "closeIcon"), for: .normal)
         addSubview(closePopupButton)
-        
+
         givingDayAppsImageView = UIImageView()
         givingDayAppsImageView.image = UIImage(named: "givingDayApps")
         givingDayAppsImageView.contentMode = .scaleAspectFit
         addSubview(givingDayAppsImageView)
-        
+
         supportUsLabel = UILabel()
         supportUsLabel.text = "Support Us On Giving Day 3.14"
         supportUsLabel.numberOfLines = 0
         supportUsLabel.textAlignment = .center
         supportUsLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         addSubview(supportUsLabel)
-        
+
         bottomPortionView = UIView()
         bottomPortionView.backgroundColor = .wash
         addSubview(bottomPortionView)
-        
+
         supportDescriptionTextView = UITextView()
         //line spacing
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 6
-        let attributes = [NSAttributedStringKey.paragraphStyle : style]
-        supportDescriptionTextView.attributedText = NSAttributedString(string: "Support Eatery by donating to Cornell AppDev! Funding will help us add new features like crowdedness, collegetown eateries, and more!", attributes: attributes)
+        let attributes = [NSAttributedStringKey.paragraphStyle: style]
+        supportDescriptionTextView.attributedText =
+            NSAttributedString(
+                string: "Support Eatery by donating to Cornell AppDev! "
+                + "Funding will help us add new features like crowdedness, collegetown eateries, and more!",
+                attributes: attributes
+            )
         supportDescriptionTextView.isSelectable = false
         supportDescriptionTextView.isScrollEnabled = false
         supportDescriptionTextView.textAlignment = .center
         supportDescriptionTextView.backgroundColor = .wash
         supportDescriptionTextView.font = UIFont.systemFont(ofSize: 13)
         addSubview(supportDescriptionTextView)
-        
+
         donateButton = UIButton()
         donateButton.setTitle("Donate", for: .normal)
         donateButton.setTitleColor(.white, for: .normal)
         donateButton.backgroundColor = .eateryBlue
         donateButton.layer.cornerRadius = 5
         addSubview(donateButton)
-        
+
         setupConstraints()
     }
-    
-    func setupConstraints(){
+
+    func setupConstraints() {
         topPortionView.snp.makeConstraints { make in
             make.top.leading.trailing.width.equalToSuperview()
             make.height.equalTo(238)
@@ -111,9 +116,9 @@ class GivingDayView: UIView {
             make.height.equalTo(40)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

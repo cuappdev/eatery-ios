@@ -13,11 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var eateryTabBarController: EateryTabBarController!
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:  [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
+    ) -> Bool {
         FirebaseApp.configure()
 
         let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        let URLCache = Foundation.URLCache(
+            memoryCapacity: 4 * 1024 * 1024,
+            diskCapacity: 20 * 1024 * 1024,
+            diskPath: nil
+        )
         Foundation.URLCache.shared = URLCache
 
         AnnouncementNetworking.setupConfig(
@@ -37,7 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             eateryTabBarController = EateryTabBarController()
             window?.rootViewController = eateryTabBarController
         } else {
-            window?.rootViewController = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            window?.rootViewController = OnboardingPageViewController(
+                transitionStyle: .scroll,
+                navigationOrientation: .horizontal,
+                options: nil
+            )
         }
         window?.makeKeyAndVisible()
 
@@ -59,23 +70,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         let favorites = Defaults[\.favorites]
         UIApplication.shared.shortcutItems = favorites.map {
-            UIApplicationShortcutItem(type: $0,
-                                      localizedTitle: $0,
-                                      localizedSubtitle: nil,
-                                      icon: UIApplicationShortcutIcon(type: .favorite),
-                                      userInfo: nil)
+            UIApplicationShortcutItem(
+                type: $0,
+                localizedTitle: $0,
+                localizedSubtitle: nil,
+                icon: UIApplicationShortcutIcon(type: .favorite),
+                userInfo: nil
+            )
         }
     }
 
     // MARK: - Force Touch Shortcut
 
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+    func application(
+        _ application: UIApplication,
+        performActionFor shortcutItem: UIApplicationShortcutItem,
+        completionHandler: @escaping (Bool) -> Void
+    ) {
         let handledShortcutItem = handleShortcutItem(shortcutItem)
         completionHandler(handledShortcutItem)
     }
 
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         eateryTabBarController.eateriesViewController.preselectEatery(withName: shortcutItem.type)
+        eateryTabBarController.eateriesSharedViewController.preselectEatery(withName: shortcutItem.type)
 
         return true
     }

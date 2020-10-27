@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 struct Sort {
-    
+
     enum SortType {
         case time
         case lookAhead
@@ -18,20 +18,21 @@ struct Sort {
         case location
     }
     static func sortMenu(_ menu: [(String, [Menu.Item])] ) -> [(String, [Menu.Item])] {
-        return menu.sorted {
+        menu.sorted {
             if $0.0 == "Hot Traditional Station - Entrees" {
                 return true
             }
             return $0.0 == "Hot Traditional Station - Sides" && $1.0 != "Hot Traditional Station - Entrees"
         }
     }
-    
-    static func sortEateriesByOpenOrAlph(_ eatery: [CampusEatery],
-                                         date: Date = Date(),
-                                         location: CLLocation = CLLocation(latitude: 42.448078,longitude: -76.484291),
-                                         selectedMeal: String = "None",
-                                         sortingType: SortType = .time) -> [CampusEatery] {
-        
+
+    static func sortEateriesByOpenOrAlph(
+        _ eatery: [CampusEatery],
+        date: Date = Date(),
+        location: CLLocation = CLLocation(latitude: 42.448078, longitude: -76.484291),
+        selectedMeal: String = "None",
+        sortingType: SortType = .time
+    ) -> [CampusEatery] {
         let sortByHoursClosure = { (a: CampusEatery, b: CampusEatery) -> Bool in
             switch sortingType {
             case .lookAhead:
@@ -44,7 +45,7 @@ struct Sort {
                     return true
                 }
                 return  a.nickname.lowercased() < b.nickname.lowercased()
-                
+
             case .time:
                 if a.isOpenToday() {
                     if let activeEvent = a.activeEvent(atExactly: date) {
@@ -56,7 +57,7 @@ struct Sort {
                             }
                         } else {
                             let atimeTillOpen = Int(activeEvent.start.timeIntervalSinceNow / 60)
-                            if let bActiveEvent = b.activeEvent(atExactly: date){
+                            if let bActiveEvent = b.activeEvent(atExactly: date) {
                                 let bTimeTillOpen = Int(bActiveEvent.start.timeIntervalSinceNow / 60)
                                 return atimeTillOpen < bTimeTillOpen
                             } else {
@@ -108,15 +109,14 @@ struct Sort {
         }
         return eatery.sorted(by: sortByHoursClosure)
     }
-    
-    
+
     //HelperFunction to get meal
     static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
         let events = eatery.eventsByName(onDayOf: date)
-        
+
         let meals: [String] = Array(events.keys)
         var selectedMeal = meal
-        
+
         switch selectedMeal {
         case "Breakfast":
             if meals.contains("Breakfast") {
@@ -139,7 +139,7 @@ struct Sort {
         case "Dinner": selectedMeal = meals.contains("Dinner") ? "Dinner" : ""
         default: selectedMeal = ""
         }
-        
+
         return selectedMeal
     }
 

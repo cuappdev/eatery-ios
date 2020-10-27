@@ -20,10 +20,25 @@ class OnboardingPageViewController: UIPageViewController {
         view.backgroundColor = .eateryBlue
 
         pages = [
-            OnboardingInfoViewController(title: "Menus", subtitle: "See what’s being served at any campus eatery.", animation: "menus"),
-            OnboardingInfoViewController(title: "Collegetown", subtitle: "Find info about your favorite Collegetown spots.", animation: "collegetown"),
-            OnboardingInfoViewController(title: "Transactions", subtitle: "Track your swipes, BRBs, meal history, and more.", animation: "transactions"),
-            OnboardingLoginViewController(title: "Login", subtitle: "To get the most out of Eatery, log in with your NetID.")
+            OnboardingInfoViewController(
+                title: "Menus",
+                subtitle: "See what’s being served at any campus eatery.",
+                animation: "menus"
+            ),
+            OnboardingInfoViewController(
+                title: "Collegetown",
+                subtitle: "Find info about your favorite Collegetown spots.",
+                animation: "collegetown"
+            ),
+            OnboardingInfoViewController(
+                title: "Transactions",
+                subtitle: "Track your swipes, BRBs, meal history, and more.",
+                animation: "transactions"
+            ),
+            OnboardingLoginViewController(
+                title: "Login",
+                subtitle: "To get the most out of Eatery, log in with your NetID."
+            )
         ]
 
         pages.forEach({ $0.delegate = self })
@@ -52,7 +67,12 @@ extension OnboardingPageViewController: OnboardingViewControllerDelegate {
     func onboardingViewControllerDidTapNext(_ viewController: OnboardingViewController) {
         if let viewControllerIndex = pages.index(of: viewController) {
             if viewControllerIndex < pages.count - 1 {
-                setViewControllers([pages[viewControllerIndex + 1]], direction: .forward, animated: true, completion: nil)
+                setViewControllers(
+                    [pages[viewControllerIndex + 1]],
+                    direction: .forward,
+                    animated: true,
+                    completion: nil
+                )
                 self.pageControl.set(progress: viewControllerIndex + 1, animated: true)
             } else if viewControllerIndex == pages.count - 1 {
                 let eateryTabBarController = EateryTabBarController()

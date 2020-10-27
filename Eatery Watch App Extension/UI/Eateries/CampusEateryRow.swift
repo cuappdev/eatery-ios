@@ -59,9 +59,7 @@ struct CampusEateryRow: View {
         if let userLocation = userLocation {
             let distance = userLocation.distance(from: eateryLocation).converted(to: .miles).value
             let text = "\(Double(round(10 * distance) / 10)) mi"
-            return AnyView(Text(text)
-                .font(.footnote)
-                .foregroundColor(.gray))
+            return AnyView(Text(text).font(.footnote).foregroundColor(.gray))
         } else {
             return AnyView(EmptyView())
         }

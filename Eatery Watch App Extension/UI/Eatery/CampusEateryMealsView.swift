@@ -48,5 +48,5 @@ struct CampusEateryMealsView: View {
             }
         )
     }
-    
+
 }
