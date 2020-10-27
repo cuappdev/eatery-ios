@@ -62,7 +62,6 @@
 		5D5B8CC12450F1B2004E05EF /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B8CC02450F1B2004E05EF /* SearchResultsTableViewCell.swift */; };
 		5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */; };
 		5D77412E2332E08400E9E699 /* ImageParallaxScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */; };
-		5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */; };
 		5D82E1E12381AD1300823715 /* Kingfisher+Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D82E1E02381AD1300823715 /* Kingfisher+Eatery.swift */; };
 		5D856458222A2D4E003A712B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D856457222A2D4E003A712B /* Menu.swift */; };
 		5D871CCD23653A7C00F9BF75 /* EateryMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D871CCB2365397B00F9BF75 /* EateryMenuHeaderView.swift */; };
@@ -106,15 +105,12 @@
 		5DC2D01922349CE800D2B0F5 /* collegetownEateries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */; };
 		5DC37327251ECC020001DC1C /* EateryExceptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC37326251ECC010001DC1C /* EateryExceptionsView.swift */; };
 		5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */; };
-		5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */; };
 		5DC7CB3A236A3F79005C57DB /* CollegetownMenuInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */; };
 		5DD59DD2244B7DF400F6FC36 /* CampusEateriesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD59DD1244B7DF400F6FC36 /* CampusEateriesSearchViewController.swift */; };
 		5DD8A8962315843900ED25FD /* EateriesCollectionViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */; };
 		5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB141622137C7500FCE59C /* LookAheadTableViewCell.swift */; };
 		5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D429225E95EB008054F4 /* RatingView.swift */; };
 		5DE1D42F225EC710008054F4 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D42E225EC710008054F4 /* PillView.swift */; };
-		5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D430225ECB62008054F4 /* PillViewController.swift */; };
-		5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */; };
 		5DEF1AA0222B2EBB00855902 /* AboutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1A9F222B2EBB00855902 /* AboutTableViewController.swift */; };
 		5DEF1AA2222B2FCE00855902 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */; };
 		5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */; };
@@ -274,7 +270,6 @@
 		5D5B8CC02450F1B2004E05EF /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		5D6BF06A22126D1700AA36CD /* LookAheadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAheadViewController.swift; sourceTree = "<group>"; };
 		5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageParallaxScrollViewController.swift; sourceTree = "<group>"; };
-		5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownEateriesViewController.swift; sourceTree = "<group>"; };
 		5D82E1E02381AD1300823715 /* Kingfisher+Eatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kingfisher+Eatery.swift"; sourceTree = "<group>"; };
 		5D856457222A2D4E003A712B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		5D871CCB2365397B00F9BF75 /* EateryMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryMenuHeaderView.swift; sourceTree = "<group>"; };
@@ -316,7 +311,6 @@
 		5DC2D01822349CE800D2B0F5 /* collegetownEateries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = collegetownEateries.graphql; sourceTree = "<group>"; };
 		5DC37326251ECC010001DC1C /* EateryExceptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateryExceptionsView.swift; sourceTree = "<group>"; };
 		5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesMenuViewController.swift; sourceTree = "<group>"; };
-		5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownMenuViewController.swift; sourceTree = "<group>"; };
 		5DC7CB39236A3F79005C57DB /* CollegetownMenuInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegetownMenuInfoView.swift; sourceTree = "<group>"; };
 		5DD59DD1244B7DF400F6FC36 /* CampusEateriesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesSearchViewController.swift; sourceTree = "<group>"; };
 		5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewGridLayout.swift; sourceTree = "<group>"; };
@@ -325,8 +319,6 @@
 		5DE1D428225E95EB008054F4 /* CollegetownMenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegetownMenuHeaderView.swift; sourceTree = "<group>"; };
 		5DE1D429225E95EB008054F4 /* RatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		5DE1D42E225EC710008054F4 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
-		5DE1D430225ECB62008054F4 /* PillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillViewController.swift; sourceTree = "<group>"; };
-		5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesSharedViewController.swift; sourceTree = "<group>"; };
 		5DEF1A9F222B2EBB00855902 /* AboutTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
 		5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		5DEF1AA3222B328800855902 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
@@ -713,27 +705,15 @@
 			path = Campus;
 			sourceTree = "<group>";
 		};
-		5DFF2122236E178D0060BCD9 /* Collegetown */ = {
-			isa = PBXGroup;
-			children = (
-				5D7A4C4E225BCEE6008242C4 /* CollegetownEateriesViewController.swift */,
-				5DC7CB37236A3D78005C57DB /* CollegetownMenuViewController.swift */,
-			);
-			path = Collegetown;
-			sourceTree = "<group>";
-		};
 		6560D4411F51F373009E7CEF /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
-				5DE1D432225ECF1B008054F4 /* EateriesSharedViewController.swift */,
-				5DE1D430225ECB62008054F4 /* PillViewController.swift */,
 				CE9C1FE0226431630062C398 /* EateriesViewController.swift */,
 				5DD8A8952315843900ED25FD /* EateriesCollectionViewGridLayout.swift */,
 				60FF4E1B1CBEE03E0051FD01 /* MapViewController.swift */,
 				5D77412D2332E08400E9E699 /* ImageParallaxScrollViewController.swift */,
 				5DC7CB35236A386D005C57DB /* EateriesMenuViewController.swift */,
 				5DFF2121236E17820060BCD9 /* Campus */,
-				5DFF2122236E178D0060BCD9 /* Collegetown */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -1421,14 +1401,12 @@
 				5DAA55AC23DA919200C378DE /* DefaultsKeys.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
-				5DE1D431225ECB62008054F4 /* PillViewController.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,
 				5D2790362336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift in Sources */,
 				D930FBD8218BC00200B0B1CE /* BRBAccount.swift in Sources */,
 				5D4451A0231D51FE0035164F /* BRBLoginErrorView.swift in Sources */,
 				5DD8A8962315843900ED25FD /* EateriesCollectionViewGridLayout.swift in Sources */,
-				5D7A4C4F225BCEE6008242C4 /* CollegetownEateriesViewController.swift in Sources */,
 				5D55803C2395629800644A9B /* PopularTimesResponse.swift in Sources */,
 				5D218C3E21FBE39700327516 /* LookAheadHeaderView.swift in Sources */,
 				5D218C3D21FBE39700327516 /* FilterDateView.swift in Sources */,
@@ -1473,8 +1451,6 @@
 				D97142E7219A6B6F00E2EE05 /* API.swift in Sources */,
 				5D871CCD23653A7C00F9BF75 /* EateryMenuHeaderView.swift in Sources */,
 				5DDB141722137C7500FCE59C /* LookAheadTableViewCell.swift in Sources */,
-				5DC7CB38236A3D78005C57DB /* CollegetownMenuViewController.swift in Sources */,
-				5DE1D433225ECF1B008054F4 /* EateriesSharedViewController.swift in Sources */,
 				5D10358323E9E69B002EBE90 /* HoursThisWeekView.swift in Sources */,
 				CE9C1FE1226431630062C398 /* EateriesViewController.swift in Sources */,
 				872E528B232DBA09006D12D4 /* Analytics.swift in Sources */,

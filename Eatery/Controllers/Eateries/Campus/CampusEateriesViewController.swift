@@ -27,6 +27,8 @@ class CampusEateriesViewController: EateriesViewController {
 
     private var selectedSearchResult: SearchSource?
 
+    private let locationManager: CLLocationManager = CLLocationManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,6 +61,7 @@ class CampusEateriesViewController: EateriesViewController {
         }
 
         setUpSearchController()
+        setUpLocationManager()
     }
 
     private func queryCampusEateries(_ completion: (() -> Void)? = nil) {
@@ -161,6 +164,22 @@ class CampusEateriesViewController: EateriesViewController {
         }
 
         navigationItem.searchController = searchController
+    }
+
+    private func setUpLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            default: break
+            }
+        }
     }
 
     private func pushSelectedSearchResult() {
@@ -279,3 +298,11 @@ extension CampusEateriesViewController: UISearchControllerDelegate {
     }
 
 }
+ 
+extension CampusEateriesViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        userLocation = locations.last
+        self.userLocation = userLocation
+    }
+}
+
