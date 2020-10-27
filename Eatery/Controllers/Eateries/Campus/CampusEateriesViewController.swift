@@ -26,14 +26,6 @@ class CampusEateriesViewController: EateriesViewController {
     var networkActivityIndicator: NVActivityIndicatorView?
 
     private var selectedSearchResult: SearchSource?
-    
-    private lazy var locationManager: CLLocationManager = {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        return locationManager
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,6 +164,14 @@ class CampusEateriesViewController: EateriesViewController {
         navigationItem.searchController = searchController
     }
     
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        return locationManager
+    }()
+    
     private func setUpLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
@@ -303,7 +303,7 @@ extension CampusEateriesViewController: UISearchControllerDelegate {
  
 extension CampusEateriesViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation = locations.last
+        userLocation = locations.last
         self.userLocation = userLocation
     }
 }

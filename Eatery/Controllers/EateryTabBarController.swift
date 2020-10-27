@@ -40,7 +40,6 @@ class EateryTabBarController: UITabBarController {
             image: UIImage(named: "eateryTabIcon.png"),
             tag: 0
         )
-        
         let lookAheadNavigationController = EateryNavigationController(rootViewController: lookAheadViewController)
         lookAheadNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "menu icon"), tag: 1)
 
@@ -57,11 +56,17 @@ class EateryTabBarController: UITabBarController {
         }
 
         setViewControllers(navigationControllers, animated: false)
-
+        
         tabBar.barTintColor = .white
         tabBar.tintColor = .eateryBlue
         tabBar.shadowImage = UIImage()
-        
+
+        // Present announcements if there are any new ones to present
+        presentAnnouncement { presented in
+            if presented {
+                AppDevAnalytics.shared.logFirebase(AnnouncementPresentedPayload())
+            }
+        }
     }
 
     func tabBarControllerSupportedInterfaceOrientations(
