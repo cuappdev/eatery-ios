@@ -18,22 +18,22 @@ class EateryTabBarController: UITabBarController {
     let eateriesViewController = CampusEateriesViewController()
     let lookAheadViewController = LookAheadViewController()
     let brbViewController = BRBViewController()
-    
+
     let eateriesNavigationController: EateryNavigationController
-    
+
     init() {
         self.eateriesNavigationController = EateryNavigationController(rootViewController: eateriesViewController)
-        
+
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         delegate = self
-        
+
         eateriesNavigationController.delegate = self
         eateriesNavigationController.tabBarItem = UITabBarItem(
             title: nil,
@@ -56,7 +56,7 @@ class EateryTabBarController: UITabBarController {
         }
 
         setViewControllers(navigationControllers, animated: false)
-        
+
         tabBar.barTintColor = .white
         tabBar.tintColor = .eateryBlue
         tabBar.shadowImage = UIImage()
@@ -111,7 +111,7 @@ extension EateryTabBarController: UITabBarControllerDelegate {
 }
 
 extension EateryTabBarController: UINavigationControllerDelegate {
-    
+
     func navigationController(
         _ navigationController: UINavigationController,
         willShow viewController: UIViewController,
@@ -122,5 +122,5 @@ extension EateryTabBarController: UINavigationControllerDelegate {
         let isParallax = viewController is ImageParallaxScrollViewController
         navigationController.setNavigationBarHidden(isParallax, animated: true)
     }
-    
+
 }

@@ -13,7 +13,7 @@ import SwiftyUserDefaults
 import UIKit
 
 class CampusEateriesViewController: EateriesViewController {
-    
+
     private static let cacheTimeToLive: TimeInterval = 24 * 60 * 60 // one day
 
     private var allEateries: [CampusEatery]?
@@ -26,6 +26,8 @@ class CampusEateriesViewController: EateriesViewController {
     var networkActivityIndicator: NVActivityIndicatorView?
 
     private var selectedSearchResult: SearchSource?
+
+    private let locationManager: CLLocationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,16 +165,12 @@ class CampusEateriesViewController: EateriesViewController {
 
         navigationItem.searchController = searchController
     }
-    
-    private lazy var locationManager: CLLocationManager = {
-        let locationManager = CLLocationManager()
+
+    private func setUpLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
-        return locationManager
-    }()
-    
-    private func setUpLocationManager() {
+
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .authorizedWhenInUse:
