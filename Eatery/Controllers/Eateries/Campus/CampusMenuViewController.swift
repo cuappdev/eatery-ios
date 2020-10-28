@@ -43,6 +43,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     private let orderButton = UIButton()
     private var orderButtonIsHidden = false
     private var scroll: ScrollSession?
+    private var showOrderButtonTimer: Timer?
 
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
@@ -70,6 +71,7 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         addMenuLabel()
         addMenuPageViewController()
+        addBlockSeparator(color: .white, height: 44)
 
         setUpOrderButton()
     }
@@ -192,6 +194,8 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private func setOrderButtonHidden(_ isHidden: Bool, animated: Bool) {
+        orderButtonIsHidden = isHidden
+
         let animation = UIViewPropertyAnimator(duration: 0.35, dampingRatio: 1.0) {
             if isHidden {
                 self.orderButton.transform.ty = self.orderButtonMaxYTransform()
@@ -217,6 +221,8 @@ class CampusMenuViewController: EateriesMenuViewController {
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scroll = ScrollSession(start: scrollView.contentOffset.y)
+        showOrderButtonTimer?.invalidate()
+        showOrderButtonTimer = nil
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -237,15 +243,16 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         let dampeningFactor: CGFloat = 0.5
 
-        orderButton.transform.ty = (0...maxYTransform).clamp(orderButton.transform.ty + dampeningFactor * (scroll.curr - scroll.prev))
+        orderButton.transform.ty =
+            (0...maxYTransform).clamp(orderButton.transform.ty + dampeningFactor * (scroll.curr - scroll.prev))
 
         self.scroll = scroll
     }
 
-    private func shouldHideOrderButton() -> Bool {
+    private func shouldHideOrderButton(scroll: ScrollSession, orderButtonIsHidden: Bool) -> Bool {
         let now = Date().timeIntervalSinceReferenceDate
-        guard let scroll = scroll, scroll.prevTime < now else {
-            return true
+        guard scroll.prevTime < now else {
+            return false
         }
 
         // if the user is scrolling with enough velocity in one direction or
@@ -277,9 +284,17 @@ class CampusMenuViewController: EateriesMenuViewController {
         _ scrollView: UIScrollView,
         willDecelerate decelerate: Bool
     ) {
-        orderButtonIsHidden = shouldHideOrderButton()
-        scroll = nil
-        setOrderButtonHidden(orderButtonIsHidden, animated: true)
+        if let scroll = scroll {
+            setOrderButtonHidden(
+                shouldHideOrderButton(scroll: scroll, orderButtonIsHidden: orderButtonIsHidden),
+                animated: true
+            )
+            self.scroll = nil
+        }
+
+        showOrderButtonTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] _ in
+            self?.setOrderButtonHidden(false, animated: true)
+        }
     }
 
 }

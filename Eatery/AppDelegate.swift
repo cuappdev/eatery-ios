@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         FirebaseApp.configure()
 
-        let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         let URLCache = Foundation.URLCache(
             memoryCapacity: 4 * 1024 * 1024,
             diskCapacity: 20 * 1024 * 1024,
@@ -93,7 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         eateryTabBarController.eateriesViewController.preselectEatery(withName: shortcutItem.type)
-        eateryTabBarController.eateriesSharedViewController.preselectEatery(withName: shortcutItem.type)
 
         return true
     }

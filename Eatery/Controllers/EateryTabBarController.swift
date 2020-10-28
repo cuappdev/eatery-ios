@@ -84,7 +84,10 @@ class EateryTabBarController: UITabBarController {
 
 extension EateryTabBarController: UITabBarControllerDelegate {
 
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        shouldSelect viewController: UIViewController
+    ) -> Bool {
         if selectedViewController === viewController,
             viewController === eateriesNavigationController {
             if eateriesNavigationController.viewControllers.count > 1 {

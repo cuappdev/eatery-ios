@@ -10,6 +10,7 @@ import CoreLocation
 import Hero
 import MapKit
 import UIKit
+import SnapKit
 
 protocol DynamicContentSizeView {
 
@@ -118,11 +119,11 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         addToStackView(separatorView)
     }
 
-    func addBlockSeparator() {
+    func addBlockSeparator(color: UIColor = .wash, height: CGFloat = 20) {
         let separator = UIView()
-        separator.backgroundColor = .wash
+        separator.backgroundColor = color
         separator.snp.makeConstraints { make in
-            make.height.equalTo(20)
+            make.height.equalTo(height)
         }
         addToStackView(separator)
     }
