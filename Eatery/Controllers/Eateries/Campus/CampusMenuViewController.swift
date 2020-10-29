@@ -161,8 +161,10 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         if eatery.eateryType == .dining {
             orderButton.setTitle("Reserve on OpenTable", for: .normal)
-        } else {
+        } else if let url = URL.getUrl, UIApplication.shared.canOpenURL(url) {
             orderButton.setTitle("Order on GET", for: .normal)
+        } else {
+            orderButton.isHidden = true
         }
 
         orderButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
@@ -172,12 +174,17 @@ class CampusMenuViewController: EateriesMenuViewController {
         orderButton.layer.shadowColor = UIColor(hex: 0x959DA5).cgColor
         orderButton.layer.shadowOpacity = 0.5
         orderButton.layer.shadowOffset = .zero
+        orderButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
         orderButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
 
         orderButton.hero.modifiers = createHeroModifiers(.fade)
+
         // force the image on the right-hand side of the button
         orderButton.semanticContentAttribute = .forceRightToLeft
 
+        orderButton.adjustsImageWhenHighlighted = false
+        orderButton.addTarget(self, action: #selector(highlightOrderButton), for: .touchDown)
+        orderButton.addTarget(self, action: #selector(unhighlighOrderButton), for: .touchUpOutside)
         orderButton.addTarget(self, action: #selector(orderButtonPressed), for: .touchUpInside)
 
         view.addSubview(orderButton)
@@ -185,6 +192,24 @@ class CampusMenuViewController: EateriesMenuViewController {
             make.bottom.equalTo(view.snp.bottomMargin).inset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
+    }
+
+    @objc private func orderButtonPressed(_ sender: UIButton) {
+        if eatery.eateryType == .dining {
+            // TODO: integrate once it is implmeneted on backend
+        } else if let url = URL.getUrl, UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+
+        unhighlighOrderButton()
+    }
+
+    @objc private func highlightOrderButton() {
+        orderButton.backgroundColor = .darkEateryBlue
+    }
+
+    @objc private func unhighlighOrderButton() {
+        orderButton.backgroundColor = .eateryBlue
     }
 
     private func orderButtonMaxYTransform() -> CGFloat {
@@ -209,10 +234,6 @@ class CampusMenuViewController: EateriesMenuViewController {
             animation.stopAnimation(false)
             animation.finishAnimation(at: .end)
         }
-    }
-
-    @objc private func orderButtonPressed(_ sender: UIButton) {
-
     }
 
     @objc private func directionsButtonPressed(_ sender: UIButton) {

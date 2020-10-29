@@ -48,6 +48,7 @@
 		5D218C4321FBE39700327516 /* EateriesCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */; };
 		5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D218C4721FC136E00327516 /* CLLocation+Distance.swift */; };
 		5D2790362336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2790352336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift */; };
+		5D2A1E41254A3669008BF13D /* URL+Eatery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2A1E40254A3669008BF13D /* URL+Eatery.swift */; };
 		5D34C4DF2356A60600A1132F /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D34C4DE2356A60600A1132F /* SeparatorView.swift */; };
 		5D34C4E12356A64B00A1132F /* CampusMenuInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D34C4E02356A64B00A1132F /* CampusMenuInfoView.swift */; };
 		5D369E9023CA400200C5ACD2 /* AreaFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D369E8F23CA400200C5ACD2 /* AreaFilterView.swift */; };
@@ -259,6 +260,7 @@
 		5D218C2C21FBE39700327516 /* EateriesCollectionViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EateriesCollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		5D218C4721FC136E00327516 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		5D2790352336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBarAppearance+Eatery.swift"; sourceTree = "<group>"; };
+		5D2A1E40254A3669008BF13D /* URL+Eatery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Eatery.swift"; sourceTree = "<group>"; };
 		5D34C4DE2356A60600A1132F /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		5D34C4E02356A64B00A1132F /* CampusMenuInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusMenuInfoView.swift; sourceTree = "<group>"; };
 		5D369E8F23CA400200C5ACD2 /* AreaFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaFilterView.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 				5D2790352336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift */,
 				5D82E1E02381AD1300823715 /* Kingfisher+Eatery.swift */,
 				5D1FE28625320EF2009AAFD1 /* Range+Eatery.swift */,
+				5D2A1E40254A3669008BF13D /* URL+Eatery.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1445,6 +1448,7 @@
 				5D218C4021FBE39700327516 /* EateryCollectionViewCell.swift in Sources */,
 				C21D107D2400F535000A488B /* Secrets.swift in Sources */,
 				D956DCB92187B885001BB9B0 /* CampusEatery.swift in Sources */,
+				5D2A1E41254A3669008BF13D /* URL+Eatery.swift in Sources */,
 				5DE1D42C225E95EB008054F4 /* RatingView.swift in Sources */,
 				5D218C3F21FBE39700327516 /* FilterEateriesView.swift in Sources */,
 				C82E5F032388E96400C881B2 /* OnboardingPageViewController.swift in Sources */,
