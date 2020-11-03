@@ -27,6 +27,9 @@ extension UIColor {
     /// 0x4A90E2
     static let eateryBlue = UIColor(hex: 0x4A90E2)
 
+    /// 0x3B73B5
+    static let darkEateryBlue = UIColor(hex: 0x3B73B5)
+
     /// 0xb7d3f3
     static let histogramBarBlue = UIColor(hex: 0xb7d3f3)
 

@@ -298,11 +298,10 @@ extension CampusEateriesViewController: UISearchControllerDelegate {
     }
 
 }
- 
+
 extension CampusEateriesViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
         self.userLocation = userLocation
     }
 }
-

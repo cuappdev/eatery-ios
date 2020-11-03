@@ -13,7 +13,37 @@ import UIKit
 
 class CampusMenuViewController: EateriesMenuViewController {
 
+    struct ScrollSession {
+
+        /// The offset of the scroll view when the user started scrolling
+        let start: CGFloat
+
+        /// The offset of the scroll view just before the current update
+        var prev: CGFloat
+
+        var prevTime: TimeInterval
+
+        /// The current offset of the scroll view
+        var curr: CGFloat
+
+        var currTime: TimeInterval
+
+        init(start: CGFloat) {
+            self.start = start
+            self.prev = start
+            self.curr = start
+            self.prevTime = Date().timeIntervalSinceReferenceDate
+            self.currTime = self.prevTime
+        }
+
+    }
+
     private let eatery: CampusEatery
+
+    private let orderButton = UIButton()
+    private var orderButtonIsHidden = false
+    private var scroll: ScrollSession?
+    private var showOrderButtonTimer: Timer?
 
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
@@ -41,6 +71,9 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         addMenuLabel()
         addMenuPageViewController()
+        addBlockSeparator(color: .white, height: 44)
+
+        setUpOrderButton()
     }
 
     private func addMenuInfoView() {
@@ -123,8 +156,182 @@ class CampusMenuViewController: EateriesMenuViewController {
         }
     }
 
+    private func setUpOrderButton() {
+        orderButton.setImage(UIImage(named: "link"), for: .normal)
+
+        switch eatery.reservationType {
+        case .get:
+            if let url = URL.getUrl, UIApplication.shared.canOpenURL(url) {
+                orderButton.setTitle("Order on GET", for: .normal)
+            } else {
+                orderButton.isHidden = true
+            }
+
+        case .url(let url):
+            if UIApplication.shared.canOpenURL(url) {
+                orderButton.setTitle("Reserve on OpenTable", for: .normal)
+            } else {
+                orderButton.isHidden = true
+            }
+
+        case .none:
+            orderButton.isHidden = true
+        }
+
+        orderButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+        orderButton.backgroundColor = .eateryBlue
+        orderButton.layer.cornerRadius = 8
+        orderButton.layer.shadowRadius = 4
+        orderButton.layer.shadowColor = UIColor(hex: 0x959DA5).cgColor
+        orderButton.layer.shadowOpacity = 0.5
+        orderButton.layer.shadowOffset = .zero
+        orderButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        orderButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+
+        orderButton.hero.modifiers = createHeroModifiers(.fade)
+
+        // force the image on the right-hand side of the button
+        orderButton.semanticContentAttribute = .forceRightToLeft
+
+        orderButton.adjustsImageWhenHighlighted = false
+        orderButton.addTarget(self, action: #selector(highlightOrderButton), for: .touchDown)
+        orderButton.addTarget(self, action: #selector(unhighlightOrderButton), for: .touchUpOutside)
+        orderButton.addTarget(self, action: #selector(orderButtonPressed), for: .touchUpInside)
+
+        view.addSubview(orderButton)
+        orderButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.snp.bottomMargin).inset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+    }
+
+    @objc private func orderButtonPressed(_ sender: UIButton) {
+        let url: URL?
+        switch eatery.reservationType {
+        case .get: url = .getUrl
+        case .url(let externalUrl): url = externalUrl
+        case .none: url = nil
+        }
+
+        if let url = url, UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+
+        unhighlightOrderButton()
+    }
+
+    @objc private func highlightOrderButton() {
+        orderButton.backgroundColor = .darkEateryBlue
+    }
+
+    @objc private func unhighlightOrderButton() {
+        orderButton.backgroundColor = .eateryBlue
+    }
+
+    private func orderButtonMaxYTransform() -> CGFloat {
+        // distance from the top of the order button to the bottom of the view
+        // plus some additional padding
+        max(0, view.frame.maxY - (orderButton.center.y - orderButton.bounds.height / 2) + 16)
+    }
+
+    private func setOrderButtonHidden(_ isHidden: Bool, animated: Bool) {
+        orderButtonIsHidden = isHidden
+
+        let animation = UIViewPropertyAnimator(duration: 0.35, dampingRatio: 1.0) {
+            if isHidden {
+                self.orderButton.transform.ty = self.orderButtonMaxYTransform()
+            } else {
+                self.orderButton.transform.ty = 0
+            }
+        }
+
+        animation.startAnimation()
+        if !animated {
+            animation.stopAnimation(false)
+            animation.finishAnimation(at: .end)
+        }
+    }
+
     @objc private func directionsButtonPressed(_ sender: UIButton) {
         openDirectionsToEatery()
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        scroll = ScrollSession(start: scrollView.contentOffset.y)
+        showOrderButtonTimer?.invalidate()
+        showOrderButtonTimer = nil
+    }
+
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+
+        guard var scroll = scroll else {
+            return
+        }
+
+        scroll.prev = scroll.curr
+        scroll.prevTime = scroll.currTime
+        scroll.curr = scrollView.contentOffset.y
+        scroll.currTime = Date().timeIntervalSinceReferenceDate
+
+        // distance from the top of the order button to the bottom of the view
+        // plus some additional padding
+        let maxYTransform = orderButtonMaxYTransform()
+
+        let dampeningFactor: CGFloat = 0.5
+
+        orderButton.transform.ty =
+            (0...maxYTransform).clamp(orderButton.transform.ty + dampeningFactor * (scroll.curr - scroll.prev))
+
+        self.scroll = scroll
+    }
+
+    private func shouldHideOrderButton(scroll: ScrollSession, orderButtonIsHidden: Bool) -> Bool {
+        let now = Date().timeIntervalSinceReferenceDate
+        guard scroll.prevTime < now else {
+            return false
+        }
+
+        // if the user is scrolling with enough velocity in one direction or
+        // another, hide or show the order button accordingly
+
+        let requiredVelocity: CGFloat = 500
+
+        // take into account the current time in case the user holds their
+        // finger on the scroll view, then releases
+        let deltaT = CGFloat(now - scroll.prevTime)
+        let deltaY = scroll.curr - scroll.prev
+        let velocity = deltaY / deltaT
+        if velocity > requiredVelocity {
+            return true
+        } else if velocity < -requiredVelocity {
+            return false
+        }
+
+        let fractionToBottom = (0...1).clamp(orderButton.transform.ty / orderButtonMaxYTransform())
+        let boundary: CGFloat = 1 / 2
+        if orderButtonIsHidden {
+            return fractionToBottom > 1 - boundary
+        } else {
+            return fractionToBottom > boundary
+        }
+    }
+
+    func scrollViewDidEndDragging(
+        _ scrollView: UIScrollView,
+        willDecelerate decelerate: Bool
+    ) {
+        if let scroll = scroll {
+            setOrderButtonHidden(
+                shouldHideOrderButton(scroll: scroll, orderButtonIsHidden: orderButtonIsHidden),
+                animated: true
+            )
+            self.scroll = nil
+        }
+
+        showOrderButtonTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] _ in
+            self?.setOrderButtonHidden(false, animated: true)
+        }
     }
 
 }

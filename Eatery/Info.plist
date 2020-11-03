@@ -84,6 +84,7 @@ winter-logo.jpg</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemaps</string>
+		<string>getmobile</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

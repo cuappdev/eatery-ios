@@ -147,6 +147,15 @@ struct NetworkManager {
                     swipeDataPoints.append(swipeDataPoint)
                 }
 
+                let reservationType: EateryReservationType
+                if eatery.isGet {
+                    reservationType = .get
+                } else if let string = eatery.reserveUrl, let url = URL(string: string) {
+                    reservationType = .url(url)
+                } else {
+                    reservationType = .none
+                }
+
                 return CampusEatery(
                     id: eatery.id,
                     name: eatery.name,
@@ -162,7 +171,8 @@ struct NetworkManager {
                     events: eventItems,
                     diningMenu: diningItems,
                     swipeDataPoints: swipeDataPoints,
-                    exceptions: eatery.exceptions.compactMap { $0 }
+                    exceptions: eatery.exceptions.compactMap { $0 },
+                    reservationType: reservationType
                 )
             }
 
