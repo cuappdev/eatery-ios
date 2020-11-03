@@ -159,11 +159,22 @@ class CampusMenuViewController: EateriesMenuViewController {
     private func setUpOrderButton() {
         orderButton.setImage(UIImage(named: "link"), for: .normal)
 
-        if eatery.eateryType == .dining {
-            orderButton.setTitle("Reserve on OpenTable", for: .normal)
-        } else if let url = URL.getUrl, UIApplication.shared.canOpenURL(url) {
-            orderButton.setTitle("Order on GET", for: .normal)
-        } else {
+        switch eatery.reservationType {
+        case .get:
+            if let url = URL.getUrl, UIApplication.shared.canOpenURL(url) {
+                orderButton.setTitle("Order on GET", for: .normal)
+            } else {
+                orderButton.isHidden = true
+            }
+
+        case .url(let url):
+            if UIApplication.shared.canOpenURL(url) {
+                orderButton.setTitle("Reserve on OpenTable", for: .normal)
+            } else {
+                orderButton.isHidden = true
+            }
+
+        case .none:
             orderButton.isHidden = true
         }
 
@@ -184,7 +195,7 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         orderButton.adjustsImageWhenHighlighted = false
         orderButton.addTarget(self, action: #selector(highlightOrderButton), for: .touchDown)
-        orderButton.addTarget(self, action: #selector(unhighlighOrderButton), for: .touchUpOutside)
+        orderButton.addTarget(self, action: #selector(unhighlightOrderButton), for: .touchUpOutside)
         orderButton.addTarget(self, action: #selector(orderButtonPressed), for: .touchUpInside)
 
         view.addSubview(orderButton)
@@ -195,20 +206,25 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     @objc private func orderButtonPressed(_ sender: UIButton) {
-        if eatery.eateryType == .dining {
-            // TODO: integrate once it is implmeneted on backend
-        } else if let url = URL.getUrl, UIApplication.shared.canOpenURL(url) {
+        let url: URL?
+        switch eatery.reservationType {
+        case .get: url = .getUrl
+        case .url(let externalUrl): url = externalUrl
+        case .none: url = nil
+        }
+
+        if let url = url, UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
 
-        unhighlighOrderButton()
+        unhighlightOrderButton()
     }
 
     @objc private func highlightOrderButton() {
         orderButton.backgroundColor = .darkEateryBlue
     }
 
-    @objc private func unhighlighOrderButton() {
+    @objc private func unhighlightOrderButton() {
         orderButton.backgroundColor = .eateryBlue
     }
 

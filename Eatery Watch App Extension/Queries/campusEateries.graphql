@@ -9,6 +9,8 @@ query CampusEateries {
         phone
         location
         exceptions
+        isGet
+        reserveUrl
         campusArea {
             descriptionShort
         }

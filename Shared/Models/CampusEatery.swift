@@ -47,6 +47,60 @@ enum MenuType: String, Codable {
 
 }
 
+enum EateryReservationType: Codable {
+
+    private enum CodingKeys: String, CodingKey {
+        case kind
+        case url
+    }
+
+    case none
+
+    /// This eatery exists on GET
+    case get
+
+    /// This eatery is reservable on OpenTable or elsewhere
+    case url(URL)
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+
+        let kind = try? values.decode(String.self, forKey: .kind)
+
+        switch kind {
+        case "get":
+            self = .get
+
+        case "url":
+            if let url = try? values.decode(URL.self, forKey: .url) {
+                self = .url(url)
+            } else {
+                self = .none
+            }
+
+        default:
+            self = .none
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .get:
+            try container.encode("get", forKey: .kind)
+
+        case .url(let url):
+            try container.encode("url", forKey: .kind)
+            try container.encode(url, forKey: .url)
+
+        case .none:
+            try container.encode("none", forKey: .kind)
+
+        }
+    }
+
+}
+
 /// Represents a Cornell Dining Facility and information about it
 /// such as open times, menus, location, etc.
 struct CampusEatery: Eatery, Codable, DefaultsSerializable {
@@ -110,6 +164,8 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
 
     let exceptions: [String]
 
+    let reservationType: EateryReservationType
+
     init(
         id: Int,
         name: String,
@@ -125,7 +181,8 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         events: [String: [String: Event]],
         diningMenu: [String: [Menu.Item]]?,
         swipeDataPoints: [SwipeDataPoint],
-        exceptions: [String]
+        exceptions: [String],
+        reservationType: EateryReservationType
     ) {
         self.id = id
         self.name = name
@@ -154,6 +211,8 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         })
 
         self.exceptions = exceptions
+
+        self.reservationType = reservationType
     }
 
     func diningItems(onDayOf date: Date) -> [Menu.Item] {
