@@ -222,6 +222,9 @@ class EateriesViewController: UIViewController {
             CGPoint(x: 0, y: -(collectionView.adjustedContentInset.top + largeTitleHeight + searchBarHeight)),
             animated: false
         )
+
+        // Add the refresh control here because of a bug in iOS?!?
+        collectionView.refreshControl = refreshControl
     }
 
     private func setUpNavigationBar() {
@@ -290,7 +293,6 @@ class EateriesViewController: UIViewController {
         refreshControl = UIRefreshControl(frame: .zero)
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refreshEateries), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
     }
 
     private func setUpSearchAndFilterBars() {
@@ -742,6 +744,7 @@ extension EateriesViewController: UICollectionViewDelegate {
         switch state {
         case .presenting(cached: false):
             delegate?.eateriesViewController(self, didSelectEatery: eatery)
+
         case .presenting(cached: true):
             preselectEatery(eatery)
 
