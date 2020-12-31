@@ -17,7 +17,8 @@ class ImageParallaxScrollViewController: UIViewController {
     private let navigationBar = UINavigationBar()
     private let navigationBarBackground = UIView()
 
-    private let scrollView = UIScrollView()
+    internal let scrollView = UIScrollView()
+    internal var scrollOffset: CGFloat?
     let imageView = UIImageView()
     let gradientView = MenuGradientView()
 
@@ -41,6 +42,7 @@ class ImageParallaxScrollViewController: UIViewController {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.delaysContentTouches = true
+        scrollView.contentInsetAdjustmentBehavior = .never
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -103,6 +105,15 @@ class ImageParallaxScrollViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        // These variables are placed here rather than in CampusMenuVC because
+        // when testing, navBarHeight gave 148 sometimes for some reason...
+        // I'm not sure why this happened but it was 100% correct when put in here
+        let imageViewHeight = imageView.frame.height
+        let navBarHeight = navigationBar.frame.height
+        let topInsets = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+        let safetyOffset: CGFloat = 5
+        self.scrollOffset = navBarHeight + topInsets - imageViewHeight - safetyOffset
 
         // Why fade in the navigation bar instead of using hero?
         //

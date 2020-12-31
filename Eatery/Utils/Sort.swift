@@ -110,6 +110,54 @@ struct Sort {
         return eatery.sorted(by: sortByHoursClosure)
     }
 
+    // Merge Sort code inspired by https://github.com/raywenderlich/swift-algorithm-club/tree/master/Merge%20Sort
+
+    static func menuMergeSort(_ array: [Menu.Item]) -> [Menu.Item] {
+        guard array.count > 1 else { return array }
+
+        let middleIndex = array.count / 2
+        let leftArray = menuMergeSort(Array(array[0..<middleIndex]))
+        let rightArray = menuMergeSort(Array(array[middleIndex..<array.count]))
+
+        return merge(leftPile: leftArray, rightPile: rightArray)
+
+    }
+
+    private static func merge(leftPile: [Menu.Item], rightPile: [Menu.Item]) -> [Menu.Item] {
+        var leftIndex = 0
+        var rightIndex = 0
+        var orderedPile = [Menu.Item]()
+
+        orderedPile.reserveCapacity(leftPile.count + rightPile.count)
+
+        while leftIndex < leftPile.count && rightIndex < rightPile.count {
+            if (leftPile[leftIndex].prices?[0] ?? 0) < (rightPile[rightIndex].prices?[0] ?? 0) {
+                orderedPile.append(leftPile[leftIndex])
+                leftIndex += 1
+            } else if (leftPile[leftIndex].prices?[0] ?? 0) > (rightPile[rightIndex].prices?[0] ?? 0) {
+                orderedPile.append(rightPile[rightIndex])
+                rightIndex += 1
+            } else {
+                orderedPile.append(leftPile[leftIndex])
+                leftIndex += 1
+                orderedPile.append(rightPile[rightIndex])
+                rightIndex += 1
+            }
+        }
+
+        while leftIndex < leftPile.count {
+            orderedPile.append(leftPile[leftIndex])
+            leftIndex += 1
+        }
+
+        while rightIndex < rightPile.count {
+            orderedPile.append(rightPile[rightIndex])
+            rightIndex += 1
+        }
+
+        return orderedPile
+    }
+
     //HelperFunction to get meal
     static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
         let events = eatery.eventsByName(onDayOf: date)

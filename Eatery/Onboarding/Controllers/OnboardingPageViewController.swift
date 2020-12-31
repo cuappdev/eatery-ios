@@ -26,11 +26,6 @@ class OnboardingPageViewController: UIPageViewController {
                 animation: "menus"
             ),
             OnboardingInfoViewController(
-                title: "Collegetown",
-                subtitle: "Find info about your favorite Collegetown spots.",
-                animation: "collegetown"
-            ),
-            OnboardingInfoViewController(
                 title: "Transactions",
                 subtitle: "Track your swipes, BRBs, meal history, and more.",
                 animation: "transactions"
