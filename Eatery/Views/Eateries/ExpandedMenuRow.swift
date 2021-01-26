@@ -1,5 +1,5 @@
 //
-//  MenuRow.swift
+//  ExpandedMenuRow.swift
 //  Eatery
 //
 //  Created by Sergio Diaz on 11/18/20.

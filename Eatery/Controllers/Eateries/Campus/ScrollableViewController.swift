@@ -1,5 +1,5 @@
 //
-//  ScrollabeViewController2.swift
+//  ScrollableViewController.swift
 //  Eatery
 //
 //  Created by Sergio Diaz on 12/9/20.

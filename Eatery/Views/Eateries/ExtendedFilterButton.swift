@@ -1,5 +1,5 @@
 //
-//  FilterButton.swift
+//  ExpandedFilterButton.swift
 //  Eatery
 //
 //  Created by Sergio Diaz on 12/24/20.
