@@ -11,9 +11,11 @@ import SnapKit
 
 class ScrollableTextTabBarControl: TabBar {
 
+    let padding: CGFloat!
     let underlineOffset: CGFloat = 6
 
-    override init(sections: [String]) {
+    init(sections: [String], padding: CGFloat = 0) {
+        self.padding = padding
         super.init(sections: sections)
 
         for section in sections {
@@ -46,7 +48,8 @@ class ScrollableTextTabBarControl: TabBar {
         scrollView.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.leading.equalToSuperview().offset(padding)
+            make.top.bottom.trailing.equalToSuperview()
         }
 
         underlineView = UIView()
@@ -61,24 +64,30 @@ class ScrollableTextTabBarControl: TabBar {
     }
 
     override func select(at index: Int) {
+        // Base case to protect against accidental backend errors
+        if tabButtons.count == 0 {
+            return
+        }
+
         selectedSegmentIndex = index
-        let button = tabButtons[index]
+        let button = tabButtons[selectedSegmentIndex]
         let buttonPos = button.center.x - (button.frame.width / 2)
-        let maxScroll = self.scrollView.contentSize.width - self.scrollView.frame.width
+        let maxScroll = self.scrollView.contentSize.width + self.padding - self.scrollView.frame.width
 
         UIView.animate(withDuration: 0.4) {
-            self.underlineView.center.x = button.center.x
+            self.underlineView.center.x = button.center.x + self.padding // Must account for padding of StackView
             if buttonPos < maxScroll {
                 self.scrollView.contentOffset.x = button.center.x - (button.frame.width / 2)
             } else if self.scrollView.contentOffset.x < maxScroll {
                 self.scrollView.contentOffset.x = maxScroll
             }
-            self.underlineView.snp.remakeConstraints { make in
-                make.centerX.equalTo(button)
-                make.width.equalTo(button)
-                make.bottom.equalTo(button).offset(self.underlineOffset)
-                make.height.equalTo(2)
-            }
+        }
+
+        self.underlineView.snp.remakeConstraints { make in
+            make.centerX.equalTo(button)
+            make.width.equalTo(button)
+            make.bottom.equalTo(button).offset(self.underlineOffset)
+            make.height.equalTo(2)
         }
 
         for tab in tabButtons {
@@ -86,6 +95,7 @@ class ScrollableTextTabBarControl: TabBar {
             tab.isUserInteractionEnabled = true
             tab.setTitleColor(.gray, for: .normal)
         }
+
         tabButtons[index].setTitleColor(.eateryBlue, for: .normal)
         tabButtons[index].isSelected = true
         tabButtons[index].isUserInteractionEnabled = false

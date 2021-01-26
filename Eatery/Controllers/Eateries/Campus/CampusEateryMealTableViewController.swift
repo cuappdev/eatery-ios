@@ -10,9 +10,7 @@ class CampusEateryMealTableViewController: UITableViewController {
     init(eatery: CampusEatery, meal: String) {
         self.eatery = eatery
         self.meal = meal
-        print("Called")
-//        self.menu = eatery.getMenu(meal: meal, onDayOf: Date())
-        self.menu = HARDCODE.getRandomMenuWithCategories()
+        self.menu = eatery.getMenu(meal: meal, onDayOf: Date())
 
         super.init(nibName: nil, bundle: nil)
     }

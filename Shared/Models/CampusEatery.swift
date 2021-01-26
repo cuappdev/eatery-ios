@@ -162,6 +162,10 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
     /// never changes.
     let diningMenu: Menu?
 
+    let expandedMenu: ExpandedMenu?
+
+    let orderedExpandedCategories: [String]
+
     let exceptions: [String]
 
     let reservationType: EateryReservationType
@@ -180,6 +184,8 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         slug: String,
         events: [String: [String: Event]],
         diningMenu: [String: [Menu.Item]]?,
+        expandedMenu: [String: [ExpandedMenu.Item]]?,
+        orderedExpandedCategories: [String],
         swipeDataPoints: [SwipeDataPoint],
         exceptions: [String],
         reservationType: EateryReservationType
@@ -204,6 +210,14 @@ struct CampusEatery: Eatery, Codable, DefaultsSerializable {
         } else {
             self.diningMenu = nil
         }
+
+        if let expandMenu = expandedMenu {
+            self.expandedMenu = ExpandedMenu(data: expandMenu)
+        } else {
+            self.expandedMenu = nil
+        }
+
+        self.orderedExpandedCategories = orderedExpandedCategories
 
         self.allEvents = events.flatMap { $0.value.map { $0.value } }
         self.swipeDataByHour = swipeDataPoints.reduce(into: [:], { (swipeDataByHour, point) in
@@ -251,6 +265,22 @@ extension CampusEatery {
 
     func getMenu(meal: String, onDayOf date: Date) -> Menu? {
         getMenuAndType(meal: meal, onDayOf: date)?.0
+    }
+
+}
+
+// MARK: - ExpandedMenu Information
+
+extension CampusEatery {
+
+    func getOrderedCategories() -> [String] {
+        if let expandedMenu = expandedMenu {
+            let categories = expandedMenu.data.map {
+                $0.key
+            }
+            return categories.sorted()
+        }
+        return []
     }
 
 }

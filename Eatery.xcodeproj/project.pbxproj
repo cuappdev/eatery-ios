@@ -124,7 +124,7 @@
 		872E528B232DBA09006D12D4 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E5289232DBA07006D12D4 /* Analytics.swift */; };
 		87E712EC23416C1900085DB5 /* GivingDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E712EB23416C1900085DB5 /* GivingDayView.swift */; };
 		87E712EE23416C3300085DB5 /* GivingDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E712ED23416C3300085DB5 /* GivingDayViewController.swift */; };
-		952341BD2565272000674187 /* MenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952341BC2565272000674187 /* MenuRow.swift */; };
+		952341BD2565272000674187 /* ExpandedMenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952341BC2565272000674187 /* ExpandedMenuRow.swift */; };
 		9524FF142561A1C10046E8B7 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9524FF132561A1C10046E8B7 /* TabBar.swift */; };
 		9538E75E255CC758000D2F34 /* ScrollableTextTabBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9538E75D255CC758000D2F34 /* ScrollableTextTabBarControl.swift */; };
 		9584FE471CDD6BDF001A3AB5 /* DINLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */; };
@@ -132,12 +132,13 @@
 		95CEB2D82595083F00582E34 /* ExtendedFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CEB2D72595083F00582E34 /* ExtendedFilterButton.swift */; };
 		95D48582259D0AE700B312D3 /* CampusEateriesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48581259D0AE700B312D3 /* CampusEateriesSearchViewController.swift */; };
 		95D48586259D0AEB00B312D3 /* CampusEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48585259D0AEB00B312D3 /* CampusEateriesViewController.swift */; };
-		95D4858E259D0B0700B312D3 /* CampusEateryExtendedMenuViewControllerswift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4858D259D0B0700B312D3 /* CampusEateryExtendedMenuViewControllerswift.swift */; };
-		95D48592259D0B1D00B312D3 /* HARDCODE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48591259D0B1D00B312D3 /* HARDCODE.swift */; };
+		95D4858E259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4858D259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift */; };
 		95D48596259D0B1F00B312D3 /* CampusMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48595259D0B1F00B312D3 /* CampusMenuViewController.swift */; };
 		95D4859C259D0B2300B312D3 /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4859B259D0B2300B312D3 /* CampusEateryMealTableViewController.swift */; };
 		95D485A4259D0B2A00B312D3 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D485A3259D0B2A00B312D3 /* TabbedPageViewController.swift */; };
 		95D485A6259D0B2D00B312D3 /* ScrollabeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D485A5259D0B2D00B312D3 /* ScrollabeViewController.swift */; };
+		95DA17B225B72203008631BF /* ExpandedMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17B125B72203008631BF /* ExpandedMenu.swift */; };
+		95DA17B325B72203008631BF /* ExpandedMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17B125B72203008631BF /* ExpandedMenu.swift */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
 		BDED220CF98246CF49570C52 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
@@ -342,7 +343,7 @@
 		872E5289232DBA07006D12D4 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		87E712EB23416C1900085DB5 /* GivingDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivingDayView.swift; sourceTree = "<group>"; };
 		87E712ED23416C3300085DB5 /* GivingDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivingDayViewController.swift; sourceTree = "<group>"; };
-		952341BC2565272000674187 /* MenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRow.swift; sourceTree = "<group>"; };
+		952341BC2565272000674187 /* ExpandedMenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMenuRow.swift; sourceTree = "<group>"; };
 		9524FF132561A1C10046E8B7 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		9538E75D255CC758000D2F34 /* ScrollableTextTabBarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableTextTabBarControl.swift; sourceTree = "<group>"; };
 		9584FE461CDD6BDF001A3AB5 /* DINLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINLight.ttf; sourceTree = "<group>"; };
@@ -351,12 +352,12 @@
 		95CEB2D72595083F00582E34 /* ExtendedFilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedFilterButton.swift; sourceTree = "<group>"; };
 		95D48581259D0AE700B312D3 /* CampusEateriesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesSearchViewController.swift; sourceTree = "<group>"; };
 		95D48585259D0AEB00B312D3 /* CampusEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesViewController.swift; sourceTree = "<group>"; };
-		95D4858D259D0B0700B312D3 /* CampusEateryExtendedMenuViewControllerswift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryExtendedMenuViewControllerswift.swift; sourceTree = "<group>"; };
-		95D48591259D0B1D00B312D3 /* HARDCODE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HARDCODE.swift; sourceTree = "<group>"; };
+		95D4858D259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryExpandedMenuViewControllerswift.swift; sourceTree = "<group>"; };
 		95D48595259D0B1F00B312D3 /* CampusMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusMenuViewController.swift; sourceTree = "<group>"; };
 		95D4859B259D0B2300B312D3 /* CampusEateryMealTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryMealTableViewController.swift; sourceTree = "<group>"; };
 		95D485A3259D0B2A00B312D3 /* TabbedPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedPageViewController.swift; sourceTree = "<group>"; };
 		95D485A5259D0B2D00B312D3 /* ScrollabeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollabeViewController.swift; sourceTree = "<group>"; };
+		95DA17B125B72203008631BF /* ExpandedMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMenu.swift; sourceTree = "<group>"; };
 		95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.debug.xcconfig"; sourceTree = "<group>"; };
 		BD082688B710875CB59FA212 /* Pods-Eatery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig"; sourceTree = "<group>"; };
@@ -549,7 +550,7 @@
 				5D10358223E9E69B002EBE90 /* HoursThisWeekView.swift */,
 				5D5B8CC02450F1B2004E05EF /* SearchResultsTableViewCell.swift */,
 				5DC37326251ECC010001DC1C /* EateryExceptionsView.swift */,
-				952341BC2565272000674187 /* MenuRow.swift */,
+				952341BC2565272000674187 /* ExpandedMenuRow.swift */,
 			);
 			path = Eateries;
 			sourceTree = "<group>";
@@ -766,9 +767,8 @@
 				95D48585259D0AEB00B312D3 /* CampusEateriesViewController.swift */,
 				95D485A5259D0B2D00B312D3 /* ScrollabeViewController.swift */,
 				95D485A3259D0B2A00B312D3 /* TabbedPageViewController.swift */,
-				95D4858D259D0B0700B312D3 /* CampusEateryExtendedMenuViewControllerswift.swift */,
+				95D4858D259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift */,
 				95D4859B259D0B2300B312D3 /* CampusEateryMealTableViewController.swift */,
-				95D48591259D0B1D00B312D3 /* HARDCODE.swift */,
 			);
 			path = Campus;
 			sourceTree = "<group>";
@@ -928,6 +928,7 @@
 				D956DCC02187B94E001BB9B0 /* Event.swift */,
 				D956DCB82187B885001BB9B0 /* CampusEatery.swift */,
 				5DACA8F6225B78B0009B0A2F /* CollegetownEatery.swift */,
+				95DA17B125B72203008631BF /* ExpandedMenu.swift */,
 				5D856457222A2D4E003A712B /* Menu.swift */,
 				D930FBD7218BC00200B0B1CE /* BRBAccount.swift */,
 			);
@@ -1411,6 +1412,7 @@
 				5D8A3BD823CE827900CA7B28 /* LocationPublisherProxy.swift in Sources */,
 				5D369EA223CD22DA00C5ACD2 /* CampusEatery+Identifiable.swift in Sources */,
 				5D05FF6723C2C35700EF8CC9 /* CollegetownEatery.swift in Sources */,
+				95DA17B325B72203008631BF /* ExpandedMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1429,7 +1431,6 @@
 				5DAA55AC23DA919200C378DE /* DefaultsKeys.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
-				95D48592259D0B1D00B312D3 /* HARDCODE.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,
 				5D2790362336BC1400AA513B /* UINavigationBarAppearance+Eatery.swift in Sources */,
@@ -1447,6 +1448,7 @@
 				5D5B8CC12450F1B2004E05EF /* SearchResultsTableViewCell.swift in Sources */,
 				D956DCB42187B4B1001BB9B0 /* NetworkManager.swift in Sources */,
 				5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */,
+				95DA17B225B72203008631BF /* ExpandedMenu.swift in Sources */,
 				5DF17737231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift in Sources */,
 				5D1FE28725320EF2009AAFD1 /* Range+Eatery.swift in Sources */,
 				5DC7CB3A236A3F79005C57DB /* CollegetownMenuInfoView.swift in Sources */,
@@ -1456,7 +1458,7 @@
 				5D856458222A2D4E003A712B /* Menu.swift in Sources */,
 				5D44519E231D45C30035164F /* BRBHistoryTableViewCell.swift in Sources */,
 				5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */,
-				95D4858E259D0B0700B312D3 /* CampusEateryExtendedMenuViewControllerswift.swift in Sources */,
+				95D4858E259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift in Sources */,
 				5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */,
 				5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */,
 				5D77412E2332E08400E9E699 /* ImageParallaxScrollViewController.swift in Sources */,
@@ -1504,7 +1506,7 @@
 				95D48596259D0B1F00B312D3 /* CampusMenuViewController.swift in Sources */,
 				95CEB2D82595083F00582E34 /* ExtendedFilterButton.swift in Sources */,
 				5DC06B7A21FE36020043701A /* PaymentMethodsView.swift in Sources */,
-				952341BD2565272000674187 /* MenuRow.swift in Sources */,
+				952341BD2565272000674187 /* ExpandedMenuRow.swift in Sources */,
 				5D50C53123D1456900B783A4 /* Sort.swift in Sources */,
 				95D48586259D0AEB00B312D3 /* CampusEateriesViewController.swift in Sources */,
 			);

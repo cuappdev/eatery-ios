@@ -112,29 +112,31 @@ struct Sort {
 
     // Merge Sort code inspired by https://github.com/raywenderlich/swift-algorithm-club/tree/master/Merge%20Sort
 
-    static func menuMergeSort(_ array: [Menu.Item]) -> [Menu.Item] {
+    static func expandedMenuMergeSort(_ array: [ExpandedMenu.Item]) -> [ExpandedMenu.Item] {
         guard array.count > 1 else { return array }
 
         let middleIndex = array.count / 2
-        let leftArray = menuMergeSort(Array(array[0..<middleIndex]))
-        let rightArray = menuMergeSort(Array(array[middleIndex..<array.count]))
+        let leftArray = expandedMenuMergeSort(Array(array[0..<middleIndex]))
+        let rightArray = expandedMenuMergeSort(Array(array[middleIndex..<array.count]))
 
         return merge(leftPile: leftArray, rightPile: rightArray)
-
     }
 
-    private static func merge(leftPile: [Menu.Item], rightPile: [Menu.Item]) -> [Menu.Item] {
+    private static func merge(leftPile: [ExpandedMenu.Item], rightPile: [ExpandedMenu.Item]) -> [ExpandedMenu.Item] {
         var leftIndex = 0
         var rightIndex = 0
-        var orderedPile = [Menu.Item]()
+        var orderedPile = [ExpandedMenu.Item]()
 
         orderedPile.reserveCapacity(leftPile.count + rightPile.count)
 
         while leftIndex < leftPile.count && rightIndex < rightPile.count {
-            if (leftPile[leftIndex].prices?[0] ?? 0) < (rightPile[rightIndex].prices?[0] ?? 0) {
+            let leftPrice = leftPile[leftIndex].getNumericPrice()
+            let rightPrice = rightPile[rightIndex].getNumericPrice()
+
+            if leftPrice < rightPrice {
                 orderedPile.append(leftPile[leftIndex])
                 leftIndex += 1
-            } else if (leftPile[leftIndex].prices?[0] ?? 0) > (rightPile[rightIndex].prices?[0] ?? 0) {
+            } else if leftPrice > rightPrice {
                 orderedPile.append(rightPile[rightIndex])
                 rightIndex += 1
             } else {

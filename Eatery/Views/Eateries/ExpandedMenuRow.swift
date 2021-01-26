@@ -8,17 +8,19 @@
 
 import UIKit
 
-class ExtendedMenuRow: UIView {
+class ExpandedMenuRow: UIView {
 
     var itemLabel: UILabel!
     var priceLabel: UILabel!
-    var item: Menu.Item!
+    var item: ExpandedMenu.Item!
+
+    let padding: CGFloat = 15
 
     let leadPadding: CGFloat = 15
     let trailPadding: CGFloat = -15
     let lineOffset: CGFloat = 2
 
-    init(item: Menu.Item, hasSeparator: Bool) {
+    init(item: ExpandedMenu.Item, hasSeparator: Bool) {
         super.init(frame: .zero)
 
         let separator = UIView()
@@ -28,8 +30,8 @@ class ExtendedMenuRow: UIView {
         separator.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(leadPadding - lineOffset)
-            make.trailing.equalToSuperview().offset(trailPadding + lineOffset)
+            make.leading.equalToSuperview().offset(padding - lineOffset)
+            make.trailing.equalToSuperview().offset(-padding + lineOffset)
         }
 
         self.item = item
@@ -58,7 +60,7 @@ class ExtendedMenuRow: UIView {
         }
 
         self.snp.makeConstraints { make in
-            make.height.equalTo(CampusEateryExtendedMenuViewController.heightConst)
+            make.height.equalTo(CampusEateryExpandedMenuViewController.heightConst)
         }
 
     }
@@ -68,17 +70,7 @@ class ExtendedMenuRow: UIView {
     }
 
     func getPriceString() -> String {
-        var priceString = ""
-        if let prices = item.prices {
-            if prices.count > 0 {
-                priceString = String(format: "$%.2f", prices[0])
-                for i in 1..<prices.count {
-                    priceString += String(format: " | $%.2f", prices[i])
-                }
-            }
-        }
-
-        return priceString
+        item.priceString.replacingOccurrences(of: "/", with: " | ")
     }
 
 }

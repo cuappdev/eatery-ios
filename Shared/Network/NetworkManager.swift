@@ -156,6 +156,32 @@ struct NetworkManager {
                     reservationType = .none
                 }
 
+                var expandedMenuData: [String: [ExpandedMenu.Item]] = [:]
+                var orderedCategories: [String] = []
+
+                eatery.expandedMenu.compactMap { $0 }.forEach { expandedMenu in
+                    expandedMenuData[expandedMenu.category] = []
+                    orderedCategories.append(expandedMenu.category)
+                    var expandedMenuItems: [ExpandedMenu.Item] = []
+                    let stations = expandedMenu.stations.compactMap { $0 }
+
+                    stations.forEach { station in
+                        let items = station.items.compactMap { $0 }
+
+                        items.forEach { item in
+                            let name = item.item
+                            let health = item.healthy
+                            let price = item.price
+
+                            let newItem = ExpandedMenu.Item(name: name, healthy: health, priceString: price)
+                            expandedMenuItems.append(newItem)
+                        }
+                    }
+
+                    expandedMenuData[expandedMenu.category] = expandedMenuItems
+                    orderedCategories = orderedCategories.sorted()
+                }
+
                 return CampusEatery(
                     id: eatery.id,
                     name: eatery.name,
@@ -170,6 +196,8 @@ struct NetworkManager {
                     slug: eatery.slug,
                     events: eventItems,
                     diningMenu: diningItems,
+                    expandedMenu: expandedMenuData,
+                    orderedExpandedCategories: orderedCategories,
                     swipeDataPoints: swipeDataPoints,
                     exceptions: eatery.exceptions.compactMap { $0 },
                     reservationType: reservationType

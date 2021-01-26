@@ -49,6 +49,19 @@ query CampusEateries {
                 }
             }
         }
-    }
+        expandedMenu {
+        category
+        stations {
+          items {
+            item
+            healthy
+            price
+            choices {
+              options
+            }
+          }
+        }
+      }
+  }
 }
 
