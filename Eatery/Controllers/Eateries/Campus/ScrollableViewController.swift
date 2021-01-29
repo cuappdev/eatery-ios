@@ -122,7 +122,7 @@ class ScrollableViewController: UIViewController {
         The first operation is very simple, as visible by the "if" statement below. However, the second
         (occurs in "else) is much more complicated because we have to split the automatic scroll operation
         into two pieces: scrolling to the top of this view controller and scrolling to the target.  If we
-        don't do this, the tabBarStack will scroll unevenly with the rest of the scroll view.   */
+        don't do this, the tabBarStack will scroll unevenly with the rest of the scroll view.  */
     @objc func manualScroll() {
         let minOffset: CGFloat = 4
         let currentPos = scrollView?.contentOffset.y ?? 0
