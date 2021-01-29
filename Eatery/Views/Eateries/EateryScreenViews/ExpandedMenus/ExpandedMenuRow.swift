@@ -10,17 +10,17 @@ import UIKit
 
 class ExpandedMenuRow: UIView {
 
-    var itemLabel: UILabel!
-    var priceLabel: UILabel!
-    var item: ExpandedMenu.Item!
+    private var itemLabel: UILabel!
+    private var priceLabel: UILabel!
+    private var item: ExpandedMenu.Item!
 
-    let padding: CGFloat = 15
+    private let padding: CGFloat = 15
 
-    let leadPadding: CGFloat = 15
-    let trailPadding: CGFloat = -15
-    let lineOffset: CGFloat = 2
+    private let leadPadding: CGFloat = 15
+    private let trailPadding: CGFloat = -15
+    private let lineOffset: CGFloat = 2
 
-    init(item: ExpandedMenu.Item, hasSeparator: Bool) {
+    init(item: ExpandedMenu.Item) {
         super.init(frame: .zero)
 
         let separator = UIView()

@@ -39,7 +39,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private let eatery: CampusEatery
-    private let isExtended: Bool
+    private let isExtended: Bool    // Property that tracks whether an ExpandedMenu will be used
 
     private let orderButton = UIButton()
     private var orderButtonIsHidden = false
@@ -51,7 +51,7 @@ class CampusMenuViewController: EateriesMenuViewController {
 
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
-        self.isExtended = eatery.eateryType == .dining ? false : true
+        self.isExtended = eatery.eateryType != .dining
 
         super.init(eatery: eatery, userLocation: userLocation)
     }
@@ -177,9 +177,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     private func addExtendedMenuViewController() {
         view.backgroundColor = .wash    // Changing background color here simplifies ScrollableViewController
 
-        if eatery.orderedExpandedCategories.count == 0 {
-            return
-        }
+        guard !eatery.orderedExpandedCategories.isEmpty else { return }
 
         let expandedMenu = eatery.expandedMenu
         var viewControllers: [CampusEateryExpandedMenuViewController] = []
@@ -192,11 +190,12 @@ class CampusMenuViewController: EateriesMenuViewController {
             menuItems.append(contentsOf: menu)
         }
 
-        scrollableVC = ScrollableViewController(eatery: eatery, viewControllers: viewControllers, items: menuItems)
-        addChildViewController(scrollableVC!)
-        addToStackView(scrollableVC!.view)
-        scrollableVC!.didMove(toParentViewController: self)
-        scrollableVC!.view.hero.modifiers = createHeroModifiers(.fade, .translate)
+        let scrollVC = ScrollableViewController(eatery: eatery, viewControllers: viewControllers, items: menuItems)
+        addChildViewController(scrollVC)
+        addToStackView(scrollVC.view)
+        scrollVC.didMove(toParentViewController: self)
+        scrollVC.view.hero.modifiers = createHeroModifiers(.fade, .translate)
+        scrollableVC = scrollVC
     }
 
     private func setUpOrderButton() {

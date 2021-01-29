@@ -275,9 +275,7 @@ extension CampusEatery {
 
     func getOrderedCategories() -> [String] {
         if let expandedMenu = expandedMenu {
-            let categories = expandedMenu.data.map {
-                $0.key
-            }
+            let categories = expandedMenu.data.map { $0.key }
             return categories.sorted()
         }
         return []

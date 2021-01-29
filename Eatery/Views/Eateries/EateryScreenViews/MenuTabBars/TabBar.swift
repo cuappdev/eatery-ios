@@ -27,9 +27,7 @@ class TabBar: UIControl {
     }
 
     @objc func tabButtonPressed(_ sender: UIButton) {
-        guard let index = tabButtons.firstIndex(of: sender) else {
-            return
-        }
+        guard let index = tabButtons.firstIndex(of: sender) else { return }
 
         select(at: index)
         sendActions(for: .valueChanged)

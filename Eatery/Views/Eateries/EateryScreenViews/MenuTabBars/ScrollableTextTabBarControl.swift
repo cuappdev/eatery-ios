@@ -65,14 +65,14 @@ class ScrollableTextTabBarControl: TabBar {
 
     override func select(at index: Int) {
         // Base case to protect against accidental backend errors
-        if tabButtons.count == 0 {
+        guard !tabButtons.isEmpty else {
             return
         }
 
         selectedSegmentIndex = index
         let button = tabButtons[selectedSegmentIndex]
         let buttonPos = button.center.x - (button.frame.width / 2)
-        let maxScroll = self.scrollView.contentSize.width + self.padding - self.scrollView.frame.width
+        let maxScroll = scrollView.contentSize.width + padding - scrollView.frame.width
 
         UIView.animate(withDuration: 0.4) {
             self.underlineView.center.x = button.center.x + self.padding // Must account for padding of StackView
@@ -83,7 +83,7 @@ class ScrollableTextTabBarControl: TabBar {
             }
         }
 
-        self.underlineView.snp.remakeConstraints { make in
+        underlineView.snp.remakeConstraints { make in
             make.centerX.equalTo(button)
             make.width.equalTo(button)
             make.bottom.equalTo(button).offset(self.underlineOffset)

@@ -106,9 +106,6 @@ class ImageParallaxScrollViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        // These variables are placed here rather than in CampusMenuVC because
-        // when testing, navBarHeight gave 148 sometimes for some reason...
-        // I'm not sure why this happened but it was 100% correct when put in here
         let imageViewHeight = imageView.frame.height
         let navBarHeight = navigationBar.frame.height
         let topInsets = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0

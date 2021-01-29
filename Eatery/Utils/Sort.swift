@@ -110,56 +110,6 @@ struct Sort {
         return eatery.sorted(by: sortByHoursClosure)
     }
 
-    // Merge Sort code inspired by https://github.com/raywenderlich/swift-algorithm-club/tree/master/Merge%20Sort
-
-    static func expandedMenuMergeSort(_ array: [ExpandedMenu.Item]) -> [ExpandedMenu.Item] {
-        guard array.count > 1 else { return array }
-
-        let middleIndex = array.count / 2
-        let leftArray = expandedMenuMergeSort(Array(array[0..<middleIndex]))
-        let rightArray = expandedMenuMergeSort(Array(array[middleIndex..<array.count]))
-
-        return merge(leftPile: leftArray, rightPile: rightArray)
-    }
-
-    private static func merge(leftPile: [ExpandedMenu.Item], rightPile: [ExpandedMenu.Item]) -> [ExpandedMenu.Item] {
-        var leftIndex = 0
-        var rightIndex = 0
-        var orderedPile = [ExpandedMenu.Item]()
-
-        orderedPile.reserveCapacity(leftPile.count + rightPile.count)
-
-        while leftIndex < leftPile.count && rightIndex < rightPile.count {
-            let leftPrice = leftPile[leftIndex].getNumericPrice()
-            let rightPrice = rightPile[rightIndex].getNumericPrice()
-
-            if leftPrice < rightPrice {
-                orderedPile.append(leftPile[leftIndex])
-                leftIndex += 1
-            } else if leftPrice > rightPrice {
-                orderedPile.append(rightPile[rightIndex])
-                rightIndex += 1
-            } else {
-                orderedPile.append(leftPile[leftIndex])
-                leftIndex += 1
-                orderedPile.append(rightPile[rightIndex])
-                rightIndex += 1
-            }
-        }
-
-        while leftIndex < leftPile.count {
-            orderedPile.append(leftPile[leftIndex])
-            leftIndex += 1
-        }
-
-        while rightIndex < rightPile.count {
-            orderedPile.append(rightPile[rightIndex])
-            rightIndex += 1
-        }
-
-        return orderedPile
-    }
-
     //HelperFunction to get meal
     static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
         let events = eatery.eventsByName(onDayOf: date)

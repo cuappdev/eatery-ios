@@ -9,22 +9,22 @@
 import UIKit
 import SnapKit
 
-enum ExtendedFilterButtonState {
+enum ExpandedFilterButtonState {
     case inactive, hightolow, lowtohigh
 }
 
-class ExtendedFilterButton: UIButton {
+class ExpandedFilterButton: UIButton {
 
-    var topRect: UIView!
-    var middleRect: UIView!
-    var bottomRect: UIView!
+    private var topRect: UIView!
+    private var middleRect: UIView!
+    private var bottomRect: UIView!
 
-    var topSpacingRect: UIView!
-    var bottomSpacingRect: UIView!
+    private var topSpacingRect: UIView!
+    private var bottomSpacingRect: UIView!
 
-    let inactiveColor: UIColor
-    let activeColor: UIColor
-    var filterState: ExtendedFilterButtonState
+    private let inactiveColor: UIColor
+    private let activeColor: UIColor
+    private(set) var filterState: ExpandedFilterButtonState
 
     init(frame: CGRect, inactiveColor: UIColor, activeColor: UIColor) {
         self.inactiveColor = inactiveColor

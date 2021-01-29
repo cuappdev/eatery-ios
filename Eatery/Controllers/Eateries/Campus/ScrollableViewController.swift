@@ -10,42 +10,36 @@ import UIKit
 
 class ScrollableViewController: UIViewController {
 
-    private var eatery: CampusEatery!
-    private var viewControllers: [CampusEateryExpandedMenuViewController]!
-    private var allItems: [ExpandedMenu.Item]!
+    private let eatery: CampusEatery!
+    private let viewControllers: [CampusEateryExpandedMenuViewController]!  // The VCs for each menu section
+    private let originalViews: [UIView]!    // The views of the VCs for each menu section
+    private let allItems: [ExpandedMenu.Item]!  // All menu items combined into array and sorted
 
-    private var originalViews: [UIView]!
+    private var headerContainer: ExpandedHeaderContainer!
     private var tabBar: TabBar!
     private var tabBarStack: UIStackView!
-    private var menuItemsStack: UIStackView!
-    private var menuItemsHighToLowStack: UIStackView!
-    private var menuItemsLowToHighStack: UIStackView!
+    private var menuItemsView: ExpandedMenuItemView!
 
-    private var menuItemsView: UIView!
-    private var filterButton: ExtendedFilterButton!
-    private var filterLabel: UILabel!
-    private var headerContainer: UIView!
-    private var separatorView: SeparatorView!
-
-    let tabBarPadding: CGFloat = 16
     var scrollView: UIScrollView?
     var scrollOffset: CGFloat = 0
-    var fillerSpaceHeight: CGFloat = 0
+    private var fillerSpaceHeight: CGFloat = 0
 
     private var beingMoved = false
     private var isManualScrolling = false
     private var orderedViewsCreated = false
 
     init(eatery: CampusEatery, viewControllers: [CampusEateryExpandedMenuViewController], items: [ExpandedMenu.Item]) {
-        super.init(nibName: nil, bundle: nil)
-
         self.eatery = eatery
         self.viewControllers = viewControllers
-        self.originalViews = viewControllers.map {
-            $0.view
+        self.originalViews = viewControllers.map { $0.view }
+        self.allItems = items.sorted { item1, item2 in
+            if item1.getNumericPrice() > item2.getNumericPrice() {
+                return false
+            }
+            return true
         }
 
-        self.allItems = Sort.expandedMenuMergeSort(items)
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -63,7 +57,7 @@ class ScrollableViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         let screenSize = UIScreen.main.bounds.height
-        let tabBarHeight = (self.tabBarController?.tabBar.frame.height) ?? 0
+        let tabBarHeight = (tabBarController?.tabBar.frame.height) ?? 0
         let smallOffset: CGFloat = CampusEateryExpandedMenuViewController.heightConst
 
         // Scroll Offset is used below because it accounts for NavBar height and edge insets
@@ -71,67 +65,20 @@ class ScrollableViewController: UIViewController {
         let reducedScreenSize = screenSize + (scrollOffset - tabBarHeight) + smallOffset
         if originalViews.count > 0 {
             let finalView = originalViews[originalViews.count - 1]
-            let checkHeight = reducedScreenSize - (menuItemsStack.frame.maxY - finalView.frame.minY)
+            let checkHeight = reducedScreenSize - (menuItemsView.getOriginalMaxY() - finalView.frame.minY)
             fillerSpaceHeight = checkHeight > 0 ? checkHeight : 0
         }
 
-        self.scrollView?.contentSize.height += fillerSpaceHeight
+        scrollView?.contentSize.height += fillerSpaceHeight
     }
 
     private func createTabBarStack() {
-        headerContainer = UIView()
-        headerContainer.layer.zPosition = 3
+        headerContainer = ExpandedHeaderContainer()
         headerContainer.backgroundColor = .white
-        headerContainer.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        headerContainer.addFilterButtonTarget(self, action: #selector(filterButtonPressed), forEvent: .touchUpInside)
 
         headerContainer.snp.makeConstraints { make in
             make.height.equalTo(58)
-        }
-
-        let titleLabel = UILabel()
-        titleLabel.text = "Menu"
-        titleLabel.textColor = .black
-        titleLabel.font = .boldSystemFont(ofSize: 26)
-        titleLabel.preservesSuperviewLayoutMargins = true
-        headerContainer.addSubview(titleLabel)
-
-        filterButton = ExtendedFilterButton(frame: .zero, inactiveColor: .systemGray, activeColor: .eateryBlue)
-        filterButton.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
-        filterButton.preservesSuperviewLayoutMargins = true
-        headerContainer.addSubview(filterButton)
-
-        filterLabel = UILabel()
-        filterLabel.textColor = .eateryBlue
-        filterLabel.font = .boldSystemFont(ofSize: 11)
-        filterLabel.text = ""
-        filterLabel.preservesSuperviewLayoutMargins = true
-        headerContainer.addSubview(filterLabel)
-
-        separatorView = SeparatorView(insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        separatorView.tintColor = .clear
-        separatorView.isHidden = true
-        headerContainer.addSubview(separatorView)
-
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(tabBarPadding)
-            make.centerY.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-
-        filterButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY)
-            make.height.equalTo(titleLabel.snp.height).multipliedBy(0.3)
-            make.trailing.equalToSuperview().offset(-tabBarPadding)
-            make.width.equalTo(filterButton.snp.height).multipliedBy(1.71)
-        }
-
-        filterLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY)
-            make.trailing.equalTo(filterButton.snp.leading).offset(-6)
-        }
-
-        separatorView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
         }
 
         let titles = viewControllers.map {
@@ -141,25 +88,23 @@ class ScrollableViewController: UIViewController {
         tabBar.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         tabBar.addTarget(self, action: #selector(manualScroll), for: .valueChanged)
         tabBar.backgroundColor = .white
-        tabBar.layer.zPosition = 2
 
         tabBar.snp.makeConstraints { make in
             make.height.equalTo(40)
         }
 
         tabBarStack = UIStackView(arrangedSubviews: [headerContainer, tabBar])
+        tabBarStack.bringSubview(toFront: headerContainer)
         tabBarStack.axis = .vertical
+        view.addSubview(tabBarStack)
+        view.bringSubview(toFront: tabBarStack)
     }
 
     private func createMenuStack() {
-        menuItemsView = UIView()
+        menuItemsView = ExpandedMenuItemView(frame: .zero, eatery: eatery, views: originalViews, allMenuItems: allItems)
         menuItemsView.backgroundColor = .white
-
-        menuItemsStack = UIStackView(arrangedSubviews: originalViews)
-        menuItemsStack.axis = .vertical
-        menuItemsView.addSubview(menuItemsStack)
         view.addSubview(menuItemsView)
-        view.addSubview(tabBarStack) // Tabbar added here to account for z position
+        view.sendSubview(toBack: menuItemsView)
 
         tabBarStack.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -171,60 +116,37 @@ class ScrollableViewController: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
         }
 
-        menuItemsStack.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(5)
-        }
-
     }
 
-    private func createHighToLowStack() {
-        let reversedItems = Array(allItems.reversed())
-        let sortedVC = CampusEateryExpandedMenuViewController(eatery: eatery, category: "", menu: reversedItems)
-
-        menuItemsHighToLowStack = UIStackView(arrangedSubviews: [sortedVC.view])
-        menuItemsHighToLowStack.axis = .vertical
-        menuItemsView.addSubview(menuItemsHighToLowStack)
-        menuItemsHighToLowStack.isHidden = true
-
-        self.menuItemsHighToLowStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-
-    private func createLowToHighStack() {
-        let sortedVC = CampusEateryExpandedMenuViewController(eatery: eatery, category: "", menu: allItems)
-
-        menuItemsLowToHighStack = UIStackView(arrangedSubviews: [sortedVC.view])
-        menuItemsLowToHighStack.axis = .vertical
-        menuItemsView.addSubview(menuItemsLowToHighStack)
-        menuItemsLowToHighStack.isHidden = true
-
-        self.menuItemsLowToHighStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-
+    /*  This function manages the automatic scroll that occurs when a user presses a button in the tabbar
+        to go to a specific expanded menu category. This can happen in 2 ways:
+        1. The user presses the button after already scrolling past the top of this ViewController
+        2. The user presses the button before scrolling past this view controller
+        (i.e. scrollView is near the top of CampusMenuViewController)
+        The first operation is very simple, as visible by the "if" statement below. However, the second
+        (occurs in "else) is much more complicated because we have to split the automatic scroll operation
+        into two pieces: scrolling to the top of this view controller and scrolling to the target.  If we
+        don't do this, the tabBarStack will scroll unevenly with the rest of the scroll view.   */
     @objc func manualScroll() {
-        let currentPos = self.scrollView?.contentOffset.y
-        let viewControllerPosOnParent = self.view.frame.origin.y
-        let viewPos = originalViews[tabBar.selectedSegmentIndex].frame.minY
         let minOffset: CGFloat = 4
-        let targetPos = viewPos - self.scrollOffset + viewControllerPosOnParent + minOffset
-        let topOfSelf = viewControllerPosOnParent - self.scrollOffset
-        let pixPS: CGFloat = 2500
+        let currentPos = scrollView?.contentOffset.y ?? 0
+        let viewControllerPosOnParent = view.frame.origin.y
+        let viewPos = originalViews[tabBar.selectedSegmentIndex].frame.minY
+        let targetPos = viewPos - scrollOffset + viewControllerPosOnParent + minOffset
+        let topOfSelf = viewControllerPosOnParent - scrollOffset
+        let duration = animationDuration(from: currentPos, to: targetPos, withConst: 0.03)
 
-        self.isManualScrolling = true
+        isManualScrolling = true
 
-        if self.scrollView?.contentOffset.y ?? 0 > topOfSelf {
-            let duration = animationDuration(from: currentPos ?? 0, to: targetPos, at: pixPS)
+        if currentPos > topOfSelf {
             UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
                 self.scrollView?.contentOffset.y = targetPos
             }
         } else {
-            let duration = animationDuration(from: currentPos ?? 0, to: targetPos, at: pixPS)
-            let firstProp = fabs((currentPos ?? 0) - topOfSelf) / fabs((currentPos ?? 0) - targetPos)
-            let secondProp = fabs(topOfSelf - targetPos) / fabs((currentPos ?? 0) - targetPos)
+            // firstProp represents the proportion of animation time spent scrolling from currentPos to the top of self
+            // secondProp represents the proportion of animation time spent scrolling from the top of self to targetPos
+            let firstProp = fabs((currentPos) - topOfSelf) / fabs((currentPos) - targetPos)
+            let secondProp = fabs(topOfSelf - targetPos) / fabs((currentPos) - targetPos)
             let firstDuration = duration * Double(firstProp)
             let secondDuration = duration * Double(secondProp)
 
@@ -240,33 +162,23 @@ class ScrollableViewController: UIViewController {
 
         }
 
-        self.isManualScrolling = false
+        isManualScrolling = false
     }
 
-    // Function helps animations look more proprotional and smooth
-    private func animationDuration(from cur: CGFloat, to target: CGFloat, at pps: CGFloat) -> Double {
+    /*  This function helps scroll animations look more proportional.  However, smaller distances should travel
+        slower, proportionally, compared to larger distances.  That's why this function is logarithmic rather
+        than linear.  If it were linear, shorter scrolls would look too short and choppy.   */
+    private func animationDuration(from cur: CGFloat, to target: CGFloat, withConst propConstant: CGFloat) -> Double {
         let distance = fabs(cur - target)
-
-        switch distance {
-        case 0..<75:
-            return Double(distance * (1/pps) * 36)
-        case 75..<150:
-            return Double(distance * (1/pps) * 18)
-        case 150..<300:
-            return Double(distance * (1/pps) * 6)
-        case 300..<1200:
-            return Double(distance * (1/pps) * 3)
-        default:
-            return Double(fabs(cur - target) * (1/pps)) * 1.5
-        }
+        return Double(log(distance) * log(distance) * propConstant) // Prop constant should be less than 0.1
     }
 
     func scrollMenuBar() {
-        let tabBarStackOriginalPos = self.view.frame.origin.y
-        let scrollPos = scrollView?.contentOffset.y ?? 0
+        let tabBarStackOriginalPos = view.frame.origin.y
+        let scrollPosWithOffset = (scrollView?.contentOffset.y ?? 0) + scrollOffset
 
-        if (scrollPos + scrollOffset) > tabBarStackOriginalPos {
-            let newPos = (scrollPos + scrollOffset) - tabBarStackOriginalPos
+        if scrollPosWithOffset > tabBarStackOriginalPos {
+            let newPos = scrollPosWithOffset - tabBarStackOriginalPos
             tabBarStack.center.y = newPos + (tabBarStack.frame.height / 2)
             beingMoved = true
         } else if beingMoved {
@@ -275,10 +187,10 @@ class ScrollableViewController: UIViewController {
     }
 
     func changeTabBarIndex() {
-        if !self.isManualScrolling {
+        if !isManualScrolling {
             var selectionIndex = 0
             var testIndex = 1
-            let viewControllerPosOnParent = self.view.frame.origin.y
+            let viewControllerPosOnParent = view.frame.origin.y
             let currentPos = (scrollView?.contentOffset.y ?? 0) + scrollOffset - viewControllerPosOnParent
 
             while (testIndex - selectionIndex == 1) && testIndex < originalViews.count {
@@ -294,13 +206,13 @@ class ScrollableViewController: UIViewController {
     }
 
     @objc func filterButtonPressed() {
-        filterButton.pressed()
+        headerContainer.filterButtonPressed()
 
-        if filterButton.filterState != .inactive {
+        if headerContainer.getFilterButtonState() != .inactive {
             hideTabBar()
         } else {
             showTabBar()
-            filterLabel.text = ""
+            headerContainer.setFilterLabelText(to: "")
         }
     }
 
@@ -308,17 +220,17 @@ class ScrollableViewController: UIViewController {
         UIView.animate(withDuration: 0.45) {
             let adjustedPosTabBar = (self.headerContainer.frame.height / 2) - (self.tabBar.frame.height / 2)
             let adjustedPosMenuStack = (self.tabBar.frame.height / 2) + (self.menuItemsView.frame.height / 2)
-            self.separatorView.isHidden = false
+            self.headerContainer.setSeparatorViewHidden(to: false)
             self.tabBar.isUserInteractionEnabled = false
             self.tabBar.center.y = self.headerContainer.center.y + adjustedPosTabBar
             self.menuItemsView.center.y = self.tabBar.center.y + adjustedPosMenuStack
         }
 
-        if filterButton.filterState == .hightolow {
-            self.scrollView?.contentSize.height -= self.tabBar.frame.height // Does not animate when subtracted
-            self.switchToHighToLowStack()
-        } else if filterButton.filterState == .lowtohigh {
-            self.switchToLowToHighStack()
+        if headerContainer.getFilterButtonState() == .hightolow {
+            scrollView?.contentSize.height -= tabBar.frame.height // Does not animate when subtracted
+            switchToHighToLowStack()
+        } else if headerContainer.getFilterButtonState() == .lowtohigh {
+            switchToLowToHighStack()
         }
     }
 
@@ -326,7 +238,7 @@ class ScrollableViewController: UIViewController {
         UIView.animate(withDuration: 0.45) {
             let adjustedPosTabBar = (self.headerContainer.frame.height / 2) + (self.tabBar.frame.height / 2)
             let adjustedPosMenuStack = (self.tabBar.frame.height / 2) + (self.menuItemsView.frame.height / 2)
-            self.separatorView.isHidden = true
+            self.headerContainer.setSeparatorViewHidden(to: true)
             self.tabBar.isUserInteractionEnabled = true
             self.tabBar.center.y = self.headerContainer.center.y + adjustedPosTabBar
             self.menuItemsView.center.y = self.tabBar.center.y + adjustedPosMenuStack
@@ -347,28 +259,25 @@ class ScrollableViewController: UIViewController {
 
     private func switchToHighToLowStack() {
         if !orderedViewsCreated {
-            createHighToLowStack()
+            menuItemsView.createHighToLowStack()
         }
-        filterLabel.text = "Highest \u{2794} Lowest"
-        menuItemsStack.isHidden = true
-        menuItemsHighToLowStack.isHidden = false
+        headerContainer.setFilterLabelText(to: "Highest \u{2794} Lowest")
+        menuItemsView.switchVisibleStack(type: .highToLow)
     }
 
     private func switchToLowToHighStack() {
         if !orderedViewsCreated {
-            createLowToHighStack()
+            menuItemsView.createLowToHighStack()
             orderedViewsCreated = true
         }
-        filterLabel.text = "Lowest \u{2794} Highest"
-        menuItemsHighToLowStack.isHidden = true
-        menuItemsLowToHighStack.isHidden = false
+        headerContainer.setFilterLabelText(to: "Lowest \u{2794} Highest")
+        menuItemsView.switchVisibleStack(type: .lowToHigh)
 
     }
 
     private func switchToOriginalStack() {
-        filterLabel.text = ""
-        menuItemsLowToHighStack.isHidden = true
-        menuItemsStack.isHidden = false
+        headerContainer.setFilterLabelText(to: "")
+        menuItemsView.switchVisibleStack(type: .original)
     }
 
 }

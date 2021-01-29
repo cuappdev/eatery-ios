@@ -50,7 +50,7 @@ query CampusEateries {
             }
         }
         expandedMenu {
-        category,
+        category
         stations {
             items {
                 item

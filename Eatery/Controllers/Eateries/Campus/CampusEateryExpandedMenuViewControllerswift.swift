@@ -33,8 +33,7 @@ class CampusEateryExpandedMenuViewController: UIViewController {
         var itemViews: [UIView] = []
 
         for i in 0..<menu.count {
-            let hasSeparator = i == (menu.count - 1) ? false : true
-            let menuRow = ExpandedMenuRow(item: menu[i], hasSeparator: hasSeparator)
+            let menuRow = ExpandedMenuRow(item: menu[i])
             contentHeight += CampusEateryExpandedMenuViewController.heightConst
             itemViews.append(menuRow)
         }
