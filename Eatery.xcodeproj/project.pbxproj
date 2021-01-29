@@ -134,7 +134,7 @@
 		95CEB2D82595083F00582E34 /* ExpandedFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CEB2D72595083F00582E34 /* ExpandedFilterButton.swift */; };
 		95D48582259D0AE700B312D3 /* CampusEateriesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48581259D0AE700B312D3 /* CampusEateriesSearchViewController.swift */; };
 		95D48586259D0AEB00B312D3 /* CampusEateriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48585259D0AEB00B312D3 /* CampusEateriesViewController.swift */; };
-		95D4858E259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4858D259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift */; };
+		95D4858E259D0B0700B312D3 /* ExpandedMenuCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4858D259D0B0700B312D3 /* ExpandedMenuCategoryView.swift */; };
 		95D48596259D0B1F00B312D3 /* CampusMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D48595259D0B1F00B312D3 /* CampusMenuViewController.swift */; };
 		95D4859C259D0B2300B312D3 /* CampusEateryMealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4859B259D0B2300B312D3 /* CampusEateryMealTableViewController.swift */; };
 		95D485A4259D0B2A00B312D3 /* TabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D485A3259D0B2A00B312D3 /* TabbedPageViewController.swift */; };
@@ -356,7 +356,7 @@
 		95CEB2D72595083F00582E34 /* ExpandedFilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedFilterButton.swift; sourceTree = "<group>"; };
 		95D48581259D0AE700B312D3 /* CampusEateriesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesSearchViewController.swift; sourceTree = "<group>"; };
 		95D48585259D0AEB00B312D3 /* CampusEateriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateriesViewController.swift; sourceTree = "<group>"; };
-		95D4858D259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryExpandedMenuViewControllerswift.swift; sourceTree = "<group>"; };
+		95D4858D259D0B0700B312D3 /* ExpandedMenuCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMenuCategoryView.swift; sourceTree = "<group>"; };
 		95D48595259D0B1F00B312D3 /* CampusMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusMenuViewController.swift; sourceTree = "<group>"; };
 		95D4859B259D0B2300B312D3 /* CampusEateryMealTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusEateryMealTableViewController.swift; sourceTree = "<group>"; };
 		95D485A3259D0B2A00B312D3 /* TabbedPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedPageViewController.swift; sourceTree = "<group>"; };
@@ -727,6 +727,7 @@
 		95587BB925C3B75C0099D24E /* ExpandedMenus */ = {
 			isa = PBXGroup;
 			children = (
+				95D4858D259D0B0700B312D3 /* ExpandedMenuCategoryView.swift */,
 				952341BC2565272000674187 /* ExpandedMenuRow.swift */,
 				95CEB2D72595083F00582E34 /* ExpandedFilterButton.swift */,
 				9553BE5725C24433006FDF56 /* ExpandedHeaderContainer.swift */,
@@ -813,7 +814,6 @@
 				95D48585259D0AEB00B312D3 /* CampusEateriesViewController.swift */,
 				95D485A5259D0B2D00B312D3 /* ScrollableViewController.swift */,
 				95D485A3259D0B2A00B312D3 /* TabbedPageViewController.swift */,
-				95D4858D259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift */,
 				95D4859B259D0B2300B312D3 /* CampusEateryMealTableViewController.swift */,
 			);
 			path = Campus;
@@ -1504,7 +1504,7 @@
 				5D856458222A2D4E003A712B /* Menu.swift in Sources */,
 				5D44519E231D45C30035164F /* BRBHistoryTableViewCell.swift in Sources */,
 				5DC7CB36236A386D005C57DB /* EateriesMenuViewController.swift in Sources */,
-				95D4858E259D0B0700B312D3 /* CampusEateryExpandedMenuViewControllerswift.swift in Sources */,
+				95D4858E259D0B0700B312D3 /* ExpandedMenuCategoryView.swift in Sources */,
 				5DEF1AA6222B377000855902 /* LogoutTableViewCell.swift in Sources */,
 				5D1E720C2234B0680028D7C7 /* Eatery.swift in Sources */,
 				5D77412E2332E08400E9E699 /* ImageParallaxScrollViewController.swift in Sources */,

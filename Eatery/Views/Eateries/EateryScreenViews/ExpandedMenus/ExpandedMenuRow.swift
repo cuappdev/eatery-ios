@@ -20,6 +20,9 @@ class ExpandedMenuRow: UIView {
     private let trailPadding: CGFloat = -15
     private let lineOffset: CGFloat = 2
 
+    /// Constant used multiple times in codebase to get/set height of ExpandedMenuRows
+    static let heightConst: CGFloat = 44
+
     init(item: ExpandedMenu.Item) {
         super.init(frame: .zero)
 
@@ -60,7 +63,7 @@ class ExpandedMenuRow: UIView {
         }
 
         self.snp.makeConstraints { make in
-            make.height.equalTo(CampusEateryExpandedMenuViewController.heightConst)
+            make.height.equalTo(ExpandedMenuRow.heightConst)
         }
 
     }

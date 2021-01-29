@@ -17,8 +17,8 @@ class ImageParallaxScrollViewController: UIViewController {
     private let navigationBar = UINavigationBar()
     private let navigationBarBackground = UIView()
 
-    internal let scrollView = UIScrollView()
-    internal var scrollOffset: CGFloat?
+    let scrollView = UIScrollView()
+    var scrollOffset: CGFloat?
     let imageView = UIImageView()
     let gradientView = MenuGradientView()
 

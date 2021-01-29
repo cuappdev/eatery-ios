@@ -69,7 +69,6 @@ class ExpandedHeaderContainer: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // Describe why you did this here
     func addFilterButtonTarget(_ target: Any?, action: Selector, forEvent: UIControlEvents) {
         filterButton.addTarget(target, action: action, for: forEvent)
     }

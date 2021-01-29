@@ -11,9 +11,10 @@ import UIKit
 class ScrollableViewController: UIViewController {
 
     private let eatery: CampusEatery!
-    private let viewControllers: [CampusEateryExpandedMenuViewController]!  // The VCs for each menu section
-    private let originalViews: [UIView]!    // The views of the VCs for each menu section
-    private let allItems: [ExpandedMenu.Item]!  // All menu items combined into array and sorted
+    /// The views for each menu section
+    private let categoryViews: [ExpandedMenuCategoryView]!
+    // All menu items combined into array and sorted
+    private let allItems: [ExpandedMenu.Item]!
 
     private var headerContainer: ExpandedHeaderContainer!
     private var tabBar: TabBar!
@@ -25,18 +26,13 @@ class ScrollableViewController: UIViewController {
     private var fillerSpaceHeight: CGFloat = 0
 
     private var beingMoved = false
-    private var isManualScrolling = false
     private var orderedViewsCreated = false
 
-    init(eatery: CampusEatery, viewControllers: [CampusEateryExpandedMenuViewController], items: [ExpandedMenu.Item]) {
+    init(eatery: CampusEatery, categoryViews: [ExpandedMenuCategoryView], items: [ExpandedMenu.Item]) {
         self.eatery = eatery
-        self.viewControllers = viewControllers
-        self.originalViews = viewControllers.map { $0.view }
+        self.categoryViews = categoryViews
         self.allItems = items.sorted { item1, item2 in
-            if item1.getNumericPrice() > item2.getNumericPrice() {
-                return false
-            }
-            return true
+            item1.getNumericPrice() < item2.getNumericPrice()
         }
 
         super.init(nibName: nil, bundle: nil)
@@ -58,13 +54,13 @@ class ScrollableViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let screenSize = UIScreen.main.bounds.height
         let tabBarHeight = (tabBarController?.tabBar.frame.height) ?? 0
-        let smallOffset: CGFloat = CampusEateryExpandedMenuViewController.heightConst
+        let smallOffset: CGFloat = ExpandedMenuRow.heightConst
 
         // Scroll Offset is used below because it accounts for NavBar height and edge insets
         // reducedScreenSize accounts for the height of the screen minus all nav and tab bars
         let reducedScreenSize = screenSize + (scrollOffset - tabBarHeight) + smallOffset
-        if originalViews.count > 0 {
-            let finalView = originalViews[originalViews.count - 1]
+        if categoryViews.count > 0 {
+            let finalView = categoryViews[categoryViews.count - 1]
             let checkHeight = reducedScreenSize - (menuItemsView.getOriginalMaxY() - finalView.frame.minY)
             fillerSpaceHeight = checkHeight > 0 ? checkHeight : 0
         }
@@ -81,8 +77,8 @@ class ScrollableViewController: UIViewController {
             make.height.equalTo(58)
         }
 
-        let titles = viewControllers.map {
-            $0.category
+        let titles = categoryViews.map {
+            $0.category ?? "Unnamed"
         }
         tabBar = ScrollableTextTabBarControl(sections: titles, padding: 16)
         tabBar.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
@@ -101,7 +97,7 @@ class ScrollableViewController: UIViewController {
     }
 
     private func createMenuStack() {
-        menuItemsView = ExpandedMenuItemView(frame: .zero, eatery: eatery, views: originalViews, allMenuItems: allItems)
+        menuItemsView = ExpandedMenuItemView(frame: .zero, eatery: eatery, views: categoryViews, allMenuItems: allItems)
         menuItemsView.backgroundColor = .white
         view.addSubview(menuItemsView)
         view.sendSubview(toBack: menuItemsView)
@@ -131,12 +127,10 @@ class ScrollableViewController: UIViewController {
         let minOffset: CGFloat = 4
         let currentPos = scrollView?.contentOffset.y ?? 0
         let viewControllerPosOnParent = view.frame.origin.y
-        let viewPos = originalViews[tabBar.selectedSegmentIndex].frame.minY
+        let viewPos = categoryViews[tabBar.selectedSegmentIndex].frame.minY
         let targetPos = viewPos - scrollOffset + viewControllerPosOnParent + minOffset
         let topOfSelf = viewControllerPosOnParent - scrollOffset
         let duration = animationDuration(from: currentPos, to: targetPos, withConst: 0.03)
-
-        isManualScrolling = true
 
         if currentPos > topOfSelf {
             UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
@@ -161,8 +155,6 @@ class ScrollableViewController: UIViewController {
             })
 
         }
-
-        isManualScrolling = false
     }
 
     /*  This function helps scroll animations look more proportional.  However, smaller distances should travel
@@ -170,7 +162,11 @@ class ScrollableViewController: UIViewController {
         than linear.  If it were linear, shorter scrolls would look too short and choppy.   */
     private func animationDuration(from cur: CGFloat, to target: CGFloat, withConst propConstant: CGFloat) -> Double {
         let distance = fabs(cur - target)
-        return Double(log(distance) * log(distance) * propConstant) // Prop constant should be less than 0.1
+
+        // Prop constant should be less than 0.1 because distances a scroll travels can be in the thousands. In
+        // a practical worst case, we would have to scroll 5000 pixels. (ln(5000))^2 = 72 = 72.5 which is WAY too
+        // long for an animation. Setting propConstant < 0.1 would make this more reasonable.
+        return Double(log(distance) * log(distance) * propConstant)
     }
 
     func scrollMenuBar() {
@@ -187,22 +183,20 @@ class ScrollableViewController: UIViewController {
     }
 
     func changeTabBarIndex() {
-        if !isManualScrolling {
-            var selectionIndex = 0
-            var testIndex = 1
-            let viewControllerPosOnParent = view.frame.origin.y
-            let currentPos = (scrollView?.contentOffset.y ?? 0) + scrollOffset - viewControllerPosOnParent
+        var selectionIndex = 0
+        var testIndex = 1
+        let viewControllerPosOnParent = view.frame.origin.y
+        let currentPos = (scrollView?.contentOffset.y ?? 0) + scrollOffset - viewControllerPosOnParent
 
-            while (testIndex - selectionIndex == 1) && testIndex < originalViews.count {
+        while (testIndex - selectionIndex == 1) && testIndex < categoryViews.count {
 
-                if currentPos > originalViews[testIndex].frame.minY {
-                    selectionIndex = testIndex
-                }
-                testIndex += 1
+            if currentPos > categoryViews[testIndex].frame.minY {
+                selectionIndex = testIndex
             }
-
-            tabBar.select(at: selectionIndex)
+            testIndex += 1
         }
+
+        tabBar.select(at: selectionIndex)
     }
 
     @objc func filterButtonPressed() {
@@ -248,28 +242,14 @@ class ScrollableViewController: UIViewController {
         switchToOriginalStack()
     }
 
-    private func getCompiledItems() -> [ExpandedMenu.Item] {
-        var allMenus: [ExpandedMenu.Item] = []
-        for controller in viewControllers {
-            allMenus += controller.menu
-        }
-
-        return allMenus
-    }
-
     private func switchToHighToLowStack() {
-        if !orderedViewsCreated {
-            menuItemsView.createHighToLowStack()
-        }
+        menuItemsView.createHighToLowStackIfNeeded()
         headerContainer.setFilterLabelText(to: "Highest \u{2794} Lowest")
         menuItemsView.switchVisibleStack(type: .highToLow)
     }
 
     private func switchToLowToHighStack() {
-        if !orderedViewsCreated {
-            menuItemsView.createLowToHighStack()
-            orderedViewsCreated = true
-        }
+        menuItemsView.createLowToHighStackIfNeeded()
         headerContainer.setFilterLabelText(to: "Lowest \u{2794} Highest")
         menuItemsView.switchVisibleStack(type: .lowToHigh)
 

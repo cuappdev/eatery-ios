@@ -11,8 +11,8 @@ import SnapKit
 
 class ScrollableTextTabBarControl: TabBar {
 
-    let padding: CGFloat!
-    let underlineOffset: CGFloat = 6
+    private let padding: CGFloat!
+    private let underlineOffset: CGFloat = 6
 
     init(sections: [String], padding: CGFloat = 0) {
         self.padding = padding

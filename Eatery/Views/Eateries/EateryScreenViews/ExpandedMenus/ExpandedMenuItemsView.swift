@@ -40,37 +40,38 @@ class ExpandedMenuItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // Explain these too
-    func createHighToLowStack() {
+    func createHighToLowStackIfNeeded() {
+        guard menuItemsHighToLowStack == nil else { return }
+
         // Items are reversed since this is the high to low stack, but elements are sorted from low to high
         let reversedItems = Array(allMenuItems.reversed())
-        let sortedVC = CampusEateryExpandedMenuViewController(eatery: eatery, category: "", menu: reversedItems)
+        let sortedVC = ExpandedMenuCategoryView(eatery: eatery, category: "", menu: reversedItems)
 
-        menuItemsHighToLowStack = UIStackView(arrangedSubviews: [sortedVC.view])
-        if let menuItemsHighToLowStack = menuItemsHighToLowStack {
-            menuItemsHighToLowStack.axis = .vertical
-            addSubview(menuItemsHighToLowStack)
-            menuItemsHighToLowStack.isHidden = true
+        let highToLowStack = UIStackView(arrangedSubviews: [sortedVC])
+        highToLowStack.axis = .vertical
+        addSubview(highToLowStack)
+        highToLowStack.isHidden = true
 
-            menuItemsHighToLowStack.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+        highToLowStack.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        menuItemsHighToLowStack = highToLowStack
     }
 
-    func createLowToHighStack() {
-        let sortedVC = CampusEateryExpandedMenuViewController(eatery: eatery, category: "", menu: allMenuItems)
+    func createLowToHighStackIfNeeded() {
+        guard menuItemsLowToHighStack == nil else { return }
 
-        menuItemsLowToHighStack = UIStackView(arrangedSubviews: [sortedVC.view])
-        if let menuItemsLowToHighStack = menuItemsLowToHighStack {
-            menuItemsLowToHighStack.axis = .vertical
-            addSubview(menuItemsLowToHighStack)
-            menuItemsLowToHighStack.isHidden = true
+        let sortedVC = ExpandedMenuCategoryView(eatery: eatery, category: "", menu: allMenuItems)
 
-            menuItemsLowToHighStack.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+        let lowToHighStack = UIStackView(arrangedSubviews: [sortedVC])
+        lowToHighStack.axis = .vertical
+        addSubview(lowToHighStack)
+        lowToHighStack.isHidden = true
+
+        lowToHighStack.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        menuItemsLowToHighStack = lowToHighStack
     }
 
     func switchVisibleStack(type: MenuStackType) {

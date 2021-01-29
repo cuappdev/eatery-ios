@@ -39,7 +39,6 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private let eatery: CampusEatery
-    private let isExtended: Bool    // Property that tracks whether an ExpandedMenu will be used
 
     private let orderButton = UIButton()
     private var orderButtonIsHidden = false
@@ -51,8 +50,6 @@ class CampusMenuViewController: EateriesMenuViewController {
 
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
-        self.isExtended = eatery.eateryType != .dining
-
         super.init(eatery: eatery, userLocation: userLocation)
     }
 
@@ -74,7 +71,7 @@ class CampusMenuViewController: EateriesMenuViewController {
         addDirectionsButton()
         addBlockSeparator()
 
-        if isExtended {
+        if eatery.eateryType != .dining {
             addExtendedMenuViewController()
         } else {
             addMenuLabel()
@@ -150,7 +147,7 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private func addTabbedMenuViewController() {
-        view.backgroundColor = .white   // Changing background color here simplifies ScrollableViewController
+        view.backgroundColor = .white  // Changing background color here simplifies ScrollableViewController
 
         let viewControllers = eatery.meals(onDayOf: Date()).map {
             CampusEateryMealTableViewController(eatery: eatery, meal: $0)
@@ -175,22 +172,22 @@ class CampusMenuViewController: EateriesMenuViewController {
     }
 
     private func addExtendedMenuViewController() {
-        view.backgroundColor = .wash    // Changing background color here simplifies ScrollableViewController
+        view.backgroundColor = .wash  // Changing background color here simplifies ScrollableViewController
 
         guard !eatery.orderedExpandedCategories.isEmpty else { return }
 
         let expandedMenu = eatery.expandedMenu
-        var viewControllers: [CampusEateryExpandedMenuViewController] = []
+        var views: [ExpandedMenuCategoryView] = []
         var menuItems: [ExpandedMenu.Item] = []
 
         for category in eatery.orderedExpandedCategories {
             let menu = expandedMenu?.data[category] ?? []
-            let extendedMenuVC = CampusEateryExpandedMenuViewController(eatery: eatery, category: category, menu: menu)
-            viewControllers.append(extendedMenuVC)
+            let extendedMenuVC = ExpandedMenuCategoryView(eatery: eatery, category: category, menu: menu)
+            views.append(extendedMenuVC)
             menuItems.append(contentsOf: menu)
         }
 
-        let scrollVC = ScrollableViewController(eatery: eatery, viewControllers: viewControllers, items: menuItems)
+        let scrollVC = ScrollableViewController(eatery: eatery, categoryViews: views, items: menuItems)
         addChildViewController(scrollVC)
         addToStackView(scrollVC.view)
         scrollVC.didMove(toParentViewController: self)
