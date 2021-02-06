@@ -10,11 +10,11 @@ import UIKit
 
 class ScrollableViewController: UIViewController {
 
-    private let eatery: CampusEatery!
+    private let eatery: CampusEatery
     /// The views for each menu section
-    private let categoryViews: [ExpandedMenuCategoryView]!
+    private let categoryViews: [ExpandedMenuCategoryView]
     // All menu items combined into array and sorted
-    private let allItems: [ExpandedMenu.Item]!
+    private let allItems: [ExpandedMenu.Item]
 
     private var headerContainer: ExpandedHeaderContainer!
     private var tabBar: TabBar!
@@ -144,15 +144,20 @@ class ScrollableViewController: UIViewController {
             let firstDuration = duration * Double(firstProp)
             let secondDuration = duration * Double(secondProp)
 
-            UIView.animate(withDuration: firstDuration, delay: 0, options: .curveEaseIn, animations: {
-                self.scrollView?.contentOffset.y = viewControllerPosOnParent - self.scrollOffset
-            }, completion: { completed in
-                if completed {
-                    UIView.animate(withDuration: secondDuration, delay: 0, options: .curveEaseOut) {
-                        self.scrollView?.contentOffset.y = targetPos
+            UIView.animate(
+                withDuration: firstDuration,
+                delay: 0,
+                options: .curveEaseIn,
+                animations: {
+                    self.scrollView?.contentOffset.y = viewControllerPosOnParent - self.scrollOffset
+                }, completion: { completed in
+                    if completed {
+                        UIView.animate(withDuration: secondDuration, delay: 0, options: .curveEaseOut) {
+                            self.scrollView?.contentOffset.y = targetPos
+                        }
                     }
                 }
-            })
+            )
 
         }
     }
