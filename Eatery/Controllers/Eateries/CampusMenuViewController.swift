@@ -45,9 +45,11 @@ class CampusMenuViewController: EateriesMenuViewController {
     private var scroll: ScrollSession?
     private var showOrderButtonTimer: Timer?
 
+    private var infoView: CampusMenuInfoView!
+    private var scrollableVC: ScrollableViewController?
+
     init(eatery: CampusEatery, userLocation: CLLocation?) {
         self.eatery = eatery
-
         super.init(eatery: eatery, userLocation: userLocation)
     }
 
@@ -69,15 +71,27 @@ class CampusMenuViewController: EateriesMenuViewController {
         addDirectionsButton()
         addBlockSeparator()
 
-        addMenuLabel()
-        addMenuPageViewController()
-        addBlockSeparator(color: .white, height: 44)
+        if eatery.eateryType != .dining {
+            addExtendedMenuViewController()
+        } else {
+            addMenuLabel()
+            addTabbedMenuViewController()
+        }
 
         setUpOrderButton()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let scrollableVC = scrollableVC {
+            scrollableVC.scrollView = scrollView
+            scrollableVC.scrollOffset = scrollOffset ?? 0
+        }
+    }
+
     private func addMenuInfoView() {
-        let infoView = CampusMenuInfoView()
+        infoView = CampusMenuInfoView()
         infoView.configure(eatery: eatery, userLocation: userLocation, meal: "Lunch")
         addToStackView(infoView)
 
@@ -121,9 +135,10 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         containerView.addSubview(menuLabel)
         menuLabel.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.height.equalTo(44)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(4)
+            make.bottom.equalToSuperview()
         }
 
         addToStackView(containerView)
@@ -131,18 +146,18 @@ class CampusMenuViewController: EateriesMenuViewController {
         menuLabel.hero.modifiers = createHeroModifiers(.fade, .translate)
     }
 
-    private func addMenuPageViewController() {
+    private func addTabbedMenuViewController() {
+        view.backgroundColor = .white  // Changing background color here simplifies ScrollableViewController
+
         let viewControllers = eatery.meals(onDayOf: Date()).map {
             CampusEateryMealTableViewController(eatery: eatery, meal: $0)
         }
-
         let pageViewController = TabbedPageViewController(viewControllers: viewControllers)
         pageViewController.delegate = self
 
         addChildViewController(pageViewController)
         addToStackView(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
-
         pageViewController.view.hero.modifiers = createHeroModifiers(.fade, .translate)
 
         if let currentEvent = eatery.currentActiveEvent() {
@@ -154,6 +169,30 @@ class CampusMenuViewController: EateriesMenuViewController {
                 }
             }
         }
+    }
+
+    private func addExtendedMenuViewController() {
+        view.backgroundColor = .wash  // Changing background color here simplifies ScrollableViewController
+
+        guard !eatery.orderedExpandedCategories.isEmpty else { return }
+
+        let expandedMenu = eatery.expandedMenu
+        var views: [ExpandedMenuCategoryView] = []
+        var menuItems: [ExpandedMenu.Item] = []
+
+        for category in eatery.orderedExpandedCategories {
+            let menu = expandedMenu?.data[category] ?? []
+            let extendedMenuVC = ExpandedMenuCategoryView(eatery: eatery, category: category, menu: menu)
+            views.append(extendedMenuVC)
+            menuItems.append(contentsOf: menu)
+        }
+
+        let scrollVC = ScrollableViewController(eatery: eatery, categoryViews: views, items: menuItems)
+        addChildViewController(scrollVC)
+        addToStackView(scrollVC.view)
+        scrollVC.didMove(toParentViewController: self)
+        scrollVC.view.hero.modifiers = createHeroModifiers(.fade, .translate)
+        scrollableVC = scrollVC
     }
 
     private func setUpOrderButton() {
@@ -265,6 +304,11 @@ class CampusMenuViewController: EateriesMenuViewController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
 
+        if let scrollableVC = self.scrollableVC {
+            scrollableVC.scrollMenuBar()
+            scrollableVC.changeTabBarIndex()
+        }
+
         guard var scroll = scroll else {
             return
         }
@@ -337,13 +381,12 @@ class CampusMenuViewController: EateriesMenuViewController {
 }
 
 extension CampusMenuViewController: TabbedPageViewControllerDelegate {
-
     func tabbedPageViewController(
         _ tabbedPageViewController: TabbedPageViewController,
         titleForViewController viewController: UIViewController
     ) -> String? {
         guard let mealViewController = viewController as? CampusEateryMealTableViewController else {
-            return nil
+            return ""
         }
 
         return mealViewController.meal
@@ -353,12 +396,12 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
         _ tabbedPageViewController: TabbedPageViewController,
         heightOfContentForViewController viewController: UIViewController
     ) -> CGFloat {
-        guard let mealViewController = viewController as? CampusEateryMealTableViewController else {
+        guard let mealTableViewController = viewController as? CampusEateryMealTableViewController else {
             return 0
         }
 
-        mealViewController.tableView.layoutIfNeeded()
-        return mealViewController.tableView.contentSize.height
+        mealTableViewController.tableView.layoutIfNeeded()
+        return mealTableViewController.tableView.contentSize.height
     }
 
 }

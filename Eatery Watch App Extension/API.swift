@@ -68,6 +68,23 @@ public final class CampusEateriesQuery: GraphQLQuery {
             }
           }
         }
+        expandedMenu {
+          __typename
+          category
+          stations {
+            __typename
+            items {
+              __typename
+              item
+              healthy
+              price
+              choices {
+                __typename
+                options
+              }
+            }
+          }
+        }
       }
     }
     """
@@ -127,6 +144,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
           GraphQLField("swipeData", type: .nonNull(.list(.object(SwipeDatum.selections)))),
           GraphQLField("coordinates", type: .nonNull(.object(Coordinate.selections))),
           GraphQLField("operatingHours", type: .nonNull(.list(.object(OperatingHour.selections)))),
+          GraphQLField("expandedMenu", type: .nonNull(.list(.object(ExpandedMenu.selections)))),
         ]
       }
 
@@ -136,8 +154,8 @@ public final class CampusEateriesQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: Int, name: String, nameShort: String, slug: String, eateryType: String, about: String, phone: String, location: String, exceptions: [String?], isGet: Bool, reserveUrl: String? = nil, campusArea: CampusArea, paymentMethods: PaymentMethod, swipeData: [SwipeDatum?], coordinates: Coordinate, operatingHours: [OperatingHour?]) {
-        self.init(unsafeResultMap: ["__typename": "CampusEateryType", "id": id, "name": name, "nameShort": nameShort, "slug": slug, "eateryType": eateryType, "about": about, "phone": phone, "location": location, "exceptions": exceptions, "isGet": isGet, "reserveUrl": reserveUrl, "campusArea": campusArea.resultMap, "paymentMethods": paymentMethods.resultMap, "swipeData": swipeData.map { (value: SwipeDatum?) -> ResultMap? in value.flatMap { (value: SwipeDatum) -> ResultMap in value.resultMap } }, "coordinates": coordinates.resultMap, "operatingHours": operatingHours.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }])
+      public init(id: Int, name: String, nameShort: String, slug: String, eateryType: String, about: String, phone: String, location: String, exceptions: [String?], isGet: Bool, reserveUrl: String? = nil, campusArea: CampusArea, paymentMethods: PaymentMethod, swipeData: [SwipeDatum?], coordinates: Coordinate, operatingHours: [OperatingHour?], expandedMenu: [ExpandedMenu?]) {
+        self.init(unsafeResultMap: ["__typename": "CampusEateryType", "id": id, "name": name, "nameShort": nameShort, "slug": slug, "eateryType": eateryType, "about": about, "phone": phone, "location": location, "exceptions": exceptions, "isGet": isGet, "reserveUrl": reserveUrl, "campusArea": campusArea.resultMap, "paymentMethods": paymentMethods.resultMap, "swipeData": swipeData.map { (value: SwipeDatum?) -> ResultMap? in value.flatMap { (value: SwipeDatum) -> ResultMap in value.resultMap } }, "coordinates": coordinates.resultMap, "operatingHours": operatingHours.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }, "expandedMenu": expandedMenu.map { (value: ExpandedMenu?) -> ResultMap? in value.flatMap { (value: ExpandedMenu) -> ResultMap in value.resultMap } }])
       }
 
       public var __typename: String {
@@ -290,6 +308,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue.map { (value: OperatingHour?) -> ResultMap? in value.flatMap { (value: OperatingHour) -> ResultMap in value.resultMap } }, forKey: "operatingHours")
+        }
+      }
+
+      public var expandedMenu: [ExpandedMenu?] {
+        get {
+          return (resultMap["expandedMenu"] as! [ResultMap?]).map { (value: ResultMap?) -> ExpandedMenu? in value.flatMap { (value: ResultMap) -> ExpandedMenu in ExpandedMenu(unsafeResultMap: value) } }
+        }
+        set {
+          resultMap.updateValue(newValue.map { (value: ExpandedMenu?) -> ResultMap? in value.flatMap { (value: ExpandedMenu) -> ResultMap in value.resultMap } }, forKey: "expandedMenu")
         }
       }
 
@@ -768,6 +795,202 @@ public final class CampusEateriesQuery: GraphQLQuery {
                 }
                 set {
                   resultMap.updateValue(newValue, forKey: "healthy")
+                }
+              }
+            }
+          }
+        }
+      }
+
+      public struct ExpandedMenu: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["FoodCategoryType"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("category", type: .nonNull(.scalar(String.self))),
+            GraphQLField("stations", type: .nonNull(.list(.object(Station.selections)))),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(category: String, stations: [Station?]) {
+          self.init(unsafeResultMap: ["__typename": "FoodCategoryType", "category": category, "stations": stations.map { (value: Station?) -> ResultMap? in value.flatMap { (value: Station) -> ResultMap in value.resultMap } }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var category: String {
+          get {
+            return resultMap["category"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "category")
+          }
+        }
+
+        public var stations: [Station?] {
+          get {
+            return (resultMap["stations"] as! [ResultMap?]).map { (value: ResultMap?) -> Station? in value.flatMap { (value: ResultMap) -> Station in Station(unsafeResultMap: value) } }
+          }
+          set {
+            resultMap.updateValue(newValue.map { (value: Station?) -> ResultMap? in value.flatMap { (value: Station) -> ResultMap in value.resultMap } }, forKey: "stations")
+          }
+        }
+
+        public struct Station: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["DescriptiveFoodStationType"]
+
+          public static var selections: [GraphQLSelection] {
+            return [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+            ]
+          }
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(items: [Item?]) {
+            self.init(unsafeResultMap: ["__typename": "DescriptiveFoodStationType", "items": items.map { (value: Item?) -> ResultMap? in value.flatMap { (value: Item) -> ResultMap in value.resultMap } }])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var items: [Item?] {
+            get {
+              return (resultMap["items"] as! [ResultMap?]).map { (value: ResultMap?) -> Item? in value.flatMap { (value: ResultMap) -> Item in Item(unsafeResultMap: value) } }
+            }
+            set {
+              resultMap.updateValue(newValue.map { (value: Item?) -> ResultMap? in value.flatMap { (value: Item) -> ResultMap in value.resultMap } }, forKey: "items")
+            }
+          }
+
+          public struct Item: GraphQLSelectionSet {
+            public static let possibleTypes: [String] = ["DescriptiveFoodItemType"]
+
+            public static var selections: [GraphQLSelection] {
+              return [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("item", type: .nonNull(.scalar(String.self))),
+                GraphQLField("healthy", type: .nonNull(.scalar(Bool.self))),
+                GraphQLField("price", type: .nonNull(.scalar(String.self))),
+                GraphQLField("choices", type: .list(.object(Choice.selections))),
+              ]
+            }
+
+            public private(set) var resultMap: ResultMap
+
+            public init(unsafeResultMap: ResultMap) {
+              self.resultMap = unsafeResultMap
+            }
+
+            public init(item: String, healthy: Bool, price: String, choices: [Choice?]? = nil) {
+              self.init(unsafeResultMap: ["__typename": "DescriptiveFoodItemType", "item": item, "healthy": healthy, "price": price, "choices": choices.flatMap { (value: [Choice?]) -> [ResultMap?] in value.map { (value: Choice?) -> ResultMap? in value.flatMap { (value: Choice) -> ResultMap in value.resultMap } } }])
+            }
+
+            public var __typename: String {
+              get {
+                return resultMap["__typename"]! as! String
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var item: String {
+              get {
+                return resultMap["item"]! as! String
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "item")
+              }
+            }
+
+            public var healthy: Bool {
+              get {
+                return resultMap["healthy"]! as! Bool
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "healthy")
+              }
+            }
+
+            public var price: String {
+              get {
+                return resultMap["price"]! as! String
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "price")
+              }
+            }
+
+            public var choices: [Choice?]? {
+              get {
+                return (resultMap["choices"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Choice?] in value.map { (value: ResultMap?) -> Choice? in value.flatMap { (value: ResultMap) -> Choice in Choice(unsafeResultMap: value) } } }
+              }
+              set {
+                resultMap.updateValue(newValue.flatMap { (value: [Choice?]) -> [ResultMap?] in value.map { (value: Choice?) -> ResultMap? in value.flatMap { (value: Choice) -> ResultMap in value.resultMap } } }, forKey: "choices")
+              }
+            }
+
+            public struct Choice: GraphQLSelectionSet {
+              public static let possibleTypes: [String] = ["DescriptiveFoodItemOptionType"]
+
+              public static var selections: [GraphQLSelection] {
+                return [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("options", type: .nonNull(.list(.scalar(String.self)))),
+                ]
+              }
+
+              public private(set) var resultMap: ResultMap
+
+              public init(unsafeResultMap: ResultMap) {
+                self.resultMap = unsafeResultMap
+              }
+
+              public init(options: [String?]) {
+                self.init(unsafeResultMap: ["__typename": "DescriptiveFoodItemOptionType", "options": options])
+              }
+
+              public var __typename: String {
+                get {
+                  return resultMap["__typename"]! as! String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              public var options: [String?] {
+                get {
+                  return resultMap["options"]! as! [String?]
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "options")
                 }
               }
             }

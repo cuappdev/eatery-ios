@@ -10,17 +10,11 @@ import UIKit
 
 // MARK: -
 
-class UnderlineTabBarControl: UIControl {
-
-    private var stackView: UIStackView!
-    private var tabButtons: [UIButton] = []
-    private var underlineView: UIView!
-
-    private(set) var selectedSegmentIndex = 0
+class UnderlineTabBarControl: TabBar {
 
     /// `sections` must contain at least one element. 
-    init(sections: [String]) {
-        super.init(frame: .zero)
+    override init(sections: [String]) {
+        super.init(sections: sections)
 
         backgroundColor = .wash
         layer.cornerRadius = 12
@@ -52,14 +46,14 @@ class UnderlineTabBarControl: UIControl {
         underlineView.backgroundColor = .eateryBlue
         insertSubview(underlineView, belowSubview: stackView)
 
-        underline(at: 0)
+        select(at: 0)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func underline(at index: Int) {
+    override func select(at index: Int) {
         selectedSegmentIndex = index
 
         let button = tabButtons[index]
@@ -76,15 +70,6 @@ class UnderlineTabBarControl: UIControl {
         }
         tabButtons[index].isSelected = true
         tabButtons[index].isUserInteractionEnabled = false
-    }
-
-    @objc private func tabButtonPressed(_ sender: UIButton) {
-        guard let index = tabButtons.firstIndex(of: sender) else {
-            return
-        }
-
-        underline(at: index)
-        sendActions(for: .valueChanged)
     }
 
 }

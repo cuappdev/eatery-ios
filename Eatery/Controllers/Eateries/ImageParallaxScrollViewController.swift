@@ -17,7 +17,8 @@ class ImageParallaxScrollViewController: UIViewController {
     private let navigationBar = UINavigationBar()
     private let navigationBarBackground = UIView()
 
-    private let scrollView = UIScrollView()
+    let scrollView = UIScrollView()
+    var scrollOffset: CGFloat?
     let imageView = UIImageView()
     let gradientView = MenuGradientView()
 
@@ -41,6 +42,7 @@ class ImageParallaxScrollViewController: UIViewController {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.delaysContentTouches = true
+        scrollView.contentInsetAdjustmentBehavior = .always // .always is necessary for ExpandedMenu UI
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -103,6 +105,12 @@ class ImageParallaxScrollViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        let imageViewHeight = imageView.frame.height
+        let navBarHeight = navigationBar.frame.height
+        let topInsets = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+        let safetyOffset: CGFloat = 5
+        scrollOffset = navBarHeight + (topInsets * 2) - imageViewHeight - safetyOffset
 
         // Why fade in the navigation bar instead of using hero?
         //

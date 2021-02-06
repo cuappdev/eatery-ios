@@ -10,7 +10,6 @@ class CampusEateryMealTableViewController: UITableViewController {
     init(eatery: CampusEatery, meal: String) {
         self.eatery = eatery
         self.meal = meal
-
         self.menu = eatery.getMenu(meal: meal, onDayOf: Date())
 
         super.init(nibName: nil, bundle: nil)

@@ -27,7 +27,7 @@ class TabbedPageViewController: UIViewController {
     let viewControllers: [UIViewController]
 
     private var pageViewController: UIPageViewController!
-    private var tabBar: UnderlineTabBarControl?
+    private var tabBar: TabBar?
 
     weak var delegate: TabbedPageViewControllerDelegate?
 
@@ -151,12 +151,12 @@ class TabbedPageViewController: UIViewController {
 
     /// Call this method when the page VC's children are modified.
     /// This method updates the underline bar and adjusts the page view
-    /// controller's height. 
+    /// controller's height.
     private func pageViewControllerDidChangeViewController() {
         adjustPageViewControllerHeight()
 
         if let index = currentViewControllerIndex, let tabBar = tabBar {
-            tabBar.underline(at: index)
+            tabBar.select(at: index)
         }
     }
 
