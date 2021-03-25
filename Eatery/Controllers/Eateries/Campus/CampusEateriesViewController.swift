@@ -40,7 +40,8 @@ class CampusEateriesViewController: EateriesViewController {
             .west,
             .central,
             .swipes,
-            .brb
+            .brb,
+            .favorites
         ]
 
         if let eateries = Defaults[\.cachedCampusEateries],
@@ -134,6 +135,9 @@ class CampusEateriesViewController: EateriesViewController {
         case .central: AppDevAnalytics.shared.logFirebase(CentralFilterPressPayload())
         case .swipes: AppDevAnalytics.shared.logFirebase(SwipesFilterPressPayload())
         case .brb: AppDevAnalytics.shared.logFirebase(BRBFilterPressPayload())
+        case .favorites:
+            //MARK: Add AppDevAnalytics?
+            print("Favorites selected")
         default:
             break
         }
@@ -251,9 +255,15 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         }
 
         filteredEateries = filteredEateries.filter {
-            if filters.contains(.swipes) { return $0.paymentMethods.contains(.swipes) }
-            if filters.contains(.brb) { return $0.paymentMethods.contains(.brb) }
+            if $0.paymentMethods.contains(.brb) && filters.contains(.brb) {return true}
+            if $0.paymentMethods.contains(.swipes) && filters.contains(.swipes) {return true}
             return true
+        }
+        
+        if filters.contains(.favorites) {
+            filteredEateries = filteredEateries.filter {
+                return $0.isFavorite
+            }
         }
 
         if !filters.isDisjoint(with: Filter.areaFilters) {

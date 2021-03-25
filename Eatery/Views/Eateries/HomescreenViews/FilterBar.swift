@@ -39,6 +39,7 @@ enum Filter: String {
     case burgers = "Burgers"
     case mexican = "Mexican"
     case bubbleTea = "Bubble Tea"
+    case favorites = "Favorite Items"
 
 }
 
