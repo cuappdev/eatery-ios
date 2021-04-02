@@ -32,6 +32,7 @@ class CampusEateryMealTableViewController: UITableViewController {
 
         tableView.register(MealItemTableViewCell.self, forCellReuseIdentifier: "MealItem")
         tableView.register(MealStationTableViewCell.self, forCellReuseIdentifier: "MealStation")
+        tableView.register(MealStationItemTableViewCell.self, forCellReuseIdentifier: "MealStationItem")
 
         tableView.isScrollEnabled = false
 
@@ -53,6 +54,19 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        guard let menu = menu else {
+            // display unknown menu section
+            return 1
+        }
+        if menu.data.count == 1, eatery.eateryType != .dining {
+            // display menu items (of the only "dining station") as a table
+            return 1
+        }
+        // display menu items with headers
+        return menu.data.count
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let menu = menu else {
             // display the unknown menu cell
@@ -63,8 +77,9 @@ class CampusEateryMealTableViewController: UITableViewController {
             // display menu items (of the only "dining station") as a table
             return item.value.count
         } else {
-            // display the menu items
-            return menu.data.count
+            // display the menu items with headers
+            let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
+            return sortedMenu[section].1.count + 1
         }
     }
 
@@ -72,11 +87,15 @@ class CampusEateryMealTableViewController: UITableViewController {
         guard let menu = menu else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
-
+        //MARK: Needs more seperation of cells
         if menu.data.count == 1, eatery.eateryType != .dining {
             return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
-            return diningStationsCell(in: tableView, forRowAt: indexPath)
+            if indexPath.item == 0 {
+                return diningStationsHeaderCell(in: tableView, forRowAt: indexPath)
+            }else {
+                return diningStationsCell(in: tableView, forRowAt: indexPath)
+            }
         }
     }
 
@@ -95,10 +114,13 @@ class CampusEateryMealTableViewController: UITableViewController {
 
     /// Create a table view cell when there is a single dining station in the menu
     private func menuItemCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let menu = menu, let station = menu.data.first else {
+        guard let menuData = menu?.data else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
-
+        guard let menu = menu else {
+            return emptyMenuCell(in: tableView, forRowAt: indexPath)
+        }
+        let station = menu.data[menuData.index(menuData.startIndex, offsetBy: indexPath.section)]
         let name = station.value[indexPath.row].name
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealItem", for: indexPath) as! MealItemTableViewCell
@@ -106,8 +128,44 @@ class CampusEateryMealTableViewController: UITableViewController {
         return cell
     }
 
-    /// Create a table view cell when there are multiple dining stations in the menu
+    /// Create a table view cell header when there are multiple dining stations in the menu
     private func diningStationsCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "MealStationItem",
+            for: indexPath
+        ) as! MealStationItemTableViewCell
+
+        guard let menu = menu else {
+            return emptyMenuCell(in: tableView, forRowAt: indexPath)
+        }
+
+        let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
+        let font = UIFont.systemFont(ofSize: 14)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
+
+        let menuItem = sortedMenu[indexPath.section].1[indexPath.item-1]
+
+        var name: NSMutableAttributedString = NSMutableAttributedString(
+            string: "\(menuItem.name.trim()) ",
+            attributes: [
+                .foregroundColor: UIColor.primary,
+                .font: font,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+
+        if menuItem.healthy {
+            name = name.appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
+        }
+
+        cell.contentLabel.attributedText = name
+
+        return cell
+    }
+
+    /// Create a table view cell when there are multiple dining stations in the menu
+    private func diningStationsHeaderCell(in tableView: UITableView, forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "MealStation",
             for: indexPath
@@ -121,7 +179,7 @@ class CampusEateryMealTableViewController: UITableViewController {
         let stationTitles = sortedMenu.map { $0.0 }
 
         // set title
-        let possibleTitle = stationTitles[indexPath.row]
+        let possibleTitle = stationTitles[indexPath.section]
         if possibleTitle == "General" {
             cell.titleLabel.text = ""
             cell.titleCollapsed = true
@@ -129,39 +187,13 @@ class CampusEateryMealTableViewController: UITableViewController {
             cell.titleLabel.text = possibleTitle
             cell.titleCollapsed = false
         }
-
-        // set content
-        let menuItems = sortedMenu[indexPath.row].1
-        let names = menuItems.map { item -> NSMutableAttributedString in
-            if item.healthy {
-                return NSMutableAttributedString(string: "\(item.name.trim()) ")
-                    .appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
-            } else {
-                return NSMutableAttributedString(string: item.name)
-            }
-        }
-
-        let font = UIFont.systemFont(ofSize: 14)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
-        let content = NSMutableAttributedString(
-            string: "",
-            attributes: [
-                .foregroundColor: UIColor.primary,
-                .font: font,
-                .paragraphStyle: paragraphStyle
-            ]
-        )
-
-        if names.isEmpty {
-            content.append(NSMutableAttributedString(string: "No items to show"))
-        } else {
-            content.append(NSMutableAttributedString(string: "\n").join(names))
-        }
-
-        cell.contentLabel.attributedText = content
-
         return cell
     }
-
+    /// Register favorites
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //MARK: Will need to integrate into backend and potentially switch this to favorites button instead of cell selection
+        if let cell = tableView.cellForRow(at: indexPath) as? MealStationItemTableViewCell {
+            cell.favorited = !cell.favorited
+        }
+    }
 }
