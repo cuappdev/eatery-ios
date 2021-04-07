@@ -257,13 +257,12 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         filteredEateries = filteredEateries.filter {
             if $0.paymentMethods.contains(.brb) && filters.contains(.brb) {return true}
             if $0.paymentMethods.contains(.swipes) && filters.contains(.swipes) {return true}
+            if filters.contains(.brb) || filters.contains(.swipes) {return false}
             return true
         }
-        
+
         if filters.contains(.favorites) {
-            filteredEateries = filteredEateries.filter {
-                return $0.isFavorite
-            }
+            filteredEateries = filteredEateries.filter {$0.hasFavorite}
         }
 
         if !filters.isDisjoint(with: Filter.areaFilters) {

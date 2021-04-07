@@ -254,6 +254,19 @@ extension Eatery {
             NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
         }
     }
+    
+    
+    var hasFavorite: Bool {
+        get {
+            guard let event = self.currentActiveEvent() else {return false}
+            for item in event.menu.data {
+                if item.value.contains(where: {$0.favorite}) {
+                    return true
+                }
+            }
+            return false
+        }
+    }
 
 }
 

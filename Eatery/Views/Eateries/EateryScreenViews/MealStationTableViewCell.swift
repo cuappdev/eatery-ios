@@ -19,8 +19,6 @@ class MealStationTableViewCell: UITableViewCell {
         set { collapseTitleLabelConstraint?.isActive = newValue }
     }
 
-    let contentLabel = UILabel()
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -31,16 +29,6 @@ class MealStationTableViewCell: UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
             make.leading.trailing.equalToSuperview().inset(10)
-        }
-
-        contentLabel.numberOfLines = 0
-        contentLabel.font = .systemFont(ofSize: 14)
-        contentLabel.textColor = .lightGray
-        addSubview(contentLabel)
-        contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview()
         }
 
         collapseTitleLabelConstraint = titleLabel.snp.prepareConstraints({ make in

@@ -87,13 +87,12 @@ class CampusEateryMealTableViewController: UITableViewController {
         guard let menu = menu else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
-        //MARK: Needs more seperation of cells
         if menu.data.count == 1, eatery.eateryType != .dining {
             return menuItemCell(in: tableView, forRowAt: indexPath)
         } else {
             if indexPath.item == 0 {
                 return diningStationsHeaderCell(in: tableView, forRowAt: indexPath)
-            }else {
+            } else {
                 return diningStationsCell(in: tableView, forRowAt: indexPath)
             }
         }
@@ -107,7 +106,6 @@ class CampusEateryMealTableViewController: UITableViewController {
         ) as! MealStationTableViewCell
 
         cell.titleLabel.text = "No menu available"
-        cell.contentLabel.attributedText = NSAttributedString(string: "")
 
         return cell
     }
@@ -154,13 +152,11 @@ class CampusEateryMealTableViewController: UITableViewController {
                 .paragraphStyle: paragraphStyle
             ]
         )
-
         if menuItem.healthy {
             name = name.appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
         }
-
         cell.contentLabel.attributedText = name
-
+        cell.favorited = menuItem.favorite
         return cell
     }
 
@@ -191,7 +187,7 @@ class CampusEateryMealTableViewController: UITableViewController {
     }
     /// Register favorites
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //MARK: Will need to integrate into backend and potentially switch this to favorites button instead of cell selection
+        // MARK: Will need to integrate into menu of supercontroller
         if let cell = tableView.cellForRow(at: indexPath) as? MealStationItemTableViewCell {
             cell.favorited = !cell.favorited
         }
