@@ -18,7 +18,9 @@ struct Menu: Codable {
 
         /// Flag indicating if the item is deemed healthy or not by Cornell
         let healthy: Bool
-
+        
+        /// Flag indicating if the item is a favorite or not
+        var favorite: Bool
         /// Number values of the prices of certain items
         var prices: [Float]?
 

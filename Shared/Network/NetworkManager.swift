@@ -95,10 +95,10 @@ struct NetworkManager {
                         menu.forEach { item in
                             let items = item.items.compactMap { $0 }
                             items.forEach { menuItem in
-                                allMenuItems.append(Menu.Item(name: menuItem.item, healthy: menuItem.healthy))
+                                allMenuItems.append(Menu.Item(name: menuItem.item, healthy: menuItem.healthy, favorite: menuItem.favorite))
                             }
                             categoryToMenu[item.category] = items.map { itemForEvent in
-                                Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy)
+                                Menu.Item(name: itemForEvent.item, healthy: itemForEvent.healthy, favorite: itemForEvent.favorite)
                             }
                         }
 
@@ -171,9 +171,10 @@ struct NetworkManager {
                         items.forEach { item in
                             let name = item.item
                             let health = item.healthy
+                            let favorite = item.favorite
                             let price = item.price
 
-                            let newItem = ExpandedMenu.Item(name: name, healthy: health, priceString: price)
+                            let newItem = ExpandedMenu.Item(name: name, healthy: health, favorite: favorite, priceString: price)
                             expandedMenuItems.append(newItem)
                         }
                     }
