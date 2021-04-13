@@ -12,6 +12,8 @@ extension DefaultsKeys {
 
     var favorites: DefaultsKey<[String]> { .init("favorites", defaultValue: []) }
 
+    var favoriteFoods: DefaultsKey<[String]> { .init("favorite", defaultValue: []) }
+
     #if os(iOS)
     var significantEvents: DefaultsKey<Int> {
         .init("significantEvents", defaultValue: 0)

@@ -259,8 +259,10 @@ extension Eatery {
     var hasFavorite: Bool {
         get {
             guard let event = self.currentActiveEvent() else {return false}
-            for item in event.menu.data {
-                if item.value.contains(where: {$0.favorite}) {
+            for category in event.menu.data {
+                if category.value.contains(where: { item in
+                    Defaults[\.favoriteFoods].contains(item.name)
+                }) {
                     return true
                 }
             }
