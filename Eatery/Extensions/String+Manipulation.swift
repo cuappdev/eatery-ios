@@ -33,7 +33,7 @@ extension NSMutableAttributedString {
         attachment.bounds = CGRect(x: 0, y: yOffset, width: image.size.width, height: image.size.height)
 
         let attachmentString: NSAttributedString = NSAttributedString(attachment: attachment)
-        let string: NSMutableAttributedString = NSMutableAttributedString(string: self.string)
+        let string: NSMutableAttributedString = NSMutableAttributedString(attributedString: self)
         string.append(attachmentString)
 
         return string

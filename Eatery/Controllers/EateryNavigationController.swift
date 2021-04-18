@@ -30,3 +30,7 @@ class EateryNavigationController: UINavigationController {
     }
 
 }
+
+protocol Reloadable {
+    func reload()
+}

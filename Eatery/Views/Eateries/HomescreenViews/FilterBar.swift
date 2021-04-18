@@ -23,13 +23,13 @@ enum Filter: String {
     ]
 
     case nearest = "Nearest First"
+    case favorites = "Favorite Items"
 
     case north = "North"
     case west = "West"
     case central = "Central"
     case swipes = "Swipes"
     case brb = "BRB"
-    case favorites = "Favorite Items"
 
     case pizza = "Pizza"
     case chinese = "Chinese"

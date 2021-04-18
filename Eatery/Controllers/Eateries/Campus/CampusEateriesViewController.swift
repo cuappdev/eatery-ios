@@ -29,6 +29,8 @@ class CampusEateriesViewController: EateriesViewController {
 
     private let locationManager: CLLocationManager = CLLocationManager()
 
+    public var presentingMenu: CampusMenuViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -124,20 +126,21 @@ class CampusEateriesViewController: EateriesViewController {
         } else {
             payload = CampusCafeCellPressPayload(cafeName: eatery.displayName)
         }
+        self.presentingMenu = menuViewController
         AppDevAnalytics.shared.logFirebase(payload)
     }
 
     override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
         switch filter {
         case .nearest: AppDevAnalytics.shared.logFirebase(NearestFilterPressPayload())
+        case .favorites:
+            // TODO: Add AppDevAnalytics?
+            print("Favorites selected")
         case .north: AppDevAnalytics.shared.logFirebase(NorthFilterPressPayload())
         case .west: AppDevAnalytics.shared.logFirebase(WestFilterPressPayload())
         case .central: AppDevAnalytics.shared.logFirebase(CentralFilterPressPayload())
         case .swipes: AppDevAnalytics.shared.logFirebase(SwipesFilterPressPayload())
         case .brb: AppDevAnalytics.shared.logFirebase(BRBFilterPressPayload())
-        case .favorites:
-            //MARK: Add AppDevAnalytics?
-            print("Favorites selected")
         default:
             break
         }
@@ -312,5 +315,11 @@ extension CampusEateriesViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
         self.userLocation = userLocation
+    }
+}
+
+extension CampusEateriesViewController: Reloadable {
+    func reload() {
+        self.presentingMenu?.reload()
     }
 }

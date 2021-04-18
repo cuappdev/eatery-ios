@@ -165,11 +165,7 @@ class CampusEateryMealTableViewController: UITableViewController {
                 return
             }
             let foodTitle = station[indexPath.item].name
-            if cell.favorited {
-                Defaults[\.favoriteFoods].append(foodTitle)
-            } else {
-                Defaults[\.favoriteFoods].removeAll(where: {$0 == foodTitle})
-            }
+            DefaultsKeys.toggleFavoriteFood(name: foodTitle)
         }
     }
 

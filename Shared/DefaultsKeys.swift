@@ -14,6 +14,26 @@ extension DefaultsKeys {
 
     var favoriteFoods: DefaultsKey<[String]> { .init("favorite", defaultValue: []) }
 
+    static func toggleFavoriteFood(name: String) {
+        if Defaults[\.favoriteFoods].contains(name) {
+            removeFavoriteFood(name: name)
+        } else {
+            addFavoriteFood(name: name)
+        }
+    }
+
+    static func addFavoriteFood(name: String) {
+        if !Defaults[\.favoriteFoods].contains(name) {
+            Defaults[\.favoriteFoods].append(name)
+        }
+    }
+
+    static func removeFavoriteFood(name: String) {
+        Defaults[\.favoriteFoods].removeAll(where: { item in
+            item == name
+        })
+    }
+
     #if os(iOS)
     var significantEvents: DefaultsKey<Int> {
         .init("significantEvents", defaultValue: 0)
