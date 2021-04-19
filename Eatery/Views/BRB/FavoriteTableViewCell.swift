@@ -10,46 +10,43 @@ import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
 
-    private var nameLabel: UILabel!
-    private var servingLabel: UILabel!
-    
-    private var favoriteStatus: UIImageView!
-    static let favoritedImage = UIImage(named: "goldStar")
-    static let unfavoritedImage = UIImage(named: "unselected")
+    private let nameLabel = UILabel()
+    private let servingLabel = UILabel()
+
+    private var favoriteStatus = UIImageView(image: .favoritedImage)
     public var favorited = true {
         didSet {
-            favoriteStatus.image = favorited ? FavoriteTableViewCell.favoritedImage : FavoriteTableViewCell.unfavoritedImage
+            favoriteStatus.image = favorited ? .favoritedImage : .unfavoritedImage
+            favoriteStatus.tintColor = favorited ? .favoriteYellow : .lightGray
         }
     }
+    let padding: CGFloat = 20
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
 
-        nameLabel = UILabel(frame: .zero)
         nameLabel.font = .preferredFont(forTextStyle: .headline)
         nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(padding)
             make.top.equalToSuperview().inset(12)
         }
 
-        servingLabel = UILabel(frame: .zero)
         servingLabel.font = .preferredFont(forTextStyle: .subheadline)
         servingLabel.textColor = .gray
         contentView.addSubview(servingLabel)
         servingLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(2)
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(padding)
             make.bottom.equalToSuperview().inset(12)
         }
 
-        favoriteStatus = UIImageView()
-        favoriteStatus.tintColor = .favoriteYellow
-        favoriteStatus.image = FavoriteTableViewCell.favoritedImage
         favoriteStatus.contentMode = .scaleAspectFill
         contentView.addSubview(favoriteStatus)
         favoriteStatus.snp.makeConstraints { make in
-            make.top.bottom.trailing.equalToSuperview().inset(20)
+            make.top.bottom.trailing.equalToSuperview().inset(padding)
         }
     }
 

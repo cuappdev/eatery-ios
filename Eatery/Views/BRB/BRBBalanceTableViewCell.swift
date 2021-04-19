@@ -15,6 +15,7 @@ class BRBBalanceTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
 
         titleLabel = UILabel(frame: .zero)
         titleLabel.font = .preferredFont(forTextStyle: .headline)

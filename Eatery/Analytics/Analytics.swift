@@ -72,6 +72,11 @@ struct NearestFilterPressPayload: Payload {
     let eventName = "nearest_filter_press"
 }
 
+/// Log whenever the Favorite Items filter is pressed
+struct FavoriteItemsPressPayload: Payload {
+    let eventName = "favorite_items_filter_press"
+}
+
 /// Log whenever the North filter is pressed
 struct NorthFilterPressPayload: Payload {
     let eventName = "north_filter_press"

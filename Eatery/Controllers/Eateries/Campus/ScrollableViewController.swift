@@ -266,3 +266,11 @@ class ScrollableViewController: UIViewController {
     }
 
 }
+
+extension ScrollableViewController: Reloadable {
+    func reload() {
+        categoryViews.forEach { categoryView in
+            categoryView.reload()
+        }
+    }
+}

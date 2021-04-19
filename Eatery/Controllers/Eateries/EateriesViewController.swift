@@ -657,7 +657,6 @@ extension EateriesViewController: UICollectionViewDataSource {
                 withReuseIdentifier: CellIdentifier.container.rawValue,
                 for: indexPath
             )
-
             cell.contentView.addSubview(filterBar)
             filterBar.snp.makeConstraints { make in
                 make.edges.equalToSuperview()

@@ -30,7 +30,7 @@ class CampusEateriesViewController: EateriesViewController {
     private let locationManager: CLLocationManager = CLLocationManager()
 
     public var presentingMenu: CampusMenuViewController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,12 +38,12 @@ class CampusEateriesViewController: EateriesViewController {
 
         availableFilters = [
             .nearest,
+            .favorites,
             .north,
             .west,
             .central,
             .swipes,
-            .brb,
-            .favorites
+            .brb
         ]
 
         if let eateries = Defaults[\.cachedCampusEateries],
@@ -126,16 +126,14 @@ class CampusEateriesViewController: EateriesViewController {
         } else {
             payload = CampusCafeCellPressPayload(cafeName: eatery.displayName)
         }
-        self.presentingMenu = menuViewController
+        presentingMenu = menuViewController
         AppDevAnalytics.shared.logFirebase(payload)
     }
 
     override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
         switch filter {
         case .nearest: AppDevAnalytics.shared.logFirebase(NearestFilterPressPayload())
-        case .favorites:
-            // TODO: Add AppDevAnalytics?
-            print("Favorites selected")
+        case .favorites: AppDevAnalytics.shared.logFirebase(FavoriteItemsPressPayload())
         case .north: AppDevAnalytics.shared.logFirebase(NorthFilterPressPayload())
         case .west: AppDevAnalytics.shared.logFirebase(WestFilterPressPayload())
         case .central: AppDevAnalytics.shared.logFirebase(CentralFilterPressPayload())
@@ -258,14 +256,14 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         }
 
         filteredEateries = filteredEateries.filter {
-            if $0.paymentMethods.contains(.brb) && filters.contains(.brb) {return true}
-            if $0.paymentMethods.contains(.swipes) && filters.contains(.swipes) {return true}
-            if filters.contains(.brb) || filters.contains(.swipes) {return false}
+            if $0.paymentMethods.contains(.brb) && filters.contains(.brb) { return true }
+            if $0.paymentMethods.contains(.swipes) && filters.contains(.swipes) { return true }
+            if filters.contains(.brb) || filters.contains(.swipes) { return false }
             return true
         }
 
         if filters.contains(.favorites) {
-            filteredEateries = filteredEateries.filter {$0.hasFavorite}
+            filteredEateries = filteredEateries.filter { $0.hasFavorite }
         }
 
         if !filters.isDisjoint(with: Filter.areaFilters) {
@@ -320,6 +318,6 @@ extension CampusEateriesViewController: CLLocationManagerDelegate {
 
 extension CampusEateriesViewController: Reloadable {
     func reload() {
-        self.presentingMenu?.reload()
+        presentingMenu?.reload()
     }
 }
