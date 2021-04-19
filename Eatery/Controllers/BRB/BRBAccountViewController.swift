@@ -102,7 +102,7 @@ extension BRBAccountViewController: UITableViewDataSource {
         } else if indexPath.section == 1 && favoriteItems.count > 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.favorites) as! FavoriteTableViewCell
             let name = favoriteItems[indexPath.item]
-            cell.configure(name: name, restaurants: nil, favorited: Defaults[\.favoriteFoods].contains(name))
+            cell.configure(name: name, restaurants: nil, favorited: DefaultsKeys.isFavoriteFood(name))
             cell.selectionStyle = .none
             return cell
         }
@@ -123,7 +123,7 @@ extension BRBAccountViewController: UITableViewDataSource {
             return
         }
         cell.favorited.toggle()
-        DefaultsKeys.toggleFavoriteFood(name: favoriteItems[indexPath.item])
+        DefaultsKeys.toggleFavoriteFood(favoriteItems[indexPath.item])
     }
 
 }

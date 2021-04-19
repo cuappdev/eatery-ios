@@ -523,6 +523,14 @@ class EateriesViewController: UIViewController {
         return (favorites: favorites, open: open, closed: closed)
     }
 
+    func favoritesToggled(_ state: Bool) {
+        for cell in collectionView.visibleCells {
+            if let cell = cell as? EateryCollectionViewCell {
+                cell.toggleFavorites(state)
+            }
+        }
+    }
+
     private func reloadEateries(animated: Bool) {
         guard view.window != nil else {
             return

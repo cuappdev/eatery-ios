@@ -133,9 +133,7 @@ class CampusEateriesViewController: EateriesViewController {
     override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
         switch filter {
         case .nearest: AppDevAnalytics.shared.logFirebase(NearestFilterPressPayload())
-        case .favorites:
-            // TODO: Add AppDevAnalytics?
-            print("Favorites selected")
+        case .favorites: AppDevAnalytics.shared.logFirebase(FavoriteItemsPressPayload())
         case .north: AppDevAnalytics.shared.logFirebase(NorthFilterPressPayload())
         case .west: AppDevAnalytics.shared.logFirebase(WestFilterPressPayload())
         case .central: AppDevAnalytics.shared.logFirebase(CentralFilterPressPayload())

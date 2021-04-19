@@ -216,3 +216,13 @@ extension TabbedPageViewController: UIPageViewControllerDelegate {
     }
 
 }
+
+extension TabbedPageViewController: Reloadable {
+    func reload() {
+        self.viewControllers.forEach { controller in
+            if let eateryController = controller as? CampusEateryMealTableViewController {
+                eateryController.tableView.reloadData()
+            }
+        }
+    }
+}

@@ -12,13 +12,12 @@ class FavoriteTableViewCell: UITableViewCell {
 
     private var nameLabel: UILabel!
     private var servingLabel: UILabel!
-    
+
     private var favoriteStatus: UIImageView!
-    static let favoritedImage = UIImage(named: "goldStar")
-    static let unfavoritedImage = UIImage(named: "unselected")
     public var favorited = true {
         didSet {
-            favoriteStatus.image = favorited ? FavoriteTableViewCell.favoritedImage : FavoriteTableViewCell.unfavoritedImage
+            favoriteStatus.image = favorited ? .favoritedImage : .unfavoritedImage
+            favoriteStatus.tintColor = favorited ? .favoriteYellow : .lightGray
         }
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -44,8 +43,7 @@ class FavoriteTableViewCell: UITableViewCell {
         }
 
         favoriteStatus = UIImageView()
-        favoriteStatus.tintColor = .favoriteYellow
-        favoriteStatus.image = FavoriteTableViewCell.favoritedImage
+        favoriteStatus.image = .favoritedImage
         favoriteStatus.contentMode = .scaleAspectFill
         contentView.addSubview(favoriteStatus)
         favoriteStatus.snp.makeConstraints { make in

@@ -7,11 +7,27 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class ExpandedMenuRow: UIView {
 
     private var itemLabel: UILabel!
     private var priceLabel: UILabel!
+    private let favoritedStatus = UIImageView()
+    private var favorited = false {
+        didSet {
+            DefaultsKeys.toggleFavoriteFood(item.name, favorited)
+            toggleFavorites()
+        }
+    }
+    private func toggleFavorites() {
+        favoritedStatus.image = favorited ? .favoritedImage : .unfavoritedImage
+        favoritedStatus.tintColor = favorited ? .favoriteYellow : .lightGray
+    }
+    public func checkFavorite() {
+        favorited = DefaultsKeys.isFavoriteFood(item.name)
+    }
+    
     private var item: ExpandedMenu.Item!
 
     private let padding: CGFloat = 15
@@ -22,6 +38,10 @@ class ExpandedMenuRow: UIView {
 
     /// Constant used multiple times in codebase to get/set height of ExpandedMenuRows
     static let heightConst: CGFloat = 44
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        favorited.toggle()
+    }
 
     init(item: ExpandedMenu.Item) {
         super.init(frame: .zero)
@@ -37,6 +57,17 @@ class ExpandedMenuRow: UIView {
             make.trailing.equalToSuperview().offset(-padding + lineOffset)
         }
 
+        favoritedStatus.contentMode = .scaleAspectFill
+        favorited = DefaultsKeys.isFavoriteFood(item.name)
+        toggleFavorites()
+
+        addSubview(favoritedStatus)
+        favoritedStatus.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(leadPadding)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(20)
+        }
+
         self.item = item
         itemLabel = UILabel()
         itemLabel.text = item.name
@@ -47,7 +78,7 @@ class ExpandedMenuRow: UIView {
 
         itemLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(leadPadding)
+            make.leading.equalTo(favoritedStatus.snp.trailing).offset(leadPadding)
         }
 
         priceLabel = UILabel()

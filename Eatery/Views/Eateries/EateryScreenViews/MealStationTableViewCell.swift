@@ -13,12 +13,6 @@ class MealStationTableViewCell: UITableViewCell {
 
     let titleLabel = UILabel()
 
-    private var collapseTitleLabelConstraint: Constraint?
-    var titleCollapsed: Bool {
-        get { collapseTitleLabelConstraint?.isActive ?? false }
-        set { collapseTitleLabelConstraint?.isActive = newValue }
-    }
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -30,10 +24,6 @@ class MealStationTableViewCell: UITableViewCell {
             make.top.equalToSuperview().inset(16)
             make.leading.trailing.equalToSuperview().inset(10)
         }
-
-        collapseTitleLabelConstraint = titleLabel.snp.prepareConstraints({ make in
-            make.height.equalTo(0)
-        }).first
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,15 +35,14 @@ class MealStationTableViewCell: UITableViewCell {
 class MealStationItemTableViewCell: UITableViewCell {
 
     let contentLabel = UILabel()
+    private let favoritedStatus = UIImageView()
 
-    let favoritedStatus = UIImageView()
+    let seperator = UIView()
 
-    let favoritedImage = UIImage(named: "goldStar")
-    let unfavoritedImage = UIImage(named: "unselected")
-
-    var favorited: Bool = false {
+    var favorited = false {
         didSet {
-            favoritedStatus.image = favorited ? favoritedImage : unfavoritedImage
+            favoritedStatus.image = favorited ? .favoritedImage : .unfavoritedImage
+            favoritedStatus.tintColor = favorited ? .favoriteYellow : .lightGray
         }
     }
 
@@ -61,16 +50,14 @@ class MealStationItemTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
-        favoritedStatus.image = unfavoritedImage
-        favoritedStatus.tintColor = .favoriteYellow
+        favoritedStatus.image = .unfavoritedImage
+        favoritedStatus.tintColor = .lightGray
         favoritedStatus.contentMode = .scaleAspectFill
         addSubview(favoritedStatus)
         favoritedStatus.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(5)
-            make.top.equalToSuperview().inset(5)
-            make.height.lessThanOrEqualTo(15)
-            make.width.lessThanOrEqualTo(15)
+            make.leading.equalToSuperview().inset(EateriesViewController.collectionViewMargin)
+            make.bottom.top.equalToSuperview().inset(5)
+            make.height.width.lessThanOrEqualTo(20)
         }
 
         contentLabel.numberOfLines = 0
@@ -83,6 +70,13 @@ class MealStationItemTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview()
         }
 
+        seperator.backgroundColor = .separator
+        addSubview(seperator)
+        seperator.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(EateriesViewController.collectionViewMargin)
+            make.height.equalTo(1)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

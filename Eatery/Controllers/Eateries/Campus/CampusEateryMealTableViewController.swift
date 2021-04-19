@@ -7,12 +7,17 @@ class CampusEateryMealTableViewController: UITableViewController {
     let eatery: CampusEatery
 
     private let menu: Menu?
+    private let sortedMenu: [(String, [Menu.Item])]?
 
     init(eatery: CampusEatery, meal: String) {
         self.eatery = eatery
         self.meal = meal
         self.menu = eatery.getMenu(meal: meal, onDayOf: Date())
-
+        if let menu = self.menu {
+            self.sortedMenu = Sort.sortMenu(menu.data.map({ ($0, $1) }))
+        } else {
+            self.sortedMenu = nil
+        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -79,8 +84,7 @@ class CampusEateryMealTableViewController: UITableViewController {
             return item.value.count
         } else {
             // display the menu items with headers
-            let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
-            return sortedMenu[section].1.count
+            return sortedMenu?[section].1.count ?? 0
         }
     }
 
@@ -127,11 +131,10 @@ class CampusEateryMealTableViewController: UITableViewController {
             for: indexPath
         ) as! MealStationItemTableViewCell
 
-        guard let menu = menu else {
+        guard let sortedMenu = sortedMenu else {
             return emptyMenuCell(in: tableView, forRowAt: indexPath)
         }
 
-        let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
         let font = UIFont.systemFont(ofSize: 14)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
@@ -150,33 +153,24 @@ class CampusEateryMealTableViewController: UITableViewController {
             name = name.appendImage(UIImage(named: "appleIcon")!, yOffset: -1.5)
         }
         cell.contentLabel.attributedText = name
-        cell.favorited = Defaults[\.favoriteFoods].contains(where: {$0 == menuItem.name})
+        cell.favorited = DefaultsKeys.isFavoriteFood(menuItem.name)
         return cell
     }
-    /// Register favorites
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // MARK: Will need to integrate into menu of supercontroller
         if let cell = tableView.cellForRow(at: indexPath) as? MealStationItemTableViewCell {
-            cell.favorited = !cell.favorited
-            guard let menu = menu else { return }
-            let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
-            let stationTitles = sortedMenu.map { $0.0 }
-            guard let station = menu.data[stationTitles[indexPath.section]] else {
-                return
-            }
-            let foodTitle = station[indexPath.item].name
-            DefaultsKeys.toggleFavoriteFood(name: foodTitle)
+            cell.favorited.toggle()
+            guard let sortedMenu = sortedMenu else { return }
+            DefaultsKeys.toggleFavoriteFood(sortedMenu[indexPath.section].1[indexPath.item].name)
         }
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = EateriesCollectionViewHeaderView()
-        guard let menu = menu else {
+        let header = MenuCollectionViewHeaderView()
+        guard let sortedMenu = sortedMenu else {
             return header
         }
-        let sortedMenu = Sort.sortMenu(menu.data.map { ($0, $1) })
-        let stationTitles = sortedMenu.map { $0.0 }
-        let possibleTitle = stationTitles[section]
+        let possibleTitle = sortedMenu[section].0
         header.titleLabel.text = (possibleTitle == "General" ? "" : possibleTitle)
         return header
     }

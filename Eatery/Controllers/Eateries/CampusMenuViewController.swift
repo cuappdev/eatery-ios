@@ -409,12 +409,8 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
 extension CampusMenuViewController: Reloadable {
     func reload() {
         childViewControllers.forEach { controller in
-            if let controller = controller as? TabbedPageViewController {
-                controller.viewControllers.forEach { controller in
-                    if let eateryController = controller as? CampusEateryMealTableViewController {
-                        eateryController.tableView.reloadData()
-                    }
-                }
+            if let controller = controller as? Reloadable {
+                controller.reload()
             }
         }
     }
