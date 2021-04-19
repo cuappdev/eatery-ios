@@ -27,7 +27,7 @@ class ExpandedMenuRow: UIView {
     public func checkFavorite() {
         favorited = DefaultsKeys.isFavoriteFood(item.name)
     }
-    
+
     private var item: ExpandedMenu.Item!
 
     private let padding: CGFloat = 15

@@ -19,10 +19,10 @@ extension DefaultsKeys {
         if let status = status {
             if status {
                 addFavoriteFood(name)
-            }else {
+            } else {
                 removeFavoriteFood(name)
             }
-        }else {
+        } else {
             if isFavoriteFood(name) {
                 removeFavoriteFood(name)
             } else {

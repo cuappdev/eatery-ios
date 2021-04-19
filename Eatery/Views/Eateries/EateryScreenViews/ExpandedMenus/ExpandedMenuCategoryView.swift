@@ -16,9 +16,9 @@ class ExpandedMenuCategoryView: UIView {
 
     /// Public variable that allows other VCs to easily get height of this view
     var contentHeight: CGFloat = 0
-    
+
     private var stackView: UIStackView?
-    
+
     init(eatery: CampusEatery, category: String, menu: [ExpandedMenu.Item]) {
         self.eatery = eatery
         self.category = category

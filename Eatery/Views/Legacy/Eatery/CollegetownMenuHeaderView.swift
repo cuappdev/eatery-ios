@@ -26,7 +26,7 @@ class CollegetownMenuHeaderView: UIView {
     var paymentView: PaymentMethodsView!
     var informationView: UIView!
 
-    //Information View
+    // Information View
 
     var statusLabel: UILabel!
     var hourLabel: UILabel!

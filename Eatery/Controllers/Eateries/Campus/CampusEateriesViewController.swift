@@ -30,7 +30,7 @@ class CampusEateriesViewController: EateriesViewController {
     private let locationManager: CLLocationManager = CLLocationManager()
 
     public var presentingMenu: CampusMenuViewController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

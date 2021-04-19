@@ -256,19 +256,17 @@ extension Eatery {
     }
 
     var hasFavorite: Bool {
-        get {
-            let events = self.eventsByName(onDayOf: Date())
-            for event in events {
-                for (_, items) in event.value.menu.data {
-                    if items.contains(where: { item in
-                        DefaultsKeys.isFavoriteFood(item.name)
-                    }) {
-                        return true
-                    }
+        let events = self.eventsByName(onDayOf: Date())
+        for event in events {
+            for (_, items) in event.value.menu.data {
+                if items.contains(where: { item in
+                    DefaultsKeys.isFavoriteFood(item.name)
+                }) {
+                    return true
                 }
             }
-            return false
         }
+        return false
     }
 
 }
