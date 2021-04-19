@@ -86,7 +86,4 @@ extension UIImage {
         return image!
     }
 
-    static let favoritedImage = UIImage(named: "goldStar")?.withRenderingMode(.alwaysTemplate)
-    static let unfavoritedImage = UIImage(named: "whiteStar")?.withRenderingMode(.alwaysTemplate)
-
 }

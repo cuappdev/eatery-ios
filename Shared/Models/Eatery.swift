@@ -254,8 +254,7 @@ extension Eatery {
             NotificationCenter.default.post(name: .eateryIsFavoriteDidChange, object: self)
         }
     }
-    
-    
+
     var hasFavorite: Bool {
         get {
             let events = self.eventsByName(onDayOf: Date())
@@ -272,6 +271,11 @@ extension Eatery {
         }
     }
 
+}
+
+extension UIImage {
+    static let favoritedImage = UIImage(named: "goldStar")?.withRenderingMode(.alwaysTemplate)
+    static let unfavoritedImage = UIImage(named: "whiteStar")?.withRenderingMode(.alwaysTemplate)
 }
 
 extension NSNotification.Name {
