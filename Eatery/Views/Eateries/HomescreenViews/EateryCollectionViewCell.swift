@@ -263,10 +263,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
     }
-
-    func toggleFavorites(_ State: Bool) {
-        // TODO: Change layout constraints when favorites are toggled
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
