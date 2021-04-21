@@ -6,8 +6,8 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
-import UIKit
 import SwiftyUserDefaults
+import UIKit
 
 protocol BRBAccountViewControllerDelegate: AnyObject {
     func brbAccountViewControllerDidRefresh()
@@ -26,7 +26,7 @@ class BRBAccountViewController: UIViewController {
 
     private var tableView: UITableView!
 
-    var favoriteItems = Defaults[\.favoriteFoods]
+    private var favoriteItems = Defaults[\.favoriteFoods]
 
     init(account: BRBAccount) {
         self.account = account
@@ -45,7 +45,6 @@ class BRBAccountViewController: UIViewController {
         tableView.register(BRBBalanceTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.balance)
         tableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.favorites)
         tableView.register(BRBHistoryTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.history)
-        tableView.allowsSelection = true
         tableView.separatorColor = .wash
         tableView.dataSource = self
         tableView.delegate = self
@@ -70,10 +69,7 @@ class BRBAccountViewController: UIViewController {
 extension BRBAccountViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        if favoriteItems.count > 0 {
-            return 3
-        }
-        return 2
+        favoriteItems.count > 0 ? 3 : 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +86,6 @@ extension BRBAccountViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.balance)
                 as! BRBBalanceTableViewCell
-            cell.selectionStyle = .none
             switch indexPath.row {
             case 0: cell.configure(title: "BRBs", subtitle: "$\(account.brbs)")
             case 1: cell.configure(title: "Laundry", subtitle: "$\(account.laundry)")
@@ -103,12 +98,10 @@ extension BRBAccountViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.favorites) as! FavoriteTableViewCell
             let name = favoriteItems[indexPath.item]
             cell.configure(name: name, restaurants: nil, favorited: DefaultsKeys.isFavoriteFood(name))
-            cell.selectionStyle = .none
             return cell
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.history) as! BRBHistoryTableViewCell
-        cell.selectionStyle = .none
         let historyItem = account.history[indexPath.row]
         cell.configure(
             title: historyItem.name,
@@ -152,7 +145,7 @@ extension BRBAccountViewController: UITableViewDelegate {
 
 extension BRBAccountViewController: Reloadable {
     func reload() {
-        self.favoriteItems = Defaults[\.favoriteFoods]
-        self.tableView.reloadData()
+        favoriteItems = Defaults[\.favoriteFoods]
+        tableView.reloadData()
     }
 }

@@ -35,9 +35,8 @@ class MealStationTableViewCell: UITableViewCell {
 class MealStationItemTableViewCell: UITableViewCell {
 
     let contentLabel = UILabel()
-    private let favoritedStatus = UIImageView()
-
-    let seperator = UIView()
+    private let favoritedStatus = UIImageView(image: .favoritedImage)
+    private let seperator = UIView()
 
     var favorited = false {
         didSet {
@@ -50,7 +49,6 @@ class MealStationItemTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
-        favoritedStatus.image = .unfavoritedImage
         favoritedStatus.tintColor = .lightGray
         favoritedStatus.contentMode = .scaleAspectFill
         addSubview(favoritedStatus)

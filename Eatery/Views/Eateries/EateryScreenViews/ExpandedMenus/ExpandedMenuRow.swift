@@ -6,13 +6,13 @@
 //  Copyright © 2020 Cornell AppDev. All rights reserved.
 //
 
-import UIKit
 import SwiftyUserDefaults
+import UIKit
 
 class ExpandedMenuRow: UIView {
 
-    private var itemLabel: UILabel!
-    private var priceLabel: UILabel!
+    private var itemLabel = UILabel()
+    private var priceLabel = UILabel()
     private let favoritedStatus = UIImageView()
     private var favorited = false {
         didSet {

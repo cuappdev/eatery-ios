@@ -10,10 +10,10 @@ import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
 
-    private var nameLabel: UILabel!
-    private var servingLabel: UILabel!
+    private let nameLabel = UILabel()
+    private let servingLabel = UILabel()
 
-    private var favoriteStatus: UIImageView!
+    private var favoriteStatus = UIImageView(image: .favoritedImage)
     public var favorited = true {
         didSet {
             favoriteStatus.image = favorited ? .favoritedImage : .unfavoritedImage
@@ -22,8 +22,8 @@ class FavoriteTableViewCell: UITableViewCell {
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
 
-        nameLabel = UILabel(frame: .zero)
         nameLabel.font = .preferredFont(forTextStyle: .headline)
         nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
@@ -32,7 +32,6 @@ class FavoriteTableViewCell: UITableViewCell {
             make.top.equalToSuperview().inset(12)
         }
 
-        servingLabel = UILabel(frame: .zero)
         servingLabel.font = .preferredFont(forTextStyle: .subheadline)
         servingLabel.textColor = .gray
         contentView.addSubview(servingLabel)
@@ -42,8 +41,6 @@ class FavoriteTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview().inset(12)
         }
 
-        favoriteStatus = UIImageView()
-        favoriteStatus.image = .favoritedImage
         favoriteStatus.contentMode = .scaleAspectFill
         contentView.addSubview(favoriteStatus)
         favoriteStatus.snp.makeConstraints { make in

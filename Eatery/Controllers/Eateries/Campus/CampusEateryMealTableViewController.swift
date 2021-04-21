@@ -1,5 +1,5 @@
-import UIKit
 import SwiftyUserDefaults
+import UIKit
 
 class CampusEateryMealTableViewController: UITableViewController {
 
@@ -13,10 +13,10 @@ class CampusEateryMealTableViewController: UITableViewController {
         self.eatery = eatery
         self.meal = meal
         self.menu = eatery.getMenu(meal: meal, onDayOf: Date())
-        if let menu = self.menu {
-            self.sortedMenu = Sort.sortMenu(menu.data.map({ ($0, $1) }))
+        if let menu = menu {
+            sortedMenu = Sort.sortMenu(menu.data.map({ ($0, $1) }))
         } else {
-            self.sortedMenu = nil
+            sortedMenu = nil
         }
         super.init(nibName: nil, bundle: nil)
     }
