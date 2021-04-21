@@ -524,10 +524,8 @@ class EateriesViewController: UIViewController {
     }
 
     func toggleFavorites(_ state: Bool) {
-        for cell in collectionView.visibleCells {
-            if let cell = cell as? EateryCollectionViewCell {
-                cell.toggleFavorites(state)
-            }
+        for case let cell as EateryCollectionViewCell in collectionView.visibleCells {
+            cell.toggleFavorites()
         }
     }
 

@@ -38,12 +38,12 @@ class CampusEateriesViewController: EateriesViewController {
 
         availableFilters = [
             .nearest,
+            .favorites,
             .north,
             .west,
             .central,
             .swipes,
-            .brb,
-            .favorites
+            .brb
         ]
 
         if let eateries = Defaults[\.cachedCampusEateries],
