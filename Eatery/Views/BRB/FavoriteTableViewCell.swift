@@ -20,6 +20,8 @@ class FavoriteTableViewCell: UITableViewCell {
             favoriteStatus.tintColor = favorited ? .favoriteYellow : .lightGray
         }
     }
+    let padding: CGFloat = 20
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -28,7 +30,7 @@ class FavoriteTableViewCell: UITableViewCell {
         nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(padding)
             make.top.equalToSuperview().inset(12)
         }
 
@@ -37,14 +39,14 @@ class FavoriteTableViewCell: UITableViewCell {
         contentView.addSubview(servingLabel)
         servingLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(2)
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(padding)
             make.bottom.equalToSuperview().inset(12)
         }
 
         favoriteStatus.contentMode = .scaleAspectFill
         contentView.addSubview(favoriteStatus)
         favoriteStatus.snp.makeConstraints { make in
-            make.top.bottom.trailing.equalToSuperview().inset(20)
+            make.top.bottom.trailing.equalToSuperview().inset(padding)
         }
     }
 

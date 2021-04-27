@@ -18,17 +18,18 @@ class EateryCollectionViewCell: UICollectionViewCell {
     let paymentView = PaymentMethodsView()
 
     let backgroundImageView = UIImageView()
-    let closedOverlay = UIView()
+    private let closedOverlay = UIView()
 
     let infoContainer = UIView()
     let titleLabel = UILabel()
     let statusLabel = UILabel()
     let timeLabel = UILabel()
-    let distanceLabel = UILabel()
+    private let distanceLabel = UILabel()
+    private let favoritesView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
-    let separator = UIView()
+    private let separator = UIView()
 
-    let menuTextView = UITextView()
+    private let menuTextView = UITextView()
     private var menuTextViewHiddenConstraints = [Constraint]()
     private var menuTextViewVisibleConstraints = [Constraint]()
 

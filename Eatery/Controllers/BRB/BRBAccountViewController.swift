@@ -95,7 +95,8 @@ extension BRBAccountViewController: UITableViewDataSource {
 
             return cell
         } else if indexPath.section == 1 && favoriteItems.count > 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.favorites) as! FavoriteTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.favorites)
+                as! FavoriteTableViewCell
             let name = favoriteItems[indexPath.item]
             cell.configure(name: name, restaurants: nil, favorited: DefaultsKeys.isFavoriteFood(name))
             return cell
