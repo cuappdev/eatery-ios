@@ -174,4 +174,5 @@ class CampusEateryMealTableViewController: UITableViewController {
         header.titleLabel.text = (possibleTitle == "General" ? "" : possibleTitle)
         return header
     }
+
 }

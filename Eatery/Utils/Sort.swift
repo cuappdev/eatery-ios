@@ -110,7 +110,7 @@ struct Sort {
         return eatery.sorted(by: sortByHoursClosure)
     }
 
-    // Helper function to get meal
+    // helper function to get meal
     static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
         let events = eatery.eventsByName(onDayOf: date)
 

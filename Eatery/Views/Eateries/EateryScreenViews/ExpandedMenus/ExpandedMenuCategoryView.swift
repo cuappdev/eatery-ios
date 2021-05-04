@@ -52,9 +52,11 @@ class ExpandedMenuCategoryView: UIView {
 }
 
 extension ExpandedMenuCategoryView: Reloadable {
+
     func reload() {
         for case let view as ExpandedMenuRow in subviews {
             view.checkFavorite()
         }
     }
+
 }

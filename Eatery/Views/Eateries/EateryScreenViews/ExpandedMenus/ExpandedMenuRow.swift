@@ -17,14 +17,14 @@ class ExpandedMenuRow: UIView {
     private var favorited = false {
         didSet {
             DefaultsKeys.toggleFavoriteFood(item.name, favorited)
-            toggleFavorites()
+            didToggleFavorites()
         }
     }
-    private func toggleFavorites() {
+    private func didToggleFavorites() {
         favoritedStatus.image = favorited ? .favoritedImage : .unfavoritedImage
         favoritedStatus.tintColor = favorited ? .favoriteYellow : .lightGray
     }
-    public func checkFavorite() {
+    func checkFavorite() {
         favorited = DefaultsKeys.isFavoriteFood(item.name)
     }
 
@@ -39,13 +39,14 @@ class ExpandedMenuRow: UIView {
     /// Constant used multiple times in codebase to get/set height of ExpandedMenuRows
     static let heightConst: CGFloat = 44
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc func toggleFavorites() {
         favorited.toggle()
     }
 
     init(item: ExpandedMenu.Item) {
         super.init(frame: .zero)
 
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleFavorites)))
         let separator = UIView()
         separator.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.06)
         addSubview(separator)
@@ -96,7 +97,6 @@ class ExpandedMenuRow: UIView {
         self.snp.makeConstraints { make in
             make.height.equalTo(ExpandedMenuRow.heightConst)
         }
-
     }
 
     required init?(coder: NSCoder) {

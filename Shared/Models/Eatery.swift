@@ -256,7 +256,7 @@ extension Eatery {
     }
 
     var hasFavorite: Bool {
-        let events = self.eventsByName(onDayOf: Date())
+        let events = eventsByName(onDayOf: Date())
         for event in events {
             for (_, items) in event.value.menu.data {
                 if items.contains(where: { item in
@@ -272,8 +272,10 @@ extension Eatery {
 }
 
 extension UIImage {
+
     static let favoritedImage = UIImage(named: "goldStar")?.withRenderingMode(.alwaysTemplate)
     static let unfavoritedImage = UIImage(named: "whiteStar")?.withRenderingMode(.alwaysTemplate)
+
 }
 
 extension NSNotification.Name {

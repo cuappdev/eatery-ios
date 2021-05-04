@@ -25,7 +25,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     let statusLabel = UILabel()
     let timeLabel = UILabel()
     private let distanceLabel = UILabel()
-    private let favoritesView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let favoritesView = UILabel()
 
     private let separator = UIView()
 
@@ -264,7 +264,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
