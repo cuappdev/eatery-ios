@@ -17,12 +17,12 @@ class ExpandedMenuCategoryView: UIView {
     /// Public variable that allows other VCs to easily get height of this view
     var contentHeight: CGFloat = 0
 
+    private var stackView: UIStackView
+
     init(eatery: CampusEatery, category: String, menu: [ExpandedMenu.Item]) {
         self.eatery = eatery
         self.category = category
         self.menu = menu
-
-        super.init(frame: .zero)
 
         var itemViews: [UIView] = []
 
@@ -32,9 +32,12 @@ class ExpandedMenuCategoryView: UIView {
             itemViews.append(menuRow)
         }
 
-        let stackView = UIStackView(arrangedSubviews: itemViews)
+        stackView = UIStackView(arrangedSubviews: itemViews)
         stackView.spacing = 0
         stackView.axis = .vertical
+
+        super.init(frame: .zero)
+
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -44,6 +47,16 @@ class ExpandedMenuCategoryView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension ExpandedMenuCategoryView: Reloadable {
+
+    func reload() {
+        for case let view as ExpandedMenuRow in subviews {
+            view.checkFavorite()
+        }
     }
 
 }

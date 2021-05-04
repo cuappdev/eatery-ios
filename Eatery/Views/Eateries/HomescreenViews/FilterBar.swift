@@ -23,6 +23,7 @@ enum Filter: String {
     ]
 
     case nearest = "Nearest First"
+    case favorites = "Favorite Items"
 
     case north = "North"
     case west = "West"

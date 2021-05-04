@@ -100,7 +100,7 @@ struct Sort {
                     }
                 }
             case .location:
-                //default location is Olin Library
+                // default location is Olin Library
                 let distanceA = location.distance(from: a.location).value
                 let distanceB = location.distance(from: b.location).value
                 return distanceA < distanceB
@@ -110,7 +110,7 @@ struct Sort {
         return eatery.sorted(by: sortByHoursClosure)
     }
 
-    //HelperFunction to get meal
+    // helper function to get meal
     static func getSelectedMeal(eatery: CampusEatery, date: Date, meal: String) -> String {
         let events = eatery.eventsByName(onDayOf: date)
 

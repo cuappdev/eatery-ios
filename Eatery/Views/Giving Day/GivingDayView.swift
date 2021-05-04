@@ -47,7 +47,7 @@ class GivingDayView: UIView {
         addSubview(bottomPortionView)
 
         supportDescriptionTextView = UITextView()
-        //line spacing
+        // Line spacing
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 6
         let attributes = [NSAttributedStringKey.paragraphStyle: style]

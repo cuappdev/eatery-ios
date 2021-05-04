@@ -45,6 +45,7 @@ query CampusEateries {
                     items {
                         item
                         healthy
+                        favorite
                     }
                 }
             }
@@ -55,6 +56,7 @@ query CampusEateries {
                 items {
                     item
                     healthy
+                    favorite
                     price
                     choices {
                         options

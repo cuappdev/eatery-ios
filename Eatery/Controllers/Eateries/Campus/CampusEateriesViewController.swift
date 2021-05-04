@@ -29,6 +29,8 @@ class CampusEateriesViewController: EateriesViewController {
 
     private let locationManager: CLLocationManager = CLLocationManager()
 
+    public var presentingMenu: CampusMenuViewController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,6 +38,7 @@ class CampusEateriesViewController: EateriesViewController {
 
         availableFilters = [
             .nearest,
+            .favorites,
             .north,
             .west,
             .central,
@@ -123,12 +126,14 @@ class CampusEateriesViewController: EateriesViewController {
         } else {
             payload = CampusCafeCellPressPayload(cafeName: eatery.displayName)
         }
+        presentingMenu = menuViewController
         AppDevAnalytics.shared.logFirebase(payload)
     }
 
     override func filterBar(_ filterBar: FilterBar, filterWasSelected filter: Filter) {
         switch filter {
         case .nearest: AppDevAnalytics.shared.logFirebase(NearestFilterPressPayload())
+        case .favorites: AppDevAnalytics.shared.logFirebase(FavoriteItemsPressPayload())
         case .north: AppDevAnalytics.shared.logFirebase(NorthFilterPressPayload())
         case .west: AppDevAnalytics.shared.logFirebase(WestFilterPressPayload())
         case .central: AppDevAnalytics.shared.logFirebase(CentralFilterPressPayload())
@@ -251,9 +256,14 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         }
 
         filteredEateries = filteredEateries.filter {
-            if filters.contains(.swipes) { return $0.paymentMethods.contains(.swipes) }
-            if filters.contains(.brb) { return $0.paymentMethods.contains(.brb) }
+            if $0.paymentMethods.contains(.brb) && filters.contains(.brb) { return true }
+            if $0.paymentMethods.contains(.swipes) && filters.contains(.swipes) { return true }
+            if filters.contains(.brb) || filters.contains(.swipes) { return false }
             return true
+        }
+
+        if filters.contains(.favorites) {
+            filteredEateries = filteredEateries.filter { $0.hasFavorite }
         }
 
         if !filters.isDisjoint(with: Filter.areaFilters) {
@@ -303,5 +313,11 @@ extension CampusEateriesViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations.last
         self.userLocation = userLocation
+    }
+}
+
+extension CampusEateriesViewController: Reloadable {
+    func reload() {
+        presentingMenu?.reload()
     }
 }

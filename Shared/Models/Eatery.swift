@@ -255,6 +255,27 @@ extension Eatery {
         }
     }
 
+    var hasFavorite: Bool {
+        let events = eventsByName(onDayOf: Date())
+        for event in events {
+            for (_, items) in event.value.menu.data {
+                if items.contains(where: { item in
+                    DefaultsKeys.isFavoriteFood(item.name)
+                }) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+}
+
+extension UIImage {
+
+    static let favoritedImage = UIImage(named: "goldStar")?.withRenderingMode(.alwaysTemplate)
+    static let unfavoritedImage = UIImage(named: "whiteStar")?.withRenderingMode(.alwaysTemplate)
+
 }
 
 extension NSNotification.Name {

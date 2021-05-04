@@ -13,10 +13,10 @@ struct ExpandedMenu: Codable {
     struct Item: Codable {
         /// English description of the menu item
         let name: String
-
         /// Flag indicating if the item is deemed healthy or not by Cornell
         let healthy: Bool
-
+        /// Flag indicating if an item is a favorite or not
+        var favorite: Bool
         /// Number values of the prices of certain items
         var priceString: String
 

@@ -6,6 +6,7 @@
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
 
+import SwiftyUserDefaults
 import UIKit
 
 protocol BRBAccountViewControllerDelegate: AnyObject {
@@ -16,6 +17,7 @@ class BRBAccountViewController: UIViewController {
 
     private enum CellIdentifiers {
         static let balance = "balance"
+        static let favorites = "favorite"
         static let history = "history"
     }
 
@@ -23,6 +25,8 @@ class BRBAccountViewController: UIViewController {
     weak var delegate: BRBAccountViewControllerDelegate?
 
     private var tableView: UITableView!
+
+    private var favoriteItems = Defaults[\.favoriteFoods]
 
     init(account: BRBAccount) {
         self.account = account
@@ -39,8 +43,8 @@ class BRBAccountViewController: UIViewController {
 
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(BRBBalanceTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.balance)
+        tableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.favorites)
         tableView.register(BRBHistoryTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.history)
-        tableView.allowsSelection = false
         tableView.separatorColor = .wash
         tableView.dataSource = self
         tableView.delegate = self
@@ -65,12 +69,14 @@ class BRBAccountViewController: UIViewController {
 extension BRBAccountViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        favoriteItems.count > 0 ? 3 : 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 3
+        } else if section == 1 && favoriteItems.count > 0 {
+            return favoriteItems.count
         }
 
         return account.history.count
@@ -80,7 +86,6 @@ extension BRBAccountViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.balance)
                 as! BRBBalanceTableViewCell
-
             switch indexPath.row {
             case 0: cell.configure(title: "BRBs", subtitle: "$\(account.brbs)")
             case 1: cell.configure(title: "Laundry", subtitle: "$\(account.laundry)")
@@ -88,6 +93,12 @@ extension BRBAccountViewController: UITableViewDataSource {
             default: break
             }
 
+            return cell
+        } else if indexPath.section == 1 && favoriteItems.count > 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.favorites)
+                as! FavoriteTableViewCell
+            let name = favoriteItems[indexPath.item]
+            cell.configure(name: name, restaurants: nil, favorited: DefaultsKeys.isFavoriteFood(name))
             return cell
         }
 
@@ -101,22 +112,41 @@ extension BRBAccountViewController: UITableViewDataSource {
         )
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteTableViewCell else {
+            return
+        }
+        cell.favorited.toggle()
+        DefaultsKeys.toggleFavoriteFood(favoriteItems[indexPath.item])
+    }
 
 }
 
 extension BRBAccountViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 1 {
+        if section == 0 {
+            return nil
+        }
+        if section == 1 && favoriteItems.count > 0 {
             let header = EateriesCollectionViewHeaderView()
-            header.titleLabel.text = "History"
+            header.titleLabel.text = "Favorites"
             return header
         }
+        let header = EateriesCollectionViewHeaderView()
+        header.titleLabel.text = "History"
+        return header
 
-        return nil
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         section == 0 ? 30 : UITableViewAutomaticDimension
+    }
+}
+
+extension BRBAccountViewController: Reloadable {
+    func reload() {
+        favoriteItems = Defaults[\.favoriteFoods]
+        tableView.reloadData()
     }
 }

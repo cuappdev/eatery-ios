@@ -64,6 +64,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
                 __typename
                 item
                 healthy
+                favorite
               }
             }
           }
@@ -77,6 +78,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
               __typename
               item
               healthy
+              favorite
               price
               choices {
                 __typename
@@ -758,6 +760,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("item", type: .nonNull(.scalar(String.self))),
                   GraphQLField("healthy", type: .nonNull(.scalar(Bool.self))),
+                  GraphQLField("favorite", type: .nonNull(.scalar(Bool.self))),
                 ]
               }
 
@@ -767,8 +770,8 @@ public final class CampusEateriesQuery: GraphQLQuery {
                 self.resultMap = unsafeResultMap
               }
 
-              public init(item: String, healthy: Bool) {
-                self.init(unsafeResultMap: ["__typename": "FoodItemType", "item": item, "healthy": healthy])
+              public init(item: String, healthy: Bool, favorite: Bool) {
+                self.init(unsafeResultMap: ["__typename": "FoodItemType", "item": item, "healthy": healthy, "favorite": favorite])
               }
 
               public var __typename: String {
@@ -795,6 +798,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
                 }
                 set {
                   resultMap.updateValue(newValue, forKey: "healthy")
+                }
+              }
+
+              public var favorite: Bool {
+                get {
+                  return resultMap["favorite"]! as! Bool
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "favorite")
                 }
               }
             }
@@ -896,6 +908,7 @@ public final class CampusEateriesQuery: GraphQLQuery {
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("item", type: .nonNull(.scalar(String.self))),
                 GraphQLField("healthy", type: .nonNull(.scalar(Bool.self))),
+                GraphQLField("favorite", type: .nonNull(.scalar(Bool.self))),
                 GraphQLField("price", type: .nonNull(.scalar(String.self))),
                 GraphQLField("choices", type: .list(.object(Choice.selections))),
               ]
@@ -907,8 +920,8 @@ public final class CampusEateriesQuery: GraphQLQuery {
               self.resultMap = unsafeResultMap
             }
 
-            public init(item: String, healthy: Bool, price: String, choices: [Choice?]? = nil) {
-              self.init(unsafeResultMap: ["__typename": "DescriptiveFoodItemType", "item": item, "healthy": healthy, "price": price, "choices": choices.flatMap { (value: [Choice?]) -> [ResultMap?] in value.map { (value: Choice?) -> ResultMap? in value.flatMap { (value: Choice) -> ResultMap in value.resultMap } } }])
+            public init(item: String, healthy: Bool, favorite: Bool, price: String, choices: [Choice?]? = nil) {
+              self.init(unsafeResultMap: ["__typename": "DescriptiveFoodItemType", "item": item, "healthy": healthy, "favorite": favorite, "price": price, "choices": choices.flatMap { (value: [Choice?]) -> [ResultMap?] in value.map { (value: Choice?) -> ResultMap? in value.flatMap { (value: Choice) -> ResultMap in value.resultMap } } }])
             }
 
             public var __typename: String {
@@ -935,6 +948,15 @@ public final class CampusEateriesQuery: GraphQLQuery {
               }
               set {
                 resultMap.updateValue(newValue, forKey: "healthy")
+              }
+            }
+
+            public var favorite: Bool {
+              get {
+                return resultMap["favorite"]! as! Bool
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "favorite")
               }
             }
 

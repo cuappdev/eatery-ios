@@ -13,14 +13,6 @@ class MealStationTableViewCell: UITableViewCell {
 
     let titleLabel = UILabel()
 
-    private var collapseTitleLabelConstraint: Constraint?
-    var titleCollapsed: Bool {
-        get { collapseTitleLabelConstraint?.isActive ?? false }
-        set { collapseTitleLabelConstraint?.isActive = newValue }
-    }
-
-    let contentLabel = UILabel()
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -32,20 +24,57 @@ class MealStationTableViewCell: UITableViewCell {
             make.top.equalToSuperview().inset(16)
             make.leading.trailing.equalToSuperview().inset(10)
         }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) will not be implemented")
+    }
+
+}
+
+class MealStationItemTableViewCell: UITableViewCell {
+
+    let contentLabel = UILabel()
+    private let favoritedStatus = UIImageView(image: .favoritedImage)
+    private let seperator = UIView()
+
+    var favorited = false {
+        didSet {
+            favoritedStatus.image = favorited ? .favoritedImage : .unfavoritedImage
+            favoritedStatus.tintColor = favorited ? .favoriteYellow : .lightGray
+        }
+    }
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        selectionStyle = .none
+        favoritedStatus.tintColor = .lightGray
+        favoritedStatus.contentMode = .scaleAspectFill
+        addSubview(favoritedStatus)
+        favoritedStatus.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(EateriesViewController.collectionViewMargin)
+            make.bottom.top.equalToSuperview().inset(5)
+            make.height.width.lessThanOrEqualTo(20)
+        }
 
         contentLabel.numberOfLines = 0
         contentLabel.font = .systemFont(ofSize: 14)
         contentLabel.textColor = .lightGray
         addSubview(contentLabel)
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.top.equalToSuperview()
+            make.leading.equalTo(favoritedStatus.snp.trailing).offset(10)
             make.bottom.equalToSuperview()
         }
 
-        collapseTitleLabelConstraint = titleLabel.snp.prepareConstraints({ make in
-            make.height.equalTo(0)
-        }).first
+        seperator.backgroundColor = .separator
+        addSubview(seperator)
+        seperator.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(EateriesViewController.collectionViewMargin)
+            make.height.equalTo(1)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
