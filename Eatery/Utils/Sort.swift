@@ -19,7 +19,7 @@ struct Sort {
     }
     static func sortMenu(_ menu: [(String, [Menu.Item])] ) -> [(String, [Menu.Item])] {
         menu.sorted {
-            if $0.0 == "Hot Traditional Station - Entrees" {
+            if $0.0 == "Hot Traditional Station - Entrees" || $0.0 == "Hot Traditional Station" {
                 return true
             }
             return $0.0 == "Hot Traditional Station - Sides" && $1.0 != "Hot Traditional Station - Entrees"

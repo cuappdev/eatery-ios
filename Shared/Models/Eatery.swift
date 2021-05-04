@@ -269,6 +269,21 @@ extension Eatery {
         return false
     }
 
+    func getFavorites() -> [Menu.Item] {
+        var favorites = [Menu.Item]()
+        let events = self.eventsByName(onDayOf: Date())
+        for event in events {
+            for (_, items) in event.value.menu.data {
+                for item in items {
+                    if DefaultsKeys.isFavoriteFood(item.name) {
+                        favorites.append(item)
+                    }
+                }
+            }
+        }
+        return favorites
+    }
+
 }
 
 extension UIImage {

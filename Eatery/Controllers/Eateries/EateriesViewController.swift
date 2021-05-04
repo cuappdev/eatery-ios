@@ -670,7 +670,10 @@ extension EateriesViewController: UICollectionViewDataSource {
             for: indexPath
         ) as! EateryCollectionViewCell
         let eatery = eateries(in: indexPath.section)[indexPath.row]
-        cell.configure(eatery: eatery)
+        cell.configure(
+            eatery: eatery,
+            showFavorites: filterBar.selectedFilters.contains(.favorites)
+        )
         cell.userLocation = userLocation
 
         cell.backgroundImageView.hero.id = AnimationKey.backgroundImageView.id(eatery: eatery)
@@ -681,11 +684,6 @@ extension EateriesViewController: UICollectionViewDataSource {
         cell.infoContainer.hero.id = AnimationKey.infoContainer.id(eatery: eatery)
 
         cell.setActivityIndicatorAnimating(eatery.id == preselectedEatery?.id, animated: true)
-
-        // Searched menu items were originally displayed inside a text field
-        // within each cell. Now that search results have been / will be moved
-        // to a new view controller, the menu text is no longer needed.
-        cell.isMenuTextViewVisible = false
 
         return cell
     }
@@ -967,4 +965,12 @@ extension EateriesViewController: UIScrollViewDelegate {
         return yPosition
     }
 
+}
+
+// MARK: - Reloadable
+
+extension EateriesViewController: Reloadable {
+    func reload() {
+        collectionView.reloadData()
+    }
 }
