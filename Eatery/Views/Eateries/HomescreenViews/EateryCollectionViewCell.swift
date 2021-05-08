@@ -245,7 +245,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
     func configure(eatery: Eatery, showFavorites: Bool) {
         self.eatery = eatery
-        self.favorites = eatery.getFavorites().map { $0.name }
+        favorites = eatery.getFavorites()
 
         // start loading background image view as soon as possible
 
@@ -284,7 +284,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
-        let favoriteFoods = eatery.getFavorites().map { $0.name }.sorted() // TODO: I AM SEEING DOUBLE FOODS
+        let favoriteFoods = eatery.getFavorites().sorted()
         if favoriteFoods.count > 0 {
             let font = UIFont.systemFont(ofSize: 14)
             let paragraphStyle = NSMutableParagraphStyle()
@@ -314,7 +314,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
                     favoritesText.append(newLine)
                 }
             } else {
-                var lineWidth = CGFloat(0)
+                var lineWidth: CGFloat = 0
                 for food in favoritesList {
                     let emptyLineSpace = favoritesView.bounds.size.width - (lineWidth + food.size().width)
                     if emptyLineSpace < 0 && lineWidth != 0 {
@@ -322,64 +322,15 @@ class EateryCollectionViewCell: UICollectionViewCell {
                         favoritesText.append(newLine)
                         favoritesText.append(food)
                     } else {
-//                        if emptyLineSpace > 0 && lineWidth > 0 {
-//                            let spacer = NSAttributedString(string: Array(repeating: " ", count: Int(emptyLineSpace)).reduce("", +))
-//                            favoritesText.append(spacer)
-//                            lineWidth += spacer.size().width
-//                        }
                         lineWidth += food.size().width
                         favoritesText.append(food)
                     }
-//                    else {
-////                        let emptyLineSpace = (frame.width - 10) - (lineWidth + food.size().width)
-////                        if emptyLineSpace < 0 {
-////                            favoritesText.append(newLine)
-////                            favoritesText.append(food)
-////                            lineWidth = food.size().width
-////                        } else {
-////                            favoritesText.append(food)
-////                            favoritesText.append(newLine)
-////                            lineWidth = 0
-////                        }
-//                    }
-//                    if emptyLineSpace < 0 && lineWidth != 0 {
-//                        lineWidth = food.size().width
-//                        favoritesText.append(newLine)
-//                        favoritesView.numberOfLines += 1
-//                        favoritesText.append(food)
-//                    } else {
-//                        if lineWidth > 0 {
-//                            lineWidth = 0
-//                            let spacing = Array(repeating: " ", count: Int(max(0, emptyLineSpace))).reduce("", +)
-//                            favoritesText.append(NSAttributedString(string: spacing))
-//                            favoritesText.append(food)
-//                            favoritesText.append(newLine)
-//                            favoritesView.numberOfLines += 1
-//                        } else {
-//                            lineWidth += food.size().width
-//                            favoritesText.append(food)
-//                        }
-//                    }
                 }
-//                var lineWidth = CGFloat(0)
-//                for food in favoritesList {
-//                    let emptyLineSpace = (frame.width - 10) - (lineWidth + food.size().width)
-//                    if emptyLineSpace < 0 && food != favoritesList[0] {
-//                        favoritesText.append(newLine)
-//                        favoritesText.append(food)
-//                        lineWidth = food.size().width
-//                    } else {
-//                        if lineWidth != 0 {
-//                            let spacing = Array(repeating: " ", count: Int(max(emptyLineSpace - 1, 0))).reduce("", +)
-//                            favoritesText.append(NSAttributedString(string: spacing))
-//                            favoritesText.append(food)
-//                            lineWidth = 0
-//                        } else {
-//                            favoritesText.append(food)
-//                            lineWidth += food.size().width
-//                        }
-//                    }
-//                }
+            }
+            if favoritesList.count < 3 {
+                for _ in 0..<4 - favoritesList.count {
+                    favoritesText.append(newLine)
+                }
             }
             favoritesView.attributedText = favoritesText
         }

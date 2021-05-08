@@ -71,7 +71,7 @@ class CampusMenuViewController: EateriesMenuViewController {
         addDirectionsButton()
         addBlockSeparator()
 
-        if eatery.eateryType != .dining {
+        if eatery.eateryType != .dining && eatery.expandedMenu?.data.count ?? 0 > 0 {
             addExtendedMenuViewController()
         } else {
             addMenuLabel()

@@ -289,30 +289,25 @@ extension CampusEatery {
         }
         return false
     }
-    func getFavorites() -> [String] {
-        var favorites = [String]()
-        let events = self.eventsByName(onDayOf: Date())
+
+    func hasItem(name: String) -> Bool {
+        let events = eventsByName(onDayOf: Date())
         for event in events {
             for (_, items) in event.value.menu.data {
-                for item in items {
-                    if DefaultsKeys.isFavoriteFood(item.name) {
-                        favorites.append(item.name)
-                    }
+                if items.map({$0.name}).contains(name) {
+                    return true
                 }
             }
         }
         if let expandedMenu = expandedMenu {
             for (_, items) in expandedMenu.data {
-                for item in items {
-                    if DefaultsKeys.isFavoriteFood(item.name) {
-                        favorites.append(item.name)
-                    }
+                if items.map({ $0.name }).contains(name) {
+                    return true
                 }
             }
         }
-        return favorites
+        return false
     }
-
 
 }
 

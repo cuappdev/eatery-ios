@@ -227,6 +227,10 @@ class EateriesViewController: UIViewController {
         collectionView.refreshControl = refreshControl
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
+
     private func setUpNavigationBar() {
         navigationItem.title = "Eateries"
         navigationItem.largeTitleDisplayMode = .automatic
