@@ -315,3 +315,9 @@ extension CampusEateriesViewController: CLLocationManagerDelegate {
         self.userLocation = userLocation
     }
 }
+
+extension CampusEateriesViewController: Reloadable {
+    func reload() {
+        presentingMenu?.reload()
+    }
+}
