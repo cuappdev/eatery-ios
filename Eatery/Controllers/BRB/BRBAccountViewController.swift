@@ -64,6 +64,17 @@ class BRBAccountViewController: UIViewController {
         tableView.refreshControl?.endRefreshing()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DefaultsKeys.updateFoodLocations {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        favoriteItems = Defaults[\.favoriteFoods]
+        tableView.reloadData()
+    }
+
 }
 
 extension BRBAccountViewController: UITableViewDataSource {
@@ -146,17 +157,5 @@ extension BRBAccountViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         section == 0 ? 30 : UITableViewAutomaticDimension
-    }
-}
-
-extension BRBAccountViewController: Reloadable {
-    func reload() {
-        DefaultsKeys.updateFoodLocations {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        favoriteItems = Defaults[\.favoriteFoods]
-        tableView.reloadData()
     }
 }

@@ -278,6 +278,7 @@ extension CampusEatery {
                 }
             }
         }
+
         if let expandedMenu = expandedMenu {
             for (_, items) in expandedMenu.data {
                 if items.contains(where: { item in

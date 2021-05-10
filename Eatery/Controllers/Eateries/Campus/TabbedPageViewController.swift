@@ -24,7 +24,8 @@ protocol TabbedPageViewControllerDelegate: AnyObject {
 
 class TabbedPageViewController: UIViewController {
 
-    let viewControllers: [UIViewController]
+    private let viewControllers: [UIViewController]
+    private var didLoad = false
 
     private var pageViewController: UIPageViewController!
     private var tabBar: TabBar?
@@ -176,6 +177,16 @@ class TabbedPageViewController: UIViewController {
         setPage(forViewControllerAt: tabBar.selectedSegmentIndex)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if didLoad {
+            for case let controller as CampusEateryMealTableViewController in viewControllers {
+                controller.tableView.reloadData()
+            }
+        }
+        didLoad = true
+    }
+
 }
 
 extension TabbedPageViewController: UIPageViewControllerDataSource {
@@ -212,16 +223,6 @@ extension TabbedPageViewController: UIPageViewControllerDelegate {
     ) {
         if completed {
             pageViewControllerDidChangeViewController()
-        }
-    }
-
-}
-
-extension TabbedPageViewController: Reloadable {
-
-    func reload() {
-        for case let controller as CampusEateryMealTableViewController in viewControllers {
-            controller.tableView.reloadData()
         }
     }
 

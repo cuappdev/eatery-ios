@@ -228,6 +228,7 @@ class EateriesViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         collectionView.reloadData()
     }
 
@@ -969,12 +970,4 @@ extension EateriesViewController: UIScrollViewDelegate {
         return yPosition
     }
 
-}
-
-// MARK: - Reloadable
-
-extension EateriesViewController: Reloadable {
-    func reload() {
-        collectionView.reloadData()
-    }
 }

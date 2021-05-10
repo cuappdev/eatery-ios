@@ -259,9 +259,12 @@ extension Eatery {
         let events = eventsByName(onDayOf: Date())
         for event in events {
             for (_, items) in event.value.menu.data {
-                if items.contains(where: { DefaultsKeys.isFavoriteFood($0.name) }) { return true }
+                if items.contains(where: { DefaultsKeys.isFavoriteFood($0.name)}) {
+                    return true
+                }
             }
         }
+
         if let eatery = self as? CampusEatery, let expandedMenu = eatery.expandedMenu {
             for (_, items) in expandedMenu.data {
                 if items.contains(where: { DefaultsKeys.isFavoriteFood($0.name) }) { return true }
@@ -272,21 +275,22 @@ extension Eatery {
 
     func getFavorites() -> [String] {
         var favorites = [String]()
-        let events = self.eventsByName(onDayOf: Date())
+        let events = eventsByName(onDayOf: Date())
         for event in events {
             for (_, items) in event.value.menu.data {
                 for item in items {
-                    if DefaultsKeys.isFavoriteFood(item.name) {
+                    if DefaultsKeys.isFavoriteFood(item.name) && !favorites.contains(where: {$0 == item.name}) {
                         favorites.append(item.name)
                     }
                 }
             }
         }
+
         if let eatery = self as? CampusEatery, let expandedMenu = eatery.expandedMenu {
             for (_, items) in expandedMenu.data {
-                for item in items.map({ $0.name }) {
-                    if DefaultsKeys.isFavoriteFood(item) && !favorites.contains(item) {
-                        favorites.append(item)
+                for item in items {
+                    if DefaultsKeys.isFavoriteFood(item.name) && !favorites.contains(where: {$0 == item.name}) {
+                        favorites.append(item.name)
                     }
                 }
             }

@@ -43,11 +43,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     private var favorites: [String]?
     var isShowingFavorites: Bool = false {
         didSet {
-            if isShowingFavorites {
-                showFavorites()
-            } else {
-                hideFavorites()
-            }
+            isShowingFavorites ? showFavorites() : hideFavorites()
         }
     }
 
@@ -134,12 +130,16 @@ class EateryCollectionViewCell: UICollectionViewCell {
         infoContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
         }
-        favoriteHiddenConstraints.append(contentsOf: infoContainer.snp.prepareConstraints { make in
+        favoriteHiddenConstraints.append(
+            contentsOf: infoContainer.snp.prepareConstraints { make in
             make.bottom.equalToSuperview()
-        })
-        favoriteVisibleConstraints.append(contentsOf: infoContainer.snp.prepareConstraints { make in
+            }
+        )
+        favoriteVisibleConstraints.append(
+            contentsOf: infoContainer.snp.prepareConstraints { make in
             make.top.equalToSuperview()
-        })
+            }
+        )
 
         titleLabel.isOpaque = false
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -157,12 +157,16 @@ class EateryCollectionViewCell: UICollectionViewCell {
             make.trailing.equalToSuperview().inset(10)
             make.leading.equalTo(titleLabel.snp.trailing).offset(8)
         }
-        favoriteVisibleConstraints.append(contentsOf: distanceLabel.snp.prepareConstraints { make in
+        favoriteVisibleConstraints.append(
+            contentsOf: distanceLabel.snp.prepareConstraints { make in
             make.centerY.equalTo(titleLabel)
-        })
-        favoriteHiddenConstraints.append(contentsOf: distanceLabel.snp.prepareConstraints { make in
+            }
+        )
+        favoriteHiddenConstraints.append(
+            contentsOf: distanceLabel.snp.prepareConstraints { make in
             make.centerY.equalToSuperview()
-        })
+            }
+        )
 
         statusLabel.font = .systemFont(ofSize: 12, weight: .semibold)
         statusLabel.setContentCompressionResistancePriority(UILayoutPriority(751), for: .vertical)
@@ -207,12 +211,16 @@ class EateryCollectionViewCell: UICollectionViewCell {
         menuTextView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
         }
-        favoriteVisibleConstraints.append(contentsOf: menuTextView.snp.prepareConstraints { make in
+        favoriteVisibleConstraints.append(
+            contentsOf: menuTextView.snp.prepareConstraints { make in
             make.top.equalTo(separator.snp.bottom)
-        })
-        favoriteHiddenConstraints.append(contentsOf: menuTextView.snp.prepareConstraints { make in
+            }
+        )
+        favoriteHiddenConstraints.append(
+            contentsOf: menuTextView.snp.prepareConstraints { make in
             make.height.equalTo(0)
-        })
+            }
+        )
     }
 
     private func setupFavoritesView() {
@@ -221,13 +229,15 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         contentView.addSubview(favoritesView)
         favoritesView.snp.makeConstraints { make in
-            make.top.equalTo(infoContainer.snp.bottom)
-            make.bottom.equalToSuperview()
+            make.top.equalTo(infoContainer.snp.bottom).offset(2.5)
+            make.bottom.lessThanOrEqualToSuperview()
             make.leading.trailing.equalToSuperview().inset(8)
         }
-        favoriteHiddenConstraints.append(contentsOf: favoritesView.snp.prepareConstraints { make in
+        favoriteHiddenConstraints.append(
+            contentsOf: favoritesView.snp.prepareConstraints { make in
             make.height.equalTo(0)
-        })
+            }
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -308,7 +318,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
             }
             let newLine = NSAttributedString(string: "\n")
             let favoritesText = NSMutableAttributedString()
-            if favoritesList.map({ $0.size().height }).reduce(0, +) < frame.height {
+            if favoritesList.map { $0.size().height }.reduce(0, +) < frame.height {
                 for food in favoritesList {
                     favoritesText.append(food)
                     favoritesText.append(newLine)
@@ -325,11 +335,6 @@ class EateryCollectionViewCell: UICollectionViewCell {
                         lineWidth += food.size().width
                         favoritesText.append(food)
                     }
-                }
-            }
-            if favoritesList.count < 3 {
-                for _ in 0..<4 - favoritesList.count {
-                    favoritesText.append(newLine)
                 }
             }
             favoritesView.attributedText = favoritesText

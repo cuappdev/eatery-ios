@@ -63,22 +63,20 @@ class FavoriteTableViewCell: UITableViewCell {
         if let locations = locations {
             servingLabel.text = locationString(locations: locations)
         } else {
-            servingLabel.text = "Not being served today"
+            servingLabel.text = "Not served today"
         }
         self.favorited = favorited
     }
 
     func locationString(locations: [String]) -> String {
-        var servingEateries = locations.map({$0 + ", "})
+        var servingEateries = locations.map {$0 + ", "}
         if servingEateries.count > 1 {
             let penultimateIndex = servingEateries.count - 1
             let penultimateString = servingEateries[penultimateIndex]
             servingEateries[penultimateIndex] = String(penultimateString.prefix(penultimateString.count - 2)) + " & "
         }
-        var eateriesText = servingEateries.reduce("", +)
-        eateriesText = String(eateriesText.prefix(max(eateriesText.count - 2, 0)))
-
-        return eateriesText
+        let eateriesText = servingEateries.reduce("", +)
+        return String(eateriesText.prefix(max(eateriesText.count - 2, 0)))
     }
-    
+
 }

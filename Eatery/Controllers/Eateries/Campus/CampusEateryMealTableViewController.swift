@@ -141,7 +141,7 @@ class CampusEateryMealTableViewController: UITableViewController {
 
         let menuItem = sortedMenu[indexPath.section].1[indexPath.item]
 
-        var name: NSMutableAttributedString = NSMutableAttributedString(
+        var name = NSMutableAttributedString(
             string: "\(menuItem.name.trim()) ",
             attributes: [
                 .foregroundColor: UIColor.primary,

@@ -405,13 +405,3 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
     }
 
 }
-
-extension CampusMenuViewController: Reloadable {
-
-    func reload() {
-        for case let controller as Reloadable in childViewControllers {
-            controller.reload()
-        }
-    }
-
-}

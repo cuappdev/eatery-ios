@@ -265,12 +265,11 @@ class ScrollableViewController: UIViewController {
         menuItemsView.switchVisibleStack(type: .original)
     }
 
-}
-
-extension ScrollableViewController: Reloadable {
-    func reload() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         categoryViews.forEach { categoryView in
             categoryView.reload()
         }
     }
+
 }
