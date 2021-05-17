@@ -34,19 +34,23 @@ class FavoriteTableViewCell: UITableViewCell {
             make.top.equalToSuperview().inset(12)
         }
 
+        favoriteStatus.contentMode = .scaleAspectFill
+        contentView.addSubview(favoriteStatus)
+        favoriteStatus.snp.makeConstraints { make in
+            make.height.width.equalTo(padding)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(padding)
+        }
+
         servingLabel.font = .preferredFont(forTextStyle: .subheadline)
         servingLabel.textColor = .gray
+        servingLabel.numberOfLines = 0
         contentView.addSubview(servingLabel)
         servingLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(2)
             make.leading.equalToSuperview().inset(padding)
             make.bottom.equalToSuperview().inset(12)
-        }
-
-        favoriteStatus.contentMode = .scaleAspectFill
-        contentView.addSubview(favoriteStatus)
-        favoriteStatus.snp.makeConstraints { make in
-            make.top.bottom.trailing.equalToSuperview().inset(padding)
+            make.trailing.lessThanOrEqualTo(favoriteStatus.snp.leading)
         }
     }
 
@@ -54,10 +58,25 @@ class FavoriteTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(name: String, restaurants: String?, favorited: Bool = true) {
+    func configure(name: String, locations: [String]?, favorited: Bool = true) {
         nameLabel.text = name
-        servingLabel.text = restaurants ?? "Not currently being served"
+        if let locations = locations {
+            servingLabel.text = locationString(locations: locations)
+        } else {
+            servingLabel.text = "Not served today"
+        }
         self.favorited = favorited
+    }
+
+    func locationString(locations: [String]) -> String {
+        var servingEateries = locations.map {$0 + ", "}
+        if servingEateries.count > 1 {
+            let penultimateIndex = servingEateries.count - 1
+            let penultimateString = servingEateries[penultimateIndex]
+            servingEateries[penultimateIndex] = String(penultimateString.prefix(penultimateString.count - 2)) + " & "
+        }
+        let eateriesText = servingEateries.reduce("", +)
+        return String(eateriesText.prefix(max(eateriesText.count - 2, 0)))
     }
 
 }

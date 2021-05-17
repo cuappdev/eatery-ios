@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Hero.shared.containerColor = .white
 
+        #if os(iOS)
+        Defaults[\.favoriteFoodLocations] = [:]
+        DefaultsKeys.updateFoodLocations {}
+        #endif
         // Set up view controllers
         if Defaults[\.hasOnboarded] {
             eateryTabBarController = EateryTabBarController()

@@ -104,17 +104,13 @@ extension EateryTabBarController: UITabBarControllerDelegate {
         switch item.tag {
         case 0:
             AppDevAnalytics.shared.logFirebase(EateryPressPayload())
-            if let controller = eateriesViewController.navigationController?.topViewController as? Reloadable {
-                controller.reload()
-            }
-        case 1: AppDevAnalytics.shared.logFirebase(LookAheadPressPayload())
+        case 1:
+            AppDevAnalytics.shared.logFirebase(LookAheadPressPayload())
         case 2:
             AppDevAnalytics.shared.logFirebase(BRBPressPayload())
-            brbViewController.reload()
         default:
             break
         }
-
     }
 
 }

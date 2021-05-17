@@ -28,7 +28,7 @@ class ExpandedMenuRow: UIView {
         favorited = DefaultsKeys.isFavoriteFood(item.name)
     }
 
-    private var item: ExpandedMenu.Item!
+    private let item: ExpandedMenu.Item
 
     private let padding: CGFloat = 15
 
@@ -44,6 +44,7 @@ class ExpandedMenuRow: UIView {
     }
 
     init(item: ExpandedMenu.Item) {
+        self.item = item
         super.init(frame: .zero)
 
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleFavorites)))
@@ -60,8 +61,7 @@ class ExpandedMenuRow: UIView {
 
         favoritedStatus.contentMode = .scaleAspectFill
         favorited = DefaultsKeys.isFavoriteFood(item.name)
-        toggleFavorites()
-
+        didToggleFavorites()
         addSubview(favoritedStatus)
         favoritedStatus.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leadPadding)
@@ -69,7 +69,6 @@ class ExpandedMenuRow: UIView {
             make.width.height.equalTo(20)
         }
 
-        self.item = item
         itemLabel = UILabel()
         itemLabel.text = item.name
         itemLabel.textColor = .black

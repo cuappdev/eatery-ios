@@ -49,10 +49,6 @@ class ExpandedMenuCategoryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-extension ExpandedMenuCategoryView: Reloadable {
-
     func reload() {
         for case let view as ExpandedMenuRow in subviews {
             view.checkFavorite()

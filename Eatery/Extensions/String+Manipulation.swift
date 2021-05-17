@@ -18,6 +18,7 @@ extension String {
 }
 
 extension NSMutableAttributedString {
+
     func join(_ sequence: [NSMutableAttributedString]) -> NSMutableAttributedString {
         let mutableString = NSMutableAttributedString(attributedString: sequence[0])
         for index in 1 ..< sequence.count {
@@ -28,7 +29,7 @@ extension NSMutableAttributedString {
     }
 
     func appendImage(_ image: UIImage, yOffset: CGFloat) -> NSMutableAttributedString {
-        let attachment: NSTextAttachment = NSTextAttachment()
+        let attachment = NSTextAttachment()
         attachment.image = image
         attachment.bounds = CGRect(x: 0, y: yOffset, width: image.size.width, height: image.size.height)
 
@@ -38,4 +39,16 @@ extension NSMutableAttributedString {
 
         return newString
     }
+
+    func prependImage(_ image: UIImage, yOffset: CGFloat, scale: CGFloat = 1) -> NSMutableAttributedString {
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        attachment.bounds = CGRect(x: 0, y: yOffset, width: image.size.width * scale, height: image.size.height * scale)
+
+        let newString = NSMutableAttributedString(attachment: attachment)
+        newString.append(NSMutableAttributedString(attributedString: self))
+
+        return newString
+    }
+
 }

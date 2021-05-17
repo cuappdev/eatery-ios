@@ -211,9 +211,3 @@ extension BRBViewController: AboutTableViewControllerDelegate {
     }
 
 }
-
-extension BRBViewController: Reloadable {
-    func reload() {
-        accountViewController?.reload()
-    }
-}

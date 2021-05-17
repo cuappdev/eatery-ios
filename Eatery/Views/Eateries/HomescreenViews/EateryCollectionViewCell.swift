@@ -30,8 +30,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
     private let separator = UIView()
 
     private let menuTextView = UITextView()
-    private var menuTextViewHiddenConstraints = [Constraint]()
-    private var menuTextViewVisibleConstraints = [Constraint]()
+    private var favoriteHiddenConstraints = [Constraint]()
+    private var favoriteVisibleConstraints = [Constraint]()
 
     var userLocation: CLLocation? {
         didSet {
@@ -40,14 +40,10 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private var eatery: Eatery?
-
-    var isMenuTextViewVisible: Bool = false {
+    private var favorites: [String]?
+    var isShowingFavorites: Bool = false {
         didSet {
-            if isMenuTextViewVisible {
-                showMenuTextView()
-            } else {
-                hideMenuTextView()
-            }
+            isShowingFavorites ? showFavorites() : hideFavorites()
         }
     }
 
@@ -77,9 +73,10 @@ class EateryCollectionViewCell: UICollectionViewCell {
         setUpSeparator()
         setUpMenuView()
         setUpBackgroundViews()
+        setupFavoritesView()
 
         // activate constraints to hide text view
-        hideMenuTextView()
+        hideFavorites()
     }
 
     private func setUpBackgroundViews() {
@@ -122,8 +119,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(paymentView)
         paymentView.layer.zPosition = 1
         paymentView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview().inset(10)
+            make.top.trailing.equalToSuperview().inset(10)
         }
     }
 
@@ -134,12 +130,16 @@ class EateryCollectionViewCell: UICollectionViewCell {
         infoContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
         }
-        menuTextViewHiddenConstraints.append(contentsOf: infoContainer.snp.prepareConstraints { make in
+        favoriteHiddenConstraints.append(
+            contentsOf: infoContainer.snp.prepareConstraints { make in
             make.bottom.equalToSuperview()
-        })
-        menuTextViewVisibleConstraints.append(contentsOf: infoContainer.snp.prepareConstraints { make in
+            }
+        )
+        favoriteVisibleConstraints.append(
+            contentsOf: infoContainer.snp.prepareConstraints { make in
             make.top.equalToSuperview()
-        })
+            }
+        )
 
         titleLabel.isOpaque = false
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -155,9 +155,18 @@ class EateryCollectionViewCell: UICollectionViewCell {
         infoContainer.addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
-            make.centerY.equalTo(titleLabel)
             make.leading.equalTo(titleLabel.snp.trailing).offset(8)
         }
+        favoriteVisibleConstraints.append(
+            contentsOf: distanceLabel.snp.prepareConstraints { make in
+            make.centerY.equalTo(titleLabel)
+            }
+        )
+        favoriteHiddenConstraints.append(
+            contentsOf: distanceLabel.snp.prepareConstraints { make in
+            make.centerY.equalToSuperview()
+            }
+        )
 
         statusLabel.font = .systemFont(ofSize: 12, weight: .semibold)
         statusLabel.setContentCompressionResistancePriority(UILayoutPriority(751), for: .vertical)
@@ -202,12 +211,33 @@ class EateryCollectionViewCell: UICollectionViewCell {
         menuTextView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
         }
-        menuTextViewVisibleConstraints.append(contentsOf: menuTextView.snp.prepareConstraints { make in
+        favoriteVisibleConstraints.append(
+            contentsOf: menuTextView.snp.prepareConstraints { make in
             make.top.equalTo(separator.snp.bottom)
-        })
-        menuTextViewHiddenConstraints.append(contentsOf: menuTextView.snp.prepareConstraints { make in
+            }
+        )
+        favoriteHiddenConstraints.append(
+            contentsOf: menuTextView.snp.prepareConstraints { make in
             make.height.equalTo(0)
-        })
+            }
+        )
+    }
+
+    private func setupFavoritesView() {
+        favoritesView.numberOfLines = 0
+        favoritesView.backgroundColor = .clear
+
+        contentView.addSubview(favoritesView)
+        favoritesView.snp.makeConstraints { make in
+            make.top.equalTo(infoContainer.snp.bottom).offset(2.5)
+            make.bottom.lessThanOrEqualToSuperview()
+            make.leading.trailing.equalToSuperview().inset(8)
+        }
+        favoriteHiddenConstraints.append(
+            contentsOf: favoritesView.snp.prepareConstraints { make in
+            make.height.equalTo(0)
+            }
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -223,8 +253,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configure(eatery: Eatery) {
+    func configure(eatery: Eatery, showFavorites: Bool) {
         self.eatery = eatery
+        favorites = eatery.getFavorites()
 
         // start loading background image view as soon as possible
 
@@ -263,6 +294,52 @@ class EateryCollectionViewCell: UICollectionViewCell {
 
         timeLabel.textColor = .lightGray
         distanceLabel.textColor = .lightGray
+        let favoriteFoods = eatery.getFavorites().sorted()
+        if favoriteFoods.count > 0 {
+            let font = UIFont.systemFont(ofSize: 14)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
+
+            var favoritesList = [NSMutableAttributedString]()
+
+            for food in favoriteFoods {
+                var name: NSMutableAttributedString = NSMutableAttributedString(
+                    string: " \(food.trim())  ",
+                    attributes: [
+                        .foregroundColor: UIColor.gray,
+                        .font: font,
+                        .paragraphStyle: paragraphStyle
+                    ]
+                )
+                if let image = UIImage.favoritedImage?.withRenderingMode(.automatic) {
+                    name = name.prependImage(image, yOffset: -1.5, scale: 0.5)
+                }
+                favoritesList.append(name)
+            }
+            let newLine = NSAttributedString(string: "\n")
+            let favoritesText = NSMutableAttributedString()
+            if favoritesList.map { $0.size().height }.reduce(0, +) < frame.height {
+                for food in favoritesList {
+                    favoritesText.append(food)
+                    favoritesText.append(newLine)
+                }
+            } else {
+                var lineWidth: CGFloat = 0
+                for food in favoritesList {
+                    let emptyLineSpace = favoritesView.bounds.size.width - (lineWidth + food.size().width)
+                    if emptyLineSpace < 0 && lineWidth != 0 {
+                        lineWidth = food.size().width
+                        favoritesText.append(newLine)
+                        favoritesText.append(food)
+                    } else {
+                        lineWidth += food.size().width
+                        favoritesText.append(food)
+                    }
+                }
+            }
+            favoritesView.attributedText = favoritesText
+        }
+        isShowingFavorites = showFavorites
     }
 
     override func layoutSubviews() {
@@ -271,22 +348,24 @@ class EateryCollectionViewCell: UICollectionViewCell {
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath
     }
 
-    private func hideMenuTextView() {
-        for constraint in menuTextViewVisibleConstraints {
+    private func hideFavorites() {
+        distanceLabel.textAlignment = .right
+        for constraint in favoriteVisibleConstraints {
             constraint.deactivate()
         }
-        for constraint in menuTextViewHiddenConstraints {
+        for constraint in favoriteHiddenConstraints {
             constraint.activate()
         }
 
         backgroundImageView.isHidden = false
     }
 
-    private func showMenuTextView() {
-        for constraint in menuTextViewHiddenConstraints {
+    private func showFavorites() {
+        distanceLabel.textAlignment = .left
+        for constraint in favoriteHiddenConstraints {
             constraint.deactivate()
         }
-        for constraint in menuTextViewVisibleConstraints {
+        for constraint in favoriteVisibleConstraints {
             constraint.activate()
         }
 

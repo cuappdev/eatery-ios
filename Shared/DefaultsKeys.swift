@@ -34,13 +34,17 @@ extension DefaultsKeys {
     static func addFavoriteFood(_ name: String) {
         if !isFavoriteFood(name) {
             Defaults[\.favoriteFoods].append(name)
+            #if os(iOS)
+            setLocations(name: name)
+            #endif
         }
     }
 
     static func removeFavoriteFood(_ name: String) {
-        Defaults[\.favoriteFoods].removeAll(where: { item in
-            item == name
-        })
+        Defaults[\.favoriteFoods].removeAll(where: { $0 == name })
+        #if os(iOS)
+        Defaults[\.favoriteFoodLocations].removeValue(forKey: name)
+        #endif
     }
 
     static func isFavoriteFood(_ name: String) -> Bool {
@@ -48,6 +52,32 @@ extension DefaultsKeys {
     }
 
     #if os(iOS)
+    var favoriteFoodLocations: DefaultsKey<[String: [String]]> {
+        .init("favoriteFoodLocations", defaultValue: [:])
+    }
+
+    static func updateFoodLocations(_ completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            let foods = Defaults[\.favoriteFoods]
+            for food in foods {
+                setLocations(name: food)
+            }
+            completion()
+        }
+    }
+
+    private static func setLocations(name: String) {
+        guard let eateries = Defaults[\.cachedCampusEateries] else { return }
+        let servingRestaurants: [String] = eateries.compactMap { eatery in
+            if !eatery.name.isEmpty && eatery.hasItem(name: name) {
+                return eatery.name
+            } else {
+                return nil
+            }
+        }
+        Defaults[\.favoriteFoodLocations][name] = servingRestaurants
+    }
+
     var significantEvents: DefaultsKey<Int> {
         .init("significantEvents", defaultValue: 0)
     }

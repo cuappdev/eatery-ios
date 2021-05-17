@@ -64,6 +64,17 @@ class BRBAccountViewController: UIViewController {
         tableView.refreshControl?.endRefreshing()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DefaultsKeys.updateFoodLocations {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        favoriteItems = Defaults[\.favoriteFoods]
+        tableView.reloadData()
+    }
+
 }
 
 extension BRBAccountViewController: UITableViewDataSource {
@@ -98,7 +109,11 @@ extension BRBAccountViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.favorites)
                 as! FavoriteTableViewCell
             let name = favoriteItems[indexPath.item]
-            cell.configure(name: name, restaurants: nil, favorited: DefaultsKeys.isFavoriteFood(name))
+            cell.configure(
+                name: name,
+                locations: Defaults[\.favoriteFoodLocations][name],
+                favorited: DefaultsKeys.isFavoriteFood(name)
+            )
             return cell
         }
 
@@ -112,6 +127,7 @@ extension BRBAccountViewController: UITableViewDataSource {
         )
         return cell
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteTableViewCell else {
             return
@@ -141,12 +157,5 @@ extension BRBAccountViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         section == 0 ? 30 : UITableViewAutomaticDimension
-    }
-}
-
-extension BRBAccountViewController: Reloadable {
-    func reload() {
-        favoriteItems = Defaults[\.favoriteFoods]
-        tableView.reloadData()
     }
 }

@@ -71,7 +71,7 @@ class CampusMenuViewController: EateriesMenuViewController {
         addDirectionsButton()
         addBlockSeparator()
 
-        if eatery.eateryType != .dining {
+        if eatery.eateryType != .dining && eatery.expandedMenu?.data.count ?? 0 > 0 {
             addExtendedMenuViewController()
         } else {
             addMenuLabel()
@@ -402,16 +402,6 @@ extension CampusMenuViewController: TabbedPageViewControllerDelegate {
 
         mealTableViewController.tableView.layoutIfNeeded()
         return mealTableViewController.tableView.contentSize.height
-    }
-
-}
-
-extension CampusMenuViewController: Reloadable {
-
-    func reload() {
-        for case let controller as Reloadable in childViewControllers {
-            controller.reload()
-        }
     }
 
 }

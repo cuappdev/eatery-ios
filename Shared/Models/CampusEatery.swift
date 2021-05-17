@@ -267,6 +267,49 @@ extension CampusEatery {
         getMenuAndType(meal: meal, onDayOf: date)?.0
     }
 
+    var hasFavorite: Bool {
+        let events = eventsByName(onDayOf: Date())
+        for event in events {
+            for (_, items) in event.value.menu.data {
+                if items.contains(where: { item in
+                    DefaultsKeys.isFavoriteFood(item.name)
+                }) {
+                    return true
+                }
+            }
+        }
+
+        if let expandedMenu = expandedMenu {
+            for (_, items) in expandedMenu.data {
+                if items.contains(where: { item in
+                    DefaultsKeys.isFavoriteFood(item.name)
+                }) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    func hasItem(name: String) -> Bool {
+        let events = eventsByName(onDayOf: Date())
+        for event in events {
+            for (_, items) in event.value.menu.data {
+                if items.map({$0.name}).contains(name) {
+                    return true
+                }
+            }
+        }
+        if let expandedMenu = expandedMenu {
+            for (_, items) in expandedMenu.data {
+                if items.map({ $0.name }).contains(name) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
 }
 
 // MARK: - ExpandedMenu Information
