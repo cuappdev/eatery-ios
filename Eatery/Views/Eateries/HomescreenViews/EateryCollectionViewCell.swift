@@ -230,12 +230,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(favoritesView)
         favoritesView.snp.makeConstraints { make in
             make.top.equalTo(infoContainer.snp.bottom).offset(2.5)
-            make.bottom.lessThanOrEqualToSuperview()
             make.leading.trailing.equalToSuperview().inset(8)
         }
         favoriteHiddenConstraints.append(
             contentsOf: favoritesView.snp.prepareConstraints { make in
-            make.height.equalTo(0)
+                make.height.equalTo(0)
             }
         )
     }
@@ -318,15 +317,23 @@ class EateryCollectionViewCell: UICollectionViewCell {
             }
             let newLine = NSAttributedString(string: "\n")
             let favoritesText = NSMutableAttributedString()
-            if favoritesList.map { $0.size().height }.reduce(0, +) < frame.height {
+            let maxHeight = frame.height - infoContainer.bounds.size.height
+            if favoritesList.map { $0.size().height }.reduce(0, +) < maxHeight {
                 for food in favoritesList {
                     favoritesText.append(food)
                     favoritesText.append(newLine)
                 }
             } else {
                 var lineWidth: CGFloat = 0
+                var cannotDisplayFullText = false
                 for food in favoritesList {
                     let emptyLineSpace = favoritesView.bounds.size.width - (lineWidth + food.size().width)
+                    if cannotDisplayFullText ||
+                        (favoritesText.size().height + font.lineHeight * 1.5 >= maxHeight &&
+                            emptyLineSpace < food.size().width + font.xHeight * 3) {
+                        cannotDisplayFullText = true
+                        continue
+                    }
                     if emptyLineSpace < 0 && lineWidth != 0 {
                         lineWidth = food.size().width
                         favoritesText.append(newLine)
@@ -335,6 +342,16 @@ class EateryCollectionViewCell: UICollectionViewCell {
                         lineWidth += food.size().width
                         favoritesText.append(food)
                     }
+                }
+                if cannotDisplayFullText {
+                    favoritesText.append(NSAttributedString(
+                        string: ". . .",
+                        attributes: [
+                            .foregroundColor: UIColor.gray,
+                            .font: font,
+                            .paragraphStyle: paragraphStyle
+                        ]
+                    ))
                 }
             }
             favoritesView.attributedText = favoritesText
@@ -349,6 +366,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private func hideFavorites() {
+        favoritesView.isHidden = true
         distanceLabel.textAlignment = .right
         for constraint in favoriteVisibleConstraints {
             constraint.deactivate()
@@ -361,6 +379,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private func showFavorites() {
+        favoritesView.isHidden = false
         distanceLabel.textAlignment = .left
         for constraint in favoriteHiddenConstraints {
             constraint.deactivate()
