@@ -251,7 +251,9 @@ class EateryCollectionViewCell: UICollectionViewCell {
             distanceLabel.text = "-- mi"
         }
     }
-
+    
+    private let font = UIFont.systemFont(ofSize: 14)
+    
     func configure(eatery: Eatery, showFavorites: Bool) {
         self.eatery = eatery
         favorites = eatery.getFavorites()
@@ -296,24 +298,20 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let favoriteFoods = eatery.getFavorites().sorted()
         if favoriteFoods.count > 0 {
             let font = UIFont.systemFont(ofSize: 14)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
 
             let newLine = NSAttributedString(string: "\n")
             let favoritesText = NSMutableAttributedString()
             let maxHeight = frame.height - max(infoContainer.bounds.size.height, 56) // Max is for calculations before layout
             
-            if favoriteFoods.count * font.lineHeight < maxHeight {
-                
+            if CGFloat(favoriteFoods.count) * font.lineHeight < maxHeight {
+                for food in favoriteFoods {
+                    favoritesText.append(getFavoriteString(food: food))
+                    favoritesText.append(newLine)
+                }
             } else {
-                
+                var lineWidth: CGFloat = 0
             }
             
-            for food in favoriteFoods {
-                
-                
-                
-            }
             if favoritesList.map { $0.size().height }.reduce(0, +) < maxHeight {
                 for food in favoritesList {
                     favoritesText.append(food)
@@ -356,8 +354,10 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private func getFavoriteString(food: String, ending: Bool = false) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
         var name: NSMutableAttributedString = NSMutableAttributedString(
-            string: " \(food.trim())",
+            string: " \(food.trim())" + (ending ? "..." : " "),
             attributes: [
                 .foregroundColor: UIColor.gray,
                 .font: font,
