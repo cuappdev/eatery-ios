@@ -5,8 +5,7 @@
 //  Created by Gonzalo Gonzalez on 3/3/19.
 //  Copyright © 2019 CUAppDev. All rights reserved.
 //
-
-//swiftlint:disable all
+// swiftlint:disable all
 
 import MapKit
 import UIKit

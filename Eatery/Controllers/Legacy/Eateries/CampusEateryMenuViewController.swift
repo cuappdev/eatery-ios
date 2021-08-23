@@ -1,5 +1,4 @@
-//swiftlint:disable all
-
+// swiftlint:disable all
 import UIKit
 import MapKit
 import Crashlytics

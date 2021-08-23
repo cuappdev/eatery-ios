@@ -65,16 +65,14 @@ class BRBLoginViewController: UIViewController {
     }
 
     private var favoriteItems = Defaults[\.favoriteFoods]
-    private let favoriteId = "favorite"
-    private let loginId = "login"
-    private var tableView: UITableView!
+    private let favoriteCellId = "favorite"
+    private let loginCellId = "login"
+    var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView = UITableView(frame: .zero, style: .grouped)
         setupTableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
 
         stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
@@ -100,6 +98,13 @@ class BRBLoginViewController: UIViewController {
         passwordTextField.text = nil
         netidTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
+        favoriteItems = Defaults[\.favoriteFoods]
+        tableView.reloadData()
+        DefaultsKeys.updateFoodLocations {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 
     private func setUpHeaderLabel() {
@@ -213,8 +218,10 @@ class BRBLoginViewController: UIViewController {
     }
 
     private func setupTableView() {
-        tableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: favoriteId)
-        tableView.register(BRBLoginTableViewCell.self, forCellReuseIdentifier: loginId)
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: favoriteCellId)
+        tableView.register(BRBLoginTableViewCell.self, forCellReuseIdentifier: loginCellId)
         tableView.separatorColor = .wash
         tableView.dataSource = self
         tableView.delegate = self
@@ -281,23 +288,24 @@ extension BRBLoginViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : favoriteItems.count
+        section == 0 ? 1 : favoriteItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: loginId, for: indexPath) as! BRBLoginTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: loginCellId, for: indexPath) as! BRBLoginTableViewCell
             cell.configure(stackView: stackView)
             return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: favoriteCellId) as! FavoriteTableViewCell
+            let name = favoriteItems[indexPath.item]
+            cell.configure(
+                name: name,
+                locations: Defaults[\.favoriteFoodLocations][name],
+                favorited: DefaultsKeys.isFavoriteFood(name)
+            )
+            return cell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: favoriteId) as! FavoriteTableViewCell
-        let name = favoriteItems[indexPath.item]
-        cell.configure(
-            name: name,
-            locations: Defaults[\.favoriteFoodLocations][name],
-            favorited: DefaultsKeys.isFavoriteFood(name)
-        )
-        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

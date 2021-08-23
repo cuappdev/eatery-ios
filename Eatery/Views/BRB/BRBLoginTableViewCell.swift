@@ -17,7 +17,6 @@ class BRBLoginTableViewCell: UITableViewCell {
 
     func configure(stackView: UIStackView) {
         stackView.removeFromSuperview()
-        stackView.snp.removeConstraints()
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
