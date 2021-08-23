@@ -59,6 +59,8 @@ class BRBLoginViewController: UIViewController {
 
             stackView.isUserInteractionEnabled = !isLoading
             loginButton.isEnabled = !isLoading
+
+            tableView.layoutSubviews()
         }
     }
 
@@ -320,6 +322,7 @@ extension BRBLoginViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 {
             tableView.deselectRow(at: indexPath, animated: false)
+            return nil
         }
         return indexPath
     }

@@ -299,25 +299,21 @@ class EateryCollectionViewCell: UICollectionViewCell {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
 
-            var favoritesList = [NSMutableAttributedString]()
-
-            for food in favoriteFoods {
-                var name: NSMutableAttributedString = NSMutableAttributedString(
-                    string: " \(food.trim())  ",
-                    attributes: [
-                        .foregroundColor: UIColor.gray,
-                        .font: font,
-                        .paragraphStyle: paragraphStyle
-                    ]
-                )
-                if let image = UIImage.favoritedImage?.withRenderingMode(.automatic) {
-                    name = name.prependImage(image, yOffset: -1.5, scale: 0.5)
-                }
-                favoritesList.append(name)
-            }
             let newLine = NSAttributedString(string: "\n")
             let favoritesText = NSMutableAttributedString()
-            let maxHeight = frame.height - infoContainer.bounds.size.height
+            let maxHeight = frame.height - max(infoContainer.bounds.size.height, 56) // Max is for calculations before layout
+            
+            if favoriteFoods.count * font.lineHeight < maxHeight {
+                
+            } else {
+                
+            }
+            
+            for food in favoriteFoods {
+                
+                
+                
+            }
             if favoritesList.map { $0.size().height }.reduce(0, +) < maxHeight {
                 for food in favoritesList {
                     favoritesText.append(food)
@@ -345,7 +341,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
                 }
                 if cannotDisplayFullText {
                     favoritesText.append(NSAttributedString(
-                        string: ". . .",
+                        string: "...",
                         attributes: [
                             .foregroundColor: UIColor.gray,
                             .font: font,
@@ -359,6 +355,20 @@ class EateryCollectionViewCell: UICollectionViewCell {
         isShowingFavorites = showFavorites
     }
 
+    private func getFavoriteString(food: String, ending: Bool = false) {
+        var name: NSMutableAttributedString = NSMutableAttributedString(
+            string: " \(food.trim())",
+            attributes: [
+                .foregroundColor: UIColor.gray,
+                .font: font,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+        if let image = UIImage.favoritedImage?.withRenderingMode(.automatic) {
+            name = name.prependImage(image, yOffset: -1.5, scale: 0.5)
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
 
