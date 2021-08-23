@@ -7,6 +7,7 @@
 //
 
 import NVActivityIndicatorView
+import SwiftyUserDefaults
 import UIKit
 
 protocol BRBLoginViewControllerDelegate: AnyObject {
@@ -61,25 +62,27 @@ class BRBLoginViewController: UIViewController {
         }
     }
 
+    private var favoriteItems = Defaults[\.favoriteFoods]
+    private let favoriteId = "favorite"
+    private let loginId = "login"
+    private var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let scrollView = UIScrollView(frame: .zero)
-        scrollView.alwaysBounceVertical = true
-        scrollView.keyboardDismissMode = .onDrag
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        tableView = UITableView(frame: .zero, style: .grouped)
+        setupTableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
 
         stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
         stackView.layoutMargins = UIEdgeInsets(top: 40, left: 20, bottom: 0, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.spacing = 16
-        scrollView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.width.equalToSuperview()
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
 
         setUpHeaderLabel()
@@ -193,7 +196,8 @@ class BRBLoginViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(loginButtonPressed(_:)), for: .touchUpInside)
         loginAndActivityContainerView.addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.leading.trailing.top.equalToSuperview()
+            make.bottom.equalToSuperview().inset(10)
         }
 
         activityIndicator = NVActivityIndicatorView(frame: .zero, type: .circleStrokeSpin, color: .white)
@@ -204,6 +208,14 @@ class BRBLoginViewController: UIViewController {
         }
 
         stackView.addArrangedSubview(loginAndActivityContainerView)
+    }
+
+    private func setupTableView() {
+        tableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: favoriteId)
+        tableView.register(BRBLoginTableViewCell.self, forCellReuseIdentifier: loginId)
+        tableView.separatorColor = .wash
+        tableView.dataSource = self
+        tableView.delegate = self
     }
 
     @objc private func privacyStatementButtonPressed(_ sender: UIButton) {
@@ -256,6 +268,60 @@ extension BRBLoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         requestLoginIfPossible()
         return true
+    }
+
+}
+
+extension BRBLoginViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 1 : favoriteItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: loginId, for: indexPath) as! BRBLoginTableViewCell
+            cell.configure(stackView: stackView)
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: favoriteId) as! FavoriteTableViewCell
+        let name = favoriteItems[indexPath.item]
+        cell.configure(
+            name: name,
+            locations: Defaults[\.favoriteFoodLocations][name],
+            favorited: DefaultsKeys.isFavoriteFood(name)
+        )
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteTableViewCell else {
+            return
+        }
+        cell.favorited.toggle()
+        DefaultsKeys.toggleFavoriteFood(favoriteItems[indexPath.item])
+    }
+
+}
+
+extension BRBLoginViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 { return nil }
+        let header = EateriesCollectionViewHeaderView()
+        header.titleLabel.text = "Favorites"
+        return header
+    }
+
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 0 {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
+        return indexPath
     }
 
 }
