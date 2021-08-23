@@ -67,11 +67,14 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     fileprivate var stage: Stage = .loginScreen
 
     init() {
-        super.init(frame: .zero, configuration: WKWebViewConfiguration())
+        let configuration = WKWebViewConfiguration()
+        // From Apple's Documentation:
+        // Use a nonpersistent data store to implement private browsing in your
+        // web view.
+        configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        super.init(frame: .zero, configuration: configuration)
 
         navigationDelegate = self
-        URLCache.shared.diskCapacity = 0
-        URLCache.shared.memoryCapacity = 0
     }
 
     required init?(coder: NSCoder) {
@@ -95,9 +98,6 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
         loginCount = 0
         stage = .loginScreen
 
-        // Remove cache
-        URLCache.shared.removeAllCachedResponses()
-
         if let loginURL = loginURL {
             load(URLRequest(url: loginURL))
         }
@@ -108,9 +108,9 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
     }
 
     @objc func login() {
-        let javascript = "document.getElementsByName('netid')[0].value = '\(netid)';"
-            + "document.getElementsByName('password')[0].value = '\(password)';"
-            + "document.forms[0].submit();"
+        let javascript = "document.getElementsByName('j_username')[0].value = '\(netid)';"
+            + "document.getElementsByName('j_password')[0].value = '\(password)';"
+            + "document.getElementsByName('_eventId_proceed')[0].click();"
 
         evaluateJavaScript(javascript) { (_, error) -> Void in
             if let error = error {
@@ -153,7 +153,7 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
                 self.stage = .loginFailed
             } else if html.contains("<h2>Login OK</h2>") {
                 self.stage = .transition
-            } else if html.contains("<h1>CUWebLogin</h1>") {
+            } else if html.contains("<h2>CUWebLogin</h2>") {
                 self.stage = self.loginCount < 1 ? .loginScreen : .loginFailed
             } else if self.url?.absoluteString.contains("sessionId") ?? false {
                 guard let url = self.url,
