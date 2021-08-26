@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E1A152810ED5A664C671483 /* Pods_Eatery_Watch_App_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E776653956F9723D00D92DD /* Pods_Eatery_Watch_App_Extension.framework */; };
+		307C62C326D4423B009932C4 /* BRBLoginTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C62C226D4423B009932C4 /* BRBLoginTableViewCell.swift */; };
 		30DA20D82625282000928E17 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DA20D72625282000928E17 /* FavoriteTableViewCell.swift */; };
 		30FCEDBF262E0DC000EDCBC5 /* MenuCollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FCEDBE262E0DC000EDCBC5 /* MenuCollectionViewHeaderView.swift */; };
 		5D05FF3623C2C14400EF8CC9 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D05FF3423C2C14400EF8CC9 /* Interface.storyboard */; };
@@ -234,6 +235,7 @@
 		0D19AE5E4967A26F6D705EA4 /* Pods-Eatery Watch App.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.testflight.xcconfig"; sourceTree = "<group>"; };
 		0E7A3B80D08EC745DCB310AD /* Pods-Eatery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.release.xcconfig"; sourceTree = "<group>"; };
 		19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eatery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		307C62C226D4423B009932C4 /* BRBLoginTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRBLoginTableViewCell.swift; sourceTree = "<group>"; };
 		30DA20D72625282000928E17 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		30FCEDBE262E0DC000EDCBC5 /* MenuCollectionViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		3DE936D6D5412F4A2DC0E11B /* Pods-Eatery.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.testflight.xcconfig"; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 			children = (
 				5D44519B231D45AE0035164F /* BRBBalanceTableViewCell.swift */,
 				30DA20D72625282000928E17 /* FavoriteTableViewCell.swift */,
+				307C62C226D4423B009932C4 /* BRBLoginTableViewCell.swift */,
 				5D44519D231D45C30035164F /* BRBHistoryTableViewCell.swift */,
 				5D44519F231D51FE0035164F /* BRBLoginErrorView.swift */,
 				5DEF1AA1222B2FCE00855902 /* DescriptionTableViewCell.swift */,
@@ -1482,6 +1485,7 @@
 				C0F182FA1B674B1300063D77 /* AppDelegate.swift in Sources */,
 				5DAA55AC23DA919200C378DE /* DefaultsKeys.swift in Sources */,
 				5D218C3221FBE39700327516 /* NavigationTitleView.swift in Sources */,
+				307C62C326D4423B009932C4 /* BRBLoginTableViewCell.swift in Sources */,
 				5D44519C231D45AE0035164F /* BRBBalanceTableViewCell.swift in Sources */,
 				5D218C4821FC136E00327516 /* CLLocation+Distance.swift in Sources */,
 				5DEF1AA4222B328800855902 /* SwitchTableViewCell.swift in Sources */,

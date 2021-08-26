@@ -218,7 +218,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
         )
         favoriteHiddenConstraints.append(
             contentsOf: menuTextView.snp.prepareConstraints { make in
-            make.height.equalTo(0)
+                make.height.equalTo(0)
             }
         )
     }
@@ -230,12 +230,11 @@ class EateryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(favoritesView)
         favoritesView.snp.makeConstraints { make in
             make.top.equalTo(infoContainer.snp.bottom).offset(2.5)
-            make.bottom.lessThanOrEqualToSuperview()
             make.leading.trailing.equalToSuperview().inset(8)
         }
         favoriteHiddenConstraints.append(
             contentsOf: favoritesView.snp.prepareConstraints { make in
-            make.height.equalTo(0)
+                make.height.equalTo(0)
             }
         )
     }
@@ -252,6 +251,8 @@ class EateryCollectionViewCell: UICollectionViewCell {
             distanceLabel.text = "-- mi"
         }
     }
+
+    private let font = UIFont.systemFont(ofSize: 14)
 
     func configure(eatery: Eatery, showFavorites: Bool) {
         self.eatery = eatery
@@ -297,37 +298,33 @@ class EateryCollectionViewCell: UICollectionViewCell {
         let favoriteFoods = eatery.getFavorites().sorted()
         if favoriteFoods.count > 0 {
             let font = UIFont.systemFont(ofSize: 14)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
 
-            var favoritesList = [NSMutableAttributedString]()
-
-            for food in favoriteFoods {
-                var name: NSMutableAttributedString = NSMutableAttributedString(
-                    string: " \(food.trim())  ",
-                    attributes: [
-                        .foregroundColor: UIColor.gray,
-                        .font: font,
-                        .paragraphStyle: paragraphStyle
-                    ]
-                )
-                if let image = UIImage.favoritedImage?.withRenderingMode(.automatic) {
-                    name = name.prependImage(image, yOffset: -1.5, scale: 0.5)
-                }
-                favoritesList.append(name)
-            }
             let newLine = NSAttributedString(string: "\n")
             let favoritesText = NSMutableAttributedString()
-            if favoritesList.map { $0.size().height }.reduce(0, +) < frame.height {
-                for food in favoritesList {
-                    favoritesText.append(food)
+            let maxHeight = frame.height -
+                max(infoContainer.bounds.size.height, 56)
+            if CGFloat(favoriteFoods.count) * font.lineHeight < maxHeight {
+                for food in favoriteFoods {
+                    favoritesText.append(getFavoriteString(food: food))
                     favoritesText.append(newLine)
                 }
             } else {
                 var lineWidth: CGFloat = 0
-                for food in favoritesList {
+                var cannotDisplayFullText = false
+                for food in favoriteFoods {
+                    let food = getFavoriteString(food: food)
                     let emptyLineSpace = favoritesView.bounds.size.width - (lineWidth + food.size().width)
-                    if emptyLineSpace < 0 && lineWidth != 0 {
+                    if cannotDisplayFullText {
+                        continue
+                    } else if favoritesText.size().height + font.lineHeight * 1.5 >= maxHeight &&
+                                emptyLineSpace < food.size().width + font.xHeight * 3 {
+                        cannotDisplayFullText = true
+                        favoritesText.replaceCharacters(
+                            in: NSRange(location: favoritesText.length - 1, length: 1),
+                            with: "..."
+                        )
+                        continue
+                    } else if emptyLineSpace < 0 && lineWidth != 0 {
                         lineWidth = food.size().width
                         favoritesText.append(newLine)
                         favoritesText.append(food)
@@ -342,6 +339,23 @@ class EateryCollectionViewCell: UICollectionViewCell {
         isShowingFavorites = showFavorites
     }
 
+    private func getFavoriteString(food: String) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 0.25 * font.lineHeight
+        var name: NSMutableAttributedString = NSMutableAttributedString(
+            string: " \(food.trim()) ",
+            attributes: [
+                .foregroundColor: UIColor.gray,
+                .font: font,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+        if let image = UIImage.favoritedImage?.withRenderingMode(.automatic) {
+            name = name.prependImage(image, yOffset: -1.5, scale: 0.5)
+        }
+        return name
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -349,6 +363,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private func hideFavorites() {
+        favoritesView.isHidden = true
         distanceLabel.textAlignment = .right
         for constraint in favoriteVisibleConstraints {
             constraint.deactivate()
@@ -361,6 +376,7 @@ class EateryCollectionViewCell: UICollectionViewCell {
     }
 
     private func showFavorites() {
+        favoritesView.isHidden = false
         distanceLabel.textAlignment = .left
         for constraint in favoriteHiddenConstraints {
             constraint.deactivate()
