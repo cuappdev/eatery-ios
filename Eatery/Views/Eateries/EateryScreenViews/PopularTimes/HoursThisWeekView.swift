@@ -11,6 +11,8 @@ import UIKit
 
 class HoursThisWeekView: UIView {
 
+    typealias Meal = CampusEatery.MajorMeal
+
     // only shown for dining halls
     private let segmentedControl = UISegmentedControl()
     private var showDiningHallConstraints: [Constraint] = []
@@ -20,8 +22,6 @@ class HoursThisWeekView: UIView {
     private let stackView = UIStackView()
 
     private var eatery: Eatery?
-
-    private let diningMeals = ["Breakfast", "Lunch", "Dinner"]
 
     init() {
         super.init(frame: .zero)
@@ -89,23 +89,17 @@ class HoursThisWeekView: UIView {
             setShowDiningHall(true)
 
             segmentedControl.removeAllSegments()
-            for meal in diningMeals {
+            for meal in Meal.allCases {
                 segmentedControl.insertSegment(
-                    withTitle: meal,
+                    withTitle: meal.description,
                     at: segmentedControl.numberOfSegments,
                     animated: false
                 )
             }
 
-            let indexToDisplay: Int
-            if let activeMealName = eatery.currentActiveEvent()?.desc,
-                let index = diningMeals.firstIndex(of: activeMealName) {
-                indexToDisplay = index
-            } else {
-                indexToDisplay = 0
-            }
-            displayMeal(withName: diningMeals[indexToDisplay])
-            segmentedControl.selectedSegmentIndex = indexToDisplay
+            let meal = Meal(description: eatery.currentActiveEvent()?.desc) ?? Meal.breakfast
+            display(meal: meal)
+            segmentedControl.selectedSegmentIndex = meal.rawValue
 
         default:
             setShowDiningHall(false)
@@ -127,19 +121,22 @@ class HoursThisWeekView: UIView {
 
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
-        guard 0 <= index, index < diningMeals.count else {
+        guard 0 <= index, index < Meal.allCases.count else {
             return
         }
 
-        displayMeal(withName: diningMeals[sender.selectedSegmentIndex])
+        display(meal: Meal.allCases[index])
     }
 
-    private func displayMeal(withName name: String) {
+    private func display(meal: Meal) {
         for subview in stackView.arrangedSubviews {
             subview.removeFromSuperview()
         }
 
-        let daysAndEvents = datesThisWeek().map { ($0, eatery?.eventsByName(onDayOf: $0)[name]) }
+        let daysAndEvents: [(Date, Event?)] = datesThisWeek().map { date in
+            let events = eatery?.eventsByName(onDayOf: date) ?? [:]
+            return (date, CampusEatery.findEvent(from: events, matching: meal))
+        }
 
         for (day, event) in daysAndEvents {
             let dayAndHoursView = DayAndHoursView()
