@@ -267,7 +267,7 @@ extension CampusEatery {
         getMenuAndType(meal: meal, onDayOf: date)?.0
     }
 
-    var hasFavorite: Bool {
+    var currentlyHasFavorite: Bool {
         let events = eventsByName(onDayOf: Date())
         for event in events {
             for (_, items) in event.value.menu.data {
@@ -308,6 +308,75 @@ extension CampusEatery {
             }
         }
         return false
+    }
+
+    /// A "major" meal of the day: breakfast, lunch, or dinner
+    enum MajorMeal: Int, CaseIterable, CustomStringConvertible, Comparable {
+
+        case breakfast
+        case lunch
+        case dinner
+
+        static func < (lhs: MajorMeal, rhs: MajorMeal) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+
+        init?(hour: Int) {
+            for choice in MajorMeal.allCases {
+                if choice.hours.contains(hour) {
+                    self = choice
+                    return
+                }
+            }
+
+            return nil
+        }
+
+        init(from date: Date) {
+            var calendar = Calendar.current
+            if let timeZone = TimeZone(identifier: "America/New_York") {
+                calendar.timeZone = timeZone
+            }
+
+            let hour = calendar.component(.hour, from: date)
+            self = MajorMeal(hour: hour) ?? .breakfast
+        }
+
+        /// Inverse of MajorMeal.description
+        init?(description: String?) {
+            if let description = description,
+                let value = MajorMeal.allCases.first(where: { $0.description == description }) {
+                self = value
+            } else {
+                return nil
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .breakfast: return "Breakfast"
+            case .lunch: return "Lunch"
+            case .dinner: return "Dinner"
+            }
+        }
+
+        var hours: CountableClosedRange<Int> {
+            switch self {
+            case .breakfast: return 0...9
+            case .lunch: return 10...15
+            case .dinner: return 15...23
+            }
+        }
+
+    }
+
+    /// Try and find the event that most closely matches the specified meal
+    static func findEvent(from events: [CampusEatery.EventName: Event], matching meal: MajorMeal) -> Event? {
+        switch meal {
+        case .breakfast: return events["Breakfast"] ?? events["Brunch"]
+        case .lunch: return events["Lunch"] ?? events["Brunch"] ?? events["Lite Lunch"]
+        case .dinner: return events["Dinner"]
+        }
     }
 
 }

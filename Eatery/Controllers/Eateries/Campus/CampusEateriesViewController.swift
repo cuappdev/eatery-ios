@@ -263,7 +263,7 @@ extension CampusEateriesViewController: EateriesViewControllerDelegate {
         }
 
         if filters.contains(.favorites) {
-            filteredEateries = filteredEateries.filter { $0.hasFavorite }
+            filteredEateries = filteredEateries.filter { $0.currentlyHasFavorite }
         }
 
         if !filters.isDisjoint(with: Filter.areaFilters) {

@@ -55,8 +55,10 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       notificationPayloadFile = "Eatery Watch App Extension/PushNotificationPayload.apns">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Eatery">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
@@ -64,7 +66,7 @@
             BlueprintName = "Eatery Watch App"
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
       <LocationScenarioReference
          identifier = "New York, NY, USA"
          referenceType = "1">
@@ -76,8 +78,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Eatery">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
@@ -85,7 +89,16 @@
             BlueprintName = "Eatery Watch App"
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
+            BuildableName = "Eatery Watch App.app"
+            BlueprintName = "Eatery Watch App"
+            ReferencedContainer = "container:Eatery.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

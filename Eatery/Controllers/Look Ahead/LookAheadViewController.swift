@@ -12,6 +12,8 @@ import NVActivityIndicatorView
 
 class LookAheadViewController: UIViewController {
 
+    typealias MealChoice = CampusEatery.MajorMeal
+
     typealias EateryArea = (area: Area, eateries: [CampusEatery])
 
     private enum CellIdentifier: String {
@@ -23,53 +25,6 @@ class LookAheadViewController: UIViewController {
     private enum HeaderIdentifier: String {
 
         case header
-
-    }
-
-    private enum MealChoice: Int, CaseIterable, CustomStringConvertible, Comparable {
-
-        case breakfast
-        case lunch
-        case dinner
-
-        static func < (lhs: MealChoice, rhs: MealChoice) -> Bool {
-            lhs.rawValue < rhs.rawValue
-        }
-
-        init?(hour: Int) {
-            for choice in MealChoice.allCases {
-                if choice.hours.contains(hour) {
-                    self = choice
-                    return
-                }
-            }
-
-            return nil
-        }
-
-        init(from date: Date) {
-            var calendar = Calendar.current
-            calendar.timeZone = TimeZone(identifier: "America/New_York")!
-
-            let hour = calendar.component(.hour, from: date)
-            self = MealChoice(hour: hour) ?? .breakfast
-        }
-
-        var description: String {
-            switch self {
-            case .breakfast: return "Breakfast"
-            case .lunch: return "Lunch"
-            case .dinner: return "Dinner"
-            }
-        }
-
-        var hours: CountableClosedRange<Int> {
-            switch self {
-            case .breakfast: return 0...9
-            case .lunch: return 10...15
-            case .dinner: return 15...23
-            }
-        }
 
     }
 
@@ -138,15 +93,6 @@ class LookAheadViewController: UIViewController {
 
     // used to prevent table view jitter when recomputing layout
     private var cellHeights: [IndexPath: CGFloat] = [:]
-
-    /// Try and find the event that most closely matches the specified meal
-    private func findEvent(from events: [CampusEatery.EventName: Event], matching meal: MealChoice) -> Event? {
-        switch meal {
-        case .breakfast: return events["Breakfast"] ?? events["Brunch"]
-        case .lunch: return events["Lunch"] ?? events["Brunch"] ?? events["Lite Lunch"]
-        case .dinner: return events["Dinner"]
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -272,7 +218,7 @@ extension LookAheadViewController: UITableViewDataSource {
         cell.eateryNameLabel.text = eatery.displayName
 
         let events = eatery.eventsByName(onDayOf: selectedDate)
-        if let event = findEvent(from: events, matching: selectedMeal) {
+        if let event = CampusEatery.findEvent(from: events, matching: selectedMeal) {
             if selectedDay == .today {
                 // There is an event, and it's today
 
@@ -349,7 +295,10 @@ extension LookAheadViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let eatery = eateriesByArea[indexPath.section].eateries[indexPath.row]
-        guard findEvent(from: eatery.eventsByName(onDayOf: selectedDate), matching: selectedMeal) != nil else {
+        guard CampusEatery.findEvent(
+                from: eatery.eventsByName(onDayOf: selectedDate),
+                matching: selectedMeal
+            ) != nil else {
             return
         }
 
@@ -397,7 +346,7 @@ extension LookAheadViewController: FilterEateriesViewDelegate {
 
     func filterEateriesView(_ filterEateriesView: FilterEateriesView, didFilterMeal sender: UIButton) {
         guard let index = filterEateriesView.mealButtons.firstIndex(of: sender),
-            let meal = MealChoice(rawValue: index) else {
+              let meal = MealChoice(rawValue: index) else {
             return
         }
 
