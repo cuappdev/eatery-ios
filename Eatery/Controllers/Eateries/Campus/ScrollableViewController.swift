@@ -86,7 +86,7 @@ class ScrollableViewController: UIViewController {
         tabBar.backgroundColor = .white
 
         tabBar.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.height.equalTo(30)
         }
 
         tabBarStack = UIStackView(arrangedSubviews: [headerContainer, tabBar])
