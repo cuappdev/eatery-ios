@@ -143,7 +143,7 @@ class CampusMenuViewController: EateriesMenuViewController {
 
         addToStackView(containerView)
 
-        menuLabel.hero.modifiers = createHeroModifiers(.fade, .translate)
+        menuLabel.hero.modifiers = createHeroModifiers(.fade)
     }
 
     private func addTabbedMenuViewController() {
