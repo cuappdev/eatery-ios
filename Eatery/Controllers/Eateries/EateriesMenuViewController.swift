@@ -99,7 +99,8 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         menuHeaderView.titleHero.id = EateriesViewController.AnimationKey.title.id(eatery: eatery)
         menuHeaderView.paymentHero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
 
-        menuHeaderView.favoriteHero.modifiers = createHeroModifiers(.fade)
+        // Header hero animation
+        menuHeaderView.favoriteHero.modifiers = createHeroModifiersWithDelay(delay: 0.2, .fade)
 
         menuHeaderView.exceptionsView.alpha = 0
     }
@@ -136,9 +137,15 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
             self?.view.layoutIfNeeded()
         }
     }
-
     func createHeroModifiers(_ groups: HeroModifierGroups...) -> [HeroModifier] {
         [.useGlobalCoordinateSpace, .whenPresenting(.delay(0.15))]
+            + (groups.contains(.fade) ? [.fade] : [])
+            + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
+    }
+    // 0.15 is default delay used across all presenting hero animations
+    // Custom delay is useful when adjusting animation timings
+    func createHeroModifiersWithDelay(delay: Double = 0.15, _ groups: HeroModifierGroups...) -> [HeroModifier] {
+        [.useGlobalCoordinateSpace, .whenPresenting(.delay(delay))]
             + (groups.contains(.fade) ? [.fade] : [])
             + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
     }
