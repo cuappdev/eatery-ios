@@ -56,10 +56,8 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "8"
       notificationPayloadFile = "Eatery Watch App Extension/PushNotificationPayload.apns">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Eatery">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
@@ -67,7 +65,7 @@
             BlueprintName = "Eatery Watch App"
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Debug"
@@ -77,10 +75,8 @@
       debugDocumentVersioning = "YES"
       launchAutomaticallySubstyle = "8"
       notificationPayloadFile = "Eatery Watch App Extension/PushNotificationPayload.apns">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Eatery">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
@@ -88,16 +84,7 @@
             BlueprintName = "Eatery Watch App"
             ReferencedContainer = "container:Eatery.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D05FF3123C2C14400EF8CC9"
-            BuildableName = "Eatery Watch App.app"
-            BlueprintName = "Eatery Watch App"
-            ReferencedContainer = "container:Eatery.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
