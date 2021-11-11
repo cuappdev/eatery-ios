@@ -37,6 +37,9 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
 
     }
 
+    // Hero animation constants
+    private let Y_TRANSLATE_OFFSET: CGFloat = 32
+
     private let eatery: Eatery
     let userLocation: CLLocation?
 
@@ -137,19 +140,19 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
             self?.view.layoutIfNeeded()
         }
     }
-    
+
     func createHeroModifiers(_ groups: HeroModifierGroups...) -> [HeroModifier] {
         [.useGlobalCoordinateSpace, .whenPresenting(.delay(0.15))]
             + (groups.contains(.fade) ? [.fade] : [])
-            + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
+            + (groups.contains(.translate) ? [.translate(y: Y_TRANSLATE_OFFSET), .timingFunction(.deceleration)] : [])
     }
-    
+
     // 0.15 is default delay used across all presenting hero animations
     /// Creates hero animation modifiers with custom delay—useful when adjusting animation timings
     func createHeroModifiersWithDelay(delay: Double = 0.15, _ groups: HeroModifierGroups...) -> [HeroModifier] {
         [.useGlobalCoordinateSpace, .whenPresenting(.delay(delay))]
             + (groups.contains(.fade) ? [.fade] : [])
-            + (groups.contains(.translate) ? [.translate(y: 32), .timingFunction(.deceleration)] : [])
+            + (groups.contains(.translate) ? [.translate(y: Y_TRANSLATE_OFFSET), .timingFunction(.deceleration)] : [])
     }
 
     // MARK: Actions
