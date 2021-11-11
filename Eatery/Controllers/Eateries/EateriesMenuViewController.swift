@@ -100,7 +100,7 @@ class EateriesMenuViewController: ImageParallaxScrollViewController {
         menuHeaderView.paymentHero.id = EateriesViewController.AnimationKey.paymentView.id(eatery: eatery)
 
         // Header hero animation
-        menuHeaderView.favoriteHero.modifiers = createHeroModifiersWithDelay(delay: 0.2, .fade)
+        menuHeaderView.favoriteHero.modifiers = createHeroModifiersWithDelay(delay: 0.05, .fade)
 
         menuHeaderView.exceptionsView.alpha = 0
     }
