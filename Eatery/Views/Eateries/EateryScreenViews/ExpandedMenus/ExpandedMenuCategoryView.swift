@@ -1,5 +1,5 @@
 //
-//  CampusEateryExtendedMenuViewController.swift
+//  ExpandedMenuCategoryView.swift
 //  Eatery
 //
 //  Created by Sergio Diaz on 12/20/20.
@@ -13,6 +13,7 @@ class ExpandedMenuCategoryView: UIView {
     let eatery: CampusEatery!
     let category: String!
     let menu: [ExpandedMenu.Item]!
+    let categoryLabel: UILabel!
 
     /// Public variable that allows other VCs to easily get height of this view
     var contentHeight: CGFloat = 0
@@ -36,11 +37,26 @@ class ExpandedMenuCategoryView: UIView {
         stackView.spacing = 0
         stackView.axis = .vertical
 
+        categoryLabel = UILabel()
+        categoryLabel.text = category
+        categoryLabel.font = .systemFont(ofSize: 18)
+
         super.init(frame: .zero)
+        backgroundColor = .white
+
+        addSubview(categoryLabel)
+        categoryLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(12)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview()
+        }
 
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(categoryLabel.snp.bottom).offset(12)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
 
     }
