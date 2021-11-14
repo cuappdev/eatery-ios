@@ -145,6 +145,7 @@
 		95DA17B225B72203008631BF /* ExpandedMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17B125B72203008631BF /* ExpandedMenu.swift */; };
 		95DA17B325B72203008631BF /* ExpandedMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17B125B72203008631BF /* ExpandedMenu.swift */; };
 		95F661FA1E2E9F3D00591A54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */; };
+		A27FC025273BBCA900969B34 /* ExpandedMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FC024273BBCA900969B34 /* ExpandedMenuHeaderView.swift */; };
 		BDED220CF98246CF49570C52 /* Pods_Eatery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19538C3B4917B0F73E5B6D62 /* Pods_Eatery.framework */; };
 		C0497B131B64AA1800AC1C6C /* UIColor+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */; };
 		C0497B161B64AA1800AC1C6C /* TimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0497AF51B64AA1800AC1C6C /* TimeFactory.swift */; };
@@ -370,6 +371,7 @@
 		95DA17B125B72203008631BF /* ExpandedMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMenu.swift; sourceTree = "<group>"; };
 		95F661F91E2E9F3D00591A54 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		977293368558D040AFA7B199 /* Pods-Eatery Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery Watch App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery Watch App/Pods-Eatery Watch App.debug.xcconfig"; sourceTree = "<group>"; };
+		A27FC024273BBCA900969B34 /* ExpandedMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMenuHeaderView.swift; sourceTree = "<group>"; };
 		BD082688B710875CB59FA212 /* Pods-Eatery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eatery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eatery/Pods-Eatery.debug.xcconfig"; sourceTree = "<group>"; };
 		C007CABF19E1BEAC00E3BD46 /* Eatery Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eatery Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0497AF11B64AA1800AC1C6C /* UIColor+ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorScheme.swift"; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 		95587BB925C3B75C0099D24E /* ExpandedMenus */ = {
 			isa = PBXGroup;
 			children = (
+				A27FC024273BBCA900969B34 /* ExpandedMenuHeaderView.swift */,
 				95D4858D259D0B0700B312D3 /* ExpandedMenuCategoryView.swift */,
 				952341BC2565272000674187 /* ExpandedMenuRow.swift */,
 				95CEB2D72595083F00582E34 /* ExpandedFilterButton.swift */,
@@ -1504,6 +1507,7 @@
 				5D94B90B238B27DB0043BE1A /* PopularTimesAccuracyPrompt.swift in Sources */,
 				5D5B8CC12450F1B2004E05EF /* SearchResultsTableViewCell.swift in Sources */,
 				D956DCB42187B4B1001BB9B0 /* NetworkManager.swift in Sources */,
+				A27FC025273BBCA900969B34 /* ExpandedMenuHeaderView.swift in Sources */,
 				5D6BF06B22126D1700AA36CD /* LookAheadViewController.swift in Sources */,
 				95DA17B225B72203008631BF /* ExpandedMenu.swift in Sources */,
 				5DF17737231C5CAE00194D14 /* BRBPrivacyStatementViewController.swift in Sources */,
@@ -1904,7 +1908,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = N85YZLFRGD;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2082,7 +2086,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = N85YZLFRGD;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2167,7 +2171,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = N85YZLFRGD;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

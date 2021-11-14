@@ -86,7 +86,7 @@ class ScrollableViewController: UIViewController {
         tabBar.backgroundColor = .white
 
         tabBar.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.height.equalTo(30)
         }
 
         tabBarStack = UIStackView(arrangedSubviews: [headerContainer, tabBar])
@@ -130,7 +130,7 @@ class ScrollableViewController: UIViewController {
         let viewPos = categoryViews[tabBar.selectedSegmentIndex].frame.minY
         let targetPos = viewPos - scrollOffset + viewControllerPosOnParent + minOffset
         let topOfSelf = viewControllerPosOnParent - scrollOffset
-        let duration = animationDuration(from: currentPos, to: targetPos, withConst: 0.03)
+        let duration = animationDuration(from: currentPos, to: targetPos, withConst: 0.01)
 
         if currentPos > topOfSelf {
             UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {

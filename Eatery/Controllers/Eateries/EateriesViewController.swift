@@ -230,7 +230,13 @@ class EateriesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+        // navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        print("DEBUG: bye bye")
+//        navigationController?.setNavigationBarHidden(true, animated: animated)
+//    }
 
     private func setUpNavigationBar() {
         navigationItem.title = "Eateries"
