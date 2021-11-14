@@ -54,7 +54,7 @@ class ExpandedMenuRow: UIView {
 
         separator.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.leading.equalToSuperview().offset(padding - lineOffset)
             make.trailing.equalToSuperview().offset(-padding + lineOffset)
         }

@@ -39,7 +39,7 @@ class ExpandedMenuCategoryView: UIView {
 
         categoryLabel = UILabel()
         categoryLabel.text = category
-        categoryLabel.font = .systemFont(ofSize: 18)
+        categoryLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 
         super.init(frame: .zero)
         backgroundColor = .white
@@ -53,7 +53,7 @@ class ExpandedMenuCategoryView: UIView {
 
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(categoryLabel.snp.bottom).offset(12)
+            make.top.equalTo(categoryLabel.snp.bottom).offset(4)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
