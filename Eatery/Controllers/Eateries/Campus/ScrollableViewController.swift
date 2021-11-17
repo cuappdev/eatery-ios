@@ -71,8 +71,6 @@ class ScrollableViewController: UIViewController {
     private func createTabBarStack() {
         headerContainer = ExpandedHeaderContainer()
         headerContainer.backgroundColor = .white
-        headerContainer.addFilterButtonTarget(self, action: #selector(filterButtonPressed), forEvent: .touchUpInside)
-
         headerContainer.snp.makeConstraints { make in
             make.height.equalTo(58)
         }
@@ -204,17 +202,6 @@ class ScrollableViewController: UIViewController {
         tabBar.select(at: selectionIndex)
     }
 
-    @objc func filterButtonPressed() {
-        headerContainer.filterButtonPressed()
-
-        if headerContainer.getFilterButtonState() != .inactive {
-            hideTabBar()
-        } else {
-            showTabBar()
-            headerContainer.setFilterLabelText(to: "")
-        }
-    }
-
     private func hideTabBar() {
         UIView.animate(withDuration: 0.45) {
             let adjustedPosTabBar = (self.headerContainer.frame.height / 2) - (self.tabBar.frame.height / 2)
@@ -223,13 +210,6 @@ class ScrollableViewController: UIViewController {
             self.tabBar.isUserInteractionEnabled = false
             self.tabBar.center.y = self.headerContainer.center.y + adjustedPosTabBar
             self.menuItemsView.center.y = self.tabBar.center.y + adjustedPosMenuStack
-        }
-
-        if headerContainer.getFilterButtonState() == .hightolow {
-            scrollView?.contentSize.height -= tabBar.frame.height // Does not animate when subtracted
-            switchToHighToLowStack()
-        } else if headerContainer.getFilterButtonState() == .lowtohigh {
-            switchToLowToHighStack()
         }
     }
 
@@ -243,26 +223,6 @@ class ScrollableViewController: UIViewController {
             self.menuItemsView.center.y = self.tabBar.center.y + adjustedPosMenuStack
             self.scrollView?.contentSize.height += self.tabBar.frame.height
         }
-
-        switchToOriginalStack()
-    }
-
-    private func switchToHighToLowStack() {
-        menuItemsView.createHighToLowStackIfNeeded()
-        headerContainer.setFilterLabelText(to: "Highest \u{2794} Lowest")
-        menuItemsView.switchVisibleStack(type: .highToLow)
-    }
-
-    private func switchToLowToHighStack() {
-        menuItemsView.createLowToHighStackIfNeeded()
-        headerContainer.setFilterLabelText(to: "Lowest \u{2794} Highest")
-        menuItemsView.switchVisibleStack(type: .lowToHigh)
-
-    }
-
-    private func switchToOriginalStack() {
-        headerContainer.setFilterLabelText(to: "")
-        menuItemsView.switchVisibleStack(type: .original)
     }
 
     override func viewWillAppear(_ animated: Bool) {
