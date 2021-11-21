@@ -10,7 +10,6 @@ import UIKit
 
 class ExpandedHeaderContainer: UIView {
 
-//    private var filterButton: ExpandedFilterButton!
     private var filterLabel: UILabel!
     private var separatorView: SeparatorView!
 
