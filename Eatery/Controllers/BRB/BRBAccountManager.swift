@@ -176,6 +176,20 @@ private class BRBConnectionHandler: WKWebView, WKNavigationDelegate {
             block()
         })
     }
+
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        // https://stackoverflow.com/questions/38450586/prevent-universal-links-from-opening-in-wkwebview-uiwebview?rq=1
+        if let policy = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) {
+            decisionHandler(policy)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
+
 }
 
 // MARK: - Account Manager
