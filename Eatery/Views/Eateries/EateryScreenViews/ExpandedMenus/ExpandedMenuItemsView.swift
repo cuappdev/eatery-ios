@@ -28,6 +28,8 @@ class ExpandedMenuItemView: UIView {
         self.allMenuItems = allMenuItems
 
         menuItemsStack = UIStackView(arrangedSubviews: views)
+        menuItemsStack.spacing = 8
+        menuItemsStack.backgroundColor = .wash
         menuItemsStack.axis = .vertical
         addSubview(menuItemsStack)
 
